@@ -1,0 +1,37 @@
+## Interface: 11302
+## Title: SpellCalc
+## Author: coolmodi
+## Version: 0.1
+## Notes: WIP
+## SavedVariables: SpellCalc_settings
+
+libs/SettingsCreator.lua
+
+i18n/loc.lua
+i18n/enUS.lua
+i18n/deDE.lua
+
+constants.lua
+
+helper.lua
+
+data/auras.lua
+data/itemData.lua
+data/itemSetData.lua
+data/priest.lua
+data/druid.lua
+data/hunter.lua
+data/mage.lua
+data/paladin.lua
+data/shaman.lua
+data/warlock.lua
+
+settings.lua
+slashcmd.lua
+events.lua
+core.lua
+system/stats.lua
+system/buffs.lua
+system/items.lua
+
+UI/TooltipDisplay.lua
