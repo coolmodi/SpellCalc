@@ -73,7 +73,7 @@ local function MakeSpellTable(primaryType, secondaryType)
             error("non-existing effect type " .. curType .. " for spell");
         end
 
-        et.persecond = 0; -- Done per second PER AVERAGE CAST
+        et.perSecond = 0; -- Done per second PER AVERAGE CAST
         et.perMana = 0; -- Mana per unit done PER AVERAGE CAST
     end
 
@@ -372,7 +372,11 @@ function _addon:CalcSpell(spellId)
         end
 
         if calcData.hitChance ~= nil then
-            et.avgAfterMitigation = et.avgAfterMitigation * calcData.hitChance;
+            if spellData.isChannel then
+                et.avgAfterMitigation = et.avgAfterMitigation * (1 - (1 - calcData.hitChance) * (1.5 / castTime));
+            else
+                et.avgAfterMitigation = et.avgAfterMitigation * calcData.hitChance;
+            end
         end
 
         --------------------------
