@@ -215,6 +215,7 @@ function _addon:UpdateTalents()
             _addon:PrintDebug("Add talent rank " .. name .. curRank);
             local idName = name .. curRank;
             ChangeBuff(true, idName, data.effect, data.perPoint*curRank, data.affectSchool, data.affectSpell);
+            activeRelevantTalents[name] = curRank;
         end
 	end
 
