@@ -34,6 +34,7 @@ _addon.stats = {
         [_addon.SCHOOL_SHADOW]      = {val=0, buffs={}},
         [_addon.SCHOOL_ARCANE]      = {val=0, buffs={}},
     },
+    healingDoneMod = {val=0, buffs={}},
     effectMods = {
         school = {
             [_addon.SCHOOL_PHYSICAL]    = {val=0, buffs={}},

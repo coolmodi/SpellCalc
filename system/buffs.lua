@@ -64,6 +64,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
+    if effect == _addon.EFFECT_TYPE_MOD_HEALING_DONE then
+        ApplyOrRemove(value, _addon.stats.healingDoneMod, name);
+        return;
+    end
+
     if effect == _addon.EFFECT_TYPE_MOD_HIT_SPELL then
         if affectSchool ~= nil then
             ApplyOrRemove(value, _addon.stats.hitMods.school[affectSchool], name);

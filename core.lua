@@ -132,8 +132,8 @@ end
 -- @param isHeal
 -- @param spellName
 -- @param buffTable
-local function GenerateEffectModifier(school, isHeal, spellName, buffTable)
-    _addon:PrintDebug(("Getting modifiers for %s, School: %d Heal: %s"):format(spellName, school, tostring(isHeal)));
+local function GenerateEffectModifier(school, spellData, effectData, spellName, buffTable)
+    _addon:PrintDebug(("Getting modifiers for %s, School: %d Heal: %s"):format(spellName, school, tostring(effectData.isHeal)));
     local effectMod = 1 + _addon.stats.effectMods.school[school].val/100;
     for _, buffName in pairs(_addon.stats.effectMods.school[school].buffs) do
         table.insert(buffTable, buffName);
@@ -146,9 +146,14 @@ local function GenerateEffectModifier(school, isHeal, spellName, buffTable)
         end
     end
 
-    if not isHeal then
+    if not effectData.isHeal then
         effectMod = effectMod * (1 + _addon.stats.dmgDoneMods[school].val/100);
         for _, buffName in pairs(_addon.stats.dmgDoneMods[school].buffs) do
+            table.insert(buffTable, buffName);
+        end
+    elseif not spellData.isAbsorbShield then
+        effectMod = effectMod * (1 + _addon.stats.healingDoneMod.val/100);
+        for _, buffName in pairs(_addon.stats.healingDoneMod.buffs) do
             table.insert(buffTable, buffName);
         end
     end
@@ -318,7 +323,7 @@ function _addon:CalcSpell(spellId)
 
         -- Magnitude
 
-        local effectMod = GenerateEffectModifier(spellData.school, effectData[i].isHeal, name, calcData.buffs);
+        local effectMod = GenerateEffectModifier(spellData.school, spellData, effectData[i], name, calcData.buffs);
         _addon:PrintDebug("Mod: " .. effectMod);
 
         --------------------------
