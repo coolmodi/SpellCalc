@@ -40,7 +40,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         value = -value;
     end
     
-    _addon:PrintDebug(("Change buff %s > %f"):format(name, value));
+    _addon:PrintDebug(("Change buff %s effect %d > %f"):format(name, effect, value));
     if affectSchool then
         _addon:PrintDebug(("Affects school: %d"):format(affectSchool));
     end
@@ -129,6 +129,37 @@ local function GetBuffDescription(slot)
     return buffDesc:GetText();
 end
 
+local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
+    local value = effectData.value;
+    if value == nil then
+        local desc = GetBuffDescription(buffSlot);
+        value = tonumber(string.match(desc, effectData.ttValue));
+        buffValueCache[usedKey] = value;
+    end
+
+    if effectSlot then
+        usedKey = usedKey.."-"..effectSlot;
+        name = name.."-"..effectSlot;
+    end
+
+    ChangeBuff(true, name, effectData.effect, value, effectData.affectSchool, effectData.affectSpell);
+end
+
+local function RemoveBuffEffect(effectData, usedKey, name, effectSlot)
+    local value = effectData.value;
+    if value == nil then
+        value = buffValueCache[usedKey];
+    end
+
+    if effectSlot then
+        usedKey = usedKey.."-"..effectSlot;
+        name = name.."-"..effectSlot;
+    end
+
+    ChangeBuff(false, name, effectData.effect, value, effectData.affectSchool, effectData.affectSpell);
+    buffValueCache[usedKey] = nil;
+end
+
 --- Update player buffs
 function _addon:UpdateBuffs()
     _addon:PrintDebug("Updating buffs");
@@ -152,15 +183,15 @@ function _addon:UpdateBuffs()
 
             if activeRelevantBuffs[usedKey] == nil then
                 _addon:PrintDebug("Add buff " .. name .. " " .. usedKey);
-                
-                local value = buffdata.value;
-                if value == nil then
-                    local desc = GetBuffDescription(i);
-                    value = tonumber(string.match(desc, buffdata.ttValue));
-                    buffValueCache[usedKey] = value;
+
+                if buffdata.effects == nil then
+                    ApplyBuffEffect(buffdata, usedKey, name, i);
+                else
+                    for k, effect in ipairs(buffdata.effects) do
+                        ApplyBuffEffect(effect, usedKey, name, i, k);
+                    end
                 end
 
-                ChangeBuff(true, name, buffdata.effect, value, buffdata.affectSchool, buffdata.affectSpell);
                 buffsChanged = true;
             end
             activeRelevantBuffs[usedKey] = true;
@@ -169,19 +200,25 @@ function _addon:UpdateBuffs()
         name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
     end
 
-    for k, _ in pairs(activeRelevantBuffs) do
-        if activeRelevantBuffs[k] == false then
-            _addon:PrintDebug("Remove buff " .. k);
-            local buffdata = _addon.buffData[k];
-            local value = buffdata.value;
+    for usedKeyIt, _ in pairs(activeRelevantBuffs) do
+        if activeRelevantBuffs[usedKeyIt] == false then
+            _addon:PrintDebug("Remove buff " .. usedKeyIt);
+            local buffdata = _addon.buffData[usedKeyIt];
+            name = usedKeyIt;
 
-            if value == nil then
-                value = buffValueCache[k];
+            if type(name) == "number" then
+                name = GetSpellInfo(name);
             end
 
-            ChangeBuff(false, GetSpellInfo(k), buffdata.effect, value, buffdata.affectSchool, buffdata.affectSpell);
-            activeRelevantBuffs[k] = nil;
-            buffValueCache[k] = nil;
+            if buffdata.effects == nil then
+                RemoveBuffEffect(buffdata, usedKeyIt, name);
+            else
+                for k, effect in ipairs(buffdata.effects) do
+                    RemoveBuffEffect(effect, usedKeyIt, name, k)
+                end
+            end
+
+            activeRelevantBuffs[usedKeyIt] = nil;
             buffsChanged = true;
         end
     end
