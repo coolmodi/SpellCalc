@@ -26,6 +26,44 @@ _addon.buffData = {
         effect = _addon.EFFECT_TYPE_MP5,
         value = 8,
     },
+    [10060] = { -- Power Infusion
+        effects = {
+            {
+                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_HOLY,
+                value = 20,
+            },
+            {
+                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_FIRE,
+                value = 20,
+            },
+            {
+                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_NATURE,
+                value = 20,
+            },
+            {
+                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_FROST,
+                value = 20,
+            },
+            {
+                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_SHADOW,
+                value = 20,
+            },
+            {
+                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_ARCANE,
+                value = 20,
+            },
+            {
+                effect = _addon.EFFECT_TYPE_MOD_HEALING_DONE,
+                value = 20,
+            }
+        }
+    },
     -- TODO: Other buffs that are outside the scope of base API queries
 };
 
