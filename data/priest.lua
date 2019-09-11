@@ -193,24 +193,30 @@ _addon.talentData = {
     {
         tree = 1,
         talent = 8,
-        effect = _addon.EFFECT_TYPE_FSR_REGEN,
-        perPoint = 5,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE_FSR_REGEN,
+                perPoint = 5
+            }
+        }
     },
     --Force of will
     -- TODO: working? needed?
     {
         tree = 1,
         talent = 14,
-        effect = _addon.EFFECT_TYPE_MOD_CRIT,
-        affectSpell = {SMITE, MIND_BLAST, HOLY_FIRE, HOLY_NOVA},
-        perPoint = 1,
-    },
-    {
-        tree = 1,
-        talent = 14,
-        effect = _addon.EFFECT_TYPE_MOD_EFFECT,
-        affectSpell = {SHADOW_WORD_PAIN, MIND_FLAY},
-        perPoint = 1,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE_MOD_EFFECT,
+                affectSpell = {SHADOW_WORD_PAIN, MIND_FLAY},
+                perPoint = 1
+            },
+            {
+                type = _addon.EFFECT_TYPE_MOD_CRIT,
+                affectSpell = {SMITE, MIND_BLAST, HOLY_FIRE, HOLY_NOVA},
+                perPoint = 1
+            }
+        }
     },
 
     -- Improved Renew
@@ -218,35 +224,51 @@ _addon.talentData = {
     {
         tree = 2,
         talent = 2,
-        effect = _addon.EFFECT_TYPE_MOD_EFFECT,
-        affectSpell = {RENEW},
-        perPoint = 5,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE_MOD_EFFECT,
+                affectSpell = {RENEW},
+                perPoint = 5
+            }
+        }
     },
     -- TODO: holy spec. Maybe shows up in holy crit from API, it has a affectmask though...
     -- Spiritual healing
     {
         tree = 2,
         talent = 15,
-        effect = _addon.EFFECT_TYPE_MOD_EFFECT,
-        affectSpell = {RENEW}, -- Holy Nova?
-        perPoint = 2,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE_MOD_EFFECT,
+                affectSpell = {RENEW}, -- Holy Nova?
+                perPoint = 2
+            }
+        }
     },
 
     -- Shadow Focus
     {
         tree = 3,
         talent = 5,
-        effect = _addon.EFFECT_TYPE_MOD_HIT_SPELL,
-        affectSchool = _addon.SCHOOL_SHADOW,
-        perPoint = 2,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE_MOD_HIT_SPELL,
+                affectSchool = _addon.SCHOOL_SHADOW,
+                perPoint = 2
+            }
+        }
     },
     -- Darkness
     {
         tree = 3,
         talent = 15,
-        effect = _addon.EFFECT_TYPE_MOD_EFFECT,
-        affectSpell = {DEVOURING_PLAGUE, SHADOW_WORD_PAIN, MIND_FLAY},
-        perPoint = 2,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE_MOD_EFFECT,
+                affectSpell = {DEVOURING_PLAGUE, SHADOW_WORD_PAIN, MIND_FLAY},
+                perPoint = 2
+            }
+        }
     },
 };
 
