@@ -147,8 +147,8 @@ local function GenerateEffectModifier(school, isHeal, spellName, buffTable)
     end
 
     if not isHeal then
-        effectMod = effectMod * (1 + _addon.stats.dmgDoneMods.school[school].val/100);
-        for _, buffName in pairs(_addon.stats.dmgDoneMods.school[school].buffs) do
+        effectMod = effectMod * (1 + _addon.stats.dmgDoneMods[school].val/100);
+        for _, buffName in pairs(_addon.stats.dmgDoneMods[school].buffs) do
             table.insert(buffTable, buffName);
         end
     end

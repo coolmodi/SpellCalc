@@ -24,19 +24,15 @@ _addon.stats = {
         [_addon.SCHOOL_ARCANE] = 0
     },
     mp5 = {val=0, buffs={}};
-    hitBonus = {val=0, buffs={}};
-    hitBonusSpell = {val=0, buffs={}};
     fsrRegenMult = {val=0, buffs={}};
     dmgDoneMods = {
-        school = {
-            [_addon.SCHOOL_PHYSICAL]    = {val=0, buffs={}},
-            [_addon.SCHOOL_HOLY]        = {val=0, buffs={}},
-            [_addon.SCHOOL_FIRE]        = {val=0, buffs={}},
-            [_addon.SCHOOL_NATURE]      = {val=0, buffs={}},
-            [_addon.SCHOOL_FROST]       = {val=0, buffs={}},
-            [_addon.SCHOOL_SHADOW]      = {val=0, buffs={}},
-            [_addon.SCHOOL_ARCANE]      = {val=0, buffs={}},
-        }
+        [_addon.SCHOOL_PHYSICAL]    = {val=0, buffs={}},
+        [_addon.SCHOOL_HOLY]        = {val=0, buffs={}},
+        [_addon.SCHOOL_FIRE]        = {val=0, buffs={}},
+        [_addon.SCHOOL_NATURE]      = {val=0, buffs={}},
+        [_addon.SCHOOL_FROST]       = {val=0, buffs={}},
+        [_addon.SCHOOL_SHADOW]      = {val=0, buffs={}},
+        [_addon.SCHOOL_ARCANE]      = {val=0, buffs={}},
     },
     effectMods = {
         school = {
@@ -50,6 +46,8 @@ _addon.stats = {
         },
         spell = {}
     },
+    hitBonus = {val=0, buffs={}};
+    hitBonusSpell = {val=0, buffs={}};
     hitMods = {
         school = {
             [_addon.SCHOOL_PHYSICAL]    = {val=0, buffs={}},
