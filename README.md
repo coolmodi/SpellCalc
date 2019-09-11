@@ -24,12 +24,11 @@ Math and logic may or may not be correct, at all. Currently observed values seem
 
 At this point it should be easy to add/implement missing buffs/items/talents/effects.
 
-`/sc` will dump all stat data and buffs used to chat (very messy)
+`/sc` will show a window with all the stats used (intended for debug)
 
 `/sc debug` will toggle debug output
 
 ## Not yet working but planned
-* Some UI to check stats used other than /sc, mainly for debug reasons
 * Showing a value on action bar buttons, e.g. average hit
 * Using target for level based hit chance
 * Things that are not a priest

@@ -35,3 +35,4 @@ system/buffs.lua
 system/items.lua
 
 UI/TooltipDisplay.lua
+UI/StatDisplay.lua

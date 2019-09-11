@@ -11,5 +11,9 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
-    _addon:PrintDebug(_addon.stats);
+    if SpellCalcStatScreen:IsShown() then
+        SpellCalcStatScreen:Hide();
+    else
+        SpellCalcStatScreen:Show();
+    end
 end;
