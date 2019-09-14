@@ -29,10 +29,11 @@ data/warlock.lua
 settings.lua
 slashcmd.lua
 events.lua
-core.lua
 system/stats.lua
 system/buffs.lua
 system/items.lua
+system/target.lua
+core.lua
 
 UI/TooltipDisplay.lua
 UI/StatDisplay.lua

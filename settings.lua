@@ -5,7 +5,8 @@ local realmName = GetRealmName();
 
 local DEFAULTSETTINGS = {
 	["firstStart"] = true,
-	["targetLevel"] = 0,
+	["useCurrentTarget"] = true,
+	["defaultTargetLvlOffset"] = 0,
 	["debug"] = false,
 	["ttHit"] = true,
 	["ttCrit"] = true,

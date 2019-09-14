@@ -23,6 +23,15 @@ _addon.stats = {
         [_addon.SCHOOL_SHADOW] = 0,
         [_addon.SCHOOL_ARCANE] = 0
     },
+    spellPen = { -- TODO: implement stat for buffs, talents and gear
+        [_addon.SCHOOL_PHYSICAL]    = {val=0, buffs={}},
+        [_addon.SCHOOL_HOLY]        = {val=0, buffs={}},
+        [_addon.SCHOOL_FIRE]        = {val=0, buffs={}},
+        [_addon.SCHOOL_NATURE]      = {val=0, buffs={}},
+        [_addon.SCHOOL_FROST]       = {val=0, buffs={}},
+        [_addon.SCHOOL_SHADOW]      = {val=0, buffs={}},
+        [_addon.SCHOOL_ARCANE]      = {val=0, buffs={}},
+    },
     mp5 = {val=0, buffs={}};
     fsrRegenMult = {val=0, buffs={}};
     dmgDoneMods = {
@@ -81,10 +90,10 @@ end
 -- Has no dedicated event I know of, so need to check if changes happened
 function _addon:UpdateHealing()
     local spellHealing = GetSpellBonusHealing();
-    if spellHealing ~= _addon.stats.spellHealing then
-        _addon:PrintDebug("Updating healing");
-        _addon.stats.spellHealing = spellHealing;
-        _addon.lastChange = time();
+    if spellHealing ~= self.stats.spellHealing then
+        self:PrintDebug("Updating healing");
+        self.stats.spellHealing = spellHealing;
+        self.lastChange = time();
     end
 end
 
@@ -110,30 +119,30 @@ end
 function _addon:UpdateStats()
     _addon:PrintDebug("Updating stats");
 
-    _addon.stats.mana = UnitPowerMax("player", 0);
+    self.stats.mana = UnitPowerMax("player", 0);
 
     -- The function only a value if out of FSR, 
     -- otherwise always 0.00 something, even with FSR mana regen talents
     -- Only update if value makes sense, otherwise queue up an update
     local curRegen = GetManaRegen();
     if curRegen > 0.5 then
-        _addon.stats.baseManaReg = curRegen;
-        _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
+        self.stats.baseManaReg = curRegen;
+        self.stats.manaReg = self.stats.baseManaReg * (self.stats.fsrRegenMult.val/100);
     else
-        _addon:PrintDebug("Have to queue spirit regen update");
+        self:PrintDebug("Have to queue spirit regen update");
         queueFrame:SetScript("OnUpdate", UpdateFunction);
     end
 
     for i = 1, 7, 1 do
-        _addon.stats.spellCrit[i] = GetSpellCritChance(i);
+        self.stats.spellCrit[i] = GetSpellCritChance(i);
     end
 
-    _addon.lastChange = time();
+    self.lastChange = time();
 end
 
 -- Update everything manually
 function _addon:FullUpdate()
-    _addon:PrintDebug("Full update");
+    self:PrintDebug("Full update");
 
     self:UpdateStats();
     self:UpdateSpellPower();

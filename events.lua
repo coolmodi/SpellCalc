@@ -63,6 +63,10 @@ function handlers.UNIT_INVENTORY_CHANGED(unit)
     _addon:UpdateItems();
 end
 
+function handlers.PLAYER_TARGET_CHANGED()
+    _addon:UpdateTarget();
+end
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)

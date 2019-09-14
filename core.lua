@@ -3,6 +3,8 @@ local _, _addon = ...;
 _addon.calcedSpells = {};
 _addon.lastChange = time();
 
+local stats = _addon.stats;
+
 --- Make a new table to store calculated spell data
 -- Possible types: DIRECT_DMG, DIRECT_HEAL, DOT, HOT, DMG_SHIELD
 -- @param primaryType The primary effect type, required
@@ -23,6 +25,7 @@ local function MakeSpellTable(primaryType, secondaryType)
     if primaryType == "DIRECT_DMG" or primaryType == "DOT" or primaryType == "DMG_SHIELD" then
         st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
         st.hitChance = 1; -- Hit chance AFTER bonus hit
+        st.avgResistMod = 0; -- The average dmg resisted modifier
     end
 
     local curType = primaryType;
@@ -73,6 +76,7 @@ local function MakeSpellTable(primaryType, secondaryType)
             error("non-existing effect type " .. curType .. " for spell");
         end
 
+        -- TODO: unmitigated dps and mitigation factors
         et.perSecond = 0; -- Done per second PER AVERAGE CAST
         et.perMana = 0; -- Mana per unit done PER AVERAGE CAST
     end
@@ -96,35 +100,65 @@ local function MakeSpellTable(primaryType, secondaryType)
     return st;
 end
 
---- Apply hit modifiers
+--- Get the average dmg resisted by target due to resistance after penetration
+-- @param school The spell school (API enumeration)
+local function GetAvgSpellResist(school)
+    local tData = _addon.target;
+    local pLevel = UnitLevel("player");
+    local baseRes = tData.resistance[school];
+    local effectiveRes = baseRes + math.max((tData.level - pLevel)*5, 0) - math.min(baseRes, stats.spellPen[school].val);
+    return 0.75 * (effectiveRes / math.max(pLevel * 5, 100));
+end
+
+--- Get level based spell hit chance against the current target
+-- @return The hit chance in percent
+local function GetSpellHitChance()
+    local tData = _addon.target;
+
+    if tData.levelDiff < -2 then
+        return 99;
+    elseif tData.levelDiff < 3 then
+        return 96 - tData.levelDiff;
+    end
+
+    if not tData.isPlayer then
+        if tData.levelDiff < 11 then
+            return 83 - (tData.levelDiff - 3) * 11;
+        end
+        return 3;
+    end
+
+    if tData.levelDiff < 13 then
+        return 87 - (tData.levelDiff - 3) * 7;
+    end
+    return 20;
+end
+
+--- Apply hit modifiers coming from gear and talents
 -- @param calcData The spell calculation table
 -- @param school The spell school (API enumeration)
 -- @param spellName
 local function ApplyHitModifiers(calcData, school, spellName)
-    if _addon.stats.hitMods.school[school].val ~= 0 then
-        calcData.hitChanceBonus = calcData.hitChanceBonus + (_addon.stats.hitMods.school[school].val/100);
-        for _, buffName in pairs(_addon.stats.hitMods.school[school].buffs) do
+    if stats.hitMods.school[school].val ~= 0 then
+        calcData.hitChanceBonus = calcData.hitChanceBonus + stats.hitMods.school[school].val;
+        for _, buffName in pairs(stats.hitMods.school[school].buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
 
-    if _addon.stats.hitMods.spell[spellName] ~= nil then
-        calcData.hitChanceBonus = calcData.hitChanceBonus + (_addon.stats.hitMods.spell[spellName].val/100);
-        for _, buffName in pairs(_addon.stats.hitMods.spell[spellName].buffs) do
+    if stats.hitMods.spell[spellName] ~= nil then
+        calcData.hitChanceBonus = calcData.hitChanceBonus + stats.hitMods.spell[spellName].val;
+        for _, buffName in pairs(stats.hitMods.spell[spellName].buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
 
-    calcData.hitChanceBonus = calcData.hitChanceBonus + (_addon.stats.hitBonusSpell.val/100);
-    for _, buffName in pairs(_addon.stats.hitBonusSpell.buffs) do
+    calcData.hitChanceBonus = calcData.hitChanceBonus + stats.hitBonusSpell.val;
+    for _, buffName in pairs(stats.hitBonusSpell.buffs) do
         table.insert(calcData.buffs, buffName);
     end
 
     calcData.hitChance = calcData.hitChance + calcData.hitChanceBonus;
-
-    if calcData.hitChance > 1 then
-        calcData.hitChance = 1;
-    end
 end
 
 --- Generate effect modifier
@@ -134,26 +168,26 @@ end
 -- @param buffTable
 local function GenerateEffectModifier(school, spellData, effectData, spellName, buffTable)
     _addon:PrintDebug(("Getting modifiers for %s, School: %d Heal: %s"):format(spellName, school, tostring(effectData.isHeal)));
-    local effectMod = 1 + _addon.stats.effectMods.school[school].val/100;
-    for _, buffName in pairs(_addon.stats.effectMods.school[school].buffs) do
+    local effectMod = 1 + stats.effectMods.school[school].val/100;
+    for _, buffName in pairs(stats.effectMods.school[school].buffs) do
         table.insert(buffTable, buffName);
     end
 
-    if _addon.stats.effectMods.spell[spellName] ~= nil then
-        effectMod = effectMod + _addon.stats.effectMods.spell[spellName].val/100;
-        for _, buffName in pairs(_addon.stats.effectMods.spell[spellName].buffs) do
+    if stats.effectMods.spell[spellName] ~= nil then
+        effectMod = effectMod + stats.effectMods.spell[spellName].val/100;
+        for _, buffName in pairs(stats.effectMods.spell[spellName].buffs) do
             table.insert(buffTable, buffName);
         end
     end
 
     if not effectData.isHeal then
-        effectMod = effectMod * (1 + _addon.stats.dmgDoneMods[school].val/100);
-        for _, buffName in pairs(_addon.stats.dmgDoneMods[school].buffs) do
+        effectMod = effectMod * (1 + stats.dmgDoneMods[school].val/100);
+        for _, buffName in pairs(stats.dmgDoneMods[school].buffs) do
             table.insert(buffTable, buffName);
         end
     elseif not spellData.isAbsorbShield then
-        effectMod = effectMod * (1 + _addon.stats.healingDoneMod.val/100);
-        for _, buffName in pairs(_addon.stats.healingDoneMod.buffs) do
+        effectMod = effectMod * (1 + stats.healingDoneMod.val/100);
+        for _, buffName in pairs(stats.healingDoneMod.buffs) do
             table.insert(buffTable, buffName);
         end
     end
@@ -253,7 +287,7 @@ function _addon:CalcSpell(spellId)
         if spellData.isAbsorbShield or spellData.isDmgShield then
             calcData.critChance = 0;
         else
-            calcData.critChance = _addon.stats.spellCrit[spellData.school];
+            calcData.critChance = stats.spellCrit[spellData.school];
         end
     end
 
@@ -264,9 +298,9 @@ function _addon:CalcSpell(spellId)
 
     -- Crit
 
-    if calcData.critChance > 0 and _addon.stats.critMods.spell[name] ~= nil then
-        calcData.critChance = calcData.critChance + _addon.stats.critMods.spell[name].val;
-        for _, buffName in pairs(_addon.stats.critMods.spell[name].buffs) do
+    if calcData.critChance > 0 and stats.critMods.spell[name] ~= nil then
+        calcData.critChance = calcData.critChance + stats.critMods.spell[name].val;
+        for _, buffName in pairs(stats.critMods.spell[name].buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
@@ -275,25 +309,35 @@ function _addon:CalcSpell(spellId)
 
     if calcData.hitChance ~= nil then
         calcData.hitChanceBonus = 0;
-        -- PLACEHOLDER, need hit formulas
-        if SpellCalc_settings.targetLevel == 0 then
-            calcData.hitChance = 0.96;
-        else
-            calcData.hitChance = 0.83;
+        calcData.hitChance = GetSpellHitChance();
+        ApplyHitModifiers(calcData, spellData.school, name);
+
+        calcData.avgResistMod = GetAvgSpellResist(spellData.school);
+
+        if spellData.isBinary or effectTypes[1] == "DOT"  then
+            calcData.hitChance = calcData.hitChance * (1 - calcData.avgResistMod);
         end
 
-        ApplyHitModifiers(calcData, spellData.school, name);
+        if calcData.hitChance > 99 then
+            calcData.hitChance = 99;
+        elseif calcData.hitChance < 1 then
+            calcData.hitChance = 1;
+        end
+
+        calcData.hitChance = calcData.hitChance/100;
+        calcData.hitChanceBonus = calcData.hitChanceBonus/100;
     end
 
-    -- NOTE: crit reduce in attack table (with very high miss/resist), just melee?
+    -- NOTE: crit reduce in attack table (with very high miss/resist)
 
     --------------------------
     -- Ressource stuff
 
-    local manapool = _addon.stats.mana;
+    local manapool = stats.mana;
     local spendRate = spellCost * (1 / castTime);
-    local regRate = _addon.stats.manaReg + _addon.stats.mp5.val/5;
+    local regRate = stats.manaReg + stats.mp5.val/5;
 
+    -- TODO: use "effective" mana cost based on regen and cast time
     calcData.timeToOom = manapool / (spendRate - regRate);
     calcData.castsToOom = (manapool + calcData.timeToOom * regRate) / spellCost;
 
@@ -308,9 +352,9 @@ function _addon:CalcSpell(spellId)
         -- Effect spell power
 
         if effectData[i].isHeal == true then
-            et.spellPower = _addon.stats.spellHealing;
+            et.spellPower = stats.spellHealing;
         else
-            et.spellPower = _addon.stats.spellPower[spellData.school];
+            et.spellPower = stats.spellPower[spellData.school];
         end
 
         -- Effective power
@@ -330,7 +374,6 @@ function _addon:CalcSpell(spellId)
         -- Effect value and critical
 
         if et.effectType == "DIRECT_DMG" or et.effectType == "DIRECT_HEAL" then
-            -- Direct types
             local minTt, maxTt = string.match(desc, effectData[i].ttMinMax);
 
             et.hitMin = math.floor(minTt * effectMod + et.effectivePower);
@@ -350,16 +393,21 @@ function _addon:CalcSpell(spellId)
             end
 
             et.avgCombined = et.critAvg * (calcData.critChance/100) + et.hitAvg * (1-calcData.critChance/100);
-            et.avgAfterMitigation = et.avgCombined;
+            
+            if calcData.hitChance ~= nil then
+                et.avgAfterMitigation = et.avgCombined * calcData.hitChance * (1 - calcData.avgResistMod);
+            else
+                et.avgAfterMitigation = et.avgCombined;
+            end
 
         elseif et.effectType == "DMG_SHIELD" then
             local dmgTt = string.match(desc, effectData[i].ttMinMax);
             et.perCharge = math.floor(dmgTt * effectMod + et.effectivePower + 0.5);
             et.charges = effectData[i].charges;
             et.hitAvg = et.perCharge * et.charges;
-            et.avgAfterMitigation = et.hitAvg;
+            et.avgAfterMitigation = et.hitAvg * calcData.hitChance * (1 - calcData.avgResistMod);
         
-        else -- HoT or DoT
+        else -- HoT or DoT (also channeled)
             if spellData.isChannel then
                 et.duration = spellData.duration;
             else
@@ -373,14 +421,15 @@ function _addon:CalcSpell(spellId)
             local dmgTt = string.match(desc, effectData[i].ttMinMax);
             et.hitAvg = math.floor(dmgTt * effectMod + (et.ticks * et.effectivePower) + 0.5);
             et.perTick = et.hitAvg / et.ticks;
-            et.avgAfterMitigation = et.hitAvg;
-        end
 
-        if calcData.hitChance ~= nil then
-            if spellData.isChannel then
-                et.avgAfterMitigation = et.avgAfterMitigation * (1 - (1 - calcData.hitChance) * (1.5 / castTime));
+            if calcData.hitChance ~= nil then
+                if spellData.isChannel then
+                    et.avgAfterMitigation = et.hitAvg * (1 - (1 - calcData.hitChance) * (1.5 / castTime));
+                else
+                    et.avgAfterMitigation = et.hitAvg * calcData.hitChance;
+                end
             else
-                et.avgAfterMitigation = et.avgAfterMitigation * calcData.hitChance;
+                et.avgAfterMitigation = et.hitAvg;
             end
         end
 
@@ -400,7 +449,7 @@ function _addon:CalcSpell(spellId)
             et.doneToOom = calcData.castsToOom * et.avgAfterMitigation;
         --end
 
-        et.perMana = et.avgAfterMitigation / spellCost;
+        et.perMana = et.avgAfterMitigation / spellCost; -- TODO: use "effective" mana cost based on regen and cast time
     end
 
     --------------------------
