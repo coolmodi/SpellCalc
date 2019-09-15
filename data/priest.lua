@@ -278,3 +278,39 @@ _addon.buffData[15473] = {
     affectSchool = _addon.SCHOOL_SHADOW,
     value = 15,
 }
+
+-- Inner Focus
+_addon.buffData[14751] = {
+    effects = {
+        {
+            effect = _addon.EFFECT_TYPE_MOD_CRIT,
+            affectSchool = _addon.SCHOOL_HOLY,
+            value = 25
+        },
+        {
+            effect = _addon.EFFECT_TYPE_MOD_CRIT,
+            affectSchool = _addon.SCHOOL_FIRE,
+            value = 25
+        },
+        {
+            effect = _addon.EFFECT_TYPE_MOD_CRIT,
+            affectSchool = _addon.SCHOOL_NATURE,
+            value = 25
+        },
+        {
+            effect = _addon.EFFECT_TYPE_MOD_CRIT,
+            affectSchool = _addon.SCHOOL_FROST,
+            value = 25
+        },
+        {
+            effect = _addon.EFFECT_TYPE_MOD_CRIT,
+            affectSchool = _addon.SCHOOL_SHADOW,
+            value = 25
+        },
+        {
+            effect = _addon.EFFECT_TYPE_MOD_CRIT,
+            affectSchool = _addon.SCHOOL_ARCANE,
+            value = 25
+        }
+    }
+}

@@ -71,6 +71,15 @@ _addon.stats = {
         spell = {}
     },
     critMods = {
+        school = {
+            [_addon.SCHOOL_PHYSICAL]    = {val=0, buffs={}},
+            [_addon.SCHOOL_HOLY]        = {val=0, buffs={}},
+            [_addon.SCHOOL_FIRE]        = {val=0, buffs={}},
+            [_addon.SCHOOL_NATURE]      = {val=0, buffs={}},
+            [_addon.SCHOOL_FROST]       = {val=0, buffs={}},
+            [_addon.SCHOOL_SHADOW]      = {val=0, buffs={}},
+            [_addon.SCHOOL_ARCANE]      = {val=0, buffs={}},
+        },
         spell = {}
     },
 };

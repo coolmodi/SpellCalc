@@ -81,7 +81,9 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     end
 
     if effect == _addon.EFFECT_TYPE_MOD_CRIT then
-        if affectSpell ~= nil then
+        if affectSchool ~= nil then
+            ApplyOrRemove(value, _addon.stats.critMods.school[affectSchool], name);
+        elseif affectSpell ~= nil then
             ApplyOrRemoveSpellAffect(name, value, _addon.stats.critMods.spell, affectSpell);
         end
         return;

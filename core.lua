@@ -299,6 +299,11 @@ function _addon:CalcSpell(spellId)
 
     -- Crit
 
+    calcData.critChance = calcData.critChance + stats.critMods.school[spellData.school].val;
+    for _, buffName in pairs(stats.critMods.school[spellData.school].buffs) do
+        table.insert(calcData.buffs, buffName);
+    end
+
     if calcData.critChance > 0 and stats.critMods.spell[name] ~= nil then
         calcData.critChance = calcData.critChance + stats.critMods.spell[name].val;
         for _, buffName in pairs(stats.critMods.spell[name].buffs) do
