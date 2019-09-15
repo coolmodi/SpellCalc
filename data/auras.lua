@@ -30,32 +30,7 @@ _addon.buffData = {
         effects = {
             {
                 effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_HOLY,
-                value = 20,
-            },
-            {
-                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_FIRE,
-                value = 20,
-            },
-            {
-                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_NATURE,
-                value = 20,
-            },
-            {
-                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_FROST,
-                value = 20,
-            },
-            {
-                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_SHADOW,
-                value = 20,
-            },
-            {
-                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_ARCANE,
+                affectSchool = _addon.SCHOOL_MASK_ALL,
                 value = 20,
             },
             {

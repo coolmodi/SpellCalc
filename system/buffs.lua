@@ -28,12 +28,38 @@ local function ApplyOrRemoveSpellAffect(name, value, destTable, spellList)
     end
 end
 
+--- Apply or remove effect affecting schools
+-- @param name The name of the buff
+-- @param value The effect value, negative to remove buff
+-- @param destTable The destination table
+-- @param schoolMask The mask of schools to affect
+local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask)
+    if bit.band(schoolMask, _addon.SCHOOL_MASK_HOLY) > 0 then
+        ApplyOrRemove(value, destTable[_addon.SCHOOL_HOLY], name);
+    end
+    if bit.band(schoolMask, _addon.SCHOOL_MASK_FIRE) > 0 then
+        ApplyOrRemove(value, destTable[_addon.SCHOOL_FIRE], name);
+    end
+    if bit.band(schoolMask, _addon.SCHOOL_MASK_NATURE) > 0 then
+        ApplyOrRemove(value, destTable[_addon.SCHOOL_NATURE], name);
+    end
+    if bit.band(schoolMask, _addon.SCHOOL_MASK_FROST) > 0 then
+        ApplyOrRemove(value, destTable[_addon.SCHOOL_FROST], name);
+    end
+    if bit.band(schoolMask, _addon.SCHOOL_MASK_SHADOW) > 0 then
+        ApplyOrRemove(value, destTable[_addon.SCHOOL_SHADOW], name);
+    end
+    if bit.band(schoolMask, _addon.SCHOOL_MASK_ARCANE) > 0 then
+        ApplyOrRemove(value, destTable[_addon.SCHOOL_ARCANE], name);
+    end
+end
+
 --- Change buff effect value (add/remove)
 -- @param apply True to apply, false to remove
 -- @param name The name of the buff
 -- @param effect The effect type
 -- @param value The effect value
--- @param affectSchool The school it affects, nil if no school affected
+-- @param affectSchool The mask of schools it affects, nil if no school affected
 -- @param affectSpell The spells it affects, nil if no specific spell(s) affected
 local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     if apply == false then
@@ -50,7 +76,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     
     if effect == _addon.EFFECT_TYPE_MOD_EFFECT then
         if affectSchool ~= nil then
-            ApplyOrRemove(value, _addon.stats.effectMods.school[affectSchool], name);
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.effectMods.school, affectSchool);
         elseif affectSpell ~= nil then
             ApplyOrRemoveSpellAffect(name, value, _addon.stats.effectMods.spell, affectSpell);
         end
@@ -59,7 +85,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 
     if effect == _addon.EFFECT_TYPE_MOD_DMG_DONE then
         if affectSchool ~= nil then
-            ApplyOrRemove(value, _addon.stats.dmgDoneMods[affectSchool], name);
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.dmgDoneMods, affectSchool);
         end
         return;
     end
@@ -71,7 +97,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 
     if effect == _addon.EFFECT_TYPE_MOD_HIT_SPELL then
         if affectSchool ~= nil then
-            ApplyOrRemove(value, _addon.stats.hitMods.school[affectSchool], name);
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.hitMods.school, affectSchool);
         elseif affectSpell ~= nil then
             ApplyOrRemoveSpellAffect(name, value, _addon.stats.hitMods.spell, affectSpell);
         else
@@ -82,7 +108,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 
     if effect == _addon.EFFECT_TYPE_MOD_CRIT then
         if affectSchool ~= nil then
-            ApplyOrRemove(value, _addon.stats.critMods.school[affectSchool], name);
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.critMods.school, affectSchool);
         elseif affectSpell ~= nil then
             ApplyOrRemoveSpellAffect(name, value, _addon.stats.critMods.spell, affectSpell);
         end
@@ -105,7 +131,7 @@ end
 -- @param name The name of the buff
 -- @param effect The effect type
 -- @param value The effect value
--- @param affectSchool The school it affects, nil if no school affected
+-- @param affectSchool The mask of schools it affects, nil if no school affected
 -- @param affectSpell The spells it affects, nil if no specific spell(s) affected
 function _addon:ApplyBuff(name, effect, value, affectSchool, affectSpell)
     ChangeBuff(true, name, effect, value, affectSchool, affectSpell);
@@ -115,7 +141,7 @@ end
 -- @param name The name of the buff
 -- @param effect The effect type
 -- @param value The effect value
--- @param affectSchool The school it affects, nil if no school affected
+-- @param affectSchool The mask of schools it affects, nil if no school affected
 -- @param affectSpell The spells it affects, nil if no specific spell(s) affected
 function _addon:RemoveBuff(name, effect, value, affectSchool, affectSpell)
     ChangeBuff(false, name, effect, value, affectSchool, affectSpell);

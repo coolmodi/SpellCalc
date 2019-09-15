@@ -25,17 +25,8 @@ _addon.talentData = {
     {
         tree = 3,
         talent = 3,
-        effects = {
-            {
-                type = _addon.EFFECT_TYPE_MOD_HIT_SPELL,
-                affectSchool = _addon.SCHOOL_FROST,
-                perPoint = 2
-            },
-            {
-                type = _addon.EFFECT_TYPE_MOD_HIT_SPELL,
-                affectSchool = _addon.SCHOOL_FIRE,
-                perPoint = 2
-            }
-        }
+        effect = _addon.EFFECT_TYPE_MOD_HIT_SPELL,
+        affectSchool = _addon.SCHOOL_MASK_FROST + _addon.SCHOOL_MASK_FIRE,
+        perPoint = 2
     },
 };
