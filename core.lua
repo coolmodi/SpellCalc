@@ -18,6 +18,7 @@ local function MakeSpellTable(primaryType, secondaryType)
         levelPenalty = 1, -- Mult for spell below lvl 20
         castsToOom = 1,
         timeToOom = 1,
+        effectiveCost = 0,
         buffs = {}, -- Buffs used in the calculation process, not buffs that affect spell indirectly
         updated = 0 -- Last update time
     };
@@ -333,13 +334,17 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Ressource stuff
 
-    local manapool = stats.mana;
-    local spendRate = spellCost * (1 / castTime);
-    local regRate = stats.manaReg + stats.mp5.val/5;
-
-    -- TODO: use "effective" mana cost based on regen and cast time
-    calcData.timeToOom = manapool / (spendRate - regRate);
-    calcData.castsToOom = (manapool + calcData.timeToOom * regRate) / spellCost;
+    if spellCost == 0 then
+        calcData.effectiveCost = -1;
+        calcData.castsToOom = -1;
+        calcData.timeToOom = -1;
+    else
+        calcData.effectiveCost = spellCost - castTime * (stats.manaReg + stats.mp5.val/5);
+        calcData.castsToOom = stats.mana / calcData.effectiveCost;
+        calcData.timeToOom = calcData.castsToOom * castTime;
+    end
+    
+    
 
     --------------------------
     -- Per effect calculations
@@ -445,11 +450,8 @@ function _addon:CalcSpell(spellId)
         --------------------------
         -- Mana values
 
-        --if et.effectType == "DIRECT_DMG" or et.effectType == "DIRECT_HEAL" then
-            et.doneToOom = calcData.castsToOom * et.avgAfterMitigation;
-        --end
-
-        et.perMana = et.avgAfterMitigation / spellCost; -- TODO: use "effective" mana cost based on regen and cast time
+        et.doneToOom = calcData.castsToOom * et.avgAfterMitigation;
+        et.perMana = et.avgAfterMitigation / calcData.effectiveCost;
     end
 
     --------------------------
