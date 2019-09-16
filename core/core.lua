@@ -355,7 +355,7 @@ function _addon:CalcSpell(spellId)
 
     -- Combined data for spells like Holy Fire or Immolate
     if calcData.perCastData ~= nil then
-        _addon:CalculateSpellCombinedEffect(calcData, effectData[i], castTime);
+        _addon:CalculateSpellCombinedEffect(calcData, effectData[2], castTime);
     end
 
     calcData.updated = time() - 1;

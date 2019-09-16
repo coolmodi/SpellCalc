@@ -174,7 +174,7 @@ end
 --- Return a title for the effect type
 -- @param etype The type
 local function GetEffectTitle(etype)
-    if etype == _addon.EFFECSPELL_EFFECT_TYPET_TYPE.DIRECT_DMG then
+    if etype == _addon.SPELL_EFFECT_TYPE.DIRECT_DMG then
         return "Damage:";
     end
 
