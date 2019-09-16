@@ -44,7 +44,7 @@ _addon.SPELL_TYPE = {
 _addon.SPELL_EFFECT_TYPE = {
     DIRECT_DMG = 1,
     DOT = 2,
-    
-    DIRECT_HEAL = 3,
-    HOT = 4
+    DMG_SHIELD = 3,
+    DIRECT_HEAL = 4,
+    HOT = 5
 };

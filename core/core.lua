@@ -9,7 +9,6 @@ _addon.lastChange = time();
 local stats = _addon.stats;
 
 --- Make a new table to store calculated spell data
--- Possible types: , DMG_SHIELD
 -- @param primaryType The primary effect type, required
 -- @param secondaryType The secondary effect type, optional
 local function MakeSpellTable(primaryType, secondaryType)
@@ -26,7 +25,7 @@ local function MakeSpellTable(primaryType, secondaryType)
         updated = 0 -- Last update time
     };
 
-    if primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DOT or primaryType == "DMG_SHIELD" then
+    if primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DOT or primaryType == SPELL_EFFECT_TYPE.DMG_SHIELD then
         st.baseHitChance = 1; -- The base hit chance dpending on level difference
         st.hitChance = 1; -- Hit chance after modifiers
         st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
@@ -72,7 +71,7 @@ local function MakeSpellTable(primaryType, secondaryType)
             et.avgAfterMitigation = 0; -- Average after miss was taken into account
             et.perSecondDuration = 0; -- Per second done over full duration (assuming hit)
 
-        elseif curType == "DMG_SHIELD" then
+        elseif curType == SPELL_EFFECT_TYPE.DMG_SHIELD then
             et.perCharge = 0; -- Done per charge
             et.charges = 0;
             et.hitAvg = 0; -- Average normal hit, all charges, if charges exist (assuming hit)
@@ -202,7 +201,7 @@ function _addon:CalcSpell(spellId)
                     effectTypes[i] = SPELL_EFFECT_TYPE.DIRECT_HEAL;
                 end
             elseif effectData[i].isDmgShield then
-                effectTypes[i] = "DMG_SHIELD";
+                effectTypes[i] = SPELL_EFFECT_TYPE.DMG_SHIELD;
             else
                 if effectData[i].isDuration then
                     effectTypes[i] = SPELL_EFFECT_TYPE.DOT;
@@ -346,7 +345,7 @@ function _addon:CalcSpell(spellId)
 
         if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
             _addon:CalculateSpellDirectEffect(calcData, et, desc, effectData[i], effectMod, castTime);
-        elseif et.effectType == "DMG_SHIELD" then
+        elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
             _addon:CalculateSpellDmgShieldEffect(calcData, et, desc, effectData[i], effectMod, castTime)
         else -- HoT or DoT (also channeled)
             _addon:CalculateSpellDurationEffect(calcData, et, desc, effectData[i], effectMod, castTime, spellData.isChannel)

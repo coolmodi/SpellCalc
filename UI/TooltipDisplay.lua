@@ -223,7 +223,7 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
 
         if calcData.effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_DMG or calcData.effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL then
             AppendDirectEffect(calcedSpell, i, isHeal);
-        elseif calcData.effectType == "DMG_SHIELD" then
+        elseif calcData.effectType == _addon.SPELL_EFFECT_TYPE.DMG_SHIELD then
             AppendDmgShieldEffect(calcedSpell, i);
         else -- HoT or DoT
             AppendDurationEffect(calcedSpell, i, isHeal);
