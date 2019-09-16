@@ -146,8 +146,8 @@ end
 -- @param calcedSpell The base calculation table for the spell
 local function AppendCombinedEffect(calcedSpell)
     local combData = calcedSpell.perCastData;
-    local unitString = calcedSpell[1].effectType == "DIRECT_HEAL" and "Heal" or "Damage";
-    local unitChar = calcedSpell[1].effectType == "DIRECT_HEAL" and "H" or "D";
+    local unitString = calcedSpell[1].effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL and "Heal" or "Damage";
+    local unitChar = calcedSpell[1].effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL and "H" or "D";
 
     if SpellCalc_settings.ttHit then
         GameTooltip:AddDoubleLine(("Avg hit: %d"):format(combData.hitAvg),
@@ -174,19 +174,19 @@ end
 --- Return a title for the effect type
 -- @param etype The type
 local function GetEffectTitle(etype)
-    if etype == "DIRECT_DMG" then
+    if etype == _addon.EFFECSPELL_EFFECT_TYPET_TYPE.DIRECT_DMG then
         return "Damage:";
     end
 
-    if etype == "DIRECT_HEAL" then
+    if etype == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL then
         return "Heal:";
     end
 
-    if etype == "DOT" then
+    if etype == _addon.SPELL_EFFECT_TYPE.DOT then
         return "DoT:";
     end
 
-    if etype == "HOT" then
+    if etype == _addon.SPELL_EFFECT_TYPE.HOT then
         return "HoT:";
     end
 end
@@ -213,7 +213,7 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
         local calcData = calcedSpell[i];
         local isHeal = false;
 
-        if calcData.effectType == "HOT" or calcData.effectType == "DIRECT_HEAL" then
+        if calcData.effectType == _addon.SPELL_EFFECT_TYPE.HOT or calcData.effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL then
             isHeal = true;
         end
 
@@ -221,7 +221,7 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
             GameTooltip:AddLine(GetEffectTitle(calcData.effectType), 0.5, 1, 0.5);
         end
 
-        if calcData.effectType == "DIRECT_DMG" or calcData.effectType == "DIRECT_HEAL" then
+        if calcData.effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_DMG or calcData.effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL then
             AppendDirectEffect(calcedSpell, i, isHeal);
         elseif calcData.effectType == "DMG_SHIELD" then
             AppendDmgShieldEffect(calcedSpell, i);

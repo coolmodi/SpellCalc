@@ -1,12 +1,15 @@
 local _, _addon = ...;
 
+local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
+local SPELL_TYPE = _addon.SPELL_TYPE;
+
 _addon.calcedSpells = {};
 _addon.lastChange = time();
 
 local stats = _addon.stats;
 
 --- Make a new table to store calculated spell data
--- Possible types: DIRECT_DMG, DIRECT_HEAL, DOT, HOT, DMG_SHIELD
+-- Possible types: , DMG_SHIELD
 -- @param primaryType The primary effect type, required
 -- @param secondaryType The secondary effect type, optional
 local function MakeSpellTable(primaryType, secondaryType)
@@ -23,7 +26,7 @@ local function MakeSpellTable(primaryType, secondaryType)
         updated = 0 -- Last update time
     };
 
-    if primaryType == "DIRECT_DMG" or primaryType == "DOT" or primaryType == "DMG_SHIELD" then
+    if primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DOT or primaryType == "DMG_SHIELD" then
         st.baseHitChance = 1; -- The base hit chance dpending on level difference
         st.hitChance = 1; -- Hit chance after modifiers
         st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
@@ -51,7 +54,7 @@ local function MakeSpellTable(primaryType, secondaryType)
         et.effectivePower = 0; -- The power used
         et.doneToOom = 0; -- Dmg/healing done until oom, assumes spam (theoretical only) for non direct spells!
         
-        if curType == "DIRECT_DMG" or curType == "DIRECT_HEAL" then
+        if curType == SPELL_EFFECT_TYPE.DIRECT_DMG or curType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
             et.hitMin = 0; -- Minimum hit
             et.hitMax = 0; -- Maximum hit
             et.hitAvg = 0; -- Average normal hit (as in it did hit)
@@ -61,7 +64,7 @@ local function MakeSpellTable(primaryType, secondaryType)
             et.avgCombined = 0; -- Both hit and crit
             et.avgAfterMitigation = 0; -- Average after miss etc. taken into account
 
-        elseif curType == "DOT" or curType == "HOT" then
+        elseif curType == SPELL_EFFECT_TYPE.DOT or curType == SPELL_EFFECT_TYPE.HOT then
             et.perTick = 0; -- Done per tick
             et.duration = 0;
             et.ticks = 0;
@@ -85,7 +88,8 @@ local function MakeSpellTable(primaryType, secondaryType)
     end
 
     -- Spells like holy fire or regrowth
-    if (primaryType == "DIRECT_DMG" or primaryType == "DIRECT_HEAL") and (secondaryType == "DOT" or secondaryType == "HOT") then
+    if (primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DIRECT_HEAL) 
+    and (secondaryType == SPELL_EFFECT_TYPE.DOT or secondaryType == SPELL_EFFECT_TYPE.HOT) then
         st.perCastData = {
             hitAvg = 0, -- The total done per hit full duration
             critAvg = 0, -- The total done if primary crits full duration
@@ -152,7 +156,7 @@ function _addon:CalcSpell(spellId)
     local desc = GetSpellDescription(spellId);
     local costs = GetSpellPowerCost(spellId);
     local spellCost = 0;
-    local spellType = _addon.SPELL_TYPE.SPELL; -- PLACEHOLDER
+    local spellType = SPELL_TYPE.SPELL; -- PLACEHOLDER
 
 
     if spellData.isChannel then
@@ -187,23 +191,23 @@ function _addon:CalcSpell(spellId)
 
     _addon:PrintDebug("Has " .. #effectData .. " effects");
 
-    if spellType == _addon.SPELL_TYPE.SPELL then
+    if spellType == SPELL_TYPE.SPELL then
         for i = 1, 2, 1 do
             if effectData[i] == nil then
                 effectTypes[i] = nil;
             elseif effectData[i].isHeal then
                 if effectData[i].isDuration then
-                    effectTypes[i] = "HOT";
+                    effectTypes[i] = SPELL_EFFECT_TYPE.HOT;
                 else
-                    effectTypes[i] = "DIRECT_HEAL";
+                    effectTypes[i] = SPELL_EFFECT_TYPE.DIRECT_HEAL;
                 end
             elseif effectData[i].isDmgShield then
                 effectTypes[i] = "DMG_SHIELD";
             else
                 if effectData[i].isDuration then
-                    effectTypes[i] = "DOT";
+                    effectTypes[i] = SPELL_EFFECT_TYPE.DOT;
                 else
-                    effectTypes[i] = "DIRECT_DMG";
+                    effectTypes[i] = SPELL_EFFECT_TYPE.DIRECT_DMG;
                 end
             end
         end
@@ -224,7 +228,7 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Low level spell scaling penalty
 
-    if spellType == _addon.SPELL_TYPE.SPELL and spellData.level ~= nil then
+    if spellType == SPELL_TYPE.SPELL and spellData.level ~= nil then
         calcData.levelPenalty =  1 - ((20 - spellData.level) * 0.0375);
     end
 
@@ -235,7 +239,7 @@ function _addon:CalcSpell(spellId)
 
     -- Crit
 
-    if spellType == _addon.SPELL_TYPE.SPELL then
+    if spellType == SPELL_TYPE.SPELL then
         calcData.critChance = _addon:GetSpellSchoolCritChance(spellData, calcData.buffs);
     else
         -- NYI
@@ -255,7 +259,7 @@ function _addon:CalcSpell(spellId)
     end
 
     if calcData.hitChance ~= nil then
-        if spellType == _addon.SPELL_TYPE.SPELL then
+        if spellType == SPELL_TYPE.SPELL then
             calcData.baseHitChance = _addon:GetSpellHitChance();
             calcData.hitChanceBonus = _addon:GetSpellHitBonus(spellData.school, calcData.buffs);
 
@@ -268,7 +272,7 @@ function _addon:CalcSpell(spellId)
             
             calcData.hitChance = calcData.baseHitChance + calcData.hitChanceBonus;
 
-            if spellData.isBinary or effectTypes[1] == "DOT"  then
+            if spellData.isBinary or effectTypes[1] == SPELL_EFFECT_TYPE.DOT  then
                 calcData.binaryHitLoss = calcData.hitChance - (calcData.hitChance * (1 - calcData.avgResistMod));
                 calcData.hitChance = calcData.hitChance - calcData.binaryHitLoss;
             end
@@ -290,12 +294,12 @@ function _addon:CalcSpell(spellId)
 
     if spellCost == 0 then
         calcData.effectiveCost = -1;
-        if spellType == _addon.SPELL_TYPE.SPELL then
+        if spellType == SPELL_TYPE.SPELL then
             calcData.castsToOom = -1;
             calcData.timeToOom = -1;
         end
     else
-        if spellType == _addon.SPELL_TYPE.SPELL then
+        if spellType == SPELL_TYPE.SPELL then
             calcData.effectiveCost = spellCost - castTime * (stats.manaReg + stats.mp5.val/5);
             calcData.castsToOom = stats.mana / calcData.effectiveCost;
             calcData.timeToOom = calcData.castsToOom * castTime;
@@ -316,7 +320,7 @@ function _addon:CalcSpell(spellId)
         --------------------------
         -- Effect bonus power scaling
 
-        if spellType == _addon.SPELL_TYPE.SPELL then
+        if spellType == SPELL_TYPE.SPELL then
             if effectData[i].isHeal == true then
                 et.spellPower = stats.spellHealing;
             else
@@ -340,12 +344,12 @@ function _addon:CalcSpell(spellId)
         --------------------------
         -- Effect values
 
-        if et.effectType == "DIRECT_DMG" or et.effectType == "DIRECT_HEAL" then
+        if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
             _addon:CalculateSpellDirectEffect(calcData, et, desc, effectData[i], effectMod, castTime);
         elseif et.effectType == "DMG_SHIELD" then
             _addon:CalculateSpellDmgShieldEffect(calcData, et, desc, effectData[i], effectMod, castTime)
         else -- HoT or DoT (also channeled)
-            _addon:CalculateSpellDurationEffect(calcData, et, desc, effectData[i], effectMod, castTime, spellData)
+            _addon:CalculateSpellDurationEffect(calcData, et, desc, effectData[i], effectMod, castTime, spellData.isChannel)
         end
     end
 

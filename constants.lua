@@ -38,3 +38,12 @@ _addon.EFFECT_TYPE = {
 _addon.SPELL_TYPE = {
     SPELL = 1
 };
+
+-- Spell effect types (What calculation rules to use)
+_addon.SPELL_EFFECT_TYPE = {
+    DIRECT_DMG = 1,
+    DOT = 2,
+    
+    DIRECT_HEAL = 3,
+    HOT = 4
+};

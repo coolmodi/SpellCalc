@@ -6,7 +6,7 @@ function _addon:GetSpellAvgResist(school)
     local tData = self.target;
     local pLevel = UnitLevel("player");
     local baseRes = tData.resistance[school];
-    local effectiveRes = baseRes + math.max((tData.level - pLevel)*5, 0) - math.min(baseRes, _addon.stats.spellPen[school].val);
+    local effectiveRes = baseRes + math.max((tData.level - pLevel)*5, 0) - math.min(baseRes, self.stats.spellPen[school].val);
     return 0.75 * (effectiveRes / math.max(pLevel * 5, 100));
 end
 
@@ -73,6 +73,13 @@ function _addon:GetSpellHitBonus(school, buffTable)
     return hitChanceBonus;
 end
 
+--- Calculate direct spell effect (e.g. Frostbolt or Healing Touch)
+-- @param calcData The calculation table
+-- @param et The subtable of the effect
+-- @param spellDesc The spell description
+-- @param effectData The effect data from spell data
+-- @param effectMod The talent/buff/gear modifier for the effect
+-- @param castTime Spell cast time
 function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, effectMod, castTime)
     local minTt, maxTt = string.match(spellDesc, effectData.ttMinMax);
 
@@ -101,6 +108,13 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, 
     et.perMana = et.avgAfterMitigation / calcData.effectiveCost;
 end
 
+--- Calculate damage shield effect (e.g. Lightning Shield, not Thorns lel)
+-- @param calcData The calculation table
+-- @param et The subtable of the effect
+-- @param spellDesc The spell description
+-- @param effectData The effect data from spell data
+-- @param effectMod The talent/buff/gear modifier for the effect
+-- @param castTime Spell cast time
 function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellDesc, effectData, effectMod, castTime)
     local dmgTt = string.match(spellDesc, effectData.ttMinMax);
     et.perCharge = math.floor(dmgTt * effectMod + et.effectivePower + 0.5);
@@ -112,10 +126,17 @@ function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellDesc, effectDat
     et.perMana = et.avgAfterMitigation / calcData.effectiveCost;
 end
 
-function _addon:CalculateSpellDurationEffect(calcData, et, spellDesc, effectData, effectMod, castTime, spellData)
-    if spellData.isChannel then
-        et.duration = spellData.duration; -- TODO: make consistent?
-    else
+--- Calculate duration effect (e.g. Corruption or Renew)
+-- @param calcData The calculation table
+-- @param et The subtable of the effect
+-- @param spellDesc The spell description
+-- @param effectData The effect data from spell data
+-- @param effectMod The talent/buff/gear modifier for the effect
+-- @param castTime Spell cast time (or channel duration)
+-- @param isChannel Is the spell a channeled spell
+function _addon:CalculateSpellDurationEffect(calcData, et, spellDesc, effectData, effectMod, castTime, isChannel)
+    et.duration = effectData.duration;
+    if not isChannel then
         et.duration = effectData.duration;
         if et.duration == nil then
             et.duration = string.match(spellDesc, effectData.ttDuration);
@@ -129,7 +150,7 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellDesc, effectData
     et.perTick = et.hitAvg / et.ticks;
 
     if calcData.hitChance ~= nil then
-        if spellData.isChannel then
+        if isChannel then
             et.avgAfterMitigation = et.hitAvg * (1 - (1 - calcData.hitChance) ^ (castTime/1.5));
         else
             et.avgAfterMitigation = et.hitAvg * calcData.hitChance;
@@ -138,15 +159,16 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellDesc, effectData
         et.avgAfterMitigation = et.hitAvg;
     end
 
-    if et.effectType == "HOT" or et.effectType == "DOT" then
-        et.perSecondDuration = et.hitAvg / et.duration;
-    end
-
+    et.perSecondDuration = et.hitAvg / et.duration;
     et.perSecond = et.avgAfterMitigation / castTime;
     et.doneToOom = calcData.castsToOom * et.avgAfterMitigation;
     et.perMana = et.avgAfterMitigation / calcData.effectiveCost;
 end
 
+--- Calculate combined values for split spells (e.g. Holy Fire)
+-- @param calcData The calculation table
+-- @param effectData The effect data from spell data
+-- @param castTime Spell cast time (or channel duration)
 function _addon:CalculateSpellCombinedEffect(calcData, effectData, castTime)
     calcData.perCastData.hitAvg = calcData[1].hitAvg + calcData[2].hitAvg;
     calcData.perCastData.critAvg = calcData[1].critAvg + calcData[2].hitAvg;

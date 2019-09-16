@@ -1,5 +1,9 @@
 local _, _addon = ...;
 
+local SCHOOL = _addon.SCHOOL;
+local SCHOOL_MASK = _addon.SCHOOL_MASK;
+local EFFECT_TYPE = _addon.EFFECT_TYPE;
+
 --- Apply or remove effect for destination
 -- @param value The effect value, negative to remove buff
 -- @param dest The destination table
@@ -34,23 +38,23 @@ end
 -- @param destTable The destination table
 -- @param schoolMask The mask of schools to affect
 local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask)
-    if bit.band(schoolMask, _addon.SCHOOL_MASK.HOLY) > 0 then
-        ApplyOrRemove(value, destTable[_addon.SCHOOL.HOLY], name);
+    if bit.band(schoolMask, SCHOOL_MASK.HOLY) > 0 then
+        ApplyOrRemove(value, destTable[SCHOOL.HOLY], name);
     end
-    if bit.band(schoolMask, _addon.SCHOOL_MASK.FIRE) > 0 then
-        ApplyOrRemove(value, destTable[_addon.SCHOOL.FIRE], name);
+    if bit.band(schoolMask, SCHOOL_MASK.FIRE) > 0 then
+        ApplyOrRemove(value, destTable[SCHOOL.FIRE], name);
     end
-    if bit.band(schoolMask, _addon.SCHOOL_MASK.NATURE) > 0 then
-        ApplyOrRemove(value, destTable[_addon.SCHOOL.NATURE], name);
+    if bit.band(schoolMask, SCHOOL_MASK.NATURE) > 0 then
+        ApplyOrRemove(value, destTable[SCHOOL.NATURE], name);
     end
-    if bit.band(schoolMask, _addon.SCHOOL_MASK.FROST) > 0 then
-        ApplyOrRemove(value, destTable[_addon.SCHOOL.FROST], name);
+    if bit.band(schoolMask, SCHOOL_MASK.FROST) > 0 then
+        ApplyOrRemove(value, destTable[SCHOOL.FROST], name);
     end
-    if bit.band(schoolMask, _addon.SCHOOL_MASK.SHADOW) > 0 then
-        ApplyOrRemove(value, destTable[_addon.SCHOOL.SHADOW], name);
+    if bit.band(schoolMask, SCHOOL_MASK.SHADOW) > 0 then
+        ApplyOrRemove(value, destTable[SCHOOL.SHADOW], name);
     end
-    if bit.band(schoolMask, _addon.SCHOOL_MASK.ARCANE) > 0 then
-        ApplyOrRemove(value, destTable[_addon.SCHOOL.ARCANE], name);
+    if bit.band(schoolMask, SCHOOL_MASK.ARCANE) > 0 then
+        ApplyOrRemove(value, destTable[SCHOOL.ARCANE], name);
     end
 end
 
@@ -74,7 +78,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         _addon:PrintDebug("Affects spell list");
     end
     
-    if effect == _addon.EFFECT_TYPE.MOD_EFFECT then
+    if effect == EFFECT_TYPE.MOD_EFFECT then
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(name, value, _addon.stats.effectMods.school, affectSchool);
         elseif affectSpell ~= nil then
@@ -83,19 +87,19 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
-    if effect == _addon.EFFECT_TYPE.MOD_DMG_DONE then
+    if effect == EFFECT_TYPE.MOD_DMG_DONE then
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(name, value, _addon.stats.dmgDoneMods, affectSchool);
         end
         return;
     end
 
-    if effect == _addon.EFFECT_TYPE.MOD_HEALING_DONE then
+    if effect == EFFECT_TYPE.MOD_HEALING_DONE then
         ApplyOrRemove(value, _addon.stats.healingDoneMod, name);
         return;
     end
 
-    if effect == _addon.EFFECT_TYPE.MOD_HIT_SPELL then
+    if effect == EFFECT_TYPE.MOD_HIT_SPELL then
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(name, value, _addon.stats.hitMods.school, affectSchool);
         elseif affectSpell ~= nil then
@@ -106,7 +110,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
-    if effect == _addon.EFFECT_TYPE.MOD_CRIT then
+    if effect == EFFECT_TYPE.MOD_CRIT then
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(name, value, _addon.stats.critMods.school, affectSchool);
         elseif affectSpell ~= nil then
@@ -115,12 +119,12 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
-    if effect == _addon.EFFECT_TYPE.MP5 then
+    if effect == EFFECT_TYPE.MP5 then
         ApplyOrRemove(value, _addon.stats.mp5, name);
         return;
     end
 
-    if effect == _addon.EFFECT_TYPE.FSR_REGEN then
+    if effect == EFFECT_TYPE.FSR_REGEN then
         ApplyOrRemove(value, _addon.stats.fsrRegenMult, name);
         _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
         return;
