@@ -7,34 +7,34 @@ local MANA_SPRING = GetSpellInfo(10491);
 -- Buffs the player can have
 _addon.buffData = {
     [16609] = { -- Warchief's Blessing
-        effect = _addon.EFFECT_TYPE_MP5,
+        effect = _addon.EFFECT_TYPE.MP5,
         value = 10,
     },
     [BLESSING_OF_WISDOM] = {
-        effect = _addon.EFFECT_TYPE_MP5,
+        effect = _addon.EFFECT_TYPE.MP5,
         ttValue = "(%d+)",
     },
     [GREATER_BLESSING_OF_WISDOM] = {
-        effect = _addon.EFFECT_TYPE_MP5,
+        effect = _addon.EFFECT_TYPE.MP5,
         ttValue = "(%d+)",
     },
     [MANA_SPRING] = {
-        effect = _addon.EFFECT_TYPE_MP5,
+        effect = _addon.EFFECT_TYPE.MP5,
         ttValue = "(%d+)",
     },
     [18194] = { -- Nightfin Soup?
-        effect = _addon.EFFECT_TYPE_MP5,
+        effect = _addon.EFFECT_TYPE.MP5,
         value = 8,
     },
     [10060] = { -- Power Infusion
         effects = {
             {
-                effect = _addon.EFFECT_TYPE_MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK_ALL,
+                effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_MASK.ALL,
                 value = 20,
             },
             {
-                effect = _addon.EFFECT_TYPE_MOD_HEALING_DONE,
+                effect = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
                 value = 20,
             }
         }

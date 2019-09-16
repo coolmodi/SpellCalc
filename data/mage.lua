@@ -7,7 +7,7 @@ end
 local FROST_BOLT = GetSpellInfo(837);
 
 local FROST_BOLT_GENERIC = {
-    school = _addon.SCHOOL_FROST,
+    school = _addon.SCHOOL.FROST,
     ttMinMax = "(%d+).-%s(%d+)",
     coef = 3 / 3.5 * 0.95
 }
@@ -25,8 +25,8 @@ _addon.talentData = {
     {
         tree = 3,
         talent = 3,
-        effect = _addon.EFFECT_TYPE_MOD_HIT_SPELL,
-        affectSchool = _addon.SCHOOL_MASK_FROST + _addon.SCHOOL_MASK_FIRE,
+        effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+        affectSchool = _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.FIRE,
         perPoint = 2
     },
 };

@@ -5,13 +5,13 @@ _addon.target = {
     levelDiff = 0,
     isPlayer = false,
     resistance = { -- TODO: allow custom resistance values
-        [_addon.SCHOOL_PHYSICAL] = 0,
-        [_addon.SCHOOL_HOLY] = 0,
-        [_addon.SCHOOL_FIRE] = 0,
-        [_addon.SCHOOL_NATURE] = 0,
-        [_addon.SCHOOL_FROST] = 0,
-        [_addon.SCHOOL_SHADOW] = 0,
-        [_addon.SCHOOL_ARCANE] = 0
+        [_addon.SCHOOL.PHYSICAL] = 0,
+        [_addon.SCHOOL.HOLY] = 0,
+        [_addon.SCHOOL.FIRE] = 0,
+        [_addon.SCHOOL.NATURE] = 0,
+        [_addon.SCHOOL.FROST] = 0,
+        [_addon.SCHOOL.SHADOW] = 0,
+        [_addon.SCHOOL.ARCANE] = 0
     }
 };
 

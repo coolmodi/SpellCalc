@@ -60,7 +60,7 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
 
     if SpellCalc_settings.ttHitChance and calcData.hitChance then
         GameTooltip:AddLine(("Hit: %.1f%% (%.1f%% + %.1f%%)"):format(calcData.hitChance*100, 
-            (calcData.hitChance - calcData.hitChanceBonus)*100, calcData.hitChanceBonus*100)
+            (calcData.hitChance - calcData.hitChanceBonus/100)*100, calcData.hitChanceBonus)
             , TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
@@ -92,7 +92,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal)
 
     if SpellCalc_settings.ttHitChance and calcData.hitChance then
         GameTooltip:AddLine(("Hit: %.1f%% (%.1f%% + %.1f%%)"):format(calcData.hitChance*100, 
-            (calcData.hitChance - calcData.hitChanceBonus)*100, calcData.hitChanceBonus*100)
+            (calcData.hitChance - calcData.hitChanceBonus/100)*100, calcData.hitChanceBonus)
             , TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
@@ -127,7 +127,7 @@ local function AppendDmgShieldEffect(calcData, effectNum)
 
     if SpellCalc_settings.ttHitChance and calcData.hitChance then
         GameTooltip:AddLine(("Hit: %.1f%% (%.1f%% + %.1f%%)"):format(calcData.hitChance*100, 
-            (calcData.hitChance - calcData.hitChanceBonus)*100, calcData.hitChanceBonus*100)
+            (calcData.hitChance - calcData.hitChanceBonus/100)*100, calcData.hitChanceBonus)
             , TTCOLOR, TTCOLOR, TTCOLOR);
     end
 

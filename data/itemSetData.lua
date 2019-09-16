@@ -37,7 +37,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 8,
                 effect = {
-                    effect = _addon.EFFECT_TYPE_MOD_CRIT,
+                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
                     affectSpell = {PRAYER_OF_HEALING},
                     value = 25,
                 }
@@ -96,7 +96,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE_FSR_REGEN,
+                    effect = _addon.EFFECT_TYPE.FSR_REGEN,
                     value = 15,
                 }
                 --effect = "Allows $s1% of your Mana regeneration to continue while casting.",
@@ -185,7 +185,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 2,
                 effect = {
-                    effect = _addon.EFFECT_TYPE_MOD_HIT_SPELL,
+                    effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
                     value = 1,
                 }
                 --effect = "Improves your chance to hit with spells by $s1%.",
@@ -314,7 +314,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE_MOD_EFFECT,
+                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
                     affectSpell = {SHADOW_WORD_PAIN},
                     value = 5,
                 }
