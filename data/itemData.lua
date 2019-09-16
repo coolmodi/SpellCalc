@@ -46,6 +46,13 @@ local spellhitSpells = {
     [23729] = 2,
 };
 
+local spellPenSpells = {
+    [25975] = 10,
+    [26283] = 20,
+    [28799] = 25,
+    [28869] = 13,
+};
+
 _addon.itemData = {
     [9448] = { -- Spidertank Oilrag
         mp5 = mp5Spells[21361],
@@ -923,11 +930,21 @@ _addon.itemData = {
     [21332] = { -- Conqueror's Legguards
         hit = hitSpells[15464],
     },
+    [21334] = { -- Doomcaller's Robes
+        spellPen = spellPenSpells[26283],
+    },
     [21335] = { -- Doomcaller's Mantle
         spellHit = spellhitSpells[23727],
+        spellPen = spellPenSpells[25975],
     },
     [21337] = { -- Doomcaller's Circlet
         spellHit = spellhitSpells[23727],
+    },
+    [21338] = { -- Doomcaller's Footwraps
+        spellPen = spellPenSpells[25975],
+    },
+    [21343] = { -- Enigma Robes
+        spellPen = spellPenSpells[26283],
     },
     [21344] = { -- Enigma Boots
         mp5 = mp5Spells[21362],
@@ -935,6 +952,7 @@ _addon.itemData = {
     },
     [21345] = { -- Enigma Shoulderpads
         mp5 = mp5Spells[21362],
+        spellPen = spellPenSpells[25975],
     },
     [21346] = { -- Enigma Leggings
         mp5 = mp5Spells[21620],
@@ -951,6 +969,10 @@ _addon.itemData = {
     },
     [21350] = { -- Mantle of the Oracle
         mp5 = mp5Spells[21625],
+        spellPen = spellPenSpells[25975],
+    },
+    [21351] = { -- Vestments of the Oracle
+        spellPen = spellPenSpells[25975],
     },
     [21352] = { -- Trousers of the Oracle
         mp5 = mp5Spells[21627],
@@ -960,6 +982,7 @@ _addon.itemData = {
     },
     [21355] = { -- Genesis Boots
         mp5 = mp5Spells[21362],
+        spellPen = spellPenSpells[25975],
     },
     [21356] = { -- Genesis Trousers
         mp5 = mp5Spells[21618],
@@ -978,6 +1001,7 @@ _addon.itemData = {
     },
     [21373] = { -- Stormcaller's Footguards
         mp5 = mp5Spells[21362],
+        spellPen = spellPenSpells[25975],
     },
     [21375] = { -- Stormcaller's Leggings
         mp5 = mp5Spells[21618],
@@ -1048,6 +1072,9 @@ _addon.itemData = {
     [21463] = { -- Ossirian's Binding
         hit = hitSpells[15464],
     },
+    [21464] = { -- Shackles of the Unscarred
+        spellPen = spellPenSpells[25975],
+    },
     [21477] = { -- Ring of Fury
         hit = hitSpells[15464],
     },
@@ -1074,6 +1101,15 @@ _addon.itemData = {
     },
     [21517] = { -- Gnomish Turban of Psychic Might
         mp5 = mp5Spells[21365],
+    },
+    [21563] = { -- Don Rodrigo's Band
+        spellPen = spellPenSpells[26283],
+    },
+    [21565] = { -- Rune of Perfection
+        spellPen = spellPenSpells[26283],
+    },
+    [21566] = { -- Rune of Perfection
+        spellPen = spellPenSpells[25975],
     },
     [21581] = { -- Gauntlets of Annihilation
         hit = hitSpells[15464],
@@ -1120,6 +1156,9 @@ _addon.itemData = {
     [21666] = { -- Sartura's Might
         mp5 = mp5Spells[21620],
     },
+    [21671] = { -- Robes of the Battleguard
+        spellPen = spellPenSpells[26283],
+    },
     [21672] = { -- Gloves of Enforcement
         hit = hitSpells[15464],
     },
@@ -1140,6 +1179,9 @@ _addon.itemData = {
     },
     [21701] = { -- Cloak of Concentrated Hatred
         hit = hitSpells[15464],
+    },
+    [21707] = { -- Ring of Swarming Thought
+        spellPen = spellPenSpells[26283],
     },
     [21709] = { -- Ring of the Fallen God
         spellHit = spellhitSpells[23727],
@@ -1179,6 +1221,9 @@ _addon.itemData = {
     },
     [22066] = { -- Sorcerer's Gloves
         spellHit = spellhitSpells[23727],
+    },
+    [22069] = { -- Sorcerer's Robes
+        spellPen = spellPenSpells[26283],
     },
     [22074] = { -- Deathmist Mask
         spellHit = spellhitSpells[23727],
@@ -1278,6 +1323,9 @@ _addon.itemData = {
     },
     [22348] = { -- Doomulus Prime
         hit = hitSpells[15464],
+    },
+    [22383] = { -- Sageblade
+        spellPen = spellPenSpells[25975],
     },
     [22384] = { -- Persuader
         hit = hitSpells[15464],
@@ -1419,8 +1467,14 @@ _addon.itemData = {
     [22502] = { -- Frostfire Belt
         spellHit = spellhitSpells[23727],
     },
+    [22503] = { -- Frostfire Bindings
+        spellPen = spellPenSpells[25975],
+    },
     [22504] = { -- Plagueheart Robe
         spellHit = spellhitSpells[23727],
+    },
+    [22505] = { -- Plagueheart Leggings
+        spellPen = spellPenSpells[25975],
     },
     [22506] = { -- Plagueheart Circlet
         spellHit = spellhitSpells[23727],
@@ -1485,6 +1539,9 @@ _addon.itemData = {
     [22753] = { -- Sentinel's Lamellar Legguards
         hit = hitSpells[15464],
     },
+    [22799] = { -- Soulseeker
+        spellPen = spellPenSpells[28799],
+    },
     [22800] = { -- Brimstone Staff
         spellHit = spellhitSpells[23729],
     },
@@ -1530,8 +1587,14 @@ _addon.itemData = {
     [22885] = { -- Legionnaire's Satin Tunic
         mp5 = mp5Spells[21626],
     },
+    [22937] = { -- Gem of Nerubis
+        spellPen = spellPenSpells[25975],
+    },
     [22938] = { -- Cryptfiend Silk Cloak
         hit = hitSpells[15464],
+    },
+    [22943] = { -- Malice Stone Pendant
+        spellPen = spellPenSpells[28869],
     },
     [22947] = { -- Pendant of Forgotten Names
         mp5 = mp5Spells[21364],
@@ -1553,6 +1616,9 @@ _addon.itemData = {
     },
     [23014] = { -- Iblis, Blade of the Fallen Seraph
         hit = hitSpells[15464],
+    },
+    [23017] = { -- Veil of Eclipse
+        spellPen = spellPenSpells[25975],
     },
     [23018] = { -- Signet of the Fallen Defender
         hit = hitSpells[15464],

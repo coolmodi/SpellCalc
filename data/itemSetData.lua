@@ -31,6 +31,20 @@ _addon.itemSetData = {
             },
         },
     },
+    [201] = {
+        name = "Arcanist Regalia",
+        effects = {
+            [1] = {
+                need = 5,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.RESISTANCE_PEN,
+                    affectSchool = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
+                    value = 10,
+                }
+                --effect = "Decreases the magical resistances of your spell targets by 10",
+            },
+        },
+    },
     [202] = {
         name = "Vestments of Prophecy",
         effects = {
@@ -653,6 +667,14 @@ _addon.setItemData = {
     [23093] = 534,
     [23259] = 538,
     [23260] = 538,
+    [16802] = 201,
+    [16799] = 201,
+    [16795] = 201,
+    [16800] = 201,
+    [16801] = 201,
+    [16796] = 201,
+    [16797] = 201,
+    [16798] = 201,
 
 
     

@@ -31,7 +31,8 @@ _addon.EFFECT_TYPE = {
     FSR_REGEN = 4,
     MOD_CRIT = 5,
     MP5 = 6,
-    MOD_HEALING_DONE = 7
+    MOD_HEALING_DONE = 7,
+    RESISTANCE_PEN = 8
 };
 
 -- Spell types (What calculation rules to use)

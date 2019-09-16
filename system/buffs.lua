@@ -129,6 +129,13 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
         return;
     end
+
+    if effect == EFFECT_TYPE.RESISTANCE_PEN then
+        if affectSchool ~= nil then
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.spellPen, affectSchool);
+        end
+        return;
+    end
 end
 
 --- Apply a buff

@@ -23,7 +23,7 @@ _addon.stats = {
         [_addon.SCHOOL.SHADOW] = 0,
         [_addon.SCHOOL.ARCANE] = 0
     },
-    spellPen = { -- TODO: implement stat for buffs, talents and gear
+    spellPen = {
         [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
         [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
         [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},

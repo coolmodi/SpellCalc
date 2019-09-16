@@ -39,6 +39,11 @@ _addon.buffData = {
             }
         }
     },
+    [26166] = { -- Obsidian Insight
+        effect = _addon.EFFECT_TYPE.RESISTANCE_PEN,
+        affectSchool = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
+        value = 100,
+    },
     -- TODO: Other buffs that are outside the scope of base API queries
 };
 

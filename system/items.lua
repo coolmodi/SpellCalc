@@ -101,6 +101,12 @@ local function EquipItem(itemId, slotId)
             ApplyOrRemove(itemData.spellHit, _addon.stats.hitBonusSpell, itemName);
         end
 
+        if itemData.spellPen then
+            for i=3,7 do
+                ApplyOrRemove(itemData.spellPen, _addon.stats.spellPen[i], itemName);
+            end
+        end
+
         _addon.lastChange = time();
     end
 
@@ -133,6 +139,12 @@ local function UnequipItem(slotId)
 
         if itemData.spellHit then
             ApplyOrRemove(-itemData.spellHit, _addon.stats.hitBonusSpell, itemName);
+        end
+
+        if itemData.spellPen then
+            for i=3,7 do
+                ApplyOrRemove(-itemData.spellPen, _addon.stats.spellPen[i], itemName);
+            end
         end
 
         _addon.lastChange = time();
