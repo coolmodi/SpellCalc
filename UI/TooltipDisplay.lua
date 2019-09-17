@@ -87,7 +87,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal)
     local hotdot = isHeal and "HoT" or "DoT";
 
     if SpellCalc_settings.ttHit then
-        GameTooltip:AddLine(("%s: %dx %.1f | %d total"):format(unitString, effectData.ticks, effectData.perTick, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(("%s: %dx %.1f | %d total"):format(unitString, effectData.ticks, effectData.perTick, effectData.allTicks), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
     if SpellCalc_settings.ttHitChance and calcData.hitChance then

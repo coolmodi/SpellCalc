@@ -1,5 +1,7 @@
 local _, _addon = ...;
 
+local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
+
 --- Get the average dmg resisted by target due to resistance after penetration
 -- @param school The spell school (API enumeration)
 function _addon:GetSpellAvgResist(school)
@@ -71,6 +73,77 @@ function _addon:GetSpellHitBonus(school, buffTable)
     end
 
     return hitChanceBonus;
+end
+
+--- Adds table members for spell calculation to the calculation table
+-- @param et The subtable for the effect
+-- @param effectType The SPELL_EFFECT_TYPE
+function _addon:AddSpellCalculationMembers(et, effectType)
+    if effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
+        et.hitMin = 0; -- Minimum hit
+        et.hitMax = 0; -- Maximum hit
+        et.hitAvg = 0; -- Average normal hit (as in it did hit)
+        et.critMin = 0; -- Same just with crit
+        et.critMax = 0;
+        et.critAvg = 0;
+        et.avgCombined = 0; -- Both hit and crit
+
+    elseif effectType == SPELL_EFFECT_TYPE.DOT or effectType == SPELL_EFFECT_TYPE.HOT then
+        et.perTick = 0; -- Done per tick
+        et.duration = 0;
+        et.ticks = 0;
+        et.allTicks = 0; -- Done over all ticks (assuming hit)
+        et.perSecondDuration = 0; -- Per second done over full duration (assuming hit)
+
+    elseif effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
+        et.perCharge = 0; -- Done per charge
+        et.charges = 0;
+        et.hitAvg = 0; -- Average normal hit, all charges, if charges exist (assuming hit)
+
+    else
+        error("non-existing effect type " .. effectType .. " for spell");
+    end
+
+    et.avgAfterMitigation = 0; -- Average after miss and resist taken into account
+    et.doneToOom = 0; -- Dmg/healing done until oom, assumes (theoretical) spam for non direct spells!
+    et.perSecond = 0; -- Done per second PER AVERAGE CAST
+    et.perMana = 0; -- Mana per unit done PER AVERAGE CAST
+end
+
+--- Is the spell something like Holy Fire
+-- @param primaryType The primary effect type, required
+-- @param secondaryType The secondary effect type, optional
+local function IsCombinedSpell(primaryType, secondaryType)
+    if (primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DIRECT_HEAL)
+    and (secondaryType == SPELL_EFFECT_TYPE.DOT or secondaryType == SPELL_EFFECT_TYPE.HOT) then
+        return true;
+    end
+    return false;
+end
+
+--- Adds table members for combined spell calculation to the calculation table if needed
+-- @param st The base spell calculation table
+-- @param primaryType The primary effect type, required
+-- @param secondaryType The secondary effect type, optional
+function _addon:ConditionalAddSpellMembers(st, primaryType, secondaryType)
+    if not IsCombinedSpell(primaryType, secondaryType) then
+        return;
+    end
+    st.perCastData = {
+        hitAvg = 0, -- The total done per hit full duration
+        critAvg = 0, -- The total done if primary crits full duration
+        perSecond = 0, -- Per second for done per cast time when full duration is used (DPSC)
+        perMana = 0, -- Unit per mana when full duration used
+
+        -- Those values really only are useful for
+        -- holy fire (without cast time talent?)
+        -- fireball and pyroblast I guess
+        hitAvgSpam = 0, -- Avg if spammed
+        critAvgSpam = 0,
+        perSecondSpam = 0, -- Per second done when spammed
+        perManaSpam = 0, -- Per mana when spammed
+        doneToOomSpam = 0, -- Done until oom if spammed
+    };
 end
 
 --- Calculate direct spell effect (e.g. Frostbolt or Healing Touch)
@@ -146,20 +219,20 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellDesc, effectData
 
     et.ticks = et.duration / effectData.tickPeriod;
     local dmgTt = string.match(spellDesc, effectData.ttMinMax);
-    et.hitAvg = math.floor(dmgTt * effectMod + (et.ticks * et.effectivePower) + 0.5);
-    et.perTick = et.hitAvg / et.ticks;
+    et.allTicks = math.floor(dmgTt * effectMod + (et.ticks * et.effectivePower) + 0.5);
+    et.perTick = et.allTicks / et.ticks;
 
     if calcData.hitChance ~= nil then
         if isChannel then
-            et.avgAfterMitigation = et.hitAvg * (1 - (1 - calcData.hitChance) ^ (castTime/1.5));
+            et.avgAfterMitigation = et.allTicks * (1 - (1 - calcData.hitChance) ^ (castTime/1.5));
         else
-            et.avgAfterMitigation = et.hitAvg * calcData.hitChance;
+            et.avgAfterMitigation = et.allTicks * calcData.hitChance;
         end
     else
-        et.avgAfterMitigation = et.hitAvg;
+        et.avgAfterMitigation = et.allTicks;
     end
 
-    et.perSecondDuration = et.hitAvg / et.duration;
+    et.perSecondDuration = et.allTicks / et.duration;
     et.perSecond = et.avgAfterMitigation / castTime;
     et.doneToOom = calcData.castsToOom * et.avgAfterMitigation;
     et.perMana = et.avgAfterMitigation / calcData.effectiveCost;
@@ -170,8 +243,8 @@ end
 -- @param effectData The effect data from spell data
 -- @param castTime Spell cast time (or channel duration)
 function _addon:CalculateSpellCombinedEffect(calcData, effectData, castTime)
-    calcData.perCastData.hitAvg = calcData[1].hitAvg + calcData[2].hitAvg;
-    calcData.perCastData.critAvg = calcData[1].critAvg + calcData[2].hitAvg;
+    calcData.perCastData.hitAvg = calcData[1].hitAvg + calcData[2].allTicks;
+    calcData.perCastData.critAvg = calcData[1].critAvg + calcData[2].allTicks;
 
     calcData.perCastData.perSecond = calcData[1].perSecond + calcData[2].avgAfterMitigation / castTime;
     calcData.perCastData.perMana = calcData[1].perMana + calcData[2].perMana;

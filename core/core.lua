@@ -8,29 +8,43 @@ _addon.lastChange = time();
 
 local stats = _addon.stats;
 
+--- Return true if spell needs mitigation calculation
+-- @param spellType The base spell type
+-- @param primaryType The primary effect type, required
+local function SpellCanMitigate(spellType, primaryType)
+    if primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DOT or primaryType == SPELL_EFFECT_TYPE.DMG_SHIELD then
+        return true;
+    end
+    return false;
+end
+
 --- Make a new table to store calculated spell data
+-- @param spellType The base spell type
 -- @param primaryType The primary effect type, required
 -- @param secondaryType The secondary effect type, optional
-local function MakeSpellTable(primaryType, secondaryType)
+local function MakeSpellTable(spellType, primaryType, secondaryType)
     _addon:PrintDebug(("Making calc table for %s %s"):format(primaryType, tostring(secondaryType)));
 
     local st = {
         critChance = 0,
         critMult = 1.5,
-        levelPenalty = 1, -- Mult for spell below lvl 20
-        castsToOom = 1,
-        timeToOom = 1,
-        effectiveCost = 0,
         buffs = {}, -- Buffs used in the calculation process, not buffs that affect spell indirectly
         updated = 0 -- Last update time
     };
 
-    if primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DOT or primaryType == SPELL_EFFECT_TYPE.DMG_SHIELD then
-        st.baseHitChance = 1; -- The base hit chance dpending on level difference
-        st.hitChance = 1; -- Hit chance after modifiers
-        st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
-        st.avgResistMod = 0; -- The average dmg resisted modifier
-        st.binaryHitLoss = 0; -- Hit chance lost due to binary spells and resistance
+    if spellType == SPELL_TYPE.SPELL then
+        st.levelPenalty = 1; -- Mult for spell below lvl 20
+        st.effectiveCost = 0;
+        st.castsToOom = 0;
+        st.timeToOom = 0;
+    end
+
+    if SpellCanMitigate(spellType, primaryType) then
+        st.baseHitChance = 0; -- The base hit chance dpending on level difference (int)
+        st.hitChance = 0; -- Hit chance after modifiers (float)
+        st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear) (int)
+        st.avgResistMod = 0; -- The average dmg resisted modifier (float)
+        st.binaryHitLoss = 0; -- Hit chance lost due to binary spells and resistance (int)
     end
 
     local curType = primaryType;
@@ -51,56 +65,15 @@ local function MakeSpellTable(primaryType, secondaryType)
         et.spCoef = 0; -- The spell power coefficient this effect uses
         et.effectiveSpCoef = 0; -- The effective coef after penalty, if it has one
         et.effectivePower = 0; -- The power used
-        et.doneToOom = 0; -- Dmg/healing done until oom, assumes spam (theoretical only) for non direct spells!
         
-        if curType == SPELL_EFFECT_TYPE.DIRECT_DMG or curType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
-            et.hitMin = 0; -- Minimum hit
-            et.hitMax = 0; -- Maximum hit
-            et.hitAvg = 0; -- Average normal hit (as in it did hit)
-            et.critMin = 0; -- Same just with crit
-            et.critMax = 0;
-            et.critAvg = 0;
-            et.avgCombined = 0; -- Both hit and crit
-            et.avgAfterMitigation = 0; -- Average after miss etc. taken into account
-
-        elseif curType == SPELL_EFFECT_TYPE.DOT or curType == SPELL_EFFECT_TYPE.HOT then
-            et.perTick = 0; -- Done per tick
-            et.duration = 0;
-            et.ticks = 0;
-            et.hitAvg = 0; -- Average normal hit, all ticks (assuming hit)
-            et.avgAfterMitigation = 0; -- Average after miss was taken into account
-            et.perSecondDuration = 0; -- Per second done over full duration (assuming hit)
-
-        elseif curType == SPELL_EFFECT_TYPE.DMG_SHIELD then
-            et.perCharge = 0; -- Done per charge
-            et.charges = 0;
-            et.hitAvg = 0; -- Average normal hit, all charges, if charges exist (assuming hit)
-            et.avgAfterMitigation = 0; -- Average after miss taken into account, only if charges
-
-        else
-            error("non-existing effect type " .. curType .. " for spell");
+        if spellType == SPELL_TYPE.SPELL then
+            _addon:AddSpellCalculationMembers(et, curType);
         end
-
-        -- TODO: unmitigated dps and mitigation factors
-        et.perSecond = 0; -- Done per second PER AVERAGE CAST
-        et.perMana = 0; -- Mana per unit done PER AVERAGE CAST
     end
 
-    -- Spells like holy fire or regrowth
-    if (primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DIRECT_HEAL) 
-    and (secondaryType == SPELL_EFFECT_TYPE.DOT or secondaryType == SPELL_EFFECT_TYPE.HOT) then
-        st.perCastData = {
-            hitAvg = 0, -- The total done per hit full duration
-            critAvg = 0, -- The total done if primary crits full duration
-            perSecond = 0, -- Per second for done per cast time when full duration is used 
-            perMana = 0, -- Unit per mana when full duration used
-
-            hitAvgSpam = 0, -- Avg if spammed
-            critAvgSpam = 0,
-            perSecondSpam = 0, -- Per second done when spammed
-            perManaSpam = 0, -- Per mana when spammed
-            doneToOomSpam = 0, -- Done until oom if spammed
-        };
+    if spellType == SPELL_TYPE.SPELL then
+        -- Spells like holy fire or regrowth
+        _addon:ConditionalAddSpellMembers(st, primaryType, secondaryType);
     end
 
     return st;
@@ -220,7 +193,7 @@ function _addon:CalcSpell(spellId)
     -- Calculation table
 
     if _addon.calcedSpells[spellId] == nil then
-        _addon.calcedSpells[spellId] = MakeSpellTable(effectTypes[1], effectTypes[2]);
+        _addon.calcedSpells[spellId] = MakeSpellTable(spellType, effectTypes[1], effectTypes[2]);
     end
     local calcData = _addon.calcedSpells[spellId];
 
