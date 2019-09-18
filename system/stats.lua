@@ -159,4 +159,5 @@ function _addon:FullUpdate()
     self:UpdateBuffs();
     self:UpdateTalents();
     self:UpdateItems();
+    self:UpdateTarget()
 end

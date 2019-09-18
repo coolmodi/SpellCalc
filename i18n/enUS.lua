@@ -1,3 +1,82 @@
 local _addonName, _addon = ...;
 local L = _addon:AddLocalization("enUS", true);
 if L == nil then return; end
+
+L["SETTINGS_HEAD_TOOLTIP"] = "Tooltip";
+
+L["SETTINGS_TT_HITVAL_LABEL"] = "Hit value";
+L["SETTINGS_TT_CRIT_LABEL"] = "Critical";
+L["SETTINGS_TT_AVG_LABEL"] = "Averages";
+L["SETTINGS_TT_COEF_LABEL"] = "Coefficient";
+L["SETTINGS_TT_PENAL_LABEL"] = "Level penalty";
+L["SETTINGS_TT_PENAL_TT"] = "Show penalty for spells below level 20.";
+L["SETTINGS_TT_POWER_LABEL"] = "Power";
+L["SETTINGS_TT_POWER_TT"] = "Show spell/attack power used by spell.";
+L["SETTINGS_TT_HITCHANCE_LABEL"] = "Hit chance";
+L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"] = "Detailed hit chance";
+L["SETTINGS_TT_HITCHANCE_DETAIL_TT"] = "Show base hit and bonus hit, also hit lost for binary spells.";
+L["SETTINGS_TT_RESISTANCE_LABEL"] = "Resistance";
+L["SETTINGS_TT_RESISTANCE_TT"] = "Show average resisted damage.";
+L["SETTINGS_TT_PERSEC_LABEL"] = "Per second (after hit chance and resist)";
+L["SETTINGS_TT_EFFCOST_LABEL"] = "Effective cost";
+L["SETTINGS_TT_EFFCOST_TT"] = "Cost considering regeneration and procs.";
+L["SETTINGS_TT_PERMANA_LABEL"] = "Per mana";
+L["SETTINGS_TT_OOM_LABEL"] = "Done until oom";
+L["SETTINGS_TT_BUFFS_LABEL"] = "Show buffs";
+L["SETTINGS_TT_BUFFS_TT"] = "Show buffs/gear/talents affecting the spell calculation. This doesn't include things that the addon doesn't need to explicitly handle!";
+
+L["SETTINGS_HEAD_TARGET"] = "Target";
+
+L["SETTINGS_TAR_DEFLEVEL_LABEL"] = "Default level difference";
+L["SETTINGS_TT_USECURRENT_LABEL"] = "Use current target";
+L["SETTINGS_TT_USECURRENT_TT"] = "Use target's level instead if possible";
+
+L["SETTINGS_HEAD_RESISTANCE"] = "Custom Resistance Values";
+
+L["SETTINGS_TT_FROST_LABEL"] = "Frost";
+L["SETTINGS_TT_FIRE_LABEL"] = "Fire";
+L["SETTINGS_TT_SHADOW_LABEL"] = "Shadow";
+L["SETTINGS_TT_NATURE_LABEL"] = "Nature";
+L["SETTINGS_TT_ARCANE_LABEL"] = "Arcane";
+
+
+L["TT_TITLE_DAMAGE"] = "Damage:";
+L["TT_TITLE_DOT"] = "DoT:";
+L["TT_TITLE_HEAL"] = "Heal:";
+L["TT_TITLE_HOT"] = "HoT:";
+L["TT_TITLE_COMB"] = "Combined:";
+
+L["TT_DAMAGE"] = "Damage";
+L["TT_HEAL"] = "Heal";
+L["TT_CRITICAL"] = "Critical";
+L["TT_CHANCE"] = "chance";
+L["TT_LOWLVLPENAL"] = "Low level penalty";
+L["TT_COEF"] = "Coefficient";
+L["TT_POWER"] = "Bonus";
+L["TT_HITCHANCE"] = "Hit chance";
+L["TT_BINARYMISS"] = "binary resist";
+L["TT_RESIST"] = "Average resisted";
+L["TT_PERSEC_HEAL"] = "HPS";
+L["TT_PERSEC_DAMAGE"] = "DPS";
+L["TT_PERSECDUR_HEAL"] = "HoT HPS";
+L["TT_PERSECDUR_DAMAGE"] = "DoT DPS";
+L["TT_PERSECC_DAMAGE"] = "DPSC";
+L["TT_PERSECC_HEAL"] = "HPSC";
+L["TT_EFFCOST"] = "Effective cost";
+L["TT_PER_MANA_HEAL"] = "HPM";
+L["TT_PER_MANA_DAMAGE"] = "DPM";
+L["TT_UNTILOOM_HEAL"] = "Heal until oom";
+L["TT_UNTILOOM_DAMAGE"] = "Damage until oom";
+
+L["TT_COMB_AVG_HIT"] = "Avg. hit";
+L["TT_COMB_AVG_CRIT"] = "Avg. crit";
+L["TT_COMB_AVG_HIT_SPAM"] = "Avg. hit spam";
+L["TT_COMB_AVG_CRIT_SPAM"] = "Avg. crit spam";
+L["TT_COMB_PERSEC_DAMAGE"] = "DPS spam";
+L["TT_COMB_PERSEC_HEAL"] = "HPS spam";
+L["TT_COMB_PER_MANA_HEAL"] = "HPM spam";
+L["TT_COMB_PER_MANA_DAMAGE"] = "DPM spam";
+L["TT_COMB_UNTILOOM_DAMAGE"] = "Damage until oom spam";
+L["TT_COMB_UNTILOOM_HEAL"] = "Heal until oom spam";
+
+L["TT_BUFFS"] = "Considered buffs:";

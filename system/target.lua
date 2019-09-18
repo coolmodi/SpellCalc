@@ -4,7 +4,7 @@ _addon.target = {
     level = 0,
     levelDiff = 0,
     isPlayer = false,
-    resistance = { -- TODO: allow custom resistance values
+    resistance = {
         [_addon.SCHOOL.PHYSICAL] = 0,
         [_addon.SCHOOL.HOLY] = 0,
         [_addon.SCHOOL.FIRE] = 0,
@@ -20,20 +20,26 @@ function _addon:UpdateTarget()
     local pLevel = UnitLevel("player");
 
     if tName == nil or not SpellCalc_settings.useCurrentTarget then
-        _addon.target.level = pLevel + SpellCalc_settings.defaultTargetLvlOffset;
-        _addon.target.levelDiff = SpellCalc_settings.defaultTargetLvlOffset;
-        _addon.target.isPlayer = false;
+        self.target.level = pLevel + SpellCalc_settings.defaultTargetLvlOffset;
+        self.target.levelDiff = SpellCalc_settings.defaultTargetLvlOffset;
+        self.target.isPlayer = false;
     else
         local tLevel = UnitLevel("target");
         if tLevel == -1 then
             tLevel = pLevel + 3;
         end
 
-        _addon.target.level = tLevel;
-        _addon.target.levelDiff = tLevel - pLevel;
-        _addon.target.isPlayer = UnitIsPlayer("target");
+        self.target.level = tLevel;
+        self.target.levelDiff = tLevel - pLevel;
+        self.target.isPlayer = UnitIsPlayer("target");
     end
 
-    _addon:PrintDebug(("New target: %d, %d, %s"):format(_addon.target.level, _addon.target.levelDiff, tostring(_addon.target.isPlayer)));
-    _addon.lastChange = time();
+    self.target.resistance[self.SCHOOL.FIRE] = SpellCalc_settings.resOverrideFire;
+    self.target.resistance[self.SCHOOL.FROST] = SpellCalc_settings.resOverrideFrost;
+    self.target.resistance[self.SCHOOL.NATURE] = SpellCalc_settings.resOverrideNature;
+    self.target.resistance[self.SCHOOL.SHADOW] = SpellCalc_settings.resOverrideShadow;
+    self.target.resistance[self.SCHOOL.ARCANE] = SpellCalc_settings.resOverrideArcane;
+
+    self:PrintDebug(("New target: %d, %d, %s"):format(self.target.level, self.target.levelDiff, tostring(self.target.isPlayer)));
+    self.lastChange = time();
 end

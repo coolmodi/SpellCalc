@@ -26,6 +26,7 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
     _addon:PrintDebug(("Making calc table for %s %s"):format(primaryType, tostring(secondaryType)));
 
     local st = {
+        spellType = spellType,
         critChance = 0,
         critMult = 1.5,
         buffs = {}, -- Buffs used in the calculation process, not buffs that affect spell indirectly
@@ -40,11 +41,11 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
     end
 
     if SpellCanMitigate(spellType, primaryType) then
-        st.baseHitChance = 0; -- The base hit chance dpending on level difference (int)
-        st.hitChance = 0; -- Hit chance after modifiers (float)
-        st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear) (int)
-        st.avgResistMod = 0; -- The average dmg resisted modifier (float)
-        st.binaryHitLoss = 0; -- Hit chance lost due to binary spells and resistance (int)
+        st.baseHitChance = 0; -- The base hit chance dpending on level difference
+        st.hitChance = 0; -- Hit chance after modifiers (mult)
+        st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
+        st.avgResistMod = 0; -- The average dmg resisted modifier (mult)
+        st.binaryHitLoss = 0; -- Hit chance lost due to binary spells and resistance
     end
 
     local curType = primaryType;
