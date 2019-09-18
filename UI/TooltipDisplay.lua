@@ -153,7 +153,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellData)
     end
 
     AppendCoefData(calcData, effectData);
-    if not isHeal and i == 1 then
+    if not isHeal and effectNum == 1 then
         AppendMitigation(calcData);
     end
 
