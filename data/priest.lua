@@ -231,15 +231,14 @@ _addon.talentData = {
             }
         }
     },
-    -- Spiritual healing
-    {
+    { -- Searing Light
         tree = 2,
-        talent = 15,
+        talent = 11,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {RENEW}, -- Holy Nova?
-                perPoint = 2
+                affectSpell = {SMITE, HOLY_FIRE},
+                perPoint = 5
             }
         }
     },
