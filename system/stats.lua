@@ -82,7 +82,8 @@ _addon.stats = {
         },
         spell = {}
     },
-    clearCastChance = {val=0, buffs={}};
+    clearCastChance = {val=0, buffs={}},
+    illumination = {val=0, buffs={}}
 };
 
 --- Update spell power stats from API

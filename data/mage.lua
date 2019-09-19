@@ -242,8 +242,13 @@ _addon.talentData = {
         affectSpell = {FLAME_STRIKE},
         perPoint = 5
     },
-    -- TODO: Master of Elements
-    { -- Improved Flamestrike
+    { -- Master of Elements
+        tree = 2,
+        talent = 12,
+        effect = _addon.EFFECT_TYPE.ILLUMINATION,
+        perPoint = 10
+    },
+    { -- Critical Mass
         tree = 2,
         talent = 13,
         effect = _addon.EFFECT_TYPE.MOD_CRIT,
@@ -269,3 +274,5 @@ _addon.buffData[12042] = { -- Arcane Power
     affectSchool = _addon.SCHOOL_MASK.ALL,
     value = 30,
 };
+
+-- TODO: Mage Armor

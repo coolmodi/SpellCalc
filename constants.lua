@@ -33,7 +33,8 @@ _addon.EFFECT_TYPE = {
     MP5 = 6,
     MOD_HEALING_DONE = 7,
     RESISTANCE_PEN = 8,
-    CLEARCAST_CHANCE = 9
+    CLEARCAST_CHANCE = 9,
+    ILLUMINATION = 10
 };
 
 -- Spell types (What calculation rules to use)

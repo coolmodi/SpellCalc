@@ -6,6 +6,7 @@ local SPELL_TYPE = _addon.SPELL_TYPE;
 _addon.calcedSpells = {};
 _addon.lastChange = time();
 
+local _, class = UnitClass("player");
 local stats = _addon.stats;
 
 --- Return true if spell needs mitigation calculation
@@ -277,9 +278,19 @@ function _addon:CalcSpell(spellId)
             
             if stats.clearCastChance.val > 0 then
                                                                         -- TODO: does this only happen on successful hits?
-                calcData.effectiveCost = calcData.effectiveCost * (1 - (stats.clearCastChance.val/100) * calcData.hitChance);
+                calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.clearCastChance.val/100) * calcData.hitChance;
                 for _, buffName in pairs(stats.clearCastChance.buffs) do
                     table.insert(calcData.buffs, buffName);
+                end
+            end
+
+            if stats.illumination.val > 0 then
+                if class == "PALADIN" or 
+                (class == "MAGE" and (spellData.school == self.SCHOOL.FIRE or spellData.school == self.SCHOOL.FROST)) then
+                    calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.illumination.val/100) * (calcData.critChance/100);
+                    for _, buffName in pairs(stats.illumination.buffs) do
+                        table.insert(calcData.buffs, buffName);
+                    end
                 end
             end
 

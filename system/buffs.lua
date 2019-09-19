@@ -141,6 +141,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemove(value, _addon.stats.clearCastChance, name);
         return;
     end
+
+    if effect == EFFECT_TYPE.ILLUMINATION then
+        ApplyOrRemove(value, _addon.stats.illumination, name);
+        return;
+    end
 end
 
 --- Apply a buff
