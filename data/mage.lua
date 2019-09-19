@@ -191,7 +191,12 @@ _addon.talentData = {
         affectSchool = _addon.SCHOOL_MASK.ARCANE,
         perPoint = 2
     },
-    -- TODO: clearcast
+    { -- Arcane Concentration
+        tree = 1,
+        talent = 6,
+        effect = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
+        perPoint = 2
+    },
     { -- Improved Arcane Explosion
         tree = 1,
         talent = 8,

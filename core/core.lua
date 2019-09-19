@@ -274,6 +274,15 @@ function _addon:CalcSpell(spellId)
     else
         if spellType == SPELL_TYPE.SPELL then
             calcData.effectiveCost = spellCost - castTime * (stats.manaReg + stats.mp5.val/5);
+            
+            if stats.clearCastChance.val > 0 then
+                                                                        -- TODO: does this only happen on successful hits?
+                calcData.effectiveCost = calcData.effectiveCost * (1 - (stats.clearCastChance.val/100) * calcData.hitChance);
+                for _, buffName in pairs(stats.clearCastChance.buffs) do
+                    table.insert(calcData.buffs, buffName);
+                end
+            end
+
             calcData.castsToOom = stats.mana / calcData.effectiveCost;
             calcData.timeToOom = calcData.castsToOom * castTime;
         else

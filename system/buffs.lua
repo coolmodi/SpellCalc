@@ -136,6 +136,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         end
         return;
     end
+
+    if effect == EFFECT_TYPE.CLEARCAST_CHANCE then
+        ApplyOrRemove(value, _addon.stats.clearCastChance, name);
+        return;
+    end
 end
 
 --- Apply a buff
@@ -177,6 +182,11 @@ local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
     local value = effectData.value;
     if value == nil then
         local desc = GetBuffDescription(buffSlot);
+        if desc == nil then
+            -- TODO: couldn't reproduce the error, no clue what buff caused it, could have been mana spring, investigate
+            _addon:PrintError("Buff " .. name .. " in slot " .. buffSlot .. " has no description!");
+            return;
+        end
         value = tonumber(string.match(desc, effectData.ttValue));
         buffValueCache[usedKey] = value;
     end
