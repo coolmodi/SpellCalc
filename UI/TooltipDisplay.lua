@@ -111,7 +111,7 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
         end
     end
 
-    if SpellCalc_settings.ttCrit then
+    if SpellCalc_settings.ttCrit and calcData.critChance > 0 then
         if effectData.critMax > 0 then
             if SpellCalc_settings.ttAverages then
                 GameTooltip:AddDoubleLine(("%s: %d - %d (%.1f)"):format(L["TT_CRITICAL"], effectData.critMin, effectData.critMax, effectData.critAvg),
