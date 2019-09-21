@@ -49,7 +49,7 @@ function handlers.PLAYER_DAMAGE_DONE_MODS(unit)
     if unit ~= "player" then
         return;
     end
-    _addon:UpdateHealing();
+    _addon:UpdateDmgDoneMods();
 end
 
 function handlers.UPDATE_INVENTORY_DURABILITY()

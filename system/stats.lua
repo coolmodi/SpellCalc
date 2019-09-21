@@ -97,14 +97,18 @@ function _addon:UpdateSpellPower()
     _addon.lastChange = time();
 end
 
---- Update healing power from API
--- Has no dedicated event I know of, so need to check if changes happened
-function _addon:UpdateHealing()
+--- Update dmg done mods
+function _addon:UpdateDmgDoneMods()
     local spellHealing = GetSpellBonusHealing();
     if spellHealing ~= self.stats.spellHealing then
         self:PrintDebug("Updating healing");
         self.stats.spellHealing = spellHealing;
         self.lastChange = time();
+    end
+
+    self:PrintDebug("Updating dmg done mods");
+    for i = 1, 7, 1 do
+        self.stats.spellCrit[i] = GetSpellCritChance(i);
     end
 end
 
@@ -144,10 +148,6 @@ function _addon:UpdateStats()
         queueFrame:SetScript("OnUpdate", UpdateFunction);
     end
 
-    for i = 1, 7, 1 do
-        self.stats.spellCrit[i] = GetSpellCritChance(i);
-    end
-
     self.lastChange = time();
 end
 
@@ -157,7 +157,7 @@ function _addon:FullUpdate()
 
     self:UpdateStats();
     self:UpdateSpellPower();
-    self:UpdateHealing();
+    self:UpdateDmgDoneMods();
     self:UpdateBuffs();
     self:UpdateTalents();
     self:UpdateItems();
