@@ -54,6 +54,9 @@ local spellPenSpells = {
 };
 
 _addon.itemData = {
+    [7950] = { -- Armor of Thero-shan
+        hit = hitSpells[15464],
+    },
     [9448] = { -- Spidertank Oilrag
         mp5 = mp5Spells[21361],
     },
@@ -66,8 +69,8 @@ _addon.itemData = {
     [11634] = { -- Silkweb Gloves
         mp5 = mp5Spells[21625],
     },
-    [11669] = { -- Naglering
-        hit = hitSpells[15464],
+    [11662] = { -- Ban'thok Sash
+        spellHit = spellhitSpells[23727],
     },
     [11921] = { -- Impervious Giant
         hit = hitSpells[15464],
@@ -77,6 +80,9 @@ _addon.itemData = {
     },
     [12082] = { -- Wyrmhide Spaulders
         hit = hitSpells[15465],
+    },
+    [12103] = { -- Star of Mystaria
+        spellHit = spellhitSpells[23727],
     },
     [12637] = { -- Backusarian Gauntlets
         mp5 = mp5Spells[21618],
@@ -111,17 +117,41 @@ _addon.itemData = {
     [13056] = { -- Frenzied Striker
         hit = hitSpells[15465],
     },
+    [13141] = { -- Tooth of Gnarr
+        mp5 = mp5Spells[21361],
+    },
+    [13142] = { -- Brigam Girdle
+        hit = hitSpells[15464],
+    },
+    [13178] = { -- Rosewine Circle
+        mp5 = mp5Spells[21363],
+    },
+    [13179] = { -- Brazecore Armguards
+        mp5 = mp5Spells[21361],
+    },
     [13211] = { -- Slashclaw Bracers
         hit = hitSpells[15464],
     },
     [13216] = { -- Crown of the Penitent
         mp5 = mp5Spells[21626],
     },
+    [13244] = { -- Gilded Gauntlets
+        mp5 = mp5Spells[21362],
+    },
+    [13255] = { -- Trueaim Gauntlets
+        hit = hitSpells[15464],
+    },
+    [13383] = { -- Woollies of the Prancing Minstrel
+        mp5 = mp5Spells[21632],
+    },
     [13386] = { -- Archivist Cape
         mp5 = mp5Spells[21618],
     },
     [13404] = { -- Mask of the Unforgiven
         hit = hitSpells[15465],
+    },
+    [13956] = { -- Clutch of Andros
+        spellHit = spellhitSpells[23727],
     },
     [13963] = { -- Voone's Vice Grips
         hit = hitSpells[15465],
@@ -147,8 +177,32 @@ _addon.itemData = {
     [14545] = { -- Ghostloom Leggings
         mp5 = mp5Spells[21627],
     },
+    [14616] = { -- Bloodmail Boots
+        hit = hitSpells[15464],
+    },
+    [14620] = { -- Deathbone Girdle
+        mp5 = mp5Spells[21362],
+    },
+    [14621] = { -- Deathbone Sabatons
+        mp5 = mp5Spells[21626],
+    },
+    [14622] = { -- Deathbone Gauntlets
+        mp5 = mp5Spells[21362],
+    },
+    [14623] = { -- Deathbone Legguards
+        mp5 = mp5Spells[21363],
+    },
+    [14624] = { -- Deathbone Chestplate
+        mp5 = mp5Spells[21363],
+    },
     [16418] = { -- Lieutenant Commander's Leather Veil
         hit = hitSpells[15464],
+    },
+    [16437] = { -- Marshal's Silk Footwraps
+        spellHit = spellhitSpells[23727],
+    },
+    [16444] = { -- Field Marshal's Silk Spaulders
+        spellPen = spellPenSpells[25975],
     },
     [16453] = { -- Field Marshal's Leather Chestpiece
         hit = hitSpells[15464],
@@ -162,19 +216,49 @@ _addon.itemData = {
     [16457] = { -- Field Marshal's Leather Epaulets
         hit = hitSpells[15464],
     },
-    [16467] = { -- Marshal's Chain Legguards
+    [16462] = { -- Marshal's Chain Boots
         hit = hitSpells[15464],
     },
-    [16475] = { -- Marshal's Lamellar Legplates
+    [16468] = { -- Field Marshal's Chain Spaulders
         hit = hitSpells[15464],
+    },
+    [16472] = { -- Marshal's Lamellar Boots
+        mp5 = mp5Spells[18379],
+    },
+    [16473] = { -- Field Marshal's Lamellar Chestplate
+        mp5 = mp5Spells[21363],
+    },
+    [16474] = { -- Field Marshal's Lamellar Faceguard
+        mp5 = mp5Spells[21363],
+    },
+    [16476] = { -- Field Marshal's Lamellar Pauldrons
+        mp5 = mp5Spells[18379],
     },
     [16479] = { -- Marshal's Plate Legguards
+        hit = hitSpells[15464],
+    },
+    [16480] = { -- Field Marshal's Plate Shoulderguards
+        hit = hitSpells[15464],
+    },
+    [16483] = { -- Marshal's Plate Boots
         hit = hitSpells[15464],
     },
     [16506] = { -- Champion's Leather Headguard
         hit = hitSpells[15464],
     },
+    [16536] = { -- Warlord's Silk Amice
+        spellPen = spellPenSpells[25975],
+    },
+    [16539] = { -- General's Silk Boots
+        spellHit = spellhitSpells[23727],
+    },
     [16543] = { -- General's Plate Leggings
+        hit = hitSpells[15464],
+    },
+    [16544] = { -- Warlord's Plate Shoulders
+        hit = hitSpells[15464],
+    },
+    [16545] = { -- General's Plate Boots
         hit = hitSpells[15464],
     },
     [16561] = { -- Warlord's Leather Helm
@@ -189,8 +273,14 @@ _addon.itemData = {
     [16564] = { -- General's Leather Legguards
         hit = hitSpells[15465],
     },
-    [16567] = { -- General's Chain Legguards
+    [16568] = { -- Warlord's Chain Shoulders
         hit = hitSpells[15464],
+    },
+    [16569] = { -- General's Chain Boots
+        hit = hitSpells[15464],
+    },
+    [16573] = { -- General's Mail Boots
+        mp5 = mp5Spells[21363],
     },
     [16795] = { -- Arcanist Crown
         spellHit = spellhitSpells[23727],
@@ -351,6 +441,24 @@ _addon.itemData = {
     [17113] = { -- Amberseal Keeper
         mp5 = mp5Spells[21636],
     },
+    [17602] = { -- Field Marshal's Headdress
+        mp5 = mp5Spells[21362],
+    },
+    [17603] = { -- Marshal's Satin Pants
+        mp5 = mp5Spells[21362],
+    },
+    [17605] = { -- Field Marshal's Satin Vestments
+        mp5 = mp5Spells[21362],
+    },
+    [17623] = { -- Warlord's Satin Cowl
+        mp5 = mp5Spells[21362],
+    },
+    [17624] = { -- Warlord's Satin Robes
+        mp5 = mp5Spells[21362],
+    },
+    [17625] = { -- General's Satin Leggings
+        mp5 = mp5Spells[21362],
+    },
     [17710] = { -- Charstone Dirk
         mp5 = mp5Spells[21623],
     },
@@ -464,6 +572,9 @@ _addon.itemData = {
     },
     [18757] = { -- Diabolic Mantle
         mp5 = mp5Spells[21629],
+    },
+    [18800] = { -- TEST 1H Amberseal Keeper
+        mp5 = mp5Spells[21636],
     },
     [18803] = { -- Finkle's Lava Dredger
         mp5 = mp5Spells[21365],
@@ -672,6 +783,12 @@ _addon.itemData = {
     [19835] = { -- Zandalar Madcap's Mantle
         hit = hitSpells[15464],
     },
+    [19844] = { -- Zandalar Illusionist's Robe DEPRECATED
+        spellHit = spellhitSpells[23729],
+    },
+    [19847] = { -- Zandalar Demoniac's Robe DEPRECATED
+        spellHit = spellhitSpells[23729],
+    },
     [19857] = { -- Cloak of Consumption
         spellHit = spellhitSpells[23727],
     },
@@ -729,6 +846,9 @@ _addon.itemData = {
         mp5 = mp5Spells[21365],
         spellHit = spellhitSpells[23729],
     },
+    [20003] = { -- Devilsaur Claws
+        hit = hitSpells[15464],
+    },
     [20033] = { -- Zandalar Demoniac's Robe
         spellHit = spellhitSpells[23727],
     },
@@ -743,6 +863,18 @@ _addon.itemData = {
     },
     [20083] = { -- Hunting Spear
         mp5 = mp5Spells[21363],
+    },
+    [20135] = { -- 90 Epic Warrior Bracelets
+        hit = hitSpells[15464],
+    },
+    [20136] = { -- 90 Epic Warrior Breastplate
+        hit = hitSpells[15465],
+    },
+    [20138] = { -- 90 Epic Warrior Helm
+        hit = hitSpells[15465],
+    },
+    [20145] = { -- 90 Epic Warrior Cloak
+        hit = hitSpells[15464],
     },
     [20176] = { -- Defiler's Epaulets
         mp5 = mp5Spells[21618],
@@ -773,6 +905,36 @@ _addon.itemData = {
     },
     [20266] = { -- Peacekeeper Leggings
         mp5 = mp5Spells[21364],
+    },
+    [20278] = { -- 90 Epic Rogue Bow
+        mp5 = mp5Spells[21624],
+    },
+    [20325] = { -- 90 Epic Frost Bindings
+        mp5 = mp5Spells[21619],
+    },
+    [20327] = { -- 90 Epic Frost Crown
+        mp5 = mp5Spells[18378],
+    },
+    [20329] = { -- 90 Epic Frost Leggings
+        mp5 = mp5Spells[18378],
+    },
+    [20331] = { -- 90 Epic Frost Robes
+        mp5 = mp5Spells[18378],
+    },
+    [20332] = { -- 90 Epic Frost Neck
+        mp5 = mp5Spells[21619],
+    },
+    [20333] = { -- 90 Epic Frost Ring
+        mp5 = mp5Spells[21619],
+    },
+    [20334] = { -- 90 Epic Frost Staff
+        mp5 = mp5Spells[21620],
+    },
+    [20335] = { -- 90 Epic Frost Wand
+        mp5 = mp5Spells[21624],
+    },
+    [20336] = { -- 90 Epic Frost Shroud
+        mp5 = mp5Spells[21619],
     },
     [20380] = { -- Dreamscale Breastplate
         mp5 = mp5Spells[21618],
@@ -1129,6 +1291,12 @@ _addon.itemData = {
     [21587] = { -- Wristguards of Castigation
         mp5 = mp5Spells[21619],
     },
+    [21588] = { -- Wristguards of Elemental Fury
+        mp5 = mp5Spells[18379],
+    },
+    [21594] = { -- Bracers of the Fallen Son
+        spellHit = spellhitSpells[23727],
+    },
     [21597] = { -- Royal Scepter of Vek'lor
         spellHit = spellhitSpells[23727],
     },
@@ -1140,6 +1308,9 @@ _addon.itemData = {
     },
     [21610] = { -- Wormscale Blocker
         mp5 = mp5Spells[21627],
+    },
+    [21612] = { -- Wormscale Stompers
+        mp5 = mp5Spells[21620],
     },
     [21615] = { -- Don Rigoberto's Lost Hat
         mp5 = mp5Spells[21634],
@@ -1606,7 +1777,7 @@ _addon.itemData = {
         mp5 = mp5Spells[21363],
     },
     [22988] = { -- The End of Dreams
-        mp5 = mp5Spells[21364],
+        mp5 = mp5Spells[21620],
     },
     [22994] = { -- Digested Hand of Power
         mp5 = mp5Spells[21632],
@@ -1632,8 +1803,14 @@ _addon.itemData = {
     [23030] = { -- Cloak of the Scourge
         hit = hitSpells[15464],
     },
+    [23031] = { -- Band of the Inevitable
+        spellHit = spellhitSpells[23727],
+    },
     [23037] = { -- Ring of Spiritual Fervor
         mp5 = mp5Spells[21632],
+    },
+    [23038] = { -- Band of Unnatural Forces
+        hit = hitSpells[15464],
     },
     [23044] = { -- Harbinger of Doom
         hit = hitSpells[15464],
@@ -1650,6 +1827,9 @@ _addon.itemData = {
     [23056] = { -- Hammer of the Twisting Nether
         mp5 = mp5Spells[18378],
     },
+    [23058] = { -- Life Channeling Necklace
+        mp5 = mp5Spells[18379],
+    },
     [23060] = { -- Bonescythe Ring
         hit = hitSpells[15464],
     },
@@ -1659,8 +1839,11 @@ _addon.itemData = {
     [23066] = { -- Ring of Redemption
         mp5 = mp5Spells[21627],
     },
-    [23067] = { -- Ring of  the Cryptstalker
+    [23067] = { -- Ring of the Cryptstalker
         mp5 = mp5Spells[18379],
+    },
+    [23072] = { -- Fists of the Unrelenting
+        hit = hitSpells[15464],
     },
     [23075] = { -- Death's Bargain
         mp5 = mp5Spells[21618],
