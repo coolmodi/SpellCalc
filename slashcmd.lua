@@ -11,6 +11,12 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
+    if arg == "ub" then
+        _addon:UpdateBuffs(true);
+        _addon:UpdateBuffs();
+        return;
+    end
+
     if SpellCalcStatScreen:IsShown() then
         SpellCalcStatScreen:Hide();
     else

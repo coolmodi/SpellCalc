@@ -16,6 +16,7 @@ local FIREBALL = GetSpellInfo(3140);
 local PYROBLAST = GetSpellInfo(11366);
 local CONE_OF_COLD = GetSpellInfo(8492);
 local BLAST_WAVE = GetSpellInfo(11113);
+local MAGE_ARMOR = GetSpellInfo(6117);
 
 local ARCANE_EXPLOSION_GENERIC = {
     school = _addon.SCHOOL.ARCANE,
@@ -180,35 +181,45 @@ _addon.talentData = {
     { -- Arcane Subtlety
         tree = 1,
         talent = 1,
-        effect = _addon.EFFECT_TYPE.RESISTANCE_PEN,
-        affectSchool = _addon.SCHOOL_MASK.ARCANE,
-        perPoint = 5
+        effects = {
+            type = _addon.EFFECT_TYPE.RESISTANCE_PEN,
+            affectSchool = _addon.SCHOOL_MASK.ARCANE,
+            perPoint = 5
+        }
     },
     { -- Arcane Focus
         tree = 1,
         talent = 2,
-        effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-        affectSchool = _addon.SCHOOL_MASK.ARCANE,
-        perPoint = 2
+        effects = {
+            type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+            affectSchool = _addon.SCHOOL_MASK.ARCANE,
+            perPoint = 2
+        }
     },
     { -- Arcane Concentration
         tree = 1,
         talent = 6,
-        effect = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
-        perPoint = 2
+        effects = {
+            type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
+            perPoint = 2
+        }
     },
     { -- Improved Arcane Explosion
         tree = 1,
         talent = 8,
-        effect = _addon.EFFECT_TYPE.MOD_CRIT,
-        affectSpell = {ARCANE_EXPLOSION},
-        perPoint = 2
+        effects = {
+            type = _addon.EFFECT_TYPE.MOD_CRIT,
+            affectSpell = {ARCANE_EXPLOSION},
+            perPoint = 2
+        }
     },
     { -- Arcane Meditation
         tree = 1,
         talent = 12,
-        effect = _addon.EFFECT_TYPE.FSR_REGEN,
-        perPoint = 5
+        effects = {
+            type = _addon.EFFECT_TYPE.FSR_REGEN,
+            perPoint = 5
+        }
     },
     { -- Arcane Instability
         tree = 1,
@@ -216,10 +227,10 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {}, -- TODO: What to affect? DoT parts of spells?
+                affectSchool = _addon.SCHOOL_MASK.ALL,
                 perPoint = 1
             },
-            { -- TODO: needed? It should be...
+            {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
                 affectSchool = _addon.SCHOOL_MASK.ALL,
                 perPoint = 1
@@ -227,46 +238,110 @@ _addon.talentData = {
         }
     },
 
-    -- TODO: Ignite
+    { -- Ignite
+        tree = 2,
+        talent = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.IGNITE,
+                perPoint = 8
+            }
+        }
+    },
     { -- Incinerate
         tree = 2,
         talent = 6,
-        effect = _addon.EFFECT_TYPE.MOD_CRIT,
-        affectSpell = {FIRE_BLAST, SCORCH},
-        perPoint = 2
+        effects = {
+            type = _addon.EFFECT_TYPE.MOD_CRIT,
+            affectSpell = {FIRE_BLAST, SCORCH},
+            perPoint = 2
+        }
     },
     { -- Improved Flamestrike
         tree = 2,
         talent = 7,
-        effect = _addon.EFFECT_TYPE.MOD_CRIT,
-        affectSpell = {FLAME_STRIKE},
-        perPoint = 5
+        effects = {
+            type = _addon.EFFECT_TYPE.MOD_CRIT,
+            affectSpell = {FLAME_STRIKE},
+            perPoint = 5
+        }
     },
     { -- Master of Elements
         tree = 2,
         talent = 12,
-        effect = _addon.EFFECT_TYPE.ILLUMINATION,
-        perPoint = 10
+        effects = {
+            type = _addon.EFFECT_TYPE.ILLUMINATION,
+            perPoint = 10
+        }
     },
     { -- Critical Mass
         tree = 2,
         talent = 13,
-        effect = _addon.EFFECT_TYPE.MOD_CRIT,
-        affectSchool = _addon.SCHOOL_MASK.FIRE,
-        perPoint = 2
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                affectSchool = _addon.SCHOOL_MASK.FIRE,
+                perPoint = 2
+            }
+        }
     },
-    -- TODO: Fire Power and dot part of FB, PB and FS
+    { -- Fire Power
+        tree = 2,
+        talent = 15,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSchool = _addon.SCHOOL.FIRE,
+                perPoint = 2
+            }
+        }
+    },
 
     { -- Elemental Precision
         tree = 3,
         talent = 3,
-        effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-        affectSchool = _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.FIRE,
-        perPoint = 2
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+                affectSchool = _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.FIRE,
+                perPoint = 2
+            }
+        }
     },
-    -- TODO: Ice Shards
-    -- TODO: Piercing Ice shouldn't be needed, check
-    -- TODO: Imp CoC shouldn't be needed, check
+    { -- Ice Shards
+        tree = 3,
+        talent = 4,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.CRIT_MULT,
+                affectSchool = _addon.SCHOOL.FROST,
+                perPoint = 20
+            }
+        }
+    },
+    { -- Piercing Ice
+        tree = 3,
+        talent = 8,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSchool = _addon.SCHOOL.FROST,
+                perPoint = 2
+            }
+        }
+    },
+    { -- Improved Cone of Cold
+        tree = 3,
+        talent = 15,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {CONE_OF_COLD},
+                -- TODO: add base points if this talent turns out to be needed after all
+                perPoint = 35/3
+            }
+        }
+    },
 };
 
 _addon.buffData[12042] = { -- Arcane Power
@@ -275,4 +350,7 @@ _addon.buffData[12042] = { -- Arcane Power
     value = 30,
 };
 
--- TODO: Mage Armor
+_addon.buffData[MAGE_ARMOR] = {
+    effect = _addon.EFFECT_TYPE.FSR_REGEN,
+    value = 30,
+};

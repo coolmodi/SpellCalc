@@ -34,7 +34,9 @@ _addon.EFFECT_TYPE = {
     MOD_HEALING_DONE = 7,
     RESISTANCE_PEN = 8,
     CLEARCAST_CHANCE = 9,
-    ILLUMINATION = 10
+    ILLUMINATION = 10,
+    CRIT_MULT = 11,
+    IGNITE = 12
 };
 
 -- Spell types (What calculation rules to use)

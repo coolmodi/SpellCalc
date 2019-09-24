@@ -146,6 +146,20 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemove(value, _addon.stats.illumination, name);
         return;
     end
+
+    if effect == EFFECT_TYPE.CRIT_MULT then
+        if affectSchool ~= nil then
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.critMult.school, affectSchool);
+        elseif affectSpell ~= nil then
+            ApplyOrRemoveSpellAffect(name, value, _addon.stats.critMult.spell, affectSpell);
+        end
+        return;
+    end
+
+    if effect == EFFECT_TYPE.IGNITE then
+        ApplyOrRemove(value, _addon.stats.ignite, name);
+        return;
+    end
 end
 
 --- Apply a buff
@@ -179,6 +193,7 @@ scanTt:AddFontStrings(
 local buffDesc = _G["SpellCalcScanTooltipTextLeft2"];
 
 local function GetBuffDescription(slot)
+    scanTt:ClearLines();
     scanTt:SetUnitAura("player", slot, "HELPFUL");
     return buffDesc:GetText();
 end
@@ -188,9 +203,16 @@ local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
     if value == nil then
         local desc = GetBuffDescription(buffSlot);
         if desc == nil then
-            -- TODO: couldn't reproduce the error, no clue what buff caused it, could have been mana spring, investigate
+            -- TODO: for some reason totem buffs just don't work here,
+            -- they are found as buff with correct name but setting tooltip just does nothing
+            -- only if you aren't the shaman yourself
+            -- do other buffs from other players work?
+            -- check PWF or AI (see auras.lua)
+            _addon:PrintDebug(scanTt);
             _addon:PrintError("Buff " .. name .. " in slot " .. buffSlot .. " has no description!");
-            return;
+            -- Just use placeholder for now
+            -- TODO: check if getting desc works after some delay (/sc ub)
+            value = 1;
         end
         value = tonumber(string.match(desc, effectData.ttValue));
         buffValueCache[usedKey] = value;
@@ -220,50 +242,53 @@ local function RemoveBuffEffect(effectData, usedKey, name, effectSlot)
 end
 
 --- Update player buffs
-function _addon:UpdateBuffs()
+function _addon:UpdateBuffs(clearOnly)
     _addon:PrintDebug("Updating buffs");
 
     for k, v in pairs(activeRelevantBuffs) do
         activeRelevantBuffs[k] = false;
     end
 
-    local i = 1;
-    local name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
     local buffsChanged = false;
-    local usedKey;
-    while name do
-        if _addon.buffData[spellId] ~= nil or _addon.buffData[name] ~= nil then
-            local buffdata = _addon.buffData[spellId];
-            usedKey = spellId;
-            if buffdata == nil then
-                buffdata = _addon.buffData[name];
-                usedKey = name;
-            end
 
-            if activeRelevantBuffs[usedKey] == nil then
-                _addon:PrintDebug("Add buff " .. name .. " " .. usedKey);
-
-                if buffdata.effects == nil then
-                    ApplyBuffEffect(buffdata, usedKey, name, i);
-                else
-                    for k, effect in ipairs(buffdata.effects) do
-                        ApplyBuffEffect(effect, usedKey, name, i, k);
-                    end
+    if not clearOnly then
+        local i = 1;
+        local name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
+        local usedKey;
+        while name do
+            if _addon.buffData[spellId] ~= nil or _addon.buffData[name] ~= nil then
+                local buffdata = _addon.buffData[spellId];
+                usedKey = spellId;
+                if buffdata == nil then
+                    buffdata = _addon.buffData[name];
+                    usedKey = name;
                 end
 
-                buffsChanged = true;
+                if activeRelevantBuffs[usedKey] == nil then
+                    _addon:PrintDebug("Add buff " .. name .. " (" .. usedKey .. ") slot " .. i);
+
+                    if buffdata.effects == nil then
+                        ApplyBuffEffect(buffdata, usedKey, name, i);
+                    else
+                        for k, effect in ipairs(buffdata.effects) do
+                            ApplyBuffEffect(effect, usedKey, name, i, k);
+                        end
+                    end
+
+                    buffsChanged = true;
+                end
+                activeRelevantBuffs[usedKey] = true;
             end
-            activeRelevantBuffs[usedKey] = true;
+            i = i + 1;
+            name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
         end
-        i = i + 1;
-        name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
     end
 
     for usedKeyIt, _ in pairs(activeRelevantBuffs) do
         if activeRelevantBuffs[usedKeyIt] == false then
             _addon:PrintDebug("Remove buff " .. usedKeyIt);
             local buffdata = _addon.buffData[usedKeyIt];
-            name = usedKeyIt;
+            local name = usedKeyIt;
 
             if type(name) == "number" then
                 name = GetSpellInfo(name);

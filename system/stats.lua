@@ -83,7 +83,20 @@ _addon.stats = {
         spell = {}
     },
     clearCastChance = {val=0, buffs={}},
-    illumination = {val=0, buffs={}}
+    illumination = {val=0, buffs={}},
+    critMult = {
+        school = {
+            [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
+            [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
+            [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
+            [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
+            [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
+            [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
+            [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
+        },
+        spell = {}
+    },
+    ignite = {val=0, buffs={}},
 };
 
 --- Update spell power stats from API
