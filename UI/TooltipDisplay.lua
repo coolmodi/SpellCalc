@@ -102,7 +102,7 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
     if SpellCalc_settings.ttHit then
         if effectData.hitMax > 0 then
             if SpellCalc_settings.ttAverages then
-                GameTooltip:AddLine(("%s: %d - %d (%.1f)"):format(unitString, effectData.hitMin, effectData.hitMax, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
+                GameTooltip:AddLine(("%s: %d - %d (%d)"):format(unitString, effectData.hitMin, effectData.hitMax, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
             else
                 GameTooltip:AddLine(("%s: %d - %d"):format(unitString, effectData.hitMin, effectData.hitMax), TTCOLOR, TTCOLOR, TTCOLOR);
             end
@@ -114,7 +114,7 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
     if SpellCalc_settings.ttCrit and calcData.critChance > 0 then
         if effectData.critMax > 0 then
             if SpellCalc_settings.ttAverages then
-                GameTooltip:AddDoubleLine(("%s: %d - %d (%.1f)"):format(L["TT_CRITICAL"], effectData.critMin, effectData.critMax, effectData.critAvg),
+                GameTooltip:AddDoubleLine(("%s: %d - %d (%d)"):format(L["TT_CRITICAL"], effectData.critMin, effectData.critMax, effectData.critAvg),
                 ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
             else
                 GameTooltip:AddDoubleLine(("%s: %d - %d"):format(L["TT_CRITICAL"], effectData.critMin, effectData.critMax),
