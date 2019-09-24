@@ -140,6 +140,7 @@ local function UpdateFunction(self, passed)
         _addon.stats.baseManaReg = curRegen;
         _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
         queueFrame:SetScript("OnUpdate", nil);
+        _addon.lastChange = time();
     end
 end
 
