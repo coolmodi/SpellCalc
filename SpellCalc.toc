@@ -38,3 +38,4 @@ core/core.lua
 
 UI/TooltipDisplay.lua
 UI/StatDisplay.lua
+UI/ActionbarValues.lua

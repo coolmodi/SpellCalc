@@ -18,6 +18,7 @@ end
 
 function handlers.PLAYER_ENTERING_WORLD()
     _addon:FullUpdate();
+    _addon:SetupActionbars();
 end
 
 function handlers.UNIT_AURA(unit)
@@ -65,6 +66,10 @@ end
 
 function handlers.PLAYER_TARGET_CHANGED()
     _addon:UpdateTarget();
+end
+
+function handlers.ACTIONBAR_SLOT_CHANGED(slot)
+    _addon:ActionbarSlotUpdate(slot)
 end
 
 frame:SetScript( "OnEvent",function(self, event, ...) 

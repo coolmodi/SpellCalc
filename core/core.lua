@@ -87,7 +87,6 @@ end
 -- @param spellName
 -- @param buffTable
 local function GenerateEffectModifier(school, spellData, effectData, spellName, buffTable)
-    _addon:PrintDebug(("Getting modifiers for %s, School: %d Heal: %s"):format(spellName, school, tostring(effectData.isHeal)));
     local effectMod = 1 + stats.effectMods.school[school].val/100;
     for _, buffName in pairs(stats.effectMods.school[school].buffs) do
         table.insert(buffTable, buffName);
@@ -163,8 +162,6 @@ function _addon:CalcSpell(spellId)
         end
     end
 
-    _addon:PrintDebug("Has " .. #effectData .. " effects");
-
     if spellType == SPELL_TYPE.SPELL then
         for i = 1, 2, 1 do
             if effectData[i] == nil then
@@ -189,7 +186,7 @@ function _addon:CalcSpell(spellId)
         -- NYI
     end
 
-    _addon:PrintDebug(effectTypes);
+    _addon:PrintDebug("Has " .. #effectData .. " effects (" .. effectTypes[1] .. ", " .. tostring(effectTypes[2]) .. ")");
 
     --------------------------
     -- Calculation table
@@ -353,7 +350,6 @@ function _addon:CalcSpell(spellId)
         -- Effect specific modifier
 
         local effectMod = GenerateEffectModifier(spellData.school, spellData, effectData[i], name, calcData.buffs);
-        _addon:PrintDebug("Mod: " .. effectMod);
 
         --------------------------
         -- Effect values
@@ -374,5 +370,5 @@ function _addon:CalcSpell(spellId)
 
     calcData.updated = time() - 1;
 
-    _addon:PrintDebug(calcData);
+    -- _addon:PrintDebug(calcData);
 end
