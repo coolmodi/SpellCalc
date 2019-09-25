@@ -17,6 +17,15 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
+    if arg == "sim" then
+        if SpellCalcSimStuff:IsShown() then
+            SpellCalcSimStuff: Hide();
+        else
+            SpellCalcSimStuff:Show();
+        end
+        return;
+    end
+
     if SpellCalcStatScreen:IsShown() then
         SpellCalcStatScreen:Hide();
     else

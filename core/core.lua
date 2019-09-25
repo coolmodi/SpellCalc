@@ -293,7 +293,7 @@ function _addon:CalcSpell(spellId)
     else
         if spellType == SPELL_TYPE.SPELL then
             calcData.effectiveCost = spellCost - castTime * (stats.manaReg + stats.mp5.val/5);
-            
+
             if stats.clearCastChance.val > 0 then
                                                                         -- TODO: does this only happen on successful hits?
                 calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.clearCastChance.val/100) * calcData.hitChance;
@@ -312,7 +312,16 @@ function _addon:CalcSpell(spellId)
                 end
             end
 
-            calcData.castsToOom = stats.mana / calcData.effectiveCost;
+            local effMana = stats.mana;
+            if _addon.test_innervate then
+                -- Need to remove 20 sec of manaReg because we added it with the effective cost
+                effMana = effMana + (stats.baseManaReg * 80) - (20 * stats.manaReg);
+            end
+            if _addon.test_manapot then
+                effMana = effMana + _addon.test_manapot;
+            end
+
+            calcData.castsToOom = effMana / calcData.effectiveCost;
             calcData.timeToOom = calcData.castsToOom * castTime;
         else
             -- NYI
