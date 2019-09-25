@@ -1,7 +1,7 @@
 --[[
     Simple settings menu builder I made for my addon(s).
     Author: https://github.com/coolmodi
-    Version: 1.0
+    Version: 1.1
 ]]
 
 local _addonName, _addon = ...;
@@ -9,93 +9,66 @@ local _addonName, _addon = ...;
 local ROW_V_SPACE = 15;
 local DEFAULT_ROW_HEIGHT = 30;
 
-local rowOffset = 0;
-local lastRow = nil;
-local rowGroups = {};
-local inputs = {};
-local svTable = nil;
-local defaults = nil;
-local OnSetCallback = nil;
-local AfterSetCallback = nil;
-local tempSettings = {};
-
-local settings = CreateFrame("FRAME");
-
-local vinfo = settings:CreateFontString(nil, nil, 'GameFontDisableSmall');
-vinfo:SetPoint('BOTTOMRIGHT', -10, 6);
-vinfo:SetText("Version " .. GetAddOnMetadata(_addonName, "Version") .. " by " .. GetAddOnMetadata(_addonName, "Author"));
-
-
 --------------------------------------------------------------------------------------------------------------------------------
 -- Panel event handlers
 --------------------------------------------------------------------------------------------------------------------------------
 
 --- Used for panel refresh event
 local function OnRefresh(self)
-    for _, input in pairs(inputs) do
+    for _, input in pairs(self.inputs) do
         input:RefreshState();
     end
 end
 
 --- Used for panel cancel event
 local function OnCancel(self)
-    wipe(tempSettings);
+    wipe(self.tempSettings);
 end
 
 --- Used for panel reset event
 local function OnDefault(self)
-    wipe(tempSettings);
-    for k, v in pairs(defaults) do
-        svTable[k] = v;
+    wipe(self.tempSettings);
+    for k, v in pairs(self.defaults) do
+        self.svTable[k] = v;
     end
 end
 
 --- Used for panel save event
 local function OnOkay(self)
-    for k, v in pairs(inputs) do
+    for k, v in pairs(self.inputs) do
         if v.isEditBox == true then
             if v:IsNumeric() then
-                tempSettings[k] = v:GetNumber();
+                self.tempSettings[k] = v:GetNumber();
             else
-                tempSettings[k] = v:GetText();
+                self.tempSettings[k] = v:GetText();
             end
         end
     end
-    
-    for k, v in pairs(svTable) do
-        if tempSettings[k] == nil then
-            tempSettings[k] = v;
+
+    for k, v in pairs(self.svTable) do
+        if self.tempSettings[k] == nil then
+            self.tempSettings[k] = v;
         end
     end
 
-    if OnSetCallback ~= nil then
-        OnSetCallback(tempSettings);
-    end
-    
-    for k, v in pairs(tempSettings) do
-        svTable[k] = v;
+    if self.OnSetCallback ~= nil then
+        self.OnSetCallback(self.tempSettings);
     end
 
-    wipe(tempSettings);
+    for k, v in pairs(self.tempSettings) do
+        self.svTable[k] = v;
+    end
 
-    if AfterSetCallback ~= nil then
-        AfterSetCallback();
+    wipe(self.tempSettings);
+
+    if self.AfterSetCallback ~= nil then
+        self.AfterSetCallback();
     end
 end
-
-settings.refresh = OnRefresh;
-settings.okay = OnOkay;
-settings.cancel = OnCancel;
-settings.default = OnDefault;
 
 --------------------------------------------------------------------------------------------------------------------------------
 -- General functions
 --------------------------------------------------------------------------------------------------------------------------------
-
---- Get the settings object
-function _addon:GetSettingsBuilder()
-    return settings;
-end
 
 --- Setup settings panel
 -- @param savedVarTable The table in saved variables that stores settings
@@ -104,53 +77,55 @@ end
 -- @param logoPath Path for a texture to show as logo (optional)
 -- @param lw The logo width, used with logoPath
 -- @param lh The logo height, used with logoPath
-function settings:Setup(savedVarTable, defaultSettings, customName, logoPath, lw, lh, la, lx, ly)
+-- @param parentName Make this a sub panel of parent
+local function Setup(self, savedVarTable, defaultSettings, customName, logoPath, lw, lh, la, lx, ly, parentName)
     if savedVarTable == nil or defaultSettings == nil then
         error("Usage: settings:Setup(savedVarTable, defaultSettings[, customName[, logoPath, logow, logoh]])");
     end
     
     self.name = customName or _addonName;
+    self.parent = parentName;
     InterfaceOptions_AddCategory(self);
 
-    svTable = savedVarTable;
-    defaults = defaultSettings;
+    self.svTable = savedVarTable;
+    self.defaults = defaultSettings;
 
     if logoPath ~= nil then
-        local logo = settings:CreateTexture (nil, "OVERLAY");
+        local logo = self:CreateTexture(nil, "OVERLAY");
         local la = la or "TOPLEFT";
         local lx = lx or 15;
         local ly = ly or -10;
-        logo:SetPoint(la, settings, la, lx, ly);
+        logo:SetPoint(la, self, la, lx, ly);
         logo:SetTexture (logoPath);
         logo:SetSize(lw, lh);
-        rowOffset = lh;
+        self.rowOffset = lh;
     end
 end
 
---- Setup settings panel
+--- Set callback that fires before settings are saved
 -- @param onSetCb Function to call before settings change, gets table parameter (settingname->value) with the to be set new values
-function settings:SetBeforeSaveCallback(onSetCb)
-    OnSetCallback = onSetCb;
+local function SetBeforeSaveCallback(self, onSetCb)
+    self.OnSetCallback = onSetCb;
 end
 
---- Setup settings panel
+--- Set callback that fires after settings were saved
 -- @param afterSetCb Function to call after settings changed
-function settings:SetAfterSaveCallback(afterSetCb)
-    AfterSetCallback = afterSetCb;
+local function SetAfterSaveCallback(self, afterSetCb)
+    self.AfterSetCallback = afterSetCb;
 end
 
 --- Get current panel values
 -- @returns the table containing current changed values from panel
-function settings:GetTempSettings()
-    return tempSettings;
+local function GetTempSettings(self)
+    return self.tempSettings;
 end
 
 --- Update row group columns
 -- @param groupNum The group number
-function settings:UpdateRowGroup(groupNum)
+local function UpdateRowGroup(self, groupNum)
     local maxWidths = {};
 
-    for _, row in pairs(rowGroups[groupNum]) do
+    for _, row in pairs(self.rowGroups[groupNum]) do
         for i = 1, row.elementCount, 1 do
             if maxWidths[i] == nil or row.elements[i].width > maxWidths[i] then
                 maxWidths[i] = row.elements[i].width;
@@ -164,7 +139,7 @@ function settings:UpdateRowGroup(groupNum)
             offset = offset + maxWidths[j];
         end
 
-        for _, row in pairs(rowGroups[groupNum]) do
+        for _, row in pairs(self.rowGroups[groupNum]) do
             if row.elements[i] ~= nil then
                 row.elements[i].anchorFrame:ClearAllPoints();
                 row.elements[i].anchorFrame:SetPoint("LEFT", offset, 0);
@@ -201,7 +176,7 @@ end
 -- @param group A number, columns in the same group will be sized to match (optional)
 -- @param height Custom height (optional)
 -- @return The row object
-function settings:MakeSettingsRow(group, height)
+local function MakeSettingsRow(self, group, height)
     local height = height or DEFAULT_ROW_HEIGHT;
 
 	local row = CreateFrame("Frame", nil, self);
@@ -210,22 +185,22 @@ function settings:MakeSettingsRow(group, height)
     row.elementCount = 0;
     row.AddElement = RowAddElement;
 
-    if lastRow == nil then
-	    row:SetPoint("TOPLEFT", 10, -rowOffset);
-        row:SetPoint("TOPRIGHT", -10, -rowOffset);
+    if self.lastRow == nil then
+	    row:SetPoint("TOPLEFT", 10, -self.rowOffset);
+        row:SetPoint("TOPRIGHT", -10, -self.rowOffset);
     else
-        row:SetPoint("TOPLEFT", lastRow, "BOTTOMLEFT", 0, 0);
-        row:SetPoint("TOPRIGHT", lastRow, "BOTTOMRIGHT", 0, 0);
+        row:SetPoint("TOPLEFT", self.lastRow, "BOTTOMLEFT", 0, 0);
+        row:SetPoint("TOPRIGHT", self.lastRow, "BOTTOMRIGHT", 0, 0);
     end
     
-    lastRow = row;
+    self.lastRow = row;
 
     if group ~= nil then
         row.group = group;
-        if rowGroups[group] == nil then
-            rowGroups[group] = {};
+        if self.rowGroups[group] == nil then
+            self.rowGroups[group] = {};
         end
-        table.insert(rowGroups[group], row);
+        table.insert(self.rowGroups[group], row);
     end
 
 	return row;
@@ -235,7 +210,7 @@ end
 
 --- Create a heading row
 -- @param titleText The string to show
-function settings:MakeHeading(titleText)
+local function MakeHeading(self, titleText)
     local row = self:MakeSettingsRow(nil, 45);
     row.label = row:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2");
 	row.label:SetPoint("LEFT", 0, -7);
@@ -261,12 +236,12 @@ end
 --- Checkbox OnClick handler
 local function CheckBoxOnClick(self)	
     ChatConfigFrame_PlayCheckboxSound(self:GetChecked());
-    tempSettings[self.settingName] = self:GetChecked();
+    self:GetParent():GetParent().tempSettings[self.settingName] = self:GetChecked();
 end
 
 --- Refresh checkbox to sv value
 local function CheckBoxRefresh(self)	
-    self:SetChecked(svTable[self.settingName]);
+    self:SetChecked(self:GetParent():GetParent().svTable[self.settingName]);
 end
 
 --- Create a checkbox option
@@ -275,7 +250,7 @@ end
 -- @param tooltipText The tooltip text (optional)
 -- @param row The row to insert it into (optional)
 -- @return the checkbox input object
-function settings:MakeCheckboxOption(settingName, labelText, tooltipText, row)
+local function MakeCheckboxOption(self, settingName, labelText, tooltipText, row)
     local row = row or self:MakeSettingsRow();
 
     local cb = CreateFrame("CheckButton", nil, row);
@@ -301,15 +276,15 @@ function settings:MakeCheckboxOption(settingName, labelText, tooltipText, row)
 
     row:AddElement(cb, cb:GetWidth() + label:GetStringWidth() + 7);
 
-    inputs[settingName] = cb;
+    self.inputs[settingName] = cb;
 	return cb;
 end
 
 
 
 --- Refresh editbox to sv value
-local function EditBoxRefresh(self)	
-    self:SetText(svTable[self.settingName]);
+local function EditBoxRefresh(self)
+    self:SetText(self:GetParent():GetParent().svTable[self.settingName]);
     self:SetCursorPosition(0);
 end
 
@@ -323,7 +298,7 @@ end
 -- @param forceWidth Force width to this value, if 0 take full width (optional)
 -- @param labelWidth Set label to this width instead of string width (optional)
 -- @return The editbox frame object
-function settings:MakeEditBoxOption(settingName, labelText, max, numeric, tooltipText, row, forceWidth, labelWidth)
+local function MakeEditBoxOption(self, settingName, labelText, max, numeric, tooltipText, row, forceWidth, labelWidth)
     local row = row or self:MakeSettingsRow();
 
     local label = row:CreateFontString(nil, "OVERLAY", "GameFontNormal");
@@ -364,21 +339,21 @@ function settings:MakeEditBoxOption(settingName, labelText, max, numeric, toolti
     
     row:AddElement(label, edit:GetWidth() + label:GetWidth() + 12 + 2);
 
-	inputs[settingName] = edit;
+	self.inputs[settingName] = edit;
 	return edit;
 end
 
 
 --- Handler func for slider change
 local function OnSliderChange(self, value)
-    tempSettings[self.settingName] = value;
+    self:GetParent():GetParent().tempSettings[self.settingName] = value;
     self.curVal:SetText(value);
 end
 
 --- Handler for slider refresh
 local function OnSliderRefresh(self)
-    self:SetValue(svTable[self.settingName]);
-    self.curVal:SetText(svTable[self.settingName]);
+    self:SetValue(self:GetParent():GetParent().svTable[self.settingName]);
+    self.curVal:SetText(self:GetParent():GetParent().svTable[self.settingName]);
 end
 
 --- Create editbox option
@@ -390,7 +365,7 @@ end
 -- @param step The step size the slider can be dragged for
 -- @param row Row to insert it into, if nit row is created (optional)
 -- @return The slider frame object
-function settings:MakeSliderOption(settingName, labelText, tooltipText, min, max, step, row)
+local function MakeSliderOption(self, settingName, labelText, tooltipText, min, max, step, row)
     local row = row or self:MakeSettingsRow(nil, 50);
 
     local sanchor = CreateFrame("Frame", nil, row);
@@ -430,7 +405,7 @@ function settings:MakeSliderOption(settingName, labelText, tooltipText, min, max
 
     row:AddElement(sanchor, slider:GetWidth() + slider.curVal:GetWidth() + 7);
 
-	inputs[settingName] = slider;
+	self.inputs[settingName] = slider;
 	return slider;
 end
 
@@ -441,7 +416,7 @@ end
 -- @param func The function to use on click
 -- @param row Row to insert it into, if nit row is created (optional)
 -- @return The button frame object
-function settings:MakeButton(text, func, row)
+local function MakeButton(self, text, func, row)
     local row = row or self:MakeSettingsRow();
 
 	local button = CreateFrame ("Button", nil, row, "OptionsButtonTemplate");
@@ -460,7 +435,7 @@ end
 -- @param initialText Initial text to set, height will be set to fit it
 -- @param justify The justifyH value (optional)
 -- @return the fontstring object
-function settings:MakeStringRow(initialText, justify)
+local function MakeStringRow(self, initialText, justify)
     local row = self:MakeSettingsRow(nil, 400);
     local fstring = row:CreateFontString(nil, "OVERLAY", "GameFontHighlight");
     fstring:SetAllPoints();
@@ -477,7 +452,7 @@ function settings:MakeStringRow(initialText, justify)
         height = DEFAULT_ROW_HEIGHT;
     end
     row:SetHeight(height);
-    
+
     return fstring;
 end
 
@@ -487,7 +462,7 @@ end
 local function DropdownRefresh(self)
     local optionName = "NOT SET!";
     for k,v in pairs(self.GetListItems()) do
-        if k == svTable[self.settingName] then
+        if k == self:GetParent():GetParent().svTable[self.settingName] then
             optionName = v;
             break;
         end
@@ -498,17 +473,17 @@ end;
 local function DropdownOpen(self, level, menuList)
     local info = UIDropDownMenu_CreateInfo();
     info.func = function(selfb, arg1, arg2)
-        tempSettings[self.settingName] = arg1;
+        self:GetParent():GetParent().tempSettings[self.settingName] = arg1;
         UIDropDownMenu_SetText(self, arg2);
     end;
     for k, v in pairs(self.GetListItems()) do
         info.text = v;
         info.arg1 = k;
         info.arg2 = v;
-        if tempSettings[self.settingName] ~= nil then
-            info.checked = (k == tempSettings[self.settingName]);
+        if self:GetParent():GetParent().tempSettings[self.settingName] ~= nil then
+            info.checked = (k == self:GetParent():GetParent().tempSettings[self.settingName]);
         else
-            info.checked = (k == svTable[self.settingName]);
+            info.checked = (k == self:GetParent():GetParent().svTable[self.settingName]);
         end
         UIDropDownMenu_AddButton(info);
     end
@@ -523,7 +498,7 @@ end
 -- @param labelWidth Set label to static width, ignore string width (optional)
 -- @param row Row to insert it into, if nit row is created (optional)
 -- @return The button frame object
-function settings:MakeDropdown(settingName, labelText, tooltipText, width, func, labelWidth, row)
+local function MakeDropdown(self, settingName, labelText, tooltipText, width, func, labelWidth, row)
     local row = row or self:MakeSettingsRow();
 
     local label = row:CreateFontString(nil, "OVERLAY", "GameFontNormal");
@@ -549,6 +524,51 @@ function settings:MakeDropdown(settingName, labelText, tooltipText, width, func,
     -- TODO: width is a bit strange on the dropdown template, fix when needed
     row:AddElement(label, label:GetWidth() + dropDown:GetWidth() - 15);
 
-    inputs[settingName] = dropDown;
+    self.inputs[settingName] = dropDown;
 	return dropDown;
+end
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+-- Exposed functions
+--------------------------------------------------------------------------------------------------------------------------------
+
+--- Get the settings object
+function _addon:GetSettingsBuilder()
+    local settings = CreateFrame("FRAME");
+
+    settings.rowOffset = 0;
+    settings.lastRow = nil;
+    settings.rowGroups = {};
+    settings.inputs = {};
+    settings.svTable = nil;
+    settings.defaults = nil;
+    settings.OnSetCallback = nil;
+    settings.AfterSetCallback = nil;
+    settings.tempSettings = {};
+
+    settings.refresh = OnRefresh;
+    settings.okay = OnOkay;
+    settings.cancel = OnCancel;
+    settings.default = OnDefault;
+
+    settings.Setup = Setup;
+    settings.SetBeforeSaveCallback = SetBeforeSaveCallback;
+    settings.SetAfterSaveCallback = SetAfterSaveCallback;
+    settings.GetTempSettings = GetTempSettings;
+    settings.UpdateRowGroup = UpdateRowGroup;
+    settings.MakeSettingsRow = MakeSettingsRow;
+    settings.MakeHeading = MakeHeading;
+    settings.MakeButton = MakeButton;
+    settings.MakeSliderOption = MakeSliderOption;
+    settings.MakeEditBoxOption = MakeEditBoxOption;
+    settings.MakeCheckboxOption = MakeCheckboxOption;
+    settings.MakeStringRow = MakeStringRow;
+    settings.MakeDropdown = MakeDropdown;
+
+    local vinfo = settings:CreateFontString(nil, nil, 'GameFontDisableSmall');
+    vinfo:SetPoint('BOTTOMRIGHT', -10, 6);
+    vinfo:SetText("Version " .. GetAddOnMetadata(_addonName, "Version") .. " by " .. GetAddOnMetadata(_addonName, "Author"));
+
+    return settings;
 end
