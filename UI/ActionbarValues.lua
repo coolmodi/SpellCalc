@@ -12,6 +12,10 @@ local frame = CreateFrame("Frame", "SCABUpdateFrame");
 --- Update buttons
 -- Checks if buttons need an update, updates one button per frame
 local function UpdateButtons(self, diff)
+    if not SpellCalc_settings.abShow then
+        return;
+    end
+
     if lastSyncTime < _addon.lastChange then
         _addon:PrintDebug("All buttons need an update");
         for slot in pairs(spellsInBar) do
@@ -19,6 +23,9 @@ local function UpdateButtons(self, diff)
         end
     end
     lastSyncTime = _addon.lastChange;
+
+    local directKey = SpellCalc_settings.abDirectValue;
+    local durationKey = SpellCalc_settings.abDurationValue;
 
     for slot, _ in pairs(needUpdate) do
         _addon:PrintDebug("Update button slot " .. slot);
@@ -41,14 +48,12 @@ local function UpdateButtons(self, diff)
                     actionButtons[slot]:SetTextColor(1, 1, 0.3);
                 end
 
-                -- TODO: setting for what to show
-
                 if effectData.effectType == SPELL_EFFECT_TYPE.HOT or effectData.effectType == SPELL_EFFECT_TYPE.DOT then
-                    actionButtons[slot]:SetText(math.floor(calcedSpell[1].allTicks + 0.5));
+                    actionButtons[slot]:SetText(math.floor(calcedSpell[1][durationKey] + 0.5));
                 elseif effectData.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1].perCharge + 0.5));
                 else
-                    actionButtons[slot]:SetText(math.floor(calcedSpell[1].hitAvg + 0.5));
+                    actionButtons[slot]:SetText(math.floor(calcedSpell[1][directKey] + 0.5));
                 end
             else
                 -- NYI
@@ -157,4 +162,11 @@ function _addon:ActionbarSlotUpdate(slot)
     end
 
     SetSlotSpell(slot, nil);
+end
+
+--- Clear every shown value
+function _addon:ClearActionBar()
+    for slot = 1, 120 do
+        actionButtons[slot]:SetText("");
+    end
 end

@@ -39,6 +39,16 @@ L["SETTINGS_TT_SHADOW_LABEL"] = "Shadow";
 L["SETTINGS_TT_NATURE_LABEL"] = "Nature";
 L["SETTINGS_TT_ARCANE_LABEL"] = "Arcane";
 
+L["SETTINGS_AB_HEAD"] = "Actionbar button value";
+L["SETTINGS_AB_SHOW"] = "Show values on actionbar";
+L["SETTINGS_AB_DIRECT_VALUE"] = "Direct";
+L["SETTINGS_AB_DIRECT_VALUE_AVG"] = "Avg. normal hit";
+L["SETTINGS_AB_DIRECT_VALUE_CRITAVG"] = "Avg. crit";
+L["SETTINGS_AB_DIRECT_VALUE_REALAVG"] = "Real average";
+L["SETTINGS_AB_DURATION_VALUE"] = "DoT/HoT";
+L["SETTINGS_AB_DURATION_VALUE_TICK"] = "Per tick";
+L["SETTINGS_AB_DURATION_VALUE_ALL"] = "All ticks";
+L["SETTINGS_AB_DURATION_VALUE_REALAVG"] = "Real average";
 
 L["TT_TITLE_DAMAGE"] = "Damage:";
 L["TT_TITLE_DOT"] = "DoT:";

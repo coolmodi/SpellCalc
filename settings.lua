@@ -31,6 +31,10 @@ local DEFAULTSETTINGS = {
 	["resOverrideNature"] = 0,
 	["resOverrideArcane"] = 0,
 
+	["abShow"] = true,
+	["abDirectValue"] = "hitAvg",
+	["abDurationValue"] = "allTicks",
+
 	["version"] = GetAddOnMetadata(_addonName, "Version")
 };
 
@@ -56,6 +60,11 @@ end
 --- Called after settings changed
 local function AfterSave()
 	_addon:UpdateTarget();
+
+	if not SpellCalc_settings.abShow then
+		_addon:ClearActionBar();
+	end
+
 	_addon.lastChange = time();
 end
 
@@ -115,4 +124,25 @@ function _addon:SetupSettings()
 	settings:MakeEditBoxOption("resOverrideShadow", L["SETTINGS_TT_SHADOW_LABEL"], 3, true, nil, nil, nil, 66);
 	settings:MakeEditBoxOption("resOverrideNature", L["SETTINGS_TT_NATURE_LABEL"], 3, true, nil, nil, nil, 66);
 	settings:MakeEditBoxOption("resOverrideArcane", L["SETTINGS_TT_ARCANE_LABEL"], 3, true, nil, nil, nil, 66);
+
+	-- Action bar settings
+	local settingsAb = _addon:GetSettingsBuilder();
+	settingsAb:Setup(SpellCalc_settings, DEFAULTSETTINGS, "Actionbar", nil, nil, nil, nil, nil, nil, _addonName);
+	settingsAb:SetAfterSaveCallback(AfterSave);
+	settingsAb:MakeHeading(L["SETTINGS_AB_HEAD"]);
+	settingsAb:MakeCheckboxOption("abShow", L["SETTINGS_AB_SHOW"]);
+	settingsAb:MakeDropdown("abDirectValue", L["SETTINGS_AB_DIRECT_VALUE"], nil, 150, function()
+		return {
+			hitAvg = L["SETTINGS_AB_DIRECT_VALUE_AVG"],
+			critAvg = L["SETTINGS_AB_DIRECT_VALUE_CRITAVG"],
+			avgAfterMitigation = L["SETTINGS_AB_DIRECT_VALUE_REALAVG"]
+		}
+	end, 100);
+	settingsAb:MakeDropdown("abDurationValue", L["SETTINGS_AB_DURATION_VALUE"], nil, 150, function()
+		return {
+			perTick = L["SETTINGS_AB_DURATION_VALUE_TICK"],
+			allTicks = L["SETTINGS_AB_DURATION_VALUE_ALL"],
+			avgAfterMitigation = L["SETTINGS_AB_DURATION_VALUE_REALAVG"]
+		}
+	end, 100);
 end
