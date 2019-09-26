@@ -206,13 +206,10 @@ local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
             -- TODO: for some reason totem buffs just don't work here,
             -- they are found as buff with correct name but setting tooltip just does nothing
             -- only if you aren't the shaman yourself
-            -- do other buffs from other players work?
-            -- check PWF or AI (see auras.lua)
-            _addon:PrintDebug(scanTt);
+            -- all other aura like buffs seem to work
             _addon:PrintError("Buff " .. name .. " in slot " .. buffSlot .. " has no description!");
-            -- Just use placeholder for now
-            -- TODO: check if getting desc works after some delay (/sc ub)
-            value = 1;
+            -- so it doesn't throw errors around, just ignore the effect
+            value = 0;
         end
         value = tonumber(string.match(desc, effectData.ttValue));
         buffValueCache[usedKey] = value;

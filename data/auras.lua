@@ -2,7 +2,7 @@ local _, _addon = ...;
 
 local BLESSING_OF_WISDOM = GetSpellInfo(19852);
 local GREATER_BLESSING_OF_WISDOM = GetSpellInfo(25918);
-local MANA_SPRING = GetSpellInfo(10491);
+
 
 -- Buffs the player can have
 _addon.buffData = {
@@ -18,11 +18,25 @@ _addon.buffData = {
         effect = _addon.EFFECT_TYPE.MP5,
         ttValue = "(%d+)",
     },
-    [MANA_SPRING] = {
+    -- For some reason the tooltip of other's totem buffs can't be read when aura is gained
+    -- So yeah, lets just put them here like that so I don't have to find out why...
+    [5677] = { -- Mana Spring 1
         effect = _addon.EFFECT_TYPE.MP5,
-        ttValue = "(%d+)",
+        value = 10, -- 4/2s
     },
-    [18194] = { -- Nightfin Soup?
+    [10491] = { -- Mana Spring 2
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 15, -- 6/2s
+    },
+    [10493] = { -- Mana Spring 3
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 20, -- 8/2s
+    },
+    [10494] = { -- Mana Spring 4
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 25, -- 10/2s
+    },
+    [18194] = { -- Nightfin Soup
         effect = _addon.EFFECT_TYPE.MP5,
         value = 8,
     },
