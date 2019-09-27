@@ -53,3 +53,10 @@ _addon.SPELL_EFFECT_TYPE = {
     DIRECT_HEAL = 4,
     HOT = 5
 };
+
+_addon.HEALING_CLASSES = {
+    PRIEST = true,
+    SHAMAN = true,
+    DRUID = true,
+    PALADIN = true
+}

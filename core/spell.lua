@@ -192,6 +192,27 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, 
     et.perSecond = et.avgAfterMitigation / castTime;
     et.doneToOom = calcData.castsToOom * et.avgAfterMitigation;
     et.perMana = et.avgAfterMitigation / calcData.effectiveCost;
+
+    -- TODO: experimental
+    if et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL and SpellCalc_settings.healTargetHps > 0 then
+        local secondsNoCast = (et.perSecond / SpellCalc_settings.healTargetHps - 1) * castTime;
+        if secondsNoCast > 0 then
+            local manaGained = secondsNoCast * self.stats.mp5.val/5;
+            local secOutOfFSR = secondsNoCast - 5 + castTime;
+            if secOutOfFSR > 0 then
+                et.secNoFsrTHPS = secOutOfFSR;
+                manaGained = manaGained + self.stats.baseManaReg * secOutOfFSR;
+            else
+                et.secNoFsrTHPS = 0;
+            end
+            et.secNoCastTHPS = secondsNoCast;
+            et.effCostTHPS = calcData.effectiveCost - manaGained;
+            et.perManaTHPS = et.avgAfterMitigation / et.effCostTHPS;
+            local ctoTHPS = (calcData.castsToOom * calcData.effectiveCost) / et.effCostTHPS;
+            et.timeToOomTHPS = ctoTHPS * (castTime + secondsNoCast);
+            et.doneToOomTHPS = ctoTHPS * et.avgAfterMitigation;
+        end
+    end
 end
 
 --- Calculate damage shield effect (e.g. Lightning Shield, not Thorns lel)

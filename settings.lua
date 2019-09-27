@@ -1,6 +1,6 @@
 local _addonName, _addon = ...;
 local L = _addon:GetLocalization();
-local classLoc = UnitClass("player");
+local classLoc, class = UnitClass("player");
 
 local DEFAULTSETTINGS = {
 	["firstStart"] = true,
@@ -33,6 +33,8 @@ local DEFAULTSETTINGS = {
 	["abShow"] = true,
 	["abDirectValue"] = "hitAvg",
 	["abDurationValue"] = "allTicks",
+
+	["healTargetHps"] = 0,
 
 	["version"] = GetAddOnMetadata(_addonName, "Version")
 };
@@ -156,5 +158,13 @@ function _addon:SetupSettings()
 				SpellCalc_settings[k] = v;
 			end
 		end
+	end
+
+	if self.HEALING_CLASSES[class] then
+		local settingsHeal = _addon:GetSettingsBuilder();
+		settingsHeal:Setup(SpellCalc_settings, DEFAULTSETTINGS, L["SETTINGS_HEAL_HEAD"], nil, nil, nil, nil, nil, nil, _addonName);
+		settingsHeal:SetAfterSaveCallback(AfterSave);
+		settingsHeal:MakeHeading(L["SETTINGS_HEAL_HEAD"]);
+		settingsHeal:MakeEditBoxOption("healTargetHps", L["SETTINGS_HEAL_TARGET_HPS"], 3, true, L["SETTINGS_HEAL_TARGET_HPS_TT"]);
 	end
 end

@@ -53,6 +53,10 @@ L["SETTINGS_AB_DURATION_VALUE_REALAVG"] = "Real average";
 L["SETTINGS_WL_USE_IMP_SB"] = "Use Improved Shadow Bolt talent";
 L["SETTINGS_WL_USE_IMP_SB_TT"] = "Use talent in Shadow Bolt dps calculation, assumes nobody \"steals\" your debuff charges.";
 
+L["SETTINGS_HEAL_HEAD"] = "Healing";
+L["SETTINGS_HEAL_TARGET_HPS"] = "Target HPS";
+L["SETTINGS_HEAL_TARGET_HPS_TT"] = "If not 0 tooltips for direct heals with at least that much HPS will show extra values as if there are breaks between casts to reach this HPS value.";
+
 L["TT_TITLE_DAMAGE"] = "Damage:";
 L["TT_TITLE_DOT"] = "DoT:";
 L["TT_TITLE_HEAL"] = "Heal:";
@@ -91,5 +95,8 @@ L["TT_COMB_PER_MANA_HEAL"] = "HPM spam";
 L["TT_COMB_PER_MANA_DAMAGE"] = "DPM spam";
 L["TT_COMB_UNTILOOM_DAMAGE"] = "Damage until oom spam";
 L["TT_COMB_UNTILOOM_HEAL"] = "Heal until oom spam";
+
+L["TT_THPS"] = "For target HPS";
+L["TT_THPS_TIMES"] = "%.1fs between casts, %.1fs outside of FSR";
 
 L["TT_BUFFS"] = "Considered buffs:";

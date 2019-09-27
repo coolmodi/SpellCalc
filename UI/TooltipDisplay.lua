@@ -91,6 +91,14 @@ local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
             GameTooltip:AddLine(("%s: %d"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOom), TTCOLOR, TTCOLOR, TTCOLOR);
         end
     end
+
+    if effectData.perManaTHPS then
+        GameTooltip:AddLine(("|cFF00FF00%s (%s):"):format(L["TT_THPS"], SpellCalc_settings.healTargetHps), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(L["TT_THPS_TIMES"]:format(effectData.secNoCastTHPS, effectData.secNoFsrTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(("%s: %.1f"):format(L["TT_EFFCOST"], effectData.effCostTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(("%s: %.2f"):format(L["TT_PER_MANA_"..unitPart], effectData.perManaTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(("%s: %d (%ds)"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOomTHPS, effectData.timeToOomTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
+    end
 end
 
 --- Apend effect data for direct damage or heal
