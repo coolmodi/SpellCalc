@@ -219,12 +219,20 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellDesc, effectData
 
     et.ticks = et.duration / effectData.tickPeriod;
     local dmgTt = string.match(spellDesc, effectData.ttMinMax);
+
+    if effectData.ttIsPerTick then
+        dmgTt = dmgTt * et.ticks;
+    end
+
     et.allTicks = math.floor(dmgTt * effectMod + (et.ticks * et.effectivePower) + 0.5);
     et.perTick = et.allTicks / et.ticks;
 
     if calcData.hitChance ~= nil then
         if isChannel then
             et.avgAfterMitigation = et.allTicks * (1 - (1 - calcData.hitChance) ^ (castTime/1.5));
+            if et.isChannelAoe then
+                et.avgAfterMitigation = et.avgAfterMitigation * (1 - calcData.avgResistMod);
+            end
         else
             et.avgAfterMitigation = et.allTicks * calcData.hitChance;
         end

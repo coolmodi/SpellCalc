@@ -44,7 +44,7 @@ _addon.stats = {
         [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
     },
     healingDoneMod = {val=0, buffs={}},
-    effectMods = {
+    effectMods = { -- TODO: these all seem to be multiplicative (even same effect e.g. pct mod 108), same for dmg done mods?
         school = {
             [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
             [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
