@@ -18,6 +18,10 @@ end
 -- @param calcData The base calculation table for the spell
 -- @param effectData The effect table from base calculation table
 local function AppendCoefData(calcData, effectData)
+    if not effectData.effectiveSpCoef or effectData.effectiveSpCoef == 0 then
+        return;
+    end
+
     if SpellCalc_settings.ttLevelPenalty and calcData.levelPenalty < 1 then
         GameTooltip:AddLine(("%s: %.2f%%"):format(L["TT_LOWLVLPENAL"], (1-calcData.levelPenalty)*100), TTCOLOR, TTCOLOR, TTCOLOR);
     end
@@ -48,32 +52,31 @@ end
 local function AppendMitigation(calcData)
     if SpellCalc_settings.ttHitChance then
         if SpellCalc_settings.ttHitDetail then
-            local baseStr = ("%s: %.1f%% (%d%% + %d%%"):format(L["TT_HITCHANCE"], calcData.hitChance*100, calcData.baseHitChance, calcData.hitChanceBonus);
-            local binaryStr = ")";
+            local hitStr = ("%s: %.1f%% (%d%% + %d%%)"):format(L["TT_HITCHANCE"], calcData.hitChance*100, calcData.baseHitChance, calcData.hitChanceBonus);
             if calcData.binaryHitLoss > 0 then
-                binaryStr = (" - %.1f%%) (%s)"):format(calcData.binaryHitLoss, L["TT_BINARYMISS"]);
+                hitStr = hitStr .. (" (-%.1f%% %s)"):format(calcData.binaryHitLoss, L["TT_BINARYMISS"]);
             end
-            baseStr = baseStr..binaryStr;
-            GameTooltip:AddLine(baseStr, TTCOLOR, TTCOLOR, TTCOLOR);
+            GameTooltip:AddLine(hitStr, TTCOLOR, TTCOLOR, TTCOLOR);
         else
             GameTooltip:AddLine(("%s: %.1f%%"):format(L["TT_HITCHANCE"], calcData.hitChance*100), TTCOLOR, TTCOLOR, TTCOLOR);
         end
     end
 
-    if SpellCalc_settings.ttResist and calcData.avgResistMod > 0 then
+    if SpellCalc_settings.ttResist and calcData.avgResistMod > 0 and calcData.binaryHitLoss == 0 then
         GameTooltip:AddLine(("%s: %.1f%%"):format(L["TT_RESIST"], calcData.avgResistMod*100), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 end
 
 --- Append efficiency stuff
 -- @param calcData The base calculation table for the spell
--- @param effectData The effect table from base calculation table
+-- @param effectNum The effect slot to show
 -- @param isHeal
 -- @param showTime Show time taken
-local function AppendEfficiency(calcData, effectData, isHeal, showTime)
+local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
+    local effectData = calcData[effectNum];
     local unitPart = isHeal and "HEAL" or "DAMAGE";
 
-    if SpellCalc_settings.ttEffCost then
+    if effectNum == 1 and SpellCalc_settings.ttEffCost then
         GameTooltip:AddLine(("%s: %.1f"):format(L["TT_EFFCOST"], calcData.effectiveCost), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
@@ -132,10 +135,10 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
     end
 
     if SpellCalc_settings.ttPerSecond then
-        GameTooltip:AddLine(("%s: %d"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
-    AppendEfficiency(calcData, effectData, isHeal, true);
+    AppendEfficiency(calcData, effectNum, isHeal, true);
 end
 
 --- Apend effect data for duration damage or heal
@@ -162,11 +165,11 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellData)
             GameTooltip:AddDoubleLine(("%s: %d"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond),
             ("%s: %d"):format(L["TT_PERSECDUR_"..unitPart], effectData.perSecondDuration), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
         else
-            GameTooltip:AddLine(("%s: %d"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
+            GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
         end
     end
 
-    AppendEfficiency(calcData, effectData, isHeal);
+    AppendEfficiency(calcData, effectNum, isHeal);
 end
 
 --- Apend effect data for dmg shields
@@ -187,10 +190,10 @@ local function AppendDmgShieldEffect(calcData, effectNum)
     AppendMitigation(calcData);
 
     if SpellCalc_settings.ttPerSecond then
-        GameTooltip:AddLine(("%s: %d"):format(L["TT_PERSECC_DAMAGE"], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSECC_DAMAGE"], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
-    AppendEfficiency(calcData, effectData, false);
+    AppendEfficiency(calcData, effectNum, false);
 end
 
 --- Append data for split spells like Holy Fire
