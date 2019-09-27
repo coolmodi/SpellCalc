@@ -5,7 +5,6 @@ if playerClass ~= "MAGE" then
 end
 
 -- TODO: Arcane Missiles, but who even needs that?
--- TODO: Blizzard
 
 local FROST_BOLT = GetSpellInfo(837);
 local ARCANE_EXPLOSION = GetSpellInfo(1449);
@@ -17,6 +16,7 @@ local PYROBLAST = GetSpellInfo(11366);
 local CONE_OF_COLD = GetSpellInfo(8492);
 local BLAST_WAVE = GetSpellInfo(11113);
 local MAGE_ARMOR = GetSpellInfo(6117);
+local BLIZZARD = GetSpellInfo(10);
 
 local ARCANE_EXPLOSION_GENERIC = {
     school = _addon.SCHOOL.ARCANE,
@@ -174,6 +174,17 @@ _addon.spellData = {
         school = _addon.SCHOOL.FIRE,
         ttMinMax = "(%d+).-%s(%d+)",
         coef = 0.136
+    },
+
+    [BLIZZARD] = {
+        school = _addon.SCHOOL.FROST,
+        isDuration = true,
+        isChannel = true,
+        isChannelAoe = true,
+        duration = 8,
+        tickPeriod = 1,
+        ttMinMax = "(%d+)",
+        coef = 1/7,
     },
 };
 
