@@ -173,7 +173,7 @@ local function UpdateDisplay(self, passed)
     timePassed = 0;
 
     for k, data in ipairs(singleStats) do
-        local ostr = KEY_COLOR .. data.title .. ": " .. VALUE_COLOR .. data.tab[data.key];
+        local ostr = KEY_COLOR .. data.title .. ": " .. VALUE_COLOR .. math.floor(data.tab[data.key]*100 + 0.5)/100;
         if data.unit then
             ostr = ostr .. UNIT_COLOR .. data.unit;
         end
@@ -181,7 +181,7 @@ local function UpdateDisplay(self, passed)
     end
 
     for k, data in ipairs(uniformStats) do
-        local ostr = KEY_COLOR .. data.title .. ": " .. VALUE_COLOR .. data.tab.val;
+        local ostr = KEY_COLOR .. data.title .. ": " .. VALUE_COLOR .. math.floor(data.tab.val*100 + 0.5)/100;
         if data.unit then
             ostr = ostr .. UNIT_COLOR .. data.unit;
         end
@@ -208,7 +208,7 @@ local function UpdateDisplay(self, passed)
                 spellList.listFrames[pos]:Show()
             end
             local label = type(spellIdOrName) == "number" and GetSpellInfo(spellIdOrName) or spellIdOrName;
-            local ostr = KEY_COLOR .. label .. ": " .. VALUE_COLOR .. uniformStat.val;
+            local ostr = KEY_COLOR .. label .. ": " .. VALUE_COLOR .. math.floor(uniformStat.val*100 + 0.5)/100;
             if spellList.unit then
                 ostr = ostr .. UNIT_COLOR .. spellList.unit;
             end
@@ -248,15 +248,24 @@ AddSchoolTableSingle(stats.spellPower, "Spell power");
 AddSingleStat("Healing bonus", stats, "spellHealing");
 
 AddSchoolTableSingle(stats.spellCrit, "Spell crit", "%");
-AddSpellTable(stats.critMods.spell, "Crit mods", "%");
+AddSchoolTableUniform(stats.critMods.school, "Crit mods", "%");
+AddSpellTable(stats.critMods.spell, nil, "%");
+AddSchoolTableUniform(stats.critMult.school, "Crit mult mods", "%");
+AddSpellTable(stats.critMult.spell, nil, "%");
+
+AddSchoolTableUniform(stats.spellPen, "Spell pen", "");
 
 AddSchoolTableUniform(stats.hitMods.school, "Hit mods", "%");
 AddUniformStatTable(stats.hitBonusSpell, "Spell +hit", "%");
 AddSpellTable(stats.hitMods.spell, nil, "%");
 
 AddSchoolTableUniform(stats.dmgDoneMods, "Dmg done mods", "%");
-
 AddUniformStatTable(stats.healingDoneMod, "Healing done mod", "%");
 
 AddSchoolTableUniform(stats.effectMods.school, "Effect mods", "%");
 AddSpellTable(stats.effectMods.spell, nil, "%");
+
+AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
+AddUniformStatTable(stats.illumination, "Illumination", "%");
+AddUniformStatTable(stats.ignite, "Ignite", "");
+AddUniformStatTable(stats.impShadowBolt, "Imp Shadow Bolt", "%");
