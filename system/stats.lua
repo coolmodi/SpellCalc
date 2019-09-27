@@ -97,6 +97,7 @@ _addon.stats = {
         spell = {}
     },
     ignite = {val=0, buffs={}},
+    impShadowBolt = {val=0, buffs={}},
 };
 
 --- Update spell power stats from API

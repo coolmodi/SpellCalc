@@ -1,7 +1,6 @@
 local _addonName, _addon = ...;
 local L = _addon:GetLocalization();
-local playerName = GetUnitName("player");
-local realmName = GetRealmName();
+local classLoc = UnitClass("player");
 
 local DEFAULTSETTINGS = {
 	["firstStart"] = true,
@@ -145,4 +144,17 @@ function _addon:SetupSettings()
 			avgAfterMitigation = L["SETTINGS_AB_DURATION_VALUE_REALAVG"]
 		}
 	end, 100);
+
+	if self.ClassSettings ~= nil then
+		local settingsClass = _addon:GetSettingsBuilder();
+		settingsClass:Setup(SpellCalc_settings, DEFAULTSETTINGS, classLoc, nil, nil, nil, nil, nil, nil, _addonName);
+		settingsClass:SetAfterSaveCallback(AfterSave);
+		settingsClass:MakeHeading(classLoc);
+		for k, v in pairs(self:ClassSettings(settingsClass)) do
+			if SpellCalc_settings[k] == nil then
+				_addon:PrintDebug("Creating missing class setting " .. k);
+				SpellCalc_settings[k] = v;
+			end
+		end
+	end
 end

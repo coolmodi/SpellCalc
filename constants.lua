@@ -36,7 +36,8 @@ _addon.EFFECT_TYPE = {
     CLEARCAST_CHANCE = 9,
     ILLUMINATION = 10,
     CRIT_MULT = 11,
-    IGNITE = 12
+    IGNITE = 12,
+    WL_IMP_SB = 13
 };
 
 -- Spell types (What calculation rules to use)

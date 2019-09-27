@@ -364,7 +364,7 @@ function _addon:CalcSpell(spellId)
         -- Effect values
 
         if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
-            _addon:CalculateSpellDirectEffect(calcData, et, desc, effectData[i], effectMod, castTime);
+            _addon:CalculateSpellDirectEffect(calcData, et, desc, effectData[i], effectMod, castTime, name);
         elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
             _addon:CalculateSpellDmgShieldEffect(calcData, et, desc, effectData[i], effectMod, castTime)
         else -- HoT or DoT (also channeled)

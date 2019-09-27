@@ -50,6 +50,9 @@ L["SETTINGS_AB_DURATION_VALUE_TICK"] = "Per tick";
 L["SETTINGS_AB_DURATION_VALUE_ALL"] = "All ticks";
 L["SETTINGS_AB_DURATION_VALUE_REALAVG"] = "Real average";
 
+L["SETTINGS_WL_USE_IMP_SB"] = "Use Improved Shadow Bolt talent";
+L["SETTINGS_WL_USE_IMP_SB_TT"] = "Use talent in Shadow Bolt dps calculation, assumes nobody \"steals\" your debuff charges.";
+
 L["TT_TITLE_DAMAGE"] = "Damage:";
 L["TT_TITLE_DOT"] = "DoT:";
 L["TT_TITLE_HEAL"] = "Heal:";

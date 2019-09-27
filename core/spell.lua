@@ -1,6 +1,7 @@
 local _, _addon = ...;
 
 local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
+local SHADOW_BOLT = GetSpellInfo(686);
 
 --- Get the average dmg resisted by target due to resistance after penetration
 -- @param school The spell school (API enumeration)
@@ -153,7 +154,8 @@ end
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
 -- @param castTime Spell cast time
-function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, effectMod, castTime)
+-- @param spellName The spell's name
+function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, effectMod, castTime, spellName)
     local minTt, maxTt = string.match(spellDesc, effectData.ttMinMax);
 
     et.hitMin = math.floor(minTt * effectMod + et.effectivePower);
@@ -174,6 +176,17 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, 
         et.avgAfterMitigation = et.avgCombined * calcData.hitChance * (1 - calcData.avgResistMod);
     else
         et.avgAfterMitigation = et.avgCombined;
+    end
+
+    if self.stats.impShadowBolt.val ~= 0 and spellName == SHADOW_BOLT and SpellCalc_settings.useImpSB then
+        local mod = self.stats.impShadowBolt.val/100;
+        local uptime = math.min(1, calcData.critChance/25); -- TODO: check this when not nearly falling asleep
+        local effectiveMod = mod * uptime;
+        et.avgAfterMitigation = et.avgAfterMitigation * (1 + effectiveMod);
+
+        for _, buffName in pairs(self.stats.impShadowBolt.buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
     end
 
     et.perSecond = et.avgAfterMitigation / castTime;

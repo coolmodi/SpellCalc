@@ -160,6 +160,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemove(value, _addon.stats.ignite, name);
         return;
     end
+
+    if effect == EFFECT_TYPE.WL_IMP_SB then
+        ApplyOrRemove(value, _addon.stats.impShadowBolt, name);
+        return;
+    end
 end
 
 --- Apply a buff

@@ -4,7 +4,7 @@ if playerClass ~= "WARLOCK" then
     return;
 end
 
--- TODO: improved shadow bolt sim
+local L = _addon:GetLocalization();
 
 local CORRUPTION = GetSpellInfo(172);
 local SHADOW_BOLT = GetSpellInfo(686);
@@ -206,6 +206,16 @@ _addon.talentData = {
         }
     },
 
+    { -- Improved Shadow Bolt
+        tree = 3,
+        talent = 1,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.WL_IMP_SB,
+                perPoint = 4
+            }
+        }
+    },
     { -- Devastation
         tree = 3,
         talent = 7,
@@ -293,3 +303,11 @@ _addon.buffData[23836] = {
     affectSchool = _addon.SCHOOL_MASK.ALL,
     value = 10,
 };
+
+--- Add class settings page
+function _addon:ClassSettings(settings)
+    settings:MakeCheckboxOption("useImpSB", L["SETTINGS_WL_USE_IMP_SB"], L["SETTINGS_WL_USE_IMP_SB_TT"]);
+    return {
+        useImpSB = false;
+    };
+end
