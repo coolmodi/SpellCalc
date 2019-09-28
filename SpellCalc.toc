@@ -1,8 +1,8 @@
 ## Interface: 11302
 ## Title: SpellCalc
 ## Author: coolmodi
-## Version: 0.2
-## Notes: WIP
+## Version: 0.3
+## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
 
 libs/SettingsCreator.lua

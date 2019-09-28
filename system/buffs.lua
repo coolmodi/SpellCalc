@@ -335,7 +335,11 @@ function _addon:UpdateTalents()
             _addon:PrintDebug("Remove old talent rank " .. name .. activeRelevantTalents[name]);
             local oldIdName = name .. activeRelevantTalents[name];
             for k, effect in ipairs(data.effects) do
-                ChangeBuff(false, oldIdName.."-"..k, effect.type, effect.perPoint*activeRelevantTalents[name], effect.affectSchool, effect.affectSpell);
+                local value = effect.perPoint * activeRelevantTalents[name];
+                if effect.base ~= nil then
+                    value = value + effect.base;
+                end
+                ChangeBuff(false, oldIdName.."-"..k, effect.type, value, effect.affectSchool, effect.affectSpell);
             end
             activeRelevantTalents[name] = nil;
         end
@@ -345,7 +349,11 @@ function _addon:UpdateTalents()
             _addon:PrintDebug("Add talent rank " .. name .. curRank);
             local idName = name .. curRank;
             for k, effect in ipairs(data.effects) do
-                ChangeBuff(true, idName.."-"..k, effect.type, effect.perPoint*curRank, effect.affectSchool, effect.affectSpell);
+                local value = effect.perPoint * curRank;
+                if effect.base ~= nil then
+                    value = value + effect.base;
+                end
+                ChangeBuff(true, idName.."-"..k, effect.type, value, effect.affectSchool, effect.affectSpell);
             end
             activeRelevantTalents[name] = curRank;
         end

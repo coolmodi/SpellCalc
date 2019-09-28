@@ -348,8 +348,8 @@ _addon.talentData = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
                 affectSpell = {CONE_OF_COLD},
-                -- TODO: add base points if this talent turns out to be needed after all
-                perPoint = 35/3
+                perPoint = 10,
+                base = 5
             }
         }
     },
