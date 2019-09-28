@@ -98,6 +98,7 @@ _addon.stats = {
     },
     ignite = {val=0, buffs={}},
     impShadowBolt = {val=0, buffs={}},
+    mageNWRProc = {},
 };
 
 --- Update spell power stats from API

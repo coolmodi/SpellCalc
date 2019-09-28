@@ -165,6 +165,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemove(value, _addon.stats.impShadowBolt, name);
         return;
     end
+
+    if effect == EFFECT_TYPE.MAGE_NWR_PROC then
+        ApplyOrRemoveSpellAffect(name, value, _addon.stats.mageNWRProc, affectSpell);
+        return;
+    end
 end
 
 --- Apply a buff

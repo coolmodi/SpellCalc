@@ -2,6 +2,9 @@ local _, _addon = ...;
 
 local PRAYER_OF_HEALING = GetSpellInfo(10960);
 local SHADOW_WORD_PAIN = GetSpellInfo(589);
+local FIREBALL = GetSpellInfo(3140);
+local FROST_BOLT = GetSpellInfo(837);
+local ARCANE_MISSILES = GetSpellInfo(7268);
 
 _addon.itemSetData = {
     [121] = {
@@ -63,7 +66,7 @@ _addon.itemSetData = {
         name = "Felheart Raiment",
         effects = {
             [1] = {
-                need = 3,
+                need = 3, -- TODO: needed?
                 effect = "Health or Mana gained from Drain Life and Drain Mana increased by $s1%.",
             },
         },
@@ -100,7 +103,12 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 8,
-                effect = "$s1% chance after casting Arcane Missiles, Fireball, or Frostbolt that your next spell with a casting time under 10 seconds cast instantly.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MAGE_NWR_PROC,
+                    affectSpell = {ARCANE_MISSILES, FROST_BOLT, FIREBALL},
+                    value = 1
+                }
+                --effect = "$s1% chance after casting Arcane Missiles, Fireball, or Frostbolt that your next spell with a casting time under 10 seconds cast instantly.",
             },
         },
     },
@@ -206,6 +214,19 @@ _addon.itemSetData = {
             },
         },
     },
+    [473] = {
+        name = "The Highlander's Intent",
+        effects = {
+            [1] = {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    affectSchool = _addon.SCHOOL_MASK.ALL,
+                    value = 1,
+                }
+            },
+        },
+    },
     [475] = {
         name = "Freethinker's Armor",
         effects = {
@@ -241,7 +262,7 @@ _addon.itemSetData = {
         name = "Demoniac's Threads",
         effects = {
             [1] = {
-                need = 3,
+                need = 3, -- TODO P4: needed?
                 effect = "Increases the damage of Corruption by $s1%.",
             },
         },
@@ -299,7 +320,7 @@ _addon.itemSetData = {
         name = "Doomcaller's Attire",
         effects = {
             [1] = {
-                need = 3,
+                need = 3, -- TODO P5: needed?
                 effect = "$s1% increased damage on your Immolate spell.",
             },
         },

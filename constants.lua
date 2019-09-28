@@ -37,7 +37,8 @@ _addon.EFFECT_TYPE = {
     ILLUMINATION = 10,
     CRIT_MULT = 11,
     IGNITE = 12,
-    WL_IMP_SB = 13
+    WL_IMP_SB = 13,
+    MAGE_NWR_PROC = 14
 };
 
 -- Spell types (What calculation rules to use)

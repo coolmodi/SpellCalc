@@ -282,6 +282,22 @@ function _addon:CalcSpell(spellId)
     end
 
     --------------------------
+    -- Cast time mods
+
+    if stats.mageNWRProc[name] ~= nil and stats.mageNWRProc[name].val ~= 0 then
+        -- E.g. with a 10% chance every 10th cast will proc, causing the next to be 1.5s (GCD).
+        -- NWR has a 10sec ICD, therefore 1 instant + floor(8.5/castTime) casts can't proc it after a proc.
+        -- So in reality you have 10 normal casts, 1 GCD and floor(8.5/castTime) additional normal casts.
+        -- The effective cast time is then (10*castTime + 1.5 + floor(8.5/castTime)*castTime)/(10 + floor(8.5/castTime) + 1)
+        -- TODO P3: is this right or did I just make up total bullshit? Check back in P3 to verify ICD
+        local castsInICD = math.floor(8.5/castTime);
+        castTime = (1.5 + (10 + castsInICD) * castTime) / (11 + castsInICD);
+        for _, buffName in pairs(stats.mageNWRProc[name].buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
+    end
+
+    --------------------------
     -- Ressource stuff
 
     if spellCost == 0 then
