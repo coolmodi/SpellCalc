@@ -170,7 +170,11 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, 
         et.critAvg = (et.critMin + et.critMax) / 2;
     end
 
-    et.avgCombined = et.hitAvg + (et.critAvg - et.hitAvg) * calcData.critChance/100;
+    if et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL and SpellCalc_settings.healDisregardCrit then
+        et.avgCombined = et.hitAvg;
+    else
+        et.avgCombined = et.hitAvg + (et.critAvg - et.hitAvg) * calcData.critChance/100;
+    end
 
     if calcData.hitChance ~= nil then
         et.avgAfterMitigation = et.avgCombined * calcData.hitChance * (1 - calcData.avgResistMod);

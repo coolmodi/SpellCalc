@@ -56,6 +56,8 @@ L["SETTINGS_WL_USE_IMP_SB_TT"] = "Use talent in Shadow Bolt dps calculation, ass
 L["SETTINGS_HEAL_HEAD"] = "Healing";
 L["SETTINGS_HEAL_TARGET_HPS"] = "Target HPS";
 L["SETTINGS_HEAL_TARGET_HPS_TT"] = "If not 0 tooltips for direct heals with at least that much HPS will show extra values as if there are breaks between casts to reach this HPS value.";
+L["SETTINGS_HEAL_NO_CRIT"] = "Disregard crit heals";
+L["SETTINGS_HEAL_NO_CRIT_TT"] = "Do not consider crits for hps and efficiency calculation.";
 
 L["TT_TITLE_DAMAGE"] = "Damage:";
 L["TT_TITLE_DOT"] = "DoT:";

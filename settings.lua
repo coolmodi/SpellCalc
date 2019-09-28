@@ -35,6 +35,7 @@ local DEFAULTSETTINGS = {
 	["abDurationValue"] = "allTicks",
 
 	["healTargetHps"] = 0,
+	["healDisregardCrit"] = false,
 
 	["version"] = GetAddOnMetadata(_addonName, "Version")
 };
@@ -166,5 +167,6 @@ function _addon:SetupSettings()
 		settingsHeal:SetAfterSaveCallback(AfterSave);
 		settingsHeal:MakeHeading(L["SETTINGS_HEAL_HEAD"]);
 		settingsHeal:MakeEditBoxOption("healTargetHps", L["SETTINGS_HEAL_TARGET_HPS"], 3, true, L["SETTINGS_HEAL_TARGET_HPS_TT"]);
+		settingsHeal:MakeCheckboxOption("healDisregardCrit", L["SETTINGS_HEAL_NO_CRIT"], L["SETTINGS_HEAL_NO_CRIT_TT"]);
 	end
 end
