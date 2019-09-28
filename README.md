@@ -4,39 +4,41 @@ A WoW classic addon providing information for spells, like actual damage done, c
 
 ## This is very much in an alpha state
 
-**Only priest is working, other classes have NO spells defined as of now, addon will error when using it with anything but a priest!**
+* Priest should work fine
+* Mage and WL should work, mage 99% untested, WL should be somewhat better off
+* All other classes won't work at all!
 
-Math and logic may or may not be correct, at all. Currently observed values seem correct for me though. Consider using `/console scriptErrors 1` when using (testing) this.
+Math and logic may or may not be correct, at all. Currently observed values for priest seem to be correct for me though. Consider using `/console scriptErrors 1` when using (testing) this.
 
-## Features that are supposed to work (for priest)
+I learned that multiple effect modifiers (e.g. Piercing Ice and Improved Cone of Cold) are multiplicative and not additive. Didn't catch that because priest doesn't really have that (shadow form + darkness works correct already). If that is indeed a rule then some things will be off slightly atm. Need to investigate.
+
+## Features that are supposed to work
 
 * Spell power scaling
 * Consideres talents that **aren't included** in the tooltip/API by default
-* Crit chance based on gear/talents/buffs
-* Hit chance (only static +0 or +3 level target for now)
-* DPS and HPS
-* DPM and HPM, also done until OOM values + time and casts for direct spells
-* Factors in spirit regen (in FSR) and MP5
-* Gets needed values from gear and buffs (not all items/buffs added)
-* Can work with basically all spells
-* Watches for set boni (e.g. 25% crit for PoM)
-* Uses IDs and patterns for everything, should probably work for all client languages
+* Crit and hit chance based on gear/talents/buffs, uses target level or set level difference
+* Average damage resisted, and additional resist (miss) chance for binary spells
+* DPS and HPS values after all of the above
+* DPM and HPM, also done until OOM values (theoretical, including partial casts!)
+* Factors in spirit regen (while casting) and MP5, additionally can use a set HPS target for heals to show values with casting breaks
+* Can show some values on the action bar
 
-At this point it should be easy to add/implement missing buffs/items/talents/effects.
+It should be easy to add/implement missing buffs/items/talents/effects. I just need to know what is missing or wrong.
 
-`/sc` will show a window with all the stats used (intended for debug)
+`/sc` will show a window with all the stats used (intended for debug, it's not pretty)
 
 `/sc debug` will toggle debug output
 
+There is a settings menu in the interface options addons tab.
+
 ## Not yet working but planned
-* Showing a value on action bar buttons, e.g. average hit
-* Using target for level based hit chance
-* Things that are not a priest
+* Things that are not a priest, mage or WL
+* Maybe use hardcoded values for all spell ranks to not have to use tooltip values at all, preventing all the problems with inconsistent talent/buff behaviour
 * Support for melee/ranged spells
 * Using target for debuffs (e.g. Shadow Weaving) or things like troll beast dmg, low prio
 * Resistance and armor mitigation, very low prio
 
-## Some tooltip examples
+## Some examples
 ![example](images/example1.png)
-![example](images/example2.png)
-![example](images/example3.png)
+![example2](images/example2.png)
+![example3](images/example3.png)
