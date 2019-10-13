@@ -201,11 +201,13 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, 
     if et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL and SpellCalc_settings.healTargetHps > 0 then
         local secondsNoCast = (et.perSecond / SpellCalc_settings.healTargetHps - 1) * castTime;
         if secondsNoCast > 0 then
-            local manaGained = secondsNoCast * self.stats.mp5.val/5;
+            local manaGained = secondsNoCast * (self.stats.mp5.val/5 + self.stats.manaReg);
             local secOutOfFSR = secondsNoCast - 5 + castTime;
             if secOutOfFSR > 0 then
                 et.secNoFsrTHPS = secOutOfFSR;
-                manaGained = manaGained + self.stats.baseManaReg * secOutOfFSR;
+                -- Also need to remove previously added normal mana regen during secOutOfFSR 
+                -- effectiveCost calculation deducted it for the castTime, so secOutOfFSR is fine to use
+                manaGained = manaGained - secOutOfFSR * self.stats.manaReg + self.stats.baseManaReg * secOutOfFSR;
             else
                 et.secNoFsrTHPS = 0;
             end
