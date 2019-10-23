@@ -10,6 +10,9 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(339)] = { -- Entangling Roots
         school = 4,
     },
+    [GetSpellInfo(467)] = { -- Thorns
+        school = 4,
+    },
     [GetSpellInfo(774)] = { -- Rejuvenation
         school = 4,
     },
@@ -54,6 +57,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [467] = { -- Thorns(Rank 1)
+        spellLevel = 6,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 3,
+                coef = 0,
+            },
+        }
+    },
     [774] = { -- Rejuvenation(Rank 1)
         spellLevel = 4,
         maxLevel = 9,
@@ -65,6 +81,19 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 8,
                 coef = 0.08,
+            },
+        }
+    },
+    [782] = { -- Thorns(Rank 2)
+        spellLevel = 14,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 6,
+                coef = 0,
             },
         }
     },
@@ -92,6 +121,19 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 10,
                 coef = 0.056,
+            },
+        }
+    },
+    [1075] = { -- Thorns(Rank 3)
+        spellLevel = 24,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 9,
+                coef = 0,
             },
         }
     },
@@ -391,6 +433,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [8914] = { -- Thorns(Rank 4)
+        spellLevel = 34,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 12,
+                coef = 0,
+            },
+        }
+    },
     [8921] = { -- Moonfire(Rank 1)
         spellLevel = 4,
         maxLevel = 9,
@@ -686,6 +741,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [9756] = { -- Thorns(Rank 5)
+        spellLevel = 44,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 15,
+                coef = 0,
+            },
+        }
+    },
     [9758] = { -- Healing Touch(Rank 8)
         spellLevel = 44,
         maxLevel = 49,
@@ -934,6 +1002,19 @@ _addon.spellRankInfo = {
                 max = 2231,
                 perLevel = 6.6,
                 coef = 1,
+            },
+        }
+    },
+    [9910] = { -- Thorns(Rank 6)
+        spellLevel = 54,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 18,
+                coef = 0,
             },
         }
     },

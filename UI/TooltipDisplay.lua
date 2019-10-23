@@ -72,15 +72,15 @@ local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
     local effectData = calcData[effectNum];
     local unitPart = isHeal and "HEAL" or "DAMAGE";
 
-    if effectNum == 1 and SpellCalc_settings.ttEffCost then
+    if effectNum == 1 and SpellCalc_settings.ttEffCost and calcData.effectiveCost ~= calcData.baseCost then
         GameTooltip:AddLine(("%s: %.1f"):format(L["TT_EFFCOST"], calcData.effectiveCost), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
-    if SpellCalc_settings.ttPerMana then
+    if SpellCalc_settings.ttPerMana and effectData.perMana > 0 then
         GameTooltip:AddLine(("%s: %.2f"):format(L["TT_PER_MANA_"..unitPart], effectData.perMana), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
-    if SpellCalc_settings.ttToOom then
+    if SpellCalc_settings.ttToOom and effectData.doneToOom > 0 then
         if showTime then
             GameTooltip:AddLine(("%s: %d (%.1fs, %.1f casts)"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOom, calcData.timeToOom, calcData.castsToOom), TTCOLOR, TTCOLOR, TTCOLOR);
         else
@@ -186,14 +186,14 @@ local function AppendDmgShieldEffect(calcData, effectNum)
         if effectData.charges > 0 then
             GameTooltip:AddLine(("%s: %dx %d | %d total"):format(L["TT_DAMAGE"], effectData.charges, effectData.perCharge, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
         else
-            GameTooltip:AddLine(("%s: %d"):format(L["TT_DAMAGE"], effectData.ticks, effectData.perTick, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
+            GameTooltip:AddLine(("%s: %.1f"):format(L["TT_DAMAGE"], effectData.perCharge), TTCOLOR, TTCOLOR, TTCOLOR);
         end
     end
 
     AppendCoefData(calcData, effectData);
     AppendMitigation(calcData);
 
-    if SpellCalc_settings.ttPerSecond then
+    if SpellCalc_settings.ttPerSecond and effectData.perSecond > 0 then
         GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSECC_DAMAGE"], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 

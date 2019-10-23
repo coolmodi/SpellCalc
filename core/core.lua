@@ -39,6 +39,7 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
     };
 
     if spellType == SPELL_TYPE.SPELL then
+        st.baseCost = 0;
         st.effectiveCost = 0;
         st.castsToOom = 0;
         st.timeToOom = 0;
@@ -282,6 +283,8 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Ressource stuff
 
+    calcData.baseCost = spellCost;
+    
     if spellCost == 0 then
         calcData.effectiveCost = -1;
         if spellType == SPELL_TYPE.SPELL then
