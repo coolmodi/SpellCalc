@@ -4,7 +4,7 @@ local SCHOOL = _addon.SCHOOL;
 local SCHOOL_MASK = _addon.SCHOOL_MASK;
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
 
-local conditionsActive = {};
+local conditionsActive = 0;
 
 --- Apply or remove effect for destination
 -- @param value The effect value, negative to remove buff
@@ -216,6 +216,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 
     if effect == EFFECT_TYPE.CONDITION_TRIGGER then
         conditionsActive = conditionsActive + value;
+        _addon:PrintDebug("Condition change!");
         _addon:UpdateBuffs();
         return;
     end
@@ -314,13 +315,14 @@ function _addon:UpdateBuffs(clearOnly)
         while name do
             if _addon.buffData[spellId] ~= nil or _addon.buffData[name] ~= nil then
                 local buffdata = _addon.buffData[spellId];
-                if buffdata.condition == 0 or bit.band(buffdata.condition, conditionsActive) == buffdata.condition then
-                    usedKey = spellId;
-                    if buffdata == nil then
-                        buffdata = _addon.buffData[name];
-                        usedKey = name;
-                    end
+                usedKey = spellId;
+                if buffdata == nil then
+                    buffdata = _addon.buffData[name];
+                    usedKey = name;
+                end
 
+                if buffdata.condition == nil or buffdata.condition == 0 
+                or bit.band(buffdata.condition, conditionsActive) == buffdata.condition then
                     if activeRelevantBuffs[usedKey] == nil then
                         _addon:PrintDebug("Add buff " .. name .. " (" .. usedKey .. ") slot " .. i);
 

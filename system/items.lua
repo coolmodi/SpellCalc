@@ -59,7 +59,7 @@ local function UpdateSet(setId, change)
                 else
                     local ed = effectData.effect;
                     local bname = setData.name .. effectData.need;
-                    _addon:PrintWarn(("Add set bonus %s"):format(bname));
+                    _addon:PrintDebug(("Add set bonus %s"):format(bname));
                     _addon:ApplyBuff(bname, ed.effect, ed.value, ed.affectSchool, ed.affectSpell);
                 end
             end
@@ -69,7 +69,7 @@ local function UpdateSet(setId, change)
                 if type(effectData.effect) == "table" then
                     local ed = effectData.effect;
                     local bname = setData.name .. effectData.need;
-                    _addon:PrintWarn(("Remove set bonus %s"):format(bname));
+                    _addon:PrintDebug(("Remove set bonus %s"):format(bname));
                     _addon:RemoveBuff(bname, ed.effect, ed.value, ed.affectSchool, ed.affectSpell);
                 end
             end
