@@ -9,8 +9,18 @@ local EFFECT_TYPE = _addon.EFFECT_TYPE;
 -- @param dest The destination table
 -- @param key The table key
 -- @param name The name of the buff
-local function ApplyOrRemove(value, dest, name)
-    dest.val = dest.val + value;
+-- @param isMultiplicative Treat multiplicatively
+local function ApplyOrRemove(value, dest, name, isMultiplicative)
+    if isMultiplicative then
+        if value > 0 then
+            dest.val = dest.val * (1 + value/100);
+        else
+            dest.val = dest.val / (1 + math.abs(value)/100);
+        end
+    else
+        dest.val = dest.val + value;
+    end
+
     if value > 0 then
         table.insert(dest.buffs, name);
     else
@@ -23,12 +33,17 @@ end
 -- @param value The effect value, negative to remove buff
 -- @param destTable The destination table
 -- @param spellList The list of spellNames to affect
-local function ApplyOrRemoveSpellAffect(name, value, destTable, spellList)
+-- @param isMultiplicative Treat multiplicatively
+local function ApplyOrRemoveSpellAffect(name, value, destTable, spellList, isMultiplicative)
     for k, spellName in ipairs(spellList) do
         if destTable[spellName] == nil then
-            destTable[spellName] = {val=0, buffs={}};
+            if isMultiplicative then
+                destTable[spellName] = {val=1, buffs={}};
+            else
+                destTable[spellName] = {val=0, buffs={}};
+            end
         end
-        ApplyOrRemove(value, destTable[spellName], name);
+        ApplyOrRemove(value, destTable[spellName], name, isMultiplicative);
     end
 end
 
@@ -37,24 +52,25 @@ end
 -- @param value The effect value, negative to remove buff
 -- @param destTable The destination table
 -- @param schoolMask The mask of schools to affect
-local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask)
+-- @param isMultiplicative Treat multiplicatively
+local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask, isMultiplicative)
     if bit.band(schoolMask, SCHOOL_MASK.HOLY) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.HOLY], name);
+        ApplyOrRemove(value, destTable[SCHOOL.HOLY], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.FIRE) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.FIRE], name);
+        ApplyOrRemove(value, destTable[SCHOOL.FIRE], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.NATURE) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.NATURE], name);
+        ApplyOrRemove(value, destTable[SCHOOL.NATURE], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.FROST) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.FROST], name);
+        ApplyOrRemove(value, destTable[SCHOOL.FROST], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.SHADOW) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.SHADOW], name);
+        ApplyOrRemove(value, destTable[SCHOOL.SHADOW], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.ARCANE) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.ARCANE], name);
+        ApplyOrRemove(value, destTable[SCHOOL.ARCANE], name, isMultiplicative);
     end
 end
 
@@ -80,22 +96,22 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     
     if effect == EFFECT_TYPE.MOD_EFFECT then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.effectMods.school, affectSchool);
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.effectMods.school, affectSchool, true);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(name, value, _addon.stats.effectMods.spell, affectSpell);
+            ApplyOrRemoveSpellAffect(name, value, _addon.stats.effectMods.spell, affectSpell, true);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_DMG_DONE then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.dmgDoneMods, affectSchool);
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.dmgDoneMods, affectSchool, true);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_HEALING_DONE then
-        ApplyOrRemove(value, _addon.stats.healingDoneMod, name);
+        ApplyOrRemove(value, _addon.stats.healingDoneMod, name, true);
         return;
     end
 

@@ -27,28 +27,6 @@ local MIND_BLAST_GENERIC = {
     coef = 1.5/3.5
 };
 
-local LESSER_HEAL_GENERIC = {
-    school = _addon.SCHOOL.HOLY,
-    isHeal = true,
-    ttMinMax = "(%d+).-%s(%d+)",
-    coef = 2.5/3.5
-};
-
-local POWER_WORD_SHIELD_GENERIC = {
-    school = _addon.SCHOOL.HOLY,
-    isHeal = true,
-    isAbsorbShield = true,
-    ttMinMax = "(%d+)",
-    coef = 0.1
-};
-
-local HEAL_GENERIC = {
-    school = _addon.SCHOOL.HOLY,
-    isHeal = true,
-    ttMinMax = "(%d+).-%s(%d+)",
-    coef = 3/3.5
-};
-
 local SMITE_GENERIC = {
     school = _addon.SCHOOL.HOLY,
     ttMinMax = "(%d+).-%s(%d+)",
@@ -60,17 +38,6 @@ local DESPERATE_PRAYER_GENERIC = {
     isHeal = true,
     ttMinMax = "(%d+).-%s(%d+)",
     coef = 1.5/3.5
-};
-
-local RENEW_GENERIC = {
-    school = _addon.SCHOOL.HOLY,
-    isDuration = true,
-    isHeal = true,
-    --duration = 15,
-    ttDuration = ".*%s(%d+)",
-    tickPeriod = 3,
-    ttMinMax = "(%d+)",
-    coef = 0.2
 };
 
 local SHADOW_WORD_PAIN_GENERIC = {
@@ -87,27 +54,6 @@ _addon.spellData = {
     [8102] = _addon:SpellDataMerge(MIND_BLAST_GENERIC, {level = 16}),
     [MIND_BLAST] = MIND_BLAST_GENERIC,
 
-    [GREATER_HEAL] = HEAL_GENERIC,
-
-    [2050] = _addon:SpellDataMerge(LESSER_HEAL_GENERIC, {level = 1}),
-    [2052] = _addon:SpellDataMerge(LESSER_HEAL_GENERIC, {level = 4}),
-    [2053] = _addon:SpellDataMerge(LESSER_HEAL_GENERIC, {level = 10}),
-
-    [17] = _addon:SpellDataMerge(POWER_WORD_SHIELD_GENERIC, {level = 6}),
-    [592] = _addon:SpellDataMerge(POWER_WORD_SHIELD_GENERIC, {level = 12}),
-    [600] = _addon:SpellDataMerge(POWER_WORD_SHIELD_GENERIC, {level = 18}),
-    [POWER_WORD_SHIELD] = POWER_WORD_SHIELD_GENERIC,
-
-    [FLASH_HEAL] = {
-        school = _addon.SCHOOL.HOLY,
-        isHeal = true,
-        ttMinMax = "(%d+).*%s(%d+)",
-        coef = 1.5/3.5
-    },
-
-    [2054] = _addon:SpellDataMerge(HEAL_GENERIC, {level = 16}),
-    [HEAL] = HEAL_GENERIC,
-
     [585] = _addon:SpellDataMerge(SMITE_GENERIC, {level = 1}),
     [591] = _addon:SpellDataMerge(SMITE_GENERIC, {level = 6}),
     [598] = _addon:SpellDataMerge(SMITE_GENERIC, {level = 14}),
@@ -115,13 +61,6 @@ _addon.spellData = {
 
     [13908] = _addon:SpellDataMerge(DESPERATE_PRAYER_GENERIC, {level = 10}),
     [DESPERATE_PRAYER] = DESPERATE_PRAYER_GENERIC,
-
-    [PRAYER_OF_HEALING] = {
-        school = _addon.SCHOOL.HOLY,
-        isHeal = true,
-        ttMinMax = "30.*%s(%d+).*%s(%d+)",
-        coef = 0.286
-    },
 
     [HOLY_NOVA] = {
         school = _addon.SCHOOL.HOLY,
@@ -150,10 +89,6 @@ _addon.spellData = {
             coef = 0.27/5,
         }
     },
-
-    [139] = _addon:SpellDataMerge(RENEW_GENERIC, {level = 8}),
-    [6074] = _addon:SpellDataMerge(RENEW_GENERIC, {level = 14}),
-    [RENEW] = RENEW_GENERIC,
 
     [MIND_FLAY] = {
         school = _addon.SCHOOL.SHADOW,
@@ -200,15 +135,26 @@ _addon.talentData = {
             }
         }
     },
-    --Force of will
-    -- TODO: working? needed?
+    -- Improved Power Word: Shield
+    {
+        tree = 1,
+        talent = 5,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {POWER_WORD_SHIELD},
+                perPoint = 5
+            }
+        }
+    },
+    -- Force of will
     {
         tree = 1,
         talent = 14,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {SHADOW_WORD_PAIN, MIND_FLAY},
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 1
             },
             {
@@ -219,6 +165,18 @@ _addon.talentData = {
         }
     },
 
+    -- Improved Renew
+    {
+        tree = 2,
+        talent = 2,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {RENEW},
+                perPoint = 5
+            }
+        }
+    },
     -- Holy Spec
     {
         tree = 2,
@@ -242,7 +200,18 @@ _addon.talentData = {
             }
         }
     },
+    { -- Spiritual Healing
+        tree = 2,
+        talent = 14,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                perPoint = 2
+            }
+        }
+    },
 
+    -- TODO: SWP duration
     -- Shadow Focus
     {
         tree = 3,
@@ -261,8 +230,8 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {DEVOURING_PLAGUE, SHADOW_WORD_PAIN, MIND_FLAY},
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                affectSchool = _addon.SCHOOL_MASK.SHADOW,
                 perPoint = 2
             }
         }

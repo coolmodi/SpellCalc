@@ -82,39 +82,40 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
 end
 
 --- Generate effect modifier
--- @param school The spell school (API enumeration)
+-- @param spellBaseInfo The spell base info table
 -- @param isHeal
 -- @param spellName
 -- @param buffTable
-local function GenerateEffectModifier(school, spellData, effectData, spellName, buffTable)
-    local effectMod = 1 + stats.effectMods.school[school].val/100;
-    for _, buffName in pairs(stats.effectMods.school[school].buffs) do
+local function GenerateEffectModifier(spellBaseInfo, isHeal, spellName, buffTable)
+    local effectMod = stats.effectMods.school[spellBaseInfo.school].val;
+    for _, buffName in pairs(stats.effectMods.school[spellBaseInfo.school].buffs) do
         table.insert(buffTable, buffName);
     end
 
     if stats.effectMods.spell[spellName] ~= nil then
-        effectMod = effectMod + stats.effectMods.spell[spellName].val/100;
+        effectMod = effectMod * stats.effectMods.spell[spellName].val;
         for _, buffName in pairs(stats.effectMods.spell[spellName].buffs) do
             table.insert(buffTable, buffName);
         end
     end
 
-    if not effectData.isHeal then
-        effectMod = effectMod * (1 + stats.dmgDoneMods[school].val/100);
-        for _, buffName in pairs(stats.dmgDoneMods[school].buffs) do
+    if not isHeal then
+        effectMod = effectMod * stats.dmgDoneMods[spellBaseInfo.school].val;
+        for _, buffName in pairs(stats.dmgDoneMods[spellBaseInfo.school].buffs) do
             table.insert(buffTable, buffName);
         end
-    elseif not spellData.isAbsorbShield then
-        effectMod = effectMod * (1 + stats.healingDoneMod.val/100);
+    elseif not spellBaseInfo.isAbsorbShield then
+        effectMod = effectMod * stats.healingDoneMod.val;
         for _, buffName in pairs(stats.healingDoneMod.buffs) do
             table.insert(buffTable, buffName);
         end
     end
-
+    
+    _addon:PrintDebug("Effectmod: "..effectMod);
     return effectMod;
 end
 
-local effectData, effectTypes = {}, {};
+local effectTypes = {};
 
 --- Calculate spell values with current stats
 -- @param spellId The ID of the spell
@@ -122,18 +123,14 @@ function _addon:CalcSpell(spellId)
     _addon:PrintDebug("Calculating spell " .. spellId);
 
     local name, _, _, castTime = GetSpellInfo(spellId);
-    local spellData = _addon.spellData[spellId];
-    if spellData == nil then
-        spellData = _addon.spellData[name];
-    end
-    local desc = GetSpellDescription(spellId);
+    local spellBaseInfo = _addon.spellBaseInfo[name];
+    local spellRankInfo = _addon.spellRankInfo[spellId];
     local costs = GetSpellPowerCost(spellId);
     local spellCost = 0;
     local spellType = SPELL_TYPE.SPELL; -- PLACEHOLDER
 
-
-    if spellData.isChannel then
-        castTime = spellData.duration;
+    if spellBaseInfo.isChannel then
+        castTime = spellRankInfo.duration;
     else
         -- Cast time is at least GCD
         if castTime < 1500 then
@@ -152,30 +149,20 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Set effect data and types
 
-    effectData[2] = nil;
-    if spellData.primary == nil then
-        effectData[1] = spellData;
-    else
-        effectData[1] = spellData.primary;
-        if spellData.secondary ~= nil then
-            effectData[2] = spellData.secondary;
-        end
-    end
-
     if spellType == SPELL_TYPE.SPELL then
         for i = 1, 2, 1 do
-            if effectData[i] == nil then
+            if spellRankInfo.effects[i] == nil then
                 effectTypes[i] = nil;
-            elseif effectData[i].isHeal then
-                if effectData[i].isDuration then
+            elseif spellRankInfo.effects[i].isHeal then
+                if spellRankInfo.effects[i].isDuration then
                     effectTypes[i] = SPELL_EFFECT_TYPE.HOT;
                 else
                     effectTypes[i] = SPELL_EFFECT_TYPE.DIRECT_HEAL;
                 end
-            elseif effectData[i].isDmgShield then
+            elseif spellRankInfo.effects[i].isDmgShield then
                 effectTypes[i] = SPELL_EFFECT_TYPE.DMG_SHIELD;
             else
-                if effectData[i].isDuration then
+                if spellRankInfo.effects[i].isDuration then
                     effectTypes[i] = SPELL_EFFECT_TYPE.DOT;
                 else
                     effectTypes[i] = SPELL_EFFECT_TYPE.DIRECT_DMG;
@@ -186,7 +173,7 @@ function _addon:CalcSpell(spellId)
         -- NYI
     end
 
-    _addon:PrintDebug("Has " .. #effectData .. " effects (" .. effectTypes[1] .. ", " .. tostring(effectTypes[2]) .. ")");
+    _addon:PrintDebug("Has " .. #spellRankInfo.effects .. " effects (" .. effectTypes[1] .. ", " .. tostring(effectTypes[2]) .. ")");
 
     --------------------------
     -- Calculation table
@@ -199,8 +186,8 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Low level spell scaling penalty
 
-    if spellType == SPELL_TYPE.SPELL and spellData.level ~= nil then
-        calcData.levelPenalty =  1 - ((20 - spellData.level) * 0.0375);
+    if spellType == SPELL_TYPE.SPELL and spellRankInfo.spellLevel ~= nil then
+        calcData.levelPenalty =  1 - ((20 - spellRankInfo.spellLevel) * 0.0375);
     end
 
     --------------------------
@@ -211,7 +198,7 @@ function _addon:CalcSpell(spellId)
     -- Crit
 
     if spellType == SPELL_TYPE.SPELL then
-        calcData.critChance = _addon:GetSpellSchoolCritChance(spellData, calcData.buffs);
+        calcData.critChance = _addon:GetSpellSchoolCritChance(spellBaseInfo, calcData.buffs);
     else
         -- NYI
     end
@@ -223,9 +210,9 @@ function _addon:CalcSpell(spellId)
         end
     end
 
-    if stats.critMult.school[spellData.school].val > 0 then
-        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * (1 + stats.critMult.school[spellData.school].val/100);
-        for _, buffName in pairs(stats.critMult.school[spellData.school].buffs) do
+    if stats.critMult.school[spellBaseInfo.school].val > 0 then
+        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * (1 + stats.critMult.school[spellBaseInfo.school].val/100);
+        for _, buffName in pairs(stats.critMult.school[spellBaseInfo.school].buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
@@ -246,14 +233,14 @@ function _addon:CalcSpell(spellId)
 
     -- Mitigation
 
-    if spellData.school ~= _addon.SCHOOL.PHYSICAL then
-        calcData.avgResistMod = _addon:GetSpellAvgResist(spellData.school);
+    if spellBaseInfo.school ~= _addon.SCHOOL.PHYSICAL then
+        calcData.avgResistMod = _addon:GetSpellAvgResist(spellBaseInfo.school);
     end
 
     if calcData.hitChance ~= nil then
         if spellType == SPELL_TYPE.SPELL then
             calcData.baseHitChance = _addon:GetSpellHitChance();
-            calcData.hitChanceBonus = _addon:GetSpellHitBonus(spellData.school, calcData.buffs);
+            calcData.hitChanceBonus = _addon:GetSpellHitBonus(spellBaseInfo.school, calcData.buffs);
 
             if stats.hitMods.spell[name] ~= nil then
                 calcData.hitChanceBonus = calcData.hitChanceBonus + stats.hitMods.spell[name].val;
@@ -264,7 +251,7 @@ function _addon:CalcSpell(spellId)
             
             calcData.hitChance = calcData.baseHitChance + calcData.hitChanceBonus;
 
-            if (spellData.isBinary or effectTypes[1] == SPELL_EFFECT_TYPE.DOT) and not spellData.isChannelAoe then
+            if (spellBaseInfo.isBinary or effectTypes[1] == SPELL_EFFECT_TYPE.DOT) and not spellBaseInfo.isChannelAoe then
                 calcData.binaryHitLoss = calcData.hitChance - (calcData.hitChance * (1 - calcData.avgResistMod));
                 calcData.hitChance = calcData.hitChance - calcData.binaryHitLoss;
             end
@@ -320,7 +307,7 @@ function _addon:CalcSpell(spellId)
 
             if stats.illumination.val > 0 then
                 if class == "PALADIN" or 
-                (class == "MAGE" and (spellData.school == self.SCHOOL.FIRE or spellData.school == self.SCHOOL.FROST)) then
+                (class == "MAGE" and (spellBaseInfo.school == self.SCHOOL.FIRE or spellBaseInfo.school == self.SCHOOL.FROST)) then
                     calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.illumination.val/100) * (calcData.critChance/100);
                     for _, buffName in pairs(stats.illumination.buffs) do
                         table.insert(calcData.buffs, buffName);
@@ -349,7 +336,7 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Per effect calculations
 
-    for i = 1, #effectData, 1 do
+    for i = 1, #spellRankInfo.effects, 1 do
         _addon:PrintDebug("Calculating effect " .. i);
         local et = calcData[i];
 
@@ -357,40 +344,39 @@ function _addon:CalcSpell(spellId)
         -- Effect bonus power scaling
 
         if spellType == SPELL_TYPE.SPELL then
-            if effectData[i].isHeal == true then
+            if spellRankInfo.effects[i].isHeal == true then
                 et.spellPower = stats.spellHealing;
             else
-                et.spellPower = stats.spellPower[spellData.school];
+                et.spellPower = stats.spellPower[spellBaseInfo.school];
             end
         else
             -- NYI
         end
 
         -- Effective power
-        et.spCoef = effectData[i].coef;
-        et.effectiveSpCoef = et.spCoef * calcData.levelPenalty;
+        et.spCoef = spellRankInfo.effects[i].coef;
+        et.effectiveSpCoef = et.spCoef; -- * calcData.levelPenalty; Already in client DB coef data
         et.effectivePower = et.spellPower * et.effectiveSpCoef;
 
         --------------------------
         -- Effect specific modifier
-
-        local effectMod = GenerateEffectModifier(spellData.school, spellData, effectData[i], name, calcData.buffs);
+        local effectMod = GenerateEffectModifier(spellBaseInfo, spellRankInfo.effects[i].isHeal, name, calcData.buffs);
 
         --------------------------
         -- Effect values
 
         if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
-            _addon:CalculateSpellDirectEffect(calcData, et, desc, effectData[i], effectMod, castTime, name);
+            _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime, name);
         elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
-            _addon:CalculateSpellDmgShieldEffect(calcData, et, desc, effectData[i], effectMod, castTime)
+            _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime)
         else -- HoT or DoT (also channeled)
-            _addon:CalculateSpellDurationEffect(calcData, et, desc, effectData[i], effectMod, castTime, spellData.isChannel)
+            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime, spellBaseInfo.isChannel)
         end
     end
 
     -- Combined data for spells like Holy Fire or Immolate
     if calcData.perCastData ~= nil then
-        _addon:CalculateSpellCombinedEffect(calcData, effectData[2], castTime);
+        _addon:CalculateSpellCombinedEffect(calcData, spellRankInfo.effects[2], castTime);
     end
 
     calcData.updated = time() - 1;

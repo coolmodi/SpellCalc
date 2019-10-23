@@ -96,7 +96,7 @@ local function SetSlotSpell(slot, spellId)
         return;
     end
 
-    if _addon.spellData[spellId] == nil and _addon.spellData[GetSpellInfo(spellId)] == nil then
+    if _addon.spellRankInfo[spellId] == nil or _addon.spellBaseInfo[GetSpellInfo(spellId)] == nil then
         return;
     end
 

@@ -34,25 +34,25 @@ _addon.stats = {
     },
     mp5 = {val=0, buffs={}};
     fsrRegenMult = {val=0, buffs={}};
-    dmgDoneMods = {
-        [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
-        [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
-        [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
-        [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
-        [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
-        [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
-        [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
+    dmgDoneMods = { -- multiplicatively!
+        [_addon.SCHOOL.PHYSICAL]    = {val=1, buffs={}},
+        [_addon.SCHOOL.HOLY]        = {val=1, buffs={}},
+        [_addon.SCHOOL.FIRE]        = {val=1, buffs={}},
+        [_addon.SCHOOL.NATURE]      = {val=1, buffs={}},
+        [_addon.SCHOOL.FROST]       = {val=1, buffs={}},
+        [_addon.SCHOOL.SHADOW]      = {val=1, buffs={}},
+        [_addon.SCHOOL.ARCANE]      = {val=1, buffs={}},
     },
-    healingDoneMod = {val=0, buffs={}},
-    effectMods = { -- TODO: these all seem to be multiplicative (even same effect e.g. pct mod 108), same for dmg done mods?
+    healingDoneMod = {val=1, buffs={}}, -- multiplicatively!
+    effectMods = { -- multiplicatively!
         school = {
-            [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
-            [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
-            [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
-            [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
-            [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
-            [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
-            [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
+            [_addon.SCHOOL.PHYSICAL]    = {val=1, buffs={}},
+            [_addon.SCHOOL.HOLY]        = {val=1, buffs={}},
+            [_addon.SCHOOL.FIRE]        = {val=1, buffs={}},
+            [_addon.SCHOOL.NATURE]      = {val=1, buffs={}},
+            [_addon.SCHOOL.FROST]       = {val=1, buffs={}},
+            [_addon.SCHOOL.SHADOW]      = {val=1, buffs={}},
+            [_addon.SCHOOL.ARCANE]      = {val=1, buffs={}},
         },
         spell = {}
     },

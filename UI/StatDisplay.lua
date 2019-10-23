@@ -259,11 +259,11 @@ AddSchoolTableUniform(stats.hitMods.school, "Hit mods", "%");
 AddUniformStatTable(stats.hitBonusSpell, "Spell +hit", "%");
 AddSpellTable(stats.hitMods.spell, nil, "%");
 
-AddSchoolTableUniform(stats.dmgDoneMods, "Dmg done mods", "%");
-AddUniformStatTable(stats.healingDoneMod, "Healing done mod", "%");
+AddSchoolTableUniform(stats.dmgDoneMods, "Dmg done mods", "x");
+AddUniformStatTable(stats.healingDoneMod, "Healing done mod", "x");
 
-AddSchoolTableUniform(stats.effectMods.school, "Effect mods", "%");
-AddSpellTable(stats.effectMods.spell, nil, "%");
+AddSchoolTableUniform(stats.effectMods.school, "Effect mods", "x");
+AddSpellTable(stats.effectMods.spell, nil, "x");
 
 AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
 AddUniformStatTable(stats.illumination, "Illumination", "%");

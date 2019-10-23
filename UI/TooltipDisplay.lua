@@ -153,8 +153,8 @@ end
 -- @param calcData The base calculation table for the spell
 -- @param effectNum The effect slot to show
 -- @param isHeal
--- @param spellData Spell data entry
-local function AppendDurationEffect(calcData, effectNum, isHeal, spellData)
+-- @param spellBaseInfo Spell base info entry
+local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
     local effectData = calcData[effectNum];
     local unitString = isHeal and L["TT_HEAL"] or L["TT_DAMAGE"];
     local unitPart = isHeal and "HEAL" or "DAMAGE";
@@ -169,7 +169,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellData)
     end
 
     if SpellCalc_settings.ttPerSecond then
-        if not spellData.isChannel then
+        if not spellBaseInfo.isChannel then
             GameTooltip:AddDoubleLine(("%s: %d"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond),
             ("%s: %d"):format(L["TT_PERSECDUR_"..unitPart], effectData.perSecondDuration), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
         else
@@ -258,8 +258,8 @@ end
 
 --- Add tooltip for spell type spells
 -- @param calcedSpell The base calculation table for the spell
--- @param spellData The spell data entry
-local function AddSpellTooltip(calcedSpell, spellData)
+-- @param spellBaseInfo The spell base info entry
+local function AddSpellTooltip(calcedSpell, spellBaseInfo)
     for i = 1, #calcedSpell, 1 do
         local effectData = calcedSpell[i];
         local isHeal = false;
@@ -277,7 +277,7 @@ local function AddSpellTooltip(calcedSpell, spellData)
         elseif effectData.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
             AppendDmgShieldEffect(calcedSpell, i);
         else -- HoT or DoT
-            AppendDurationEffect(calcedSpell, i, isHeal, spellData);
+            AppendDurationEffect(calcedSpell, i, isHeal, spellBaseInfo);
         end
     end
 
@@ -291,12 +291,9 @@ end
 -- Appends data if spell is known to the addon.
 GameTooltip:SetScript("OnTooltipSetSpell", function(self)
     local _, spellID = GameTooltip:GetSpell();
-    local data = _addon.spellData[spellID];
-    if data == nil then
-        data = _addon.spellData[GetSpellInfo(spellID)];
-        if data == nil then
-            return;
-        end
+    local spellBaseInfo = _addon.spellBaseInfo[GetSpellInfo(spellID)];
+    if spellBaseInfo == nil then
+        return;
     end
 
     if _addon.calcedSpells[spellID] == nil or _addon.calcedSpells[spellID].updated < _addon.lastChange then
@@ -306,7 +303,7 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
     local calcedSpell = _addon.calcedSpells[spellID];
 
     if calcedSpell.spellType == SPELL_TYPE.SPELL then
-        AddSpellTooltip(calcedSpell, data);
+        AddSpellTooltip(calcedSpell, spellBaseInfo);
     end
 
     AppendBuffList(calcedSpell.buffs);

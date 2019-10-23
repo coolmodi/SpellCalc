@@ -38,18 +38,18 @@ function _addon:GetSpellHitChance()
 end
 
 --- Get base spell crit chance for spell school
--- @param spellData The spell data table
+-- @param spellBaseInfo The spell base info table
 -- @param buffTable The calculation table's buff table
-function _addon:GetSpellSchoolCritChance(spellData, buffTable)
-    if spellData.isAbsorbShield or spellData.isDmgShield then
+function _addon:GetSpellSchoolCritChance(spellBaseInfo, buffTable)
+    if spellBaseInfo.isAbsorbShield or spellBaseInfo.isDmgShield then
         return 0;
     end
 
     local stats = self.stats;
-    local chance = stats.spellCrit[spellData.school];
+    local chance = stats.spellCrit[spellBaseInfo.school];
 
-    chance = chance + stats.critMods.school[spellData.school].val;
-    for _, buffName in pairs(stats.critMods.school[spellData.school].buffs) do
+    chance = chance + stats.critMods.school[spellBaseInfo.school].val;
+    for _, buffName in pairs(stats.critMods.school[spellBaseInfo.school].buffs) do
         table.insert(buffTable, buffName);
     end
 
@@ -150,21 +150,24 @@ end
 --- Calculate direct spell effect (e.g. Frostbolt or Healing Touch)
 -- @param calcData The calculation table
 -- @param et The subtable of the effect
--- @param spellDesc The spell description
+-- @param spellRankInfo The spell rank info table
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
 -- @param castTime Spell cast time
 -- @param spellName The spell's name
-function _addon:CalculateSpellDirectEffect(calcData, et, spellDesc, effectData, effectMod, castTime, spellName)
-    local minTt, maxTt = string.match(spellDesc, effectData.ttMinMax);
+function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, spellName)
+    local levelBonus = 0;
+    if effectData.perLevel then
+        levelBonus = (spellRankInfo.spellLevel - math.min(UnitLevel("player"), spellRankInfo.maxLevel)) * effectData.perLevel;
+    end
 
-    et.hitMin = math.floor(minTt * effectMod + et.effectivePower);
+    et.hitMin = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower);
     et.hitAvg = et.hitMin;
     et.critMin = math.floor(et.hitMin * calcData.critMult);
     et.critAvg = et.critMin;
 
-    if maxTt then
-        et.hitMax = math.ceil(maxTt * effectMod + et.effectivePower);
+    if effectData.max then
+        et.hitMax = math.ceil((effectData.max + levelBonus) * effectMod + et.effectivePower);
         et.hitAvg = (et.hitMin + et.hitMax) / 2;
         et.critMax = math.ceil(et.hitMax * calcData.critMult);
         et.critAvg = (et.critMin + et.critMax) / 2;
@@ -224,13 +227,17 @@ end
 --- Calculate damage shield effect (e.g. Lightning Shield, not Thorns lel)
 -- @param calcData The calculation table
 -- @param et The subtable of the effect
--- @param spellDesc The spell description
+-- @param spellRankInfo The spell rank info table
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
 -- @param castTime Spell cast time
-function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellDesc, effectData, effectMod, castTime)
-    local dmgTt = string.match(spellDesc, effectData.ttMinMax);
-    et.perCharge = math.floor(dmgTt * effectMod + et.effectivePower + 0.5);
+function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime)
+    local levelBonus = 0;
+    if effectData.perLevel then
+        levelBonus = (spellRankInfo.spellLevel - math.min(UnitLevel("player"), spellRankInfo.maxLevel)) * effectData.perLevel;
+    end
+
+    et.perCharge = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower + 0.5);
     et.charges = effectData.charges;
     et.hitAvg = et.perCharge * et.charges;
     et.avgAfterMitigation = et.hitAvg * calcData.hitChance * (1 - calcData.avgResistMod);
@@ -242,30 +249,17 @@ end
 --- Calculate duration effect (e.g. Corruption or Renew)
 -- @param calcData The calculation table
 -- @param et The subtable of the effect
--- @param spellDesc The spell description
+-- @param spellRankInfo The spell rank info table
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
 -- @param castTime Spell cast time (or channel duration)
 -- @param isChannel Is the spell a channeled spell
-function _addon:CalculateSpellDurationEffect(calcData, et, spellDesc, effectData, effectMod, castTime, isChannel)
-    et.duration = effectData.duration;
-    if not isChannel then
-        et.duration = effectData.duration;
-        if et.duration == nil then
-            et.duration = string.match(spellDesc, effectData.ttDuration);
-            _addon:PrintDebug("Have duration: " .. et.duration);
-        end
-    end
+function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, isChannel)
+    et.duration = spellRankInfo.duration;
 
     et.ticks = et.duration / effectData.tickPeriod;
-    local dmgTt = string.match(spellDesc, effectData.ttMinMax);
-
-    if effectData.ttIsPerTick then
-        dmgTt = dmgTt * et.ticks;
-    end
-
-    et.allTicks = math.floor(dmgTt * effectMod + (et.ticks * et.effectivePower) + 0.5);
-    et.perTick = et.allTicks / et.ticks;
+    et.perTick = effectData.min * effectMod + et.effectivePower;
+    et.allTicks = math.floor(et.perTick * et.ticks + 0.5);
 
     if calcData.hitChance ~= nil then
         if isChannel then
@@ -288,7 +282,7 @@ end
 
 --- Calculate combined values for split spells (e.g. Holy Fire)
 -- @param calcData The calculation table
--- @param effectData The effect data from spell data
+-- @param effectData The effect data for the duration effect (2)
 -- @param castTime Spell cast time (or channel duration)
 function _addon:CalculateSpellCombinedEffect(calcData, effectData, castTime)
     calcData.perCastData.hitAvg = calcData[1].hitAvg + calcData[2].allTicks;

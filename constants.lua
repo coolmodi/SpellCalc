@@ -20,7 +20,8 @@ _addon.SCHOOL_MASK = {
     FROST = 0x10,
     SHADOW = 0x20,
     ARCANE = 0x40,
-    ALL = 0xFF
+    ALL = 0xFF,
+    ALL_SPELL = 0xFE,
 };
 
 -- Buff/Aura effects
@@ -38,7 +39,8 @@ _addon.EFFECT_TYPE = {
     CRIT_MULT = 11,
     IGNITE = 12,
     WL_IMP_SB = 13,
-    MAGE_NWR_PROC = 14
+    MAGE_NWR_PROC = 14,
+    MOD_DURATION = 15
 };
 
 -- Spell types (What calculation rules to use)

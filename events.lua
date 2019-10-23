@@ -11,8 +11,8 @@ function handlers.ADDON_LOADED(addonName)
 	frame:UnregisterEvent("ADDON_LOADED");
     _addon:SetupSettings();
 
-    if _addon.spellData == nil then
-		_addon:PrintError(_addonName .. ": No spell data for this class (yet)! Addon won't work!");
+    if _addon.spellRankInfo == nil or _addon.talentData == nil then
+		_addon:PrintError(_addonName .. ": No data for this class (yet)! Addon won't work!");
 	end
 end
 
