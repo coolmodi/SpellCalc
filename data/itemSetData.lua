@@ -14,6 +14,7 @@ local REJUVENATION = GetSpellInfo(1058);
 local EARTH_SHOCK = GetSpellInfo(8042);
 local FLAME_SHOCK = GetSpellInfo(8050);
 local FROST_SHOCK = GetSpellInfo(8056);
+local RENEW = GetSpellInfo(139);
 
 _addon.itemSetData = {
     [121] = {
@@ -227,7 +228,10 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 3,
-                effect = "Restores $s1 mana per 5 sec.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MP5,
+                    value = 12,
+                }
             },
         },
     },
@@ -261,7 +265,10 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 2,
-                effect = "Restores $s1 mana per 5 sec.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MP5,
+                    value = 4,
+                }
             },
         },
     },
@@ -324,11 +331,17 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 2,
-                effect = "Restores $s1 mana per 5 sec.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MP5,
+                    value = 3,
+                }
             },
             [2] = {
                 need = 3,
-                effect = "Allows $s1% of your Mana regeneration to continue while casting.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.FSR_REGEN,
+                    value = 15,
+                }
             },
         },
     },
@@ -387,6 +400,19 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = "20% chance to regain 100 mana when you cast a Judgement.",
+            },
+        },
+    },
+    [507] = {
+        name = "Garments of the Oracle",
+        effects = {
+            [1] = {
+                need = 5,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_DURATION,
+                    affectSpell = {RENEW},
+                    value = 3,
+                }
             },
         },
     },
@@ -752,12 +778,16 @@ _addon.setItemData = {
     [16796] = 201,
     [16797] = 201,
     [16798] = 201,
+    [21349] = 507,
+    [21350] = 507,
+    [21348] = 507,
+    [21352] = 507,
+    [21351] = 507,
 
-
-    
-    --[9492] = 211,
-    --[4112] = 211,
-    --[20641] = 211,
-    --[9683] = 211,
+    --[[
+    [6087] = 207,
+    [5944] = 207,
+    [6550] = 207,
+    ]]
 };
 
