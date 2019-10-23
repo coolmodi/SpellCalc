@@ -58,6 +58,11 @@ _addon.buffData = {
         affectSchool = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
         value = 100,
     },
+    [24907] = { -- Moonkin Aura
+        effect = _addon.EFFECT_TYPE.MOD_CRIT,
+        affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
+        value = 3,
+    }
     -- TODO: Other buffs that are outside the scope of base API queries
 };
 
