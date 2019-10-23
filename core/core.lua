@@ -9,6 +9,10 @@ _addon.lastChange = time();
 local _, class = UnitClass("player");
 local stats = _addon.stats;
 
+local HEALING_TOUCH = GetSpellInfo(5186);
+local HEALING_WAVE = GetSpellInfo(332);
+local LESSER_HEALING_WAVE = GetSpellInfo(8004);
+
 --- Return true if spell needs mitigation calculation
 -- @param spellType The base spell type
 -- @param primaryType The primary effect type, required
@@ -298,12 +302,20 @@ function _addon:CalcSpell(spellId)
             end
 
             if stats.illumination.val > 0 then
-                if class == "PALADIN" or 
-                (class == "MAGE" and (spellBaseInfo.school == self.SCHOOL.FIRE or spellBaseInfo.school == self.SCHOOL.FROST)) then
+                if (class == "PALADIN" and spellRankInfo.effects[1].isHeal)
+                or (class == "MAGE" and (spellBaseInfo.school == self.SCHOOL.FIRE or spellBaseInfo.school == self.SCHOOL.FROST))
+                or (class == "DRUID" and name == HEALING_TOUCH) then
                     calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.illumination.val/100) * (calcData.critChance/100);
                     for _, buffName in pairs(stats.illumination.buffs) do
                         table.insert(calcData.buffs, buffName);
                     end
+                end
+            end
+
+            if stats.earthfuryReturn.val > 0 and (name == HEALING_WAVE or name == LESSER_HEALING_WAVE) then
+                calcData.effectiveCost = calcData.effectiveCost - spellCost * 0.0875;
+                for _, buffName in pairs(stats.earthfuryReturn.buffs) do
+                    table.insert(calcData.buffs, buffName);
                 end
             end
 

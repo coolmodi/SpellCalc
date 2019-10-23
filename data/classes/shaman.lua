@@ -10,6 +10,7 @@ local LIGHTNING_BOLT = GetSpellInfo(403);
 local CHAIN_LIGHTNING = GetSpellInfo(421);
 local EARTH_SHOCK = GetSpellInfo(8042);
 local FLAME_SHOCK = GetSpellInfo(8050);
+local LIGHTNING_SHIELD = GetSpellInfo(8788);
 local FROST_SHOCK = GetSpellInfo(8056);
 
 _addon.talentData = {
@@ -92,3 +93,9 @@ _addon.buffData[16188] = { -- Nature's Swiftness dummy
     affectSchool = _addon.SCHOOL_MASK.NATURE,
     value = 0,
 };
+
+_addon.buffData[LIGHTNING_SHIELD] = { -- for T3 setbonus
+    condition = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS,
+    effect = _addon.EFFECT_TYPE.MP5,
+    value = 15,
+}

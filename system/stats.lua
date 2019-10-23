@@ -102,6 +102,7 @@ _addon.stats = {
     extraSp = {},
     ignite = {val=0, buffs={}},
     impShadowBolt = {val=0, buffs={}},
+    earthfuryReturn = {val=0, buffs={}},
     mageNWRProc = {},
 };
 

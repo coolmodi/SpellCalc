@@ -198,21 +198,3 @@ function _addon:UpdateItems()
 
     end
 end
-
-
-local itemInfo = {};
---- Get equipped item data
-function _addon:GetItemInfo()
-    for slot, slotName in pairs(ITEM_SLOTS) do
-        if itemInfo[slot] == nil then
-            itemInfo[slot] = {
-                slotName = slotName,
-                itemId = items[slot];
-            };
-        else
-            itemInfo[slot].slotName = slotName;
-            itemInfo[slot].itemId = items[slot];
-        end
-    end
-    return itemInfo;
-end

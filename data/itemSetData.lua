@@ -8,6 +8,12 @@ local ARCANE_MISSILES = GetSpellInfo(7268);
 local DRAIN_LIFE = GetSpellInfo(689);
 local CORRUPTION = GetSpellInfo(172);
 local IMMOLATE = GetSpellInfo(348);
+local THORNS = GetSpellInfo(782);
+local STARFIRE = GetSpellInfo(2912);
+local REJUVENATION = GetSpellInfo(1058);
+local EARTH_SHOCK = GetSpellInfo(8042);
+local FLAME_SHOCK = GetSpellInfo(8050);
+local FROST_SHOCK = GetSpellInfo(8056);
 
 _addon.itemSetData = {
     [121] = {
@@ -47,7 +53,6 @@ _addon.itemSetData = {
                     affectSchool = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
                     value = 10,
                 }
-                --effect = "Decreases the magical resistances of your spell targets by 10",
             },
         },
     },
@@ -61,7 +66,6 @@ _addon.itemSetData = {
                     affectSpell = {PRAYER_OF_HEALING},
                     value = 25,
                 }
-                --effect = "Increases your chance of a critical hit with Prayer of Healing by $s1%.",
             },
         },
     },
@@ -75,7 +79,6 @@ _addon.itemSetData = {
                     affectSpell = {DRAIN_LIFE},
                     value = 15,
                 }
-                --effect = "Health or Mana gained from Drain Life and Drain Mana increased by $s1%.",
             },
         },
     },
@@ -84,7 +87,11 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 3,
-                effect = "Damage dealt by Thorns increased by $s1 and duration increased by $s2%.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_FLAT_VALUE,
+                    affectSpell = {THORNS},
+                    value = 4,
+                }
             },
         },
     },
@@ -102,7 +109,10 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 5,
-                effect = "After casting your Healing Wave or Lesser Healing Wave spell, gives you a 25% chance to gain Mana equal to 35% of the base cost of the spell.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.EARTHFURY_RETURN,
+                    value = 1,
+                }
             },
         },
     },
@@ -116,7 +126,6 @@ _addon.itemSetData = {
                     affectSpell = {ARCANE_MISSILES, FROST_BOLT, FIREBALL},
                     value = 1
                 }
-                --effect = "$s1% chance after casting Arcane Missiles, Fireball, or Frostbolt that your next spell with a casting time under 10 seconds cast instantly.",
             },
         },
     },
@@ -129,7 +138,6 @@ _addon.itemSetData = {
                     effect = _addon.EFFECT_TYPE.FSR_REGEN,
                     value = 15,
                 }
-                --effect = "Allows $s1% of your Mana regeneration to continue while casting.",
             },
         },
     },
@@ -140,7 +148,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = "Increases the chance to apply poisons to your target by $s1%.",
             },
-            [1] = {
+            [2] = {
                 need = 8,
                 effect = "Gives the Rogue a chance to inflict $23580s1 damage on the target and heal the Rogue for $23580s2 health every $23580t2 sec. for $23580d. on a melee hit.",
             },
@@ -151,18 +159,24 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 3,
-                effect = "Allows $s1% of your Mana regeneration to continue while casting.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.FSR_REGEN,
+                    value = 15,
+                }
+            },
+            [2] = {
+                need = 8,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_DURATION,
+                    affectSpell = {REJUVENATION},
+                    value = 3,
+                }
             },
         },
     },
     [216] = {
         name = "The Ten Storms",
-        effects = {
-            [1] = {
-                need = 8,
-                effect = "When you cast a Healing Wave or Lesser Healing Wave, there is a 25% chance the target also receives a free Lightning Shield that causes $23552s1 Nature damage to attacker on hit.",
-            },
-        },
+        effects = {},
     },
     [217] = {
         name = "Judgement Armor",
@@ -187,7 +201,11 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 4,
-                effect = "Improves your chance to get a critical strike with all Shock spells by $s1%.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    affectSpell = {FROST_SHOCK, EARTH_SHOCK, FLAME_SHOCK},
+                    perPoint = 2
+                }
             },
         },
     },
@@ -196,7 +214,11 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 3,
-                effect = "Improves your chance to get a critical strike with all Shock spells by $s1%.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    affectSpell = {FROST_SHOCK, EARTH_SHOCK, FLAME_SHOCK},
+                    perPoint = 2
+                }
             },
         },
     },
@@ -218,7 +240,6 @@ _addon.itemSetData = {
                     effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
                     value = 1,
                 }
-                --effect = "Improves your chance to hit with spells by $s1%.",
             },
         },
     },
@@ -249,7 +270,10 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 2,
-                effect = "Restores $s1 mana per 5 sec.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MP5,
+                    value = 4,
+                }
             },
         },
     },
@@ -258,11 +282,18 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 2,
-                effect = "Restores $s1 mana per 5 sec.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MP5,
+                    value = 4,
+                }
             },
             [2] = {
                 need = 5,
-                effect = "Increases the critical hit chance of your Starfire spell $s1%.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    affectSpell = {STARFIRE},
+                    value = 3,
+                }
             },
         },
     },
@@ -276,7 +307,6 @@ _addon.itemSetData = {
                     affectSpell = {CORRUPTION},
                     value = 2,
                 }
-                --effect = "Increases the damage of Corruption by $s1%.",
             },
         },
     },
@@ -339,7 +369,6 @@ _addon.itemSetData = {
                     affectSpell = {IMMOLATE},
                     value = 5,
                 }
-                --effect = "$s1% increased damage on your Immolate spell.",
             },
         },
     },
@@ -371,7 +400,6 @@ _addon.itemSetData = {
                     affectSpell = {SHADOW_WORD_PAIN},
                     value = 5,
                 }
-                --effect = "Increases the damage of your Shadow Word: Pain spell by $s1%.",
             },
         },
     },
@@ -380,7 +408,10 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 8,
-                effect = "On Healing Touch critical hits, you regain 30% of the mana cost of the spell.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.ILLUMINATION,
+                    value = 30
+                }
             },
         },
     },
@@ -407,7 +438,10 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 8,
-                effect = "Your Lightning Shield spell also grants you $28820s1 mana per 5 sec. while active.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.CONDITION_TRIGGER,
+                    value = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS
+                }
             },
         },
     },
@@ -461,7 +495,11 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 4,
-                effect = "Improves your chance to get a critical strike with all Shock spells by $s1%.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    affectSpell = {FROST_SHOCK, EARTH_SHOCK, FLAME_SHOCK},
+                    perPoint = 2
+                }
             },
         },
     },

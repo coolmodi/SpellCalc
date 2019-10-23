@@ -4,6 +4,8 @@ local SCHOOL = _addon.SCHOOL;
 local SCHOOL_MASK = _addon.SCHOOL_MASK;
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
 
+local conditionsActive = {};
+
 --- Apply or remove effect for destination
 -- @param value The effect value, negative to remove buff
 -- @param dest The destination table
@@ -206,6 +208,17 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemoveSpellAffect(name, value, _addon.stats.extraSp, affectSpell);
         return;
     end
+
+    if effect == EFFECT_TYPE.EARTHFURY_RETURN then
+        ApplyOrRemove(value, _addon.stats.earthfuryReturn, name);
+        return;
+    end
+
+    if effect == EFFECT_TYPE.CONDITION_TRIGGER then
+        conditionsActive = conditionsActive + value;
+        _addon:UpdateBuffs();
+        return;
+    end
 end
 
 --- Apply a buff
@@ -301,26 +314,28 @@ function _addon:UpdateBuffs(clearOnly)
         while name do
             if _addon.buffData[spellId] ~= nil or _addon.buffData[name] ~= nil then
                 local buffdata = _addon.buffData[spellId];
-                usedKey = spellId;
-                if buffdata == nil then
-                    buffdata = _addon.buffData[name];
-                    usedKey = name;
-                end
-
-                if activeRelevantBuffs[usedKey] == nil then
-                    _addon:PrintDebug("Add buff " .. name .. " (" .. usedKey .. ") slot " .. i);
-
-                    if buffdata.effects == nil then
-                        ApplyBuffEffect(buffdata, usedKey, name, i);
-                    else
-                        for k, effect in ipairs(buffdata.effects) do
-                            ApplyBuffEffect(effect, usedKey, name, i, k);
-                        end
+                if buffdata.condition == 0 or bit.band(buffdata.condition, conditionsActive) == buffdata.condition then
+                    usedKey = spellId;
+                    if buffdata == nil then
+                        buffdata = _addon.buffData[name];
+                        usedKey = name;
                     end
 
-                    buffsChanged = true;
+                    if activeRelevantBuffs[usedKey] == nil then
+                        _addon:PrintDebug("Add buff " .. name .. " (" .. usedKey .. ") slot " .. i);
+
+                        if buffdata.effects == nil then
+                            ApplyBuffEffect(buffdata, usedKey, name, i);
+                        else
+                            for k, effect in ipairs(buffdata.effects) do
+                                ApplyBuffEffect(effect, usedKey, name, i, k);
+                            end
+                        end
+
+                        buffsChanged = true;
+                    end
+                    activeRelevantBuffs[usedKey] = true;
                 end
-                activeRelevantBuffs[usedKey] = true;
             end
             i = i + 1;
             name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);

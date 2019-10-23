@@ -43,7 +43,9 @@ _addon.EFFECT_TYPE = {
     MOD_DURATION = 15,
     MOD_FLAT_VALUE = 16,
     EXTRA_SP = 17,
-    CLEARCAST_CHANCE_DMG = 18
+    CLEARCAST_CHANCE_DMG = 18,
+    EARTHFURY_RETURN = 19,
+    CONDITION_TRIGGER = 20
 };
 
 -- Spell types (What calculation rules to use)
@@ -65,4 +67,8 @@ _addon.HEALING_CLASSES = {
     SHAMAN = true,
     DRUID = true,
     PALADIN = true
+}
+
+_addon.BUFF_CONDITIONS = {
+    EARTHSHATTERER_8PCS = 0x1
 }
