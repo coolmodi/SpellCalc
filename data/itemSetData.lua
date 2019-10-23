@@ -5,6 +5,9 @@ local SHADOW_WORD_PAIN = GetSpellInfo(589);
 local FIREBALL = GetSpellInfo(3140);
 local FROST_BOLT = GetSpellInfo(837);
 local ARCANE_MISSILES = GetSpellInfo(7268);
+local DRAIN_LIFE = GetSpellInfo(689);
+local CORRUPTION = GetSpellInfo(172);
+local IMMOLATE = GetSpellInfo(348);
 
 _addon.itemSetData = {
     [121] = {
@@ -66,8 +69,13 @@ _addon.itemSetData = {
         name = "Felheart Raiment",
         effects = {
             [1] = {
-                need = 3, -- TODO: needed?
-                effect = "Health or Mana gained from Drain Life and Drain Mana increased by $s1%.",
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+                    affectSpell = {DRAIN_LIFE},
+                    value = 15,
+                }
+                --effect = "Health or Mana gained from Drain Life and Drain Mana increased by $s1%.",
             },
         },
     },
@@ -262,8 +270,13 @@ _addon.itemSetData = {
         name = "Demoniac's Threads",
         effects = {
             [1] = {
-                need = 3, -- TODO P4: needed?
-                effect = "Increases the damage of Corruption by $s1%.",
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+                    affectSpell = {CORRUPTION},
+                    value = 2,
+                }
+                --effect = "Increases the damage of Corruption by $s1%.",
             },
         },
     },
@@ -320,8 +333,13 @@ _addon.itemSetData = {
         name = "Doomcaller's Attire",
         effects = {
             [1] = {
-                need = 3, -- TODO P5: needed?
-                effect = "$s1% increased damage on your Immolate spell.",
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+                    affectSpell = {IMMOLATE},
+                    value = 5,
+                }
+                --effect = "$s1% increased damage on your Immolate spell.",
             },
         },
     },
