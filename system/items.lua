@@ -20,7 +20,6 @@ local ITEM_SLOTS = {
     [18] = "ranged",
 };
 
--- TODO: items with self buffs (e.g. benediction's your holy spells probably has mask too) probably need to be treated too. Special effects at least.
 local items = {};
 local sets = {};
 
@@ -78,6 +77,33 @@ local function UpdateSet(setId, change)
     end
 end
 
+local function ChangeItemEffects(itemData, itemName, remove)
+    local val;
+    if itemData.mp5 then
+        val = remove and -itemData.mp5 or itemData.mp5;
+        ApplyOrRemove(val, _addon.stats.mp5, itemName);
+    end
+
+    if itemData.hit then
+        val = remove and -itemData.hit or itemData.hit;
+        ApplyOrRemove(val, _addon.stats.hitBonus, itemName);
+    end
+
+    if itemData.spellHit then
+        val = remove and -itemData.spellHit or itemData.spellHit;
+        ApplyOrRemove(val, _addon.stats.hitBonusSpell, itemName);
+    end
+
+    if itemData.spellPen then
+        val = remove and -itemData.spellPen or itemData.spellPen;
+        for i=3,7 do
+            ApplyOrRemove(val, _addon.stats.spellPen[i], itemName);
+        end
+    end
+
+    _addon.lastChange = time();
+end
+
 --- Equip item for slot
 -- @param itemId The item ID to equip
 -- @param slotId The slot item is equipped into
@@ -89,27 +115,15 @@ local function EquipItem(itemId, slotId)
 
     if itemData then
         _addon:PrintDebug("Item has effect");
-        if itemData.mp5 then
-            ApplyOrRemove(itemData.mp5, _addon.stats.mp5, itemName);
-        end
-
-        if itemData.hit then
-            ApplyOrRemove(itemData.hit, _addon.stats.hitBonus, itemName);
-        end
-
-        if itemData.spellHit then
-            ApplyOrRemove(itemData.spellHit, _addon.stats.hitBonusSpell, itemName);
-        end
-
-        if itemData.spellPen then
-            for i=3,7 do
-                ApplyOrRemove(itemData.spellPen, _addon.stats.spellPen[i], itemName);
-            end
-        end
-
-        _addon.lastChange = time();
+        ChangeItemEffects(itemData, itemName);
     end
 
+    if _addon.itemEffects[itemId] then
+        for _, effect in ipairs(_addon.itemEffects[itemId]) do
+            _addon:ApplyBuff(itemName, effect.type, effect.value, effect.affectSchool, effect.affectSpell);
+        end
+        _addon.lastChange = time();
+    end
 
     if setId then
         _addon:PrintDebug("Item is in a set");
@@ -128,25 +142,13 @@ local function UnequipItem(slotId)
 
     if itemData then
         _addon:PrintDebug("Item had effect");
+        ChangeItemEffects(itemData, itemName, true);
+    end
 
-        if itemData.mp5 then
-            ApplyOrRemove(-itemData.mp5, _addon.stats.mp5, itemName);
+    if _addon.itemEffects[items[slotId]] then
+        for _, effect in ipairs(_addon.itemEffects[items[slotId]]) do
+            _addon:RemoveBuff(itemName, effect.type, effect.value, effect.affectSchool, effect.affectSpell);
         end
-
-        if itemData.hit then
-            ApplyOrRemove(-itemData.hit, _addon.stats.hitBonus, itemName);
-        end
-
-        if itemData.spellHit then
-            ApplyOrRemove(-itemData.spellHit, _addon.stats.hitBonusSpell, itemName);
-        end
-
-        if itemData.spellPen then
-            for i=3,7 do
-                ApplyOrRemove(-itemData.spellPen, _addon.stats.spellPen[i], itemName);
-            end
-        end
-
         _addon.lastChange = time();
     end
 

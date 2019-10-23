@@ -16,6 +16,7 @@ helper.lua
 
 data/auras.lua
 data/itemData.lua
+data/itemEffects.lua
 data/itemSetData.lua
 data/classes/druid_spell.lua
 data/classes/hunter_spell.lua
