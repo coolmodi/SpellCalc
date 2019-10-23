@@ -35,6 +35,9 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(2061)] = { -- Flash Heal
         school = 2,
     },
+    [GetSpellInfo(2944)] = { -- Devouring Plague
+        school = 6,
+    },
     [GetSpellInfo(8092)] = { -- Mind Blast
         school = 6,
     },
@@ -54,6 +57,9 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(17311)] = { -- Mind Flay
         school = 6,
         isChannel = true,
+    },
+    [GetSpellInfo(18137)] = { -- Shadowguard
+        school = 6,
     },
 };
 
@@ -350,6 +356,19 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 61,
                 coef = 0.167,
+            },
+        }
+    },
+    [2944] = { -- Devouring Plague(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 24,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 19,
+                coef = 0.063,
             },
         }
     },
@@ -1096,6 +1115,13 @@ _addon.spellRankInfo = {
                 perLevel = 0.4,
                 coef = 0.107,
             },
+            [2] = {
+                isHeal = true,
+                min = 86,
+                max = 99,
+                perLevel = 0.4,
+                coef = 0.107,
+            },
         }
     },
     [15431] = { -- Holy Nova(Rank 3)
@@ -1106,6 +1132,13 @@ _addon.spellRankInfo = {
                 min = 76,
                 max = 89,
                 perLevel = 0.6,
+                coef = 0.107,
+            },
+            [2] = {
+                isHeal = true,
+                min = 121,
+                max = 140,
+                perLevel = 0.5,
                 coef = 0.107,
             },
         }
@@ -1159,6 +1192,19 @@ _addon.spellRankInfo = {
                 tickPeriod = 1,
                 min = 110,
                 coef = 0.15,
+            },
+        }
+    },
+    [18137] = { -- Shadowguard(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 20,
+                coef = 0.267,
             },
         }
     },
@@ -1253,6 +1299,71 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [19276] = { -- Devouring Plague(Rank 2)
+        spellLevel = 28,
+        maxLevel = 0,
+        duration = 24,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 34,
+                coef = 0.063,
+            },
+        }
+    },
+    [19277] = { -- Devouring Plague(Rank 3)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = 24,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 50,
+                coef = 0.063,
+            },
+        }
+    },
+    [19278] = { -- Devouring Plague(Rank 4)
+        spellLevel = 44,
+        maxLevel = 0,
+        duration = 24,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 68,
+                coef = 0.063,
+            },
+        }
+    },
+    [19279] = { -- Devouring Plague(Rank 5)
+        spellLevel = 52,
+        maxLevel = 0,
+        duration = 24,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 89,
+                coef = 0.063,
+            },
+        }
+    },
+    [19280] = { -- Devouring Plague(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 24,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 113,
+                coef = 0.063,
+            },
+        }
+    },
     [19296] = { -- Starshards(Rank 2)
         spellLevel = 18,
         maxLevel = 24,
@@ -1331,6 +1442,71 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [19308] = { -- Shadowguard(Rank 2)
+        spellLevel = 28,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 35,
+                coef = 0.267,
+            },
+        }
+    },
+    [19309] = { -- Shadowguard(Rank 3)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 51,
+                coef = 0.267,
+            },
+        }
+    },
+    [19310] = { -- Shadowguard(Rank 4)
+        spellLevel = 44,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 70,
+                coef = 0.267,
+            },
+        }
+    },
+    [19311] = { -- Shadowguard(Rank 5)
+        spellLevel = 52,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 90,
+                coef = 0.267,
+            },
+        }
+    },
+    [19312] = { -- Shadowguard(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 116,
+                coef = 0.267,
+            },
+        }
+    },
     [25314] = { -- Greater Heal(Rank 5)
         spellLevel = 60,
         maxLevel = 65,
@@ -1381,6 +1557,13 @@ _addon.spellRankInfo = {
                 perLevel = 0.8,
                 coef = 0.107,
             },
+            [2] = {
+                isHeal = true,
+                min = 161,
+                max = 188,
+                perLevel = 0.6,
+                coef = 0.107,
+            },
         }
     },
     [27800] = { -- Holy Nova(Rank 5)
@@ -1393,6 +1576,13 @@ _addon.spellRankInfo = {
                 perLevel = 1,
                 coef = 0.107,
             },
+            [2] = {
+                isHeal = true,
+                min = 235,
+                max = 272,
+                perLevel = 0.7,
+                coef = 0.107,
+            },
         }
     },
     [27801] = { -- Holy Nova(Rank 6)
@@ -1403,6 +1593,13 @@ _addon.spellRankInfo = {
                 min = 181,
                 max = 210,
                 perLevel = 1.2,
+                coef = 0.107,
+            },
+            [2] = {
+                isHeal = true,
+                min = 302,
+                max = 351,
+                perLevel = 0.8,
                 coef = 0.107,
             },
         }

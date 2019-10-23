@@ -7,6 +7,9 @@ if playerClass ~= "SHAMAN" then
 end
 
 _addon.spellBaseInfo = {
+    [GetSpellInfo(324)] = { -- Lightning Shield
+        school = 4,
+    },
     [GetSpellInfo(331)] = { -- Healing Wave
         school = 4,
     },
@@ -34,6 +37,32 @@ _addon.spellBaseInfo = {
 };
 
 _addon.spellRankInfo = {
+    [324] = { -- Lightning Shield(Rank 1)
+        spellLevel = 8,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 13,
+                coef = 0.147,
+            },
+        }
+    },
+    [325] = { -- Lightning Shield(Rank 2)
+        spellLevel = 16,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 29,
+                coef = 0.227,
+            },
+        }
+    },
     [331] = { -- Healing Wave(Rank 1)
         spellLevel = 1,
         maxLevel = 5,
@@ -121,6 +150,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [905] = { -- Lightning Shield(Rank 3)
+        spellLevel = 24,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 51,
+                coef = 0.267,
+            },
+        }
+    },
     [913] = { -- Healing Wave(Rank 4)
         spellLevel = 18,
         maxLevel = 23,
@@ -180,6 +222,19 @@ _addon.spellRankInfo = {
                 max = 144,
                 perLevel = 1.2,
                 coef = 0.857,
+            },
+        }
+    },
+    [945] = { -- Lightning Shield(Rank 4)
+        spellLevel = 32,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 80,
+                coef = 0.267,
             },
         }
     },
@@ -417,6 +472,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [8134] = { -- Lightning Shield(Rank 5)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 114,
+                coef = 0.267,
+            },
+        }
+    },
     [10391] = { -- Lightning Bolt(Rank 7)
         spellLevel = 38,
         maxLevel = 43,
@@ -503,6 +571,32 @@ _addon.spellRankInfo = {
                 max = 546,
                 perLevel = 3.1,
                 coef = 0.386,
+            },
+        }
+    },
+    [10431] = { -- Lightning Shield(Rank 6)
+        spellLevel = 48,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 154,
+                coef = 0.267,
+            },
+        }
+    },
+    [10432] = { -- Lightning Shield(Rank 7)
+        spellLevel = 56,
+        maxLevel = 0,
+        duration = 600,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 3,
+                min = 198,
+                coef = 0.267,
             },
         }
     },

@@ -19,6 +19,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(686)] = { -- Shadow Bolt
         school = 6,
     },
+    [GetSpellInfo(689)] = { -- Drain Life
+        school = 6,
+        isChannel = true,
+    },
     [GetSpellInfo(755)] = { -- Health Funnel
         school = 6,
         isChannel = true,
@@ -48,6 +52,9 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(17962)] = { -- Conflagrate
         school = 3,
+    },
+    [GetSpellInfo(18265)] = { -- Siphon Life
+        school = 6,
     },
 };
 
@@ -108,6 +115,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [689] = { -- Drain Life(Rank 1)
+        spellLevel = 14,
+        maxLevel = 19,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 10,
+                coef = 0.078,
+            },
+        }
+    },
     [695] = { -- Shadow Bolt(Rank 2)
         spellLevel = 6,
         maxLevel = 11,
@@ -117,6 +137,19 @@ _addon.spellRankInfo = {
                 max = 30,
                 perLevel = 0.6,
                 coef = 0.299,
+            },
+        }
+    },
+    [699] = { -- Drain Life(Rank 2)
+        spellLevel = 22,
+        maxLevel = 27,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 17,
+                coef = 0.1,
             },
         }
     },
@@ -147,6 +180,19 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 8,
                 coef = 0.081,
+            },
+        }
+    },
+    [709] = { -- Drain Life(Rank 3)
+        spellLevel = 30,
+        maxLevel = 35,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 29,
+                coef = 0.1,
             },
         }
     },
@@ -419,6 +465,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [7651] = { -- Drain Life(Rank 4)
+        spellLevel = 38,
+        maxLevel = 43,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 41,
+                coef = 0.1,
+            },
+        }
+    },
     [8288] = { -- Drain Soul(Rank 2)
         spellLevel = 24,
         maxLevel = 0,
@@ -644,6 +703,32 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [11699] = { -- Drain Life(Rank 5)
+        spellLevel = 46,
+        maxLevel = 51,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 55,
+                coef = 0.1,
+            },
+        }
+    },
+    [11700] = { -- Drain Life(Rank 6)
+        spellLevel = 54,
+        maxLevel = 59,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 71,
+                coef = 0.1,
+            },
+        }
+    },
     [11711] = { -- Curse of Agony(Rank 4)
         spellLevel = 38,
         maxLevel = 0,
@@ -804,6 +889,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [18265] = { -- Siphon Life(Rank 1)
+        spellLevel = 30,
+        maxLevel = 38,
+        duration = 30,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 15,
+                coef = 0.05,
+            },
+        }
+    },
     [18867] = { -- Shadowburn(Rank 2)
         spellLevel = 24,
         maxLevel = 30,
@@ -866,6 +964,45 @@ _addon.spellRankInfo = {
                 max = 503,
                 perLevel = 3,
                 coef = 0.429,
+            },
+        }
+    },
+    [18879] = { -- Siphon Life(Rank 2)
+        spellLevel = 38,
+        maxLevel = 48,
+        duration = 30,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 22,
+                coef = 0.05,
+            },
+        }
+    },
+    [18880] = { -- Siphon Life(Rank 3)
+        spellLevel = 48,
+        maxLevel = 58,
+        duration = 30,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 33,
+                coef = 0.05,
+            },
+        }
+    },
+    [18881] = { -- Siphon Life(Rank 4)
+        spellLevel = 58,
+        maxLevel = 68,
+        duration = 30,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 45,
+                coef = 0.05,
             },
         }
     },
