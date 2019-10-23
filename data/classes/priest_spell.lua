@@ -51,12 +51,13 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(14914)] = { -- Holy Fire
         school = 2,
     },
-    [GetSpellInfo(15430)] = { -- Holy Nova
+    [GetSpellInfo(15237)] = { -- Holy Nova
         school = 2,
     },
     [GetSpellInfo(17311)] = { -- Mind Flay
         school = 6,
         isChannel = true,
+        isBinary = true,
     },
     [GetSpellInfo(18137)] = { -- Shadowguard
         school = 6,
@@ -969,6 +970,25 @@ _addon.spellRankInfo = {
                 tickPeriod = 2,
                 min = 6,
                 coef = 0.05,
+            },
+        }
+    },
+    [15237] = { -- Holy Nova(Rank 1)
+        spellLevel = 20,
+        maxLevel = 26,
+        effects = {
+            [1] = {
+                min = 28,
+                max = 33,
+                perLevel = 0.2,
+                coef = 0.107,
+            },
+            [2] = {
+                isHeal = true,
+                min = 52,
+                max = 61,
+                perLevel = 0.3,
+                coef = 0.107,
             },
         }
     },

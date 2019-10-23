@@ -167,7 +167,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
     if SpellCalc_settings.ttPerSecond then
         if not spellBaseInfo.isChannel then
             GameTooltip:AddDoubleLine(("%s: %d"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond),
-            ("%s: %d"):format(L["TT_PERSECDUR_"..unitPart], effectData.perSecondDuration), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+            ("%s: %.1f"):format(L["TT_PERSECDUR_"..unitPart], effectData.perSecondDuration), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
         else
             GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
         end

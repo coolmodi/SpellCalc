@@ -180,7 +180,10 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
     end
 
     if calcData.hitChance ~= nil then
-        et.avgAfterMitigation = et.avgCombined * calcData.hitChance * (1 - calcData.avgResistMod);
+        et.avgAfterMitigation = et.avgCombined * calcData.hitChance;
+        if et.binaryHitLoss == 0 then
+            et.avgAfterMitigation = et.avgAfterMitigation * (1 - calcData.avgResistMod);
+        end
     else
         et.avgAfterMitigation = et.avgCombined;
     end
@@ -200,7 +203,6 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
     et.doneToOom = calcData.castsToOom * et.avgAfterMitigation;
     et.perMana = et.avgAfterMitigation / calcData.effectiveCost;
 
-    -- TODO: experimental
     if et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL and SpellCalc_settings.healTargetHps > 0 then
         local secondsNoCast = (et.perSecond / SpellCalc_settings.healTargetHps - 1) * castTime;
         if secondsNoCast > 0 then
@@ -272,11 +274,11 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
     if calcData.hitChance ~= nil then
         if isChannel then
             et.avgAfterMitigation = et.allTicks * (1 - (1 - calcData.hitChance) ^ (castTime/1.5));
-            if et.isChannelAoe then
-                et.avgAfterMitigation = et.avgAfterMitigation * (1 - calcData.avgResistMod);
-            end
         else
             et.avgAfterMitigation = et.allTicks * calcData.hitChance;
+        end
+        if et.binaryHitLoss == 0 then
+            et.avgAfterMitigation = et.avgAfterMitigation * (1 - calcData.avgResistMod);
         end
     else
         et.avgAfterMitigation = et.allTicks;

@@ -242,7 +242,7 @@ function _addon:CalcSpell(spellId)
             
             calcData.hitChance = calcData.baseHitChance + calcData.hitChanceBonus;
 
-            if (spellBaseInfo.isBinary or effectTypes[1] == SPELL_EFFECT_TYPE.DOT) and not spellBaseInfo.isChannelAoe then
+            if spellBaseInfo.isBinary then
                 calcData.binaryHitLoss = calcData.hitChance - (calcData.hitChance * (1 - calcData.avgResistMod));
                 calcData.hitChance = calcData.hitChance - calcData.binaryHitLoss;
             end

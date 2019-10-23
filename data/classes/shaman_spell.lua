@@ -33,6 +33,7 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(8056)] = { -- Frost Shock
         school = 5,
+        isBinary = true,
     },
 };
 

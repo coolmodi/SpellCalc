@@ -9,12 +9,15 @@ end
 _addon.spellBaseInfo = {
     [GetSpellInfo(116)] = { -- Frostbolt
         school = 5,
+        isBinary = true,
     },
     [GetSpellInfo(120)] = { -- Cone of Cold
         school = 5,
+        isBinary = true,
     },
     [GetSpellInfo(122)] = { -- Frost Nova
         school = 5,
+        isBinary = true,
     },
     [GetSpellInfo(133)] = { -- Fireball
         school = 3,
@@ -41,6 +44,7 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(11113)] = { -- Blast Wave
         school = 3,
+        isBinary = true,
     },
     [GetSpellInfo(11426)] = { -- Ice Barrier
         school = 5,
