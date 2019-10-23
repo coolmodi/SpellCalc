@@ -202,7 +202,7 @@ _addon.talentData = {
     },
     { -- Spiritual Healing
         tree = 2,
-        talent = 14,
+        talent = 15,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,

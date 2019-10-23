@@ -35,7 +35,6 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
     };
 
     if spellType == SPELL_TYPE.SPELL then
-        st.levelPenalty = 1; -- Mult for spell below lvl 20
         st.effectiveCost = 0;
         st.castsToOom = 0;
         st.timeToOom = 0;
@@ -64,7 +63,6 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
 
         et.effectType = curType; -- The type of the effect
         et.spellPower = 0; -- Spell power this effect uses
-        et.spCoef = 0; -- The spell power coefficient this effect uses
         et.effectiveSpCoef = 0; -- The effective coef after penalty, if it has one
         et.effectivePower = 0; -- The power used
         
@@ -182,13 +180,6 @@ function _addon:CalcSpell(spellId)
         _addon.calcedSpells[spellId] = MakeSpellTable(spellType, effectTypes[1], effectTypes[2]);
     end
     local calcData = _addon.calcedSpells[spellId];
-
-    --------------------------
-    -- Low level spell scaling penalty
-
-    if spellType == SPELL_TYPE.SPELL and spellRankInfo.spellLevel ~= nil then
-        calcData.levelPenalty =  1 - ((20 - spellRankInfo.spellLevel) * 0.0375);
-    end
 
     --------------------------
     -- Spell wide modifiers
@@ -354,8 +345,7 @@ function _addon:CalcSpell(spellId)
         end
 
         -- Effective power
-        et.spCoef = spellRankInfo.effects[i].coef;
-        et.effectiveSpCoef = et.spCoef; -- * calcData.levelPenalty; Already in client DB coef data
+        et.effectiveSpCoef = spellRankInfo.effects[i].coef;
         et.effectivePower = et.spellPower * et.effectiveSpCoef;
 
         --------------------------

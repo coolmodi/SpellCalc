@@ -22,10 +22,6 @@ local function AppendCoefData(calcData, effectData)
         return;
     end
 
-    if SpellCalc_settings.ttLevelPenalty and calcData.levelPenalty < 1 then
-        GameTooltip:AddLine(("%s: %.2f%%"):format(L["TT_LOWLVLPENAL"], (1-calcData.levelPenalty)*100), TTCOLOR, TTCOLOR, TTCOLOR);
-    end
-
     if SpellCalc_settings.ttCoef then
         local fullCoef = effectData.effectiveSpCoef;
         if effectData.ticks then

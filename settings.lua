@@ -10,7 +10,6 @@ local DEFAULTSETTINGS = {
 	["ttCrit"] = true,
 	["ttAverages"] = true,
 	["ttCoef"] = true,
-	["ttLevelPenalty"] = true,
 	["ttPower"] = true,
 	["ttHitChance"] = true,
 	["ttHitDetail"] = true,
@@ -98,7 +97,6 @@ function _addon:SetupSettings()
 	row = settings:MakeSettingsRow(1);
 	settings:MakeCheckboxOption("ttPower", L["SETTINGS_TT_POWER_LABEL"], L["SETTINGS_TT_POWER_TT"], row);
 	settings:MakeCheckboxOption("ttCoef", L["SETTINGS_TT_COEF_LABEL"], nil, row);
-	settings:MakeCheckboxOption("ttLevelPenalty", L["SETTINGS_TT_PENAL_LABEL"], L["SETTINGS_TT_PENAL_TT"], row);
 	row = settings:MakeSettingsRow(1);
 	settings:MakeCheckboxOption("ttHitChance", L["SETTINGS_TT_HITCHANCE_LABEL"], nil, row);
 	settings:MakeCheckboxOption("ttHitDetail", L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"], L["SETTINGS_TT_HITCHANCE_DETAIL_TT"], row);
