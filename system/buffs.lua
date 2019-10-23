@@ -158,6 +158,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
+    if effect == EFFECT_TYPE.CLEARCAST_CHANCE_DMG then
+        ApplyOrRemove(value, _addon.stats.clearCastChanceDmg, name);
+        return;
+    end
+
     if effect == EFFECT_TYPE.ILLUMINATION then
         ApplyOrRemove(value, _addon.stats.illumination, name);
         return;

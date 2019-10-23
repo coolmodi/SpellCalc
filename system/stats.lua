@@ -83,6 +83,7 @@ _addon.stats = {
         spell = {}
     },
     clearCastChance = {val=0, buffs={}},
+    clearCastChanceDmg = {val=0, buffs={}},
     illumination = {val=0, buffs={}},
     critMult = {
         school = {

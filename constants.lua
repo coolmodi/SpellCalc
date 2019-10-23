@@ -43,6 +43,7 @@ _addon.EFFECT_TYPE = {
     MOD_DURATION = 15,
     MOD_FLAT_VALUE = 16,
     EXTRA_SP = 17,
+    CLEARCAST_CHANCE_DMG = 18
 };
 
 -- Spell types (What calculation rules to use)

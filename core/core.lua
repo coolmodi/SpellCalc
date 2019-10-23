@@ -288,10 +288,11 @@ function _addon:CalcSpell(spellId)
         if spellType == SPELL_TYPE.SPELL then
             calcData.effectiveCost = spellCost - castTime * (stats.manaReg + stats.mp5.val/5);
 
-            if stats.clearCastChance.val > 0 then
-                                                                        -- TODO: does this only happen on successful hits?
-                calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.clearCastChance.val/100) * calcData.hitChance;
-                for _, buffName in pairs(stats.clearCastChance.buffs) do
+            if stats.clearCastChance.val > 0 or (stats.clearCastChanceDmg.val > 0 and not spellRankInfo.effects[1].isHeal) then
+                local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
+                -- TODO: does this only happen on successful hits?
+                calcData.effectiveCost = calcData.effectiveCost - spellCost * (ccc.val/100) * calcData.hitChance;
+                for _, buffName in pairs(ccc.buffs) do
                     table.insert(calcData.buffs, buffName);
                 end
             end
