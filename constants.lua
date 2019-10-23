@@ -40,7 +40,9 @@ _addon.EFFECT_TYPE = {
     IGNITE = 12,
     WL_IMP_SB = 13,
     MAGE_NWR_PROC = 14,
-    MOD_DURATION = 15
+    MOD_DURATION = 15,
+    MOD_FLAT_VALUE = 16,
+    EXTRA_SP = 17,
 };
 
 -- Spell types (What calculation rules to use)

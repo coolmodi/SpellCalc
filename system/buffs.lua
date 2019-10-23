@@ -191,6 +191,16 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemoveSpellAffect(name, value, _addon.stats.durationMods, affectSpell);
         return;
     end
+
+    if effect == EFFECT_TYPE.MOD_FLAT_VALUE then
+        ApplyOrRemoveSpellAffect(name, value, _addon.stats.flatMods, affectSpell);
+        return;
+    end
+
+    if effect == EFFECT_TYPE.EXTRA_SP then
+        ApplyOrRemoveSpellAffect(name, value, _addon.stats.extraSp, affectSpell);
+        return;
+    end
 end
 
 --- Apply a buff

@@ -97,6 +97,8 @@ _addon.stats = {
         spell = {}
     },
     durationMods = {},
+    flatMods = {},
+    extraSp = {},
     ignite = {val=0, buffs={}},
     impShadowBolt = {val=0, buffs={}},
     mageNWRProc = {},

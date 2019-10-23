@@ -4,9 +4,9 @@ if playerClass ~= "PALADIN" then
     return;
 end
 
-local HOLY_LIGHT = GetSpellInfo();
-local FLASH_OF_LIGHT = GetSpellInfo();
-local HOLY_SHOCK = GetSpellInfo();
+local HOLY_LIGHT = GetSpellInfo(635);
+local FLASH_OF_LIGHT = GetSpellInfo(19750);
+local HOLY_SHOCK = GetSpellInfo(20473);
 
 _addon.talentData = {
     { -- Healing Light

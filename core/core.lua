@@ -322,7 +322,24 @@ function _addon:CalcSpell(spellId)
         end
     end
     
-    
+    --------------------------
+    -- Flat mods
+
+    local flatMod = 0;
+    if stats.flatMods[name] ~= nil then
+        flatMod = stats.flatMod[name].val;
+        for _, buffName in pairs(stats.flatMod[name].buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
+    end
+
+    local extraSp = 0;
+    if stats.extraSp[name] ~= nil then
+        extraSp = stats.extraSp[name].val;
+        for _, buffName in pairs(stats.extraSp[name].buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
+    end
 
     --------------------------
     -- Per effect calculations
@@ -340,13 +357,14 @@ function _addon:CalcSpell(spellId)
             else
                 et.spellPower = stats.spellPower[spellBaseInfo.school];
             end
+            et.spellPower = extraSp + et.spellPower;
         else
             -- NYI
         end
 
         -- Effective power
         et.effectiveSpCoef = spellRankInfo.effects[i].coef;
-        et.effectivePower = et.spellPower * et.effectiveSpCoef;
+        et.effectivePower = et.spellPower * et.effectiveSpCoef + flatMod;
 
         --------------------------
         -- Effect specific modifier

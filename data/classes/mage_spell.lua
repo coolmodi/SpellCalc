@@ -33,6 +33,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(1449)] = { -- Arcane Explosion
         school = 7,
     },
+    [GetSpellInfo(1463)] = { -- Mana Shield
+        school = 7,
+        isAbsorbShield = true,
+    },
     [GetSpellInfo(2120)] = { -- Flamestrike
         school = 3,
     },
@@ -230,6 +234,18 @@ _addon.spellRankInfo = {
                 max = 37,
                 perLevel = 0.4,
                 coef = 0.111,
+            },
+        }
+    },
+    [1463] = { -- Mana Shield(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                min = 120,
+                coef = 0,
             },
         }
     },
@@ -695,6 +711,30 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [8494] = { -- Mana Shield(Rank 2)
+        spellLevel = 28,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                min = 210,
+                coef = 0,
+            },
+        }
+    },
+    [8495] = { -- Mana Shield(Rank 3)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                min = 300,
+                coef = 0,
+            },
+        }
+    },
     [10148] = { -- Fireball(Rank 8)
         spellLevel = 42,
         maxLevel = 46,
@@ -900,6 +940,42 @@ _addon.spellRankInfo = {
                 min = 149,
                 perLevel = 0.4,
                 coef = 0.042,
+            },
+        }
+    },
+    [10191] = { -- Mana Shield(Rank 4)
+        spellLevel = 44,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                min = 390,
+                coef = 0,
+            },
+        }
+    },
+    [10192] = { -- Mana Shield(Rank 5)
+        spellLevel = 52,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                min = 480,
+                coef = 0,
+            },
+        }
+    },
+    [10193] = { -- Mana Shield(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                min = 570,
+                coef = 0,
             },
         }
     },
