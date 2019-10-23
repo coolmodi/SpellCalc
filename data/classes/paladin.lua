@@ -13,26 +13,32 @@ _addon.talentData = {
         tree = 1,
         talent = 5,
         effects = {
-            type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
-            affectSpell = {HOLY_LIGHT, FLASH_OF_LIGHT},
-            perPoint = 4
+            {
+                type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                affectSpell = {HOLY_LIGHT, FLASH_OF_LIGHT},
+                perPoint = 4
+            }
         }
     },
     { -- Illumination
         tree = 1,
         talent = 9,
         effects = {
-            type = _addon.EFFECT_TYPE.ILLUMINATION,
-            perPoint = 20
+            {
+                type = _addon.EFFECT_TYPE.ILLUMINATION,
+                perPoint = 20
+            }
         }
     },
     { -- Holy Power
         tree = 1,
         talent = 13,
         effects = {
-            type = _addon.EFFECT_TYPE.MOD_CRIT,
-            affectSchool = _addon.SCHOOL_MASK.HOLY,
-            perPoint = 1
+            {
+                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                affectSchool = _addon.SCHOOL_MASK.HOLY,
+                perPoint = 1
+            }
         }
     },
 };

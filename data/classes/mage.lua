@@ -6,60 +6,65 @@ end
 
 -- TODO: Arcane Missiles, but who even needs that?
 
-local FROST_BOLT = GetSpellInfo(837);
 local ARCANE_EXPLOSION = GetSpellInfo(1449);
 local FIRE_BLAST = GetSpellInfo(10197);
 local SCORCH = GetSpellInfo(10205);
 local FLAME_STRIKE = GetSpellInfo(2120);
-local FIREBALL = GetSpellInfo(3140);
-local PYROBLAST = GetSpellInfo(11366);
 local CONE_OF_COLD = GetSpellInfo(8492);
-local BLAST_WAVE = GetSpellInfo(11113);
 local MAGE_ARMOR = GetSpellInfo(6117);
-local BLIZZARD = GetSpellInfo(10);
 
 _addon.talentData = {
     { -- Arcane Subtlety
         tree = 1,
         talent = 1,
         effects = {
-            type = _addon.EFFECT_TYPE.RESISTANCE_PEN,
-            affectSchool = _addon.SCHOOL_MASK.ARCANE,
-            perPoint = 5
+            {
+                type = _addon.EFFECT_TYPE.RESISTANCE_PEN,
+                affectSchool = _addon.SCHOOL_MASK.ARCANE,
+                perPoint = 5
+            }
         }
     },
     { -- Arcane Focus
         tree = 1,
         talent = 2,
         effects = {
-            type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-            affectSchool = _addon.SCHOOL_MASK.ARCANE,
-            perPoint = 2
+            {
+                type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+                affectSchool = _addon.SCHOOL_MASK.ARCANE,
+                perPoint = 2
+            }
         }
     },
     { -- Arcane Concentration
         tree = 1,
         talent = 6,
         effects = {
-            type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
-            perPoint = 2
+            {
+                type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
+                perPoint = 2
+            }
         }
     },
     { -- Improved Arcane Explosion
         tree = 1,
         talent = 8,
         effects = {
-            type = _addon.EFFECT_TYPE.MOD_CRIT,
-            affectSpell = {ARCANE_EXPLOSION},
-            perPoint = 2
+            {
+                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                affectSpell = {ARCANE_EXPLOSION},
+                perPoint = 2
+            }
         }
     },
     { -- Arcane Meditation
         tree = 1,
         talent = 12,
         effects = {
-            type = _addon.EFFECT_TYPE.FSR_REGEN,
-            perPoint = 5
+            {
+                type = _addon.EFFECT_TYPE.FSR_REGEN,
+                perPoint = 5
+            }
         }
     },
     { -- Arcane Instability
@@ -93,26 +98,32 @@ _addon.talentData = {
         tree = 2,
         talent = 6,
         effects = {
-            type = _addon.EFFECT_TYPE.MOD_CRIT,
-            affectSpell = {FIRE_BLAST, SCORCH},
-            perPoint = 2
+            {
+                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                affectSpell = {FIRE_BLAST, SCORCH},
+                perPoint = 2
+            }
         }
     },
     { -- Improved Flamestrike
         tree = 2,
         talent = 7,
         effects = {
-            type = _addon.EFFECT_TYPE.MOD_CRIT,
-            affectSpell = {FLAME_STRIKE},
-            perPoint = 5
+            {
+                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                affectSpell = {FLAME_STRIKE},
+                perPoint = 5
+            }
         }
     },
     { -- Master of Elements
         tree = 2,
         talent = 12,
         effects = {
-            type = _addon.EFFECT_TYPE.ILLUMINATION,
-            perPoint = 10
+            {
+                type = _addon.EFFECT_TYPE.ILLUMINATION,
+                perPoint = 10
+            }
         }
     },
     { -- Critical Mass
@@ -132,7 +143,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSchool = _addon.SCHOOL.FIRE,
+                affectSchool = _addon.SCHOOL_MASK.FIRE,
                 perPoint = 2
             }
         }
@@ -155,7 +166,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.CRIT_MULT,
-                affectSchool = _addon.SCHOOL.FROST,
+                affectSchool = _addon.SCHOOL_MASK.FROST,
                 perPoint = 20
             }
         }
@@ -166,7 +177,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSchool = _addon.SCHOOL.FROST,
+                affectSchool = _addon.SCHOOL_MASK.FROST,
                 perPoint = 2
             }
         }
