@@ -161,6 +161,18 @@ local function AddSpellTable(spellTable, title, unit)
     });
 end
 
+--- Add a title
+-- @param title The label for the stat
+local function AddTitle(title)
+    if title then
+        local row = CreateStatRow();
+        local text = row:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2");
+        text:SetPoint("LEFT", 0, 0);
+        text:SetText(title);
+        row:SetHeight(text:GetHeight() + 10);
+    end
+end
+
 -------------------------------------------------------
 -- Update UI
 
@@ -265,7 +277,16 @@ AddUniformStatTable(stats.healingDoneMod, "Healing done mod", "x");
 AddSchoolTableUniform(stats.effectMods.school, "Effect mods", "x");
 AddSpellTable(stats.effectMods.spell, nil, "x");
 
+AddSpellTable(stats.durationMods, "Duration mods:", "s");
+AddSpellTable(stats.flatMods, "Flat mods", "");
+AddSpellTable(stats.extraSp, "Extra SP", "");
+AddSpellTable(stats.mageNWRProc, "Mage NWR proc", "");
+
+AddTitle("Clearcast");
 AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
+AddUniformStatTable(stats.clearCastChanceDmg, "Clearcast chance dmg", "%");
+
+AddTitle("Misc");
 AddUniformStatTable(stats.illumination, "Illumination", "%");
 AddUniformStatTable(stats.ignite, "Ignite", "");
 AddUniformStatTable(stats.impShadowBolt, "Imp Shadow Bolt", "%");
