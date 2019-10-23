@@ -7,6 +7,10 @@ if playerClass ~= "MAGE" then
 end
 
 _addon.spellBaseInfo = {
+    [GetSpellInfo(10)] = { -- Blizzard
+        school = 5,
+        isChannel = true,
+    },
     [GetSpellInfo(116)] = { -- Frostbolt
         school = 5,
         isBinary = true,
@@ -56,6 +60,20 @@ _addon.spellBaseInfo = {
 };
 
 _addon.spellRankInfo = {
+    [10] = { -- Blizzard(Rank 1)
+        spellLevel = 20,
+        maxLevel = 25,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 25,
+                perLevel = 0.1,
+                coef = 0.042,
+            },
+        }
+    },
     [116] = { -- Frostbolt(Rank 1)
         spellLevel = 4,
         maxLevel = 8,
@@ -226,6 +244,12 @@ _addon.spellRankInfo = {
                 perLevel = 0.6,
                 coef = 0.134,
             },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 12,
+                coef = 0.017,
+            },
         }
     },
     [2121] = { -- Flamestrike(Rank 2)
@@ -238,6 +262,12 @@ _addon.spellRankInfo = {
                 max = 123,
                 perLevel = 0.8,
                 coef = 0.157,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 22,
+                coef = 0.02,
             },
         }
     },
@@ -318,6 +348,20 @@ _addon.spellRankInfo = {
                 max = 59,
                 perLevel = 0.5,
                 coef = 0.029,
+            },
+        }
+    },
+    [6141] = { -- Blizzard(Rank 2)
+        spellLevel = 28,
+        maxLevel = 33,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 44,
+                perLevel = 0.2,
+                coef = 0.042,
             },
         }
     },
@@ -477,6 +521,12 @@ _addon.spellRankInfo = {
                 perLevel = 1,
                 coef = 0.157,
             },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 35,
+                coef = 0.02,
+            },
         }
     },
     [8423] = { -- Flamestrike(Rank 4)
@@ -489,6 +539,26 @@ _addon.spellRankInfo = {
                 max = 273,
                 perLevel = 1.3,
                 coef = 0.157,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 49,
+                coef = 0.02,
+            },
+        }
+    },
+    [8427] = { -- Blizzard(Rank 3)
+        spellLevel = 36,
+        maxLevel = 41,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 65,
+                perLevel = 0.2,
+                coef = 0.042,
             },
         }
     },
@@ -791,6 +861,48 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [10185] = { -- Blizzard(Rank 4)
+        spellLevel = 44,
+        maxLevel = 49,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 90,
+                perLevel = 0.3,
+                coef = 0.042,
+            },
+        }
+    },
+    [10186] = { -- Blizzard(Rank 5)
+        spellLevel = 52,
+        maxLevel = 57,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 117,
+                perLevel = 0.3,
+                coef = 0.042,
+            },
+        }
+    },
+    [10187] = { -- Blizzard(Rank 6)
+        spellLevel = 60,
+        maxLevel = 65,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 149,
+                perLevel = 0.4,
+                coef = 0.042,
+            },
+        }
+    },
     [10197] = { -- Fire Blast(Rank 6)
         spellLevel = 46,
         maxLevel = 51,
@@ -886,6 +998,12 @@ _addon.spellRankInfo = {
                 perLevel = 1.5,
                 coef = 0.157,
             },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 66,
+                coef = 0.02,
+            },
         }
     },
     [10216] = { -- Flamestrike(Rank 6)
@@ -898,6 +1016,12 @@ _addon.spellRankInfo = {
                 max = 460,
                 perLevel = 1.7,
                 coef = 0.157,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 85,
+                coef = 0.02,
             },
         }
     },

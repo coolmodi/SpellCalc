@@ -40,12 +40,20 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(5676)] = { -- Searing Pain
         school = 3,
     },
+    [GetSpellInfo(5740)] = { -- Rain of Fire
+        school = 3,
+        isChannel = true,
+    },
     [GetSpellInfo(6229)] = { -- Shadow Ward
         school = 6,
         isAbsorbShield = true,
     },
     [GetSpellInfo(6353)] = { -- Soul Fire
         school = 3,
+    },
+    [GetSpellInfo(6789)] = { -- Death Coil
+        school = 6,
+        isBinary = true,
     },
     [GetSpellInfo(17877)] = { -- Shadowburn
         school = 6,
@@ -377,6 +385,20 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [5740] = { -- Rain of Fire(Rank 1)
+        spellLevel = 20,
+        maxLevel = 25,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 42,
+                perLevel = 0.3,
+                coef = 0.083,
+            },
+        }
+    },
     [6217] = { -- Curse of Agony(Rank 3)
         spellLevel = 28,
         maxLevel = 0,
@@ -386,6 +408,20 @@ _addon.spellRankInfo = {
                 isDuration = true,
                 tickPeriod = 2,
                 min = 27,
+                coef = 0.083,
+            },
+        }
+    },
+    [6219] = { -- Rain of Fire(Rank 2)
+        spellLevel = 34,
+        maxLevel = 39,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 96,
+                perLevel = 0.4,
                 coef = 0.083,
             },
         }
@@ -437,6 +473,18 @@ _addon.spellRankInfo = {
                 max = 784,
                 perLevel = 2.9,
                 coef = 1,
+            },
+        }
+    },
+    [6789] = { -- Death Coil(Rank 1)
+        spellLevel = 42,
+        maxLevel = 48,
+        duration = 3,
+        effects = {
+            [1] = {
+                min = 287,
+                perLevel = 2.2,
+                coef = 0.214,
             },
         }
     },
@@ -630,6 +678,34 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 91,
                 coef = 0.1,
+            },
+        }
+    },
+    [11677] = { -- Rain of Fire(Rank 3)
+        spellLevel = 46,
+        maxLevel = 51,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 155,
+                perLevel = 0.5,
+                coef = 0.083,
+            },
+        }
+    },
+    [11678] = { -- Rain of Fire(Rank 4)
+        spellLevel = 58,
+        maxLevel = 63,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 226,
+                perLevel = 0.6,
+                coef = 0.083,
             },
         }
     },
@@ -874,6 +950,30 @@ _addon.spellRankInfo = {
                 max = 882,
                 perLevel = 3.1,
                 coef = 1,
+            },
+        }
+    },
+    [17925] = { -- Death Coil(Rank 2)
+        spellLevel = 50,
+        maxLevel = 56,
+        duration = 3,
+        effects = {
+            [1] = {
+                min = 375,
+                perLevel = 2.6,
+                coef = 0.214,
+            },
+        }
+    },
+    [17926] = { -- Death Coil(Rank 3)
+        spellLevel = 58,
+        maxLevel = 64,
+        duration = 3,
+        effects = {
+            [1] = {
+                min = 470,
+                perLevel = 3,
+                coef = 0.214,
             },
         }
     },

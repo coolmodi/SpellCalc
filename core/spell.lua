@@ -161,9 +161,9 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
         levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     end
 
-    et.hitMin = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower);
+    et.hitMin = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower + 0.5);
     et.hitAvg = et.hitMin;
-    et.critMin = math.floor(et.hitMin * calcData.critMult);
+    et.critMin = math.floor(et.hitMin * calcData.critMult + 0.5);
     et.critAvg = et.critMin;
 
     if effectData.max then
@@ -258,6 +258,11 @@ end
 -- @param isChannel Is the spell a channeled spell
 -- @param spellName The spell's name
 function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, isChannel, spellName)
+    local levelBonus = 0;
+    if effectData.perLevel then
+        levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
+    end
+
     et.duration = spellRankInfo.duration;
 
     if self.stats.durationMods[spellName] ~= nil then
@@ -268,7 +273,7 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
     end
 
     et.ticks = et.duration / effectData.tickPeriod;
-    et.perTick = effectData.min * effectMod + et.effectivePower;
+    et.perTick = (effectData.min + levelBonus) * effectMod + et.effectivePower;
     et.allTicks = math.floor(et.perTick * et.ticks + 0.5);
 
     if calcData.hitChance ~= nil then

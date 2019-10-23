@@ -31,6 +31,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(8936)] = { -- Regrowth
         school = 4,
     },
+    [GetSpellInfo(16914)] = { -- Hurricane
+        school = 4,
+        isChannel = true,
+    },
     [GetSpellInfo(18562)] = { -- Swiftmend
         school = 4,
     },
@@ -942,6 +946,48 @@ _addon.spellRankInfo = {
                 max = 265,
                 perLevel = 2.1,
                 coef = 0.571,
+            },
+        }
+    },
+    [16914] = { -- Hurricane(Rank 1)
+        spellLevel = 40,
+        maxLevel = 46,
+        duration = 10,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 70,
+                perLevel = 0.2,
+                coef = 0.03,
+            },
+        }
+    },
+    [17401] = { -- Hurricane(Rank 2)
+        spellLevel = 50,
+        maxLevel = 56,
+        duration = 10,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 100,
+                perLevel = 0.2,
+                coef = 0.03,
+            },
+        }
+    },
+    [17402] = { -- Hurricane(Rank 3)
+        spellLevel = 60,
+        maxLevel = 66,
+        duration = 10,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 134,
+                perLevel = 0.3,
+                coef = 0.03,
             },
         }
     },

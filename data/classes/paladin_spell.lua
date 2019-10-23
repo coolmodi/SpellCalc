@@ -19,6 +19,9 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(19750)] = { -- Flash of Light
         school = 2,
     },
+    [GetSpellInfo(20116)] = { -- Consecration
+        school = 2,
+    },
     [GetSpellInfo(20473)] = { -- Holy Shock
         school = 2,
     },
@@ -306,6 +309,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20116] = { -- Consecration(Rank 2)
+        spellLevel = 30,
+        maxLevel = 0,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 15,
+                coef = 0.042,
+            },
+        }
+    },
     [20473] = { -- Holy Shock(Rank 1)
         spellLevel = 40,
         maxLevel = 0,
@@ -318,6 +334,45 @@ _addon.spellRankInfo = {
                 isHeal = true,
                 min = 205,
                 coef = 0.4285,
+            },
+        }
+    },
+    [20922] = { -- Consecration(Rank 3)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 24,
+                coef = 0.042,
+            },
+        }
+    },
+    [20923] = { -- Consecration(Rank 4)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 35,
+                coef = 0.042,
+            },
+        }
+    },
+    [20924] = { -- Consecration(Rank 5)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 48,
+                coef = 0.042,
             },
         }
     },

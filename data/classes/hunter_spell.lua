@@ -11,6 +11,10 @@ _addon.spellBaseInfo = {
         school = 4,
         isChannel = true,
     },
+    [GetSpellInfo(1510)] = { -- Volley
+        school = 7,
+        isChannel = true,
+    },
     [GetSpellInfo(1978)] = { -- Serpent Sting
         school = 4,
     },
@@ -31,6 +35,19 @@ _addon.spellRankInfo = {
                 tickPeriod = 1,
                 min = 20,
                 coef = 0.14,
+            },
+        }
+    },
+    [1510] = { -- Volley(Rank 1)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 50,
+                coef = 0.056,
             },
         }
     },
@@ -299,6 +316,32 @@ _addon.spellRankInfo = {
             [1] = {
                 min = 183,
                 coef = 0.429,
+            },
+        }
+    },
+    [14294] = { -- Volley(Rank 2)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 65,
+                coef = 0.056,
+            },
+        }
+    },
+    [14295] = { -- Volley(Rank 3)
+        spellLevel = 58,
+        maxLevel = 0,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 80,
+                coef = 0.056,
             },
         }
     },
