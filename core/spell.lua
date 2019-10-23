@@ -254,8 +254,16 @@ end
 -- @param effectMod The talent/buff/gear modifier for the effect
 -- @param castTime Spell cast time (or channel duration)
 -- @param isChannel Is the spell a channeled spell
-function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, isChannel)
+-- @param spellName The spell's name
+function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, isChannel, spellName)
     et.duration = spellRankInfo.duration;
+
+    if self.stats.durationMods[spellName] ~= nil then
+        et.duration = et.duration + self.stats.durationMods[spellName].val;
+        for _, buffName in pairs(self.stats.durationMods[spellName]) do
+            table.insert(calcData.buffs, buffName);
+        end
+    end
 
     et.ticks = et.duration / effectData.tickPeriod;
     et.perTick = effectData.min * effectMod + et.effectivePower;

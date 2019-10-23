@@ -211,7 +211,18 @@ _addon.talentData = {
         }
     },
 
-    -- TODO: SWP duration
+    -- Improved Shadow Word: Pain
+    {
+        tree = 3,
+        talent = 4,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_DURATION,
+                affectSpell = {SHADOW_WORD_PAIN},
+                perPoint = 3
+            }
+        }
+    },
     -- Shadow Focus
     {
         tree = 3,

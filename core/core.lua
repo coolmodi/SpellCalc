@@ -110,7 +110,7 @@ local function GenerateEffectModifier(spellBaseInfo, isHeal, spellName, buffTabl
             table.insert(buffTable, buffName);
         end
     end
-    
+
     _addon:PrintDebug("Effectmod: "..effectMod);
     return effectMod;
 end
@@ -370,7 +370,7 @@ function _addon:CalcSpell(spellId)
         elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
             _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime)
         else -- HoT or DoT (also channeled)
-            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime, spellBaseInfo.isChannel)
+            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime, spellBaseInfo.isChannel, name)
         end
     end
 

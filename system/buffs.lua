@@ -186,6 +186,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemoveSpellAffect(name, value, _addon.stats.mageNWRProc, affectSpell);
         return;
     end
+
+    if effect == EFFECT_TYPE.MOD_DURATION then
+        ApplyOrRemoveSpellAffect(name, value, _addon.stats.durationMods, affectSpell);
+        return;
+    end
 end
 
 --- Apply a buff
