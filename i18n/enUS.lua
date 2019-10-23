@@ -2,8 +2,25 @@ local _addonName, _addon = ...;
 local L = _addon:AddLocalization("enUS", true);
 if L == nil then return; end
 
-L["SETTINGS_HEAD_TOOLTIP"] = "Tooltip";
+L["SETTINGS_HEAD_CALC"] = "Calculation";
+L["SETTINGS_CALC_REAL_OOM"] = "Real until OOM";
+L["SETTINGS_CALC_REAL_OOM_TT"] = "Show real done until oom value. That means until mana<spellcost instead of 0.";
 
+L["SETTINGS_HEAD_TARGET"] = "Target";
+L["SETTINGS_TAR_DEFLEVEL_LABEL"] = "Default level difference";
+L["SETTINGS_TT_USECURRENT_LABEL"] = "Use current target";
+L["SETTINGS_TT_USECURRENT_TT"] = "If possible use target's level instead.";
+
+L["SETTINGS_HEAD_RESISTANCE"] = "Custom Resistance Values";
+
+L["SETTINGS_TT_FROST_LABEL"] = "Frost";
+L["SETTINGS_TT_FIRE_LABEL"] = "Fire";
+L["SETTINGS_TT_SHADOW_LABEL"] = "Shadow";
+L["SETTINGS_TT_NATURE_LABEL"] = "Nature";
+L["SETTINGS_TT_ARCANE_LABEL"] = "Arcane";
+
+L["SETTINGS_TOOLTIP_TITLE"] = "Tooltip";
+L["SETTINGS_HEAD_TOOLTIP"] = "Values to show in tooltip";
 L["SETTINGS_TT_HITVAL_LABEL"] = "Hit value";
 L["SETTINGS_TT_CRIT_LABEL"] = "Critical";
 L["SETTINGS_TT_AVG_LABEL"] = "Averages";
@@ -25,20 +42,7 @@ L["SETTINGS_TT_OOM_LABEL"] = "Done until oom";
 L["SETTINGS_TT_BUFFS_LABEL"] = "Show buffs";
 L["SETTINGS_TT_BUFFS_TT"] = "Show buffs/gear/talents affecting the spell calculation. This doesn't include things that the addon doesn't need to explicitly handle!";
 
-L["SETTINGS_HEAD_TARGET"] = "Target";
-
-L["SETTINGS_TAR_DEFLEVEL_LABEL"] = "Default level difference";
-L["SETTINGS_TT_USECURRENT_LABEL"] = "Use current target";
-L["SETTINGS_TT_USECURRENT_TT"] = "Use target's level instead if possible";
-
-L["SETTINGS_HEAD_RESISTANCE"] = "Custom Resistance Values";
-
-L["SETTINGS_TT_FROST_LABEL"] = "Frost";
-L["SETTINGS_TT_FIRE_LABEL"] = "Fire";
-L["SETTINGS_TT_SHADOW_LABEL"] = "Shadow";
-L["SETTINGS_TT_NATURE_LABEL"] = "Nature";
-L["SETTINGS_TT_ARCANE_LABEL"] = "Arcane";
-
+L["SETTINGS_AB_TITLE"] = "Actionbar";
 L["SETTINGS_AB_HEAD"] = "Actionbar button value";
 L["SETTINGS_AB_SHOW"] = "Show values on actionbar";
 L["SETTINGS_AB_DIRECT_VALUE"] = "Direct";

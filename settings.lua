@@ -6,6 +6,8 @@ local DEFAULTSETTINGS = {
 	["firstStart"] = true,
 	["debug"] = false,
 
+	["useRealToOom"] = false,
+
 	["ttHit"] = true,
 	["ttCrit"] = true,
 	["ttAverages"] = true,
@@ -84,33 +86,11 @@ function _addon:SetupSettings()
 
     local settings = _addon:GetSettingsBuilder();
 	settings:Setup(SpellCalc_settings, DEFAULTSETTINGS);
-
 	settings:SetBeforeSaveCallback(BeforeSave);
 	settings:SetAfterSaveCallback(AfterSave);
 
-	settings:MakeHeading(L["SETTINGS_HEAD_TOOLTIP"]);
-
-	local row = settings:MakeSettingsRow(1);
-	settings:MakeCheckboxOption("ttHit", L["SETTINGS_TT_HITVAL_LABEL"], nil, row);
-	settings:MakeCheckboxOption("ttCrit", L["SETTINGS_TT_CRIT_LABEL"], nil, row);
-	settings:MakeCheckboxOption("ttAverages", L["SETTINGS_TT_AVG_LABEL"], nil, row);
-	row = settings:MakeSettingsRow(1);
-	settings:MakeCheckboxOption("ttPower", L["SETTINGS_TT_POWER_LABEL"], L["SETTINGS_TT_POWER_TT"], row);
-	settings:MakeCheckboxOption("ttCoef", L["SETTINGS_TT_COEF_LABEL"], nil, row);
-	row = settings:MakeSettingsRow(1);
-	settings:MakeCheckboxOption("ttHitChance", L["SETTINGS_TT_HITCHANCE_LABEL"], nil, row);
-	settings:MakeCheckboxOption("ttHitDetail", L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"], L["SETTINGS_TT_HITCHANCE_DETAIL_TT"], row);
-	settings:MakeCheckboxOption("ttResist", L["SETTINGS_TT_RESISTANCE_LABEL"], L["SETTINGS_TT_RESISTANCE_TT"], row);
-	row = settings:MakeSettingsRow();
-	settings:MakeCheckboxOption("ttPerSecond", L["SETTINGS_TT_PERSEC_LABEL"], nil, row);
-	row = settings:MakeSettingsRow(1);
-	settings:MakeCheckboxOption("ttEffCost", L["SETTINGS_TT_EFFCOST_LABEL"], L["SETTINGS_TT_EFFCOST_TT"], row);
-	settings:MakeCheckboxOption("ttPerMana", L["SETTINGS_TT_PERMANA_LABEL"], nil, row);
-	settings:MakeCheckboxOption("ttToOom", L["SETTINGS_TT_OOM_LABEL"], nil, row);
-	row = settings:MakeSettingsRow(1);
-	settings:MakeCheckboxOption("ttShowBuffs", L["SETTINGS_TT_BUFFS_LABEL"], L["SETTINGS_TT_BUFFS_TT"], row);
-
-	settings:UpdateRowGroup(1);
+	settings:MakeHeading(L["SETTINGS_HEAD_CALC"]);
+	settings:MakeCheckboxOption("useRealToOom", L["SETTINGS_CALC_REAL_OOM"], L["SETTINGS_CALC_REAL_OOM_TT"]);
 
 	settings:MakeHeading(L["SETTINGS_HEAD_TARGET"]);
 
@@ -125,9 +105,35 @@ function _addon:SetupSettings()
 	settings:MakeEditBoxOption("resOverrideNature", L["SETTINGS_TT_NATURE_LABEL"], 3, true, nil, nil, nil, 66);
 	settings:MakeEditBoxOption("resOverrideArcane", L["SETTINGS_TT_ARCANE_LABEL"], 3, true, nil, nil, nil, 66);
 
+	-- Tooltip settings
+	local settingsTt = _addon:GetSettingsBuilder();
+	settingsTt:Setup(SpellCalc_settings, DEFAULTSETTINGS, L["SETTINGS_TOOLTIP_TITLE"], nil, nil, nil, nil, nil, nil, _addonName);
+	settingsTt:SetAfterSaveCallback(AfterSave);
+	settingsTt:MakeHeading(L["SETTINGS_HEAD_TOOLTIP"]);
+	local row = settingsTt:MakeSettingsRow(1);
+	settingsTt:MakeCheckboxOption("ttHit", L["SETTINGS_TT_HITVAL_LABEL"], nil, row);
+	settingsTt:MakeCheckboxOption("ttCrit", L["SETTINGS_TT_CRIT_LABEL"], nil, row);
+	settingsTt:MakeCheckboxOption("ttAverages", L["SETTINGS_TT_AVG_LABEL"], nil, row);
+	row = settingsTt:MakeSettingsRow(1);
+	settingsTt:MakeCheckboxOption("ttPower", L["SETTINGS_TT_POWER_LABEL"], L["SETTINGS_TT_POWER_TT"], row);
+	settingsTt:MakeCheckboxOption("ttCoef", L["SETTINGS_TT_COEF_LABEL"], nil, row);
+	row = settingsTt:MakeSettingsRow(1);
+	settingsTt:MakeCheckboxOption("ttHitChance", L["SETTINGS_TT_HITCHANCE_LABEL"], nil, row);
+	settingsTt:MakeCheckboxOption("ttHitDetail", L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"], L["SETTINGS_TT_HITCHANCE_DETAIL_TT"], row);
+	settingsTt:MakeCheckboxOption("ttResist", L["SETTINGS_TT_RESISTANCE_LABEL"], L["SETTINGS_TT_RESISTANCE_TT"], row);
+	row = settingsTt:MakeSettingsRow();
+	settingsTt:MakeCheckboxOption("ttPerSecond", L["SETTINGS_TT_PERSEC_LABEL"], nil, row);
+	row = settingsTt:MakeSettingsRow(1);
+	settingsTt:MakeCheckboxOption("ttEffCost", L["SETTINGS_TT_EFFCOST_LABEL"], L["SETTINGS_TT_EFFCOST_TT"], row);
+	settingsTt:MakeCheckboxOption("ttPerMana", L["SETTINGS_TT_PERMANA_LABEL"], nil, row);
+	settingsTt:MakeCheckboxOption("ttToOom", L["SETTINGS_TT_OOM_LABEL"], nil, row);
+	row = settingsTt:MakeSettingsRow(1);
+	settingsTt:MakeCheckboxOption("ttShowBuffs", L["SETTINGS_TT_BUFFS_LABEL"], L["SETTINGS_TT_BUFFS_TT"], row);
+	settingsTt:UpdateRowGroup(1);
+
 	-- Action bar settings
 	local settingsAb = _addon:GetSettingsBuilder();
-	settingsAb:Setup(SpellCalc_settings, DEFAULTSETTINGS, "Actionbar", nil, nil, nil, nil, nil, nil, _addonName);
+	settingsAb:Setup(SpellCalc_settings, DEFAULTSETTINGS, L["SETTINGS_AB_TITLE"], nil, nil, nil, nil, nil, nil, _addonName);
 	settingsAb:SetAfterSaveCallback(AfterSave);
 	settingsAb:MakeHeading(L["SETTINGS_AB_HEAD"]);
 	settingsAb:MakeCheckboxOption("abShow", L["SETTINGS_AB_SHOW"]);
@@ -145,6 +151,7 @@ function _addon:SetupSettings()
 			avgAfterMitigation = L["SETTINGS_AB_DURATION_VALUE_REALAVG"]
 		}
 	end, 100);
+
 
 	if self.ClassSettings ~= nil then
 		local settingsClass = _addon:GetSettingsBuilder();

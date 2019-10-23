@@ -10,7 +10,7 @@ function _addon:GetSpellAvgResist(school)
     local pLevel = UnitLevel("player");
     local baseRes = tData.resistance[school];
     local effectiveRes = baseRes + math.max((tData.level - pLevel)*5, 0) - math.min(baseRes, self.stats.spellPen[school].val);
-    return 0.75 * (effectiveRes / math.max(pLevel * 5, 100));
+    return math.min(0.75 * (effectiveRes / math.max(pLevel * 5, 100)), 0.75);
 end
 
 --- Get level based spell hit chance against the current target
@@ -219,7 +219,10 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
             et.secNoCastTHPS = secondsNoCast;
             et.effCostTHPS = calcData.effectiveCost - manaGained;
             et.perManaTHPS = et.avgAfterMitigation / et.effCostTHPS;
-            local ctoTHPS = (calcData.castsToOom * calcData.effectiveCost) / et.effCostTHPS;
+            local ctoTHPS = calcData.effMana / et.effCostTHPS;
+            if SpellCalc_settings.useRealToOom then
+                calcData.castsToOom = math.floor(ctoTHPS);
+            end
             et.timeToOomTHPS = ctoTHPS * (castTime + secondsNoCast);
             et.doneToOomTHPS = ctoTHPS * et.avgAfterMitigation;
         end

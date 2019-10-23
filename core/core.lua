@@ -319,16 +319,20 @@ function _addon:CalcSpell(spellId)
                 end
             end
 
-            local effMana = stats.mana;
+            -- TODO: remove this?
+            calcData.effMana = stats.mana;
             if _addon.test_innervate then
                 -- Need to remove 20 sec of manaReg because we added it with the effective cost
-                effMana = effMana + (stats.baseManaReg * 80) - (20 * stats.manaReg);
+                calcData.effMana = calcData.effMana + (stats.baseManaReg * 80) - (20 * stats.manaReg);
             end
             if _addon.test_manapot then
-                effMana = effMana + _addon.test_manapot;
+                calcData.effMana = calcData.effMana + _addon.test_manapot;
             end
 
-            calcData.castsToOom = effMana / calcData.effectiveCost;
+            calcData.castsToOom = calcData.effMana / calcData.effectiveCost;
+            if SpellCalc_settings.useRealToOom then
+                calcData.castsToOom = math.floor(calcData.castsToOom);
+            end
             calcData.timeToOom = calcData.castsToOom * castTime;
         else
             -- NYI

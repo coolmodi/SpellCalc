@@ -82,7 +82,7 @@ local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
 
     if SpellCalc_settings.ttToOom then
         if showTime then
-            GameTooltip:AddLine(("%s: %d (%ds)"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOom, calcData.timeToOom), TTCOLOR, TTCOLOR, TTCOLOR);
+            GameTooltip:AddLine(("%s: %d (%.1fs, %.1f casts)"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOom, calcData.timeToOom, calcData.castsToOom), TTCOLOR, TTCOLOR, TTCOLOR);
         else
             GameTooltip:AddLine(("%s: %d"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOom), TTCOLOR, TTCOLOR, TTCOLOR);
         end
