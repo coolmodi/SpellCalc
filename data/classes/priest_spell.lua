@@ -7,30 +7,53 @@ if playerClass ~= "PRIEST" then
 end
 
 _addon.spellBaseInfo = {
-    [GetSpellInfo(17)] = {
+    [GetSpellInfo(17)] = { -- Power Word: Shield
         school = 2,
         isAbsorbShield = true,
     },
-    [GetSpellInfo(139)] = {
+    [GetSpellInfo(139)] = { -- Renew
         school = 2,
     },
-    [GetSpellInfo(596)] = {
+    [GetSpellInfo(585)] = { -- Smite
         school = 2,
     },
-    [GetSpellInfo(2050)] = {
+    [GetSpellInfo(589)] = { -- Shadow Word: Pain
+        school = 6,
+    },
+    [GetSpellInfo(596)] = { -- Prayer of Healing
         school = 2,
     },
-    [GetSpellInfo(2054)] = {
+    [GetSpellInfo(2050)] = { -- Lesser Heal
         school = 2,
     },
-    [GetSpellInfo(2060)] = {
+    [GetSpellInfo(2054)] = { -- Heal
         school = 2,
     },
-    [GetSpellInfo(2061)] = {
+    [GetSpellInfo(2060)] = { -- Greater Heal
         school = 2,
     },
-    [GetSpellInfo(13908)] = {
+    [GetSpellInfo(2061)] = { -- Flash Heal
         school = 2,
+    },
+    [GetSpellInfo(8092)] = { -- Mind Blast
+        school = 6,
+    },
+    [GetSpellInfo(10797)] = { -- Starshards
+        school = 7,
+        isChannel = true,
+    },
+    [GetSpellInfo(13908)] = { -- Desperate Prayer
+        school = 2,
+    },
+    [GetSpellInfo(14914)] = { -- Holy Fire
+        school = 2,
+    },
+    [GetSpellInfo(15430)] = { -- Holy Nova
+        school = 2,
+    },
+    [GetSpellInfo(17311)] = { -- Mind Flay
+        school = 6,
+        isChannel = true,
     },
 };
 
@@ -62,6 +85,43 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [585] = { -- Smite(Rank 1)
+        spellLevel = 1,
+        maxLevel = 6,
+        effects = {
+            [1] = {
+                min = 13,
+                max = 18,
+                perLevel = 0.5,
+                coef = 0.123,
+            },
+        }
+    },
+    [589] = { -- Shadow Word: Pain(Rank 1)
+        spellLevel = 4,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 5,
+                coef = 0.067,
+            },
+        }
+    },
+    [591] = { -- Smite(Rank 2)
+        spellLevel = 6,
+        maxLevel = 11,
+        effects = {
+            [1] = {
+                min = 25,
+                max = 32,
+                perLevel = 0.6,
+                coef = 0.271,
+            },
+        }
+    },
     [592] = { -- Power Word: Shield(Rank 2)
         spellLevel = 12,
         maxLevel = 17,
@@ -72,6 +132,19 @@ _addon.spellRankInfo = {
                 min = 88,
                 perLevel = 1.2,
                 coef = 0.07,
+            },
+        }
+    },
+    [594] = { -- Shadow Word: Pain(Rank 2)
+        spellLevel = 10,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 11,
+                coef = 0.104,
             },
         }
     },
@@ -88,6 +161,18 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [598] = { -- Smite(Rank 3)
+        spellLevel = 14,
+        maxLevel = 19,
+        effects = {
+            [1] = {
+                min = 54,
+                max = 63,
+                perLevel = 0.9,
+                coef = 0.554,
+            },
+        }
+    },
     [600] = { -- Power Word: Shield(Rank 3)
         spellLevel = 18,
         maxLevel = 23,
@@ -101,6 +186,44 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [970] = { -- Shadow Word: Pain(Rank 3)
+        spellLevel = 18,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 22,
+                coef = 0.154,
+            },
+        }
+    },
+    [984] = { -- Smite(Rank 4)
+        spellLevel = 22,
+        maxLevel = 27,
+        effects = {
+            [1] = {
+                min = 91,
+                max = 106,
+                perLevel = 1.3,
+                coef = 0.714,
+            },
+        }
+    },
+    [992] = { -- Shadow Word: Pain(Rank 4)
+        spellLevel = 26,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 39,
+                coef = 0.167,
+            },
+        }
+    },
     [996] = { -- Prayer of Healing(Rank 2)
         spellLevel = 40,
         maxLevel = 49,
@@ -111,6 +234,18 @@ _addon.spellRankInfo = {
                 max = 473,
                 perLevel = 1.6,
                 coef = 0.286,
+            },
+        }
+    },
+    [1004] = { -- Smite(Rank 5)
+        spellLevel = 30,
+        maxLevel = 35,
+        effects = {
+            [1] = {
+                min = 150,
+                max = 171,
+                perLevel = 1.6,
+                coef = 0.714,
             },
         }
     },
@@ -205,6 +340,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [2767] = { -- Shadow Word: Pain(Rank 5)
+        spellLevel = 34,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 61,
+                coef = 0.167,
+            },
+        }
+    },
     [3747] = { -- Power Word: Shield(Rank 4)
         spellLevel = 24,
         maxLevel = 29,
@@ -215,6 +363,18 @@ _addon.spellRankInfo = {
                 min = 234,
                 perLevel = 2,
                 coef = 0.1,
+            },
+        }
+    },
+    [6060] = { -- Smite(Rank 6)
+        spellLevel = 38,
+        maxLevel = 43,
+        effects = {
+            [1] = {
+                min = 212,
+                max = 241,
+                perLevel = 2,
+                coef = 0.714,
             },
         }
     },
@@ -340,6 +500,78 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [8092] = { -- Mind Blast(Rank 1)
+        spellLevel = 10,
+        maxLevel = 15,
+        effects = {
+            [1] = {
+                min = 39,
+                max = 44,
+                perLevel = 0.6,
+                coef = 0.268,
+            },
+        }
+    },
+    [8102] = { -- Mind Blast(Rank 2)
+        spellLevel = 16,
+        maxLevel = 21,
+        effects = {
+            [1] = {
+                min = 72,
+                max = 79,
+                perLevel = 0.9,
+                coef = 0.364,
+            },
+        }
+    },
+    [8103] = { -- Mind Blast(Rank 3)
+        spellLevel = 22,
+        maxLevel = 27,
+        effects = {
+            [1] = {
+                min = 112,
+                max = 121,
+                perLevel = 1.1,
+                coef = 0.429,
+            },
+        }
+    },
+    [8104] = { -- Mind Blast(Rank 4)
+        spellLevel = 28,
+        maxLevel = 33,
+        effects = {
+            [1] = {
+                min = 167,
+                max = 178,
+                perLevel = 1.4,
+                coef = 0.429,
+            },
+        }
+    },
+    [8105] = { -- Mind Blast(Rank 5)
+        spellLevel = 34,
+        maxLevel = 39,
+        effects = {
+            [1] = {
+                min = 217,
+                max = 232,
+                perLevel = 1.6,
+                coef = 0.429,
+            },
+        }
+    },
+    [8106] = { -- Mind Blast(Rank 6)
+        spellLevel = 40,
+        maxLevel = 45,
+        effects = {
+            [1] = {
+                min = 279,
+                max = 298,
+                perLevel = 1.9,
+                coef = 0.429,
+            },
+        }
+    },
     [9472] = { -- Flash Heal(Rank 2)
         spellLevel = 26,
         maxLevel = 31,
@@ -376,6 +608,58 @@ _addon.spellRankInfo = {
                 max = 479,
                 perLevel = 2.8,
                 coef = 0.429,
+            },
+        }
+    },
+    [10797] = { -- Starshards(Rank 1)
+        spellLevel = 10,
+        maxLevel = 16,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 14,
+                coef = 0.104,
+            },
+        }
+    },
+    [10892] = { -- Shadow Word: Pain(Rank 6)
+        spellLevel = 42,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 85,
+                coef = 0.167,
+            },
+        }
+    },
+    [10893] = { -- Shadow Word: Pain(Rank 7)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 112,
+                coef = 0.167,
+            },
+        }
+    },
+    [10894] = { -- Shadow Word: Pain(Rank 8)
+        spellLevel = 58,
+        maxLevel = 0,
+        duration = 18,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 3,
+                min = 142,
+                coef = 0.167,
             },
         }
     },
@@ -512,6 +796,66 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [10933] = { -- Smite(Rank 7)
+        spellLevel = 46,
+        maxLevel = 51,
+        effects = {
+            [1] = {
+                min = 287,
+                max = 324,
+                perLevel = 2.3,
+                coef = 0.714,
+            },
+        }
+    },
+    [10934] = { -- Smite(Rank 8)
+        spellLevel = 54,
+        maxLevel = 59,
+        effects = {
+            [1] = {
+                min = 371,
+                max = 416,
+                perLevel = 2.7,
+                coef = 0.714,
+            },
+        }
+    },
+    [10945] = { -- Mind Blast(Rank 7)
+        spellLevel = 46,
+        maxLevel = 51,
+        effects = {
+            [1] = {
+                min = 346,
+                max = 367,
+                perLevel = 2.1,
+                coef = 0.429,
+            },
+        }
+    },
+    [10946] = { -- Mind Blast(Rank 8)
+        spellLevel = 52,
+        maxLevel = 57,
+        effects = {
+            [1] = {
+                min = 425,
+                max = 450,
+                perLevel = 2.4,
+                coef = 0.429,
+            },
+        }
+    },
+    [10947] = { -- Mind Blast(Rank 9)
+        spellLevel = 58,
+        maxLevel = 63,
+        effects = {
+            [1] = {
+                min = 503,
+                max = 532,
+                perLevel = 2.6,
+                coef = 0.429,
+            },
+        }
+    },
     [10960] = { -- Prayer of Healing(Rank 3)
         spellLevel = 50,
         maxLevel = 59,
@@ -587,6 +931,247 @@ _addon.spellRankInfo = {
                 max = 171,
                 perLevel = 2.4,
                 coef = 0.268,
+            },
+        }
+    },
+    [14914] = { -- Holy Fire(Rank 1)
+        spellLevel = 20,
+        maxLevel = 24,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 78,
+                max = 99,
+                perLevel = 1.5,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 6,
+                coef = 0.05,
+            },
+        }
+    },
+    [15261] = { -- Holy Fire(Rank 8)
+        spellLevel = 60,
+        maxLevel = 66,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 355,
+                max = 450,
+                perLevel = 3.4,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 29,
+                coef = 0.05,
+            },
+        }
+    },
+    [15262] = { -- Holy Fire(Rank 2)
+        spellLevel = 24,
+        maxLevel = 30,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 96,
+                max = 121,
+                perLevel = 1.7,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 8,
+                coef = 0.05,
+            },
+        }
+    },
+    [15263] = { -- Holy Fire(Rank 3)
+        spellLevel = 30,
+        maxLevel = 36,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 132,
+                max = 167,
+                perLevel = 2,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 11,
+                coef = 0.05,
+            },
+        }
+    },
+    [15264] = { -- Holy Fire(Rank 4)
+        spellLevel = 36,
+        maxLevel = 42,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 165,
+                max = 210,
+                perLevel = 2.2,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 13,
+                coef = 0.05,
+            },
+        }
+    },
+    [15265] = { -- Holy Fire(Rank 5)
+        spellLevel = 42,
+        maxLevel = 48,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 204,
+                max = 259,
+                perLevel = 2.5,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 17,
+                coef = 0.05,
+            },
+        }
+    },
+    [15266] = { -- Holy Fire(Rank 6)
+        spellLevel = 48,
+        maxLevel = 54,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 254,
+                max = 323,
+                perLevel = 2.9,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 20,
+                coef = 0.05,
+            },
+        }
+    },
+    [15267] = { -- Holy Fire(Rank 7)
+        spellLevel = 54,
+        maxLevel = 60,
+        duration = 10,
+        effects = {
+            [1] = {
+                min = 304,
+                max = 387,
+                perLevel = 3.2,
+                coef = 0.75,
+            },
+            [2] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 25,
+                coef = 0.05,
+            },
+        }
+    },
+    [15430] = { -- Holy Nova(Rank 2)
+        spellLevel = 28,
+        maxLevel = 34,
+        effects = {
+            [1] = {
+                min = 50,
+                max = 59,
+                perLevel = 0.4,
+                coef = 0.107,
+            },
+        }
+    },
+    [15431] = { -- Holy Nova(Rank 3)
+        spellLevel = 36,
+        maxLevel = 42,
+        effects = {
+            [1] = {
+                min = 76,
+                max = 89,
+                perLevel = 0.6,
+                coef = 0.107,
+            },
+        }
+    },
+    [17311] = { -- Mind Flay(Rank 2)
+        spellLevel = 28,
+        maxLevel = 36,
+        duration = 3,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 42,
+                coef = 0.15,
+            },
+        }
+    },
+    [17312] = { -- Mind Flay(Rank 3)
+        spellLevel = 36,
+        maxLevel = 44,
+        duration = 3,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 62,
+                coef = 0.15,
+            },
+        }
+    },
+    [17313] = { -- Mind Flay(Rank 4)
+        spellLevel = 44,
+        maxLevel = 52,
+        duration = 3,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 87,
+                coef = 0.15,
+            },
+        }
+    },
+    [17314] = { -- Mind Flay(Rank 5)
+        spellLevel = 52,
+        maxLevel = 60,
+        duration = 3,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 110,
+                coef = 0.15,
+            },
+        }
+    },
+    [18807] = { -- Mind Flay(Rank 6)
+        spellLevel = 60,
+        maxLevel = 68,
+        duration = 3,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 142,
+                coef = 0.15,
             },
         }
     },
@@ -668,6 +1253,84 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [19296] = { -- Starshards(Rank 2)
+        spellLevel = 18,
+        maxLevel = 24,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 27,
+                coef = 0.154,
+            },
+        }
+    },
+    [19299] = { -- Starshards(Rank 3)
+        spellLevel = 26,
+        maxLevel = 32,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 48,
+                coef = 0.167,
+            },
+        }
+    },
+    [19302] = { -- Starshards(Rank 4)
+        spellLevel = 34,
+        maxLevel = 40,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 69,
+                coef = 0.167,
+            },
+        }
+    },
+    [19303] = { -- Starshards(Rank 5)
+        spellLevel = 42,
+        maxLevel = 48,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 95,
+                coef = 0.167,
+            },
+        }
+    },
+    [19304] = { -- Starshards(Rank 6)
+        spellLevel = 50,
+        maxLevel = 56,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 126,
+                coef = 0.167,
+            },
+        }
+    },
+    [19305] = { -- Starshards(Rank 7)
+        spellLevel = 58,
+        maxLevel = 64,
+        duration = 6,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 156,
+                coef = 0.167,
+            },
+        }
+    },
     [25314] = { -- Greater Heal(Rank 5)
         spellLevel = 60,
         maxLevel = 65,
@@ -705,6 +1368,42 @@ _addon.spellRankInfo = {
                 max = 1100,
                 perLevel = 2.5,
                 coef = 0.286,
+            },
+        }
+    },
+    [27799] = { -- Holy Nova(Rank 4)
+        spellLevel = 44,
+        maxLevel = 50,
+        effects = {
+            [1] = {
+                min = 106,
+                max = 123,
+                perLevel = 0.8,
+                coef = 0.107,
+            },
+        }
+    },
+    [27800] = { -- Holy Nova(Rank 5)
+        spellLevel = 52,
+        maxLevel = 58,
+        effects = {
+            [1] = {
+                min = 140,
+                max = 163,
+                perLevel = 1,
+                coef = 0.107,
+            },
+        }
+    },
+    [27801] = { -- Holy Nova(Rank 6)
+        spellLevel = 60,
+        maxLevel = 66,
+        effects = {
+            [1] = {
+                min = 181,
+                max = 210,
+                perLevel = 1.2,
+                coef = 0.107,
             },
         }
     },

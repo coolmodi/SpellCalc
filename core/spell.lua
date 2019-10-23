@@ -158,7 +158,7 @@ end
 function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, spellName)
     local levelBonus = 0;
     if effectData.perLevel then
-        levelBonus = (spellRankInfo.spellLevel - math.min(UnitLevel("player"), spellRankInfo.maxLevel)) * effectData.perLevel;
+        levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     end
 
     et.hitMin = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower);
@@ -234,7 +234,7 @@ end
 function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime)
     local levelBonus = 0;
     if effectData.perLevel then
-        levelBonus = (spellRankInfo.spellLevel - math.min(UnitLevel("player"), spellRankInfo.maxLevel)) * effectData.perLevel;
+        levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     end
 
     et.perCharge = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower + 0.5);

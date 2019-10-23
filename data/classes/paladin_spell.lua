@@ -7,13 +7,22 @@ if playerClass ~= "PALADIN" then
 end
 
 _addon.spellBaseInfo = {
-    [GetSpellInfo(635)] = {
+    [GetSpellInfo(635)] = { -- Holy Light
         school = 2,
     },
-    [GetSpellInfo(19750)] = {
+    [GetSpellInfo(879)] = { -- Exorcism
         school = 2,
     },
-    [GetSpellInfo(20473)] = {
+    [GetSpellInfo(2812)] = { -- Holy Wrath
+        school = 2,
+    },
+    [GetSpellInfo(19750)] = { -- Flash of Light
+        school = 2,
+    },
+    [GetSpellInfo(20473)] = { -- Holy Shock
+        school = 2,
+    },
+    [GetSpellInfo(24239)] = { -- Hammer of Wrath
         school = 2,
     },
 };
@@ -58,6 +67,18 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [879] = { -- Exorcism(Rank 1)
+        spellLevel = 20,
+        maxLevel = 25,
+        effects = {
+            [1] = {
+                min = 84,
+                max = 97,
+                perLevel = 1.2,
+                coef = 0.429,
+            },
+        }
+    },
     [1026] = { -- Holy Light(Rank 4)
         spellLevel = 22,
         maxLevel = 27,
@@ -84,6 +105,18 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [2812] = { -- Holy Wrath(Rank 1)
+        spellLevel = 50,
+        maxLevel = 54,
+        effects = {
+            [1] = {
+                min = 362,
+                max = 429,
+                perLevel = 1.6,
+                coef = 0.19,
+            },
+        }
+    },
     [3472] = { -- Holy Light(Rank 6)
         spellLevel = 38,
         maxLevel = 43,
@@ -94,6 +127,78 @@ _addon.spellRankInfo = {
                 max = 781,
                 perLevel = 3.8,
                 coef = 0.7142857142857143,
+            },
+        }
+    },
+    [5614] = { -- Exorcism(Rank 2)
+        spellLevel = 28,
+        maxLevel = 33,
+        effects = {
+            [1] = {
+                min = 152,
+                max = 173,
+                perLevel = 1.6,
+                coef = 0.429,
+            },
+        }
+    },
+    [5615] = { -- Exorcism(Rank 3)
+        spellLevel = 36,
+        maxLevel = 41,
+        effects = {
+            [1] = {
+                min = 217,
+                max = 246,
+                perLevel = 2,
+                coef = 0.429,
+            },
+        }
+    },
+    [10312] = { -- Exorcism(Rank 4)
+        spellLevel = 44,
+        maxLevel = 49,
+        effects = {
+            [1] = {
+                min = 304,
+                max = 343,
+                perLevel = 2.4,
+                coef = 0.429,
+            },
+        }
+    },
+    [10313] = { -- Exorcism(Rank 5)
+        spellLevel = 52,
+        maxLevel = 57,
+        effects = {
+            [1] = {
+                min = 393,
+                max = 440,
+                perLevel = 2.8,
+                coef = 0.429,
+            },
+        }
+    },
+    [10314] = { -- Exorcism(Rank 6)
+        spellLevel = 60,
+        maxLevel = 65,
+        effects = {
+            [1] = {
+                min = 505,
+                max = 564,
+                perLevel = 3.2,
+                coef = 0.429,
+            },
+        }
+    },
+    [10318] = { -- Holy Wrath(Rank 2)
+        spellLevel = 60,
+        maxLevel = 64,
+        effects = {
+            [1] = {
+                min = 490,
+                max = 577,
+                perLevel = 1.9,
+                coef = 0.19,
             },
         }
     },
@@ -206,6 +311,10 @@ _addon.spellRankInfo = {
         maxLevel = 0,
         effects = {
             [1] = {
+                min = 205,
+                coef = 0.4285,
+            },
+            [2] = {
                 isHeal = true,
                 min = 205,
                 coef = 0.4285,
@@ -217,6 +326,10 @@ _addon.spellRankInfo = {
         maxLevel = 0,
         effects = {
             [1] = {
+                min = 280,
+                coef = 0.4285,
+            },
+            [2] = {
                 isHeal = true,
                 min = 280,
                 coef = 0.4285,
@@ -228,9 +341,49 @@ _addon.spellRankInfo = {
         maxLevel = 0,
         effects = {
             [1] = {
+                min = 366,
+                coef = 0.4285,
+            },
+            [2] = {
                 isHeal = true,
                 min = 366,
                 coef = 0.4285,
+            },
+        }
+    },
+    [24239] = { -- Hammer of Wrath(Rank 3)
+        spellLevel = 60,
+        maxLevel = 65,
+        effects = {
+            [1] = {
+                min = 504,
+                max = 557,
+                perLevel = 3.1,
+                coef = 0.429,
+            },
+        }
+    },
+    [24274] = { -- Hammer of Wrath(Rank 2)
+        spellLevel = 52,
+        maxLevel = 57,
+        effects = {
+            [1] = {
+                min = 399,
+                max = 442,
+                perLevel = 2.7,
+                coef = 0.429,
+            },
+        }
+    },
+    [24275] = { -- Hammer of Wrath(Rank 1)
+        spellLevel = 44,
+        maxLevel = 49,
+        effects = {
+            [1] = {
+                min = 304,
+                max = 337,
+                perLevel = 2.4,
+                coef = 0.429,
             },
         }
     },
