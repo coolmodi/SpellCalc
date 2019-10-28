@@ -161,13 +161,15 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
         levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     end
 
-    et.hitMin = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower + 0.5);
+    local effPowerUse = effectData.isHeal and et.effectivePower or et.effectivePower * effectMod;
+
+    et.hitMin = math.floor((effectData.min + levelBonus) * effectMod + effPowerUse + 0.5);
     et.hitAvg = et.hitMin;
     et.critMin = math.floor(et.hitMin * calcData.critMult + 0.5);
     et.critAvg = et.critMin;
 
     if effectData.max then
-        et.hitMax = math.ceil((effectData.max + levelBonus) * effectMod + et.effectivePower);
+        et.hitMax = math.floor((effectData.max + levelBonus) * effectMod + effPowerUse + 0.5);
         et.hitAvg = (et.hitMin + et.hitMax) / 2;
         et.critMax = math.ceil(et.hitMax * calcData.critMult);
         et.critAvg = (et.critMin + et.critMax) / 2;
@@ -242,7 +244,9 @@ function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, effec
         levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     end
 
-    et.perCharge = math.floor((effectData.min + levelBonus) * effectMod + et.effectivePower + 0.5);
+    local effPowerUse = effectData.isHeal and et.effectivePower or et.effectivePower * effectMod;
+
+    et.perCharge = math.floor((effectData.min + levelBonus) * effectMod + effPowerUse + 0.5);
     et.charges = effectData.charges;
     et.hitAvg = et.perCharge * et.charges;
     et.avgAfterMitigation = et.hitAvg * calcData.hitChance * (1 - calcData.avgResistMod);
@@ -275,8 +279,10 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
         end
     end
 
+    local effPowerUse = effectData.isHeal and et.effectivePower or et.effectivePower * effectMod;
+
     et.ticks = et.duration / effectData.tickPeriod;
-    et.perTick = (effectData.min + levelBonus) * effectMod + et.effectivePower;
+    et.perTick = (effectData.min + levelBonus) * effectMod + effPowerUse;
     et.allTicks = math.floor(et.perTick * et.ticks + 0.5);
 
     if calcData.hitChance ~= nil then
