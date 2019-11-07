@@ -46,6 +46,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(2948)] = { -- Scorch
         school = 3,
     },
+    [GetSpellInfo(5143)] = { -- Arcane Missiles
+        school = 7,
+        isChannel = true,
+    },
     [GetSpellInfo(6143)] = { -- Frost Ward
         school = 5,
         isAbsorbShield = true,
@@ -354,6 +358,48 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [5143] = { -- Arcane Missiles(Rank 1)
+        spellLevel = 8,
+        maxLevel = 12,
+        duration = 3,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 24,
+                perLevel = 0.3,
+                coef = 0.132,
+            },
+        }
+    },
+    [5144] = { -- Arcane Missiles(Rank 2)
+        spellLevel = 16,
+        maxLevel = 20,
+        duration = 4,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 36,
+                perLevel = 0.4,
+                coef = 0.204,
+            },
+        }
+    },
+    [5145] = { -- Arcane Missiles(Rank 3)
+        spellLevel = 24,
+        maxLevel = 28,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 56,
+                perLevel = 0.5,
+                coef = 0.24,
+            },
+        }
+    },
     [6131] = { -- Frost Nova(Rank 3)
         spellLevel = 40,
         maxLevel = 45,
@@ -523,6 +569,34 @@ _addon.spellRankInfo = {
                 max = 291,
                 perLevel = 2.2,
                 coef = 0.429,
+            },
+        }
+    },
+    [8416] = { -- Arcane Missiles(Rank 4)
+        spellLevel = 32,
+        maxLevel = 36,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 83,
+                perLevel = 0.6,
+                coef = 0.24,
+            },
+        }
+    },
+    [8417] = { -- Arcane Missiles(Rank 5)
+        spellLevel = 40,
+        maxLevel = 44,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 115,
+                perLevel = 0.7,
+                coef = 0.24,
             },
         }
     },
@@ -1063,6 +1137,34 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [10211] = { -- Arcane Missiles(Rank 6)
+        spellLevel = 48,
+        maxLevel = 52,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 151,
+                perLevel = 0.8,
+                coef = 0.24,
+            },
+        }
+    },
+    [10212] = { -- Arcane Missiles(Rank 7)
+        spellLevel = 56,
+        maxLevel = 60,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 192,
+                perLevel = 0.9,
+                coef = 0.24,
+            },
+        }
+    },
     [10215] = { -- Flamestrike(Rank 5)
         spellLevel = 48,
         maxLevel = 53,
@@ -1417,6 +1519,20 @@ _addon.spellRankInfo = {
                 tickPeriod = 2,
                 min = 19,
                 coef = 0,
+            },
+        }
+    },
+    [25345] = { -- Arcane Missiles(Rank 8)
+        spellLevel = 60,
+        maxLevel = 64,
+        duration = 5,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 230,
+                perLevel = 1,
+                coef = 0.24,
             },
         }
     },
