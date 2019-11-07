@@ -183,7 +183,7 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
 
     if calcData.hitChance ~= nil then
         et.avgAfterMitigation = et.avgCombined * calcData.hitChance;
-        if et.binaryHitLoss == 0 then
+        if calcData.binaryHitLoss == 0 then
             et.avgAfterMitigation = et.avgAfterMitigation * (1 - calcData.avgResistMod);
         end
     else
@@ -291,7 +291,7 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
         else
             et.avgAfterMitigation = et.allTicks * calcData.hitChance;
         end
-        if et.binaryHitLoss == 0 then
+        if calcData.binaryHitLoss == 0 then
             et.avgAfterMitigation = et.avgAfterMitigation * (1 - calcData.avgResistMod);
         end
     else
