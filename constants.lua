@@ -45,7 +45,8 @@ _addon.EFFECT_TYPE = {
     EXTRA_SP = 17,
     CLEARCAST_CHANCE_DMG = 18,
     EARTHFURY_RETURN = 19,
-    CONDITION_TRIGGER = 20
+    CONDITION_TRIGGER = 20,
+    DRUID_NATURES_GRACE = 21
 };
 
 -- Spell types (What calculation rules to use)

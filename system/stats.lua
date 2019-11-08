@@ -104,6 +104,7 @@ _addon.stats = {
     impShadowBolt = {val=0, buffs={}},
     earthfuryReturn = {val=0, buffs={}},
     mageNWRProc = {},
+    druidNaturesGrace = {val=0, buffs={}},
 };
 
 --- Update spell power stats from API

@@ -126,6 +126,8 @@ function _addon:CalcSpell(spellId)
     _addon:PrintDebug("Calculating spell " .. spellId);
 
     local name, _, _, castTime = GetSpellInfo(spellId);
+    local GCD = 1.5;
+    local effCastTime = 0;
     local spellBaseInfo = _addon.spellBaseInfo[name];
     local spellRankInfo = _addon.spellRankInfo[spellId];
     local costs = GetSpellPowerCost(spellId);
@@ -134,12 +136,10 @@ function _addon:CalcSpell(spellId)
 
     if spellBaseInfo.isChannel then
         castTime = spellRankInfo.duration;
+        effCastTime = castTime;
     else
-        -- Cast time is at least GCD
-        if castTime < 1500 then
-            castTime = 1500;
-        end
         castTime = castTime / 1000;
+        effCastTime = math.max(GCD, castTime);
     end
 
     if costs and #costs > 0 then
@@ -265,15 +265,24 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Cast time mods
 
-    if stats.mageNWRProc[name] ~= nil and stats.mageNWRProc[name].val ~= 0 then
+    if stats.mageNWRProc[name] ~= nil and stats.mageNWRProc[name].val ~= 0 and castTime > 0 then
         -- E.g. with a 10% chance every 10th cast will proc, causing the next to be 1.5s (GCD).
         -- NWR has a 10sec ICD, therefore 1 instant + floor(8.5/castTime) casts can't proc it after a proc.
         -- So in reality you have 10 normal casts, 1 GCD and floor(8.5/castTime) additional normal casts.
         -- The effective cast time is then (10*castTime + 1.5 + floor(8.5/castTime)*castTime)/(10 + floor(8.5/castTime) + 1)
         -- TODO P3: is this right or did I just make up total bullshit? Check back in P3 to verify ICD
-        local castsInICD = math.floor(8.5/castTime);
-        castTime = (1.5 + (10 + castsInICD) * castTime) / (11 + castsInICD);
+        local castsInICD = math.floor(8.5/effCastTime);
+        effCastTime = (1.5 + (10 + castsInICD) * effCastTime) / (11 + castsInICD);
+        effCastTime = math.max(effCastTime, GCD);
         for _, buffName in pairs(stats.mageNWRProc[name].buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
+    end
+
+    if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
+        effCastTime = effCastTime - (calcData.critChance/100) * 0.5;
+        effCastTime = math.max(effCastTime, GCD);
+        for _, buffName in pairs(self.stats.druidNaturesGrace.buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
@@ -291,7 +300,7 @@ function _addon:CalcSpell(spellId)
         end
     else
         if spellType == SPELL_TYPE.SPELL then
-            calcData.effectiveCost = spellCost - castTime * (stats.manaReg + stats.mp5.val/5);
+            calcData.effectiveCost = spellCost - effCastTime * (stats.manaReg + stats.mp5.val/5);
 
             if stats.clearCastChance.val > 0 or (stats.clearCastChanceDmg.val > 0 and not spellRankInfo.effects[1].isHeal) then
                 local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
@@ -334,7 +343,7 @@ function _addon:CalcSpell(spellId)
             if SpellCalc_settings.useRealToOom then
                 calcData.castsToOom = math.floor(calcData.castsToOom);
             end
-            calcData.timeToOom = calcData.castsToOom * castTime;
+            calcData.timeToOom = calcData.castsToOom * effCastTime;
         else
             -- NYI
         end
@@ -392,17 +401,17 @@ function _addon:CalcSpell(spellId)
         -- Effect values
 
         if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
-            _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime, name);
+            _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime, name);
         elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
-            _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime)
+            _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime)
         else -- HoT or DoT (also channeled)
-            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, castTime, spellBaseInfo.isChannel, name)
+            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime, spellBaseInfo.isChannel, name)
         end
     end
 
     -- Combined data for spells like Holy Fire or Immolate
     if calcData.perCastData ~= nil then
-        _addon:CalculateSpellCombinedEffect(calcData, spellRankInfo.effects[2], castTime);
+        _addon:CalculateSpellCombinedEffect(calcData, spellRankInfo.effects[2], effCastTime);
     end
 
     calcData.updated = time() - 1;

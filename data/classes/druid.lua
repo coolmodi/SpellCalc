@@ -46,8 +46,17 @@ _addon.talentData = {
             }
         }
     },
-    -- TODO. Nature's Grace
-    { -- Improve Thorns
+    { -- Nature's Grace
+        tree = 1,
+        talent = 13,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.DRUID_NATURES_GRACE,
+                perPoint = 1
+            }
+        }
+    },
+    { -- Moonfury
         tree = 1,
         talent = 15,
         effects = {

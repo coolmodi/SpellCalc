@@ -220,6 +220,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         _addon:UpdateBuffs();
         return;
     end
+
+    if effect == EFFECT_TYPE.DRUID_NATURES_GRACE then
+        ApplyOrRemove(value, _addon.stats.druidNaturesGrace, name);
+        return;
+    end
 end
 
 --- Apply a buff
@@ -300,7 +305,7 @@ end
 
 --- Update player buffs
 function _addon:UpdateBuffs(clearOnly)
-    _addon:PrintDebug("Updating buffs");
+    self:PrintDebug("Updating buffs");
 
     for k, v in pairs(activeRelevantBuffs) do
         activeRelevantBuffs[k] = false;
@@ -313,18 +318,18 @@ function _addon:UpdateBuffs(clearOnly)
         local name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
         local usedKey;
         while name do
-            if _addon.buffData[spellId] ~= nil or _addon.buffData[name] ~= nil then
-                local buffdata = _addon.buffData[spellId];
+            if self.buffData[spellId] ~= nil or self.buffData[name] ~= nil then
+                local buffdata = self.buffData[spellId];
                 usedKey = spellId;
                 if buffdata == nil then
-                    buffdata = _addon.buffData[name];
+                    buffdata = self.buffData[name];
                     usedKey = name;
                 end
 
                 if buffdata.condition == nil or buffdata.condition == 0 
                 or bit.band(buffdata.condition, conditionsActive) == buffdata.condition then
                     if activeRelevantBuffs[usedKey] == nil then
-                        _addon:PrintDebug("Add buff " .. name .. " (" .. usedKey .. ") slot " .. i);
+                        self:PrintDebug("Add buff " .. name .. " (" .. usedKey .. ") slot " .. i);
 
                         if buffdata.effects == nil then
                             ApplyBuffEffect(buffdata, usedKey, name, i);
@@ -346,8 +351,8 @@ function _addon:UpdateBuffs(clearOnly)
 
     for usedKeyIt, _ in pairs(activeRelevantBuffs) do
         if activeRelevantBuffs[usedKeyIt] == false then
-            _addon:PrintDebug("Remove buff " .. usedKeyIt);
-            local buffdata = _addon.buffData[usedKeyIt];
+            self:PrintDebug("Remove buff " .. usedKeyIt);
+            local buffdata = self.buffData[usedKeyIt];
             local name = usedKeyIt;
 
             if type(name) == "number" then
@@ -368,24 +373,29 @@ function _addon:UpdateBuffs(clearOnly)
     end
 
     if buffsChanged then
-        _addon.lastChange = time();
+        self.lastChange = time();
     end
 end
 
 local activeRelevantTalents = {};
 
 --- Update talents
-function _addon:UpdateTalents()
-    _addon:PrintDebug("Updating talents");
+-- @param forceTalent Info about a talent to force active
+function _addon:UpdateTalents(forceTalent)
+    self:PrintDebug("Updating talents");
 
-    for _, data in ipairs(_addon.talentData) do
+    for _, data in ipairs(self.talentData) do
         local name, _, _, _, curRank, maxRank = GetTalentInfo(data.tree, data.talent);
 
-        _addon:PrintDebug(("%s %d/%d"):format(name, curRank, maxRank));
+        if forceTalent ~= nil and forceTalent.tree == data.tree and forceTalent.talent == data.talent then
+            curRank = forceTalent.rank;
+        end
+
+        self:PrintDebug(("%s %d/%d"):format(name, curRank, maxRank));
 
         -- remove old rank if we have another rank of the talent active
         if activeRelevantTalents[name] ~= nil and curRank ~= activeRelevantTalents[name] then
-            _addon:PrintDebug("Remove old talent rank " .. name .. activeRelevantTalents[name]);
+            self:PrintDebug("Remove old talent rank " .. name .. activeRelevantTalents[name]);
             local oldIdName = name .. activeRelevantTalents[name];
             for k, effect in ipairs(data.effects) do
                 local value = effect.perPoint * activeRelevantTalents[name];
@@ -399,7 +409,7 @@ function _addon:UpdateTalents()
 
         -- add new rank if we don't have the talent already
         if curRank > 0 and activeRelevantTalents[name] == nil then
-            _addon:PrintDebug("Add talent rank " .. name .. curRank);
+            self:PrintDebug("Add talent rank " .. name .. curRank);
             local idName = name .. curRank;
             for k, effect in ipairs(data.effects) do
                 local value = effect.perPoint * curRank;
@@ -412,5 +422,5 @@ function _addon:UpdateTalents()
         end
 	end
 
-    _addon.lastChange = time();
+    self.lastChange = time();
 end

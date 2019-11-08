@@ -4,8 +4,6 @@ if playerClass ~= "MAGE" then
     return;
 end
 
--- TODO: Arcane Missiles, but who even needs that?
-
 local ARCANE_EXPLOSION = GetSpellInfo(1449);
 local FIRE_BLAST = GetSpellInfo(10197);
 local SCORCH = GetSpellInfo(10205);
