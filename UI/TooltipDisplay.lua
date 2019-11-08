@@ -72,7 +72,7 @@ local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
     local effectData = calcData[effectNum];
     local unitPart = isHeal and "HEAL" or "DAMAGE";
 
-    if effectNum == 1 and SpellCalc_settings.ttEffCost and calcData.effectiveCost ~= calcData.baseCost then
+    if effectNum == 1 and SpellCalc_settings.ttEffCost and calcData.effectiveCost ~= calcData.baseCost and calcData.effectiveCost > -99999 then
         GameTooltip:AddLine(("%s: %.1f"):format(L["TT_EFFCOST"], calcData.effectiveCost), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 

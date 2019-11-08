@@ -142,11 +142,9 @@ function _addon:CalcSpell(spellId)
         castTime = castTime / 1000;
     end
 
-    if #costs > 0 then
+    if costs and #costs > 0 then
+        -- TODO: This will need a change for spells with multiple costs, e.g. combo spells!
         spellCost = costs[1].cost;
-    else
-        _addon:PrintError("Spell " .. spellId .. " has no cost");
-        return;
     end
 
     --------------------------
@@ -286,7 +284,7 @@ function _addon:CalcSpell(spellId)
     calcData.baseCost = spellCost;
     
     if spellCost == 0 then
-        calcData.effectiveCost = -1;
+        calcData.effectiveCost = -99999;
         if spellType == SPELL_TYPE.SPELL then
             calcData.castsToOom = -1;
             calcData.timeToOom = -1;
