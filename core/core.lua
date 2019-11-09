@@ -405,7 +405,7 @@ function _addon:CalcSpell(spellId)
         elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
             _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime)
         else -- HoT or DoT (also channeled)
-            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime, spellBaseInfo.isChannel, name)
+            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime, spellBaseInfo, name)
         end
     end
 

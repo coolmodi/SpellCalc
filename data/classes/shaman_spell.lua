@@ -22,6 +22,16 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(1064)] = { -- Chain Heal
         school = 4,
     },
+    [GetSpellInfo(1535)] = { -- Fire Nova Totem
+        school = 3,
+    },
+    [GetSpellInfo(3599)] = { -- Searing Totem
+        school = 3,
+        forceCanCrit = true,
+    },
+    [GetSpellInfo(5394)] = { -- Healing Stream Totem
+        school = 5,
+    },
     [GetSpellInfo(8004)] = { -- Lesser Healing Wave
         school = 4,
     },
@@ -34,6 +44,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(8056)] = { -- Frost Shock
         school = 5,
         isBinary = true,
+    },
+    [GetSpellInfo(8190)] = { -- Magma Totem
+        school = 3,
+        forceCanCrit = true,
     },
 };
 
@@ -265,6 +279,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [1535] = { -- Fire Nova Totem(Rank 1)
+        spellLevel = 12,
+        maxLevel = 0,
+        duration = 5,
+        effects = {
+            [1] = {
+                min = 48,
+                max = 57,
+                perLevel = 1.1,
+                coef = 0.1,
+            },
+        }
+    },
     [2860] = { -- Chain Lightning(Rank 3)
         spellLevel = 48,
         maxLevel = 53,
@@ -277,6 +304,34 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [3599] = { -- Searing Totem(Rank 1)
+        spellLevel = 10,
+        maxLevel = 0,
+        duration = 30,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2.2,
+                min = 9,
+                max = 12,
+                coef = 0.052,
+            },
+        }
+    },
+    [5394] = { -- Healing Stream Totem(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 6,
+                coef = 0.022,
+            },
+        }
+    },
     [6041] = { -- Lightning Bolt(Rank 6)
         spellLevel = 32,
         maxLevel = 37,
@@ -286,6 +341,76 @@ _addon.spellRankInfo = {
                 max = 195,
                 perLevel = 1.5,
                 coef = 0.857,
+            },
+        }
+    },
+    [6363] = { -- Searing Totem(Rank 2)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 35,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2.2,
+                min = 13,
+                max = 18,
+                coef = 0.083,
+            },
+        }
+    },
+    [6364] = { -- Searing Totem(Rank 3)
+        spellLevel = 30,
+        maxLevel = 0,
+        duration = 40,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2.2,
+                min = 19,
+                max = 26,
+                coef = 0.083,
+            },
+        }
+    },
+    [6365] = { -- Searing Totem(Rank 4)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 45,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2.2,
+                min = 26,
+                max = 35,
+                coef = 0.083,
+            },
+        }
+    },
+    [6375] = { -- Healing Stream Totem(Rank 2)
+        spellLevel = 30,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 8,
+                coef = 0.022,
+            },
+        }
+    },
+    [6377] = { -- Healing Stream Totem(Rank 3)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 10,
+                coef = 0.022,
             },
         }
     },
@@ -486,6 +611,45 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [8190] = { -- Magma Totem(Rank 1)
+        spellLevel = 26,
+        maxLevel = 0,
+        duration = 20,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 22,
+                coef = 0.033,
+            },
+        }
+    },
+    [8498] = { -- Fire Nova Totem(Rank 2)
+        spellLevel = 22,
+        maxLevel = 0,
+        duration = 5,
+        effects = {
+            [1] = {
+                min = 102,
+                max = 117,
+                perLevel = 1.6,
+                coef = 0.143,
+            },
+        }
+    },
+    [8499] = { -- Fire Nova Totem(Rank 3)
+        spellLevel = 32,
+        maxLevel = 0,
+        duration = 5,
+        effects = {
+            [1] = {
+                min = 184,
+                max = 209,
+                perLevel = 2.2,
+                coef = 0.143,
+            },
+        }
+    },
     [10391] = { -- Lightning Bolt(Rank 7)
         spellLevel = 38,
         maxLevel = 43,
@@ -601,6 +765,34 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [10437] = { -- Searing Totem(Rank 5)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 50,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2.2,
+                min = 33,
+                max = 46,
+                coef = 0.083,
+            },
+        }
+    },
+    [10438] = { -- Searing Totem(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 55,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2.2,
+                min = 40,
+                max = 55,
+                coef = 0.083,
+            },
+        }
+    },
     [10447] = { -- Flame Shock(Rank 4)
         spellLevel = 40,
         maxLevel = 45,
@@ -634,6 +826,34 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 64,
                 coef = 0.1,
+            },
+        }
+    },
+    [10462] = { -- Healing Stream Totem(Rank 4)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 12,
+                coef = 0.022,
+            },
+        }
+    },
+    [10463] = { -- Healing Stream Totem(Rank 5)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 60,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 14,
+                coef = 0.022,
             },
         }
     },
@@ -702,6 +922,45 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [10585] = { -- Magma Totem(Rank 2)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = 20,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 37,
+                coef = 0.033,
+            },
+        }
+    },
+    [10586] = { -- Magma Totem(Rank 3)
+        spellLevel = 46,
+        maxLevel = 0,
+        duration = 20,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 54,
+                coef = 0.033,
+            },
+        }
+    },
+    [10587] = { -- Magma Totem(Rank 4)
+        spellLevel = 56,
+        maxLevel = 0,
+        duration = 20,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 2,
+                min = 75,
+                coef = 0.033,
+            },
+        }
+    },
     [10605] = { -- Chain Lightning(Rank 4)
         spellLevel = 56,
         maxLevel = 61,
@@ -737,6 +996,32 @@ _addon.spellRankInfo = {
                 max = 630,
                 perLevel = 3.3,
                 coef = 0.714,
+            },
+        }
+    },
+    [11314] = { -- Fire Nova Totem(Rank 4)
+        spellLevel = 42,
+        maxLevel = 0,
+        duration = 5,
+        effects = {
+            [1] = {
+                min = 281,
+                max = 318,
+                perLevel = 2.8,
+                coef = 0.143,
+            },
+        }
+    },
+    [11315] = { -- Fire Nova Totem(Rank 5)
+        spellLevel = 52,
+        maxLevel = 0,
+        duration = 5,
+        effects = {
+            [1] = {
+                min = 396,
+                max = 443,
+                perLevel = 3.4,
+                coef = 0.143,
             },
         }
     },

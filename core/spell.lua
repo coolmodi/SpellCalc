@@ -91,6 +91,8 @@ function _addon:AddSpellCalculationMembers(et, effectType)
 
     elseif effectType == SPELL_EFFECT_TYPE.DOT or effectType == SPELL_EFFECT_TYPE.HOT then
         et.perTick = 0; -- Done per tick
+        et.perTickNormal = 0; -- For PTSA triggered spells
+        et.perTickCrit = 0; -- For PTSA triggered spells
         et.duration = 0;
         et.ticks = 0;
         et.allTicks = 0; -- Done over all ticks (assuming hit)
@@ -262,9 +264,9 @@ end
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
 -- @param castTime Spell cast time (or channel duration)
--- @param isChannel Is the spell a channeled spell
+-- @param spellBaseInfo The spell base info table
 -- @param spellName The spell's name
-function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, isChannel, spellName)
+function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, spellBaseInfo, spellName)
     local levelBonus = 0;
     if effectData.perLevel then
         levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
@@ -282,11 +284,25 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
     local effPowerUse = effectData.isHeal and et.effectivePower or et.effectivePower * effectMod;
 
     et.ticks = et.duration / effectData.tickPeriod;
-    et.perTick = (effectData.min + levelBonus) * effectMod + effPowerUse;
-    et.allTicks = math.floor(et.perTick * et.ticks + 0.5);
+
+    -- Searing totem, this is so ugly...
+    if effectData.max then
+        et.perTick = ((effectData.min + effectData.max)/2 + levelBonus) * effectMod + effPowerUse;
+    else
+        et.perTick = (effectData.min + levelBonus) * effectMod + effPowerUse;
+    end
+
+    -- PTSA hackfixes :/
+    if spellBaseInfo.forceCanCrit and calcData.critChance > 0 then
+        et.perTickNormal = et.perTick;
+        et.perTickCrit = math.floor(et.perTick * calcData.critMult + 0.5);
+        et.perTick = et.perTick + (et.perTickCrit - et.perTick) * calcData.critChance/100;
+    end
+
+    et.allTicks = et.perTick * et.ticks;
 
     if calcData.hitChance ~= nil then
-        if isChannel then
+        if spellBaseInfo.isChannel then
             et.avgAfterMitigation = et.allTicks * (1 - (1 - calcData.hitChance) ^ (castTime/1.5));
         else
             et.avgAfterMitigation = et.allTicks * calcData.hitChance;

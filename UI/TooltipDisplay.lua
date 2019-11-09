@@ -159,6 +159,12 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
         GameTooltip:AddLine(("%s: %dx %.1f | %d total"):format(unitString, effectData.ticks, effectData.perTick, effectData.allTicks), TTCOLOR, TTCOLOR, TTCOLOR);
     end
 
+    if SpellCalc_settings.ttCrit and calcData.critChance > 0 and effectData.perTickCrit > 0 then
+        GameTooltip:AddLine(("%s: %.1f"):format(unitString, effectData.perTickNormal), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddDoubleLine(("%s: %.1f"):format(L["TT_CRITICAL"], effectData.perTickCrit),
+            ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+    end
+
     AppendCoefData(calcData, effectData);
     if not isHeal and effectNum == 1 then
         AppendMitigation(calcData);
@@ -173,7 +179,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
         end
     end
 
-    AppendEfficiency(calcData, effectNum, isHeal);
+    AppendEfficiency(calcData, effectNum, isHeal, spellBaseInfo.isChannel);
 end
 
 --- Apend effect data for dmg shields

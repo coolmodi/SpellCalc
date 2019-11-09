@@ -49,6 +49,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(5143)] = { -- Arcane Missiles
         school = 7,
         isChannel = true,
+        forceCanCrit = true,
     },
     [GetSpellInfo(6143)] = { -- Frost Ward
         school = 5,
