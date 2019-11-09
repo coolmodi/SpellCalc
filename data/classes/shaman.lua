@@ -4,14 +4,17 @@ if playerClass ~= "SHAMAN" then
     return;
 end
 
--- TODO: totems
-
 local LIGHTNING_BOLT = GetSpellInfo(403);
 local CHAIN_LIGHTNING = GetSpellInfo(421);
 local EARTH_SHOCK = GetSpellInfo(8042);
 local FLAME_SHOCK = GetSpellInfo(8050);
 local LIGHTNING_SHIELD = GetSpellInfo(8788);
 local FROST_SHOCK = GetSpellInfo(8056);
+
+local SEARING_TOTEM = GetSpellInfo(3599);
+local MAGMA_TOTEM = GetSpellInfo(8190);
+local FIRE_NOVA_TOTEM = GetSpellInfo(1535);
+local HEALING_STREAM_TOTEM = GetSpellInfo(5394);
 
 _addon.talentData = {
     { -- Concussion
@@ -25,7 +28,17 @@ _addon.talentData = {
             }
         }
     },
-    -- TODO: Call of Flame
+    { -- Call of Flame
+        tree = 1,
+        talent = 5,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {SEARING_TOTEM, FIRE_NOVA_TOTEM, MAGMA_TOTEM},
+                perPoint = 5
+            }
+        }
+    },
     { -- Elemental Focus
         tree = 1,
         talent = 6,
@@ -59,6 +72,17 @@ _addon.talentData = {
         }
     },
 
+    { -- Restorative Totems
+        tree = 1,
+        talent = 10,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {HEALING_STREAM_TOTEM},
+                perPoint = 5
+            }
+        }
+    },
     { -- Tidal Mastery
         tree = 1,
         talent = 11,
