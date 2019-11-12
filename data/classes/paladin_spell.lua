@@ -455,5 +455,18 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [26573] = { -- Consecration(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 8,
+        effects = {
+            [1] = {
+                isDuration = true,
+                tickPeriod = 1,
+                min = 8,
+                coef = 0.042,
+            },
+        }
+    },
 };
 
