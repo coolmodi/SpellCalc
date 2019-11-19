@@ -33,7 +33,7 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
     local st = {
         spellType = spellType,
         critChance = 0,
-        critMult = 1.5,
+        critMult = 0,
         buffs = {}, -- Buffs used in the calculation process, not buffs that affect spell indirectly
         updated = 0 -- Last update time
     };
@@ -192,6 +192,7 @@ function _addon:CalcSpell(spellId)
     -- Crit
 
     if spellType == SPELL_TYPE.SPELL then
+        calcData.critMult = 1.5;
         calcData.critChance = _addon:GetSpellSchoolCritChance(spellBaseInfo, calcData.buffs);
     else
         -- NYI
@@ -205,14 +206,14 @@ function _addon:CalcSpell(spellId)
     end
 
     if stats.critMult.school[spellBaseInfo.school].val > 0 then
-        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * (1 + stats.critMult.school[spellBaseInfo.school].val/100);
+        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * stats.critMult.school[spellBaseInfo.school].val/100;
         for _, buffName in pairs(stats.critMult.school[spellBaseInfo.school].buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
 
     if stats.critMult.spell[name] ~= nil then
-        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * (1 + stats.critMult.spell[name].val/100);
+        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * stats.critMult.spell[name].val/100;
         for _, buffName in pairs(stats.critMult.spell[name].buffs) do
             table.insert(calcData.buffs, buffName);
         end
