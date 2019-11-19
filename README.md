@@ -30,7 +30,7 @@ It should be easy to add/implement missing buffs/items/talents/effects or fix in
 There is a settings menu in the interface options addons tab.
 
 ## Planned
-* Special spells like seals and totems.
+* Support for more special spells like seals.
 * More options for actionbar values.
 * Better tooltips.
 * Support for melee/ranged spells.
