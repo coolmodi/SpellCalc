@@ -20,6 +20,8 @@ local ITEM_SLOTS = {
     [18] = "ranged",
 };
 
+local retryFrame = CreateFrame("Frame");
+local retryTimer = 0;
 local items = {};
 local sets = {};
 
@@ -104,6 +106,22 @@ local function ChangeItemEffects(itemData, itemName, remove)
     _addon.lastChange = time();
 end
 
+--- Trigger full item update when time is up
+-- If items are unknown we need to check back after a moment
+-- Also on fresh login for some items now for some reason!
+-- See EquipItem(), it will trigger this to happen again and again until item names can be resolved
+-- TODO: Could use items ID as name, it's just for internal and debug use anyways
+local function RetryUpdate(self, delta)
+    retryTimer = retryTimer + delta;
+    if retryTimer < 0.25 then
+        return;
+    end
+    retryTimer = 0;
+    _addon:PrintDebug("Retry item update");
+    retryFrame:SetScript("OnUpdate", nil);
+    _addon:UpdateItems();
+end
+
 --- Equip item for slot
 -- @param itemId The item ID to equip
 -- @param slotId The slot item is equipped into
@@ -112,6 +130,12 @@ local function EquipItem(itemId, slotId)
     local itemData = _addon.itemData[itemId];
     local itemName = GetItemInfo(itemId);
     local setId = _addon.setItemData[itemId];
+
+    if itemName == nil then
+        _addon:PrintDebug("Item " .. itemId .. " name unknown, trigger retry!");
+        retryFrame:SetScript("OnUpdate", RetryUpdate);
+        return;
+    end
 
     if itemData then
         _addon:PrintDebug("Item has effect");
