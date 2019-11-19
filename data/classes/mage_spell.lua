@@ -29,6 +29,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(543)] = { -- Fire Ward
         school = 3,
         isAbsorbShield = true,
+        forceSchoolScaling = true,
     },
     [GetSpellInfo(1449)] = { -- Arcane Explosion
         school = 7,
@@ -36,6 +37,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(1463)] = { -- Mana Shield
         school = 7,
         isAbsorbShield = true,
+        forceSchoolScaling = true,
     },
     [GetSpellInfo(2120)] = { -- Flamestrike
         school = 3,
@@ -54,6 +56,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(6143)] = { -- Frost Ward
         school = 5,
         isAbsorbShield = true,
+        forceSchoolScaling = true,
     },
     [GetSpellInfo(11113)] = { -- Blast Wave
         school = 3,
@@ -62,6 +65,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(11426)] = { -- Ice Barrier
         school = 5,
         isAbsorbShield = true,
+        forceSchoolScaling = true,
     },
     [GetSpellInfo(12505)] = { -- Pyroblast
         school = 3,
@@ -1263,7 +1267,7 @@ _addon.spellRankInfo = {
                 isHeal = true,
                 min = 438,
                 perLevel = 2.8,
-                coef = 0,
+                coef = 0.1,
             },
         }
     },
@@ -1442,7 +1446,7 @@ _addon.spellRankInfo = {
                 isHeal = true,
                 min = 549,
                 perLevel = 3.2,
-                coef = 0,
+                coef = 0.1,
             },
         }
     },
@@ -1455,7 +1459,7 @@ _addon.spellRankInfo = {
                 isHeal = true,
                 min = 678,
                 perLevel = 3.6,
-                coef = 0,
+                coef = 0.1,
             },
         }
     },
@@ -1468,7 +1472,7 @@ _addon.spellRankInfo = {
                 isHeal = true,
                 min = 818,
                 perLevel = 4,
-                coef = 0,
+                coef = 0.1,
             },
         }
     },

@@ -59,7 +59,7 @@ _addon.talentData = {
         talent = 16,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
                 affectSchool = _addon.SCHOOL_MASK.SHADOW,
                 perPoint = 2
             }

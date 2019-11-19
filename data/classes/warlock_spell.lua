@@ -47,6 +47,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(6229)] = { -- Shadow Ward
         school = 6,
         isAbsorbShield = true,
+        forceSchoolScaling = true,
     },
     [GetSpellInfo(6353)] = { -- Soul Fire
         school = 3,
