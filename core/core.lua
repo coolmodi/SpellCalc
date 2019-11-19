@@ -304,8 +304,8 @@ function _addon:CalcSpell(spellId)
 
             if stats.clearCastChance.val > 0 or (stats.clearCastChanceDmg.val > 0 and not spellRankInfo.effects[1].isHeal) then
                 local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
-                -- TODO: does this only happen on successful hits?
-                calcData.effectiveCost = calcData.effectiveCost - spellCost * (ccc.val/100) * calcData.hitChance;
+                -- TODO: Don't think this needs a successful hit, but not sure still, people never really know :D
+                calcData.effectiveCost = calcData.effectiveCost - spellCost * (ccc.val/100);
                 for _, buffName in pairs(ccc.buffs) do
                     table.insert(calcData.buffs, buffName);
                 end
