@@ -225,6 +225,16 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemove(value, _addon.stats.druidNaturesGrace, name);
         return;
     end
+
+    if effect == EFFECT_TYPE.JUDGEMENT_SPELL then
+        if value > 0 then
+            _addon.judgementSpell = value;
+        elseif -_addon.judgementSpell == value then
+            _addon.judgementSpell = nil;
+        end
+        _addon:PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
+        return;
+    end
 end
 
 --- Apply a buff

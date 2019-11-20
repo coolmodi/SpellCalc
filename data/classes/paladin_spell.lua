@@ -22,6 +22,16 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(20116)] = { -- Consecration
         school = 2,
     },
+    [GetSpellInfo(20187)] = { -- Judgement of Righteousness
+        school = 2,
+    },
+    [GetSpellInfo(20287)] = { -- Seal of Righteousness
+        school = 2,
+        isSeal = "SOR",
+    },
+    [GetSpellInfo(20467)] = { -- Judgement of Command
+        school = 2,
+    },
     [GetSpellInfo(20473)] = { -- Holy Shock
         school = 2,
     },
@@ -322,6 +332,197 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20187] = { -- Judgement of Righteousness(Rank 1)
+        spellLevel = 1,
+        maxLevel = 7,
+        effects = {
+            [1] = {
+                min = 15,
+                perLevel = 1.8,
+                coef = 0.144,
+            },
+        }
+    },
+    [20280] = { -- Judgement of Righteousness(Rank 2)
+        spellLevel = 10,
+        maxLevel = 16,
+        effects = {
+            [1] = {
+                min = 25,
+                max = 28,
+                perLevel = 1.9,
+                coef = 0.312,
+            },
+        }
+    },
+    [20281] = { -- Judgement of Righteousness(Rank 3)
+        spellLevel = 18,
+        maxLevel = 24,
+        effects = {
+            [1] = {
+                min = 39,
+                max = 44,
+                perLevel = 2.4,
+                coef = 0.462,
+            },
+        }
+    },
+    [20282] = { -- Judgement of Righteousness(Rank 4)
+        spellLevel = 26,
+        maxLevel = 32,
+        effects = {
+            [1] = {
+                min = 57,
+                max = 64,
+                perLevel = 2.8,
+                coef = 0.5,
+            },
+        }
+    },
+    [20283] = { -- Judgement of Righteousness(Rank 5)
+        spellLevel = 34,
+        maxLevel = 40,
+        effects = {
+            [1] = {
+                min = 78,
+                max = 87,
+                perLevel = 3.1,
+                coef = 0.5,
+            },
+        }
+    },
+    [20284] = { -- Judgement of Righteousness(Rank 6)
+        spellLevel = 42,
+        maxLevel = 48,
+        effects = {
+            [1] = {
+                min = 102,
+                max = 113,
+                perLevel = 3.8,
+                coef = 0.5,
+            },
+        }
+    },
+    [20285] = { -- Judgement of Righteousness(Rank 7)
+        spellLevel = 50,
+        maxLevel = 56,
+        effects = {
+            [1] = {
+                min = 131,
+                max = 144,
+                perLevel = 4.1,
+                coef = 0.5,
+            },
+        }
+    },
+    [20286] = { -- Judgement of Righteousness(Rank 8)
+        spellLevel = 58,
+        maxLevel = 64,
+        effects = {
+            [1] = {
+                min = 162,
+                max = 179,
+                perLevel = 4.1,
+                coef = 0.5,
+            },
+        }
+    },
+    [20287] = { -- Seal of Righteousness(Rank 2)
+        spellLevel = 10,
+        maxLevel = 16,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 216,
+                perLevel = 17,
+                coef = 0.1,
+            },
+        }
+    },
+    [20288] = { -- Seal of Righteousness(Rank 3)
+        spellLevel = 18,
+        maxLevel = 24,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 352,
+                perLevel = 23,
+                coef = 0.1,
+            },
+        }
+    },
+    [20289] = { -- Seal of Righteousness(Rank 4)
+        spellLevel = 26,
+        maxLevel = 32,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 541,
+                perLevel = 31,
+                coef = 0.1,
+            },
+        }
+    },
+    [20290] = { -- Seal of Righteousness(Rank 5)
+        spellLevel = 34,
+        maxLevel = 40,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 785,
+                perLevel = 37,
+                coef = 0.1,
+            },
+        }
+    },
+    [20291] = { -- Seal of Righteousness(Rank 6)
+        spellLevel = 42,
+        maxLevel = 48,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 1082,
+                perLevel = 41,
+                coef = 0.1,
+            },
+        }
+    },
+    [20292] = { -- Seal of Righteousness(Rank 7)
+        spellLevel = 50,
+        maxLevel = 56,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 1407,
+                perLevel = 47,
+                coef = 0.1,
+            },
+        }
+    },
+    [20293] = { -- Seal of Righteousness(Rank 8)
+        spellLevel = 58,
+        maxLevel = 64,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 1786,
+                perLevel = 47,
+                coef = 0.1,
+            },
+        }
+    },
+    [20467] = { -- Judgement of Command(Rank 1)
+        spellLevel = 20,
+        maxLevel = 28,
+        effects = {
+            [1] = {
+                min = 47,
+                max = 52,
+                perLevel = 2.8,
+                coef = 0.429,
+            },
+        }
+    },
     [20473] = { -- Holy Shock(Rank 1)
         spellLevel = 40,
         maxLevel = 0,
@@ -406,6 +607,66 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20963] = { -- Judgement of Command(Rank 2)
+        spellLevel = 30,
+        maxLevel = 38,
+        effects = {
+            [1] = {
+                min = 74,
+                max = 82,
+                perLevel = 3.05,
+                coef = 0.429,
+            },
+        }
+    },
+    [20964] = { -- Judgement of Command(Rank 3)
+        spellLevel = 40,
+        maxLevel = 48,
+        effects = {
+            [1] = {
+                min = 103,
+                max = 114,
+                perLevel = 2.8,
+                coef = 0.429,
+            },
+        }
+    },
+    [20965] = { -- Judgement of Command(Rank 4)
+        spellLevel = 50,
+        maxLevel = 58,
+        effects = {
+            [1] = {
+                min = 131,
+                max = 145,
+                perLevel = 3.05,
+                coef = 0.429,
+            },
+        }
+    },
+    [20966] = { -- Judgement of Command(Rank 5)
+        spellLevel = 60,
+        maxLevel = 68,
+        effects = {
+            [1] = {
+                min = 170,
+                max = 188,
+                perLevel = 3.05,
+                coef = 0.429,
+            },
+        }
+    },
+    [21084] = { -- Seal of Righteousness(Rank 1)
+        spellLevel = 1,
+        maxLevel = 7,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 108,
+                perLevel = 18,
+                coef = 0.1,
+            },
+        }
+    },
     [24239] = { -- Hammer of Wrath(Rank 3)
         spellLevel = 60,
         maxLevel = 65,
@@ -468,5 +729,70 @@ _addon.spellRankInfo = {
             },
         }
     },
+};
+
+_addon.buffData[20287] = { -- Seal of Righteousness(Rank 2)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20280
+};
+
+_addon.buffData[20288] = { -- Seal of Righteousness(Rank 3)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20281
+};
+
+_addon.buffData[20289] = { -- Seal of Righteousness(Rank 4)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20282
+};
+
+_addon.buffData[20290] = { -- Seal of Righteousness(Rank 5)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20283
+};
+
+_addon.buffData[20291] = { -- Seal of Righteousness(Rank 6)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20284
+};
+
+_addon.buffData[20292] = { -- Seal of Righteousness(Rank 7)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20285
+};
+
+_addon.buffData[20293] = { -- Seal of Righteousness(Rank 8)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20286
+};
+
+_addon.buffData[20375] = { -- Seal of Command(Rank 1)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20467
+};
+
+_addon.buffData[20915] = { -- Seal of Command(Rank 2)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20963
+};
+
+_addon.buffData[20918] = { -- Seal of Command(Rank 3)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20964
+};
+
+_addon.buffData[20919] = { -- Seal of Command(Rank 4)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20965
+};
+
+_addon.buffData[20920] = { -- Seal of Command(Rank 5)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20966
+};
+
+_addon.buffData[21084] = { -- Seal of Righteousness(Rank 1)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20187
 };
 

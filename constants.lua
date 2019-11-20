@@ -46,7 +46,8 @@ _addon.EFFECT_TYPE = {
     CLEARCAST_CHANCE_DMG = 18,
     EARTHFURY_RETURN = 19,
     CONDITION_TRIGGER = 20,
-    DRUID_NATURES_GRACE = 21
+    DRUID_NATURES_GRACE = 21,
+    JUDGEMENT_SPELL = 22
 };
 
 -- Spell types (What calculation rules to use)
@@ -73,3 +74,5 @@ _addon.HEALING_CLASSES = {
 _addon.BUFF_CONDITIONS = {
     EARTHSHATTERER_8PCS = 0x1
 }
+
+_addon.JUDGEMENT_ID = 20271;

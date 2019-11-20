@@ -342,6 +342,11 @@ end
 -- Appends data if spell is known to the addon.
 GameTooltip:SetScript("OnTooltipSetSpell", function(self)
     local _, spellID = GameTooltip:GetSpell();
+
+    if spellID == _addon.JUDGEMENT_ID and _addon.judgementSpell then
+        spellID = _addon.judgementSpell;
+    end
+
     local spellBaseInfo = _addon.spellBaseInfo[GetSpellInfo(spellID)];
     if spellBaseInfo == nil then
         return;

@@ -31,6 +31,14 @@ local function UpdateButtons(self, diff)
         _addon:PrintDebug("Update button slot " .. slot);
         local spellId = spellsInBar[slot];
 
+        if spellId == _addon.JUDGEMENT_ID then
+            if _addon.judgementSpell then
+                spellId = _addon.judgementSpell;
+            else
+                spellId = nil;
+            end
+        end
+
         if spellId == nil then
             actionButtons[slot]:SetText("");
         else
@@ -96,7 +104,7 @@ local function SetSlotSpell(slot, spellId)
         return;
     end
 
-    if _addon.spellRankInfo[spellId] == nil or _addon.spellBaseInfo[GetSpellInfo(spellId)] == nil then
+    if spellId ~= _addon.JUDGEMENT_ID and (_addon.spellRankInfo[spellId] == nil or _addon.spellBaseInfo[GetSpellInfo(spellId)] == nil) then
         return;
     end
 
