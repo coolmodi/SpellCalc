@@ -118,16 +118,6 @@ end
 function _addon:SetupActionbars()
     self:PrintDebug("Add action button strings");
 
-    if _G["ActionButton1"] ~= nil then
-        for i = 1, 12 do
-            AddStringToButton(_G["ActionButton"..i], i);
-            AddStringToButton(_G["MultiBarRightButton"..i], i+24);
-            AddStringToButton(_G["MultiBarLeftButton"..i], i+36);
-            AddStringToButton(_G["MultiBarBottomRightButton"..i], i+48);
-            AddStringToButton(_G["MultiBarBottomLeftButton"..i], i+60);
-        end
-    end
-
     if _G["DominosActionButton1"] ~= nil then
         self:PrintDebug("Add Dominos support");
         local slotId = 0;
@@ -138,6 +128,38 @@ function _addon:SetupActionbars()
                 slotId = i+60;
             end
             AddStringToButton(_G["DominosActionButton"..i], slotId);
+        end
+        for i = 1, 12 do
+            AddStringToButton(_G["ActionButton"..i], i);
+            AddStringToButton(_G["MultiBarRightButton"..i], i+24);
+            AddStringToButton(_G["MultiBarLeftButton"..i], i+36);
+            AddStringToButton(_G["MultiBarBottomRightButton"..i], i+48);
+            AddStringToButton(_G["MultiBarBottomLeftButton"..i], i+60);
+        end
+
+    elseif _G["ElvUI_Bar1Button1"] ~= nil then
+        self:PrintWarn("Add ElvUI support");
+        for i = 1, 12 do
+            AddStringToButton(_G["ElvUI_Bar1Button"..i], i);
+            AddStringToButton(_G["ElvUI_Bar2Button"..i], i+48);
+            AddStringToButton(_G["ElvUI_Bar3Button"..i], i+60);
+            AddStringToButton(_G["ElvUI_Bar4Button"..i], i+36);
+            AddStringToButton(_G["ElvUI_Bar5Button"..i], i+24);
+            AddStringToButton(_G["ElvUI_Bar6Button"..i], i+12);
+            AddStringToButton(_G["ElvUI_Bar7Button"..i], i+72);
+            AddStringToButton(_G["ElvUI_Bar8Button"..i], i+84);
+            AddStringToButton(_G["ElvUI_Bar9Button"..i], i+96);
+            AddStringToButton(_G["ElvUI_Bar10Button"..i], i+108);
+        end
+
+    elseif _G["ActionButton1"] ~= nil then
+        self:PrintWarn("Add default UI support");
+        for i = 1, 12 do
+            AddStringToButton(_G["ActionButton"..i], i);
+            AddStringToButton(_G["MultiBarRightButton"..i], i+24);
+            AddStringToButton(_G["MultiBarLeftButton"..i], i+36);
+            AddStringToButton(_G["MultiBarBottomRightButton"..i], i+48);
+            AddStringToButton(_G["MultiBarBottomLeftButton"..i], i+60);
         end
     end
 

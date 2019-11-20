@@ -4,6 +4,7 @@
 ## Version: 0.5.1
 ## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
+## OptionalDeps: Dominos, ElvUI
 
 libs/SettingsCreator.lua
 
