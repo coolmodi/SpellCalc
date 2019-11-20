@@ -209,6 +209,7 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
 
     if et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL and SpellCalc_settings.healTargetHps > 0 then
         local secondsNoCast = (et.perSecond / SpellCalc_settings.healTargetHps - 1) * castTime;
+        et.secNoCastTHPS = secondsNoCast;
         if secondsNoCast > 0 then
             local manaGained = secondsNoCast * (self.stats.mp5.val/5 + self.stats.manaReg);
             local secOutOfFSR = secondsNoCast - 5 + castTime;
@@ -220,7 +221,6 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
             else
                 et.secNoFsrTHPS = 0;
             end
-            et.secNoCastTHPS = secondsNoCast;
             et.effCostTHPS = calcData.effectiveCost - manaGained;
             et.perManaTHPS = et.avgAfterMitigation / et.effCostTHPS;
             local ctoTHPS = calcData.effMana / et.effCostTHPS;
@@ -230,6 +230,8 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
             et.timeToOomTHPS = ctoTHPS * (castTime + secondsNoCast);
             et.doneToOomTHPS = ctoTHPS * et.avgAfterMitigation;
         end
+    else
+        et.secNoCastTHPS = 0;
     end
 end
 

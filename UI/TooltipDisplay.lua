@@ -3,14 +3,55 @@ local L = _addon:GetLocalization();
 
 local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
 local SPELL_TYPE = _addon.SPELL_TYPE;
-local TTCOLOR = 0.9;
+local TTC_LABEL = "|cFFAAAAFF";
+local TTC_DEFAULT = "|cFFEEEEEE";
+
+--- Add single line to tooltip
+-- @param label The line label (optional)
+-- @param text The line text
+local function SingleLine(label, text)
+    local t1 = text and TTC_DEFAULT..text;
+    if label then
+        t1 = TTC_LABEL..label..": "..t1;
+    end
+
+    GameTooltip:AddLine(t1);
+end
+
+--- Add double line to tooltip
+-- @param label The left label (optional)
+-- @param text The left text (optional)
+-- @param label2 The right label (optional)
+-- @param text2 The right text
+local function DoubleLine(label, text, label2, text2)
+    local t1 = text and TTC_DEFAULT..text or "";
+    if label then
+        t1 = TTC_LABEL..label..": "..t1;
+    end
+    if t1 == "" then
+        t1 = "-";
+    end
+    
+    local t2 = TTC_DEFAULT..text2;
+    if label2 then
+        t2 = TTC_LABEL..label2..": "..t2;
+    end
+
+    GameTooltip:AddDoubleLine(t1, t2);
+end
+
+--- Add heading to tooltip
+-- @param text The heading text
+local function HeaderLine(text)
+    GameTooltip:AddLine(text, 0.5, 1, 0.5);
+end
 
 --- Append buff list
 -- @param buffs The base table from the base calculation table
 local function AppendBuffList(buffs)
     if SpellCalc_settings.ttShowBuffs and #buffs > 0 then
         GameTooltip:AddLine(L["TT_BUFFS"], 0.5, 1, 0.5);
-        GameTooltip:AddLine(table.concat(buffs, ", "), TTCOLOR, TTCOLOR, TTCOLOR);
+        GameTooltip:AddLine(TTC_DEFAULT..table.concat(buffs, ", "));
     end
 end
 
@@ -29,7 +70,7 @@ local function AppendCoefData(calcData, effectData)
         elseif effectData.charges and effectData.charges > 0 then
             fullCoef = fullCoef * effectData.charges;
         end
-        GameTooltip:AddLine(("%s: %.2f%%"):format(L["TT_COEF"], fullCoef*100), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(L["TT_COEF"], ("%.2f%%"):format(fullCoef*100));
     end
 
     if SpellCalc_settings.ttPower then
@@ -39,7 +80,7 @@ local function AppendCoefData(calcData, effectData)
         elseif effectData.charges and effectData.charges > 0 then
             fullPower = fullPower * effectData.charges;
         end
-        GameTooltip:AddLine(("%s: %d (of %d)"):format(L["TT_POWER"], fullPower, effectData.spellPower), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(L["TT_POWER"], ("%d (of %d)"):format(fullPower, effectData.spellPower));
     end
 end
 
@@ -48,18 +89,18 @@ end
 local function AppendMitigation(calcData)
     if SpellCalc_settings.ttHitChance then
         if SpellCalc_settings.ttHitDetail then
-            local hitStr = ("%s: %.1f%% (%d%% + %d%%)"):format(L["TT_HITCHANCE"], calcData.hitChance*100, calcData.baseHitChance, calcData.hitChanceBonus);
+            local hitStr = ("%.1f%% (%d%% + %d%%)"):format(calcData.hitChance*100, calcData.baseHitChance, calcData.hitChanceBonus);
             if calcData.binaryHitLoss > 0 then
                 hitStr = hitStr .. (" (-%.1f%% %s)"):format(calcData.binaryHitLoss, L["TT_BINARYMISS"]);
             end
-            GameTooltip:AddLine(hitStr, TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(L["TT_HITCHANCE"], hitStr);
         else
-            GameTooltip:AddLine(("%s: %.1f%%"):format(L["TT_HITCHANCE"], calcData.hitChance*100), TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(L["TT_HITCHANCE"], ("%.1f%%"):format(calcData.hitChance*100));
         end
     end
 
     if SpellCalc_settings.ttResist and calcData.avgResistMod > 0 and calcData.binaryHitLoss == 0 then
-        GameTooltip:AddLine(("%s: %.1f%%"):format(L["TT_RESIST"], calcData.avgResistMod*100), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcData.avgResistMod*100));
     end
 end
 
@@ -73,27 +114,29 @@ local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
     local unitPart = isHeal and "HEAL" or "DAMAGE";
 
     if effectNum == 1 and SpellCalc_settings.ttEffCost and calcData.effectiveCost ~= calcData.baseCost and calcData.effectiveCost > -99999 then
-        GameTooltip:AddLine(("%s: %.1f"):format(L["TT_EFFCOST"], calcData.effectiveCost), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(L["TT_EFFCOST"], ("%.1f"):format(calcData.effectiveCost));
     end
 
     if SpellCalc_settings.ttPerMana and effectData.perMana > 0 then
-        GameTooltip:AddLine(("%s: %.2f"):format(L["TT_PER_MANA_"..unitPart], effectData.perMana), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(effectData.perMana));
     end
 
     if SpellCalc_settings.ttToOom and effectData.doneToOom > 0 then
         if showTime then
-            GameTooltip:AddLine(("%s: %d (%.1fs, %.1f casts)"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOom, calcData.timeToOom, calcData.castsToOom), TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(L["TT_UNTILOOM_"..unitPart], ("%d (%.1fs, %.1f casts)"):format(effectData.doneToOom, calcData.timeToOom, calcData.castsToOom));
         else
-            GameTooltip:AddLine(("%s: %d"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOom), TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(L["TT_UNTILOOM_"..unitPart], math.floor(effectData.doneToOom + 0.5));
         end
     end
 
-    if effectData.perManaTHPS then
-        GameTooltip:AddLine(("|cFF00FF00%s (%s):"):format(L["TT_THPS"], SpellCalc_settings.healTargetHps), TTCOLOR, TTCOLOR, TTCOLOR);
-        GameTooltip:AddLine(L["TT_THPS_TIMES"]:format(effectData.secNoCastTHPS, effectData.secNoFsrTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
-        GameTooltip:AddLine(("%s: %.1f"):format(L["TT_EFFCOST"], effectData.effCostTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
-        GameTooltip:AddLine(("%s: %.2f"):format(L["TT_PER_MANA_"..unitPart], effectData.perManaTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
-        GameTooltip:AddLine(("%s: %d (%ds)"):format(L["TT_UNTILOOM_"..unitPart], effectData.doneToOomTHPS, effectData.timeToOomTHPS), TTCOLOR, TTCOLOR, TTCOLOR);
+    if effectData.secNoCastTHPS and effectData.secNoCastTHPS > 0 then
+        HeaderLine(("%s (%s):"):format(L["TT_THPS"], SpellCalc_settings.healTargetHps));
+        SingleLine(nil, L["TT_THPS_TIMES"]:format(effectData.secNoCastTHPS, effectData.secNoFsrTHPS));
+        SingleLine(L["TT_EFFCOST"], ("%.1f"):format(effectData.effCostTHPS));
+        if effectData.perManaTHPS > 0 then
+            SingleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(effectData.perManaTHPS));
+            SingleLine(L["TT_UNTILOOM_"..unitPart], ("%d (%ds)"):format(effectData.doneToOomTHPS, effectData.timeToOomTHPS));
+        end
     end
 end
 
@@ -109,27 +152,24 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
     if SpellCalc_settings.ttHit then
         if effectData.hitMax > 0 then
             if SpellCalc_settings.ttAverages then
-                GameTooltip:AddLine(("%s: %d - %d (%d)"):format(unitString, effectData.hitMin, effectData.hitMax, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
+                SingleLine(unitString, ("%d - %d (%d)"):format(effectData.hitMin, effectData.hitMax, effectData.hitAvg));
             else
-                GameTooltip:AddLine(("%s: %d - %d"):format(unitString, effectData.hitMin, effectData.hitMax), TTCOLOR, TTCOLOR, TTCOLOR);
+                SingleLine(unitString, ("%d - %d"):format(effectData.hitMin, effectData.hitMax));
             end
         else
-            GameTooltip:AddLine(("%s: %d"):format(unitString, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(unitString, math.floor(effectData.hitAvg + 0.5));
         end
     end
 
     if SpellCalc_settings.ttCrit and calcData.critChance > 0 then
         if effectData.critMax > 0 then
             if SpellCalc_settings.ttAverages then
-                GameTooltip:AddDoubleLine(("%s: %d - %d (%d)"):format(L["TT_CRITICAL"], effectData.critMin, effectData.critMax, effectData.critAvg),
-                ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+                DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(effectData.critMin, effectData.critMax, effectData.critAvg), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
             else
-                GameTooltip:AddDoubleLine(("%s: %d - %d"):format(L["TT_CRITICAL"], effectData.critMin, effectData.critMax),
-                ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+                DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(effectData.critMin, effectData.critMax), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
             end
         else
-            GameTooltip:AddDoubleLine(("%s: %d"):format(L["TT_CRITICAL"], effectData.critAvg),
-            ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+            DoubleLine(L["TT_CRITICAL"], math.floor(effectData.critAvg + 0.5), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
         end
     end
 
@@ -139,7 +179,7 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
     end
 
     if SpellCalc_settings.ttPerSecond then
-        GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(effectData.perSecond));
     end
 
     AppendEfficiency(calcData, effectNum, isHeal, true);
@@ -156,13 +196,12 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
     local unitPart = isHeal and "HEAL" or "DAMAGE";
 
     if SpellCalc_settings.ttHit then
-        GameTooltip:AddLine(("%s: %dx %.1f | %d total"):format(unitString, effectData.ticks, effectData.perTick, effectData.allTicks), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(unitString, ("%dx %.1f | %d total"):format(effectData.ticks, effectData.perTick, effectData.allTicks));
     end
 
     if SpellCalc_settings.ttCrit and calcData.critChance > 0 and effectData.perTickCrit > 0 then
-        GameTooltip:AddLine(("%s: %.1f"):format(unitString, effectData.perTickNormal), TTCOLOR, TTCOLOR, TTCOLOR);
-        GameTooltip:AddDoubleLine(("%s: %.1f"):format(L["TT_CRITICAL"], effectData.perTickCrit),
-            ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(unitString, ("%.1f"):format(effectData.perTickNormal));
+        DoubleLine(L["TT_CRITICAL"], ("%.1f"):format(effectData.perTickCrit), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
     end
 
     AppendCoefData(calcData, effectData);
@@ -172,10 +211,9 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
 
     if SpellCalc_settings.ttPerSecond then
         if not spellBaseInfo.isChannel then
-            GameTooltip:AddDoubleLine(("%s: %d"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond),
-            ("%s: %.1f"):format(L["TT_PERSECDUR_"..unitPart], effectData.perSecondDuration), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+            DoubleLine(L["TT_PERSEC_"..unitPart], math.floor(effectData.perSecond + 0.5), L["TT_PERSECDUR_"..unitPart], ("%.1f"):format(effectData.perSecondDuration));
         else
-            GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSEC_"..unitPart], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(effectData.perSecond));
         end
     end
 
@@ -190,9 +228,9 @@ local function AppendDmgShieldEffect(calcData, effectNum)
 
     if SpellCalc_settings.ttHit then
         if effectData.charges > 0 then
-            GameTooltip:AddLine(("%s: %dx %d | %d total"):format(L["TT_DAMAGE"], effectData.charges, effectData.perCharge, effectData.hitAvg), TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(L["TT_DAMAGE"], ("%dx %d | %d total"):format(effectData.charges, effectData.perCharge, effectData.hitAvg));
         else
-            GameTooltip:AddLine(("%s: %.1f"):format(L["TT_DAMAGE"], effectData.perCharge), TTCOLOR, TTCOLOR, TTCOLOR);
+            SingleLine(L["TT_DAMAGE"], ("%.1f"):format(effectData.perCharge));
         end
     end
 
@@ -200,7 +238,7 @@ local function AppendDmgShieldEffect(calcData, effectNum)
     AppendMitigation(calcData);
 
     if SpellCalc_settings.ttPerSecond and effectData.perSecond > 0 then
-        GameTooltip:AddLine(("%s: %.1f"):format(L["TT_PERSECC_DAMAGE"], effectData.perSecond), TTCOLOR, TTCOLOR, TTCOLOR);
+        SingleLine(L["TT_PERSECC_DAMAGE"], ("%.1f"):format(effectData.perSecond));
     end
 
     AppendEfficiency(calcData, effectNum, false);
@@ -213,28 +251,39 @@ local function AppendCombinedEffect(calcedSpell)
     local unitPart = calcedSpell[1].effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL and "HEAL" or "DAMAGE";
 
     if SpellCalc_settings.ttAverages then
-        GameTooltip:AddDoubleLine(("%s: %d"):format(L["TT_COMB_AVG_HIT"], combData.hitAvg),
-        ("%s: %d"):format(L["TT_COMB_AVG_HIT_SPAM"], combData.hitAvgSpam), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+        if combData.hitAvg ~= combData.hitAvgSpam then
+            DoubleLine(L["TT_COMB_AVG_HIT"], math.floor(combData.hitAvg + 0.5), L["TT_COMB_AVG_HIT_SPAM"], math.floor(combData.hitAvgSpam + 0.5));
+        else
+            SingleLine(L["TT_COMB_AVG_HIT"], math.floor(combData.hitAvg + 0.5));
+        end
 
         if SpellCalc_settings.ttCrit then
-            GameTooltip:AddDoubleLine(("%s: %d"):format(L["TT_COMB_AVG_CRIT"], combData.critAvg),
-            ("%s: %d"):format(L["TT_COMB_AVG_CRIT_SPAM"], combData.critAvgSpam), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+            if combData.critAvg ~= combData.critAvgSpam then
+                DoubleLine(L["TT_COMB_AVG_CRIT"], math.floor(combData.critAvg + 0.5), L["TT_COMB_AVG_CRIT_SPAM"], math.floor(combData.critAvgSpam + 0.5));
+            else
+                SingleLine(L["TT_COMB_AVG_CRIT"], math.floor(combData.critAvg + 0.5));
+            end
         end
     end
 
     if SpellCalc_settings.ttPerSecond then
-        _addon:PrintDebug(combData);
-        GameTooltip:AddDoubleLine(("%s: %.1f"):format(L["TT_PERSECC_"..unitPart], combData.perSecond),
-        ("%s: %.1f"):format(L["TT_COMB_PERSEC_"..unitPart], combData.perSecondSpam), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+        if combData.perSecond ~= combData.perSecondSpam then
+            DoubleLine(L["TT_PERSECC_"..unitPart], ("%.1f"):format(combData.perSecond), L["TT_COMB_PERSEC_"..unitPart], ("%.1f"):format(combData.perSecondSpam));
+        else
+            SingleLine(L["TT_PERSECC_"..unitPart], ("%.1f"):format(combData.perSecond));
+        end
     end
 
     if SpellCalc_settings.ttPerMana then
-        GameTooltip:AddDoubleLine(("%s: %.2f"):format(L["TT_PER_MANA_"..unitPart], combData.perMana),
-        ("%s: %.2f"):format(L["TT_COMB_PER_MANA_"..unitPart], combData.perManaSpam), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+        if combData.perMana ~= combData.perManaSpam then
+            DoubleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(combData.perMana), L["TT_COMB_PER_MANA_"..unitPart], ("%.2f"):format(combData.perManaSpam));
+        else
+            SingleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(combData.perMana));
+        end
     end
 
     if SpellCalc_settings.ttPerMana then
-        GameTooltip:AddDoubleLine("-", ("%s: %d"):format(L["TT_COMB_UNTILOOM_"..unitPart], combData.doneToOomSpam), TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR, TTCOLOR);
+        DoubleLine(nil, nil, L["TT_COMB_UNTILOOM_"..unitPart], math.floor(combData.doneToOomSpam + 0.5));
     end
 end
 
@@ -271,7 +320,7 @@ local function AddSpellTooltip(calcedSpell, spellBaseInfo)
         end
 
         if #calcedSpell > 1 and (i == 2 or calcedSpell.perCastData == nil) then
-            GameTooltip:AddLine(GetEffectTitle(effectData.effectType), 0.5, 1, 0.5);
+            HeaderLine(GetEffectTitle(effectData.effectType));
         end
 
         if effectData.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or effectData.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
@@ -284,7 +333,7 @@ local function AddSpellTooltip(calcedSpell, spellBaseInfo)
     end
 
     if calcedSpell.perCastData ~= nil then
-        GameTooltip:AddLine(L["TT_TITLE_COMB"], 0.5, 1, 0.5);
+        HeaderLine(L["TT_TITLE_COMB"]);
         AppendCombinedEffect(calcedSpell);
     end
 end
