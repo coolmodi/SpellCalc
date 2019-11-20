@@ -138,9 +138,8 @@ function _addon:ConditionalAddSpellMembers(st, primaryType, secondaryType)
         perSecond = 0, -- Per second for done per cast time when full duration is used (DPSC)
         perMana = 0, -- Unit per mana when full duration used
 
-        -- Those values really only are useful for
-        -- holy fire (without cast time talent?)
-        -- fireball and pyroblast I guess
+        -- Those values really only are useful for holy fire, fireball and pyroblast I guess
+        ticksWhileCasting = 0, -- Ticks that happen while casting next spell
         hitAvgSpam = 0, -- Avg if spammed
         critAvgSpam = 0,
         perSecondSpam = 0, -- Per second done when spammed
@@ -332,18 +331,21 @@ function _addon:CalculateSpellCombinedEffect(calcData, effectData, castTime)
 
     calcData.perCastData.perSecond = calcData[1].perSecond + calcData[2].avgAfterMitigation / castTime;
     calcData.perCastData.perMana = calcData[1].perMana + calcData[2].perMana;
-        
-    local ticksPerCast = math.floor(castTime / effectData.tickPeriod);
-    local tickDonePerCast = ticksPerCast * calcData[2].perTick;
-    calcData.perCastData.hitAvgSpam = tickDonePerCast + calcData[1].hitAvg;
-    calcData.perCastData.critAvgSpam = tickDonePerCast + calcData[1].critAvg;
-    calcData.perCastData.perSecondSpam = calcData[1].perSecond + tickDonePerCast / castTime;
-    calcData.perCastData.perManaSpam = calcData[1].perMana + (calcData[2].perMana * (ticksPerCast / calcData[2].ticks));
 
-    local hitCastsToOom = calcData.castsToOom;
-    if calcData.hitChance ~= nil then
-        hitCastsToOom = hitCastsToOom * calcData.hitChance;
+    local ticksPerCast = math.floor(castTime / effectData.tickPeriod);
+    calcData.perCastData.ticksWhileCasting = ticksPerCast;
+    if ticksPerCast > 0 then
+        local tickDonePerCast = ticksPerCast * calcData[2].perTick;
+        calcData.perCastData.hitAvgSpam = tickDonePerCast + calcData[1].hitAvg;
+        calcData.perCastData.critAvgSpam = tickDonePerCast + calcData[1].critAvg;
+        calcData.perCastData.perSecondSpam = calcData[1].perSecond + tickDonePerCast / castTime;
+        calcData.perCastData.perManaSpam = calcData[1].perMana + (calcData[2].perMana * (ticksPerCast / calcData[2].ticks));
+
+        local hitCastsToOom = calcData.castsToOom;
+        if calcData.hitChance ~= nil then
+            hitCastsToOom = hitCastsToOom * calcData.hitChance;
+        end
+        local ticksPerCastToOom = hitCastsToOom * ticksPerCast;
+        calcData.perCastData.doneToOomSpam = calcData[1].doneToOom + ticksPerCastToOom * calcData[2].perTick;
     end
-    local ticksPerCastToOom = hitCastsToOom * ticksPerCast;
-    calcData.perCastData.doneToOomSpam = calcData[1].doneToOom + ticksPerCastToOom * calcData[2].perTick;
 end

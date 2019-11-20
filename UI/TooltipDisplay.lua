@@ -255,14 +255,14 @@ local function AppendCombinedEffect(calcedSpell)
     local unitPart = calcedSpell[1].effectType == _addon.SPELL_EFFECT_TYPE.DIRECT_HEAL and "HEAL" or "DAMAGE";
 
     if SpellCalc_settings.ttAverages then
-        if combData.hitAvg ~= combData.hitAvgSpam then
+        if combData.ticksWhileCasting > 0 then
             DoubleLine(L["TT_COMB_AVG_HIT"], Round(combData.hitAvg), L["TT_COMB_AVG_HIT_SPAM"], Round(combData.hitAvgSpam));
         else
             SingleLine(L["TT_COMB_AVG_HIT"], Round(combData.hitAvg));
         end
 
         if SpellCalc_settings.ttCrit then
-            if combData.critAvg ~= combData.critAvgSpam then
+            if combData.ticksWhileCasting > 0 then
                 DoubleLine(L["TT_COMB_AVG_CRIT"], Round(combData.critAvg), L["TT_COMB_AVG_CRIT_SPAM"], Round(combData.critAvgSpam));
             else
                 SingleLine(L["TT_COMB_AVG_CRIT"], Round(combData.critAvg));
@@ -271,7 +271,7 @@ local function AppendCombinedEffect(calcedSpell)
     end
 
     if SpellCalc_settings.ttPerSecond then
-        if combData.perSecond ~= combData.perSecondSpam then
+        if combData.ticksWhileCasting > 0 then
             DoubleLine(L["TT_PERSECC_"..unitPart], ("%.1f"):format(combData.perSecond), L["TT_COMB_PERSEC_"..unitPart], ("%.1f"):format(combData.perSecondSpam));
         else
             SingleLine(L["TT_PERSECC_"..unitPart], ("%.1f"):format(combData.perSecond));
@@ -279,14 +279,14 @@ local function AppendCombinedEffect(calcedSpell)
     end
 
     if SpellCalc_settings.ttPerMana then
-        if combData.perMana ~= combData.perManaSpam then
+        if combData.ticksWhileCasting > 0 then
             DoubleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(combData.perMana), L["TT_COMB_PER_MANA_"..unitPart], ("%.2f"):format(combData.perManaSpam));
         else
             SingleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(combData.perMana));
         end
     end
 
-    if SpellCalc_settings.ttPerMana then
+    if combData.ticksWhileCasting > 0 and SpellCalc_settings.ttPerMana then
         DoubleLine(nil, nil, L["TT_COMB_UNTILOOM_"..unitPart], Round(combData.doneToOomSpam));
     end
 end
