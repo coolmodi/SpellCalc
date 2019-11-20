@@ -390,15 +390,19 @@ end
 local activeRelevantTalents = {};
 
 --- Update talents
--- @param forceTalent Info about a talent to force active
-function _addon:UpdateTalents(forceTalent)
+-- @param forceTalents Info about talents to force active
+function _addon:UpdateTalents(forceTalents)
     self:PrintDebug("Updating talents");
 
     for _, data in ipairs(self.talentData) do
         local name, _, _, _, curRank, maxRank = GetTalentInfo(data.tree, data.talent);
 
-        if forceTalent ~= nil and forceTalent.tree == data.tree and forceTalent.talent == data.talent then
-            curRank = forceTalent.rank;
+        if forceTalents ~= nil then
+            for _, ftal in ipairs(forceTalents) do
+                if ftal.tree == data.tree and ftal.talent == data.talent then
+                    curRank = ftal.rank;
+                end
+            end
         end
 
         self:PrintDebug(("%s %d/%d"):format(name, curRank, maxRank));

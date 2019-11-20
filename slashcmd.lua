@@ -26,6 +26,22 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
+    if arg == "tt" then
+        _addon:UpdateTalents({
+            {
+                tree = 3,
+                talent = 4,
+                rank = 5
+            },
+            {
+                tree = 2,
+                talent = 3,
+                rank = 5
+            },
+        });
+        return;
+    end
+
     if SpellCalcStatScreen:IsShown() then
         SpellCalcStatScreen:Hide();
     else
