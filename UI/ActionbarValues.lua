@@ -138,7 +138,7 @@ function _addon:SetupActionbars()
         end
 
     elseif _G["ElvUI_Bar1Button1"] ~= nil then
-        self:PrintWarn("Add ElvUI support");
+        self:PrintDebug("Add ElvUI support");
         for i = 1, 12 do
             AddStringToButton(_G["ElvUI_Bar1Button"..i], i);
             AddStringToButton(_G["ElvUI_Bar2Button"..i], i+48);
@@ -152,8 +152,14 @@ function _addon:SetupActionbars()
             AddStringToButton(_G["ElvUI_Bar10Button"..i], i+108);
         end
 
+    elseif _G["BT4Button1"] ~= nil then
+        self:PrintDebug("Add bartender4 support");
+        for i = 1, 120 do
+            AddStringToButton(_G["BT4Button"..i], i);
+        end
+
     elseif _G["ActionButton1"] ~= nil then
-        self:PrintWarn("Add default UI support");
+        self:PrintDebug("Add default UI support");
         for i = 1, 12 do
             AddStringToButton(_G["ActionButton"..i], i);
             AddStringToButton(_G["MultiBarRightButton"..i], i+24);

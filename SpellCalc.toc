@@ -1,10 +1,10 @@
 ## Interface: 11302
 ## Title: SpellCalc
 ## Author: coolmodi
-## Version: 0.5.1
+## Version: 0.5.2
 ## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
-## OptionalDeps: Dominos, ElvUI
+## OptionalDeps: Dominos, ElvUI, Bartender4
 
 libs/SettingsCreator.lua
 
