@@ -6,6 +6,10 @@ local SPELL_TYPE = _addon.SPELL_TYPE;
 local TTC_LABEL = "|cFFAAAAFF";
 local TTC_DEFAULT = "|cFFEEEEEE";
 
+local function Round(f)
+    return math.floor(f + 0.5);
+end
+
 --- Add single line to tooltip
 -- @param label The line label (optional)
 -- @param text The line text
@@ -80,7 +84,7 @@ local function AppendCoefData(calcData, effectData)
         elseif effectData.charges and effectData.charges > 0 then
             fullPower = fullPower * effectData.charges;
         end
-        SingleLine(L["TT_POWER"], ("%d (of %d)"):format(fullPower, effectData.spellPower));
+        SingleLine(L["TT_POWER"], ("%d (of %d)"):format(Round(fullPower), effectData.spellPower));
     end
 end
 
@@ -123,9 +127,9 @@ local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
 
     if SpellCalc_settings.ttToOom and effectData.doneToOom > 0 then
         if showTime then
-            SingleLine(L["TT_UNTILOOM_"..unitPart], ("%d (%.1fs, %.1f casts)"):format(effectData.doneToOom, calcData.timeToOom, calcData.castsToOom));
+            SingleLine(L["TT_UNTILOOM_"..unitPart], ("%d (%.1fs, %.1f casts)"):format(Round(effectData.doneToOom), calcData.timeToOom, calcData.castsToOom));
         else
-            SingleLine(L["TT_UNTILOOM_"..unitPart], math.floor(effectData.doneToOom + 0.5));
+            SingleLine(L["TT_UNTILOOM_"..unitPart], Round(effectData.doneToOom));
         end
     end
 
@@ -135,7 +139,7 @@ local function AppendEfficiency(calcData, effectNum, isHeal, showTime)
         SingleLine(L["TT_EFFCOST"], ("%.1f"):format(effectData.effCostTHPS));
         if effectData.perManaTHPS > 0 then
             SingleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(effectData.perManaTHPS));
-            SingleLine(L["TT_UNTILOOM_"..unitPart], ("%d (%ds)"):format(effectData.doneToOomTHPS, effectData.timeToOomTHPS));
+            SingleLine(L["TT_UNTILOOM_"..unitPart], ("%d (%ds)"):format(Round(effectData.doneToOomTHPS), effectData.timeToOomTHPS));
         end
     end
 end
@@ -152,24 +156,24 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
     if SpellCalc_settings.ttHit then
         if effectData.hitMax > 0 then
             if SpellCalc_settings.ttAverages then
-                SingleLine(unitString, ("%d - %d (%d)"):format(effectData.hitMin, effectData.hitMax, effectData.hitAvg));
+                SingleLine(unitString, ("%d - %d (%d)"):format(effectData.hitMin, effectData.hitMax, Round(effectData.hitAvg)));
             else
                 SingleLine(unitString, ("%d - %d"):format(effectData.hitMin, effectData.hitMax));
             end
         else
-            SingleLine(unitString, math.floor(effectData.hitAvg + 0.5));
+            SingleLine(unitString, Round(effectData.hitAvg));
         end
     end
 
     if SpellCalc_settings.ttCrit and calcData.critChance > 0 then
         if effectData.critMax > 0 then
             if SpellCalc_settings.ttAverages then
-                DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(effectData.critMin, effectData.critMax, effectData.critAvg), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+                DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(effectData.critMin, effectData.critMax, Round(effectData.critAvg)), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
             else
                 DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(effectData.critMin, effectData.critMax), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
             end
         else
-            DoubleLine(L["TT_CRITICAL"], math.floor(effectData.critAvg + 0.5), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+            DoubleLine(L["TT_CRITICAL"], Round(effectData.critAvg), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
         end
     end
 
@@ -196,7 +200,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
     local unitPart = isHeal and "HEAL" or "DAMAGE";
 
     if SpellCalc_settings.ttHit then
-        SingleLine(unitString, ("%dx %.1f | %d total"):format(effectData.ticks, effectData.perTick, effectData.allTicks));
+        SingleLine(unitString, ("%dx %.1f | %d total"):format(effectData.ticks, effectData.perTick, Round(effectData.allTicks)));
     end
 
     if SpellCalc_settings.ttCrit and calcData.critChance > 0 and effectData.perTickCrit > 0 then
@@ -211,7 +215,7 @@ local function AppendDurationEffect(calcData, effectNum, isHeal, spellBaseInfo)
 
     if SpellCalc_settings.ttPerSecond then
         if not spellBaseInfo.isChannel then
-            DoubleLine(L["TT_PERSEC_"..unitPart], math.floor(effectData.perSecond + 0.5), L["TT_PERSECDUR_"..unitPart], ("%.1f"):format(effectData.perSecondDuration));
+            DoubleLine(L["TT_PERSEC_"..unitPart], Round(effectData.perSecond), L["TT_PERSECDUR_"..unitPart], ("%.1f"):format(effectData.perSecondDuration));
         else
             SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(effectData.perSecond));
         end
@@ -228,7 +232,7 @@ local function AppendDmgShieldEffect(calcData, effectNum)
 
     if SpellCalc_settings.ttHit then
         if effectData.charges > 0 then
-            SingleLine(L["TT_DAMAGE"], ("%dx %d | %d total"):format(effectData.charges, effectData.perCharge, effectData.hitAvg));
+            SingleLine(L["TT_DAMAGE"], ("%dx %d | %d total"):format(effectData.charges, Round(effectData.perCharge), Round(effectData.hitAvg)));
         else
             SingleLine(L["TT_DAMAGE"], ("%.1f"):format(effectData.perCharge));
         end
@@ -252,16 +256,16 @@ local function AppendCombinedEffect(calcedSpell)
 
     if SpellCalc_settings.ttAverages then
         if combData.hitAvg ~= combData.hitAvgSpam then
-            DoubleLine(L["TT_COMB_AVG_HIT"], math.floor(combData.hitAvg + 0.5), L["TT_COMB_AVG_HIT_SPAM"], math.floor(combData.hitAvgSpam + 0.5));
+            DoubleLine(L["TT_COMB_AVG_HIT"], Round(combData.hitAvg), L["TT_COMB_AVG_HIT_SPAM"], Round(combData.hitAvgSpam));
         else
-            SingleLine(L["TT_COMB_AVG_HIT"], math.floor(combData.hitAvg + 0.5));
+            SingleLine(L["TT_COMB_AVG_HIT"], Round(combData.hitAvg));
         end
 
         if SpellCalc_settings.ttCrit then
             if combData.critAvg ~= combData.critAvgSpam then
-                DoubleLine(L["TT_COMB_AVG_CRIT"], math.floor(combData.critAvg + 0.5), L["TT_COMB_AVG_CRIT_SPAM"], math.floor(combData.critAvgSpam + 0.5));
+                DoubleLine(L["TT_COMB_AVG_CRIT"], Round(combData.critAvg), L["TT_COMB_AVG_CRIT_SPAM"], Round(combData.critAvgSpam));
             else
-                SingleLine(L["TT_COMB_AVG_CRIT"], math.floor(combData.critAvg + 0.5));
+                SingleLine(L["TT_COMB_AVG_CRIT"], Round(combData.critAvg));
             end
         end
     end
@@ -283,7 +287,7 @@ local function AppendCombinedEffect(calcedSpell)
     end
 
     if SpellCalc_settings.ttPerMana then
-        DoubleLine(nil, nil, L["TT_COMB_UNTILOOM_"..unitPart], math.floor(combData.doneToOomSpam + 0.5));
+        DoubleLine(nil, nil, L["TT_COMB_UNTILOOM_"..unitPart], Round(combData.doneToOomSpam));
     end
 end
 
