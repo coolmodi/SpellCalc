@@ -95,7 +95,7 @@ function _addon:SetupSettings()
 	settings:MakeHeading(L["SETTINGS_HEAD_TARGET"]);
 
 	settings:MakeSliderOption("defaultTargetLvlOffset", L["SETTINGS_TAR_DEFLEVEL_LABEL"], nil, -3, 13, 1);
-	settings:MakeCheckboxOption("ttShowBuffs", L["SETTINGS_TT_USECURRENT_LABEL"], L["SETTINGS_TT_USECURRENT_TT"]);
+	settings:MakeCheckboxOption("useCurrentTarget", L["SETTINGS_TT_USECURRENT_LABEL"], L["SETTINGS_TT_USECURRENT_TT"]);
 
 	settings:MakeHeading(L["SETTINGS_HEAD_RESISTANCE"]);
 
