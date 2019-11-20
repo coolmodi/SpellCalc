@@ -205,21 +205,23 @@ function _addon:CalcSpell(spellId)
         end
     end
 
+    local cmbonus = calcData.critMult - 1;
+
     if stats.critMult.school[spellBaseInfo.school].val > 0 then
-        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * stats.critMult.school[spellBaseInfo.school].val/100;
+        calcData.critMult = calcData.critMult + cmbonus * stats.critMult.school[spellBaseInfo.school].val/100;
         for _, buffName in pairs(stats.critMult.school[spellBaseInfo.school].buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
 
     if stats.critMult.spell[name] ~= nil then
-        calcData.critMult = calcData.critMult + (calcData.critMult - 1) * stats.critMult.spell[name].val/100;
+        calcData.critMult = calcData.critMult + cmbonus * stats.critMult.spell[name].val/100;
         for _, buffName in pairs(stats.critMult.spell[name].buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end
 
-    if stats.ignite.val > 0 then
+    if stats.ignite.val > 0 and spellBaseInfo.school == self.SCHOOL.FIRE then
         calcData.critMult = calcData.critMult * (1 + stats.ignite.val/100);
         for _, buffName in pairs(stats.ignite.buffs) do
             table.insert(calcData.buffs, buffName);
