@@ -165,15 +165,15 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
 
     local effPowerUse = effectData.isHeal and et.effectivePower or et.effectivePower * effectMod;
 
-    et.hitMin = math.floor((effectData.min + levelBonus) * effectMod + effPowerUse + 0.5);
+    et.hitMin = (effectData.min + levelBonus) * effectMod + effPowerUse;
     et.hitAvg = et.hitMin;
-    et.critMin = math.floor(et.hitMin * calcData.critMult + 0.5);
+    et.critMin = et.hitMin * calcData.critMult;
     et.critAvg = et.critMin;
 
     if effectData.max then
-        et.hitMax = math.floor((effectData.max + levelBonus) * effectMod + effPowerUse + 0.5);
+        et.hitMax = (effectData.max + levelBonus) * effectMod + effPowerUse;
         et.hitAvg = (et.hitMin + et.hitMax) / 2;
-        et.critMax = math.ceil(et.hitMax * calcData.critMult);
+        et.critMax = et.hitMax * calcData.critMult;
         et.critAvg = (et.critMin + et.critMax) / 2;
     end
 
@@ -250,7 +250,7 @@ function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, effec
 
     local effPowerUse = effectData.isHeal and et.effectivePower or et.effectivePower * effectMod;
 
-    et.perCharge = math.floor((effectData.min + levelBonus) * effectMod + effPowerUse + 0.5);
+    et.perCharge = (effectData.min + levelBonus) * effectMod + effPowerUse;
     et.charges = effectData.charges;
     et.hitAvg = et.perCharge * et.charges;
     et.avgAfterMitigation = et.hitAvg * calcData.hitChance * (1 - calcData.avgResistMod);
@@ -297,7 +297,7 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
     -- PTSA hackfixes :/
     if spellBaseInfo.forceCanCrit and calcData.critChance > 0 then
         et.perTickNormal = et.perTick;
-        et.perTickCrit = math.floor(et.perTick * calcData.critMult + 0.5);
+        et.perTickCrit = et.perTick * calcData.critMult;
         et.perTick = et.perTick + (et.perTickCrit - et.perTick) * calcData.critChance/100;
     end
 
