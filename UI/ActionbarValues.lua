@@ -61,6 +61,9 @@ local function UpdateButtons(self, diff)
                 elseif effectData.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1].perCharge + 0.5));
                 else
+                    if directKey == "critAvg" and calcedSpell.critChance == 0 then
+                        directKey = "hitAvg";
+                    end
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1][directKey] + 0.5));
                 end
             else
