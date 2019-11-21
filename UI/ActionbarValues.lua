@@ -154,8 +154,23 @@ function _addon:SetupActionbars()
 
     elseif _G["BT4Button1"] ~= nil then
         self:PrintDebug("Add bartender4 support");
+        -- BT4 doesn't even create disabled bars and buttons, only add created ones now
         for i = 1, 120 do
-            AddStringToButton(_G["BT4Button"..i], i);
+            if _G["BT4Button"..i] then
+                AddStringToButton(_G["BT4Button"..i], i);
+            end
+        end
+        -- Try to hook LibActionButton create function to add buttons created later
+        if LibStub then
+            local LAB10 = LibStub("LibActionButton-1.0");
+            if LAB10 then
+                hooksecurefunc(LAB10, "CreateButton", function(_, slotId, name)
+                    if name:find("BT4Button") then
+                        self:PrintDebug("Add bartender4 button " .. name);
+                        AddStringToButton(_G[name], slotId);
+                    end
+                end);
+            end
         end
 
     elseif _G["ActionButton1"] ~= nil then
@@ -170,7 +185,7 @@ function _addon:SetupActionbars()
     end
 
     frame:SetScript("OnUpdate", UpdateButtons);
-    
+
     for i = 1, 120 do
         self:ActionbarSlotUpdate(i);
     end
