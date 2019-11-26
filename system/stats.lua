@@ -105,6 +105,12 @@ _addon.stats = {
     earthfuryReturn = {val=0, buffs={}},
     mageNWRProc = {},
     druidNaturesGrace = {val=0, buffs={}},
+
+    attackSpeed = {
+        mh = 0,
+        oh = 0,
+        r = 0
+    }
 };
 
 --- Update spell power stats from API
@@ -173,6 +179,17 @@ function _addon:UpdateStats()
     self.lastChange = time();
 end
 
+function _addon:UpdateAttackSpeeds()
+    local m,o = UnitAttackSpeed("player");
+    local r = UnitRangedDamage("player");
+
+    self.stats.attackSpeed.mh = m and m or 0;
+    self.stats.attackSpeed.oh = o and o or 0;
+    self.stats.attackSpeed.r = r and r or 0;
+
+    _addon:PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mh, self.stats.attackSpeed.oh, self.stats.attackSpeed.r));
+end
+
 -- Update everything manually
 function _addon:FullUpdate()
     self:PrintDebug("Full update");
@@ -183,5 +200,6 @@ function _addon:FullUpdate()
     self:UpdateBuffs();
     self:UpdateTalents();
     self:UpdateItems();
-    self:UpdateTarget()
+    self:UpdateTarget();
+    self:UpdateAttackSpeeds();
 end

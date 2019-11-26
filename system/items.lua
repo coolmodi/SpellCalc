@@ -24,6 +24,11 @@ local retryFrame = CreateFrame("Frame");
 local retryTimer = 0;
 local items = {};
 local sets = {};
+local weapontypes = {
+    mh = nil,
+    oh = nil,
+    r = nil
+};
 
 --- Apply or remove effect for destination
 -- @param value The effect value, negative to remove buff
@@ -128,13 +133,24 @@ end
 local function EquipItem(itemId, slotId)
     _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
     local itemData = _addon.itemData[itemId];
-    local itemName = GetItemInfo(itemId);
+    local itemName, _, _, _, _, _, itemSubType = GetItemInfo(itemId);
     local setId = _addon.setItemData[itemId];
 
     if itemName == nil then
         _addon:PrintDebug("Item " .. itemId .. " name unknown, trigger retry!");
         retryFrame:SetScript("OnUpdate", RetryUpdate);
         return;
+    end
+
+    if slotId >= 16 and slotId <= 18 then
+        _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubType);
+        if slotId == 16 then
+            weapontypes.mh = itemSubType;
+        elseif slotId == 17 then
+            weapontypes.oh = itemSubType;
+        elseif slotId == 18 then
+            weapontypes.r = itemSubType;
+        end
     end
 
     if itemData then
@@ -182,6 +198,18 @@ local function UnequipItem(slotId)
     end
 
     items[slotId] = nil;
+
+    if slotId >= 16 and slotId <= 18 then
+        _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now unarmed");
+        if slotId == 16 then
+            weapontypes.mh = nil;
+        elseif slotId == 17 then
+            weapontypes.oh = nil;
+        elseif slotId == 18 then
+            weapontypes.r = nil;
+        end
+    end
+
     _addon:PrintDebug("Slot " .. slotId .. " empty");
 end
 
@@ -221,4 +249,17 @@ function _addon:UpdateItems()
         end
 
     end
+end
+
+--- Return true if a two handed weapon is in the main hand slot
+function _addon:IsTwoHandEquipped()
+    if weapontypes.mh == self.WEAPON_TYPES.FISHING_POLE
+    or weapontypes.mh == self.WEAPON_TYPES.POLEARM
+    or weapontypes.mh == self.WEAPON_TYPES.STAVE
+    or weapontypes.mh == self.WEAPON_TYPES.AXE_2H
+    or weapontypes.mh == self.WEAPON_TYPES.MACE_2H
+    or weapontypes.mh == self.WEAPON_TYPES.SWORD_2H then
+        return true;
+    end
+    return false;
 end

@@ -72,6 +72,13 @@ function handlers.ACTIONBAR_SLOT_CHANGED(slot)
     _addon:ActionbarSlotUpdate(slot)
 end
 
+function handlers.UNIT_ATTACK_SPEED(unit)
+    if unit ~= "player" then
+        return;
+    end
+    _addon:UpdateAttackSpeeds();
+end
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)

@@ -76,3 +76,12 @@ _addon.BUFF_CONDITIONS = {
 }
 
 _addon.JUDGEMENT_ID = 20271;
+
+_addon.WEAPON_TYPES = {
+    FISHING_POLE = GetSpellInfo(7738), -- TODO: check this
+    POLEARM = GetSpellInfo(200),
+    STAVE = GetSpellInfo(227),
+    AXE_2H = GetSpellInfo(197),
+    MACE_2H = GetSpellInfo(199),
+    SWORD_2H = GetSpellInfo(202)
+}
