@@ -45,8 +45,8 @@ system/stats.lua
 system/buffs.lua
 system/items.lua
 system/target.lua
-core/spell.lua
 core/core.lua
+core/spell.lua
 
 UI/TooltipDisplay.lua
 UI/StatDisplay.lua

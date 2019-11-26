@@ -6,22 +6,18 @@ local SPELL_TYPE = _addon.SPELL_TYPE;
 _addon.calcedSpells = {};
 _addon.lastChange = time();
 
-local _, class = UnitClass("player");
+local typeFuncs = {
+    baseMembers = {},
+    effMembers = {},
+    setCrit = {},
+    mitigate = {},
+    spellcost = {},
+    spellcostZero = {},
+    effCalc = {}
+}
+_addon.typeFuncs = typeFuncs;
+
 local stats = _addon.stats;
-
-local HEALING_TOUCH = GetSpellInfo(5186);
-local HEALING_WAVE = GetSpellInfo(332);
-local LESSER_HEALING_WAVE = GetSpellInfo(8004);
-
---- Return true if spell needs mitigation calculation
--- @param spellType The base spell type
--- @param primaryType The primary effect type, required
-local function SpellCanMitigate(spellType, primaryType)
-    if primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DOT or primaryType == SPELL_EFFECT_TYPE.DMG_SHIELD then
-        return true;
-    end
-    return false;
-end
 
 --- Make a new table to store calculated spell data
 -- @param spellType The base spell type
@@ -38,20 +34,10 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
         updated = 0 -- Last update time
     };
 
-    if spellType == SPELL_TYPE.SPELL then
-        st.baseCost = 0;
-        st.effectiveCost = 0;
-        st.castsToOom = 0;
-        st.timeToOom = 0;
-    end
+    st.baseCost = 0;
+    st.effectiveCost = 0;
 
-    if SpellCanMitigate(spellType, primaryType) then
-        st.baseHitChance = 0; -- The base hit chance dpending on level difference
-        st.hitChance = 0; -- Hit chance after modifiers (mult)
-        st.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
-        st.avgResistMod = 0; -- The average dmg resisted modifier (mult)
-        st.binaryHitLoss = 0; -- Hit chance lost due to binary spells and resistance
-    end
+    typeFuncs.baseMembers[spellType](st, primaryType, secondaryType);
 
     local curType = primaryType;
     for i = 1, 2, 1 do
@@ -70,15 +56,8 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
         et.spellPower = 0; -- Spell power this effect uses
         et.effectiveSpCoef = 0; -- The effective coef after penalty, if it has one
         et.effectivePower = 0; -- The power used
-        
-        if spellType == SPELL_TYPE.SPELL then
-            _addon:AddSpellCalculationMembers(et, curType);
-        end
-    end
 
-    if spellType == SPELL_TYPE.SPELL then
-        -- Spells like holy fire or regrowth
-        _addon:ConditionalAddSpellMembers(st, primaryType, secondaryType);
+        typeFuncs.effMembers[spellType](et, curType);
     end
 
     return st;
@@ -191,12 +170,7 @@ function _addon:CalcSpell(spellId)
 
     -- Crit
 
-    if spellType == SPELL_TYPE.SPELL then
-        calcData.critMult = 1.5;
-        calcData.critChance = _addon:GetSpellSchoolCritChance(spellBaseInfo, calcData.buffs);
-    else
-        -- NYI
-    end
+    typeFuncs.setCrit[spellType](calcData, spellBaseInfo);
 
     if calcData.critChance > 0 and stats.critMods.spell[name] ~= nil then
         calcData.critChance = calcData.critChance + stats.critMods.spell[name].val;
@@ -230,40 +204,7 @@ function _addon:CalcSpell(spellId)
 
     -- Mitigation
 
-    if spellBaseInfo.school ~= _addon.SCHOOL.PHYSICAL then
-        calcData.avgResistMod = _addon:GetSpellAvgResist(spellBaseInfo.school);
-    end
-
-    if calcData.hitChance ~= nil then
-        if spellType == SPELL_TYPE.SPELL then
-            calcData.baseHitChance = _addon:GetSpellHitChance();
-            calcData.hitChanceBonus = _addon:GetSpellHitBonus(spellBaseInfo.school, calcData.buffs);
-
-            if stats.hitMods.spell[name] ~= nil then
-                calcData.hitChanceBonus = calcData.hitChanceBonus + stats.hitMods.spell[name].val;
-                for _, buffName in pairs(stats.hitMods.spell[name].buffs) do
-                    table.insert(calcData.buffs, buffName);
-                end
-            end
-            
-            calcData.hitChance = calcData.baseHitChance + calcData.hitChanceBonus;
-
-            if spellBaseInfo.isBinary then
-                calcData.binaryHitLoss = calcData.hitChance - (calcData.hitChance * (1 - calcData.avgResistMod));
-                calcData.hitChance = calcData.hitChance - calcData.binaryHitLoss;
-            end
-
-            if calcData.hitChance > 99 then
-                calcData.hitChance = 99;
-            elseif calcData.hitChance < 1 then
-                calcData.hitChance = 1;
-            end
-
-            calcData.hitChance = calcData.hitChance/100;
-        else
-            -- NYI
-        end
-    end
+    typeFuncs.mitigate[spellType](calcData, spellBaseInfo, name);
 
     --------------------------
     -- Cast time mods
@@ -294,64 +235,15 @@ function _addon:CalcSpell(spellId)
     -- Ressource stuff
 
     calcData.baseCost = spellCost;
-    
+
     if spellCost == 0 then
-        calcData.effectiveCost = -99999;
-        if spellType == SPELL_TYPE.SPELL then
-            calcData.castsToOom = -1;
-            calcData.timeToOom = -1;
-        end
+        calcData.effectiveCost = -99999; -- TODO make this 0
+        typeFuncs.spellcostZero[spellType](calcData);
     else
-        if spellType == SPELL_TYPE.SPELL then
-            calcData.effectiveCost = spellCost - effCastTime * (stats.manaReg + stats.mp5.val/5);
-
-            if stats.clearCastChance.val > 0 or (stats.clearCastChanceDmg.val > 0 and not spellRankInfo.effects[1].isHeal) then
-                local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
-                -- TODO: Don't think this needs a successful hit, but not sure still, people never really know :D
-                calcData.effectiveCost = calcData.effectiveCost - spellCost * (ccc.val/100);
-                for _, buffName in pairs(ccc.buffs) do
-                    table.insert(calcData.buffs, buffName);
-                end
-            end
-
-            if stats.illumination.val > 0 then
-                if (class == "PALADIN" and spellRankInfo.effects[1].isHeal)
-                or (class == "MAGE" and (spellBaseInfo.school == self.SCHOOL.FIRE or spellBaseInfo.school == self.SCHOOL.FROST))
-                or (class == "DRUID" and name == HEALING_TOUCH) then
-                    calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.illumination.val/100) * (calcData.critChance/100);
-                    for _, buffName in pairs(stats.illumination.buffs) do
-                        table.insert(calcData.buffs, buffName);
-                    end
-                end
-            end
-
-            if stats.earthfuryReturn.val > 0 and (name == HEALING_WAVE or name == LESSER_HEALING_WAVE) then
-                calcData.effectiveCost = calcData.effectiveCost - spellCost * 0.0875;
-                for _, buffName in pairs(stats.earthfuryReturn.buffs) do
-                    table.insert(calcData.buffs, buffName);
-                end
-            end
-
-            -- TODO: remove this?
-            calcData.effMana = stats.mana;
-            if _addon.test_innervate then
-                -- Need to remove 20 sec of manaReg because we added it with the effective cost
-                calcData.effMana = calcData.effMana + (stats.baseManaReg * 80) - (20 * stats.manaReg);
-            end
-            if _addon.test_manapot then
-                calcData.effMana = calcData.effMana + _addon.test_manapot;
-            end
-
-            calcData.castsToOom = calcData.effMana / calcData.effectiveCost;
-            if SpellCalc_settings.useRealToOom then
-                calcData.castsToOom = math.floor(calcData.castsToOom);
-            end
-            calcData.timeToOom = calcData.castsToOom * effCastTime;
-        else
-            -- NYI
-        end
+        calcData.effectiveCost = spellCost;
+        typeFuncs.spellcost[spellType](calcData, spellCost, effCastTime, spellBaseInfo, spellRankInfo, name);
     end
-    
+
     --------------------------
     -- Flat mods
 
@@ -388,12 +280,10 @@ function _addon:CalcSpell(spellId)
                 et.spellPower = stats.spellPower[spellBaseInfo.school];
             end
             et.spellPower = extraSp + et.spellPower;
-        else
-            -- NYI
         end
 
         -- Effective power
-        et.effectiveSpCoef = spellRankInfo.effects[i].coef;
+        et.effectiveSpCoef = spellRankInfo.effects[i].coef and spellRankInfo.effects[i].coef or 0;
         et.effectivePower = et.spellPower * et.effectiveSpCoef + flatMod;
 
         --------------------------
@@ -403,13 +293,7 @@ function _addon:CalcSpell(spellId)
         --------------------------
         -- Effect values
 
-        if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
-            _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime, name);
-        elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
-            _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime)
-        else -- HoT or DoT (also channeled)
-            _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime, spellBaseInfo, name)
-        end
+        typeFuncs.effCalc[spellType](calcData, et, spellRankInfo, spellRankInfo.effects[i], effectMod, effCastTime, spellBaseInfo, name);
     end
 
     -- Combined data for spells like Holy Fire or Immolate

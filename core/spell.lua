@@ -1,22 +1,56 @@
 local _, _addon = ...;
 
+local TYPE = _addon.SPELL_TYPE.SPELL;
+local _, class = UnitClass("player");
 local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
+
 local SHADOW_BOLT = GetSpellInfo(686);
+local HEALING_TOUCH = GetSpellInfo(5186);
+local HEALING_WAVE = GetSpellInfo(332);
+local LESSER_HEALING_WAVE = GetSpellInfo(8004);
+
+local stats = _addon.stats;
+
+--- Get base spell crit chance for spell school
+-- @param spellBaseInfo The spell base info table
+-- @param buffTable The calculation table's buff table
+function GetSpellSchoolCritChance(spellBaseInfo, buffTable)
+    if spellBaseInfo.isAbsorbShield or spellBaseInfo.isDmgShield then
+        return 0;
+    end
+
+    local chance = stats.spellCrit[spellBaseInfo.school];
+
+    chance = chance + stats.critMods.school[spellBaseInfo.school].val;
+    for _, buffName in pairs(stats.critMods.school[spellBaseInfo.school].buffs) do
+        table.insert(buffTable, buffName);
+    end
+
+    return chance;
+end
+
+--- Set crit chance and mult
+-- @param ct the calculation table
+-- @param spellBaseInfo The spell base info table
+local function SetCrit(ct, spellBaseInfo)
+    ct.critMult = 1.5;
+    ct.critChance = GetSpellSchoolCritChance(spellBaseInfo, ct.buffs);
+end
 
 --- Get the average dmg resisted by target due to resistance after penetration
 -- @param school The spell school (API enumeration)
-function _addon:GetSpellAvgResist(school)
-    local tData = self.target;
+function GetSpellAvgResist(school)
+    local tData = _addon.target;
     local pLevel = UnitLevel("player");
     local baseRes = tData.resistance[school];
-    local effectiveRes = baseRes + math.max((tData.level - pLevel)*5, 0) - math.min(baseRes, self.stats.spellPen[school].val);
+    local effectiveRes = baseRes + math.max((tData.level - pLevel)*5, 0) - math.min(baseRes, stats.spellPen[school].val);
     return math.min(0.75 * (effectiveRes / math.max(pLevel * 5, 100)), 0.75);
 end
 
 --- Get level based spell hit chance against the current target
 -- @return The hit chance in percent
-function _addon:GetSpellHitChance()
-    local tData = self.target;
+function GetSpellHitChance()
+    local tData = _addon.target;
 
     if tData.levelDiff < -2 then
         return 99;
@@ -37,30 +71,10 @@ function _addon:GetSpellHitChance()
     return 20;
 end
 
---- Get base spell crit chance for spell school
--- @param spellBaseInfo The spell base info table
--- @param buffTable The calculation table's buff table
-function _addon:GetSpellSchoolCritChance(spellBaseInfo, buffTable)
-    if spellBaseInfo.isAbsorbShield or spellBaseInfo.isDmgShield then
-        return 0;
-    end
-
-    local stats = self.stats;
-    local chance = stats.spellCrit[spellBaseInfo.school];
-
-    chance = chance + stats.critMods.school[spellBaseInfo.school].val;
-    for _, buffName in pairs(stats.critMods.school[spellBaseInfo.school].buffs) do
-        table.insert(buffTable, buffName);
-    end
-
-    return chance;
-end
-
 --- Get spell hit bonus from gear and talents
 -- @param school The spell school (API enumeration)
 -- @param buffTable The calculation table's buff table
-function _addon:GetSpellHitBonus(school, buffTable)
-    local stats = self.stats;
+function GetSpellHitBonus(school, buffTable)
     local hitChanceBonus = 0;
 
     hitChanceBonus = hitChanceBonus + stats.hitMods.school[school].val;
@@ -76,10 +90,90 @@ function _addon:GetSpellHitBonus(school, buffTable)
     return hitChanceBonus;
 end
 
+--- Calculate mitigation variables
+-- @param calcData the calculation table
+-- @param spellBaseInfo The spell base info table
+-- @param spellName The spell's name
+local function Mitigate(calcData, spellBaseInfo, spellName)
+    calcData.avgResistMod = GetSpellAvgResist(spellBaseInfo.school);
+
+    if calcData.hitChance ~= nil then
+        calcData.baseHitChance = GetSpellHitChance();
+        calcData.hitChanceBonus = GetSpellHitBonus(spellBaseInfo.school, calcData.buffs);
+
+        if stats.hitMods.spell[spellName] ~= nil then
+            calcData.hitChanceBonus = calcData.hitChanceBonus + stats.hitMods.spell[spellName].val;
+            for _, buffName in pairs(stats.hitMods.spell[spellName].buffs) do
+                table.insert(calcData.buffs, buffName);
+            end
+        end
+
+        calcData.hitChance = calcData.baseHitChance + calcData.hitChanceBonus;
+
+        if spellBaseInfo.isBinary then
+            calcData.binaryHitLoss = calcData.hitChance - (calcData.hitChance * (1 - calcData.avgResistMod));
+            calcData.hitChance = calcData.hitChance - calcData.binaryHitLoss;
+        end
+
+        if calcData.hitChance > 99 then
+            calcData.hitChance = 99;
+        elseif calcData.hitChance < 1 then
+            calcData.hitChance = 1;
+        end
+
+        calcData.hitChance = calcData.hitChance/100;
+    end
+end
+
+--- Is the spell something like Holy Fire
+-- @param primaryType The primary effect type
+-- @param secondaryType The secondary effect type
+local function IsCombinedSpell(primaryType, secondaryType)
+    if (primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DIRECT_HEAL)
+    and (secondaryType == SPELL_EFFECT_TYPE.DOT or secondaryType == SPELL_EFFECT_TYPE.HOT) then
+        return true;
+    end
+    return false;
+end
+
+--- Add vars for mitigation to calc table if needed
+-- @param ct the calculation table
+-- @param primaryType The primary effect type
+-- @param primaryType The secondary effect type
+function AddBaseMembers(ct, primaryType, secondaryType)
+    ct.castsToOom = 0;
+    ct.timeToOom = 0;
+
+    if primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DOT or primaryType == SPELL_EFFECT_TYPE.DMG_SHIELD then
+        ct.baseHitChance = 0; -- The base hit chance dpending on level difference
+        ct.hitChance = 0; -- Hit chance after modifiers (mult)
+        ct.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
+        ct.avgResistMod = 0; -- The average dmg resisted modifier (mult)
+        ct.binaryHitLoss = 0; -- Hit chance lost due to binary spells and resistance
+    end
+
+    if IsCombinedSpell(primaryType, secondaryType) then
+        ct.perCastData = {
+            hitAvg = 0, -- The total done per hit full duration
+            critAvg = 0, -- The total done if primary crits full duration
+            perSecond = 0, -- Per second for done per cast time when full duration is used (DPSC)
+            perMana = 0, -- Unit per mana when full duration used
+    
+            -- Those values really only are useful for holy fire, fireball and pyroblast I guess
+            ticksWhileCasting = 0, -- Ticks that happen while casting next spell
+            hitAvgSpam = 0, -- Avg if spammed
+            critAvgSpam = 0,
+            perSecondSpam = 0, -- Per second done when spammed
+            perManaSpam = 0, -- Per mana when spammed
+            doneToOomSpam = 0, -- Done until oom if spammed
+        };
+    end
+end
+
 --- Adds table members for spell calculation to the calculation table
 -- @param et The subtable for the effect
 -- @param effectType The SPELL_EFFECT_TYPE
-function _addon:AddSpellCalculationMembers(et, effectType)
+function AddSpellCalculationMembers(et, effectType)
     if effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
         et.hitMin = 0; -- Minimum hit
         et.hitMax = 0; -- Maximum hit
@@ -113,39 +207,65 @@ function _addon:AddSpellCalculationMembers(et, effectType)
     et.perMana = 0; -- Mana per unit done PER AVERAGE CAST
 end
 
---- Is the spell something like Holy Fire
--- @param primaryType The primary effect type, required
--- @param secondaryType The secondary effect type, optional
-local function IsCombinedSpell(primaryType, secondaryType)
-    if (primaryType == SPELL_EFFECT_TYPE.DIRECT_DMG or primaryType == SPELL_EFFECT_TYPE.DIRECT_HEAL)
-    and (secondaryType == SPELL_EFFECT_TYPE.DOT or secondaryType == SPELL_EFFECT_TYPE.HOT) then
-        return true;
-    end
-    return false;
+--- Set vars for zero spell cost spells
+-- @param calcData The calculation table
+local function SetNoSpellCost(calcData)
+    calcData.castsToOom = -1;
+    calcData.timeToOom = -1;
 end
 
---- Adds table members for combined spell calculation to the calculation table if needed
--- @param st The base spell calculation table
--- @param primaryType The primary effect type, required
--- @param secondaryType The secondary effect type, optional
-function _addon:ConditionalAddSpellMembers(st, primaryType, secondaryType)
-    if not IsCombinedSpell(primaryType, secondaryType) then
-        return;
-    end
-    st.perCastData = {
-        hitAvg = 0, -- The total done per hit full duration
-        critAvg = 0, -- The total done if primary crits full duration
-        perSecond = 0, -- Per second for done per cast time when full duration is used (DPSC)
-        perMana = 0, -- Unit per mana when full duration used
+--- Calculate spell cost related things
+-- @param calcData The calculation table
+-- @param spellCost The base spell cost
+-- @param effCastTime The effective casting time
+-- @param spellBaseInfo The spell base info table
+-- @param spellRankInfo The rank info table
+-- @param spellName The spell's name
+local function HandleSpellCost(calcData, spellCost, effCastTime, spellBaseInfo, spellRankInfo, spellName)
+    calcData.effectiveCost = spellCost - effCastTime * (stats.manaReg + stats.mp5.val/5);
 
-        -- Those values really only are useful for holy fire, fireball and pyroblast I guess
-        ticksWhileCasting = 0, -- Ticks that happen while casting next spell
-        hitAvgSpam = 0, -- Avg if spammed
-        critAvgSpam = 0,
-        perSecondSpam = 0, -- Per second done when spammed
-        perManaSpam = 0, -- Per mana when spammed
-        doneToOomSpam = 0, -- Done until oom if spammed
-    };
+    if stats.clearCastChance.val > 0 or (stats.clearCastChanceDmg.val > 0 and not spellRankInfo.effects[1].isHeal) then
+        local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
+        -- TODO: Don't think this needs a successful hit, but not sure still, people never really know :D
+        calcData.effectiveCost = calcData.effectiveCost - spellCost * (ccc.val/100);
+        for _, buffName in pairs(ccc.buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
+    end
+
+    if stats.illumination.val > 0 then
+        if (class == "PALADIN" and spellRankInfo.effects[1].isHeal)
+        or (class == "MAGE" and (spellBaseInfo.school == _addon.SCHOOL.FIRE or spellBaseInfo.school == _addon.SCHOOL.FROST))
+        or (class == "DRUID" and spellName == HEALING_TOUCH) then
+            calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.illumination.val/100) * (calcData.critChance/100);
+            for _, buffName in pairs(stats.illumination.buffs) do
+                table.insert(calcData.buffs, buffName);
+            end
+        end
+    end
+
+    if stats.earthfuryReturn.val > 0 and (spellName == HEALING_WAVE or spellName == LESSER_HEALING_WAVE) then
+        calcData.effectiveCost = calcData.effectiveCost - spellCost * 0.0875;
+        for _, buffName in pairs(stats.earthfuryReturn.buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
+    end
+
+    -- TODO: remove this?
+    calcData.effMana = stats.mana;
+    if _addon.test_innervate then
+        -- Need to remove 20 sec of manaReg because we added it with the effective cost
+        calcData.effMana = calcData.effMana + (stats.baseManaReg * 80) - (20 * stats.manaReg);
+    end
+    if _addon.test_manapot then
+        calcData.effMana = calcData.effMana + _addon.test_manapot;
+    end
+
+    calcData.castsToOom = calcData.effMana / calcData.effectiveCost;
+    if SpellCalc_settings.useRealToOom then
+        calcData.castsToOom = math.floor(calcData.castsToOom);
+    end
+    calcData.timeToOom = calcData.castsToOom * effCastTime;
 end
 
 --- Calculate direct spell effect (e.g. Frostbolt or Healing Touch)
@@ -349,3 +469,30 @@ function _addon:CalculateSpellCombinedEffect(calcData, effectData, castTime)
         calcData.perCastData.doneToOomSpam = calcData[1].doneToOom + ticksPerCastToOom * calcData[2].perTick;
     end
 end
+
+--- Calculate effect values
+-- @param calcData The calculation table
+-- @param et The subtable of the effect
+-- @param spellRankInfo The spell rank info table
+-- @param effectData The effect data from spell data
+-- @param effectMod The talent/buff/gear modifier for the effect
+-- @param effCastTime Spell cast time (or channel duration)
+-- @param spellBaseInfo The spell base info table
+-- @param spellName The spell's name
+local function CalculateEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime, spellBaseInfo, name)
+    if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
+        _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime, name);
+    elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
+        _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime)
+    else -- HoT or DoT (also channeled)
+        _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime, spellBaseInfo, name)
+    end
+end
+
+_addon.typeFuncs.setCrit[TYPE] = SetCrit;
+_addon.typeFuncs.mitigate[TYPE] = Mitigate;
+_addon.typeFuncs.baseMembers[TYPE] = AddBaseMembers;
+_addon.typeFuncs.effMembers[TYPE] = AddSpellCalculationMembers;
+_addon.typeFuncs.spellcostZero[TYPE] = SetNoSpellCost;
+_addon.typeFuncs.spellcost[TYPE] = HandleSpellCost;
+_addon.typeFuncs.effCalc[TYPE] = CalculateEffect;
