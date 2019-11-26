@@ -47,6 +47,7 @@ system/items.lua
 system/target.lua
 core/core.lua
 core/spell.lua
+core/seal.lua
 
 UI/TooltipDisplay.lua
 UI/StatDisplay.lua

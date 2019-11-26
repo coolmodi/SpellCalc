@@ -342,6 +342,42 @@ local function AddSpellTooltip(calcedSpell, spellBaseInfo)
     end
 end
 
+--- Add tooltip for spell type spells
+-- @param calcedSpell The base calculation table for the spell
+-- @param spellBaseInfo The spell base info entry
+local function AddSealTooltip(calcedSpell, spellBaseInfo)
+    local effectData = calcedSpell[1];
+
+    local unitString = L["TT_DAMAGE"];
+    local unitPart = "DAMAGE";
+
+    if SpellCalc_settings.ttHit then
+        if effectData.hitMax > 0 then
+            if SpellCalc_settings.ttAverages then
+                SingleLine(unitString, ("%d - %d (%d)"):format(effectData.hitMin, effectData.hitMax, Round(effectData.hitAvg)));
+            else
+                SingleLine(unitString, ("%d - %d"):format(effectData.hitMin, effectData.hitMax));
+            end
+        else
+            SingleLine(unitString, ("%.1f"):format(effectData.hitAvg));
+        end
+    end
+
+    AppendCoefData(calcedSpell, effectData);
+    if SpellCalc_settings.ttResist and calcedSpell.avgResistMod > 0 then
+        SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResistMod*100));
+    end
+
+    if SpellCalc_settings.ttHit then
+        SingleLine("Hits over duration", ("%.1f"):format(effectData.triggerHits));
+        SingleLine("Dmg done over duration", ("%.1f"):format(effectData.avgTriggerHits));
+    end
+
+    if SpellCalc_settings.ttPerSecond then
+        SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(effectData.perSecond));
+    end
+end
+
 -- This happens for every spell tooltip using the stock tooltip object.
 -- Appends data if spell is known to the addon.
 GameTooltip:SetScript("OnTooltipSetSpell", function(self)
@@ -364,6 +400,8 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
 
     if calcedSpell.spellType == SPELL_TYPE.SPELL then
         AddSpellTooltip(calcedSpell, spellBaseInfo);
+    elseif calcedSpell.spellType == SPELL_TYPE.SEAL then
+        AddSealTooltip(calcedSpell, spellBaseInfo);
     end
 
     AppendBuffList(calcedSpell.buffs);

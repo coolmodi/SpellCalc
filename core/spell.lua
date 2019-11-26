@@ -39,7 +39,7 @@ end
 
 --- Get the average dmg resisted by target due to resistance after penetration
 -- @param school The spell school (API enumeration)
-function GetSpellAvgResist(school)
+function _addon:GetSpellAvgResist(school)
     local tData = _addon.target;
     local pLevel = UnitLevel("player");
     local baseRes = tData.resistance[school];
@@ -95,7 +95,7 @@ end
 -- @param spellBaseInfo The spell base info table
 -- @param spellName The spell's name
 local function Mitigate(calcData, spellBaseInfo, spellName)
-    calcData.avgResistMod = GetSpellAvgResist(spellBaseInfo.school);
+    calcData.avgResistMod = _addon:GetSpellAvgResist(spellBaseInfo.school);
 
     if calcData.hitChance ~= nil then
         calcData.baseHitChance = GetSpellHitChance();

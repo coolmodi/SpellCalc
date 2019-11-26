@@ -52,7 +52,8 @@ _addon.EFFECT_TYPE = {
 
 -- Spell types (What calculation rules to use)
 _addon.SPELL_TYPE = {
-    SPELL = 1
+    SPELL = 1,
+    SEAL = 2
 };
 
 -- Spell effect types (What calculation rules to use)
@@ -61,7 +62,10 @@ _addon.SPELL_EFFECT_TYPE = {
     DOT = 2,
     DMG_SHIELD = 3,
     DIRECT_HEAL = 4,
-    HOT = 5
+    HOT = 5,
+
+    SEAL_OF_RIGHTEOUSNES = 6,
+    SEAL_OF_COMMAND = 7
 };
 
 _addon.HEALING_CLASSES = {

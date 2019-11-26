@@ -111,7 +111,7 @@ function _addon:CalcSpell(spellId)
     local spellRankInfo = _addon.spellRankInfo[spellId];
     local costs = GetSpellPowerCost(spellId);
     local spellCost = 0;
-    local spellType = SPELL_TYPE.SPELL; -- PLACEHOLDER
+    local spellType = SPELL_TYPE.SPELL;
 
     if spellBaseInfo.isChannel then
         castTime = spellRankInfo.duration;
@@ -128,6 +128,10 @@ function _addon:CalcSpell(spellId)
 
     --------------------------
     -- Set effect data and types
+
+    if spellBaseInfo.isSeal then
+        spellType = SPELL_TYPE.SEAL;
+    end
 
     if spellType == SPELL_TYPE.SPELL then
         for i = 1, 2, 1 do
@@ -149,8 +153,12 @@ function _addon:CalcSpell(spellId)
                 end
             end
         end
-    else
-        -- NYI
+    elseif spellType == SPELL_TYPE.SEAL then
+        if spellBaseInfo.isSeal == "SOR" then
+            effectTypes[1] = SPELL_EFFECT_TYPE.SEAL_OF_RIGHTEOUSNES;
+        elseif spellBaseInfo.isSeal == "SOC" then
+            effectTypes[1] = SPELL_EFFECT_TYPE.SEAL_OF_COMMAND;
+        end
     end
 
     _addon:PrintDebug("Has " .. #spellRankInfo.effects .. " effects (" .. effectTypes[1] .. ", " .. tostring(effectTypes[2]) .. ")");
