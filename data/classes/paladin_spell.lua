@@ -29,6 +29,10 @@ _addon.spellBaseInfo = {
         school = 2,
         isSeal = "SOR",
     },
+    [GetSpellInfo(20375)] = { -- Seal of Command
+        school = 2,
+        isSeal = "SOC",
+    },
     [GetSpellInfo(20467)] = { -- Judgement of Command
         school = 2,
     },
@@ -511,6 +515,17 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20375] = { -- Seal of Command(Rank 1)
+        spellLevel = 20,
+        maxLevel = 28,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 70,
+                coef = 0.29,
+            },
+        }
+    },
     [20467] = { -- Judgement of Command(Rank 1)
         spellLevel = 20,
         maxLevel = 28,
@@ -535,6 +550,50 @@ _addon.spellRankInfo = {
                 isHeal = true,
                 min = 205,
                 coef = 0.4285,
+            },
+        }
+    },
+    [20915] = { -- Seal of Command(Rank 2)
+        spellLevel = 30,
+        maxLevel = 38,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 70,
+                coef = 0.29,
+            },
+        }
+    },
+    [20918] = { -- Seal of Command(Rank 3)
+        spellLevel = 40,
+        maxLevel = 48,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 70,
+                coef = 0.29,
+            },
+        }
+    },
+    [20919] = { -- Seal of Command(Rank 4)
+        spellLevel = 50,
+        maxLevel = 58,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 70,
+                coef = 0.29,
+            },
+        }
+    },
+    [20920] = { -- Seal of Command(Rank 5)
+        spellLevel = 60,
+        maxLevel = 68,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 70,
+                coef = 0.29,
             },
         }
     },
