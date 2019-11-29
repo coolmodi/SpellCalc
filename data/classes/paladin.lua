@@ -7,6 +7,8 @@ end
 local HOLY_LIGHT = GetSpellInfo(635);
 local FLASH_OF_LIGHT = GetSpellInfo(19750);
 local HOLY_SHOCK = GetSpellInfo(20473);
+local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20288);
+local JUDGEMENT_OF_RIGHTEOUSNESS = GetSpellInfo(20286);
 
 _addon.talentData = {
     { -- Healing Light
@@ -17,6 +19,17 @@ _addon.talentData = {
                 type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
                 affectSpell = {HOLY_LIGHT, FLASH_OF_LIGHT},
                 perPoint = 4
+            }
+        }
+    },
+    { -- Improved Seal of Righteousness
+        tree = 1,
+        talent = 4,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {SEAL_OF_RIGHTEOUSNESS, JUDGEMENT_OF_RIGHTEOUSNESS},
+                perPoint = 3
             }
         }
     },

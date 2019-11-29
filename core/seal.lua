@@ -3,41 +3,9 @@ local _, _addon = ...;
 local TYPE = _addon.SPELL_TYPE.SEAL;
 local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
 
+local SOC_PPS = 7/60; -- procs per second
+
 local stats = _addon.stats;
-
---- Set crit chance and mult
--- @param ct the calculation table
--- @param spellBaseInfo The spell base info table
-local function SetCrit(ct, spellBaseInfo)
-    ct.critMult = 2;
-    ct.critChance = 0; -- TODO: SOC melee crit
-end
-
---- Calculate mitigation variables
--- @param calcData the calculation table
--- @param spellBaseInfo The spell base info table
--- @param spellName The spell's name
-local function Mitigate(calcData, spellBaseInfo, spellName)
-    calcData.avgResistMod = _addon:GetSpellAvgResist(spellBaseInfo.school);
-
-    -- SOR can't miss itself, this is only SOC
-    -- TODO: SOC: behaves like a melee hit, can dodge, parry and miss
-    if calcData.hitChance ~= nil then
-        calcData.baseHitChance = GetSpellHitChance(); -- TODO: get effective melee hit chance (no parry, dodge or miss)
-        calcData.hitChanceBonus = GetSpellHitBonus(spellBaseInfo.school, calcData.buffs); -- TODO: ??
-
-        calcData.hitChance = calcData.baseHitChance + calcData.hitChanceBonus;
-
-        -- TODO melee stuff here
-        if calcData.hitChance > 99 then
-            calcData.hitChance = 99;
-        elseif calcData.hitChance < 1 then
-            calcData.hitChance = 1;
-        end
-
-        calcData.hitChance = calcData.hitChance/100;
-    end
-end
 
 --- Add vars for mitigation to calc table if needed
 -- @param ct the calculation table
@@ -46,12 +14,13 @@ end
 function AddBaseMembers(ct, primaryType, secondaryType)
     ct.avgResistMod = 0; -- The average dmg resisted modifier (mult)
 
-    -- TODO: melee stuff
-    if primaryType == SPELL_EFFECT_TYPE.SEAL_OF_COMMAND then
-        ct.baseHitChance = 0; -- The base hit chance dpending on level difference
-        ct.hitChance = 0; -- Hit chance after modifiers (mult)
-        ct.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
-    end
+    ct.baseHitChance = 0; -- The base hit chance dpending on level difference
+    ct.dodge = 0;
+    ct.block = 0;
+    ct.parry = 0;
+    ct.hitChance = 0; -- Hit chance after modifiers
+    ct.hitChanceBonus = 0; -- Bonus hitchance from buffs (and gear)
+    ct.effHitChance = 0; -- The effective chance to score a successful hit (mult)
 end
 
 --- Adds table members for spell calculation to the calculation table
@@ -64,17 +33,41 @@ function AddEffectMembers(et, effectType)
     et.critMin = 0; -- Same just with crit
     et.critMax = 0;
     et.critAvg = 0;
-    et.avgCombined = 0; -- Both hit and crit
 
     et.duration = 0;
-    et.procChance = 1; -- For SOC, SOR is 1
+    et.procChance = 0; -- For SOC
     et.triggers = 0; -- how often it will trigger based on weapon speed and proc chance
 
-    et.avgAfterResist = 0; -- Average after (level based) resist taken into account
     et.triggerHits = 0; -- Minus weapon miss, parry, dodge and block
     et.avgTriggerHits = 0; -- Avg done over all successful triggers
 
     et.perSecond = 0; -- DPS added from seal
+end
+
+--- Set crit chance and mult
+-- @param ct the calculation table
+-- @param spellBaseInfo The spell base info table
+local function SetCrit(ct, spellBaseInfo)
+    ct.critMult = 2;
+    -- we set more than just crit here now...
+    local miss, dodge, parry, _, block, crit, hitBonus = _addon:GetMeleeTable(ct.buffs);
+    ct.critChance = crit;
+    ct.baseHitChance = 100 - miss;
+    ct.dodge = dodge;
+    ct.block = block;
+    ct.parry = parry;
+    ct.hitChanceBonus = hitBonus;
+    ct.hitChance = math.min(100, ct.baseHitChance + hitBonus);
+end
+
+--- Calculate mitigation variables
+-- @param calcData the calculation table
+-- @param spellBaseInfo The spell base info table
+-- @param spellName The spell's name
+local function Mitigate(calcData, spellBaseInfo, spellName)
+    calcData.avgResistMod = _addon:GetSpellAvgResist(spellBaseInfo.school);
+    -- effective hit is anything that does dmg, both for seal procs and for hitting SoC
+    calcData.effHitChance = (calcData.hitChance - calcData.dodge - calcData.block - calcData.parry) / 100;
 end
 
 --- Calculate SoR
@@ -83,8 +76,7 @@ end
 -- @param spellRankInfo The spell rank info table
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
--- @param castTime Spell cast time (or channel duration)
-function CalculateSoR(calcData, et, spellRankInfo, effectData, effectMod, castTime)
+function CalculateSoR(calcData, et, spellRankInfo, effectData, effectMod)
     local dmgbase = effectData.min + (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     local as = stats.attackSpeed.mh;
 
@@ -93,15 +85,14 @@ function CalculateSoR(calcData, et, spellRankInfo, effectData, effectMod, castTi
     else
         et.hitMin = 0.85 * dmgbase * as/100;
     end
-
-    et.hitAvg = et.hitMin;
+    et.hitAvg = et.hitMin * effectMod;
 
     et.duration = spellRankInfo.duration;
     et.triggers = et.duration / as;
+    et.triggerHits = et.triggers * calcData.effHitChance;
 
-    et.avgAfterResist = et.hitMin * (1 - calcData.avgResistMod);
-    et.triggerHits = et.triggers; -- TODO: melee miss stuff
-    et.avgTriggerHits = et.triggerHits * et.avgAfterResist;
+    local avgAfterResist = et.hitMin * (1 - calcData.avgResistMod);
+    et.avgTriggerHits = et.triggerHits * avgAfterResist;
 
     et.perSecond = et.avgTriggerHits / et.duration;
 end
@@ -112,9 +103,29 @@ end
 -- @param spellRankInfo The spell rank info table
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
--- @param castTime Spell cast time (or channel duration)
-function CalculateSoC(calcData, et, spellRankInfo, effectData, effectMod, castTime)
+function CalculateSoC(calcData, et, spellRankInfo, effectData, effectMod)
+    local as = stats.attackSpeed.mh;
+    local wdcoef = effectData.min/100;
 
+    et.hitMin = wdcoef * stats.attackDmg.mh.min * effectMod;
+    et.hitMax = wdcoef * stats.attackDmg.mh.max * effectMod;
+    et.hitAvg = (et.hitMin + et.hitMax) / 2;
+
+    et.critMin = et.hitMin * calcData.critMult;
+    et.critMax = et.hitMax * calcData.critMult;
+    et.critAvg = (et.critMin + et.critMax) / 2;
+
+    local avgCombined = et.hitAvg + (et.critAvg - et.hitAvg) * calcData.critChance/100;
+
+    et.duration = spellRankInfo.duration;
+    et.triggers = SOC_PPS * et.duration;
+    et.procChance = SOC_PPS * as;
+    et.triggerHits = et.triggers * calcData.effHitChance; -- TODO: does this also only proc on successful hits
+
+    local avgAfterResist = avgCombined * (1 - calcData.avgResistMod);
+    et.avgTriggerHits = et.triggerHits * avgAfterResist * calcData.effHitChance; -- SOC hits can again be melee mitigated like a special attack
+
+    et.perSecond = et.avgTriggerHits / et.duration;
 end
 
 --- Calculate effect values
