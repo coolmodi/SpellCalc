@@ -76,6 +76,20 @@ local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask, isM
     end
 end
 
+--- Apply or remove effect affecting weapon types
+-- @param name The name of the buff
+-- @param value The effect value, negative to remove buff
+-- @param destTable The destination table
+-- @param weaponMask The mask of weapon types to affec
+-- @param isMultiplicative Treat multiplicatively
+local function ApplyOrRemoveWeaponAffect(name, value, destTable, weaponMask, isMultiplicative)
+    for typeKey in pairs(destTable) do
+        if bit.band(typeKey, weaponMask) > 0 then
+            ApplyOrRemove(value, destTable[typeKey], name, isMultiplicative);
+        end
+    end
+end
+
 --- Change buff effect value (add/remove)
 -- @param apply True to apply, false to remove
 -- @param name The name of the buff
@@ -223,6 +237,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 
     if effect == EFFECT_TYPE.DRUID_NATURES_GRACE then
         ApplyOrRemove(value, _addon.stats.druidNaturesGrace, name);
+        return;
+    end
+
+    if effect == EFFECT_TYPE.MOD_HIT_WEAPON then
+        ApplyOrRemoveWeaponAffect(name, value, _addon.stats.hitMods.weapon, affectSchool)
         return;
     end
 

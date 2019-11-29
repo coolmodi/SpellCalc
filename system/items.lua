@@ -285,3 +285,9 @@ end
 function _addon:IsDualWieldEquipped()
     return self:IsMainHandWeaponEquipped() and self:IsOffHandWeaponEquipped();
 end
+
+--- Return WEAPON_TYPES_MASK for weapon in given slot
+-- @param slot Can be mh, oh or r
+function _addon:GetWeaponType(slot)
+    return weapontypes[slot];
+end

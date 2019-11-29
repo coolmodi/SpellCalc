@@ -47,7 +47,8 @@ _addon.EFFECT_TYPE = {
     EARTHFURY_RETURN = 19,
     CONDITION_TRIGGER = 20,
     DRUID_NATURES_GRACE = 21,
-    JUDGEMENT_SPELL = 22
+    JUDGEMENT_SPELL = 22,
+    MOD_HIT_WEAPON = 23
 };
 
 -- Spell types (What calculation rules to use)

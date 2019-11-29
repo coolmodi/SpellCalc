@@ -68,6 +68,24 @@ _addon.stats = {
             [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
             [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
         },
+        weapon = {
+            [_addon.WEAPON_TYPES_MASK.FISHING_POLE] = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.POLEARM]      = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.STAVE]        = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.AXE_2H]       = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.MACE_2H]      = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.SWORD_2H]     = {val=0, buffs={}},
+
+            [_addon.WEAPON_TYPES_MASK.DAGGER]       = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.FIST]         = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.AXE_1H]       = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.MACE_1H]      = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.SWORD_1H]     = {val=0, buffs={}},
+
+            [_addon.WEAPON_TYPES_MASK.BOW]          = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.CROSSBOW]     = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.GUN]          = {val=0, buffs={}},
+        },
         spell = {}
     },
     critMods = {

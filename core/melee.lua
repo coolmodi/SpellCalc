@@ -108,9 +108,19 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
         crit = 0;
     end
 
-    hitBonus = hitBonus + stats.hitBonus.val;
-    for _, buffName in pairs(stats.hitBonus.buffs) do
-        table.insert(buffTable, buffName);
+    if stats.hitBonus.val > 0 then
+        hitBonus = hitBonus + stats.hitBonus.val;
+        for _, buffName in pairs(stats.hitBonus.buffs) do
+            table.insert(buffTable, buffName);
+        end
+    end
+
+    local weaponType = self:GetWeaponType(isOffhand and "oh" or "mh");
+    if stats.hitMods.weapon[weaponType].val > 0 then
+        hitBonus = hitBonus + stats.hitMods.weapon[weaponType].val;
+        for _, buffName in pairs(stats.hitMods.weapon[weaponType].buffs) do
+            table.insert(buffTable, buffName);
+        end
     end
 
     -- TODO: implement talent/buff hit bonus collection (also weapon specific)

@@ -41,6 +41,18 @@ _addon.talentData = {
             }
         }
     },
+
+    { -- Precision
+        tree = 2,
+        talent = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_HIT_WEAPON,
+                affectSchool = _addon.WEAPON_TYPES_MASK.MELEE,
+                perPoint = 1
+            }
+        }
+    },
 };
 
 _addon.buffData[20216] = { -- Divine Favor
