@@ -38,6 +38,8 @@ local DEFAULTSETTINGS = {
 	["healTargetHps"] = 0,
 	["healDisregardCrit"] = false,
 
+	["meleeFromFront"] = true,
+
 	["version"] = GetAddOnMetadata(_addonName, "Version")
 };
 
@@ -173,5 +175,13 @@ function _addon:SetupSettings()
 		settingsHeal:MakeHeading(L["SETTINGS_HEAL_HEAD"]);
 		settingsHeal:MakeEditBoxOption("healTargetHps", L["SETTINGS_HEAL_TARGET_HPS"], 3, true, L["SETTINGS_HEAL_TARGET_HPS_TT"]);
 		settingsHeal:MakeCheckboxOption("healDisregardCrit", L["SETTINGS_HEAL_NO_CRIT"], L["SETTINGS_HEAL_NO_CRIT_TT"]);
+	end
+
+	if self.MELEE_CLASSES[class] then
+		local settingsMelee = _addon:GetSettingsBuilder();
+		settingsMelee:Setup(SpellCalc_settings, DEFAULTSETTINGS, L["SETTINGS_MELEE_HEAD"], nil, nil, nil, nil, nil, nil, _addonName);
+		settingsMelee:SetAfterSaveCallback(AfterSave);
+		settingsMelee:MakeHeading(L["SETTINGS_MELEE_HEAD"]);
+		settingsMelee:MakeCheckboxOption("meleeFromFront", L["SETTINGS_MELEE_FROM_FRONT"], L["SETTINGS_MELEE_FROM_FRONT_TT"]);
 	end
 end

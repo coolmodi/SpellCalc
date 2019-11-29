@@ -75,6 +75,15 @@ _addon.HEALING_CLASSES = {
     PALADIN = true
 }
 
+_addon.MELEE_CLASSES = {
+    WARRIOR = true,
+    ROGUE = true,
+    HUNTER = true,
+    SHAMAN = true,
+    DRUID = true,
+    PALADIN = true
+}
+
 _addon.BUFF_CONDITIONS = {
     EARTHSHATTERER_8PCS = 0x1
 }
@@ -82,7 +91,7 @@ _addon.BUFF_CONDITIONS = {
 _addon.JUDGEMENT_ID = 20271;
 
 _addon.WEAPON_TYPES = {
-    FISHING_POLE = GetSpellInfo(7738), -- TODO: check this
+    FISHING_POLE = GetSpellInfo(7738),
     POLEARM = GetSpellInfo(200),
     STAVE = GetSpellInfo(227),
     AXE_2H = GetSpellInfo(197),
