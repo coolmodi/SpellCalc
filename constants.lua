@@ -90,6 +90,7 @@ _addon.BUFF_CONDITIONS = {
 
 _addon.JUDGEMENT_ID = 20271;
 
+-- Weapon types as localized itemSubType name, equals proficiency name
 _addon.WEAPON_TYPES = {
     FISHING_POLE = GetSpellInfo(7738),
     POLEARM = GetSpellInfo(200),
@@ -103,4 +104,64 @@ _addon.WEAPON_TYPES = {
     AXE_1H = GetSpellInfo(196),
     MACE_1H = GetSpellInfo(198),
     SWORD_1H = GetSpellInfo(201),
+
+    BOW = GetSpellInfo(264),
+    CROSSBOW = GetSpellInfo(5011),
+    GUN = GetSpellInfo(266),
+
+    THROWN = GetSpellInfo(2567),
+    UNARMED = GetSpellInfo(203),
+    WAND = GetSpellInfo(5009),
+}
+
+_addon.WEAPON_TYPES_MASK = {
+    FISHING_POLE = 0x1,
+    POLEARM = 0x2,
+    STAVE = 0x4,
+    AXE_2H = 0x8,
+    MACE_2H = 0x10,
+    SWORD_2H = 0x20,
+
+    DAGGER = 0x100,
+    FIST = 0x200,
+    AXE_1H = 0x400,
+    MACE_1H = 0x800,
+    SWORD_1H = 0x1000,
+
+    BOW = 0x10000,
+    CROSSBOW = 0x20000,
+    GUN = 0x40000,
+
+    UNARMED = 1000000,
+    THROWN = 2000000,
+    WAND = 4000000,
+
+    TWO_HAND = 0xFF,
+    ONE_HAND = 0xFF00,
+    RANGED = 0xFF0000,
+    MELEE = 0xFFFF
+}
+
+-- Resolve WEAPON_TYPES (itemSubType) to their WEAPON_TYPES_MASK
+_addon.WEAPON_TYPE_TO_MASK = {
+    [_addon.WEAPON_TYPES.FISHING_POLE] = _addon.WEAPON_TYPES_MASK.FISHING_POLE,
+    [_addon.WEAPON_TYPES.POLEARM] = _addon.WEAPON_TYPES_MASK.POLEARM,
+    [_addon.WEAPON_TYPES.STAVE] = _addon.WEAPON_TYPES_MASK.STAVE,
+    [_addon.WEAPON_TYPES.AXE_2H] = _addon.WEAPON_TYPES_MASK.AXE_2H,
+    [_addon.WEAPON_TYPES.MACE_2H] = _addon.WEAPON_TYPES_MASK.MACE_2H,
+    [_addon.WEAPON_TYPES.SWORD_2H] = _addon.WEAPON_TYPES_MASK.SWORD_2H,
+
+    [_addon.WEAPON_TYPES.DAGGER] = _addon.WEAPON_TYPES_MASK.DAGGER,
+    [_addon.WEAPON_TYPES.FIST] = _addon.WEAPON_TYPES_MASK.FIST,
+    [_addon.WEAPON_TYPES.AXE_1H] = _addon.WEAPON_TYPES_MASK.AXE_1H,
+    [_addon.WEAPON_TYPES.MACE_1H] = _addon.WEAPON_TYPES_MASK.MACE_1H,
+    [_addon.WEAPON_TYPES.SWORD_1H] = _addon.WEAPON_TYPES_MASK.SWORD_1H,
+
+    [_addon.WEAPON_TYPES.BOW] = _addon.WEAPON_TYPES_MASK.BOW,
+    [_addon.WEAPON_TYPES.CROSSBOW] = _addon.WEAPON_TYPES_MASK.CROSSBOW,
+    [_addon.WEAPON_TYPES.GUN] = _addon.WEAPON_TYPES_MASK.GUN,
+
+    [_addon.WEAPON_TYPES.UNARMED] = _addon.WEAPON_TYPES_MASK.UNARMED,
+    [_addon.WEAPON_TYPES.THROWN] = _addon.WEAPON_TYPES_MASK.THROWN,
+    [_addon.WEAPON_TYPES.WAND] = _addon.WEAPON_TYPES_MASK.WAND,
 }

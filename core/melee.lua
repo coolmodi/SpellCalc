@@ -27,14 +27,12 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
     if tData.isPlayer then
         local atk = baseAtk;
         if race == "Orc" then
-            local slott = isOffhand and "oh" or "mh";
-            if self:IsWeaponTypeEquipped(self.WEAPON_TYPES.AXE_1H, slott) or (not isOffhand and self:IsWeaponTypeEquipped(self.WEAPON_TYPES.AXE_2H, "mh")) then
+            if self:IsWeaponTypeEquipped(self.WEAPON_TYPES_MASK.AXE_1H + self.WEAPON_TYPES_MASK.AXE_2H, isOffhand and "oh" or "mh") then
                 atk = atk + 5;
             end
         elseif race == "Human" then
-            local slott = isOffhand and "oh" or "mh";
-            if self:IsWeaponTypeEquipped(self.WEAPON_TYPES.SWORD_1H, slott) or (not isOffhand and self:IsWeaponTypeEquipped(self.WEAPON_TYPES.SWORD_2H, "mh"))
-            or self:IsWeaponTypeEquipped(self.WEAPON_TYPES.MACE_1H, slott) or (not isOffhand and self:IsWeaponTypeEquipped(self.WEAPON_TYPES.MACE_2H, "mh")) then
+            local WTM = self.WEAPON_TYPES_MASK;
+            if self:IsWeaponTypeEquipped(WTM.SWORD_1H + WTM.SWORD_2H + WTM.MACE_1H + WTM.MACE_2H, isOffhand and "oh" or "mh") then
                 atk = atk + 5;
             end
         end

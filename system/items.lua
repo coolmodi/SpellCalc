@@ -20,14 +20,17 @@ local ITEM_SLOTS = {
     [18] = "ranged",
 };
 
+local WTTM = _addon.WEAPON_TYPE_TO_MASK;
+local UNARMED = _addon.WEAPON_TYPES_MASK.UNARMED;
+
 local retryFrame = CreateFrame("Frame");
 local retryTimer = 0;
 local items = {};
 local sets = {};
 local weapontypes = {
-    mh = nil,
-    oh = nil,
-    r = nil
+    mh = UNARMED,
+    oh = UNARMED,
+    r = UNARMED
 };
 
 --- Apply or remove effect for destination
@@ -145,11 +148,11 @@ local function EquipItem(itemId, slotId)
     if slotId >= 16 and slotId <= 18 then
         _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubType);
         if slotId == 16 then
-            weapontypes.mh = itemSubType;
+            weapontypes.mh = WTTM[itemSubType];
         elseif slotId == 17 then
-            weapontypes.oh = itemSubType;
+            weapontypes.oh = WTTM[itemSubType];
         elseif slotId == 18 then
-            weapontypes.r = itemSubType;
+            weapontypes.r = WTTM[itemSubType];
         end
     end
 
@@ -202,11 +205,11 @@ local function UnequipItem(slotId)
     if slotId >= 16 and slotId <= 18 then
         _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now unarmed");
         if slotId == 16 then
-            weapontypes.mh = nil;
+            weapontypes.mh = UNARMED;
         elseif slotId == 17 then
-            weapontypes.oh = nil;
+            weapontypes.oh = UNARMED;
         elseif slotId == 18 then
-            weapontypes.r = nil;
+            weapontypes.r = UNARMED;
         end
     end
 
@@ -253,49 +256,29 @@ end
 
 --- Return true if a two handed weapon is in the main hand slot
 function _addon:IsTwoHandEquipped()
-    if weapontypes.mh == self.WEAPON_TYPES.FISHING_POLE
-    or weapontypes.mh == self.WEAPON_TYPES.POLEARM
-    or weapontypes.mh == self.WEAPON_TYPES.STAVE
-    or weapontypes.mh == self.WEAPON_TYPES.AXE_2H
-    or weapontypes.mh == self.WEAPON_TYPES.MACE_2H
-    or weapontypes.mh == self.WEAPON_TYPES.SWORD_2H then
-        return true;
-    end
-    return false;
+    return weapontypes.mh and bit.band(weapontypes.mh, self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
+end
+
+--- Return true if a one handed weapon is in the main hand slot
+function _addon:IsOneHandEquipped()
+    return weapontypes.mh and bit.band(weapontypes.mh, self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
 end
 
 --- Return true if a weapon is in the mainhand slot
 function _addon:IsMainHandWeaponEquipped()
-    if weapontypes.mh == self.WEAPON_TYPES.FIST
-    or weapontypes.mh == self.WEAPON_TYPES.DAGGER
-    or weapontypes.mh == self.WEAPON_TYPES.AXE_1H
-    or weapontypes.mh == self.WEAPON_TYPES.MACE_1H
-    or weapontypes.mh == self.WEAPON_TYPES.SWORD_1H then
-        return true;
-    end
-    return false;
+    return weapontypes.mh and bit.band(weapontypes.mh, self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
 --- Return true if a weapon is in the offhand slot
 function _addon:IsOffHandWeaponEquipped()
-    if weapontypes.mh == self.WEAPON_TYPES.FIST
-    or weapontypes.mh == self.WEAPON_TYPES.DAGGER
-    or weapontypes.mh == self.WEAPON_TYPES.AXE_1H
-    or weapontypes.mh == self.WEAPON_TYPES.MACE_1H
-    or weapontypes.mh == self.WEAPON_TYPES.SWORD_1H then
-        return true;
-    end
-    return false;
+    return weapontypes.oh and bit.band(weapontypes.oh, self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
---- Return true if given weapon type is equipped in given slot
--- @param weapon The weapon type, see constants WEAPON_TYPES
+--- Return true if any of the given weapon types is equipped
+-- @param weaponMask See constants WEAPON_TYPES_MASK
 -- @param slot Can be mh, oh or r
-function _addon:IsWeaponTypeEquipped(weapon, slot)
-    if weapon == weapontypes[slot] then
-        return true;
-    end
-    return false;
+function _addon:IsWeaponTypeEquipped(weaponMask, slot)
+    return weapontypes[slot] and bit.band(weaponMask, weapontypes[slot]) > 0;
 end
 
 --- Return true if both weapon slots have a weapon equipped
