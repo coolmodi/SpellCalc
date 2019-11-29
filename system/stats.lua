@@ -110,6 +110,11 @@ _addon.stats = {
         mh = 0,
         oh = 0,
         r = 0
+    },
+    attack = {
+        mh = 0,
+        oh = 0,
+        r = 0
     }
 };
 
@@ -188,6 +193,21 @@ function _addon:UpdateAttackSpeeds()
     self.stats.attackSpeed.r = r and r or 0;
 
     _addon:PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mh, self.stats.attackSpeed.oh, self.stats.attackSpeed.r));
+
+    self.lastChange = time();
+end
+
+function _addon:UpdateWeaponAttack()
+    local mh, mhMod, oh, ohMod = UnitAttackBothHands("player");
+    local r, rMod = UnitRangedAttack("player");
+
+    self.stats.attack.mh = mh + mhMod;
+    self.stats.attack.oh = oh + ohMod;
+    self.stats.attack.r = r + rMod;
+
+    _addon:PrintDebug(("Updated attack: M: %d + %d O: %d + %d R: %d + %d"):format(mh, mhMod, oh, ohMod, r, rMod));
+
+    self.lastChange = time();
 end
 
 -- Update everything manually

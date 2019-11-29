@@ -79,6 +79,13 @@ function handlers.UNIT_ATTACK_SPEED(unit)
     _addon:UpdateAttackSpeeds();
 end
 
+function handlers.UNIT_ATTACK(unit)
+    if unit ~= "player" then
+        return;
+    end
+    _addon:UpdateWeaponAttack();
+end
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)
