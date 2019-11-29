@@ -115,6 +115,25 @@ _addon.stats = {
         mh = 0,
         oh = 0,
         r = 0
+    },
+    attackCrit = {
+        mh = 0,
+        oh = 0,
+        r = 0
+    },
+    attackDmg = {
+        mh = {
+            min = 0,
+            max = 0
+        },
+        oh = {
+            min = 0,
+            max = 0
+        },
+        r = {
+            min = 0,
+            max = 0
+        }
     }
 };
 
@@ -135,13 +154,19 @@ function _addon:UpdateDmgDoneMods()
     if spellHealing ~= self.stats.spellHealing then
         self:PrintDebug("Updating healing");
         self.stats.spellHealing = spellHealing;
-        self.lastChange = time();
     end
 
     self:PrintDebug("Updating dmg done mods");
     for i = 1, 7, 1 do
         self.stats.spellCrit[i] = GetSpellCritChance(i);
     end
+
+    -- TODO: does this include talents and buffs reliably?
+    self.stats.attackCrit.mh = GetCritChance();
+    self.stats.attackCrit.oh = GetCritChance(); -- TODO: how to get this? Is there even a (realistic) way?
+    self.stats.attackCrit.r = GetRangedCritChance();
+
+    self.lastChange = time();
 end
 
 local queueFrame = CreateFrame("Frame");
@@ -184,6 +209,7 @@ function _addon:UpdateStats()
     self.lastChange = time();
 end
 
+--- Update weapon attack speeds
 function _addon:UpdateAttackSpeeds()
     local m,o = UnitAttackSpeed("player");
     local r = UnitRangedDamage("player");
@@ -197,6 +223,7 @@ function _addon:UpdateAttackSpeeds()
     self.lastChange = time();
 end
 
+--- Update weapon attack skill
 function _addon:UpdateWeaponAttack()
     local mh, mhMod, oh, ohMod = UnitAttackBothHands("player");
     local r, rMod = UnitRangedAttack("player");
@@ -207,6 +234,22 @@ function _addon:UpdateWeaponAttack()
 
     _addon:PrintDebug(("Updated attack: M: %d + %d O: %d + %d R: %d + %d"):format(mh, mhMod, oh, ohMod, r, rMod));
 
+    self.lastChange = time();
+end
+
+--- Update melee attack damage
+function _addon:UpdateAttackDmg()
+    _addon:PrintDebug("Updated melee dmg");
+    self.stats.attackDmg.mh.min, self.stats.attackDmg.mh.max, self.stats.attackDmg.oh.min, self.stats.attackDmg.oh.max = UnitDamage("player");
+    self.lastChange = time();
+end
+
+--- Update ranged attack damage
+function _addon:UpdateRangedAttackDmg()
+    _addon:PrintDebug("Updated ranged dmg");
+    local _, lowDmg, hiDmg = UnitRangedDamage("player");
+    self.stats.attackDmg.r.min = lowDmg;
+    self.stats.attackDmg.r.max = hiDmg;
     self.lastChange = time();
 end
 
@@ -222,4 +265,7 @@ function _addon:FullUpdate()
     self:UpdateItems();
     self:UpdateTarget();
     self:UpdateAttackSpeeds();
+    self:UpdateWeaponAttack();
+    self:UpdateAttackDmg();
+    self:UpdateRangedAttackDmg();
 end

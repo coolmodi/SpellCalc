@@ -86,6 +86,22 @@ function handlers.UNIT_ATTACK(unit)
     _addon:UpdateWeaponAttack();
 end
 
+
+function handlers.UNIT_DAMAGE(unit)
+    if unit ~= "player" then
+        return;
+    end
+    _addon:UpdateAttackDmg();
+end
+
+function handlers.UNIT_RANGEDDAMAGE(unit)
+    if unit ~= "player" then
+        return;
+    end
+    _addon:UpdateRangedAttackDmg();
+end
+
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)
