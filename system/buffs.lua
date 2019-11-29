@@ -435,7 +435,8 @@ function _addon:UpdateTalents(forceTalents)
                 if effect.base ~= nil then
                     value = value + effect.base;
                 end
-                ChangeBuff(false, oldIdName.."-"..k, effect.type, value, effect.affectSchool, effect.affectSpell);
+                local useName = (k > 1) and oldIdName.."-"..k or oldIdName;
+                ChangeBuff(false, useName, effect.type, value, effect.affectSchool, effect.affectSpell);
             end
             activeRelevantTalents[name] = nil;
         end
@@ -449,7 +450,8 @@ function _addon:UpdateTalents(forceTalents)
                 if effect.base ~= nil then
                     value = value + effect.base;
                 end
-                ChangeBuff(true, idName.."-"..k, effect.type, value, effect.affectSchool, effect.affectSpell);
+                local useName = (k > 1) and idName.."-"..k or idName;
+                ChangeBuff(true, useName, effect.type, value, effect.affectSchool, effect.affectSpell);
             end
             activeRelevantTalents[name] = curRank;
         end
