@@ -263,3 +263,42 @@ function _addon:IsTwoHandEquipped()
     end
     return false;
 end
+
+--- Return true if a weapon is in the mainhand slot
+function _addon:IsMainHandWeaponEquipped()
+    if weapontypes.mh == self.WEAPON_TYPES.FIST
+    or weapontypes.mh == self.WEAPON_TYPES.DAGGER
+    or weapontypes.mh == self.WEAPON_TYPES.AXE_1H
+    or weapontypes.mh == self.WEAPON_TYPES.MACE_1H
+    or weapontypes.mh == self.WEAPON_TYPES.SWORD_1H then
+        return true;
+    end
+    return false;
+end
+
+--- Return true if a weapon is in the offhand slot
+function _addon:IsOffHandWeaponEquipped()
+    if weapontypes.mh == self.WEAPON_TYPES.FIST
+    or weapontypes.mh == self.WEAPON_TYPES.DAGGER
+    or weapontypes.mh == self.WEAPON_TYPES.AXE_1H
+    or weapontypes.mh == self.WEAPON_TYPES.MACE_1H
+    or weapontypes.mh == self.WEAPON_TYPES.SWORD_1H then
+        return true;
+    end
+    return false;
+end
+
+--- Return true if given weapon type is equipped in given slot
+-- @param weapon The weapon type, see constants WEAPON_TYPES
+-- @param slot Can be mh, oh or r
+function _addon:IsWeaponTypeEquipped(weapon, slot)
+    if weapon == weapontypes[slot] then
+        return true;
+    end
+    return false;
+end
+
+--- Return true if both weapon slots have a weapon equipped
+function _addon:IsDualWieldEquipped()
+    return self:IsMainHandWeaponEquipped() and self:IsOffHandWeaponEquipped();
+end

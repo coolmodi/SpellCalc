@@ -87,5 +87,11 @@ _addon.WEAPON_TYPES = {
     STAVE = GetSpellInfo(227),
     AXE_2H = GetSpellInfo(197),
     MACE_2H = GetSpellInfo(199),
-    SWORD_2H = GetSpellInfo(202)
+    SWORD_2H = GetSpellInfo(202),
+
+    DAGGER = GetSpellInfo(1180),
+    FIST = GetSpellInfo(15590),
+    AXE_1H = GetSpellInfo(196),
+    MACE_1H = GetSpellInfo(198),
+    SWORD_1H = GetSpellInfo(201),
 }
