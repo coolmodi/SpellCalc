@@ -173,6 +173,30 @@ local function AddTitle(title)
     end
 end
 
+--- Add a weapon types uniform table
+-- @param weaponTable The table containing the per weapon tables
+-- @param title The label for the stat
+-- @param unit The unit of the value, if any
+local function AddWeaponTableUniform(weaponTable, title, unit)
+    if title then
+        local row = CreateStatRow();
+        local text = row:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2");
+        text:SetPoint("LEFT", 0, 0);
+        text:SetText(title);
+        row:SetHeight(text:GetHeight() + 10);
+    end
+    for weaponType, _ in pairs(weaponTable) do
+        local label = "-";
+        for k, typeVal in pairs(_addon.WEAPON_TYPES_MASK) do
+            if typeVal == weaponType then
+                label = k;
+                break;
+            end
+        end
+        AddUniformStatTable(weaponTable[weaponType], label, unit);
+    end
+end
+
 -------------------------------------------------------
 -- Update UI
 
@@ -269,6 +293,8 @@ AddSchoolTableUniform(stats.spellPen, "Spell pen", "");
 
 AddSchoolTableUniform(stats.hitMods.school, "Hit mods", "%");
 AddUniformStatTable(stats.hitBonusSpell, "Spell +hit", "%");
+AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
+AddWeaponTableUniform(stats.hitMods.weapon, nil, "%");
 AddSpellTable(stats.hitMods.spell, nil, "%");
 
 AddSchoolTableUniform(stats.dmgDoneMods, "Dmg done mods", "x");
@@ -282,6 +308,26 @@ AddSpellTable(stats.flatMods, "Flat mods", "");
 AddSpellTable(stats.extraSp, "Extra SP", "");
 AddSpellTable(stats.mageNWRProc, "Mage NWR proc", "");
 
+AddTitle("Weapon attack speed");
+AddSingleStat("Mainhand", stats.attackSpeed, "mh");
+AddSingleStat("Offhand", stats.attackSpeed, "oh");
+AddSingleStat("Ranged", stats.attackSpeed, "r");
+AddTitle("Weapon attack");
+AddSingleStat("Mainhand", stats.attack, "mh");
+AddSingleStat("Offhand", stats.attack, "oh");
+AddSingleStat("Ranged", stats.attack, "r");
+AddTitle("Weapon crit");
+AddSingleStat("Mainhand", stats.attackCrit, "mh", "%");
+AddSingleStat("Offhand", stats.attackCrit, "oh", "%");
+AddSingleStat("Ranged", stats.attackCrit, "r", "%");
+AddTitle("Weapon dmg");
+AddSingleStat("Mainhand min", stats.attackDmg.mh, "min");
+AddSingleStat("Mainhand max", stats.attackDmg.mh, "max");
+AddSingleStat("Offhand min", stats.attackDmg.oh, "min");
+AddSingleStat("Offhand max", stats.attackDmg.oh, "max");
+AddSingleStat("Ranged min", stats.attackDmg.r, "min");
+AddSingleStat("Ranged max", stats.attackDmg.r, "max");
+
 AddTitle("Clearcast");
 AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
 AddUniformStatTable(stats.clearCastChanceDmg, "Clearcast chance dmg", "%");
@@ -290,3 +336,5 @@ AddTitle("Misc");
 AddUniformStatTable(stats.illumination, "Illumination", "%");
 AddUniformStatTable(stats.ignite, "Ignite", "");
 AddUniformStatTable(stats.impShadowBolt, "Imp Shadow Bolt", "%");
+AddUniformStatTable(stats.earthfuryReturn, "Earthfury return", "");
+AddUniformStatTable(stats.druidNaturesGrace, "Nature's Grace", "");
