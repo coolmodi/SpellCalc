@@ -342,7 +342,7 @@ local function AddSpellTooltip(calcedSpell, spellBaseInfo)
     end
 end
 
---- Add tooltip for spell type spells
+--- Add tooltip for SoR and SoC
 -- @param calcedSpell The base calculation table for the spell
 -- @param spellBaseInfo The spell base info entry
 local function AddSealTooltip(calcedSpell, spellBaseInfo)
@@ -363,14 +363,47 @@ local function AddSealTooltip(calcedSpell, spellBaseInfo)
         end
     end
 
+    if spellBaseInfo.isSeal == "SOC" and SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
+        if SpellCalc_settings.ttAverages then
+            DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(effectData.critMin, effectData.critMax, Round(effectData.critAvg)), nil, ("%.2f%% %s"):format(calcedSpell.critChance, L["TT_CHANCE"]));
+        else
+            DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(effectData.critMin, effectData.critMax), nil, ("%.2f%% %s"):format(calcedSpell.critChance, L["TT_CHANCE"]));
+        end
+    end
+
     AppendCoefData(calcedSpell, effectData);
     if SpellCalc_settings.ttResist and calcedSpell.avgResistMod > 0 then
         SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResistMod*100));
     end
 
+    if SpellCalc_settings.ttHitChance then
+        if SpellCalc_settings.ttHitDetail then
+            SingleLine(L["TT_HITCHANCE"], ("%.1f%% (%.1f%% + %d%%)"):format(calcedSpell.hitChance, calcedSpell.baseHitChance, calcedSpell.hitChanceBonus));
+        else
+            SingleLine(L["TT_HITCHANCE"], ("%.1f%%"):format(calcedSpell.hitChance));
+        end
+        if calcedSpell.dodge > 0 then
+            SingleLine(L["TT_DODGECHANCE"], ("%.1f%%"):format(calcedSpell.dodge));
+        end
+        if calcedSpell.parry > 0 then
+            SingleLine(L["TT_PARRYCHANCE"], ("%.1f%%"):format(calcedSpell.parry));
+        end
+        if calcedSpell.block > 0 then
+            SingleLine(L["TT_BLOCKCHANCE"], ("%.1f%%"):format(calcedSpell.block));
+        end
+    end
+
+    if SpellCalc_settings.ttResist and calcedSpell.avgResistMod > 0 then
+        SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResistMod*100));
+    end
+
+    if effectData.procChance > 0 then
+        SingleLine(L["TT_PROCCHANCE"], ("%.1f%%"):format(effectData.procChance*100));
+    end
+
     if SpellCalc_settings.ttHit then
-        SingleLine("Hits over duration", ("%.1f"):format(effectData.triggerHits));
-        SingleLine("Dmg done over duration", ("%.1f"):format(effectData.avgTriggerHits));
+        SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(effectData.triggerHits));
+        SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(effectData.avgTriggerHits));
     end
 
     if SpellCalc_settings.ttPerSecond then
