@@ -26,6 +26,7 @@ local function UpdateButtons(self, diff)
 
     local directKey = SpellCalc_settings.abDirectValue;
     local durationKey = SpellCalc_settings.abDurationValue;
+    local sealKey = SpellCalc_settings.abSealValue;
 
     for slot, _ in pairs(needUpdate) do
         _addon:PrintDebug("Update button slot " .. slot);
@@ -50,12 +51,6 @@ local function UpdateButtons(self, diff)
             local effectData = calcedSpell[1];
 
             if calcedSpell.spellType == SPELL_TYPE.SPELL then
-                if effectData.effectType == SPELL_EFFECT_TYPE.HOT or effectData.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
-                    actionButtons[slot]:SetTextColor(0.3, 1, 0.3);
-                else
-                    actionButtons[slot]:SetTextColor(1, 1, 0.3);
-                end
-
                 if effectData.effectType == SPELL_EFFECT_TYPE.HOT or effectData.effectType == SPELL_EFFECT_TYPE.DOT then
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1][durationKey] + 0.5));
                 elseif effectData.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
@@ -66,8 +61,8 @@ local function UpdateButtons(self, diff)
                     end
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1][directKey] + 0.5));
                 end
-            else
-                -- NYI
+            elseif calcedSpell.spellType == SPELL_TYPE.SEAL then
+                actionButtons[slot]:SetText(math.floor(calcedSpell[1][sealKey] + 0.5));
             end
         end
 
@@ -112,6 +107,12 @@ local function SetSlotSpell(slot, spellId)
     end
 
     _addon:PrintDebug("Set slot " .. slot .. " to spell " .. spellId);
+
+    if spellId ~= _addon.JUDGEMENT_ID and _addon.spellRankInfo[spellId].effects[1].isHeal then
+        actionButtons[slot]:SetTextColor(0.3, 1, 0.3);
+    else
+        actionButtons[slot]:SetTextColor(1, 1, 0.3);
+    end
 
     spellsInBar[slot] = spellId;
     needUpdate[slot] = true;

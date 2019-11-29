@@ -34,6 +34,7 @@ local DEFAULTSETTINGS = {
 	["abShow"] = true,
 	["abDirectValue"] = "hitAvg",
 	["abDurationValue"] = "allTicks",
+	["abSealValue"] = "hitAvg",
 
 	["healTargetHps"] = 0,
 	["healDisregardCrit"] = false,
@@ -151,6 +152,13 @@ function _addon:SetupSettings()
 			perTick = L["SETTINGS_AB_DURATION_VALUE_TICK"],
 			allTicks = L["SETTINGS_AB_DURATION_VALUE_ALL"],
 			avgAfterMitigation = L["SETTINGS_AB_DURATION_VALUE_REALAVG"]
+		}
+	end, 100);
+	settingsAb:MakeDropdown("abSealValue", L["SETTINGS_AB_SEAL_VALUE"], nil, 150, function()
+		return {
+			hitAvg = L["SETTINGS_AB_SEAL_VALUE_HIT"],
+			avgTriggerHits = L["SETTINGS_AB_SEAL_VALUE_OVERDUR"],
+			perSecond = L["SETTINGS_AB_SEAL_VALUE_PERSEC"]
 		}
 	end, 100);
 
