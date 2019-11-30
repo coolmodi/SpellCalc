@@ -281,14 +281,12 @@ function _addon:CalcSpell(spellId)
         --------------------------
         -- Effect bonus power scaling
 
-        if spellType == SPELL_TYPE.SPELL then
-            if spellRankInfo.effects[i].isHeal == true and not spellBaseInfo.forceSchoolScaling then
-                et.spellPower = stats.spellHealing;
-            else
-                et.spellPower = stats.spellPower[spellBaseInfo.school];
-            end
-            et.spellPower = extraSp + et.spellPower;
+        if spellRankInfo.effects[i].isHeal == true and not spellBaseInfo.forceSchoolScaling then
+            et.spellPower = stats.spellHealing;
+        else
+            et.spellPower = stats.spellPower[spellBaseInfo.school];
         end
+        et.spellPower = extraSp + et.spellPower;
 
         -- Effective power
         et.effectiveSpCoef = spellRankInfo.effects[i].coef and spellRankInfo.effects[i].coef or 0;
