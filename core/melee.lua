@@ -123,8 +123,6 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
         end
     end
 
-    -- TODO: implement talent/buff hit bonus collection (also weapon specific)
-
     if tData.levelDiff > 2 then
         hitBonus = math.max(0, hitBonus - 1);
     end

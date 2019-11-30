@@ -53,6 +53,10 @@ L["SETTINGS_AB_DURATION_VALUE"] = "DoT/HoT";
 L["SETTINGS_AB_DURATION_VALUE_TICK"] = "Per tick";
 L["SETTINGS_AB_DURATION_VALUE_ALL"] = "All ticks";
 L["SETTINGS_AB_DURATION_VALUE_REALAVG"] = "Real average";
+L["SETTINGS_AB_SEAL_VALUE"] = "Seals";
+L["SETTINGS_AB_SEAL_VALUE_HIT"] = "Avg. hit";
+L["SETTINGS_AB_SEAL_VALUE_OVERDUR"] = "Damage over duration";
+L["SETTINGS_AB_SEAL_VALUE_PERSEC"] = "DPS";
 
 L["SETTINGS_WL_USE_IMP_SB"] = "Use Improved Shadow Bolt talent";
 L["SETTINGS_WL_USE_IMP_SB_TT"] = "Use talent in Shadow Bolt dps calculation, assumes nobody \"steals\" your debuff charges.";
@@ -62,6 +66,10 @@ L["SETTINGS_HEAL_TARGET_HPS"] = "Target HPS";
 L["SETTINGS_HEAL_TARGET_HPS_TT"] = "If not 0 tooltips for direct heals with at least that much HPS will show extra values as if there are breaks between casts to reach this HPS value.";
 L["SETTINGS_HEAL_NO_CRIT"] = "Disregard crit heals";
 L["SETTINGS_HEAL_NO_CRIT_TT"] = "Do not consider crits for hps and efficiency calculation.";
+
+L["SETTINGS_MELEE_HEAD"] = "Melee";
+L["SETTINGS_MELEE_FROM_FRONT"] = "Attacks from front";
+L["SETTINGS_MELEE_FROM_FRONT_TT"] = "Use parry and block against PvE targets.";
 
 L["TT_TITLE_DAMAGE"] = "Damage:";
 L["TT_TITLE_DOT"] = "DoT:";
@@ -90,6 +98,12 @@ L["TT_PER_MANA_HEAL"] = "HPM";
 L["TT_PER_MANA_DAMAGE"] = "DPM";
 L["TT_UNTILOOM_HEAL"] = "Heal until oom";
 L["TT_UNTILOOM_DAMAGE"] = "Damage until oom";
+L["TT_DODGECHANCE"] = "Dodge";
+L["TT_PARRYCHANCE"] = "Parry";
+L["TT_BLOCKCHANCE"] = "Block";
+L["TT_PROCCHANCE"] = "Proc chance";
+L["TT_HITS_OVER_DURATION"] = "Procs over duration";
+L["TT_DMG_OVER_DURATION"] = "Damage over duration";
 
 L["TT_COMB_AVG_HIT"] = "Avg. hit";
 L["TT_COMB_AVG_CRIT"] = "Avg. crit";
