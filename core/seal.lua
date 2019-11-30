@@ -85,7 +85,7 @@ function CalculateSoR(calcData, et, spellRankInfo, effectData, effectMod)
     else
         et.hitMin = 0.85 * dmgbase * as/100;
     end
-    et.hitAvg = et.hitMin * effectMod;
+    et.hitAvg = (et.hitMin + et.effectivePower) * effectMod;
 
     et.duration = spellRankInfo.duration;
     et.triggers = et.duration / as;
@@ -107,8 +107,8 @@ function CalculateSoC(calcData, et, spellRankInfo, effectData, effectMod)
     local as = stats.attackSpeed.mh;
     local wdcoef = effectData.min/100;
 
-    et.hitMin = wdcoef * stats.attackDmg.mh.min * effectMod;
-    et.hitMax = wdcoef * stats.attackDmg.mh.max * effectMod;
+    et.hitMin = (wdcoef * stats.attackDmg.mh.min + et.effectivePower) * effectMod;
+    et.hitMax = (wdcoef * stats.attackDmg.mh.max + et.effectivePower) * effectMod;
     et.hitAvg = (et.hitMin + et.hitMax) / 2;
 
     et.critMin = et.hitMin * calcData.critMult;
