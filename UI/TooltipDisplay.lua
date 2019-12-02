@@ -169,11 +169,23 @@ local function AppendDirectEffect(calcData, effectNum, isHeal)
         if effectData.critMax > 0 then
             if SpellCalc_settings.ttAverages then
                 DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(effectData.critMin, effectData.critMax, Round(effectData.critAvg)), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+
+                if effectData.igniteMin then
+                    SingleLine(L["TT_IGNITE"], ("2x %d - %d (%d)"):format(Round(effectData.igniteMin/2), Round(effectData.igniteMax/2), Round(effectData.igniteAvg/2)));
+                end
             else
                 DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(effectData.critMin, effectData.critMax), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+
+                if effectData.igniteMin then
+                    SingleLine(L["TT_IGNITE"], ("2x %d - %d"):format(Round(effectData.igniteMin/2), Round(effectData.igniteMax/2)));
+                end
             end
         else
             DoubleLine(L["TT_CRITICAL"], Round(effectData.critAvg), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+
+            if effectData.igniteMin then
+                SingleLine(L["TT_IGNITE"], ("2x %d"):format(Round(effectData.igniteAvg/2)));
+            end
         end
     end
 

@@ -104,6 +104,7 @@ L["TT_BLOCKCHANCE"] = "Block";
 L["TT_PROCCHANCE"] = "Proc chance";
 L["TT_HITS_OVER_DURATION"] = "Procs over duration";
 L["TT_DMG_OVER_DURATION"] = "Damage over duration";
+L["TT_IGNITE"] = "Ignite";
 
 L["TT_COMB_AVG_HIT"] = "Avg. hit";
 L["TT_COMB_AVG_CRIT"] = "Avg. crit";

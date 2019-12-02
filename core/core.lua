@@ -203,13 +203,6 @@ local function CalcSpell(spellId)
         end
     end
 
-    if stats.ignite.val > 0 and spellBaseInfo.school == self.SCHOOL.FIRE then
-        calcData.critMult = calcData.critMult * (1 + stats.ignite.val/100);
-        for _, buffName in pairs(stats.ignite.buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
-    end
-
     -- Mitigation
 
     typeFuncs.mitigate[spellType](calcData, spellBaseInfo, name);
@@ -234,7 +227,7 @@ local function CalcSpell(spellId)
     if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
         effCastTime = effCastTime - (calcData.critChance/100) * 0.5;
         effCastTime = math.max(effCastTime, GCD);
-        for _, buffName in pairs(self.stats.druidNaturesGrace.buffs) do
+        for _, buffName in pairs(stats.druidNaturesGrace.buffs) do
             table.insert(calcData.buffs, buffName);
         end
     end

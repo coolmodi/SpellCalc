@@ -275,8 +275,9 @@ end
 -- @param effectData The effect data from spell data
 -- @param effectMod The talent/buff/gear modifier for the effect
 -- @param castTime Spell cast time
+-- @param spellBaseInfo The spell base info table
 -- @param spellName The spell's name
-function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, spellName)
+function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectData, effectMod, castTime, spellBaseInfo, spellName)
     local levelBonus = 0;
     if effectData.perLevel then
         levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
@@ -298,6 +299,22 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
 
     if et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL and SpellCalc_settings.healDisregardCrit then
         et.avgCombined = et.hitAvg;
+    elseif stats.ignite.val > 0 and spellBaseInfo.school == _addon.SCHOOL.FIRE then
+        local igniteMult = stats.ignite.val/100;
+        et.igniteMin = et.critMin * igniteMult;
+
+        if effectData.max then
+            et.igniteMax =  et.critMax * igniteMult;
+            et.igniteAvg = (et.igniteMin + et.igniteMax) / 2;
+        else
+            et.igniteAvg = et.igniteMin;
+        end
+
+        for _, buffName in pairs(stats.ignite.buffs) do
+            table.insert(calcData.buffs, buffName);
+        end
+
+        et.avgCombined = et.hitAvg + (et.critAvg + et.igniteAvg - et.hitAvg) * calcData.critChance/100;
     else
         et.avgCombined = et.hitAvg + (et.critAvg - et.hitAvg) * calcData.critChance/100;
     end
@@ -481,7 +498,7 @@ end
 -- @param spellName The spell's name
 local function CalculateEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime, spellBaseInfo, name)
     if et.effectType == SPELL_EFFECT_TYPE.DIRECT_DMG or et.effectType == SPELL_EFFECT_TYPE.DIRECT_HEAL then
-        _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime, name);
+        _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime, spellBaseInfo, name);
     elseif et.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
         _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, effectData, effectMod, effCastTime)
     else -- HoT or DoT (also channeled)
