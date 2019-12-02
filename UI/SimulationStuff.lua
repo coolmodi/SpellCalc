@@ -28,7 +28,7 @@ cb:SetScript("OnClick", function(self)
     else
         _addon.test_innervate = false;
     end
-    _addon.lastChange = time();
+    _addon:TriggerUpdate();
 end);
 cb:SetNormalTexture([[Interface\Buttons\UI-CheckBox-Up]]);
 cb:SetPushedTexture([[Interface\Buttons\UI-CheckBox-Down]]);
@@ -57,7 +57,7 @@ UIDropDownMenu_Initialize(dropDown, function(self, level, menuList)
             _addon.test_manapot = 1800;
         end
         UIDropDownMenu_SetText(self, arg2);
-        _addon.lastChange = time();
+        _addon:TriggerUpdate();
     end;
     for k, v in pairs({none = "No mana pot", superior = "Superior mana pot", major = "Major mana pot"}) do
         info.text = v;

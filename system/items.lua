@@ -111,7 +111,7 @@ local function ChangeItemEffects(itemData, itemName, remove)
         end
     end
 
-    _addon.lastChange = time();
+    _addon:TriggerUpdate();
 end
 
 --- Trigger full item update when time is up
@@ -165,7 +165,7 @@ local function EquipItem(itemId, slotId)
         for _, effect in ipairs(_addon.itemEffects[itemId]) do
             _addon:ApplyBuff(itemName, effect.type, effect.value, effect.affectSchool, effect.affectSpell);
         end
-        _addon.lastChange = time();
+        _addon:TriggerUpdate();
     end
 
     if setId then
@@ -192,7 +192,7 @@ local function UnequipItem(slotId)
         for _, effect in ipairs(_addon.itemEffects[items[slotId]]) do
             _addon:RemoveBuff(itemName, effect.type, effect.value, effect.affectSchool, effect.affectSpell);
         end
-        _addon.lastChange = time();
+        _addon:TriggerUpdate();
     end
 
     if setId then

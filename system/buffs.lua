@@ -402,7 +402,7 @@ function _addon:UpdateBuffs(clearOnly)
     end
 
     if buffsChanged then
-        self.lastChange = time();
+        self:TriggerUpdate();
     end
 end
 
@@ -457,5 +457,5 @@ function _addon:UpdateTalents(forceTalents)
         end
 	end
 
-    self.lastChange = time();
+    self:TriggerUpdate();
 end

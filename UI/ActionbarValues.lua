@@ -6,7 +6,7 @@ local SPELL_TYPE = _addon.SPELL_TYPE;
 local spellsInBar = {};
 local actionButtons = {};
 local needUpdate = {};
-local lastSyncTime = 0;
+local lastSyncState = 0;
 local frame = CreateFrame("Frame", "SCABUpdateFrame");
 
 --- Update buttons
@@ -16,52 +16,38 @@ local function UpdateButtons(self, diff)
         return;
     end
 
-    if lastSyncTime < _addon.lastChange then
+    if lastSyncState < _addon:GetCurrentState() then
         _addon:PrintDebug("All buttons need an update");
         for slot in pairs(spellsInBar) do
             needUpdate[slot] = true;
         end
+        lastSyncState = _addon:GetCurrentState();
     end
-    lastSyncTime = _addon.lastChange;
-
-    local directKey = SpellCalc_settings.abDirectValue;
-    local durationKey = SpellCalc_settings.abDurationValue;
-    local sealKey = SpellCalc_settings.abSealValue;
 
     for slot, _ in pairs(needUpdate) do
         _addon:PrintDebug("Update button slot " .. slot);
         local spellId = spellsInBar[slot];
+        local calcedSpell = _addon:GetCalcedSpell(spellId);
 
-        if spellId == _addon.JUDGEMENT_ID then
-            if _addon.judgementSpell then
-                spellId = _addon.judgementSpell;
-            else
-                spellId = nil;
-            end
-        end
-
-        if spellId == nil then
-            actionButtons[slot]:SetText("");
-        else
-            if _addon.calcedSpells[spellId] == nil or _addon.calcedSpells[spellId].updated < _addon.lastChange then
-                _addon:CalcSpell(spellId);
-            end
-
-            local calcedSpell = _addon.calcedSpells[spellId];
-            local effectData = calcedSpell[1];
-
+        if calcedSpell ~= nil then
             if calcedSpell.spellType == SPELL_TYPE.SPELL then
+                local effectData = calcedSpell[1];
+
                 if effectData.effectType == SPELL_EFFECT_TYPE.HOT or effectData.effectType == SPELL_EFFECT_TYPE.DOT then
+                    local durationKey = SpellCalc_settings.abDurationValue;
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1][durationKey] + 0.5));
                 elseif effectData.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1].perCharge + 0.5));
                 else
+                    local directKey = SpellCalc_settings.abDirectValue;
                     if directKey == "critAvg" and calcedSpell.critChance == 0 then
                         directKey = "hitAvg";
                     end
                     actionButtons[slot]:SetText(math.floor(calcedSpell[1][directKey] + 0.5));
                 end
+
             elseif calcedSpell.spellType == SPELL_TYPE.SEAL then
+                local sealKey = SpellCalc_settings.abSealValue;
                 actionButtons[slot]:SetText(math.floor(calcedSpell[1][sealKey] + 0.5));
             end
         end
@@ -96,13 +82,11 @@ local function SetSlotSpell(slot, spellId)
         return;
     end
 
-    if spellId == nil then
+    if spellId == nil or (spellId ~= _addon.JUDGEMENT_ID and not _addon:GetHandledSpellID(spellId)) then
+        _addon:PrintDebug("Set slot "..slot.." nil because spell "..tostring(spellId).." is nil or not handled");
         spellsInBar[slot] = nil;
-        needUpdate[slot] = true;
-        return;
-    end
-
-    if spellId ~= _addon.JUDGEMENT_ID and (_addon.spellRankInfo[spellId] == nil or _addon.spellBaseInfo[GetSpellInfo(spellId)] == nil) then
+        needUpdate[slot] = nil;
+        actionButtons[slot]:SetText("");
         return;
     end
 
@@ -200,7 +184,7 @@ end
 --- Update action slot
 -- @param slot The action slot number
 function _addon:ActionbarSlotUpdate(slot)
-    self:PrintDebug("Slot update " .. slot);
+    self:PrintDebug("Action slot update " .. slot);
     local aType, aId = GetActionInfo(slot);
 
     if aType == "spell" then

@@ -3,8 +3,8 @@ local _, _addon = ...;
 local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
 local SPELL_TYPE = _addon.SPELL_TYPE;
 
-_addon.calcedSpells = {};
-_addon.lastChange = time();
+local calcedSpells = {};
+local currentState = 1;
 
 local typeFuncs = {
     baseMembers = {},
@@ -101,7 +101,7 @@ local effectTypes = {};
 
 --- Calculate spell values with current stats
 -- @param spellId The ID of the spell
-function _addon:CalcSpell(spellId)
+local function CalcSpell(spellId)
     _addon:PrintDebug("Calculating spell " .. spellId);
 
     local name, _, _, castTime = GetSpellInfo(spellId);
@@ -166,10 +166,10 @@ function _addon:CalcSpell(spellId)
     --------------------------
     -- Calculation table
 
-    if _addon.calcedSpells[spellId] == nil then
-        _addon.calcedSpells[spellId] = MakeSpellTable(spellType, effectTypes[1], effectTypes[2]);
+    if calcedSpells[spellId] == nil then
+        calcedSpells[spellId] = MakeSpellTable(spellType, effectTypes[1], effectTypes[2]);
     end
-    local calcData = _addon.calcedSpells[spellId];
+    local calcData = calcedSpells[spellId];
 
     --------------------------
     -- Spell wide modifiers
@@ -307,7 +307,69 @@ function _addon:CalcSpell(spellId)
         _addon:CalculateSpellCombinedEffect(calcData, spellRankInfo.effects[2], effCastTime);
     end
 
-    calcData.updated = time() - 1;
+    calcData.updated = currentState;
 
     -- _addon:PrintDebug(calcData);
+end
+
+do
+    local updateStaggerFrame = CreateFrame("Frame");
+    local timerDiff = 0;
+    local waitForUpdate = false;
+
+    -- Only update every 1/3 sec instead of possibly after every single change
+    local function UpdateUpdate(self, diff)
+        timerDiff = timerDiff + diff;
+        if timerDiff > 0.333 then
+            currentState = currentState + 1;
+            _addon:PrintDebug("Increment state! " .. currentState);
+            updateStaggerFrame:SetScript("OnUpdate", nil);
+            timerDiff = 0;
+            waitForUpdate = false;
+        end
+    end
+
+    --- Trigger full update
+    function _addon:TriggerUpdate()
+        if waitForUpdate then
+            return;
+        end
+        self:PrintDebug("Update triggered!");
+        updateStaggerFrame:SetScript("OnUpdate", UpdateUpdate);
+    end
+end
+
+--- Return the handled spell ID or fals if spell is not known by the addon
+-- @param SpellID The spell's ID
+function _addon:GetHandledSpellID(spellID)
+    if spellID == self.JUDGEMENT_ID and self.judgementSpell then
+        spellID = self.judgementSpell;
+    end
+
+    if self.spellBaseInfo[GetSpellInfo(spellID)] == nil then
+        return false;
+    end
+
+    return spellID;
+end
+
+--- Get calculated spell if it is handled by the addon, updates or creates spell data if needed
+-- @param SpellID The spell's ID
+function _addon:GetCalcedSpell(spellID)
+    spellID = self:GetHandledSpellID(spellID)
+
+    if not spellID then
+        return;
+    end
+
+    if calcedSpells[spellID] == nil or calcedSpells[spellID].updated < currentState then
+        CalcSpell(spellID);
+    end
+
+    return calcedSpells[spellID];
+end
+
+--- Get the current incrementing internal update state
+function _addon:GetCurrentState()
+    return currentState;
 end

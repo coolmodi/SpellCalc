@@ -41,5 +41,5 @@ function _addon:UpdateTarget()
     self.target.resistance[self.SCHOOL.ARCANE] = SpellCalc_settings.resOverrideArcane;
 
     self:PrintDebug(("New target: %d, %d, %s"):format(self.target.level, self.target.levelDiff, tostring(self.target.isPlayer)));
-    self.lastChange = time();
+    self:TriggerUpdate();
 end

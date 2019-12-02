@@ -415,27 +415,15 @@ end
 -- Appends data if spell is known to the addon.
 GameTooltip:SetScript("OnTooltipSetSpell", function(self)
     local _, spellID = GameTooltip:GetSpell();
+    local calcedSpell = _addon:GetCalcedSpell(spellID);
 
-    if spellID == _addon.JUDGEMENT_ID and _addon.judgementSpell then
-        spellID = _addon.judgementSpell;
+    if calcedSpell then
+        if calcedSpell.spellType == SPELL_TYPE.SPELL then
+            AddSpellTooltip(calcedSpell, _addon.spellBaseInfo[GetSpellInfo(spellID)]);
+        elseif calcedSpell.spellType == SPELL_TYPE.SEAL then
+            AddSealTooltip(calcedSpell, _addon.spellBaseInfo[GetSpellInfo(spellID)]);
+        end
+
+        AppendBuffList(calcedSpell.buffs);
     end
-
-    local spellBaseInfo = _addon.spellBaseInfo[GetSpellInfo(spellID)];
-    if spellBaseInfo == nil then
-        return;
-    end
-
-    if _addon.calcedSpells[spellID] == nil or _addon.calcedSpells[spellID].updated < _addon.lastChange then
-        _addon:CalcSpell(spellID);
-    end
-
-    local calcedSpell = _addon.calcedSpells[spellID];
-
-    if calcedSpell.spellType == SPELL_TYPE.SPELL then
-        AddSpellTooltip(calcedSpell, spellBaseInfo);
-    elseif calcedSpell.spellType == SPELL_TYPE.SEAL then
-        AddSealTooltip(calcedSpell, spellBaseInfo);
-    end
-
-    AppendBuffList(calcedSpell.buffs);
 end);

@@ -163,7 +163,7 @@ function _addon:UpdateSpellPower()
         _addon.stats.spellPower[i] = GetSpellBonusDamage(i);
     end
 
-    _addon.lastChange = time();
+    self:TriggerUpdate();
 end
 
 --- Update dmg done mods
@@ -184,7 +184,7 @@ function _addon:UpdateDmgDoneMods()
     self.stats.attackCrit.oh = GetCritChance(); -- TODO: how to get this? Is there even a (realistic) way?
     self.stats.attackCrit.r = GetRangedCritChance();
 
-    self.lastChange = time();
+    self:TriggerUpdate();
 end
 
 local queueFrame = CreateFrame("Frame");
@@ -202,7 +202,7 @@ local function UpdateFunction(self, passed)
         _addon.stats.baseManaReg = curRegen;
         _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
         queueFrame:SetScript("OnUpdate", nil);
-        _addon.lastChange = time();
+        _addon:TriggerUpdate();
     end
 end
 
@@ -224,7 +224,7 @@ function _addon:UpdateStats()
         queueFrame:SetScript("OnUpdate", UpdateFunction);
     end
 
-    self.lastChange = time();
+    self:TriggerUpdate();
 end
 
 --- Update weapon attack speeds
@@ -238,7 +238,7 @@ function _addon:UpdateAttackSpeeds()
 
     _addon:PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mh, self.stats.attackSpeed.oh, self.stats.attackSpeed.r));
 
-    self.lastChange = time();
+    self:TriggerUpdate();
 end
 
 --- Update weapon attack skill
@@ -252,14 +252,14 @@ function _addon:UpdateWeaponAttack()
 
     _addon:PrintDebug(("Updated attack: M: %d + %d O: %d + %d R: %d + %d"):format(mh, mhMod, oh, ohMod, r, rMod));
 
-    self.lastChange = time();
+    self:TriggerUpdate();
 end
 
 --- Update melee attack damage
 function _addon:UpdateAttackDmg()
     _addon:PrintDebug("Updated melee dmg");
     self.stats.attackDmg.mh.min, self.stats.attackDmg.mh.max, self.stats.attackDmg.oh.min, self.stats.attackDmg.oh.max = UnitDamage("player");
-    self.lastChange = time();
+    self:TriggerUpdate();
 end
 
 --- Update ranged attack damage
@@ -268,7 +268,7 @@ function _addon:UpdateRangedAttackDmg()
     local _, lowDmg, hiDmg = UnitRangedDamage("player");
     self.stats.attackDmg.r.min = lowDmg;
     self.stats.attackDmg.r.max = hiDmg;
-    self.lastChange = time();
+    self:TriggerUpdate();
 end
 
 -- Update everything manually

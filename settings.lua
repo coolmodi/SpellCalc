@@ -71,7 +71,7 @@ local function AfterSave()
 		_addon:ClearActionBar();
 	end
 
-	_addon.lastChange = time();
+	_addon:TriggerUpdate();
 end
 
 --- Setup SV tables, check settings and setup settings menu
