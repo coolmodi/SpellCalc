@@ -38,6 +38,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(2944)] = { -- Devouring Plague
         school = 6,
     },
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        isAutoAttack = true,
+    },
     [GetSpellInfo(8092)] = { -- Mind Blast
         school = 6,
     },
@@ -517,6 +521,16 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 80,
                 coef = 0.2,
+            },
+        }
+    },
+    [6603] = { -- Attack
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                min = 0,
+                coef = 0,
             },
         }
     },

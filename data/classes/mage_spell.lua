@@ -58,6 +58,10 @@ _addon.spellBaseInfo = {
         isAbsorbShield = true,
         forceSchoolScaling = true,
     },
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        isAutoAttack = true,
+    },
     [GetSpellInfo(11113)] = { -- Blast Wave
         school = 3,
         isBinary = true,
@@ -440,6 +444,16 @@ _addon.spellRankInfo = {
             [1] = {
                 isHeal = true,
                 min = 165,
+                coef = 0,
+            },
+        }
+    },
+    [6603] = { -- Attack
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                min = 0,
                 coef = 0,
             },
         }

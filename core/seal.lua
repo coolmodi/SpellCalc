@@ -67,7 +67,7 @@ end
 local function Mitigate(calcData, spellBaseInfo, spellName)
     calcData.avgResistMod = _addon:GetSpellAvgResist(spellBaseInfo.school);
     -- effective hit is anything that does dmg, both for seal procs and for hitting SoC
-    calcData.effHitChance = (calcData.hitChance - calcData.dodge - calcData.block - calcData.parry) / 100;
+    calcData.effHitChance = (calcData.hitChance - calcData.dodge - calcData.parry) / 100;
 end
 
 --- Calculate SoR

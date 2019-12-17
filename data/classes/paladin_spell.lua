@@ -16,6 +16,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(2812)] = { -- Holy Wrath
         school = 2,
     },
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        isAutoAttack = true,
+    },
     [GetSpellInfo(19750)] = { -- Flash of Light
         school = 2,
     },
@@ -168,6 +172,16 @@ _addon.spellRankInfo = {
                 max = 246,
                 perLevel = 2,
                 coef = 0.429,
+            },
+        }
+    },
+    [6603] = { -- Attack
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                min = 0,
+                coef = 0,
             },
         }
     },

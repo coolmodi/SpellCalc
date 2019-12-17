@@ -52,6 +52,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(6353)] = { -- Soul Fire
         school = 3,
     },
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        isAutoAttack = true,
+    },
     [GetSpellInfo(6789)] = { -- Death Coil
         school = 6,
         isBinary = true,
@@ -474,6 +478,16 @@ _addon.spellRankInfo = {
                 max = 784,
                 perLevel = 2.9,
                 coef = 1,
+            },
+        }
+    },
+    [6603] = { -- Attack
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                min = 0,
+                coef = 0,
             },
         }
     },

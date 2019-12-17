@@ -48,11 +48,13 @@ system/target.lua
 core/core.lua
 core/spell.lua
 core/melee.lua
+core/melee_auto.lua
 core/seal.lua
 
 UI/TooltipDisplay.lua
 UI/tooltip_seal.lua
 UI/tooltip_spell.lua
+UI/tooltip_autoattack.lua
 UI/StatDisplay.lua
 UI/ActionbarValues.lua
 UI/SimulationStuff.lua

@@ -105,6 +105,11 @@ L["TT_PROCCHANCE"] = "Proc chance";
 L["TT_HITS_OVER_DURATION"] = "Procs over duration";
 L["TT_DMG_OVER_DURATION"] = "Damage over duration";
 L["TT_IGNITE"] = "Ignite";
+L["TT_MAINHAND"] = "Mainhand";
+L["TT_OFFHAND"] = "Offhand";
+L["TT_GLANCECHANCE"] = "Glancing";
+L["TT_GLANCEDATA"] = "%.1f%% for %.1f%% damage";
+L["TT_PERSEC_COMBINED_DAMAGE"] = "Combined DPS";
 
 L["TT_COMB_AVG_HIT"] = "Avg. hit";
 L["TT_COMB_AVG_CRIT"] = "Avg. crit";

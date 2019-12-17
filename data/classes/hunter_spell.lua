@@ -21,6 +21,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(3044)] = { -- Arcane Shot
         school = 7,
     },
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        isAutoAttack = true,
+    },
 };
 
 _addon.spellRankInfo = {
@@ -113,6 +117,16 @@ _addon.spellRankInfo = {
                 tickPeriod = 1,
                 min = 103,
                 coef = 0.2,
+            },
+        }
+    },
+    [6603] = { -- Attack
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                min = 0,
+                coef = 0,
             },
         }
     },

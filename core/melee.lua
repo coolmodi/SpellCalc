@@ -60,16 +60,9 @@ local function GetWeaponCritChance(isPvP, baseAtk, atk, ldef, levelDiff, isOffha
         return math.max(0, basecrit + (baseAtk - ldef) * 0.04);
     end
 
-    _addon:PrintDebug(basecrit);
-    _addon:PrintDebug(atk);
-    _addon:PrintDebug(baseAtk);
-
     -- against NPCs weapon skill above the level based max is ignored for crit
     local effectiveAttack = math.min(atk, baseAtk);
     local adDiff = effectiveAttack - ldef;
-
-    _addon:PrintDebug(effectiveAttack);
-    _addon:PrintDebug(adDiff);
 
     -- spellbook crit (basecrit) already includes a 0.04% change for every point you are above or below YOUR level based maximum!
     -- need to adjust crit so that bonuses from weapon skill are removed and penalties are applied correctly based on target level/def
@@ -98,19 +91,15 @@ end
 -- @param isPvP Is the target a player
 -- @param levelDiff Level difference with target
 local function GetParryChance(isPvP, levelDiff)
-    if isPvP then
+    if isPvP or not SpellCalc_settings.meleeFromFront then
         return 0;
     end
 
-    if SpellCalc_settings.meleeFromFront then
-        -- TODO: this is probably not correct at all
-        if levelDiff < 2 then
-            return math.max(0, 5 + levelDiff);
-        else
-            return 14;
-        end
+    -- TODO: this is probably not correct at all
+    if levelDiff < 2 then
+        return math.max(0, 5 + levelDiff);
     else
-        return 0;
+        return 14;
     end
 end
 
@@ -160,10 +149,17 @@ end
 -- @param atk Actual attack value for weapon
 local function GetGlancingChanceAndDamage(ldef, baseAtk, atk)
     local glancing = 10 + (ldef - math.min(baseAtk, atk)) * 2;
-    local minReduction = math.min(0.91, 1.3 - 0.05 * (ldef - atk));
+    local minReduction = math.max(0, math.min(0.91, 1.3 - 0.05 * (ldef - atk)));
     local maxRedcution = math.max(0.2, math.min(0.99, 1.2 - 0.03 * (ldef - atk)));
     local glancingDamage = (minReduction + maxRedcution) / 2;
     return glancing, glancingDamage;
+end
+
+local function GetBlockChancePH(isPvP, skillDiff)
+    if isPvP or not SpellCalc_settings.meleeFromFront then
+        return 0;
+    end
+    return math.min(5, 5 + skillDiff * 0.1);
 end
 
 --- Get melee attack table against current target
@@ -205,17 +201,26 @@ function _addon:GetMeleeTable(calcData, isWhitehit, isOffhand)
 
         miss = GetMissChance(true, isWhitehit, skillDiff);
         dodge = GetDodgeChance(true, skillDiff);
-        block = 0;
+        block = GetBlockChancePH(true, skillDiff);
         parry = GetParryChance(true, tData.levelDiff);
         crit = GetWeaponCritChance(true, baseAtk, atk, ldef, tData.levelDiff, isOffhand);
 
+        if isWhitehit then
+            glancing, glancingDamage = 0, 1;
+        end
     else
         local atk = isOffhand and stats.attack.oh or stats.attack.mh;
+        if class == "DRUID" then
+            local formId = GetShapeshiftForm();
+            if formId == 1 or formId == 3 then
+                atk = baseAtk;
+            end
+        end
         local skillDiff = ldef - atk;
 
         miss = GetMissChance(false, isWhitehit, skillDiff, tData.level);
         dodge = GetDodgeChance(false, skillDiff);
-        block = 0;
+        block = GetBlockChancePH(false, skillDiff);
         parry = GetParryChance(false, tData.levelDiff);
         crit = GetWeaponCritChance(false, baseAtk, atk, ldef, tData.levelDiff, isOffhand);
 
@@ -247,9 +252,12 @@ function _addon:GetMeleeTable(calcData, isWhitehit, isOffhand)
     self:PrintDebug((dbstring):format(miss, dodge, parry, tostring(glancing), block, crit, hitBonus, tostring(glancingDamage)));
 
     local total = 100;
-    if total < miss - hitBonus then
-        return total, 0, 0, 0, 0, 0, hitBonus, glancingDamage;
+
+    local realMiss = math.max(0, miss - hitBonus);
+    if total < realMiss then
+        return 100, 0, 0, 0, 0, 0, hitBonus, glancingDamage;
     end
+    total = total - realMiss;
 
     if total < dodge then
         return miss, total, 0, 0, 0, 0, hitBonus, glancingDamage;

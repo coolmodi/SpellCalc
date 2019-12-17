@@ -32,6 +32,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(5394)] = { -- Healing Stream Totem
         school = 5,
     },
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        isAutoAttack = true,
+    },
     [GetSpellInfo(8004)] = { -- Lesser Healing Wave
         school = 4,
     },
@@ -411,6 +415,16 @@ _addon.spellRankInfo = {
                 tickPeriod = 2,
                 min = 10,
                 coef = 0.022,
+            },
+        }
+    },
+    [6603] = { -- Attack
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                min = 0,
+                coef = 0,
             },
         }
     },

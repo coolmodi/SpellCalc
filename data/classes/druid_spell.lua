@@ -28,6 +28,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(5570)] = { -- Insect Swarm
         school = 4,
     },
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        isAutoAttack = true,
+    },
     [GetSpellInfo(8921)] = { -- Moonfire
         school = 7,
     },
@@ -366,6 +370,16 @@ _addon.spellRankInfo = {
                 tickPeriod = 2,
                 min = 11,
                 coef = 0.158,
+            },
+        }
+    },
+    [6603] = { -- Attack
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                min = 0,
+                coef = 0,
             },
         }
     },

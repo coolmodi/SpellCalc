@@ -54,7 +54,8 @@ _addon.EFFECT_TYPE = {
 -- Spell types (What calculation rules to use)
 _addon.SPELL_TYPE = {
     SPELL = 1,
-    SEAL = 2
+    SEAL = 2,
+    AUTO_ATTACK = 3
 };
 
 -- Spell effect types (What calculation rules to use)
@@ -66,7 +67,9 @@ _addon.SPELL_EFFECT_TYPE = {
     HOT = 5,
 
     SEAL_OF_RIGHTEOUSNES = 6,
-    SEAL_OF_COMMAND = 7
+    SEAL_OF_COMMAND = 7,
+
+    AUTO_ATTACK = 8
 };
 
 _addon.HEALING_CLASSES = {
@@ -133,9 +136,9 @@ _addon.WEAPON_TYPES_MASK = {
     CROSSBOW = 0x20000,
     GUN = 0x40000,
 
-    UNARMED = 1000000,
-    THROWN = 2000000,
-    WAND = 4000000,
+    UNARMED = 0x1000000,
+    THROWN = 0x2000000,
+    WAND = 0x4000000,
 
     TWO_HAND = 0xFF,
     ONE_HAND = 0xFF00,

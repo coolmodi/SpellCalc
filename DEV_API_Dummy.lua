@@ -184,3 +184,7 @@ function GetSpellPowerCost(spellName_spellID)
         costPerSec = 0
     }
 end
+
+function GetShapeshiftForm()
+    return 0;
+end

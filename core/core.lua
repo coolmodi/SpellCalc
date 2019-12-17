@@ -133,6 +133,8 @@ local function CalcSpell(spellId)
 
     if spellBaseInfo.isSeal then
         spellType = SPELL_TYPE.SEAL;
+    elseif spellBaseInfo.isAutoAttack then
+        spellType = SPELL_TYPE.AUTO_ATTACK;
     end
 
     if spellType == SPELL_TYPE.SPELL then
@@ -161,6 +163,8 @@ local function CalcSpell(spellId)
         elseif spellBaseInfo.isSeal == "SOC" then
             effectTypes[1] = SPELL_EFFECT_TYPE.SEAL_OF_COMMAND;
         end
+    elseif spellType == SPELL_TYPE.AUTO_ATTACK then
+        effectTypes[1] = SPELL_EFFECT_TYPE.AUTO_ATTACK;
     end
 
     _addon:PrintDebug("Has " .. #spellRankInfo.effects .. " effects (" .. effectTypes[1] .. ", " .. tostring(effectTypes[2]) .. ")");
@@ -289,8 +293,6 @@ local function CalcSpell(spellId)
     end
 
     calcData.updated = currentState;
-
-    -- _addon:PrintDebug(calcData);
 end
 
 do
