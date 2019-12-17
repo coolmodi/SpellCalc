@@ -50,7 +50,7 @@ end
 local function SetCrit(ct, spellBaseInfo)
     ct.critMult = 2;
     -- we set more than just crit here now...
-    local miss, dodge, parry, _, block, crit, hitBonus = _addon:GetMeleeTable(ct.buffs);
+    local miss, dodge, parry, _, block, crit, hitBonus = _addon:GetMeleeTable(ct);
     ct.critChance = crit;
     ct.baseHitChance = 100 - miss;
     ct.dodge = dodge;

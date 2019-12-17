@@ -19,6 +19,15 @@ _addon.typeFuncs = typeFuncs;
 
 local stats = _addon.stats;
 
+--- Add buff names to buff list
+-- @param self The spell calc table
+-- @param buffs The table of buff names to add
+local function AddToBuffList(self, buffs)
+    for _, buffName in ipairs(buffs) do
+        table.insert(self.buffs, buffName);
+    end
+end
+
 --- Make a new table to store calculated spell data
 -- @param spellType The base spell type
 -- @param primaryType The primary effect type, required
@@ -31,6 +40,7 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
         critChance = 0,
         critMult = 0,
         buffs = {}, -- Buffs used in the calculation process, not buffs that affect spell indirectly
+        AddToBuffList = AddToBuffList,
         updated = 0 -- Last update time
     };
 
@@ -67,30 +77,22 @@ end
 -- @param spellBaseInfo The spell base info table
 -- @param isHeal
 -- @param spellName
--- @param buffTable
-local function GenerateEffectModifier(spellBaseInfo, isHeal, spellName, buffTable)
+-- @param calcData the calculation table
+local function GenerateEffectModifier(spellBaseInfo, isHeal, spellName, calcData)
     local effectMod = stats.effectMods.school[spellBaseInfo.school].val;
-    for _, buffName in pairs(stats.effectMods.school[spellBaseInfo.school].buffs) do
-        table.insert(buffTable, buffName);
-    end
+    calcData:AddToBuffList(stats.effectMods.school[spellBaseInfo.school].buffs);
 
     if stats.effectMods.spell[spellName] ~= nil then
         effectMod = effectMod * stats.effectMods.spell[spellName].val;
-        for _, buffName in pairs(stats.effectMods.spell[spellName].buffs) do
-            table.insert(buffTable, buffName);
-        end
+        calcData:AddToBuffList(stats.effectMods.spell[spellName].buffs);
     end
 
     if not isHeal then
         effectMod = effectMod * stats.dmgDoneMods[spellBaseInfo.school].val;
-        for _, buffName in pairs(stats.dmgDoneMods[spellBaseInfo.school].buffs) do
-            table.insert(buffTable, buffName);
-        end
+        calcData:AddToBuffList(stats.dmgDoneMods[spellBaseInfo.school].buffs);
     elseif not spellBaseInfo.isAbsorbShield then
         effectMod = effectMod * stats.healingDoneMod.val;
-        for _, buffName in pairs(stats.healingDoneMod.buffs) do
-            table.insert(buffTable, buffName);
-        end
+        calcData:AddToBuffList(stats.healingDoneMod.buffs);
     end
 
     _addon:PrintDebug("Effectmod: "..effectMod);
@@ -182,25 +184,19 @@ local function CalcSpell(spellId)
 
     if calcData.critChance > 0 and stats.critMods.spell[name] ~= nil then
         calcData.critChance = calcData.critChance + stats.critMods.spell[name].val;
-        for _, buffName in pairs(stats.critMods.spell[name].buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        AddToBuffList(calcData, stats.critMods.spell[name].buffs);
     end
 
     local cmbonus = calcData.critMult - 1;
 
     if stats.critMult.school[spellBaseInfo.school].val > 0 then
         calcData.critMult = calcData.critMult + cmbonus * stats.critMult.school[spellBaseInfo.school].val/100;
-        for _, buffName in pairs(stats.critMult.school[spellBaseInfo.school].buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        AddToBuffList(calcData, stats.critMult.school[spellBaseInfo.school].buffs);
     end
 
     if stats.critMult.spell[name] ~= nil then
         calcData.critMult = calcData.critMult + cmbonus * stats.critMult.spell[name].val/100;
-        for _, buffName in pairs(stats.critMult.spell[name].buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        AddToBuffList(calcData, stats.critMult.spell[name].buffs);
     end
 
     -- Mitigation
@@ -219,17 +215,13 @@ local function CalcSpell(spellId)
         local castsInICD = math.floor(8.5/effCastTime);
         effCastTime = (1.5 + (10 + castsInICD) * effCastTime) / (11 + castsInICD);
         effCastTime = math.max(effCastTime, GCD);
-        for _, buffName in pairs(stats.mageNWRProc[name].buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        AddToBuffList(calcData, stats.mageNWRProc[name].buffs);
     end
 
     if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
         effCastTime = effCastTime - (calcData.critChance/100) * 0.5;
         effCastTime = math.max(effCastTime, GCD);
-        for _, buffName in pairs(stats.druidNaturesGrace.buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        AddToBuffList(calcData, stats.druidNaturesGrace.buffs);
     end
 
     --------------------------
@@ -251,17 +243,13 @@ local function CalcSpell(spellId)
     local flatMod = 0;
     if stats.flatMods[name] ~= nil then
         flatMod = stats.flatMod[name].val;
-        for _, buffName in pairs(stats.flatMod[name].buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        AddToBuffList(calcData, stats.flatMod[name].buffs);
     end
 
     local extraSp = 0;
     if stats.extraSp[name] ~= nil then
         extraSp = stats.extraSp[name].val;
-        for _, buffName in pairs(stats.extraSp[name].buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        AddToBuffList(calcData, stats.extraSp[name].buffs);
     end
 
     --------------------------
@@ -287,7 +275,7 @@ local function CalcSpell(spellId)
 
         --------------------------
         -- Effect specific modifier
-        local effectMod = GenerateEffectModifier(spellBaseInfo, spellRankInfo.effects[i].isHeal, name, calcData.buffs);
+        local effectMod = GenerateEffectModifier(spellBaseInfo, spellRankInfo.effects[i].isHeal, name, calcData);
 
         --------------------------
         -- Effect values

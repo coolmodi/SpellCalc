@@ -167,7 +167,7 @@ local function GetGlancingChanceAndDamage(ldef, baseAtk, atk)
 end
 
 --- Get melee attack table against current target
--- @param buffTable The calculation table's buff table
+-- @param calcData The spell calc table
 -- @param isWhitehit Treat as white hit, i.e. there are glancing blows
 -- @param isOffhand Use offhand weapon skill
 -- @return miss chance in percent, excluding hitBonus!
@@ -179,7 +179,7 @@ end
 -- @return hitBonus after level based penalty
 -- @return glancingDamage if isWhitehit is true
 -- @return crit percent to crit cap if whitehit, negative if over crit cap
-function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
+function _addon:GetMeleeTable(calcData, isWhitehit, isOffhand)
     local tData = _addon.target;
     local ldef = tData.level * 5;
     local miss, dodge, parry, block, crit, glancing, glancingDamage;
@@ -228,17 +228,13 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
 
     if stats.hitBonus.val > 0 then
         hitBonus = hitBonus + stats.hitBonus.val;
-        for _, buffName in pairs(stats.hitBonus.buffs) do
-            table.insert(buffTable, buffName);
-        end
+        calcData:AddToBuffList(stats.hitBonus.buffs);
     end
 
     local weaponType = self:GetWeaponType(isOffhand and "oh" or "mh");
     if stats.hitMods.weapon[weaponType].val > 0 then
         hitBonus = hitBonus + stats.hitMods.weapon[weaponType].val;
-        for _, buffName in pairs(stats.hitMods.weapon[weaponType].buffs) do
-            table.insert(buffTable, buffName);
-        end
+        calcData:AddToBuffList(stats.hitMods.weapon[weaponType].buffs);
     end
 
     if tData.levelDiff > 2 then

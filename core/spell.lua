@@ -13,8 +13,8 @@ local stats = _addon.stats;
 
 --- Get base spell crit chance for spell school
 -- @param spellBaseInfo The spell base info table
--- @param buffTable The calculation table's buff table
-function GetSpellSchoolCritChance(spellBaseInfo, buffTable)
+-- @param calcData the calculation table
+function GetSpellSchoolCritChance(spellBaseInfo, calcData)
     if spellBaseInfo.isAbsorbShield or spellBaseInfo.isDmgShield then
         return 0;
     end
@@ -22,9 +22,7 @@ function GetSpellSchoolCritChance(spellBaseInfo, buffTable)
     local chance = stats.spellCrit[spellBaseInfo.school];
 
     chance = chance + stats.critMods.school[spellBaseInfo.school].val;
-    for _, buffName in pairs(stats.critMods.school[spellBaseInfo.school].buffs) do
-        table.insert(buffTable, buffName);
-    end
+    calcData:AddToBuffList(stats.critMods.school[spellBaseInfo.school].buffs);
 
     return chance;
 end
@@ -34,7 +32,7 @@ end
 -- @param spellBaseInfo The spell base info table
 local function SetCrit(ct, spellBaseInfo)
     ct.critMult = 1.5;
-    ct.critChance = GetSpellSchoolCritChance(spellBaseInfo, ct.buffs);
+    ct.critChance = GetSpellSchoolCritChance(spellBaseInfo, ct);
 end
 
 --- Get the average dmg resisted by target due to resistance after penetration
@@ -73,19 +71,15 @@ end
 
 --- Get spell hit bonus from gear and talents
 -- @param school The spell school (API enumeration)
--- @param buffTable The calculation table's buff table
-function GetSpellHitBonus(school, buffTable)
+-- @param calcData the calculation table
+function GetSpellHitBonus(school, calcData)
     local hitChanceBonus = 0;
 
     hitChanceBonus = hitChanceBonus + stats.hitMods.school[school].val;
-    for _, buffName in pairs(stats.hitMods.school[school].buffs) do
-        table.insert(buffTable, buffName);
-    end
+    calcData:AddToBuffList(stats.hitMods.school[school].buffs);
 
     hitChanceBonus = hitChanceBonus + stats.hitBonusSpell.val;
-    for _, buffName in pairs(stats.hitBonusSpell.buffs) do
-        table.insert(buffTable, buffName);
-    end
+    calcData:AddToBuffList(stats.hitBonusSpell.buffs);
 
     return hitChanceBonus;
 end
@@ -99,13 +93,11 @@ local function Mitigate(calcData, spellBaseInfo, spellName)
 
     if calcData.hitChance ~= nil then
         calcData.baseHitChance = GetSpellHitChance();
-        calcData.hitChanceBonus = GetSpellHitBonus(spellBaseInfo.school, calcData.buffs);
+        calcData.hitChanceBonus = GetSpellHitBonus(spellBaseInfo.school, calcData);
 
         if stats.hitMods.spell[spellName] ~= nil then
             calcData.hitChanceBonus = calcData.hitChanceBonus + stats.hitMods.spell[spellName].val;
-            for _, buffName in pairs(stats.hitMods.spell[spellName].buffs) do
-                table.insert(calcData.buffs, buffName);
-            end
+            calcData:AddToBuffList(stats.hitMods.spell[spellName].buffs);
         end
 
         calcData.hitChance = calcData.baseHitChance + calcData.hitChanceBonus;
@@ -228,9 +220,7 @@ local function HandleSpellCost(calcData, spellCost, effCastTime, spellBaseInfo, 
         local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
         -- TODO: Don't think this needs a successful hit, but not sure still, people never really know :D
         calcData.effectiveCost = calcData.effectiveCost - spellCost * (ccc.val/100);
-        for _, buffName in pairs(ccc.buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        calcData:AddToBuffList(ccc.buffs);
     end
 
     if stats.illumination.val > 0 then
@@ -238,17 +228,13 @@ local function HandleSpellCost(calcData, spellCost, effCastTime, spellBaseInfo, 
         or (class == "MAGE" and (spellBaseInfo.school == _addon.SCHOOL.FIRE or spellBaseInfo.school == _addon.SCHOOL.FROST))
         or (class == "DRUID" and spellName == HEALING_TOUCH) then
             calcData.effectiveCost = calcData.effectiveCost - spellCost * (stats.illumination.val/100) * (calcData.critChance/100);
-            for _, buffName in pairs(stats.illumination.buffs) do
-                table.insert(calcData.buffs, buffName);
-            end
+            calcData:AddToBuffList(stats.illumination.buffs);
         end
     end
 
     if stats.earthfuryReturn.val > 0 and (spellName == HEALING_WAVE or spellName == LESSER_HEALING_WAVE) then
         calcData.effectiveCost = calcData.effectiveCost - spellCost * 0.0875;
-        for _, buffName in pairs(stats.earthfuryReturn.buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        calcData:AddToBuffList(stats.earthfuryReturn.buffs);
     end
 
     -- TODO: remove this?
@@ -310,9 +296,7 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
             et.igniteAvg = et.igniteMin;
         end
 
-        for _, buffName in pairs(stats.ignite.buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        calcData:AddToBuffList(stats.ignite.buffs);
 
         et.avgCombined = et.hitAvg + (et.critAvg + et.igniteAvg - et.hitAvg) * calcData.critChance/100;
     else
@@ -333,10 +317,7 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
         local uptime = math.min(1, calcData.critChance/25); -- TODO: check this when not nearly falling asleep
         local effectiveMod = mod * uptime;
         et.avgAfterMitigation = et.avgAfterMitigation * (1 + effectiveMod);
-
-        for _, buffName in pairs(self.stats.impShadowBolt.buffs) do
-            table.insert(calcData.buffs, buffName);
-        end
+        calcData:AddToBuffList(self.stats.impShadowBolt.buffs);
     end
 
     et.perSecond = et.avgAfterMitigation / castTime;
@@ -414,9 +395,7 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
 
     if self.stats.durationMods[spellName] ~= nil then
         et.duration = et.duration + self.stats.durationMods[spellName].val;
-        for _, buffName in pairs(self.stats.durationMods[spellName]) do
-            table.insert(calcData.buffs, buffName);
-        end
+        calcData:AddToBuffList(self.stats.durationMods[spellName].buffs);
     end
 
     local effPowerUse = effectData.isHeal and et.effectivePower or et.effectivePower * effectMod;
