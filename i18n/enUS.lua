@@ -68,8 +68,8 @@ L["SETTINGS_HEAL_NO_CRIT"] = "Disregard crit heals";
 L["SETTINGS_HEAL_NO_CRIT_TT"] = "Do not consider crits for hps and efficiency calculation.";
 
 L["SETTINGS_MELEE_HEAD"] = "Melee";
-L["SETTINGS_MELEE_FROM_FRONT"] = "Attacks from front";
-L["SETTINGS_MELEE_FROM_FRONT_TT"] = "Use parry and block against PvE targets.";
+L["SETTINGS_MELEE_FROM_FRONT"] = "Attacking from front";
+L["SETTINGS_MELEE_FROM_FRONT_TT"] = "Use parry against PvE targets.";
 
 L["TT_TITLE_DAMAGE"] = "Damage:";
 L["TT_TITLE_DOT"] = "DoT:";

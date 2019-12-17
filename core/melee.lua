@@ -46,7 +46,7 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
 
         -- basecrit (the spellbook crit) includes changes as if the target is a player on your level (lvl*5 def),
         -- which means we only have to adjust for level differences.
-        crit = basecrit + (baseAtk - ldef) * 0.04;
+        crit = math.max(0, basecrit + (baseAtk - ldef) * 0.04);
 
     -- vs. NPC
     else
@@ -66,7 +66,8 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
         dodge = math.max(0, 5 + skillDiff * 0.1);
 
         if SpellCalc_settings.meleeFromFront then
-            block = math.max(0, math.min(5, 5 + skillDiff * 0.1));
+            -- TODO: No clue how to handle block, how to get damage reduction?
+            block = 0; --math.max(0, math.min(5, 5 + skillDiff * 0.1));
             -- TODO: this is probably not correct at all
             if tData.levelDiff < 2 then
                 parry = math.max(0, 5 + tData.levelDiff);
@@ -96,16 +97,16 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
             crit = crit - 1.8;
         end
 
+        if crit < 0 then
+            crit = 0;
+        end
+
         if isWhitehit then
             glancing = 10 + (ldef - math.min(baseAtk, atk)) * 2;
             local minReduction = math.min(0.91, 1.3 - 0.05 * (ldef - atk));
             local maxRedcution = math.max(0.2, math.min(0.99, 1.2 - 0.03 * (ldef - atk)));
             glancingDamage = (minReduction + maxRedcution) / 2;
         end
-    end
-
-    if crit < 0 then
-        crit = 0;
     end
 
     if stats.hitBonus.val > 0 then
