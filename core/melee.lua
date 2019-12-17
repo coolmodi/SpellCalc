@@ -178,6 +178,7 @@ end
 -- @return crit adjusted to target level
 -- @return hitBonus after level based penalty
 -- @return glancingDamage if isWhitehit is true
+-- @return crit percent to crit cap if whitehit, negative if over crit cap
 function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
     local tData = _addon.target;
     local ldef = tData.level * 5;
@@ -280,8 +281,11 @@ function _addon:GetMeleeTable(buffTable, isWhitehit, isOffhand)
     -- 1. miss, dodge and parry
     -- 2. crit
     -- same as spells just with all "miss" chances
-    if isWhitehit and total < crit then
-        return miss, dodge, parry, glancing, block, total, hitBonus, glancingDamage;
+    if isWhitehit then
+        if total < crit then
+            return miss, dodge, parry, glancing, block, total, hitBonus, glancingDamage, total - crit;
+        end
+        return miss, dodge, parry, glancing, block, crit, hitBonus, glancingDamage, total - crit;
     end
 
     return miss, dodge, parry, glancing, block, crit, hitBonus, glancingDamage;
