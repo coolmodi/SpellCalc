@@ -39,7 +39,7 @@ local DEFAULTSETTINGS = {
 	["healTargetHps"] = 0,
 	["healDisregardCrit"] = false,
 
-	["meleeFromFront"] = true,
+	["meleeFromFront"] = false,
 
 	["version"] = GetAddOnMetadata(_addonName, "Version")
 };
