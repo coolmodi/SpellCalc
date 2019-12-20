@@ -285,6 +285,7 @@ function _addon:GetMeleeTable(calcData, isWhitehit, isOffhand)
     -- 1. miss, dodge and parry
     -- 2. crit
     -- same as spells just with all "miss" chances
+    -- TODO: blocks can crit for specials  though, so no clue how that fits in there
     if isWhitehit then
         if total < crit then
             return miss, dodge, parry, glancing, block, total, hitBonus, glancingDamage, total - crit;

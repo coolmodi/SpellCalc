@@ -101,6 +101,9 @@ function handlers.UNIT_RANGEDDAMAGE(unit)
     _addon:UpdateRangedAttackDmg();
 end
 
+function handlers.UPDATE_SHAPESHIFT_FORM()
+    _addon:ActionbarShapeShiftUpdate();
+end
 
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
