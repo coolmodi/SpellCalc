@@ -37,32 +37,32 @@ end
 -- @param calcedSpell The base calculation table for the spell
 -- @param spellBaseInfo The spell base info entry
 local function AddSealTooltip(calcedSpell, spellBaseInfo)
-    local effectData = calcedSpell[1];
+    local eff = calcedSpell[1];
 
     local unitString = L["TT_DAMAGE"];
     local unitPart = "DAMAGE";
 
     if SpellCalc_settings.ttHit then
-        if effectData.hitMax > 0 then
+        if eff.hitMax > 0 then
             if SpellCalc_settings.ttAverages then
-                SingleLine(unitString, ("%d - %d (%d)"):format(effectData.hitMin, effectData.hitMax, Round(effectData.hitAvg)));
+                SingleLine(unitString, ("%d - %d (%d)"):format(Round(eff.hitMin), Round(eff.hitMax), Round(eff.hitAvg)));
             else
-                SingleLine(unitString, ("%d - %d"):format(effectData.hitMin, effectData.hitMax));
+                SingleLine(unitString, ("%d - %d"):format(Round(eff.hitMin), Round(eff.hitMax)));
             end
         else
-            SingleLine(unitString, ("%.1f"):format(effectData.hitAvg));
+            SingleLine(unitString, ("%.1f"):format(eff.hitAvg));
         end
     end
 
     if spellBaseInfo.isSeal == "SOC" and SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
         if SpellCalc_settings.ttAverages then
-            DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(effectData.critMin, effectData.critMax, Round(effectData.critAvg)), nil, ("%.2f%% %s"):format(calcedSpell.critChance, L["TT_CHANCE"]));
+            DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(Round(eff.critMin), Round(eff.critMax), Round(eff.critAvg)), nil, ("%.2f%% %s"):format(calcedSpell.critChance, L["TT_CHANCE"]));
         else
-            DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(effectData.critMin, effectData.critMax), nil, ("%.2f%% %s"):format(calcedSpell.critChance, L["TT_CHANCE"]));
+            DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(Round(eff.critMin), Round(eff.critMax)), nil, ("%.2f%% %s"):format(calcedSpell.critChance, L["TT_CHANCE"]));
         end
     end
 
-    AppendCoefData(effectData);
+    AppendCoefData(eff);
     if SpellCalc_settings.ttResist and calcedSpell.avgResistMod > 0 then
         SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResistMod*100));
     end
@@ -88,17 +88,17 @@ local function AddSealTooltip(calcedSpell, spellBaseInfo)
         SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResistMod*100));
     end
 
-    if effectData.procChance > 0 then
-        SingleLine(L["TT_PROCCHANCE"], ("%.1f%%"):format(effectData.procChance*100));
+    if eff.procChance > 0 then
+        SingleLine(L["TT_PROCCHANCE"], ("%.1f%%"):format(eff.procChance*100));
     end
 
     if SpellCalc_settings.ttHit then
-        SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(effectData.triggerHits));
-        SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(effectData.avgTriggerHits));
+        SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(eff.triggerHits));
+        SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(eff.avgTriggerHits));
     end
 
     if SpellCalc_settings.ttPerSecond then
-        SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(effectData.perSecond));
+        SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(eff.perSecond));
     end
 end
 

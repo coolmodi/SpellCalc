@@ -97,53 +97,53 @@ end
 -- @param effectNum The effect slot to show
 -- @param isHeal
 local function AppendDirectEffect(calcData, effectNum, isHeal)
-    local effectData = calcData[effectNum];
+    local eff = calcData[effectNum];
     local unitString = isHeal and L["TT_HEAL"] or L["TT_DAMAGE"];
     local unitPart = isHeal and "HEAL" or "DAMAGE";
 
     if SpellCalc_settings.ttHit then
-        if effectData.hitMax > 0 then
+        if eff.hitMax > 0 then
             if SpellCalc_settings.ttAverages then
-                SingleLine(unitString, ("%d - %d (%d)"):format(effectData.hitMin, effectData.hitMax, Round(effectData.hitAvg)));
+                SingleLine(unitString, ("%d - %d (%d)"):format(Round(eff.hitMin), Round(eff.hitMax), Round(eff.hitAvg)));
             else
-                SingleLine(unitString, ("%d - %d"):format(effectData.hitMin, effectData.hitMax));
+                SingleLine(unitString, ("%d - %d"):format(Round(eff.hitMin), Round(eff.hitMax)));
             end
         else
-            SingleLine(unitString, Round(effectData.hitAvg));
+            SingleLine(unitString, Round(eff.hitAvg));
         end
     end
 
     if SpellCalc_settings.ttCrit and calcData.critChance > 0 then
-        if effectData.critMax > 0 then
+        if eff.critMax > 0 then
             if SpellCalc_settings.ttAverages then
-                DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(effectData.critMin, effectData.critMax, Round(effectData.critAvg)), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+                DoubleLine(L["TT_CRITICAL"], ("%d - %d (%d)"):format(Round(eff.critMin), Round(eff.critMax), Round(eff.critAvg)), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
 
-                if effectData.igniteMin then
-                    SingleLine(L["TT_IGNITE"], ("2x %d - %d (%d)"):format(Round(effectData.igniteMin/2), Round(effectData.igniteMax/2), Round(effectData.igniteAvg/2)));
+                if eff.igniteMin then
+                    SingleLine(L["TT_IGNITE"], ("2x %d - %d (%d)"):format(Round(eff.igniteMin/2), Round(eff.igniteMax/2), Round(eff.igniteAvg/2)));
                 end
             else
-                DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(effectData.critMin, effectData.critMax), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+                DoubleLine(L["TT_CRITICAL"], ("%d - %d"):format(Round(eff.critMin), Round(eff.critMax)), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
 
-                if effectData.igniteMin then
-                    SingleLine(L["TT_IGNITE"], ("2x %d - %d"):format(Round(effectData.igniteMin/2), Round(effectData.igniteMax/2)));
+                if eff.igniteMin then
+                    SingleLine(L["TT_IGNITE"], ("2x %d - %d"):format(Round(eff.igniteMin/2), Round(eff.igniteMax/2)));
                 end
             end
         else
-            DoubleLine(L["TT_CRITICAL"], Round(effectData.critAvg), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
+            DoubleLine(L["TT_CRITICAL"], Round(eff.critAvg), nil, ("%.2f%% %s"):format(calcData.critChance, L["TT_CHANCE"]));
 
-            if effectData.igniteMin then
-                SingleLine(L["TT_IGNITE"], ("2x %d"):format(Round(effectData.igniteAvg/2)));
+            if eff.igniteMin then
+                SingleLine(L["TT_IGNITE"], ("2x %d"):format(Round(eff.igniteAvg/2)));
             end
         end
     end
 
-    AppendCoefData(effectData);
+    AppendCoefData(eff);
     if not isHeal then
         AppendMitigation(calcData);
     end
 
     if SpellCalc_settings.ttPerSecond then
-        SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(effectData.perSecond));
+        SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(eff.perSecond));
     end
 
     AppendEfficiency(calcData, effectNum, isHeal, true);
