@@ -128,39 +128,14 @@ local function RemapActionSlots(origStart, newStart)
 end
 
 --- Update shapeshift or stance for Dominos bars
--- @param form The form/stance number
+-- @param form The form/stance name
 local function ShapeShiftRemapDominos(form)
-    local formName;
-    if class == "DRUID" then
-        if form == 1 then
-            formName = "bear";
-        elseif form == 2 then
-            formName = "aquatic";
-        elseif form == 3 then
-            formName = "cat";
-        elseif form == 4 then
-            formName = "travel";
-        elseif form == 5 then
-            formName = "moonkin";
-        end
-    elseif class == "WARRIOR" then
-        if form == 1 then
-            formName = "battle";
-        elseif form == 2 then
-            formName = "defensive";
-        elseif form == 3 then
-            formName = "berserker";
-        end
-    else
-        return;
-    end
-
     local profileName = DominosDB.profileKeys[UnitName("player") .. " - " .. GetRealmName()];
     local profileFrames = DominosDB.profiles[profileName].frames;
-    _addon:PrintDebug("Remap bars for Dominos from " .. formName .. " for profile " .. profileName);
+    _addon:PrintDebug("Remap bars for Dominos from " .. form .. " for profile " .. profileName);
     for barNum, data in ipairs(profileFrames) do
-        if data.pages[class] and data.pages[class][formName] then
-            local tbar = (data.pages[class][formName] + barNum) % 10;
+        if data.pages[class] and data.pages[class][form] then
+            local tbar = (data.pages[class][form] + barNum) % 10;
             _addon:PrintDebug("Remap bar " .. barNum .. " to bar " .. tbar);
             RemapActionSlots(barNum*12-11, tbar*12-11)
         end
@@ -168,39 +143,14 @@ local function ShapeShiftRemapDominos(form)
 end
 
 --- Update shapeshift or stance for Bartender4 bars
--- @param form The form/stance number
+-- @param form The form/stance name
 local function ShapeShiftRemapBT4(form)
-    local formName;
-    if class == "DRUID" then
-        if form == 1 then
-            formName = "bear";
-        elseif form == 3 then
-            formName = "cat";
-        elseif form == 5 then
-            formName = "moonkin";
-        end
-    elseif class == "WARRIOR" then
-        if form == 1 then
-            formName = "battle";
-        elseif form == 2 then
-            formName = "defensive";
-        elseif form == 3 then
-            formName = "berserker";
-        end
-    else
-        return;
-    end
-
-    if formName == nil then
-        return;
-    end
-
     local profileName = Bartender4DB.profileKeys[UnitName("player") .. " - " .. GetRealmName()];
     local profileFrames = Bartender4DB.namespaces.ActionBars.profiles[profileName].actionbars;
-    _addon:PrintDebug("Remap bars for BT4 from " .. formName .. " for profile " .. profileName);
+    _addon:PrintDebug("Remap bars for BT4 from " .. form .. " for profile " .. profileName);
     for barNum, data in ipairs(profileFrames) do
-        if data.states and data.states.stance and data.states.stance[class] and data.states.stance[class][formName] then
-            local tbar = data.states.stance[class][formName];
+        if data.states and data.states.stance and data.states.stance[class] and data.states.stance[class][form] then
+            local tbar = data.states.stance[class][form];
             _addon:PrintDebug("Remap bar " .. barNum .. " to bar " .. tbar);
             RemapActionSlots(barNum*12-11, tbar*12-11)
         end
@@ -209,23 +159,23 @@ end
 
 --- Update shapeshift or stance for ElvUI bars
 -- TODO: Only supports bar 1 atm
--- @param form The form/stance number
+-- @param form The form/stance name
 local function ShapeShiftRemapElv(form)
     local formBar;
     if class == "DRUID" then
-        if form == 1 then
+        if form == "bear" then
             formBar = 3;
-        elseif form == 3 then
+        elseif form == "cat" then
             formBar = 1;
-        elseif form == 5 then
+        elseif form == "moonkin" then
             formBar = 4;
         end
     elseif class == "WARRIOR" then
-        if form == 1 then
+        if form == "battle" then
             formBar = 3;
-        elseif form == 2 then
+        elseif form == "defensive" then
             formBar = 2;
-        elseif form == 3 then
+        elseif form == "berserker" then
             formBar = 1;
         end
     else
@@ -248,19 +198,19 @@ end
 --- Update bars after shapeshift or stance change
 function _addon:ActionbarShapeShiftUpdate()
     if class == "DRUID" then
-        local form = GetShapeshiftForm();
+        local form = self:GetShapeshiftName();
 
-        if form == 0 then
+        if not form then
             RemapActionSlots();
             return;
         end
 
         if actionbarSupport == "STOCK" then
-            if form == 1 then -- Bear
+            if form == "bear" then -- Bear
                 RemapActionSlots(1, 97);
-            elseif form == 3 then -- Cat
+            elseif form == "cat" then -- Cat
                 RemapActionSlots(1, 73);
-            elseif form == 5 then -- Moonkin
+            elseif form == "moonkin" then -- Moonkin
                 RemapActionSlots(1, 109);
             end
         elseif actionbarSupport == "DOMINOS" then

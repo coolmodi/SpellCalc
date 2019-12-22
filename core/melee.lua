@@ -211,8 +211,8 @@ function _addon:GetMeleeTable(calcData, isWhitehit, isOffhand)
     else
         local atk = isOffhand and stats.attack.oh or stats.attack.mh;
         if class == "DRUID" then
-            local formId = GetShapeshiftForm();
-            if formId == 1 or formId == 3 then
+            local form = self:GetShapeshiftName();
+            if form and (form == "bear" or form == "cat") then
                 atk = baseAtk;
             end
         end

@@ -35,6 +35,29 @@ local function PrintToChat(msg, defColor)
   print(defColor .. _addonName .. ": " .. msg);
 end
 
+local SHAPESHIFTS = {
+	[768] = "cat",
+	[5487] = "bear",
+	[9634] = "bear",
+	[1066] = "aquatic",
+	[783] = "travel",
+	[24858] = "moonkin",
+	[2457] = "battle",
+	[71] = "defensive",
+	[2458] = "berserker"
+}
+
+--- Return a string naming the shapeshift currently in, nil if no shapeshift
+function _addon:GetShapeshiftName()
+	local index = GetShapeshiftForm();
+	if index > 0 then
+		local _, _, _, spellId = GetShapeshiftFormInfo(index);
+		if SHAPESHIFTS[spellId] then
+			return SHAPESHIFTS[spellId];
+		end
+	end
+end
+
 --- Print success message (green)
 -- @param msg The message to print
 function _addon:PrintSuccess(msg)
