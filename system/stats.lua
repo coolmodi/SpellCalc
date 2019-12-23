@@ -136,7 +136,6 @@ _addon.stats = {
     },
     attackCrit = {
         mh = 0,
-        oh = 0,
         r = 0
     },
     attackDmg = {
@@ -181,7 +180,6 @@ function _addon:UpdateDmgDoneMods()
 
     -- TODO: does this include talents and buffs reliably?
     self.stats.attackCrit.mh = GetCritChance();
-    self.stats.attackCrit.oh = GetCritChance(); -- TODO: how to get this? Is there even a (realistic) way?
     self.stats.attackCrit.r = GetRangedCritChance();
 
     self:TriggerUpdate();
