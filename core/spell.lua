@@ -314,9 +314,8 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
 
     if self.stats.impShadowBolt.val ~= 0 and spellName == SHADOW_BOLT and SpellCalc_settings.useImpSB then
         local mod = self.stats.impShadowBolt.val/100;
-        local uptime = math.min(1, calcData.critChance/25); -- TODO: check this when not nearly falling asleep
-        local effectiveMod = mod * uptime;
-        et.avgAfterMitigation = et.avgAfterMitigation * (1 + effectiveMod);
+        local pCritIn4 = (1 - math.pow(1 - calcData.critChance/100, 4));
+        et.avgAfterMitigation = et.avgAfterMitigation * (1 + mod * pCritIn4);
         calcData:AddToBuffList(self.stats.impShadowBolt.buffs);
     end
 
