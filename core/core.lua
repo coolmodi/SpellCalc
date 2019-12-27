@@ -107,10 +107,10 @@ local function CalcSpell(spellId)
     _addon:PrintDebug("Calculating spell " .. spellId);
 
     local name, _, _, castTime = GetSpellInfo(spellId);
-    local GCD = 1.5;
     local effCastTime = 0;
     local spellBaseInfo = _addon.spellBaseInfo[name];
     local spellRankInfo = _addon.spellRankInfo[spellId];
+    local GCD = spellBaseInfo.GCD or 1.5;
     local costs = GetSpellPowerCost(spellId);
     local spellCost = 0;
     local spellType = SPELL_TYPE.SPELL;
