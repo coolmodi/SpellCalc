@@ -23,6 +23,12 @@ const enum AURA_TYPE {
     SPELL_AURA_DUMMY = 4
 }
 
+const enum DEFENSE_TYPE {
+    MAGIC = 1,
+    MELEE = 2,
+    RANGED = 3
+}
+
 interface BaseInfo {
     getspellinfoid: number,
     school: number,
@@ -33,7 +39,9 @@ interface BaseInfo {
     forceCanCrit: boolean,
     isSeal: false | string,
     isMelee: boolean,
-    isAutoAttack: boolean
+    isRanged: boolean,
+    isAutoAttack: boolean,
+    gcd: number
 }
 
 interface EffectInfo {
@@ -46,6 +54,7 @@ interface EffectInfo {
     period: number,
     isDmgShield: boolean,
     charges: number,
+    weaponCoef: number
 }
 
 interface RankInfo {

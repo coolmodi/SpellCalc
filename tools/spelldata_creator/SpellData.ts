@@ -115,6 +115,10 @@ export interface SpellMisc {
     SpellID: number
 }
 
+export interface SpellCategory {
+    DefenseType: DEFENSE_TYPE,
+}
+
 export interface SpellName {
     ID: number
     Name_lang: string
@@ -134,6 +138,15 @@ export interface SpellDuration {
     MaxDuration: number
 }
 
+export interface SpellCooldown {
+    DifficultyID: number,
+    CategoryRecoveryTime: number,
+    RecoveryTime: number,
+    StartRecoveryTime: number,
+    SpellID: number
+}
+
+
 export class SpellData {
     private spellEffects: {[index: number]: SpellEffect};
     private spellLevels: {[index: number]: SpellLevel};
@@ -142,6 +155,8 @@ export class SpellData {
     private spell: {[index: number]: Spell};
     private spellDuration: {[index: number]: SpellDuration};
     private totemSpells: {[index: number]: number};
+    private spellCategories: {[index: number]: SpellCategory};
+    private spellCooldowns: {[index: number]: SpellCooldown};
 
     constructor() {
         console.log("Creating SpellData");
@@ -157,10 +172,14 @@ export class SpellData {
         this.spell = readCSV("data/dbc/spell.csv", "ID");
         // @ts-ignore
         this.spellDuration = readCSV("data/dbc/spellduration.csv", "ID");
+        // @ts-ignore
+        this.spellCategories = readCSV("data/dbc/spellcategories.csv", "SpellID");
+        // @ts-ignore
+        this.spellCooldowns = readCSV("data/dbc/spellcooldowns.csv", "SpellID");
         
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
-        fixSpellEffects(this.spellEffects);
+        fixSpellEffects(this.spellEffects, this.spellCategories);
 
         // make sure direct dmg is always the 1st effect on spells that also have a duration effect
         for (let eff1 in this.spellEffects) {
@@ -243,5 +262,31 @@ export class SpellData {
 
     getTotemSpell(totemId: number): number | undefined {
         return this.totemSpells[totemId];
+    }
+
+    getSpellCategory(spellId: number) {
+        if (this.spellCategories[spellId]) return this.spellCategories[spellId];
+
+        if (spellId == AUTO_ATTACK_ID) {
+            let sc: SpellCategory = {
+                DefenseType: 0
+            }
+            return sc;
+        }
+
+        throw new Error("SpellCategory not found for " + spellId);
+    }
+
+    getSpellCooldown(spellId: number) {
+        if (this.spellCooldowns[spellId]) return this.spellCooldowns[spellId];
+
+        let sc: SpellCooldown = {
+            DifficultyID: 0,
+            CategoryRecoveryTime: 0,
+            StartRecoveryTime: 1500,
+            RecoveryTime: 0,
+            SpellID: AUTO_ATTACK_ID
+        }
+        return sc;
     }
 }

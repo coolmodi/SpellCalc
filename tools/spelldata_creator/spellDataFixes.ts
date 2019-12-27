@@ -1,4 +1,4 @@
-import { SpellEffect } from "./SpellData";
+import { SpellEffect, SpellCategory } from "./SpellData";
 import { isJudgeDummy, SealType, isSeal } from "./paladinCrap";
 
 // This isn't used anywhere, just put something there just in case
@@ -79,7 +79,7 @@ function priestFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-function paladinFix(se: {[index: number]: SpellEffect}) {
+function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}) {
     console.log("Fixing pala coefs and effects");
     const HL_GENERIC = [1026, 1042, 3472, 10328, 10329, 25292];
     const FOL_GENERIC = [19750, 19939, 19940, 19941, 19942, 19943];
@@ -150,6 +150,7 @@ function paladinFix(se: {[index: number]: SpellEffect}) {
                     if (jeff.SpellID == jdId) {
                         eff.EffectBasePoints = jeff.EffectBasePoints;
                         jdId = jeff.EffectBasePoints + 1;
+                        sc[jdId].DefenseType = 1;
                         break;
                     }
                 }
@@ -195,8 +196,8 @@ function mageFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-export function fixSpellEffects(se: {[index: number]: SpellEffect}) {
-    paladinFix(se);
+export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}) {
+    paladinFix(se, sc);
     priestFix(se);
     mageFix(se);
 }

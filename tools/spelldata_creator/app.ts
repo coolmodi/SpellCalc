@@ -1,4 +1,4 @@
-import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell } from "./SpellData";
+import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown } from "./SpellData";
 import * as fs from "fs";
 import { isSeal, isJudgeDummy, SealType } from "./paladinCrap";
 
@@ -23,7 +23,8 @@ const DO_EFFECTS = [
     EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA,
     EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC,
     EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE,
-    EFFECT_TYPE.SPELL_EFFECT_ATTACK
+    EFFECT_TYPE.SPELL_EFFECT_ATTACK,
+    EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE
 ];
 const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_PERIODIC_HEAL,
@@ -92,7 +93,7 @@ function getValidSpellList(pclass: string) {
                 }
 
                 if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL ) {
-                    if (PTSA_IGNORES.indexOf(effect.SpellID) != -1) continue;
+                    if (PTSA_IGNORES.indexOf(effect.SpellID) != -1 || effect.EffectTriggerSpell == 0) continue;
                 }
 
                 if (effect.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY) {
@@ -155,7 +156,8 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         isDuration: false,
         period: 0,
         isDmgShield: false,
-        charges: 0
+        charges: 0,
+        weaponCoef: 0 
     };
     switch (effect.EffectAura) {
         case AURA_TYPE.SPELL_AURA_PERIODIC_HEAL:
@@ -205,7 +207,9 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             break;
         default:
             if (effectNum == 1 && effect.EffectMechanic != 0) {
-                baseInfo.isBinary = true;
+                if (baseInfo.school != 1) {
+                    baseInfo.isBinary = true;
+                }
                 rankInfo.effects.splice(effectNum);
             } else {
                 throw new Error("Aura type not supported! " + effect.EffectAura);
@@ -226,7 +230,8 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
         isDuration: false,
         period: 0,
         isDmgShield: false,
-        charges: 0
+        charges: 0,
+        weaponCoef: 0 
     };
 }
 
@@ -267,7 +272,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             isDuration: false,
             period: 0,
             isDmgShield: false,
-            charges: 0
+            charges: 0,
+            weaponCoef: 0 
         };
     },
 
@@ -279,7 +285,47 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
 
     [EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC]: summonTotemSlot,
 
-    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum) => {
+    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE]: (rankInfo, effect, effectNum, _spellName, _baseInfo) => {
+        rankInfo.effects[effectNum] = {
+            coef: effect.EffectBonusCoefficient,
+            min: (effect.EffectBasePoints > 0) ? effect.EffectBasePoints + 1 : 0,
+            max: 0,
+            perLevel: effect.EffectRealPointsPerLevel,
+            isHeal: false,
+            isDuration: false,
+            period: 0,
+            isDmgShield: false,
+            charges: 0,
+            weaponCoef: 1
+        };
+        //baseInfo.isMelee = true;
+    },
+
+    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum, _spellName, baseInfo) => {
+        if (effectNum > 0) {
+            if (rankInfo.effects[0].weaponCoef == 0) {
+                throw new Error("E1 is SPELL_EFFECT_WEAPON_PERCENT_DAMAGE but E0 doesn't add a weapon coef!");
+            }
+            rankInfo.effects[0].weaponCoef *= (effect.EffectBasePoints + 1) / 100;
+            return;
+        }
+
+        if (!baseInfo.isSeal) {
+            rankInfo.effects[effectNum] = {
+                coef: effect.EffectBonusCoefficient,
+                min: 0,
+                max: 0,
+                perLevel: effect.EffectRealPointsPerLevel,
+                isHeal: false,
+                isDuration: false,
+                period: 0,
+                isDmgShield: false,
+                charges: 0,
+                weaponCoef: (effect.EffectBasePoints + 1) / 100
+            };
+            //baseInfo.isMelee = true;
+        }
+
         rankInfo.effects[effectNum] = {
             coef: effect.EffectBonusCoefficient,
             min: effect.EffectBasePoints + 1, // Idk why
@@ -289,7 +335,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             isDuration: false,
             period: 0,
             isDmgShield: false,
-            charges: 0
+            charges: 0,
+            weaponCoef: 0
         };
     },
 
@@ -303,7 +350,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             isDuration: false,
             period: 0,
             isDmgShield: false,
-            charges: 0
+            charges: 0,
+            weaponCoef: 0 
         };
         baseInfo.isAutoAttack = true;
     },
@@ -326,6 +374,8 @@ function buildSpellInfo(pclass: string) {
     let spellName: string;
     let spellLevel: SpellLevel;
     let spellspell: Spell;
+    let spellcat: SpellCategory;
+    let spellcd: SpellCooldown;
 
     for (let s in list) {
         effects = list[s];
@@ -333,9 +383,8 @@ function buildSpellInfo(pclass: string) {
         spellName = spellData.getSpellName(effects[0].SpellID).Name_lang;
         spellLevel = spellData.getSpellLevel(effects[0].SpellID);
         spellspell = spellData.getSpell(effects[0].SpellID);
-
-        // Skip physical spells except auto attack for now
-        if (spellMisc.SchoolMask == 1 && spellName != "Attack") continue;
+        spellcat = spellData.getSpellCategory(effects[0].SpellID);
+        spellcd = spellData.getSpellCooldown(effects[0].SpellID);
 
         // Create base info if needed
         if (!classInfo.baseInfo[spellName]) {
@@ -349,8 +398,10 @@ function buildSpellInfo(pclass: string) {
                 isBinary: false,
                 forceCanCrit: false,
                 isSeal: isSeal(effects[0].SpellID),
-                isMelee: false,
+                isMelee: spellcat.DefenseType == DEFENSE_TYPE.MELEE,
+                isRanged: spellcat.DefenseType == DEFENSE_TYPE.RANGED,
                 isAutoAttack: false,
+                gcd: spellcd.StartRecoveryTime / 1000
             };
 
             if (classInfo.baseInfo[spellName].isAbsorbShield && spellName != "Power Word: Shield") {
@@ -408,7 +459,9 @@ end
         if (bi.forceCanCrit) str += `\t\tforceCanCrit = true,\n`;
         if (bi.isSeal) str += `\t\tisSeal = "${bi.isSeal}",\n`;
         if (bi.isMelee) str += `\t\tisMelee = true,\n`;
+        if (bi.isRanged) str += `\t\tisRanged = true,\n`;
         if (bi.isAutoAttack) str += `\t\tisAutoAttack = true,\n`;
+        if (bi.gcd != 1.5) str += `\t\tGCD = ${bi.gcd},\n`;
         str += `\t},\n`;
     }
     str += "};\n\n";
@@ -434,6 +487,7 @@ end
                 str += `\t\t\t\tisDmgShield = true,\n`;
                 str += `\t\t\t\tcharges = ${eff.charges},\n`;
             }
+            if (eff.weaponCoef) str += `\t\t\t\tweaponCoef = ${eff.weaponCoef},\n`;
             str += `\t\t\t\tmin = ${eff.min},\n`;
             if (eff.min < eff.max) str += `\t\t\t\tmax = ${eff.max},\n`;
             if (eff.perLevel) str += `\t\t\t\tperLevel = ${eff.perLevel},\n`;
