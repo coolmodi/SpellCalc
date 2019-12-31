@@ -120,7 +120,7 @@ function CalculateSoC(calcData, et, spellRankInfo, effectData, effectMod)
     et.duration = spellRankInfo.duration;
     et.triggers = SOC_PPS * et.duration;
     et.procChance = SOC_PPS * as;
-    et.triggerHits = et.triggers * calcData.effHitChance; -- TODO: does this also only proc on successful hits
+    et.triggerHits = et.triggers * calcData.effHitChance;
 
     local avgAfterResist = avgCombined * (1 - calcData.avgResistMod);
     et.avgTriggerHits = et.triggerHits * avgAfterResist * calcData.effHitChance; -- SOC hits can again be melee mitigated like a special attack

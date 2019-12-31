@@ -218,7 +218,6 @@ local function HandleSpellCost(calcData, spellCost, effCastTime, spellBaseInfo, 
 
     if stats.clearCastChance.val > 0 or (stats.clearCastChanceDmg.val > 0 and not spellRankInfo.effects[1].isHeal) then
         local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
-        -- TODO: Don't think this needs a successful hit, but not sure still, people never really know :D
         calcData.effectiveCost = calcData.effectiveCost - spellCost * (ccc.val/100);
         calcData:AddToBuffList(ccc.buffs);
     end
