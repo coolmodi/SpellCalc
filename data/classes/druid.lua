@@ -11,6 +11,11 @@ local WRATH = GetSpellInfo(5176);
 local REJUVENATION = GetSpellInfo(1058);
 local REGROWTH = GetSpellInfo(8936);
 
+local FEROCIOUS_BITE = GetSpellInfo(22827);
+local CLAW = GetSpellInfo(1082);
+local RAKE = GetSpellInfo(1822);
+local MAUL = GetSpellInfo(6808);
+local SWIPE = GetSpellInfo(779);
 
 _addon.talentData = {
     { -- Improve Moonfire
@@ -64,6 +69,29 @@ _addon.talentData = {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
                 affectSpell = {STARFIRE, WRATH, MOONFIRE},
                 perPoint = 2
+            }
+        }
+    },
+
+    { -- Feral Aggression
+        tree = 2,
+        talent = 2,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                affectSpell = {FEROCIOUS_BITE},
+                perPoint = 3
+            }
+        }
+    },
+    { -- Savage Fury
+        tree = 2,
+        talent = 13,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                affectSpell = {CLAW, RAKE, MAUL, SWIPE},
+                perPoint = 10
             }
         }
     },
