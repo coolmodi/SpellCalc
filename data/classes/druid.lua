@@ -97,7 +97,7 @@ _addon.talentData = {
     },
 
     { -- Reflection
-        tree = 1,
+        tree = 3,
         talent = 6,
         effects = {
             {
