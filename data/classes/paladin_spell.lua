@@ -20,6 +20,9 @@ _addon.spellBaseInfo = {
         school = 1,
         isAutoAttack = true,
     },
+    [GetSpellInfo(7294)] = { -- Retribution Aura
+        school = 2,
+    },
     [GetSpellInfo(19750)] = { -- Flash of Light
         school = 2,
     },
@@ -45,6 +48,8 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(24239)] = { -- Hammer of Wrath
         school = 2,
+        isRanged = true,
+        GCD = 1,
     },
 };
 
@@ -181,6 +186,71 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 min = 0,
+                coef = 0,
+            },
+        }
+    },
+    [7294] = { -- Retribution Aura(Rank 1)
+        spellLevel = 16,
+        maxLevel = 0,
+        duration = -0.001,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 5,
+                coef = 0,
+            },
+        }
+    },
+    [10298] = { -- Retribution Aura(Rank 2)
+        spellLevel = 26,
+        maxLevel = 0,
+        duration = -0.001,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 8,
+                coef = 0,
+            },
+        }
+    },
+    [10299] = { -- Retribution Aura(Rank 3)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = -0.001,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 12,
+                coef = 0,
+            },
+        }
+    },
+    [10300] = { -- Retribution Aura(Rank 4)
+        spellLevel = 46,
+        maxLevel = 0,
+        duration = -0.001,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 16,
+                coef = 0,
+            },
+        }
+    },
+    [10301] = { -- Retribution Aura(Rank 5)
+        spellLevel = 56,
+        maxLevel = 0,
+        duration = -0.001,
+        effects = {
+            [1] = {
+                isDmgShield = true,
+                charges = 0,
+                min = 20,
                 coef = 0,
             },
         }

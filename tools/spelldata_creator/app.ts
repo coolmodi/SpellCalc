@@ -24,7 +24,8 @@ const DO_EFFECTS = [
     EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC,
     EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE,
     EFFECT_TYPE.SPELL_EFFECT_ATTACK,
-    EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE
+    EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE,
+    EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY
 ];
 const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_PERIODIC_HEAL,
@@ -78,7 +79,9 @@ function getValidSpellList(pclass: string) {
 
             if (DO_EFFECTS.indexOf(effect.Effect) == -1) continue;
             
-            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA) {
+            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA 
+                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA 
+                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY) {
                 if (DO_AURAS.indexOf(effect.EffectAura) == -1) {
                     if (effect.EffectMechanic != 0 && effect.EffectIndex != 0) {
                         binaryCache[effect.SpellID] = effect;
@@ -279,6 +282,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
 
     [EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA]: applyAuraAreaAura,
     [EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA]: applyAuraAreaAura,
+    [EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY]: applyAuraAreaAura,
 
     [EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE]: directDmg,
     [EFFECT_TYPE.SPELL_EFFECT_HEALTH_LEECH]: directDmg,
@@ -385,6 +389,9 @@ function buildSpellInfo(pclass: string) {
         spellspell = spellData.getSpell(effects[0].SpellID);
         spellcat = spellData.getSpellCategory(effects[0].SpellID);
         spellcd = spellData.getSpellCooldown(effects[0].SpellID);
+
+        // Skip physical spells except auto attack for now
+        if (spellMisc.SchoolMask == 1 && spellName != "Attack") continue;
 
         // Create base info if needed
         if (!classInfo.baseInfo[spellName]) {

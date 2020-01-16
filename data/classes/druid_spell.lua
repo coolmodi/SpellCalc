@@ -13,6 +13,9 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(467)] = { -- Thorns
         school = 4,
     },
+    [GetSpellInfo(740)] = { -- Tranquility
+        school = 4,
+    },
     [GetSpellInfo(774)] = { -- Rejuvenation
         school = 4,
     },
@@ -71,6 +74,21 @@ _addon.spellRankInfo = {
                 charges = 0,
                 min = 3,
                 coef = 0,
+            },
+        }
+    },
+    [740] = { -- Tranquility(Rank 1)
+        spellLevel = 30,
+        maxLevel = 36,
+        duration = 10,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 94,
+                perLevel = 0.6,
+                coef = 0.067,
             },
         }
     },
@@ -457,6 +475,21 @@ _addon.spellRankInfo = {
                 charges = 0,
                 min = 12,
                 coef = 0,
+            },
+        }
+    },
+    [8918] = { -- Tranquility(Rank 2)
+        spellLevel = 40,
+        maxLevel = 46,
+        duration = 10,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 138,
+                perLevel = 0.7,
+                coef = 0.067,
             },
         }
     },
@@ -966,6 +999,36 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 152,
                 coef = 0.071,
+            },
+        }
+    },
+    [9862] = { -- Tranquility(Rank 3)
+        spellLevel = 50,
+        maxLevel = 56,
+        duration = 10,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 205,
+                perLevel = 0.9,
+                coef = 0.067,
+            },
+        }
+    },
+    [9863] = { -- Tranquility(Rank 4)
+        spellLevel = 60,
+        maxLevel = 66,
+        duration = 10,
+        effects = {
+            [1] = {
+                isHeal = true,
+                isDuration = true,
+                tickPeriod = 2,
+                min = 294,
+                perLevel = 1,
+                coef = 0.067,
             },
         }
     },
