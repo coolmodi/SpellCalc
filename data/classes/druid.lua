@@ -26,6 +26,11 @@ _addon.talentData = {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
                 affectSpell = {MOONFIRE},
                 perPoint = 2
+            },
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {MOONFIRE},
+                perPoint = 2
             }
         }
     },
@@ -107,7 +112,7 @@ _addon.talentData = {
         }
     },
     { -- Improved Rejuvenation
-        tree = 1,
+        tree = 3,
         talent = 10,
         effects = {
             {
@@ -118,7 +123,7 @@ _addon.talentData = {
         }
     },
     { -- Gift of Nature
-        tree = 1,
+        tree = 3,
         talent = 12,
         effects = {
             {
@@ -128,7 +133,7 @@ _addon.talentData = {
         }
     },
     { -- Improved Regrowth
-        tree = 1,
+        tree = 3,
         talent = 12,
         effects = {
             {
