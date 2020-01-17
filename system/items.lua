@@ -22,6 +22,7 @@ local ITEM_SLOTS = {
 
 local WTTM = _addon.WEAPON_TYPE_TO_MASK;
 local UNARMED = _addon.WEAPON_TYPES_MASK.UNARMED;
+local FISHING_POLE_NAME = _addon.WEAPON_TYPES.FISHING_POLE;
 
 local retryFrame = CreateFrame("Frame");
 local retryTimer = 0;
@@ -147,6 +148,12 @@ local function EquipItem(itemId, slotId)
 
     if slotId >= 16 and slotId <= 18 then
         _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubType);
+
+        -- hackfix for fishing poles
+        if _addon.FISHING_POLES[itemId] then
+            itemSubType = FISHING_POLE_NAME;
+        end
+
         if slotId == 16 then
             weapontypes.mh = WTTM[itemSubType];
         elseif slotId == 17 then

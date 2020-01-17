@@ -169,3 +169,13 @@ _addon.WEAPON_TYPE_TO_MASK = {
     [_addon.WEAPON_TYPES.THROWN] = _addon.WEAPON_TYPES_MASK.THROWN,
     [_addon.WEAPON_TYPES.WAND] = _addon.WEAPON_TYPES_MASK.WAND,
 }
+
+_addon.FISHING_POLES = {
+    [6365] = true, -- Strong Fishing Pole
+    [6256] = true, -- Fishing Pole
+    [6366] = true, -- Darkwood Fishing Pole
+    [12225] = true, -- Blump Family Fishing Pole
+    [6367] = true, -- Big Iron Fishing Pole
+    [19022] = true, -- Nat Pagle's Extreme Angler FC-5000
+    [19970] = true -- Arcanite Fishing Pole
+}
