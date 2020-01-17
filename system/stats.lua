@@ -69,6 +69,7 @@ _addon.stats = {
             [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
         },
         weapon = {
+            [_addon.WEAPON_TYPES_MASK.UNARMED]      = {val=0, buffs={}},
             [_addon.WEAPON_TYPES_MASK.FISHING_POLE] = {val=0, buffs={}},
             [_addon.WEAPON_TYPES_MASK.POLEARM]      = {val=0, buffs={}},
             [_addon.WEAPON_TYPES_MASK.STAVE]        = {val=0, buffs={}},
