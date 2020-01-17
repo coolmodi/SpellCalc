@@ -140,7 +140,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
                 affectSchool = _addon.SCHOOL_MASK.FIRE,
                 perPoint = 2
             }
@@ -174,7 +174,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
                 affectSchool = _addon.SCHOOL_MASK.FROST,
                 perPoint = 2
             }
@@ -185,7 +185,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
                 affectSpell = {CONE_OF_COLD},
                 perPoint = 10,
                 base = 5

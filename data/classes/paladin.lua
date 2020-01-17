@@ -16,7 +16,7 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
                 affectSpell = {HOLY_LIGHT, FLASH_OF_LIGHT},
                 perPoint = 4
             }

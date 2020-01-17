@@ -33,7 +33,7 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
                 affectSpell = {SEARING_TOTEM, FIRE_NOVA_TOTEM, MAGMA_TOTEM},
                 perPoint = 5
             }

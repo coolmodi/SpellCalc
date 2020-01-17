@@ -114,7 +114,7 @@ _addon.talentData = {
         talent = 13,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
                 affectSpell = {IMMOLATE},
                 perPoint = 5
             }
@@ -153,14 +153,14 @@ _addon.buffData[18288] = {
 
 -- Demonic Sacrifice Succubus
 _addon.buffData[18791] = {
-    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
     affectSchool = _addon.SCHOOL_MASK.SHADOW,
     value = 15,
 };
 
 -- Demonic Sacrifice Imp
 _addon.buffData[18789] = {
-    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
     affectSchool = _addon.SCHOOL_MASK.FIRE,
     value = 15,
 };

@@ -11,6 +11,10 @@ local SMITE = GetSpellInfo(585);
 local HOLY_FIRE = GetSpellInfo(14914);
 local HOLY_NOVA = GetSpellInfo(15237);
 local RENEW = GetSpellInfo(139);
+local SHADOW_GUARD = GetSpellInfo(28377);
+local DEVOURING_PLAGUE = GetSpellInfo(2944);
+local MIND_FLAY = GetSpellInfo(17312);
+local TOUCH_OF_WEAKNESS = GetSpellInfo(19251);
 
 _addon.talentData = {
     -- Meditation
@@ -83,7 +87,7 @@ _addon.talentData = {
         talent = 11,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
                 affectSpell = {SMITE, HOLY_FIRE},
                 perPoint = 5
             }
@@ -130,8 +134,13 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {MIND_BLAST, SHADOW_GUARD, DEVOURING_PLAGUE},
+                perPoint = 2
+            },
+            {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.SHADOW,
+                affectSpell = {SHADOW_WORD_PAIN, MIND_FLAY, TOUCH_OF_WEAKNESS},
                 perPoint = 2
             }
         }
