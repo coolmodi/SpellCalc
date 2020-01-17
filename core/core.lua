@@ -88,8 +88,13 @@ local function GenerateEffectModifier(spellBaseInfo, isHeal, spellName, calcData
     end
 
     if not isHeal then
-        effectMod = effectMod * stats.dmgDoneMods[spellBaseInfo.school].val;
-        calcData:AddToBuffList(stats.dmgDoneMods[spellBaseInfo.school].buffs);
+        effectMod = effectMod * stats.dmgDoneMods.school[spellBaseInfo.school].val;
+        calcData:AddToBuffList(stats.dmgDoneMods.school[spellBaseInfo.school].buffs);
+
+        if stats.dmgDoneMods.spell[spellName] ~= nil then
+            effectMod = effectMod * stats.dmgDoneMods.spell[spellName].val;
+            calcData:AddToBuffList(stats.dmgDoneMods.spell[spellName].buffs);
+        end
     elseif not spellBaseInfo.isAbsorbShield then
         effectMod = effectMod * stats.healingDoneMod.val;
         calcData:AddToBuffList(stats.healingDoneMod.buffs);

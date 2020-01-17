@@ -297,7 +297,8 @@ AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
 AddWeaponTableUniform(stats.hitMods.weapon, nil, "%");
 AddSpellTable(stats.hitMods.spell, nil, "%");
 
-AddSchoolTableUniform(stats.dmgDoneMods, "Dmg done mods", "x");
+AddSchoolTableUniform(stats.dmgDoneMods.school, "Dmg done mods", "x");
+AddSpellTable(stats.dmgDoneMods.spell, nil, "x");
 AddUniformStatTable(stats.healingDoneMod, "Healing done mod", "x");
 
 AddSchoolTableUniform(stats.effectMods.school, "Effect mods", "x");

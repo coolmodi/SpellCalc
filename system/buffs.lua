@@ -121,7 +121,9 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 
     if effect == EFFECT_TYPE.MOD_DMG_DONE then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.dmgDoneMods, affectSchool, true);
+            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.dmgDoneMods.school, affectSchool, true);
+        elseif affectSpell ~= nil then
+            ApplyOrRemoveSpellAffect(name, value, _addon.stats.dmgDoneMods.spell, affectSpell, true);
         end
         return;
     end
