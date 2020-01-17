@@ -73,35 +73,38 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
     return st;
 end
 
---- Generate effect modifier
+--- Generate effect modifiers (baseMod, bonusMod)
 -- @param spellBaseInfo The spell base info table
 -- @param isHeal
 -- @param spellName
 -- @param calcData the calculation table
-local function GenerateEffectModifier(spellBaseInfo, isHeal, spellName, calcData)
-    local effectMod = stats.effectMods.school[spellBaseInfo.school].val;
+local function GenerateEffectModifiers(spellBaseInfo, isHeal, spellName, calcData)
+    local bonusMod = 1;
+    local baseMod = stats.effectMods.school[spellBaseInfo.school].val;
     calcData:AddToBuffList(stats.effectMods.school[spellBaseInfo.school].buffs);
 
     if stats.effectMods.spell[spellName] ~= nil then
-        effectMod = effectMod * stats.effectMods.spell[spellName].val;
+        baseMod = baseMod * stats.effectMods.spell[spellName].val;
         calcData:AddToBuffList(stats.effectMods.spell[spellName].buffs);
     end
 
     if not isHeal then
-        effectMod = effectMod * stats.dmgDoneMods.school[spellBaseInfo.school].val;
+        bonusMod = bonusMod * stats.dmgDoneMods.school[spellBaseInfo.school].val;
         calcData:AddToBuffList(stats.dmgDoneMods.school[spellBaseInfo.school].buffs);
 
         if stats.dmgDoneMods.spell[spellName] ~= nil then
-            effectMod = effectMod * stats.dmgDoneMods.spell[spellName].val;
+            bonusMod = bonusMod * stats.dmgDoneMods.spell[spellName].val;
             calcData:AddToBuffList(stats.dmgDoneMods.spell[spellName].buffs);
         end
     elseif not spellBaseInfo.isAbsorbShield then
-        effectMod = effectMod * stats.healingDoneMod.val;
+        baseMod = baseMod * stats.healingDoneMod.val;
         calcData:AddToBuffList(stats.healingDoneMod.buffs);
     end
 
-    _addon:PrintDebug("Effectmod: "..effectMod);
-    return effectMod;
+    baseMod = baseMod * bonusMod;
+
+    _addon:PrintDebug("Basemod: "..baseMod..", Bonusmod: "..bonusMod);
+    return baseMod, bonusMod;
 end
 
 local effectTypes = {};
@@ -269,6 +272,10 @@ local function CalcSpell(spellId)
         local et = calcData[i];
 
         --------------------------
+        -- Effect specific modifier
+        local effectMod, bonusMod = GenerateEffectModifiers(spellBaseInfo, spellRankInfo.effects[i].isHeal, name, calcData);
+
+        --------------------------
         -- Effect bonus power scaling
 
         if spellRankInfo.effects[i].isHeal == true and not spellBaseInfo.forceSchoolScaling then
@@ -279,12 +286,8 @@ local function CalcSpell(spellId)
         et.spellPower = extraSp + et.spellPower;
 
         -- Effective power
-        et.effectiveSpCoef = spellRankInfo.effects[i].coef and spellRankInfo.effects[i].coef or 0;
+        et.effectiveSpCoef = spellRankInfo.effects[i].coef and (spellRankInfo.effects[i].coef * bonusMod) or 0;
         et.effectivePower = et.spellPower * et.effectiveSpCoef + flatMod;
-
-        --------------------------
-        -- Effect specific modifier
-        local effectMod = GenerateEffectModifier(spellBaseInfo, spellRankInfo.effects[i].isHeal, name, calcData);
 
         --------------------------
         -- Effect values
