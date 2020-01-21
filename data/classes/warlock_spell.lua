@@ -36,6 +36,7 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(1949)] = { -- Hellfire
         school = 3,
+        isChannel = true,
     },
     [GetSpellInfo(5676)] = { -- Searing Pain
         school = 3,

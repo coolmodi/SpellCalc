@@ -15,6 +15,7 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(740)] = { -- Tranquility
         school = 4,
+        isChannel = true,
     },
     [GetSpellInfo(774)] = { -- Rejuvenation
         school = 4,

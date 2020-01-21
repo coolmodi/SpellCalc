@@ -398,7 +398,7 @@ function buildSpellInfo(pclass: string) {
             classInfo.baseInfo[spellName] = {
                 getspellinfoid: effects[0].SpellID,
                 school: SCHOOL_MASK_TO_ENUM[spellMisc.SchoolMask],
-                isChannel: ((spellMisc["Attributes[1]"] & 4) > 0),
+                isChannel: ((spellMisc["Attributes[1]"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
                 isAbsorbShield: (effects[0].EffectAura == AURA_TYPE.SPELL_AURA_SCHOOL_ABSORB 
                     || effects[0].EffectAura == AURA_TYPE.SPELL_AURA_MANA_SHIELD),
                 forceSchoolScaling: false,

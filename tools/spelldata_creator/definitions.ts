@@ -30,6 +30,12 @@ const enum DEFENSE_TYPE {
     RANGED = 3
 }
 
+const enum SPELL_ATTR1 {
+    SPELL_ATTR_EX_CHANNELED1 = 0x4,
+    SPELL_ATTR_EX_CHANNELED2 = 0x40,
+    SPELL_ATTR_EX_CHANNELED_ANY = 0x44,
+}
+
 interface BaseInfo {
     getspellinfoid: number,
     school: number,
