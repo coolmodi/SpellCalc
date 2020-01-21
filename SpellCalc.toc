@@ -1,7 +1,7 @@
 ## Interface: 11302
 ## Title: SpellCalc
 ## Author: coolmodi
-## Version: 0.6.1
+## Version: 0.6.2
 ## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
 ## OptionalDeps: Dominos, ElvUI, Bartender4
