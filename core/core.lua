@@ -254,8 +254,8 @@ local function CalcSpell(spellId)
 
     local flatMod = 0;
     if stats.flatMods[name] ~= nil then
-        flatMod = stats.flatMod[name].val;
-        AddToBuffList(calcData, stats.flatMod[name].buffs);
+        flatMod = stats.flatMods[name].val;
+        AddToBuffList(calcData, stats.flatMods[name].buffs);
     end
 
     local extraSp = 0;
