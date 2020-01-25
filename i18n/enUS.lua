@@ -43,8 +43,11 @@ L["SETTINGS_TT_BUFFS_LABEL"] = "Show buffs";
 L["SETTINGS_TT_BUFFS_TT"] = "Show buffs/gear/talents affecting the spell calculation. This doesn't include things that the addon doesn't need to explicitly handle!";
 
 L["SETTINGS_AB_TITLE"] = "Actionbar";
-L["SETTINGS_AB_HEAD"] = "Actionbar button value";
 L["SETTINGS_AB_SHOW"] = "Show values on actionbar";
+L["SETTINGS_AB_POS"] = "Position";
+L["SETTINGS_AB_POS_TT"] = "Offset from the bottom of the button in percent.";
+L["SETTINGS_AB_SIZE"] = "Font size";
+L["SETTINGS_AB_HEAD"] = "Shown values";
 L["SETTINGS_AB_DIRECT_VALUE"] = "Direct";
 L["SETTINGS_AB_DIRECT_VALUE_AVG"] = "Avg. normal hit";
 L["SETTINGS_AB_DIRECT_VALUE_CRITAVG"] = "Avg. crit";

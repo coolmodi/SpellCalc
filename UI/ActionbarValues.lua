@@ -62,6 +62,18 @@ local function UpdateButtons(self, diff)
     end
 end
 
+--- Get offset based on button frame height
+-- @param buttonFrame The button frame object
+-- @param fontObject The font object
+-- @param offsetPct The offset in percent
+local function GetButtonPosOffset(buttonFrame, fontObject, offsetPct)
+    local oldString = fontObject:GetText();
+    fontObject:SetText("-");
+    local hs = fontObject:GetStringHeight();
+    fontObject:SetText(oldString);
+    return buttonFrame:GetHeight() * offsetPct / 100 - hs / 2;
+end
+
 --- Add font string to the given button frame for button slot
 -- @param buttonFrame The button frame object
 -- @param slot The action slot number
@@ -71,9 +83,10 @@ local function AddStringToButton(buttonFrame, slot)
     end
 
     local buttonText = buttonFrame:CreateFontString(nil, "ARTWORK");
-    buttonText:SetFont("Fonts\\ARIALN.TTF", 12, "OUTLINE");
-    buttonText:SetPoint("BOTTOMLEFT", buttonFrame, "BOTTOMLEFT", 0, 2);
-    buttonText:SetPoint("BOTTOMRIGHT", buttonFrame, "BOTTOMRIGHT", 0, 2);
+    buttonText:SetFont("Fonts\\ARIALN.TTF", SpellCalc_settings.abSize, "OUTLINE");
+    local offset = GetButtonPosOffset(buttonFrame, buttonText, SpellCalc_settings.abPosition);
+    buttonText:SetPoint("BOTTOMLEFT", buttonFrame, "BOTTOMLEFT", 0, offset);
+    buttonText:SetPoint("BOTTOMRIGHT", buttonFrame, "BOTTOMRIGHT", 0, offset);
     buttonText:Show();
 
     actionButtons[slot] = buttonText;
@@ -345,5 +358,20 @@ end
 function _addon:ClearActionBar()
     for slot = 1, 120 do
         actionButtons[slot]:SetText("");
+    end
+end
+
+function _addon:ActionbarUpdateStyle()
+    local settingOffset = SpellCalc_settings.abPosition;
+    local settingSize = SpellCalc_settings.abSize;
+    for slot = 1, 120 do
+        if actionButtons[slot] ~= nil then 
+            local buttonText = actionButtons[slot];
+            buttonText:ClearAllPoints();
+            local offset = GetButtonPosOffset(buttonText:GetParent(), buttonText, settingOffset);
+            buttonText:SetPoint("BOTTOMLEFT", 0, offset);
+            buttonText:SetPoint("BOTTOMRIGHT", 0, offset);
+            buttonText:SetFont("Fonts\\ARIALN.TTF", settingSize, "OUTLINE");
+        end
     end
 end

@@ -35,6 +35,8 @@ local DEFAULTSETTINGS = {
 	["abDirectValue"] = "hitAvg",
 	["abDurationValue"] = "allTicks",
 	["abSealValue"] = "hitAvg",
+	["abPosition"] = 25,
+	["abSize"] = 12,
 
 	["healTargetHps"] = 0,
 	["healDisregardCrit"] = false,
@@ -70,6 +72,8 @@ local function AfterSave()
 	if not SpellCalc_settings.abShow then
 		_addon:ClearActionBar();
 	end
+
+	_addon:ActionbarUpdateStyle();
 
 	_addon:TriggerUpdate();
 end
@@ -138,8 +142,11 @@ function _addon:SetupSettings()
 	local settingsAb = _addon:GetSettingsBuilder();
 	settingsAb:Setup(SpellCalc_settings, DEFAULTSETTINGS, L["SETTINGS_AB_TITLE"], nil, nil, nil, nil, nil, nil, _addonName);
 	settingsAb:SetAfterSaveCallback(AfterSave);
-	settingsAb:MakeHeading(L["SETTINGS_AB_HEAD"]);
+	settingsAb:MakeHeading(L["SETTINGS_AB_TITLE"]);
 	settingsAb:MakeCheckboxOption("abShow", L["SETTINGS_AB_SHOW"]);
+	settingsAb:MakeSliderOption("abPosition", L["SETTINGS_AB_POS"], L["SETTINGS_AB_POS_TT"], 0, 100, 1);
+	settingsAb:MakeSliderOption("abSize", L["SETTINGS_AB_SIZE"], nil, 8, 20, 1);
+	settingsAb:MakeHeading(L["SETTINGS_AB_HEAD"]);
 	settingsAb:MakeDropdown("abDirectValue", L["SETTINGS_AB_DIRECT_VALUE"], nil, 150, function()
 		return {
 			hitAvg = L["SETTINGS_AB_DIRECT_VALUE_AVG"],
