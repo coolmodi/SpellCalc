@@ -82,6 +82,11 @@ local function AddStringToButton(buttonFrame, slot)
         return;
     end
 
+    if buttonFrame == nil then
+        _addon:PrintDebug("buttonFrame is nil for slot "..slot);
+        return;
+    end
+
     local buttonText = buttonFrame:CreateFontString(nil, "ARTWORK");
     buttonText:SetFont("Fonts\\ARIALN.TTF", SpellCalc_settings.abSize, "OUTLINE");
     local offset = GetButtonPosOffset(buttonFrame, buttonText, SpellCalc_settings.abPosition);
