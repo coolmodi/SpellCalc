@@ -66,6 +66,7 @@ local function MakeSpellTable(spellType, primaryType, secondaryType)
         et.spellPower = 0; -- Spell power this effect uses
         et.effectiveSpCoef = 0; -- The effective coef after penalty, if it has one
         et.effectivePower = 0; -- The power used
+        et.flatMod = 0; -- Flat increase, e.g. Cenarion Raiment Thorn damage
 
         typeFuncs.effMembers[spellType](et, curType);
     end
@@ -287,7 +288,8 @@ local function CalcSpell(spellId)
 
         -- Effective power
         et.effectiveSpCoef = spellRankInfo.effects[i].coef and (spellRankInfo.effects[i].coef * bonusMod) or 0;
-        et.effectivePower = et.spellPower * et.effectiveSpCoef + flatMod;
+        et.effectivePower = et.spellPower * et.effectiveSpCoef;
+        et.flatMod = flatMod;
 
         --------------------------
         -- Effect values

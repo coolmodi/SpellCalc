@@ -268,13 +268,13 @@ function _addon:CalculateSpellDirectEffect(calcData, et, spellRankInfo, effectDa
         levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     end
 
-    et.hitMin = (effectData.min + levelBonus) * effectMod + et.effectivePower;
+    et.hitMin = (effectData.min + levelBonus + et.flatMod) * effectMod + et.effectivePower;
     et.hitAvg = et.hitMin;
     et.critMin = et.hitMin * calcData.critMult;
     et.critAvg = et.critMin;
 
     if effectData.max then
-        et.hitMax = (effectData.max + levelBonus) * effectMod + et.effectivePower;
+        et.hitMax = (effectData.max + levelBonus + et.flatMod) * effectMod + et.effectivePower;
         et.hitAvg = (et.hitMin + et.hitMax) / 2;
         et.critMax = et.hitMax * calcData.critMult;
         et.critAvg = (et.critMin + et.critMax) / 2;
@@ -361,7 +361,7 @@ function _addon:CalculateSpellDmgShieldEffect(calcData, et, spellRankInfo, effec
         levelBonus = (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
     end
 
-    et.perCharge = (effectData.min + levelBonus) * effectMod + et.effectivePower;
+    et.perCharge = (effectData.min + levelBonus + et.flatMod) * effectMod + et.effectivePower;
     et.charges = effectData.charges;
     et.hitAvg = et.perCharge * et.charges;
     et.avgAfterMitigation = et.hitAvg * calcData.hitChance * (1 - calcData.avgResistMod);
@@ -396,9 +396,9 @@ function _addon:CalculateSpellDurationEffect(calcData, et, spellRankInfo, effect
 
     -- Searing totem, this is so ugly...
     if effectData.max then
-        et.perTick = ((effectData.min + effectData.max)/2 + levelBonus) * effectMod + et.effectivePower;
+        et.perTick = ((effectData.min + effectData.max)/2 + levelBonus + et.flatMod) * effectMod + et.effectivePower;
     else
-        et.perTick = (effectData.min + levelBonus) * effectMod + et.effectivePower;
+        et.perTick = (effectData.min + levelBonus + et.flatMod) * effectMod + et.effectivePower;
     end
 
     -- PTSA hackfixes :/
