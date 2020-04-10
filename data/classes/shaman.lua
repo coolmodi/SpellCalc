@@ -73,7 +73,7 @@ _addon.talentData = {
     },
 
     { -- Restorative Totems
-        tree = 1,
+        tree = 3,
         talent = 10,
         effects = {
             {
@@ -84,7 +84,7 @@ _addon.talentData = {
         }
     },
     { -- Tidal Mastery
-        tree = 1,
+        tree = 3,
         talent = 11,
         effects = {
             {
@@ -94,8 +94,8 @@ _addon.talentData = {
             }
         }
     },
-    { -- Tidal Mastery
-        tree = 1,
+    { -- Purification
+        tree = 3,
         talent = 14,
         effects = {
             {
