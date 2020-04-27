@@ -1,5 +1,12 @@
 local _addonName, _addon = ...;
-local L = _addon:GetLocalization();
+
+-- dirty fix to "disable" the addon preventing errors on unsupported classes
+-- TODO: Remove when classes are supported
+local _, class = UnitClass("player");
+if class == "WARRIOR" or class == "ROGUE" or class == "HUNTER" then
+    _addon:PrintError("Class not (yet) supported, addon won't work!");
+    return;
+end
 
 local frame = CreateFrame("Frame");
 local handlers = {};
