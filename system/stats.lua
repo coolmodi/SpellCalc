@@ -273,6 +273,34 @@ function _addon:UpdateRangedAttackDmg()
     self:TriggerUpdate();
 end
 
+local oldApiHitBonus = 0;
+local oldApiHitBonusSpell = 0;
+
+--- Combat ratings updated (seems to be hit modifier in classic)
+function _addon:CombatRatingUpdate()
+    self:PrintDebug("Combat rating update");
+    local meleeFlat = GetHitModifier();
+    local spellFlat = GetSpellHitModifier();
+    local changed = false;
+
+    if meleeFlat ~= oldApiHitBonus then
+        self.stats.hitBonus.val = self.stats.hitBonus.val - oldApiHitBonus + meleeFlat;
+        oldApiHitBonus = meleeFlat;
+        changed = true;
+    end
+
+    if spellFlat ~= oldApiHitBonusSpell then
+        self.stats.hitBonusSpell.val = self.stats.hitBonusSpell.val - oldApiHitBonusSpell + spellFlat;
+        oldApiHitBonusSpell = spellFlat;
+        changed = true;
+    end
+
+    if changed then
+        self:PrintDebug("Updated hit mods from API. M: " .. meleeFlat .. " - S: " .. spellFlat);
+        self:TriggerUpdate();
+    end
+end
+
 -- Update everything manually
 function _addon:FullUpdate()
     self:PrintDebug("Full update");
@@ -288,4 +316,5 @@ function _addon:FullUpdate()
     self:UpdateWeaponAttack();
     self:UpdateAttackDmg();
     self:UpdateRangedAttackDmg();
+    self:CombatRatingUpdate();
 end

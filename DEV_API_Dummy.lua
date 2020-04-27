@@ -188,3 +188,40 @@ end
 function GetShapeshiftForm()
     return 0;
 end
+
+function GetRealmName()
+    return "";
+end
+
+Bartender4DB = {
+    namespaces = {},
+    profileKeys = {},
+}
+
+DominosDB = {
+    profileKeys = {},
+    profiles = {},
+}
+
+ElvDB = {
+    profileKeys = {},
+    profiles = {},
+}
+
+--- initpos is optional. Returns the matched substring(s) found within string. Multiple return values can occur.
+function strmatch(string, pattern, initpos)
+    return "", "", "", "";
+end
+
+--- icon, name, active, castable, spellId
+function GetShapeshiftFormInfo(index)
+    return "", "", true, true, 1;
+end
+
+function GetHitModifier()
+    return 1;
+end
+
+function GetSpellHitModifier()
+    return 1;
+end

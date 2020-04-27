@@ -53,6 +53,10 @@ function handlers.PLAYER_DAMAGE_DONE_MODS(unit)
     _addon:UpdateDmgDoneMods();
 end
 
+function handlers.COMBAT_RATING_UPDATE()
+    _addon:CombatRatingUpdate();
+end
+
 function handlers.UPDATE_INVENTORY_DURABILITY()
     _addon:UpdateItems();
 end

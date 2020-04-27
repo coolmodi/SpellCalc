@@ -235,18 +235,19 @@ _addon.itemSetData = {
             },
         },
     },
-    [462] = {
-        name = "Zanzil's Concentration",
-        effects = {
-            [1] = {
-                need = 2,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-                    value = 1,
-                }
-            },
-        },
-    },
+    -- This should appear in GetSpellHitModifier()
+    -- [462] = {
+    --     name = "Zanzil's Concentration",
+    --     effects = {
+    --         [1] = {
+    --             need = 2,
+    --             effect = {
+    --                 effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+    --                 value = 1,
+    --             }
+    --         },
+    --     },
+    -- },
     [473] = {
         name = "The Highlander's Intent",
         effects = {
@@ -677,8 +678,8 @@ _addon.setItemData = {
     [19840] = 479,
     [19848] = 481,
     [19849] = 481,
-    [19893] = 462,
-    [19905] = 462,
+    -- [19893] = 462,
+    -- [19905] = 462,
     [19952] = 475,
     [19955] = 479,
     [19956] = 476,

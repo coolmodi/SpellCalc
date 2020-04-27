@@ -95,15 +95,16 @@ local function ChangeItemEffects(itemData, itemName, remove)
         ApplyOrRemove(val, _addon.stats.mp5, itemName);
     end
 
-    if itemData.hit then
-        val = remove and -itemData.hit or itemData.hit;
-        ApplyOrRemove(val, _addon.stats.hitBonus, itemName);
-    end
+    -- All flat hit bonus aruras on items should appear in GetSpellHitModifier()
+    -- if itemData.hit then
+    --     val = remove and -itemData.hit or itemData.hit;
+    --     ApplyOrRemove(val, _addon.stats.hitBonus, itemName);
+    -- end
 
-    if itemData.spellHit then
-        val = remove and -itemData.spellHit or itemData.spellHit;
-        ApplyOrRemove(val, _addon.stats.hitBonusSpell, itemName);
-    end
+    -- if itemData.spellHit then
+    --     val = remove and -itemData.spellHit or itemData.spellHit;
+    --     ApplyOrRemove(val, _addon.stats.hitBonusSpell, itemName);
+    -- end
 
     if itemData.spellPen then
         val = remove and -itemData.spellPen or itemData.spellPen;
