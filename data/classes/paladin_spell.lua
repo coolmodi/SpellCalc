@@ -29,12 +29,12 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(20116)] = { -- Consecration
         school = 2,
     },
-    [GetSpellInfo(20187)] = { -- Judgement of Righteousness
-        school = 2,
-    },
-    [GetSpellInfo(20287)] = { -- Seal of Righteousness
+    [GetSpellInfo(20154)] = { -- Seal of Righteousness
         school = 2,
         isSeal = "SOR",
+    },
+    [GetSpellInfo(20187)] = { -- Judgement of Righteousness
+        school = 2,
     },
     [GetSpellInfo(20375)] = { -- Seal of Command
         school = 2,
@@ -417,6 +417,18 @@ _addon.spellRankInfo = {
                 tickPeriod = 1,
                 min = 15,
                 coef = 0.042,
+            },
+        }
+    },
+    [20154] = { -- Seal of Righteousness(Rank 1)
+        spellLevel = 1,
+        maxLevel = 7,
+        duration = 30,
+        effects = {
+            [1] = {
+                min = 108,
+                perLevel = 18,
+                coef = 0.1,
             },
         }
     },
