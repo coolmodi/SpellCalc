@@ -300,6 +300,7 @@ AddSpellTable(stats.hitMods.spell, nil, "%");
 AddSchoolTableUniform(stats.dmgDoneMods.school, "Dmg done mods", "x");
 AddSpellTable(stats.dmgDoneMods.spell, nil, "x");
 AddUniformStatTable(stats.healingDoneMod, "Healing done mod", "x");
+AddUniformStatTable(stats.healingDoneModAll, "Healing done mod (all)", "x");
 
 AddSchoolTableUniform(stats.effectMods.school, "Effect mods", "x");
 AddSpellTable(stats.effectMods.spell, nil, "x");

@@ -100,6 +100,8 @@ local function GenerateEffectModifiers(spellBaseInfo, isHeal, spellName, calcDat
     elseif not spellBaseInfo.isAbsorbShield then
         baseMod = baseMod * stats.healingDoneMod.val;
         calcData:AddToBuffList(stats.healingDoneMod.buffs);
+        bonusMod = bonusMod * stats.healingDoneModAll.val;
+        calcData:AddToBuffList(stats.healingDoneModAll.buffs);
     end
 
     baseMod = baseMod * bonusMod;

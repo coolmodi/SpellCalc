@@ -48,7 +48,7 @@ _addon.buffData = {
                 value = 20,
             },
             {
-                effect = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                effect = _addon.EFFECT_TYPE.MOD_HEALING_DONE_ALL,
                 value = 20,
             }
         }

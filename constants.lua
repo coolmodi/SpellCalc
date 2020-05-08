@@ -48,7 +48,8 @@ _addon.EFFECT_TYPE = {
     CONDITION_TRIGGER = 20,
     DRUID_NATURES_GRACE = 21,
     JUDGEMENT_SPELL = 22,
-    MOD_HIT_WEAPON = 23
+    MOD_HIT_WEAPON = 23,
+    MOD_HEALING_DONE_ALL = 24,
 };
 
 -- Spell types (What calculation rules to use)
