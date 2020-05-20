@@ -1,4 +1,5 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
 local BLESSING_OF_WISDOM = GetSpellInfo(19852);
 local GREATER_BLESSING_OF_WISDOM = GetSpellInfo(25918);

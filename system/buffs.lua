@@ -1,4 +1,5 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
 local SCHOOL = _addon.SCHOOL;
 local SCHOOL_MASK = _addon.SCHOOL_MASK;
@@ -6,12 +7,13 @@ local EFFECT_TYPE = _addon.EFFECT_TYPE;
 
 local conditionsActive = 0;
 
+local stats = _addon.stats;
+
 --- Apply or remove effect for destination
--- @param value The effect value, negative to remove buff
--- @param dest The destination table
--- @param key The table key
--- @param name The name of the buff
--- @param isMultiplicative Treat multiplicatively
+---@param value number @The effect value, negative to remove buff
+---@param dest table @The destination table
+---@param name string @The name of the buff
+---@param isMultiplicative boolean @Treat multiplicatively
 local function ApplyOrRemove(value, dest, name, isMultiplicative)
     if isMultiplicative then
         if value > 0 then
@@ -31,11 +33,11 @@ local function ApplyOrRemove(value, dest, name, isMultiplicative)
 end
 
 --- Apply or remove effect affecting spells
--- @param name The name of the buff
--- @param value The effect value, negative to remove buff
--- @param destTable The destination table
--- @param spellList The list of spellNames to affect
--- @param isMultiplicative Treat multiplicatively
+---@param name string @The name of the buff
+---@param value number @The effect value, negative to remove buff
+---@param destTable table @The destination table
+---@param spellList string[] @The list of spellNames to affect
+---@param isMultiplicative boolean @Treat multiplicatively
 local function ApplyOrRemoveSpellAffect(name, value, destTable, spellList, isMultiplicative)
     for k, spellName in ipairs(spellList) do
         if destTable[spellName] == nil then
@@ -50,11 +52,11 @@ local function ApplyOrRemoveSpellAffect(name, value, destTable, spellList, isMul
 end
 
 --- Apply or remove effect affecting schools
--- @param name The name of the buff
--- @param value The effect value, negative to remove buff
--- @param destTable The destination table
--- @param schoolMask The mask of schools to affect
--- @param isMultiplicative Treat multiplicatively
+---@param name string @The name of the buff
+---@param value number @The effect value, negative to remove buff
+---@param destTable table @The destination table
+---@param schoolMask number @The mask of schools to affect
+---@param isMultiplicative boolean @Treat multiplicatively
 local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask, isMultiplicative)
     if bit.band(schoolMask, SCHOOL_MASK.HOLY) > 0 then
         ApplyOrRemove(value, destTable[SCHOOL.HOLY], name, isMultiplicative);
@@ -77,11 +79,11 @@ local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask, isM
 end
 
 --- Apply or remove effect affecting weapon types
--- @param name The name of the buff
--- @param value The effect value, negative to remove buff
--- @param destTable The destination table
--- @param weaponMask The mask of weapon types to affec
--- @param isMultiplicative Treat multiplicatively
+---@param name string @The name of the buff
+---@param value number @The effect value, negative to remove buff
+---@param destTable table @The destination table
+---@param weaponMask number @The mask of weapon types to affec
+---@param isMultiplicative boolean @Treat multiplicatively
 local function ApplyOrRemoveWeaponAffect(name, value, destTable, weaponMask, isMultiplicative)
     for typeKey in pairs(destTable) do
         if bit.band(typeKey, weaponMask) > 0 then
@@ -91,12 +93,12 @@ local function ApplyOrRemoveWeaponAffect(name, value, destTable, weaponMask, isM
 end
 
 --- Change buff effect value (add/remove)
--- @param apply True to apply, false to remove
--- @param name The name of the buff
--- @param effect The effect type
--- @param value The effect value
--- @param affectSchool The mask of schools it affects, nil if no school affected
--- @param affectSpell The spells it affects, nil if no specific spell(s) affected
+---@param apply boolean @True to apply, false to remove
+---@param name string @The name of the buff
+---@param effect number @The effect type
+---@param value number @The effect value
+---@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
+---@param affectSpell string|nil @The spells it affects, nil if no specific spell(s) affected
 local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     if apply == false then
         value = -value;
@@ -247,6 +249,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
+    if effect == EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST then
+        ApplyOrRemoveSpellAffect(name, value, _addon.stats.chainMultMods, affectSpell);
+        return;
+    end
+
     if effect == EFFECT_TYPE.MOD_HIT_WEAPON then
         ApplyOrRemoveWeaponAffect(name, value, _addon.stats.hitMods.weapon, affectSchool)
         return;
@@ -264,21 +271,21 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 end
 
 --- Apply a buff
--- @param name The name of the buff
--- @param effect The effect type
--- @param value The effect value
--- @param affectSchool The mask of schools it affects, nil if no school affected
--- @param affectSpell The spells it affects, nil if no specific spell(s) affected
+---@param name string @The name of the buff
+---@param effect number @The effect type
+---@param value number @The effect value
+---@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
+---@param affectSpell string|nil @The spells it affects, nil if no specific spell(s) affected
 function _addon:ApplyBuff(name, effect, value, affectSchool, affectSpell)
     ChangeBuff(true, name, effect, value, affectSchool, affectSpell);
 end
 
 --- Remove a previously applied buff
--- @param name The name of the buff
--- @param effect The effect type
--- @param value The effect value
--- @param affectSchool The mask of schools it affects, nil if no school affected
--- @param affectSpell The spells it affects, nil if no specific spell(s) affected
+---@param name string @The name of the buff
+---@param effect number @The effect type
+---@param value number @The effect value
+---@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
+---@param affectSpell string|nil @The spells it affects, nil if no specific spell(s) affected
 function _addon:RemoveBuff(name, effect, value, affectSchool, affectSpell)
     ChangeBuff(false, name, effect, value, affectSchool, affectSpell);
 end
@@ -340,6 +347,7 @@ local function RemoveBuffEffect(effectData, usedKey, name, effectSlot)
 end
 
 --- Update player buffs
+---@param clearOnly boolean
 function _addon:UpdateBuffs(clearOnly)
     self:PrintDebug("Updating buffs");
 
@@ -416,7 +424,7 @@ end
 local activeRelevantTalents = {};
 
 --- Update talents
--- @param forceTalents Info about talents to force active
+---@param forceTalents table
 function _addon:UpdateTalents(forceTalents)
     self:PrintDebug("Updating talents");
 

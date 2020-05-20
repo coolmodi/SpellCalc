@@ -27,21 +27,16 @@ A WoW classic addon providing information for spells, like actual damage done, c
 
 It should be easy to add/implement missing buffs/items/talents/effects or fix incorrect ones. I just need to know what is missing or wrong.
 
-`/sc` will show a window with all the stats used (intended for debug, it's not pretty)
+`/sc` to show settings in the interface options addons tab
+
+`/sc info` will show a window with all the stats used (intended for debug, it's not pretty)
 
 `/sc debug` will toggle debug output
-
-There is a settings menu in the interface options addons tab.
 
 ## Known Problems/Shortcomings
 * Aura crit supression for melee is always applied, even if there is no crit from auras. This means if you don't have at least 2% crit from gear, talents or buffs you will have less crit displayed against +3 targets than you have. This should rarely matter.
 * Block chance for melee attacks is only used to calculate following chances in attack table, notably crit, block damage reduction is not implemented.
 * Against player targets parry, block and dodge is not handled in any way.
-
-## Planned
-* Support for melee and ranged spells.
-* Using target for debuffs (e.g. Shadow Weaving) or things like troll beast dmg, low prio.
-* Resistance (custom values can be set) and armor mitigation, very low prio.
 
 ## Some examples
 ![example](images/example1.png)

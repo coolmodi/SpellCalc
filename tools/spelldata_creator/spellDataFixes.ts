@@ -53,8 +53,18 @@ function priestFix(se: {[index: number]: SpellEffect}) {
         }
     };
 
+    // map Touch of Weakness proc spells
+    const TOW_MAP: {[spellId: number]: number} = {
+        2652: 2943,
+        19261: 19249,
+        19262: 19251,
+        19264: 19252,
+        19265: 19253,
+        19266: 19254
+    };
+
     for(let effId in se) {
-        let eff = se[effId];
+        const eff = se[effId];
         // PWS
         if (eff.SpellID == 17) {
             eff.EffectBonusCoefficient = 0.0475;
@@ -74,6 +84,26 @@ function priestFix(se: {[index: number]: SpellEffect}) {
                 clone.EffectDieSides = HN[eff.SpellID].max - HN[eff.SpellID].min;
                 clone.EffectRealPointsPerLevel = HN[eff.SpellID].perlvl;
                 se[clone.ID] = clone;
+            }
+        // Touch of Weakness does not have any usefull data about its proc by default, replace with proc entirely
+        } else if (TOW_MAP[eff.SpellID]) {
+            const procId = TOW_MAP[eff.SpellID];
+            let found = false;
+            if (eff.EffectIndex == 0) {
+                for (let effectId2 in se) {
+                    const effect2 = se[effectId2];
+                    if (effect2.SpellID == procId) {
+                        for (let key in effect2) {
+                            if (key == "ID" || key == "SpellID" || key == "Effect" || key == "EffectAura") continue;
+                            eff[key as keyof SpellEffect] =  effect2[key as keyof SpellEffect];
+                        }
+                        eff.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
+                        eff.EffectAura = AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) throw "Couldn't replace Touch of Weakness with proc! Spell not found!";
             }
         }
     }
@@ -150,7 +180,7 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                     if (jeff.SpellID == jdId) {
                         eff.EffectBasePoints = jeff.EffectBasePoints;
                         jdId = jeff.EffectBasePoints + 1;
-                        sc[jdId].DefenseType = 1;
+                        sc[jdId].DefenseType = DEFENSE_TYPE.MAGIC;
                         break;
                     }
                 }
@@ -179,6 +209,11 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                         break;
                     }
                 }
+            }
+
+            // Make seals melee
+            if (isSeal(eff.SpellID) && eff.EffectIndex == 0) {
+                sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MELEE;
             }
         }
     }

@@ -1,6 +1,8 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...)
 
--- As used by the API
+--- As used by the API
+---@class SpellSchools
 _addon.SCHOOL = {
     PHYSICAL = 1,
     HOLY = 2,
@@ -11,7 +13,7 @@ _addon.SCHOOL = {
     ARCANE = 7
 };
 
--- Internal use for buffs only
+--- Internal use for buffs only
 _addon.SCHOOL_MASK = {
     PHYSICAL = 0x1,
     HOLY = 0x2,
@@ -24,7 +26,7 @@ _addon.SCHOOL_MASK = {
     ALL_SPELL = 0xFE,
 };
 
--- Buff/Aura effects
+--- Buff/Aura effects
 _addon.EFFECT_TYPE = {
     MOD_EFFECT = 1;
     MOD_DMG_DONE = 2,
@@ -50,27 +52,28 @@ _addon.EFFECT_TYPE = {
     JUDGEMENT_SPELL = 22,
     MOD_HIT_WEAPON = 23,
     MOD_HEALING_DONE_ALL = 24,
+    SPELLMOD_EFFECT_PAST_FIRST = 25,
 };
 
--- Spell types (What calculation rules to use)
-_addon.SPELL_TYPE = {
-    SPELL = 1,
-    SEAL = 2,
-    AUTO_ATTACK = 3
-};
+--- Defense type (Decides mitigation types used)
+---@class SpellDefenseType
+_addon.DEF_TYPE = {
+    MAGIC = 1,
+    MELEE = 2,
+    RANGED = 3
+}
 
--- Spell effect types (What calculation rules to use)
-_addon.SPELL_EFFECT_TYPE = {
-    DIRECT_DMG = 1,
-    DOT = 2,
-    DMG_SHIELD = 3,
-    DIRECT_HEAL = 4,
-    HOT = 5,
-
-    SEAL_OF_RIGHTEOUSNES = 6,
-    SEAL_OF_COMMAND = 7,
-
-    AUTO_ATTACK = 8
+--- Spell effect flags
+---@class SpellEffectFlags
+_addon.SPELL_EFFECT_FLAGS = {
+    DURATION = 0x1,
+    HEAL = 0x2,
+    DMG_SHIELD = 0x4,
+    ABSORB = 0x8,
+    CHANNEL = 0x10,
+    TRIGGER_SPELL_AURA = 0x20,
+    AUTO_ATTACK = 0x40,
+    DUMMY_AURA = 0x80,
 };
 
 _addon.HEALING_CLASSES = {
@@ -95,7 +98,7 @@ _addon.BUFF_CONDITIONS = {
 
 _addon.JUDGEMENT_ID = 20271;
 
--- Weapon types as localized itemSubType name, equals proficiency name
+--- Weapon types as localized itemSubType name, equals proficiency name
 _addon.WEAPON_TYPES = {
     FISHING_POLE = GetSpellInfo(7738),
     POLEARM = GetSpellInfo(200),
@@ -147,7 +150,7 @@ _addon.WEAPON_TYPES_MASK = {
     MELEE = 0xFFFF
 }
 
--- Resolve WEAPON_TYPES (itemSubType) to their WEAPON_TYPES_MASK
+--- Resolve WEAPON_TYPES (itemSubType) to their WEAPON_TYPES_MASK
 _addon.WEAPON_TYPE_TO_MASK = {
     [_addon.WEAPON_TYPES.FISHING_POLE] = _addon.WEAPON_TYPES_MASK.FISHING_POLE,
     [_addon.WEAPON_TYPES.POLEARM] = _addon.WEAPON_TYPES_MASK.POLEARM,
@@ -179,4 +182,25 @@ _addon.FISHING_POLES = {
     [6367] = true, -- Big Iron Fishing Pole
     [19022] = true, -- Nat Pagle's Extreme Angler FC-5000
     [19970] = true -- Arcanite Fishing Pole
+}
+
+_addon.SPELL_EFFECT_TYPES = {
+    SPELL_EFFECT_SCHOOL_DAMAGE = 2,
+    SPELL_EFFECT_APPLY_AURA = 6,
+    SPELL_EFFECT_HEAL = 10,
+    SPELL_EFFECT_PERSISTENT_AREA_AURA = 27,
+    SPELL_EFFECT_APPLY_AREA_AURA_PARTY = 35,
+    SPELL_EFFECT_ATTACK = 78,
+}
+
+_addon.SPELL_AURA_TYPES = {
+    SPELL_AURA_PERIODIC_DAMAGE = 3,
+    SPELL_AURA_DUMMY = 4,
+    SPELL_AURA_PERIODIC_HEAL = 8,
+    SPELL_AURA_DAMAGE_SHIELD = 15,
+    SPELL_AURA_PERIODIC_TRIGGER_SPELL = 23,
+    SPELL_AURA_PROC_TRIGGER_SPELL = 42,
+    SPELL_AURA_PERIODIC_LEECH = 53,
+    SPELL_AURA_SCHOOL_ABSORB = 69,
+    SPELL_AURA_MANA_SHIELD = 97,
 }

@@ -1,4 +1,7 @@
-local _addonName, _addon = ...;
+---@type string
+local _addonName = select(1, ...);
+---@type AddonEnv
+local _addon = select(2, ...);
 
 -- dirty fix to "disable" the addon preventing errors on unsupported classes
 -- TODO: Remove when classes are supported
@@ -25,7 +28,7 @@ end
 
 function handlers.PLAYER_ENTERING_WORLD()
     _addon:FullUpdate();
-    _addon:SetupActionbars();
+    _addon.ActionbarValues:Setup();
 end
 
 function handlers.UNIT_AURA(unit)
@@ -80,7 +83,7 @@ function handlers.PLAYER_TARGET_CHANGED()
 end
 
 function handlers.ACTIONBAR_SLOT_CHANGED(slot)
-    _addon:ActionbarSlotUpdate(slot)
+    _addon.ActionbarValues:SlotUpdate(slot)
 end
 
 function handlers.UNIT_ATTACK_SPEED(unit)
@@ -113,7 +116,7 @@ function handlers.UNIT_RANGEDDAMAGE(unit)
 end
 
 function handlers.UPDATE_SHAPESHIFT_FORM()
-    _addon:ActionbarShapeShiftUpdate();
+    _addon.ActionbarValues:ShapeShiftUpdate();
 end
 
 frame:SetScript( "OnEvent",function(self, event, ...) 

@@ -1,9 +1,8 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
 local _, class = UnitClass("player");
-
-local SPELL_EFFECT_TYPE = _addon.SPELL_EFFECT_TYPE;
-local SPELL_TYPE = _addon.SPELL_TYPE;
+local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 
 local spellsInBar = {};
 local actionButtons = {};
@@ -13,12 +12,88 @@ local frame = CreateFrame("Frame", "SCABUpdateFrame");
 local actionbarSupport = "STOCK";
 local slotRemap = {};
 local slotDisable = {};
+local delayedButtonUpdate = 0;
+
+local ActionbarValues = {};
+_addon.ActionbarValues = ActionbarValues;
+
+-- For compatibility with old setting keys
+-- TODO: Update settings? Change how it's done?
+local settingsToKeyMap = {
+    perSecond = "perSec",
+    avgAfterMitigation = "avgAfterMitigation",
+    avgTriggerHits = "avgAfterMitigation",
+    perTick = "avgCombined",
+    critAvg = "avgCrit",
+    hitAvg = "avg", 
+};
+
+local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20154);
+local SEAL_OF_COMMAND = GetSpellInfo(20375);
+
+--- Get value to show for a dummy effect
+---@param calcedEffect CalcedEffect
+---@param spellName string
+local function GetDummyValue(calcedEffect, spellName)
+    local k = SpellCalc_settings.abSealValue;
+
+    if spellName == SEAL_OF_RIGHTEOUSNESS or spellName == SEAL_OF_COMMAND then
+        if settingsToKeyMap[k] then
+            return calcedEffect[settingsToKeyMap[k]];
+        end
+    end
+
+    return "ERR!";
+end
+
+--- Get value to show for a DoT/HoT or PTSA effect
+---@param calcedEffect CalcedEffect
+local function GetDurationValue(calcedEffect)
+    local k = SpellCalc_settings.abDurationValue;
+
+    if k == "allTicks" then
+        return calcedEffect.avgCombined * calcedEffect.ticks;
+    end
+
+    if settingsToKeyMap[k] then
+        return calcedEffect[settingsToKeyMap[k]];
+    end
+
+    return "ERR!";
+end
+
+--- Get value to show for a direct effect
+---@param calcedEffect CalcedEffect
+---@param critChance number
+local function GetDirectValue(calcedEffect, critChance)
+    local k = SpellCalc_settings.abDirectValue;
+    if k == "critAvg" and critChance == 0 then
+        k = "hitAvg";
+    end
+
+    if settingsToKeyMap[k] then
+        return calcedEffect[settingsToKeyMap[k]];
+    end
+
+    return "ERR!";
+end
 
 --- Update buttons
 -- Checks if buttons need an update, updates one button per frame
 local function UpdateButtons(self, diff)
     if not SpellCalc_settings.abShow then
         return;
+    end
+
+    if delayedButtonUpdate > 0 then
+        delayedButtonUpdate = delayedButtonUpdate - diff;
+        if delayedButtonUpdate <= 0 then
+            _addon:PrintDebug("Doing delayed full actionbar slot update")
+            for i = 1, 120 do
+                ActionbarValues:SlotUpdate(i);
+            end
+            delayedButtonUpdate = 0;
+        end
     end
 
     if lastSyncState < _addon:GetCurrentState() then
@@ -35,26 +110,28 @@ local function UpdateButtons(self, diff)
         local calcedSpell = _addon:GetCalcedSpell(spellId);
 
         if calcedSpell ~= nil then
-            if calcedSpell.spellType == SPELL_TYPE.SPELL then
-                local effectData = calcedSpell[1];
+            ---@type CalcedEffect
+            local calcedEffect = calcedSpell[1];
 
-                if effectData.effectType == SPELL_EFFECT_TYPE.HOT or effectData.effectType == SPELL_EFFECT_TYPE.DOT then
-                    local durationKey = SpellCalc_settings.abDurationValue;
-                    actionButtons[slot]:SetText(math.floor(calcedSpell[1][durationKey] + 0.5));
-                elseif effectData.effectType == SPELL_EFFECT_TYPE.DMG_SHIELD then
-                    actionButtons[slot]:SetText(math.floor(calcedSpell[1].perCharge + 0.5));
-                else
-                    local directKey = SpellCalc_settings.abDirectValue;
-                    if directKey == "critAvg" and calcedSpell.critChance == 0 then
-                        directKey = "hitAvg";
-                    end
-                    actionButtons[slot]:SetText(math.floor(calcedSpell[1][directKey] + 0.5));
-                end
-
-            elseif calcedSpell.spellType == SPELL_TYPE.SEAL then
-                local sealKey = SpellCalc_settings.abSealValue;
-                actionButtons[slot]:SetText(math.floor(calcedSpell[1][sealKey] + 0.5));
+            if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL + SPELL_EFFECT_FLAGS.ABSORB) > 0 then
+                actionButtons[slot]:SetTextColor(0.3, 1, 0.3);
+            else
+                actionButtons[slot]:SetTextColor(1, 1, 0.3);
             end
+
+            local showValue;
+
+            if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
+                showValue = GetDummyValue(calcedEffect);
+            elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
+                showValue = GetDurationValue(calcedEffect);
+            elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+                showValue = calcedEffect.avgCombined;
+            else
+                showValue = GetDirectValue(calcedEffect, calcedSpell.critChance);
+            end
+
+            actionButtons[slot]:SetText(math.floor(showValue + 0.5));
         end
 
         needUpdate[slot] = nil;
@@ -63,9 +140,9 @@ local function UpdateButtons(self, diff)
 end
 
 --- Get offset based on button frame height
--- @param buttonFrame The button frame object
--- @param fontObject The font object
--- @param offsetPct The offset in percent
+---@param buttonFrame table
+---@param fontObject table
+---@param offsetPct number
 local function GetButtonPosOffset(buttonFrame, fontObject, offsetPct)
     local oldString = fontObject:GetText();
     fontObject:SetText("-");
@@ -75,8 +152,8 @@ local function GetButtonPosOffset(buttonFrame, fontObject, offsetPct)
 end
 
 --- Add font string to the given button frame for button slot
--- @param buttonFrame The button frame object
--- @param slot The action slot number
+---@param buttonFrame table
+---@param slot number
 local function AddStringToButton(buttonFrame, slot)
     if actionButtons[slot] ~= nil then 
         return;
@@ -98,8 +175,8 @@ local function AddStringToButton(buttonFrame, slot)
 end
 
 --- Set spell ID for given action slot
--- @param slot The action slot number
--- @param spellId The ID of the spell currently in this slot, nil to unset
+---@param slot number
+---@param spellId number|nil
 local function SetSlotSpell(slot, spellId)
     if spellsInBar[slot] == spellId or actionButtons[slot] == nil then
         return;
@@ -115,25 +192,19 @@ local function SetSlotSpell(slot, spellId)
 
     _addon:PrintDebug("Set slot " .. slot .. " to spell " .. spellId);
 
-    if spellId ~= _addon.JUDGEMENT_ID and _addon.spellRankInfo[spellId].effects[1].isHeal then
-        actionButtons[slot]:SetTextColor(0.3, 1, 0.3);
-    else
-        actionButtons[slot]:SetTextColor(1, 1, 0.3);
-    end
-
     spellsInBar[slot] = spellId;
     needUpdate[slot] = true;
 end
 
 --- Remap action slot to another for stance paging
--- @param origStart Original first slot of the bar that paged
--- @param newStart First slot of the bar that holds the buttons to use instead
+---@param origStart number @Original first slot of the bar that paged
+---@param newStart number @First slot of the bar that holds the buttons to use instead
 local function RemapActionSlots(origStart, newStart)
     if origStart and newStart then
         for i=0, 11, 1 do
             slotRemap[newStart + i] = origStart + i;
             slotDisable[origStart + i] = true;
-            _addon:ActionbarSlotUpdate(newStart + i);
+            ActionbarValues:SlotUpdate(newStart + i);
         end
         return;
     end
@@ -141,12 +212,12 @@ local function RemapActionSlots(origStart, newStart)
     for new, orig in pairs(slotRemap) do
         slotRemap[new] = nil;
         slotDisable[orig] = nil;
-        _addon:ActionbarSlotUpdate(orig);
+        ActionbarValues:SlotUpdate(orig);
     end
 end
 
 --- Update shapeshift or stance for Dominos bars
--- @param form The form/stance name
+---@param form string
 local function ShapeShiftRemapDominos(form)
     local profileName = DominosDB.profileKeys[UnitName("player") .. " - " .. GetRealmName()];
     local profileFrames = DominosDB.profiles[profileName].frames;
@@ -161,7 +232,7 @@ local function ShapeShiftRemapDominos(form)
 end
 
 --- Update shapeshift or stance for Bartender4 bars
--- @param form The form/stance name
+---@param form string
 local function ShapeShiftRemapBT4(form)
     local profileName = Bartender4DB.profileKeys[UnitName("player") .. " - " .. GetRealmName()];
     local profileFrames = Bartender4DB.namespaces.ActionBars.profiles[profileName].actionbars;
@@ -177,7 +248,7 @@ end
 
 --- Update shapeshift or stance for ElvUI bars
 -- TODO: Only supports bar 1 atm
--- @param form The form/stance name
+---@param form string
 local function ShapeShiftRemapElv(form)
     local formBar;
     if class == "DRUID" then
@@ -214,9 +285,9 @@ local function ShapeShiftRemapElv(form)
 end
 
 --- Update bars after shapeshift or stance change
-function _addon:ActionbarShapeShiftUpdate()
+function ActionbarValues:ShapeShiftUpdate()
     if class == "DRUID" then
-        local form = self:GetShapeshiftName();
+        local form = _addon:GetShapeshiftName();
 
         if not form then
             RemapActionSlots();
@@ -241,12 +312,12 @@ function _addon:ActionbarShapeShiftUpdate()
     end
 end
 
---- Setup action bars by adding strings for showing a value to all action buttons by slot id
-function _addon:SetupActionbars()
-    self:PrintDebug("Add action button strings");
+--- Add text object to all action buttons and trigger updates
+function ActionbarValues:Setup()
+    _addon:PrintDebug("Add action button strings");
 
     if _G["DominosActionButton1"] ~= nil then
-        self:PrintDebug("Add Dominos support");
+        _addon:PrintDebug("Add Dominos support");
         local slotId = 0;
         for i = 1, 60 do
             if i <= 12 then
@@ -266,7 +337,7 @@ function _addon:SetupActionbars()
         actionbarSupport = "DOMINOS";
 
     elseif _G["ElvUI_Bar1Button1"] ~= nil then
-        self:PrintDebug("Add ElvUI support");
+        _addon:PrintDebug("Add ElvUI support");
         for i = 1, 12 do
             AddStringToButton(_G["ElvUI_Bar1Button"..i], i);
             AddStringToButton(_G["ElvUI_Bar2Button"..i], i+48);
@@ -282,7 +353,7 @@ function _addon:SetupActionbars()
         actionbarSupport = "ELV";
 
     elseif _G["BT4Button1"] ~= nil then
-        self:PrintDebug("Add bartender4 support");
+        _addon:PrintDebug("Add bartender4 support");
         -- BT4 doesn't even create disabled bars and buttons, only add created ones now
         for i = 1, 120 do
             if _G["BT4Button"..i] then
@@ -295,7 +366,7 @@ function _addon:SetupActionbars()
             if LAB10 then
                 hooksecurefunc(LAB10, "CreateButton", function(_, slotId, name)
                     if name:find("BT4Button") then
-                        self:PrintDebug("Add bartender4 button " .. name);
+                        _addon:PrintDebug("Add bartender4 button " .. name);
                         AddStringToButton(_G[name], slotId);
                     end
                 end);
@@ -304,7 +375,7 @@ function _addon:SetupActionbars()
         actionbarSupport = "BT4";
 
     elseif _G["ActionButton1"] ~= nil then
-        self:PrintDebug("Add default UI support");
+        _addon:PrintDebug("Add default UI support");
         for i = 1, 12 do
             AddStringToButton(_G["ActionButton"..i], i);
             AddStringToButton(_G["MultiBarRightButton"..i], i+24);
@@ -316,22 +387,20 @@ function _addon:SetupActionbars()
 
     frame:SetScript("OnUpdate", UpdateButtons);
 
-    for i = 1, 120 do
-        self:ActionbarSlotUpdate(i);
-    end
+    delayedButtonUpdate = 3;
 
-    self:ActionbarShapeShiftUpdate();
+    self:ShapeShiftUpdate();
 
-    self:PrintDebug("Action bar setup complete");
+    _addon:PrintDebug("Action bar setup complete");
 end
 
 --- Update action slot
--- @param slot The action slot number
-function _addon:ActionbarSlotUpdate(slot)
-    self:PrintDebug("Action slot update " .. slot);
+---@param slot number
+function ActionbarValues:SlotUpdate(slot)
+    _addon:PrintDebug("Action slot update " .. slot);
 
     if slotDisable[slot] then
-        self:PrintDebug("Action slot is currently disabled");
+        _addon:PrintDebug("Action slot is currently disabled");
         return;
     end
 
@@ -339,7 +408,7 @@ function _addon:ActionbarSlotUpdate(slot)
     local targetSlot = slot;
 
     if slotRemap[slot] then
-        self:PrintDebug("Action slot is currently remapped to " .. slotRemap[slot]);
+        _addon:PrintDebug("Action slot is currently remapped to " .. slotRemap[slot]);
         targetSlot = slotRemap[slot];
     end
 
@@ -360,13 +429,14 @@ function _addon:ActionbarSlotUpdate(slot)
 end
 
 --- Clear every shown value
-function _addon:ClearActionBar()
+function ActionbarValues:Clear()
     for slot = 1, 120 do
         actionButtons[slot]:SetText("");
     end
 end
 
-function _addon:ActionbarUpdateStyle()
+--- Update position and color of actionbar text for all buttons
+function ActionbarValues:UpdateStyle()
     local settingOffset = SpellCalc_settings.abPosition;
     local settingSize = SpellCalc_settings.abSize;
     for slot = 1, 120 do

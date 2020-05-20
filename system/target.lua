@@ -1,4 +1,5 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
 _addon.target = {
     level = 0,
@@ -15,6 +16,7 @@ _addon.target = {
     }
 };
 
+--- Update selected target
 function _addon:UpdateTarget()
     local tName = UnitName("target");
     local pLevel = UnitLevel("player");

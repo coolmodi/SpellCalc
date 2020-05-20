@@ -85,6 +85,7 @@ local function Setup(self, savedVarTable, defaultSettings, customName, logoPath,
     
     self.name = customName or _addonName;
     self.parent = parentName;
+    self:Hide();
     InterfaceOptions_AddCategory(self);
 
     self.svTable = savedVarTable;
@@ -148,6 +149,21 @@ local function UpdateRowGroup(self, groupNum)
     end
 end
 
+local function AutoExpand(self)
+    if self.expandHooked then
+        return;
+    end
+
+    self:HookScript("OnShow", function()
+		for i, button in pairs(InterfaceOptionsFrameAddOns.buttons) do
+            if button.element and button.element.name == self.name and button.element.collapsed then
+                OptionsListButtonToggle_OnClick(button.toggle);
+            end
+        end
+    end);
+
+    self.expandHooked = true;
+end
 
 --------------------------------------------------------------------------------------------------------------------------------
 -- Builder functions
@@ -565,6 +581,8 @@ function _addon:GetSettingsBuilder()
     settings.MakeCheckboxOption = MakeCheckboxOption;
     settings.MakeStringRow = MakeStringRow;
     settings.MakeDropdown = MakeDropdown;
+
+    settings.AutoExpand = AutoExpand;
 
     local vinfo = settings:CreateFontString(nil, nil, 'GameFontDisableSmall');
     vinfo:SetPoint('BOTTOMRIGHT', -10, 6);

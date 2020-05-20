@@ -40,28 +40,32 @@ interface BaseInfo {
     getspellinfoid: number,
     school: number,
     isChannel: boolean,
-    isAbsorbShield: boolean,
-    forceSchoolScaling: boolean,
     isBinary: boolean,
-    forceCanCrit: boolean,
-    isSeal: false | string,
-    isMelee: boolean,
-    isRanged: boolean,
-    isAutoAttack: boolean,
-    gcd: number
+    gcd: number,
+    defenseType: DEFENSE_TYPE,
 }
 
 interface EffectInfo {
+    effectType: number,
+    auraType?: number
     min: number,
     max: number,
     perLevel: number,
     coef: number,
-    isHeal: boolean,
-    isDuration: boolean,
+    forceScaleWithHeal: boolean,
     period: number,
-    isDmgShield: boolean,
     charges: number,
-    weaponCoef: number
+    weaponCoef: number,
+    chainInfo?: {
+        chains: number, 
+        mult: number
+    }
+}
+
+const enum PowerType {
+    MANA = 0,
+    RAGE = 1,
+    ENERGY = 3,
 }
 
 interface RankInfo {
@@ -69,6 +73,7 @@ interface RankInfo {
     spellLevel: number,
     maxLevel: number,
     duration: number,
+    baseCost: number,
     effects: EffectInfo[]
 }
 

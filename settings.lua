@@ -1,7 +1,12 @@
-local _addonName, _addon = ...;
+---@type string
+local _addonName = select(1, ...);
+---@type AddonEnv
+local _addon = select(2, ...);
+
 local L = _addon:GetLocalization();
 local classLoc, class = UnitClass("player");
 
+---@class SettingsTable
 local DEFAULTSETTINGS = {
 	["firstStart"] = true,
 	["debug"] = false,
@@ -20,6 +25,7 @@ local DEFAULTSETTINGS = {
 	["ttEffCost"] = true,
 	["ttPerMana"] = true,
 	["ttToOom"] = true,
+	["ttCombined"] = true,
 	["ttShowBuffs"] = false,
 
 	["useCurrentTarget"] = true,
@@ -42,6 +48,11 @@ local DEFAULTSETTINGS = {
 	["healDisregardCrit"] = false,
 
 	["meleeFromFront"] = false,
+
+	calcEffManaInnervate = false,
+	calcEffManaPotion = false,
+	calcEffManaPotionType = "MAJOR",
+	calcEffManaRune = false,
 
 	["version"] = GetAddOnMetadata(_addonName, "Version")
 };
@@ -70,10 +81,10 @@ local function AfterSave()
 	_addon:UpdateTarget();
 
 	if not SpellCalc_settings.abShow then
-		_addon:ClearActionBar();
+		_addon.ActionbarValues:Clear();
 	end
 
-	_addon:ActionbarUpdateStyle();
+	_addon.ActionbarValues:UpdateStyle();
 
 	_addon:TriggerUpdate();
 end
@@ -112,6 +123,8 @@ function _addon:SetupSettings()
 	settings:MakeEditBoxOption("resOverrideNature", L["SETTINGS_TT_NATURE_LABEL"], 3, true, nil, nil, nil, 66);
 	settings:MakeEditBoxOption("resOverrideArcane", L["SETTINGS_TT_ARCANE_LABEL"], 3, true, nil, nil, nil, 66);
 
+	settings:AutoExpand();
+
 	-- Tooltip settings
 	local settingsTt = _addon:GetSettingsBuilder();
 	settingsTt:Setup(SpellCalc_settings, DEFAULTSETTINGS, L["SETTINGS_TOOLTIP_TITLE"], nil, nil, nil, nil, nil, nil, _addonName);
@@ -134,9 +147,8 @@ function _addon:SetupSettings()
 	settingsTt:MakeCheckboxOption("ttEffCost", L["SETTINGS_TT_EFFCOST_LABEL"], L["SETTINGS_TT_EFFCOST_TT"], row);
 	settingsTt:MakeCheckboxOption("ttPerMana", L["SETTINGS_TT_PERMANA_LABEL"], nil, row);
 	settingsTt:MakeCheckboxOption("ttToOom", L["SETTINGS_TT_OOM_LABEL"], nil, row);
-	row = settingsTt:MakeSettingsRow(1);
-	settingsTt:MakeCheckboxOption("ttShowBuffs", L["SETTINGS_TT_BUFFS_LABEL"], L["SETTINGS_TT_BUFFS_TT"], row);
 	settingsTt:UpdateRowGroup(1);
+	settingsTt:MakeCheckboxOption("ttCombined", L["SETTINGS_TT_COMBINED_LABEL"], L["SETTINGS_TT_COMBINED_TT"]);
 
 	-- Action bar settings
 	local settingsAb = _addon:GetSettingsBuilder();
@@ -199,4 +211,31 @@ function _addon:SetupSettings()
 		settingsMelee:MakeHeading(L["SETTINGS_MELEE_HEAD"]);
 		settingsMelee:MakeCheckboxOption("meleeFromFront", L["SETTINGS_MELEE_FROM_FRONT"], L["SETTINGS_MELEE_FROM_FRONT_TT"]);
 	end
+
+	local settingsCalcSim = _addon:GetSettingsBuilder();
+	settingsCalcSim:Setup(SpellCalc_settings, DEFAULTSETTINGS, L["SETTINGS_CALC_HEAD"], nil, nil, nil, nil, nil, nil, _addonName);
+	settingsCalcSim:SetAfterSaveCallback(AfterSave);
+	settingsCalcSim:MakeHeading(L["SETTINGS_CALC_HEAD"]);
+	settingsCalcSim:MakeStringRow(L["SETTINGS_CALC_EM_DESC"], "LEFT");
+	row = settingsCalcSim:MakeSettingsRow(1);
+	settingsCalcSim:MakeCheckboxOption("calcEffManaInnervate", L["SETTINGS_CALC_EM_INNER"], nil, row);
+	row = settingsCalcSim:MakeSettingsRow(1);
+	settingsCalcSim:MakeCheckboxOption("calcEffManaPotion", L["SETTINGS_CALC_EM_POTION"], nil, row);
+	settingsCalcSim:MakeDropdown("calcEffManaPotionType", "", nil, 150, function()
+		return {
+			MAJOR = L["SETTINGS_CALC_EM_POTION_MAJOR"],
+			SUPERIOR = L["SETTINGS_CALC_EM_POTION_SUPERIOR"],
+			GREATER = L["SETTINGS_CALC_EM_POTION_GREATER"]
+		}
+	end, nil, row);
+	row = settingsCalcSim:MakeSettingsRow(1);
+	settingsCalcSim:MakeCheckboxOption("calcEffManaRune", L["SETTINGS_CALC_EM_RUNE"], nil, row);
+	settingsCalcSim:UpdateRowGroup(1);
+
+	local settingsDebug = _addon:GetSettingsBuilder();
+	settingsDebug:Setup(SpellCalc_settings, DEFAULTSETTINGS, "Debug", nil, nil, nil, nil, nil, nil, _addonName);
+	settingsDebug:SetAfterSaveCallback(AfterSave);
+	settingsDebug:MakeHeading("Debug");
+	settingsDebug:MakeCheckboxOption("ttShowBuffs", L["SETTINGS_TT_BUFFS_LABEL"], L["SETTINGS_TT_BUFFS_TT"]);
+	settingsDebug:MakeCheckboxOption("debug", "Debug");
 end

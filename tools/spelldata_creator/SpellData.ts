@@ -22,7 +22,7 @@ function readCSV(path: string, index: string) {
         let lineData = lines[i].split(",");
         let thisData: {[index: string]: number | string} = {};
         for (let j = 0; j < headers.length; j++) {
-            if (headers[j] == "EffectBonusCoefficient" || headers[j] == "EffectRealPointsPerLevel") {
+            if (lineData[j].match(/\d\.\d/)) {
                 thisData[headers[j]] = parseFloat(lineData[j]);
             } else if (headers[j] == "Name_lang" || headers[j] == "NameSubtext_lang" || headers[j] == "Description_lang" || headers[j] == "AuraDescription_lang") {
                 thisData[headers[j]] = lineData[j];
@@ -146,6 +146,17 @@ export interface SpellCooldown {
     SpellID: number
 }
 
+export interface SpellPower {
+    ID: number,
+    ManaCost: number,
+    ManaCostPerLevel: number,
+    ManaPerSecond: number,
+    PowerCostPct: number,
+    PowerCostMaxPct: number,
+    PowerCostPctPerSecond: number,
+    PowerType: number,
+    SpellID: number
+}
 
 export class SpellData {
     private spellEffects: {[index: number]: SpellEffect};
@@ -157,6 +168,7 @@ export class SpellData {
     private totemSpells: {[index: number]: number};
     private spellCategories: {[index: number]: SpellCategory};
     private spellCooldowns: {[index: number]: SpellCooldown};
+    private spellPowerCost: {[index: number]: SpellPower};
 
     constructor() {
         console.log("Creating SpellData");
@@ -176,6 +188,8 @@ export class SpellData {
         this.spellCategories = readCSV("data/dbc/spellcategories.csv", "SpellID");
         // @ts-ignore
         this.spellCooldowns = readCSV("data/dbc/spellcooldowns.csv", "SpellID");
+        // @ts-ignore
+        this.spellPowerCost = readCSV("data/dbc/spellpower.csv", "ID");
         
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
@@ -269,7 +283,7 @@ export class SpellData {
 
         if (spellId == AUTO_ATTACK_ID) {
             let sc: SpellCategory = {
-                DefenseType: 0
+                DefenseType: DEFENSE_TYPE.MELEE
             }
             return sc;
         }
@@ -288,5 +302,16 @@ export class SpellData {
             SpellID: AUTO_ATTACK_ID
         }
         return sc;
+    }
+
+    getSpellPowerCosts(spellId: number) {
+        let costs: SpellPower[] = [];
+
+        for (let costId in this.spellPowerCost) {
+            if (this.spellPowerCost[costId].SpellID == spellId) 
+            costs.push(this.spellPowerCost[costId]);
+        }
+
+        return costs;
     }
 }

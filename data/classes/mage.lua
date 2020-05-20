@@ -39,7 +39,7 @@ _addon.talentData = {
         talent = 6,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
+                type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE_DMG,
                 perPoint = 2
             }
         }

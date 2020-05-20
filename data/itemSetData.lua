@@ -1,4 +1,5 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
 local PRAYER_OF_HEALING = GetSpellInfo(10960);
 local SHADOW_WORD_PAIN = GetSpellInfo(589);
@@ -15,6 +16,8 @@ local EARTH_SHOCK = GetSpellInfo(8042);
 local FLAME_SHOCK = GetSpellInfo(8050);
 local FROST_SHOCK = GetSpellInfo(8056);
 local RENEW = GetSpellInfo(139);
+local CHAIN_HEAL = GetSpellInfo(1064);
+local CHAIN_LIGHTNING = GetSpellInfo(1064);
 
 _addon.itemSetData = {
     [121] = {
@@ -177,7 +180,16 @@ _addon.itemSetData = {
     },
     [216] = {
         name = "The Ten Storms",
-        effects = {},
+        effects = {
+            {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+                    affectSpell = {CHAIN_HEAL},
+                    value = 30,
+                }
+            },
+        },
     },
     [217] = {
         name = "Judgement Armor",
@@ -381,6 +393,19 @@ _addon.itemSetData = {
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_EFFECT,
                     affectSpell = {IMMOLATE},
+                    value = 5,
+                }
+            },
+        },
+    },
+    [502] = {
+        name = "Gift of the Gathering Storm",
+        effects = {
+            {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+                    affectSpell = {CHAIN_LIGHTNING},
                     value = 5,
                 }
             },
@@ -701,6 +726,9 @@ _addon.setItemData = {
     [21361] = 497,
     [21362] = 497,
     [21364] = 497,
+    [21400] = 504,
+    [21398] = 504,
+    [21399] = 504,
     [21395] = 506,
     [21396] = 506,
     [21397] = 506,
@@ -784,11 +812,5 @@ _addon.setItemData = {
     [21348] = 507,
     [21352] = 507,
     [21351] = 507,
-
-    --[[
-    [6087] = 207,
-    [5944] = 207,
-    [6550] = 207,
-    ]]
 };
 

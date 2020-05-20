@@ -1,4 +1,4 @@
-import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown } from "./SpellData";
+import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown, SpellPower } from "./SpellData";
 import * as fs from "fs";
 import { isSeal, isJudgeDummy, SealType } from "./paladinCrap";
 
@@ -6,7 +6,7 @@ const outputdir = __dirname + "/../../../data/classes/";
 
 const CLASSES = [
     "priest", 
-    "hunter",
+    //"hunter",
     "mage", 
     "warlock", 
     "druid", 
@@ -42,6 +42,18 @@ const DO_AURAS = [
 const DMG_SHIELD_DATA: {[index: string]: number} = {
     "Shadowguard": 3,
     "Lightning Shield": 3,
+    "Touch of Weakness": 1
+}
+
+const TRIGGER_SPELL_IGNORE: {[spellName: string]: boolean} = {
+    "Feedback": true,
+    "Frost Armor": true,
+    "Ice Armor": true,
+    "Drain Soul": true,
+    "Nature's Grasp": true,
+    "Seal of Justice": true,
+    "Seal of Light": true, // no scaling, no need to handle
+    "Seal of Wisdom": true
 }
 
 const PTSA_IGNORES = [
@@ -91,7 +103,14 @@ function getValidSpellList(pclass: string) {
 
                 if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL) {
                     let spellName = spellData.getSpellName(effect.SpellID).Name_lang;
-                    if (!DMG_SHIELD_DATA[spellName]) continue;
+                    if (TRIGGER_SPELL_IGNORE[spellName]) {
+                        console.log("Ignoring spell " + spellName);
+                        continue;
+                    }
+                    if (!DMG_SHIELD_DATA[spellName]) {
+                        console.error("Spell " + effect.SpellID + " " + spellName + " not handled correctly!");
+                        throw "SPELL_AURA_PROC_TRIGGER_SPELL not handled!";
+                    }
                     console.log("have trigger aura " + effect.SpellID + " " + spellName);
                 }
 
@@ -151,39 +170,37 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo) {
  */
 function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string, baseInfo: BaseInfo) {
     rankInfo.effects[effectNum] = {
+        effectType: effect.Effect,
+        auraType: effect.EffectAura,
         coef: effect.EffectBonusCoefficient,
         min: effect.EffectBasePoints + 1, // Idk why
         max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
         perLevel: effect.EffectRealPointsPerLevel,
-        isHeal: false,
-        isDuration: false,
+        forceScaleWithHeal: false,
         period: 0,
-        isDmgShield: false,
         charges: 0,
         weaponCoef: 0 
     };
     switch (effect.EffectAura) {
         case AURA_TYPE.SPELL_AURA_PERIODIC_HEAL:
             rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
-            rankInfo.effects[effectNum].isDuration = true;
-            rankInfo.effects[effectNum].isHeal = true;
             break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE:
         case AURA_TYPE.SPELL_AURA_PERIODIC_LEECH:
             rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
-            rankInfo.effects[effectNum].isDuration = true;
             break;
         case AURA_TYPE.SPELL_AURA_SCHOOL_ABSORB:
         case AURA_TYPE.SPELL_AURA_MANA_SHIELD:
-            rankInfo.effects[effectNum].isHeal = true;
+            if (spellName == "Power Word: Shield") rankInfo.effects[effectNum].forceScaleWithHeal = true;
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL:
         case AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD:
-            rankInfo.effects[effectNum].isDmgShield = true;
-            rankInfo.effects[effectNum].charges = (DMG_SHIELD_DATA[spellName]) ? DMG_SHIELD_DATA[spellName] : 0;
+            rankInfo.effects[effectNum].charges = (DMG_SHIELD_DATA[spellName]) ? DMG_SHIELD_DATA[spellName] : -1;
             break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
             const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
+            const tspellCat = spellData.getSpellCategory(effect.EffectTriggerSpell);
+            baseInfo.defenseType = tspellCat.DefenseType;
             let found = false;
             for (let i = 0; i < tspell.length; i++) {
                 if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) {
@@ -193,13 +210,13 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     rankInfo.spellLevel = spellLevel.SpellLevel;
                     rankInfo.maxLevel = spellLevel.MaxLevel;
                     rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
-                    rankInfo.effects[effectNum].isDuration = true;
                     rankInfo.effects[effectNum].coef = teffect.EffectBonusCoefficient;
                     rankInfo.effects[effectNum].min = teffect.EffectBasePoints + 1;
                     rankInfo.effects[effectNum].max = teffect.EffectBasePoints + 1 + ((teffect.EffectDieSides > 1) ? teffect.EffectDieSides : 0),
                     rankInfo.effects[effectNum].perLevel = teffect.EffectRealPointsPerLevel;
                     const misc = spellData.getSpellMisc(teffect.SpellID);
-                    if ((misc["Attributes[2]"] & 0x20000000) == 0) baseInfo.forceCanCrit = true;
+                    //if ((misc["Attributes[2]"] & 0x20000000) == 0) baseInfo.forceCanCrit = true;
+                    if ((misc["Attributes[2]"] & 0x20000000) != 0) throw "OH WTF IT HAPPENED! Now you have to find out why this wasn't supposed to crit, or why this condition was here...";
                     break;
                 }
             }
@@ -225,29 +242,38 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
  */
 function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
     rankInfo.effects[effectNum] = {
+        effectType: effect.Effect,
         coef: effect.EffectBonusCoefficient,
         min: effect.EffectBasePoints + 1, // Idk why
         max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
         perLevel: effect.EffectRealPointsPerLevel,
-        isHeal: false,
-        isDuration: false,
+        forceScaleWithHeal: false,
         period: 0,
-        isDmgShield: false,
         charges: 0,
         weaponCoef: 0 
     };
+
+    if (effect.EffectChainTargets > 1 && effect.EffectChainAmplitude < 1)
+    {
+        rankInfo.effects[effectNum].chainInfo = {
+            chains: effect.EffectChainTargets,
+            mult: effect.EffectChainAmplitude
+        };
+    }
 }
 
 function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string, baseInfo: BaseInfo) {
     const totemSpell = spellData.getTotemSpell(effect.SpellID);
     if (!totemSpell) throw new Error("Totem spell not found!");
     const totemEffects = spellData.getSpellEffects(totemSpell);
+    const totemSpellCat = spellData.getSpellCategory(totemSpell);
     switch(spellName) {
         case "Searing Totem":
             directDmg(rankInfo, totemEffects[0], effectNum);
             rankInfo.effects[effectNum].period = 2.2;
-            rankInfo.effects[effectNum].isDuration = true;
-            baseInfo.forceCanCrit = true;
+            baseInfo.defenseType = totemSpellCat.DefenseType;
+            rankInfo.effects[effectNum].effectType = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
+            rankInfo.effects[effectNum].auraType = AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL;
             break;
         case "Magma Totem":
         case "Healing Stream Totem":
@@ -267,17 +293,24 @@ function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: num
 const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string, baseInfo: BaseInfo) => void} = {
     [EFFECT_TYPE.SPELL_EFFECT_HEAL]: (rankInfo, effect, effectNum) => {
         rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
             min: effect.EffectBasePoints + 1, // Idk why
             max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
             perLevel: effect.EffectRealPointsPerLevel,
-            isHeal: true,
-            isDuration: false,
+            forceScaleWithHeal: false,
             period: 0,
-            isDmgShield: false,
             charges: 0,
             weaponCoef: 0 
         };
+
+        if (effect.EffectChainTargets > 1 && effect.EffectChainAmplitude < 1)
+        {
+            rankInfo.effects[effectNum].chainInfo = {
+                chains: effect.EffectChainTargets,
+                mult: effect.EffectChainAmplitude
+            };
+        }
     },
 
     [EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA]: applyAuraAreaAura,
@@ -291,21 +324,19 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
 
     [EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE]: (rankInfo, effect, effectNum, _spellName, _baseInfo) => {
         rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
             min: (effect.EffectBasePoints > 0) ? effect.EffectBasePoints + 1 : 0,
-            max: 0,
+            max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
             perLevel: effect.EffectRealPointsPerLevel,
-            isHeal: false,
-            isDuration: false,
+            forceScaleWithHeal: false,
             period: 0,
-            isDmgShield: false,
             charges: 0,
             weaponCoef: 1
         };
-        //baseInfo.isMelee = true;
     },
 
-    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum, _spellName, baseInfo) => {
+    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum, spellName, _baseInfo) => {
         if (effectNum > 0) {
             if (rankInfo.effects[0].weaponCoef == 0) {
                 throw new Error("E1 is SPELL_EFFECT_WEAPON_PERCENT_DAMAGE but E0 doesn't add a weapon coef!");
@@ -314,50 +345,37 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             return;
         }
 
-        if (!baseInfo.isSeal) {
-            rankInfo.effects[effectNum] = {
-                coef: effect.EffectBonusCoefficient,
-                min: 0,
-                max: 0,
-                perLevel: effect.EffectRealPointsPerLevel,
-                isHeal: false,
-                isDuration: false,
-                period: 0,
-                isDmgShield: false,
-                charges: 0,
-                weaponCoef: (effect.EffectBasePoints + 1) / 100
-            };
-            //baseInfo.isMelee = true;
-        }
-
         rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
-            min: effect.EffectBasePoints + 1, // Idk why
-            max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
+            min: 0,
+            max: 0,
             perLevel: effect.EffectRealPointsPerLevel,
-            isHeal: false,
-            isDuration: false,
+            forceScaleWithHeal: false,
             period: 0,
-            isDmgShield: false,
             charges: 0,
-            weaponCoef: 0
+            weaponCoef: (effect.EffectBasePoints + 1) / 100
         };
+
+        // SoC "fix"
+        if (spellName == "Seal of Command") {
+            rankInfo.effects[effectNum].effectType = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
+            rankInfo.effects[effectNum].auraType = AURA_TYPE.SPELL_AURA_DUMMY;
+        }
     },
 
-    [EFFECT_TYPE.SPELL_EFFECT_ATTACK]: (rankInfo, _effect, effectNum, _spellName, baseInfo) => {
+    [EFFECT_TYPE.SPELL_EFFECT_ATTACK]: (rankInfo, effect, effectNum, _spellName, _baseInfo) => {
         rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
             coef: 0,
             min: 0,
             max: 0,
             perLevel: 0,
-            isHeal: false,
-            isDuration: false,
+            forceScaleWithHeal: false,
             period: 0,
-            isDmgShield: false,
             charges: 0,
             weaponCoef: 0 
         };
-        baseInfo.isAutoAttack = true;
     },
 }
 
@@ -380,6 +398,7 @@ function buildSpellInfo(pclass: string) {
     let spellspell: Spell;
     let spellcat: SpellCategory;
     let spellcd: SpellCooldown;
+    let spellCosts: SpellPower[];
 
     for (let s in list) {
         effects = list[s];
@@ -389,6 +408,7 @@ function buildSpellInfo(pclass: string) {
         spellspell = spellData.getSpell(effects[0].SpellID);
         spellcat = spellData.getSpellCategory(effects[0].SpellID);
         spellcd = spellData.getSpellCooldown(effects[0].SpellID);
+        spellCosts = spellData.getSpellPowerCosts(effects[0].SpellID);
 
         // Skip physical spells except auto attack for now
         if (spellMisc.SchoolMask == 1 && spellName != "Attack") continue;
@@ -399,21 +419,10 @@ function buildSpellInfo(pclass: string) {
                 getspellinfoid: effects[0].SpellID,
                 school: SCHOOL_MASK_TO_ENUM[spellMisc.SchoolMask],
                 isChannel: ((spellMisc["Attributes[1]"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
-                isAbsorbShield: (effects[0].EffectAura == AURA_TYPE.SPELL_AURA_SCHOOL_ABSORB 
-                    || effects[0].EffectAura == AURA_TYPE.SPELL_AURA_MANA_SHIELD),
-                forceSchoolScaling: false,
                 isBinary: false,
-                forceCanCrit: false,
-                isSeal: isSeal(effects[0].SpellID),
-                isMelee: spellcat.DefenseType == DEFENSE_TYPE.MELEE,
-                isRanged: spellcat.DefenseType == DEFENSE_TYPE.RANGED,
-                isAutoAttack: false,
-                gcd: spellcd.StartRecoveryTime / 1000
+                gcd: spellcd.StartRecoveryTime / 1000,
+                defenseType: spellcat.DefenseType,
             };
-
-            if (classInfo.baseInfo[spellName].isAbsorbShield && spellName != "Power Word: Shield") {
-                classInfo.baseInfo[spellName].forceSchoolScaling = true;
-            }
         }
 
         // Create rank info if needed
@@ -424,8 +433,22 @@ function buildSpellInfo(pclass: string) {
                 spellLevel: spellLevel.SpellLevel,
                 maxLevel: spellLevel.MaxLevel,
                 duration: dur,
+                baseCost: 0,
                 effects: []
             };
+
+            if (spellCosts.length === 1) {
+                if (spellCosts[0].PowerType == PowerType.MANA || spellCosts[0].PowerType == PowerType.RAGE || spellCosts[0].PowerType == PowerType.ENERGY) {
+                    classInfo.rankInfo[effects[0].SpellID].baseCost = spellCosts[0].ManaCost;
+                }
+            } else if (spellCosts.length > 1) {
+                for (let cinfo of spellCosts) {
+                    if (cinfo.PowerType == PowerType.MANA || cinfo.PowerType == PowerType.RAGE || cinfo.PowerType == PowerType.ENERGY) {
+                        classInfo.rankInfo[effects[0].SpellID].baseCost = cinfo.ManaCost;
+                        break;
+                    }
+                }
+            }
         }
 
         // Handle effects
@@ -460,15 +483,9 @@ end
         str += `\t[GetSpellInfo(${bi.getspellinfoid})] = { -- ${sname}\n`;
         str += `\t\tschool = ${bi.school},\n`;
         if (bi.isChannel) str += `\t\tisChannel = true,\n`;
-        if (bi.isAbsorbShield) str += `\t\tisAbsorbShield = true,\n`;
-        if (bi.forceSchoolScaling) str += `\t\tforceSchoolScaling = true,\n`;
         if (bi.isBinary) str += `\t\tisBinary = true,\n`;
-        if (bi.forceCanCrit) str += `\t\tforceCanCrit = true,\n`;
-        if (bi.isSeal) str += `\t\tisSeal = "${bi.isSeal}",\n`;
-        if (bi.isMelee) str += `\t\tisMelee = true,\n`;
-        if (bi.isRanged) str += `\t\tisRanged = true,\n`;
-        if (bi.isAutoAttack) str += `\t\tisAutoAttack = true,\n`;
         if (bi.gcd != 1.5) str += `\t\tGCD = ${bi.gcd},\n`;
+        str += `\t\tdefType = ${bi.defenseType},\n`;
         str += `\t},\n`;
     }
     str += "};\n\n";
@@ -480,25 +497,28 @@ end
         str += `\t\tspellLevel = ${ri.spellLevel},\n`;
         str += `\t\tmaxLevel = ${ri.maxLevel},\n`;
         if (ri.duration) str += `\t\tduration = ${ri.duration},\n`;
+        if (ri.baseCost > 0) str += `\t\tbaseCost = ${ri.baseCost},\n`;
+
         str += `\t\teffects = {\n`;
 
         for (let i = 0; i < ri.effects.length; i++) {
             let eff = ri.effects[i];
             str += `\t\t\t[${i + 1}] = {\n`;
-            if (eff.isHeal) str += `\t\t\t\tisHeal = true,\n`;
-            if (eff.isDuration) {
-                str += `\t\t\t\tisDuration = true,\n`;
-                str += `\t\t\t\ttickPeriod = ${eff.period},\n`;
-            }
-            if (eff.isDmgShield) {
-                str += `\t\t\t\tisDmgShield = true,\n`;
-                str += `\t\t\t\tcharges = ${eff.charges},\n`;
-            }
+            str += `\t\t\t\teffectType = ${eff.effectType},\n`;
+            if (eff.auraType) str += `\t\t\t\tauraType = ${eff.auraType},\n`;
+            if (eff.forceScaleWithHeal) str += `\t\t\t\tforceScaleWithHeal = true,\n`;
+            if (eff.period > 0) str += `\t\t\t\ttickPeriod = ${eff.period},\n`;
+            if (eff.charges != 0) str += `\t\t\t\tcharges = ${eff.charges},\n`;
             if (eff.weaponCoef) str += `\t\t\t\tweaponCoef = ${eff.weaponCoef},\n`;
             str += `\t\t\t\tmin = ${eff.min},\n`;
             if (eff.min < eff.max) str += `\t\t\t\tmax = ${eff.max},\n`;
             if (eff.perLevel) str += `\t\t\t\tperLevel = ${eff.perLevel},\n`;
             str += `\t\t\t\tcoef = ${eff.coef},\n`;
+            if (eff.chainInfo) 
+            {
+                str += `\t\t\t\tchains = ${eff.chainInfo.chains},\n`;
+                str += `\t\t\t\tchainMult = ${eff.chainInfo.mult},\n`;
+            }
             str += `\t\t\t},\n`;
         }
 

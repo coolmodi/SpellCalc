@@ -1,5 +1,7 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
+---@class InternalStats
 _addon.stats = {
     mana = 0,
     baseManaReg = 0,
@@ -128,6 +130,7 @@ _addon.stats = {
     earthfuryReturn = {val=0, buffs={}},
     mageNWRProc = {},
     druidNaturesGrace = {val=0, buffs={}},
+    chainMultMods = {},
 
     attackSpeed = {
         mh = 0,

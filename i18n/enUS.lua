@@ -1,4 +1,5 @@
-local _addonName, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 local L = _addon:AddLocalization("enUS", true);
 if L == nil then return; end
 
@@ -34,13 +35,15 @@ L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"] = "Detailed hit chance";
 L["SETTINGS_TT_HITCHANCE_DETAIL_TT"] = "Show base hit and bonus hit, also hit lost for binary spells.";
 L["SETTINGS_TT_RESISTANCE_LABEL"] = "Resistance";
 L["SETTINGS_TT_RESISTANCE_TT"] = "Show average resisted damage.";
-L["SETTINGS_TT_PERSEC_LABEL"] = "Per second (after hit chance and resist)";
+L["SETTINGS_TT_PERSEC_LABEL"] = "Per second (after mitigation)";
 L["SETTINGS_TT_EFFCOST_LABEL"] = "Effective cost";
 L["SETTINGS_TT_EFFCOST_TT"] = "Cost considering regeneration and procs.";
 L["SETTINGS_TT_PERMANA_LABEL"] = "Per mana";
 L["SETTINGS_TT_OOM_LABEL"] = "Done until oom";
 L["SETTINGS_TT_BUFFS_LABEL"] = "Show buffs";
 L["SETTINGS_TT_BUFFS_TT"] = "Show buffs/gear/talents affecting the spell calculation. This doesn't include things that the addon doesn't need to explicitly handle!";
+L["SETTINGS_TT_COMBINED_LABEL"] = "Show combined direct + over time";
+L["SETTINGS_TT_COMBINED_TT"] = "Show combined values of direct and over time effect for spells that have both.";
 
 L["SETTINGS_AB_TITLE"] = "Actionbar";
 L["SETTINGS_AB_SHOW"] = "Show values on actionbar";
@@ -74,14 +77,26 @@ L["SETTINGS_MELEE_HEAD"] = "Melee";
 L["SETTINGS_MELEE_FROM_FRONT"] = "Attacking from front";
 L["SETTINGS_MELEE_FROM_FRONT_TT"] = "Use parry and block against PvE targets.";
 
+L["SETTINGS_CALC_HEAD"] = "Calculation";
+L["SETTINGS_CALC_EM_DESC"] = "Consider mana gained from chosen effects for relevant calculations.";
+L["SETTINGS_CALC_EM_INNER"] = "Use Innervate";
+L["SETTINGS_CALC_EM_POTION"] = "Use mana potion";
+L["SETTINGS_CALC_EM_POTION_MAJOR"] = "Major Mana Potion";
+L["SETTINGS_CALC_EM_POTION_SUPERIOR"] = "Superior Mana Potion";
+L["SETTINGS_CALC_EM_POTION_GREATER"] = "Greater Mana Potion";
+L["SETTINGS_CALC_EM_RUNE"] = "Use rune";
+
 L["TT_TITLE_DAMAGE"] = "Damage:";
 L["TT_TITLE_DOT"] = "DoT:";
 L["TT_TITLE_HEAL"] = "Heal:";
 L["TT_TITLE_HOT"] = "HoT:";
 L["TT_TITLE_COMB"] = "Combined:";
+L["TT_TITLE_ABSORB"] = "Absorb:";
+L["TT_TITLE_CHAINS"] = "With Chaining:";
 
 L["TT_DAMAGE"] = "Damage";
 L["TT_HEAL"] = "Heal";
+L["TT_ABSORB"] = "Absorb";
 L["TT_CRITICAL"] = "Critical";
 L["TT_CHANCE"] = "chance";
 L["TT_LOWLVLPENAL"] = "Low level penalty";
@@ -113,6 +128,7 @@ L["TT_OFFHAND"] = "Offhand";
 L["TT_GLANCECHANCE"] = "Glancing";
 L["TT_GLANCEDATA"] = "%.1f%% for %.1f%% damage";
 L["TT_PERSEC_COMBINED_DAMAGE"] = "Combined DPS";
+L["TT_TOTAL"] = "Total";
 
 L["TT_COMB_AVG_HIT"] = "Avg. hit";
 L["TT_COMB_AVG_CRIT"] = "Avg. crit";

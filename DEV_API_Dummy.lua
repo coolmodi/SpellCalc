@@ -7,8 +7,8 @@ local function SetScript(self, eventName, func) end
 GameTooltip = {
     SetOwner = function(self, frame, anchor) end,
     SetText = function(self, text, a, r, g, b, wrap) end,
-    AddLine = function(self, text) end,
-    AddDoubleLine = function(self, textl, textr) end,
+    AddLine = function(self, text, red, green, blue) end,
+    AddDoubleLine = function(self, textL, textR, rL, gL, bL, rR, gR, bR) end,
     SetScript = SetScript,
 }
 
@@ -172,17 +172,21 @@ function UnitRace(unit)
     return "localized", "English";
 end
 
+---@class SpellPowerEntry
+local SpellPowerEntry = {
+    hasRequiredAura = true,
+    type = 1,
+    name = "name",
+    cost = 1,
+    minCost = 0,
+    requiredAuraID = 0,
+    costPercent = 0,
+    costPerSec = 0
+}
+
+---@return table<number,SpellPowerEntry>
 function GetSpellPowerCost(spellName_spellID)
-    return {
-        hasRequiredAura = true,
-        type = 1,
-        name = "name",
-        cost = 1,
-        minCost = 0,
-        requiredAuraID = 0,
-        costPercent = 0,
-        costPerSec = 0
-    }
+
 end
 
 function GetShapeshiftForm()
@@ -213,9 +217,9 @@ function strmatch(string, pattern, initpos)
     return "", "", "", "";
 end
 
---- icon, name, active, castable, spellId
+--- icon, active, castable, spellId
 function GetShapeshiftFormInfo(index)
-    return "", "", true, true, 1;
+    return "", true, true, 1;
 end
 
 function GetHitModifier()
@@ -225,3 +229,69 @@ end
 function GetSpellHitModifier()
     return 1;
 end
+
+function InterfaceOptionsFrame_OpenToCategory(panelName) end
+function InterfaceOptions_AddCategory(frame) end
+InterfaceOptionsFrameAddOns = {};
+function OptionsListButtonToggle_OnClick() end
+function ChatConfigFrame_PlayCheckboxSound() end
+function EditBox_ClearFocus() end
+function GameTooltip_Hide() end
+
+---@class SpellBaseInfo
+local SpellBaseInfo = {
+    ---@type number
+    school = math.random(),
+    ---@type boolean|nil
+    isChannel = nil,
+    ---@type boolean|nil
+    isBinary = nil,
+    ---@type number|nil
+    GCD = nil,
+    ---@type number
+    defType = math.random(),
+}
+
+---@class SpellRankEffectData
+local SpellRankEffectData = {
+    effectType = math.random(),
+    ---@type number|nil
+    auraType = nil,
+
+    ---@type boolean|nil
+    forceScaleWithHeal = nil,
+
+    min = math.random(),
+    ---@type number|nil
+    max = nil,
+    ---@type number|nil
+    perLevel = nil,
+
+    coef = math.random(),
+    ---@type number|nil
+    weaponCoef = nil,
+    ---@type number|nil
+    tickPeriod = nil,
+    ---@type number|nil
+    charges = nil,
+
+    ---@type number|nil
+    chains = nil,
+    ---@type number|nil
+    chainMult = nil,
+}
+
+---@class SpellRankInfo
+local SpellRankInfo = {
+    spellLevel = math.random(),
+    maxLevel = math.random(),
+    ---@type number|nil
+    duration = math.random(),
+    ---@type number|nil
+    baseCost = nil,
+    ---@type table<number, SpellRankEffectData|nil>
+    effects = {}
+}
+
+---@type SettingsTable
+SpellCalc_settings = SpellCalc_settings;

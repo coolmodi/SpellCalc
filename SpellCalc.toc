@@ -1,7 +1,7 @@
 ## Interface: 11304
 ## Title: SpellCalc
 ## Author: coolmodi
-## Version: 0.6.6
+## Version: 0.7
 ## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
 ## OptionalDeps: Dominos, ElvUI, Bartender4
@@ -41,20 +41,21 @@ data/classes/warrior.lua
 settings.lua
 slashcmd.lua
 events.lua
+
 system/stats.lua
 system/buffs.lua
 system/items.lua
 system/target.lua
-core/core.lua
-core/spell.lua
-core/melee.lua
-core/melee_auto.lua
-core/seal.lua
 
-UI/TooltipDisplay.lua
-UI/tooltip_seal.lua
-UI/tooltip_spell.lua
-UI/tooltip_autoattack.lua
+core/CostHandler.lua
+core/MagicCalc.lua
+core/MeleeCalc.lua
+core/CalcedSpell.lua
+core/core.lua
+core/effecthandlers.lua
+
+UI/tooltip/SCTooltip.lua
+UI/tooltip/base.lua
+UI/tooltip/seals.lua
 UI/StatDisplay.lua
 UI/ActionbarValues.lua
-UI/SimulationStuff.lua

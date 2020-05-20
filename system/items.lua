@@ -1,4 +1,5 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
 local ITEM_SLOTS = {
     [1] = "head",
@@ -35,9 +36,9 @@ local weapontypes = {
 };
 
 --- Apply or remove effect for destination
--- @param value The effect value, negative to remove buff
--- @param dest The destination table
--- @param name The name of the buff
+---@param value number
+---@param dest table
+---@param name string
 local function ApplyOrRemove(value, dest, name)
     dest.val = dest.val + value;
     if value > 0 then
@@ -48,8 +49,8 @@ local function ApplyOrRemove(value, dest, name)
 end
 
 --- Update set item count and add/remove buffs as needed
--- @param setId The set id
--- @param change The item count change
+---@param setId number
+---@param change number
 local function UpdateSet(setId, change)
     if sets[setId] == nil then
         sets[setId] = change;
@@ -88,6 +89,9 @@ local function UpdateSet(setId, change)
     end
 end
 
+---@param itemData any
+---@param itemName string
+---@param remove boolean
 local function ChangeItemEffects(itemData, itemName, remove)
     local val;
     if itemData.mp5 then
@@ -133,8 +137,8 @@ local function RetryUpdate(self, delta)
 end
 
 --- Equip item for slot
--- @param itemId The item ID to equip
--- @param slotId The slot item is equipped into
+---@param itemId number
+---@param slotId number
 local function EquipItem(itemId, slotId)
     _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
     local itemData = _addon.itemData[itemId];
@@ -185,7 +189,7 @@ local function EquipItem(itemId, slotId)
 end
 
 --- Unequip previously equipped item
--- @param slotId The slot item was in
+---@param slotId number
 local function UnequipItem(slotId)
     local itemData = _addon.itemData[items[slotId]];
     local itemName = GetItemInfo(items[slotId]);
@@ -283,8 +287,8 @@ function _addon:IsOffHandWeaponEquipped()
 end
 
 --- Return true if any of the given weapon types is equipped
--- @param weaponMask See constants WEAPON_TYPES_MASK
--- @param slot Can be mh, oh or r
+---@param weaponMask number
+---@param slot string
 function _addon:IsWeaponTypeEquipped(weaponMask, slot)
     return weapontypes[slot] and bit.band(weaponMask, weapontypes[slot]) > 0;
 end
@@ -294,8 +298,8 @@ function _addon:IsDualWieldEquipped()
     return self:IsMainHandWeaponEquipped() and self:IsOffHandWeaponEquipped();
 end
 
---- Return WEAPON_TYPES_MASK for weapon in given slot
--- @param slot Can be mh, oh or r
+--- Return WEAPON_TYPES_MASK for weapon in given slot ("mh", "oh" or "r")
+---@param slot string
 function _addon:GetWeaponType(slot)
     return weapontypes[slot];
 end

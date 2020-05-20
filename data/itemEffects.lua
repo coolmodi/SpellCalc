@@ -1,4 +1,5 @@
-local _, _addon = ...;
+---@type AddonEnv
+local _addon = select(2, ...);
 
 local FLASH_OF_LIGHT = GetSpellInfo(19750);
 local MANA_SHIELD = GetSpellInfo(1463);

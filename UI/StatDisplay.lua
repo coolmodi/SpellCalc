@@ -309,6 +309,7 @@ AddSpellTable(stats.durationMods, "Duration mods:", "s");
 AddSpellTable(stats.flatMods, "Flat mods", "");
 AddSpellTable(stats.extraSp, "Extra SP", "");
 AddSpellTable(stats.mageNWRProc, "Mage NWR proc", "");
+AddSpellTable(stats.chainMultMods, "Chain multiplier mods", "%");
 
 AddTitle("Weapon attack speed");
 AddSingleStat("Mainhand", stats.attackSpeed, "mh");
