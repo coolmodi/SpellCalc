@@ -10,11 +10,12 @@ local conditionsActive = 0;
 local stats = _addon.stats;
 
 --- Apply or remove effect for destination
+---@param apply boolean
 ---@param value number @The effect value, negative to remove buff
 ---@param dest table @The destination table
 ---@param name string @The name of the buff
 ---@param isMultiplicative boolean @Treat multiplicatively
-local function ApplyOrRemove(value, dest, name, isMultiplicative)
+local function ApplyOrRemove(apply, value, dest, name, isMultiplicative)
     if isMultiplicative then
         if value > 0 then
             dest.val = dest.val * (1 + value/100);
@@ -25,7 +26,7 @@ local function ApplyOrRemove(value, dest, name, isMultiplicative)
         dest.val = dest.val + value;
     end
 
-    if value > 0 then
+    if apply then
         table.insert(dest.buffs, name);
     else
         _addon:RemoveTableEntry(dest.buffs, name);
@@ -33,12 +34,13 @@ local function ApplyOrRemove(value, dest, name, isMultiplicative)
 end
 
 --- Apply or remove effect affecting spells
+---@param apply boolean
 ---@param name string @The name of the buff
 ---@param value number @The effect value, negative to remove buff
 ---@param destTable table @The destination table
 ---@param spellList string[] @The list of spellNames to affect
 ---@param isMultiplicative boolean @Treat multiplicatively
-local function ApplyOrRemoveSpellAffect(name, value, destTable, spellList, isMultiplicative)
+local function ApplyOrRemoveSpellAffect(apply, name, value, destTable, spellList, isMultiplicative)
     for k, spellName in ipairs(spellList) do
         if destTable[spellName] == nil then
             if isMultiplicative then
@@ -47,47 +49,49 @@ local function ApplyOrRemoveSpellAffect(name, value, destTable, spellList, isMul
                 destTable[spellName] = {val=0, buffs={}};
             end
         end
-        ApplyOrRemove(value, destTable[spellName], name, isMultiplicative);
+        ApplyOrRemove(apply, value, destTable[spellName], name, isMultiplicative);
     end
 end
 
 --- Apply or remove effect affecting schools
+---@param apply boolean
 ---@param name string @The name of the buff
 ---@param value number @The effect value, negative to remove buff
 ---@param destTable table @The destination table
 ---@param schoolMask number @The mask of schools to affect
 ---@param isMultiplicative boolean @Treat multiplicatively
-local function ApplyOrRemoveSchoolAffect(name, value, destTable, schoolMask, isMultiplicative)
+local function ApplyOrRemoveSchoolAffect(apply, name, value, destTable, schoolMask, isMultiplicative)
     if bit.band(schoolMask, SCHOOL_MASK.HOLY) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.HOLY], name, isMultiplicative);
+        ApplyOrRemove(apply, value, destTable[SCHOOL.HOLY], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.FIRE) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.FIRE], name, isMultiplicative);
+        ApplyOrRemove(apply, value, destTable[SCHOOL.FIRE], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.NATURE) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.NATURE], name, isMultiplicative);
+        ApplyOrRemove(apply, value, destTable[SCHOOL.NATURE], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.FROST) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.FROST], name, isMultiplicative);
+        ApplyOrRemove(apply, value, destTable[SCHOOL.FROST], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.SHADOW) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.SHADOW], name, isMultiplicative);
+        ApplyOrRemove(apply, value, destTable[SCHOOL.SHADOW], name, isMultiplicative);
     end
     if bit.band(schoolMask, SCHOOL_MASK.ARCANE) > 0 then
-        ApplyOrRemove(value, destTable[SCHOOL.ARCANE], name, isMultiplicative);
+        ApplyOrRemove(apply, value, destTable[SCHOOL.ARCANE], name, isMultiplicative);
     end
 end
 
 --- Apply or remove effect affecting weapon types
+---@param apply boolean
 ---@param name string @The name of the buff
 ---@param value number @The effect value, negative to remove buff
 ---@param destTable table @The destination table
 ---@param weaponMask number @The mask of weapon types to affec
 ---@param isMultiplicative boolean @Treat multiplicatively
-local function ApplyOrRemoveWeaponAffect(name, value, destTable, weaponMask, isMultiplicative)
+local function ApplyOrRemoveWeaponAffect(apply, name, value, destTable, weaponMask, isMultiplicative)
     for typeKey in pairs(destTable) do
         if bit.band(typeKey, weaponMask) > 0 then
-            ApplyOrRemove(value, destTable[typeKey], name, isMultiplicative);
+            ApplyOrRemove(apply, value, destTable[typeKey], name, isMultiplicative);
         end
     end
 end
@@ -114,126 +118,126 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     
     if effect == EFFECT_TYPE.MOD_EFFECT then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.effectMods.school, affectSchool, true);
+            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.effectMods.school, affectSchool, true);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(name, value, _addon.stats.effectMods.spell, affectSpell, true);
+            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.effectMods.spell, affectSpell, true);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_DMG_DONE then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.dmgDoneMods.school, affectSchool, true);
+            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.dmgDoneMods.school, affectSchool, true);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(name, value, _addon.stats.dmgDoneMods.spell, affectSpell, true);
+            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.dmgDoneMods.spell, affectSpell, true);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_HEALING_DONE then
-        ApplyOrRemove(value, _addon.stats.healingDoneMod, name, true);
+        ApplyOrRemove(apply, value, _addon.stats.healingDoneMod, name, true);
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_HEALING_DONE_ALL then
-        ApplyOrRemove(value, _addon.stats.healingDoneModAll, name, true);
+        ApplyOrRemove(apply, value, _addon.stats.healingDoneModAll, name, true);
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_HIT_SPELL then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.hitMods.school, affectSchool);
+            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.hitMods.school, affectSchool);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(name, value, _addon.stats.hitMods.spell, affectSpell);
+            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.hitMods.spell, affectSpell);
         else
-            ApplyOrRemove(value, _addon.stats.hitBonusSpell, name);
+            ApplyOrRemove(apply, value, _addon.stats.hitBonusSpell, name);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_CRIT then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.critMods.school, affectSchool);
+            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.critMods.school, affectSchool);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(name, value, _addon.stats.critMods.spell, affectSpell);
+            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.critMods.spell, affectSpell);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.MP5 then
-        ApplyOrRemove(value, _addon.stats.mp5, name);
+        ApplyOrRemove(apply, value, _addon.stats.mp5, name);
         return;
     end
 
     if effect == EFFECT_TYPE.FSR_REGEN then
-        ApplyOrRemove(value, _addon.stats.fsrRegenMult, name);
+        ApplyOrRemove(apply, value, _addon.stats.fsrRegenMult, name);
         _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
         return;
     end
 
     if effect == EFFECT_TYPE.RESISTANCE_PEN then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.spellPen, affectSchool);
+            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.spellPen, affectSchool);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.CLEARCAST_CHANCE then
-        ApplyOrRemove(value, _addon.stats.clearCastChance, name);
+        ApplyOrRemove(apply, value, _addon.stats.clearCastChance, name);
         return;
     end
 
     if effect == EFFECT_TYPE.CLEARCAST_CHANCE_DMG then
-        ApplyOrRemove(value, _addon.stats.clearCastChanceDmg, name);
+        ApplyOrRemove(apply, value, _addon.stats.clearCastChanceDmg, name);
         return;
     end
 
     if effect == EFFECT_TYPE.ILLUMINATION then
-        ApplyOrRemove(value, _addon.stats.illumination, name);
+        ApplyOrRemove(apply, value, _addon.stats.illumination, name);
         return;
     end
 
     if effect == EFFECT_TYPE.CRIT_MULT then
         if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(name, value, _addon.stats.critMult.school, affectSchool);
+            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.critMult.school, affectSchool);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(name, value, _addon.stats.critMult.spell, affectSpell);
+            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.critMult.spell, affectSpell);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.IGNITE then
-        ApplyOrRemove(value, _addon.stats.ignite, name);
+        ApplyOrRemove(apply, value, _addon.stats.ignite, name);
         return;
     end
 
     if effect == EFFECT_TYPE.WL_IMP_SB then
-        ApplyOrRemove(value, _addon.stats.impShadowBolt, name);
+        ApplyOrRemove(apply, value, _addon.stats.impShadowBolt, name);
         return;
     end
 
     if effect == EFFECT_TYPE.MAGE_NWR_PROC then
-        ApplyOrRemoveSpellAffect(name, value, _addon.stats.mageNWRProc, affectSpell);
+        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.mageNWRProc, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_DURATION then
-        ApplyOrRemoveSpellAffect(name, value, _addon.stats.durationMods, affectSpell);
+        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.durationMods, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_FLAT_VALUE then
-        ApplyOrRemoveSpellAffect(name, value, _addon.stats.flatMods, affectSpell);
+        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.flatMods, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.EXTRA_SP then
-        ApplyOrRemoveSpellAffect(name, value, _addon.stats.extraSp, affectSpell);
+        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.extraSp, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.EARTHFURY_RETURN then
-        ApplyOrRemove(value, _addon.stats.earthfuryReturn, name);
+        ApplyOrRemove(apply, value, _addon.stats.earthfuryReturn, name);
         return;
     end
 
@@ -245,17 +249,17 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     end
 
     if effect == EFFECT_TYPE.DRUID_NATURES_GRACE then
-        ApplyOrRemove(value, _addon.stats.druidNaturesGrace, name);
+        ApplyOrRemove(apply, value, _addon.stats.druidNaturesGrace, name);
         return;
     end
 
     if effect == EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST then
-        ApplyOrRemoveSpellAffect(name, value, _addon.stats.chainMultMods, affectSpell);
+        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.chainMultMods, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_HIT_WEAPON then
-        ApplyOrRemoveWeaponAffect(name, value, _addon.stats.hitMods.weapon, affectSchool)
+        ApplyOrRemoveWeaponAffect(apply, name, value, _addon.stats.hitMods.weapon, affectSchool)
         return;
     end
 
@@ -266,6 +270,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
             _addon.judgementSpell = nil;
         end
         _addon:PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
+        return;
+    end
+
+    if effect == EFFECT_TYPE.SPELLMOD_GCD then
+        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.gcdMods, affectSpell);
         return;
     end
 end

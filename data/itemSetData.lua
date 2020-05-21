@@ -18,6 +18,7 @@ local FROST_SHOCK = GetSpellInfo(8056);
 local RENEW = GetSpellInfo(139);
 local CHAIN_HEAL = GetSpellInfo(1064);
 local CHAIN_LIGHTNING = GetSpellInfo(1064);
+local FLASH_HEAL = GetSpellInfo(2061);
 
 _addon.itemSetData = {
     [121] = {
@@ -63,7 +64,15 @@ _addon.itemSetData = {
     [202] = {
         name = "Vestments of Prophecy",
         effects = {
-            [1] = {
+            {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    affectSpell = {FLASH_HEAL},
+                    value = -100,
+                }
+            },
+            {
                 need = 8,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_CRIT,
@@ -235,6 +244,32 @@ _addon.itemSetData = {
             },
         },
     },
+    [391] = {
+        name = "Warlord's Threads",
+        effects = {
+            {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    affectSpell = {IMMOLATE},
+                    perPoint = -200
+                }
+            },
+        },
+    },
+    [392] = {
+        name = "Field Marshal's Threads",
+        effects = {
+            {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    affectSpell = {IMMOLATE},
+                    perPoint = -200
+                }
+            },
+        },
+    },
     [443] = {
         name = "Bloodsoul Embrace",
         effects = {
@@ -247,19 +282,6 @@ _addon.itemSetData = {
             },
         },
     },
-    -- This should appear in GetSpellHitModifier()
-    -- [462] = {
-    --     name = "Zanzil's Concentration",
-    --     effects = {
-    --         [1] = {
-    --             need = 2,
-    --             effect = {
-    --                 effect = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-    --                 value = 1,
-    --             }
-    --         },
-    --     },
-    -- },
     [473] = {
         name = "The Highlander's Intent",
         effects = {
@@ -555,6 +577,32 @@ _addon.itemSetData = {
             },
         },
     },
+    [541] = {
+        name = "Champion's Dreadgear",
+        effects = {
+            {
+                need = 4,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    affectSpell = {IMMOLATE},
+                    perPoint = -200
+                }
+            },
+        },
+    },
+    [547] = {
+        name = "Lieutenant Commander's Dreadgear",
+        effects = {
+            {
+                need = 4,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    affectSpell = {IMMOLATE},
+                    perPoint = -200
+                }
+            },
+        },
+    },
 };
 
 _addon.setItemData = {
@@ -703,8 +751,6 @@ _addon.setItemData = {
     [19840] = 479,
     [19848] = 481,
     [19849] = 481,
-    -- [19893] = 462,
-    -- [19905] = 462,
     [19952] = 475,
     [19955] = 479,
     [19956] = 476,
@@ -812,5 +858,29 @@ _addon.setItemData = {
     [21348] = 507,
     [21352] = 507,
     [21351] = 507,
+    [17586] = 391,
+    [17588] = 391,
+    [17590] = 391,
+    [17591] = 391,
+    [17592] = 391,
+    [17593] = 391,
+    [17581] = 392,
+    [17580] = 392,
+    [17583] = 392,
+    [17584] = 392,
+    [17579] = 392,
+    [17578] = 392,
+    [22865] = 541,
+    [22855] = 541,
+    [23255] = 541,
+    [23256] = 541,
+    [22881] = 541,
+    [22884] = 541,
+    [23296] = 547,
+    [23297] = 547,
+    [23282] = 547,
+    [23283] = 547,
+    [23310] = 547,
+    [23311] = 547,
 };
 

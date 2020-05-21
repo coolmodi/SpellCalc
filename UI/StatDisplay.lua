@@ -1,5 +1,5 @@
-local _, _addon = ...;
-local L = _addon:GetLocalization();
+---@type AddonEnv
+local _addon = select(2, ...);
 
 local VALUE_COLOR = "|cFFAAFFAA";
 local UNIT_COLOR = "|cFFFFFFCC";
@@ -310,6 +310,7 @@ AddSpellTable(stats.flatMods, "Flat mods", "");
 AddSpellTable(stats.extraSp, "Extra SP", "");
 AddSpellTable(stats.mageNWRProc, "Mage NWR proc", "");
 AddSpellTable(stats.chainMultMods, "Chain multiplier mods", "%");
+AddSpellTable(stats.gcdMods, "GCD modifiers", "ms");
 
 AddTitle("Weapon attack speed");
 AddSingleStat("Mainhand", stats.attackSpeed, "mh");

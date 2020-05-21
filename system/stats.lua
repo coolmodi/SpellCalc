@@ -131,6 +131,7 @@ _addon.stats = {
     mageNWRProc = {},
     druidNaturesGrace = {val=0, buffs={}},
     chainMultMods = {},
+    gcdMods = {},
 
     attackSpeed = {
         mh = 0,

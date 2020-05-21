@@ -28,7 +28,7 @@ _addon.SCHOOL_MASK = {
 
 --- Buff/Aura effects
 _addon.EFFECT_TYPE = {
-    MOD_EFFECT = 1;
+    MOD_EFFECT = 1,
     MOD_DMG_DONE = 2,
     MOD_HIT_SPELL = 3,
     FSR_REGEN = 4,
@@ -53,6 +53,7 @@ _addon.EFFECT_TYPE = {
     MOD_HIT_WEAPON = 23,
     MOD_HEALING_DONE_ALL = 24,
     SPELLMOD_EFFECT_PAST_FIRST = 25,
+    SPELLMOD_GCD = 26,
 };
 
 --- Defense type (Decides mitigation types used)

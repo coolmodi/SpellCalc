@@ -167,14 +167,6 @@ local function CalcSpell(spellId)
         costs = GetSpellPowerCost(spellId);
     end
 
-    if spellBaseInfo.isChannel then
-        castTime = spellRankInfo.duration;
-        effCastTime = castTime;
-    else
-        castTime = castTime / 1000;
-        effCastTime = math.max(GCD, castTime);
-    end
-
     -- TODO: This will need a change for spells with multiple costs, e.g. combo spells!
     if costs and #costs > 0 then
         ---@type SpellPowerEntry
@@ -246,6 +238,22 @@ local function CalcSpell(spellId)
 
     if spellBaseInfo.school ~= SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MAGIC then
         magicCalc:Init(calcedSpell, spellBaseInfo, spellName);
+    end
+
+    ----------------------------------------------------------------------------------------------------------------------
+    -- Cast time and GCD
+
+    if stats.gcdMods[spellName] ~= nil then
+        GCD = GCD + stats.gcdMods[spellName].val / 100;
+        calcedSpell:AddToBuffList(stats.gcdMods[spellName].buffs);
+    end
+
+    if spellBaseInfo.isChannel then
+        castTime = spellRankInfo.duration;
+        effCastTime = castTime;
+    else
+        castTime = castTime / 1000;
+        effCastTime = math.max(GCD, castTime);
     end
 
     ----------------------------------------------------------------------------------------------------------------------
