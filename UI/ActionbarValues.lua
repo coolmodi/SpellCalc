@@ -122,7 +122,8 @@ local function UpdateButtons(self, diff)
             local showValue;
 
             if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
-                showValue = GetDummyValue(calcedEffect);
+                local spellName = GetSpellInfo(spellId);
+                showValue = GetDummyValue(calcedEffect, spellName);
             elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
                 showValue = GetDurationValue(calcedEffect);
             elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
@@ -131,7 +132,11 @@ local function UpdateButtons(self, diff)
                 showValue = GetDirectValue(calcedEffect, calcedSpell.critChance);
             end
 
-            actionButtons[slot]:SetText(math.floor(showValue + 0.5));
+            if type(showValue) == "number" then
+                showValue = math.floor(showValue + 0.5);
+            end
+
+            actionButtons[slot]:SetText(showValue);
         end
 
         needUpdate[slot] = nil;
