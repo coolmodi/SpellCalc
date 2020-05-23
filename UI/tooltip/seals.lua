@@ -31,22 +31,6 @@ local function SoR(calcedSpell, effectNum)
         SCT:SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResist * 100));
     end
 
-    if SpellCalc_settings.ttHitChance then
-        if SpellCalc_settings.ttHitDetail then
-            SCT:SingleLine(L["TT_HITCHANCE"], ("%.1f%% (%.1f%% + %d%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
-        else
-            SCT:SingleLine(L["TT_HITCHANCE"], ("%.1f%%"):format(calcedSpell.hitChance));
-        end
-
-        local mmit = calcedSpell.meleeMitigation;
-        if mmit.dodge > 0 then
-            SCT:SingleLine(L["TT_DODGECHANCE"], ("%.1f%%"):format(mmit.dodge));
-        end
-        if mmit.parry > 0 then
-            SCT:SingleLine(L["TT_PARRYCHANCE"], ("%.1f%%"):format(mmit.parry));
-        end
-    end
-
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(calcedEffect.ticks));
         SCT:SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(calcedEffect.avgAfterMitigation));
@@ -145,3 +129,4 @@ end
 
 SCT:AddDummyHandler(SEAL_OF_COMMAND, SoC);
 SCT:AddDummyHandler(SEAL_OF_RIGHTEOUSNESS, SoR);
+SCT:AddDummyHandler(SEAL_OF_THE_CRUSADER, SotC);
