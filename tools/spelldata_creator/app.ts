@@ -61,13 +61,14 @@ const PTSA_IGNORES = [
 ];
 
 const SCHOOL_MASK_TO_ENUM = {
-    1: 1,// Physical
-    2: 2,// Holy
-    4: 3,// Fire
-    8: 4,// Nature
-    16: 5,// Frost
-    32: 6,// Shadow
-    64: 7,// Arcane
+    [SCHOOL_MASK.NONE]: 0,
+    [SCHOOL_MASK.PHYSICAL]: 1,
+    [SCHOOL_MASK.HOLY]: 2,
+    [SCHOOL_MASK.FIRE]: 3,
+    [SCHOOL_MASK.NATURE]: 4,
+    [SCHOOL_MASK.FROST]: 5,
+    [SCHOOL_MASK.SHADOW]: 6,
+    [SCHOOL_MASK.ARCANE]: 7,
 }
 
 const spellData = new SpellData();
@@ -161,6 +162,8 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo) {
         ei.coef = 0.1;
         return;
     }
+
+    if (sealType == SealType.SOtC) return;
 
     throw new Error("Dummy aura effect not supported!");
 }
@@ -410,8 +413,8 @@ function buildSpellInfo(pclass: string) {
         spellcd = spellData.getSpellCooldown(effects[0].SpellID);
         spellCosts = spellData.getSpellPowerCosts(effects[0].SpellID);
 
-        // Skip physical spells except auto attack for now
-        if (spellMisc.SchoolMask == 1 && spellName != "Attack") continue;
+        // Skip physical spells except auto attack and SOtC for now
+        if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID, SealType.SOtC)) continue;
 
         // Create base info if needed
         if (!classInfo.baseInfo[spellName]) {

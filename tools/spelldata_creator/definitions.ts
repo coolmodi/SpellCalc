@@ -36,6 +36,17 @@ const enum SPELL_ATTR1 {
     SPELL_ATTR_EX_CHANNELED_ANY = 0x44,
 }
 
+const enum SCHOOL_MASK {
+    NONE	= 0x00,
+    PHYSICAL= 0x01,
+    HOLY	= 0x02,
+    FIRE	= 0x04,
+    NATURE	= 0x08,
+    FROST	= 0x10,
+    SHADOW	= 0x20,
+    ARCANE	= 0x40,
+}
+
 interface BaseInfo {
     getspellinfoid: number,
     school: number,

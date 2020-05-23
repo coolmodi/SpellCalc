@@ -30,6 +30,7 @@ local settingsToKeyMap = {
 
 local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20154);
 local SEAL_OF_COMMAND = GetSpellInfo(20375);
+local SEAL_OF_THE_CRUSADER = GetSpellInfo(20162);
 
 --- Get value to show for a dummy effect
 ---@param calcedEffect CalcedEffect
@@ -41,6 +42,11 @@ local function GetDummyValue(calcedEffect, spellName)
         if settingsToKeyMap[k] then
             return calcedEffect[settingsToKeyMap[k]];
         end
+    elseif spellName == SEAL_OF_THE_CRUSADER then
+        if k == "hitAvg" then
+            return "";
+        end
+        return calcedEffect[settingsToKeyMap[k]];
     end
 
     return "ERR!";

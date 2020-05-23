@@ -1,4 +1,4 @@
-import { SpellEffect, SpellCategory } from "./SpellData";
+import { SpellEffect, SpellCategory, SpellMisc } from "./SpellData";
 import { isJudgeDummy, SealType, isSeal } from "./paladinCrap";
 
 // This isn't used anywhere, just put something there just in case
@@ -109,7 +109,7 @@ function priestFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}) {
+function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
     console.log("Fixing pala coefs and effects");
     const HL_GENERIC = [1026, 1042, 3472, 10328, 10329, 25292];
     const FOL_GENERIC = [19750, 19939, 19940, 19941, 19942, 19943];
@@ -215,6 +215,13 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
             if (isSeal(eff.SpellID) && eff.EffectIndex == 0) {
                 sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MELEE;
             }
+
+            // Make SOtC a dummy effect
+            if (isSeal(eff.SpellID, SealType.SOtC) && eff.EffectIndex == 0) {
+                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
+                eff.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY;
+                sm[eff.SpellID].SchoolMask = SCHOOL_MASK.PHYSICAL;
+            }
         }
     }
 }
@@ -231,8 +238,8 @@ function mageFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}) {
-    paladinFix(se, sc);
+export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
+    paladinFix(se, sc, sm);
     priestFix(se);
     mageFix(se);
 }

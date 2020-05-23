@@ -131,8 +131,35 @@ local function SealOfCommand(calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     calcedEffect.perResource = avgTriggerHits / calcedSpell.effectiveCost;
 end
 
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellBaseInfo SpellBaseInfo
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function SealOfTheCrusader(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    ---@type SpellRankEffectData
+    local effectData = spellRankInfo.effects[effNum];
+
+    local dpsFromAP = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) / 14;
+    local mmit = calcedSpell.meleeMitigation;
+    local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
+    local as = stats.attackSpeed.mh;
+    local hits = math.floor(spellRankInfo.duration / as);
+    local dpsAfterMitigation = dpsFromAP * effectiveHitChance * (1 - calcedSpell.avgResist);
+
+    calcedEffect.avgAfterMitigation = hits * as * dpsAfterMitigation;
+    calcedEffect.ticks = hits;
+    calcedEffect.perSec = dpsAfterMitigation;
+    calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
+dummyAuraHandlers[GetSpellInfo(20162)] = SealOfTheCrusader;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler

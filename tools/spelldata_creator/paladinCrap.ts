@@ -3,7 +3,8 @@ import { SpellEffect } from "./SpellData";
 
 export enum SealType {
     SOR = "SOR", 
-    SOC = "SOC"
+    SOC = "SOC",
+    SOtC = "SOtC"
 }
 
 interface SealInfo {
@@ -30,6 +31,9 @@ export function isSeal(id: number, specific?: SealType) {
     }
     if ((!specific || specific == SealType.SOC) && SEALDATA.seals.SOC.spells.indexOf(id) != -1) {
         return SealType.SOC;
+    }
+    if ((!specific || specific == SealType.SOtC) && SEALDATA.seals.SOtC.spells.indexOf(id) != -1) {
+        return SealType.SOtC;
     }
     return false;
 }

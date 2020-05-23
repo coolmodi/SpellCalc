@@ -3,6 +3,7 @@ local _addon = select(2, ...);
 local L = _addon:GetLocalization();
 local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20288);
 local SEAL_OF_COMMAND = GetSpellInfo(20375);
+local SEAL_OF_THE_CRUSADER = GetSpellInfo(20162);
 local SCT = _addon.SCTooltip;
 
 ---@param calcedSpell CalcedSpell
@@ -124,6 +125,23 @@ local function SoC(calcedSpell, effectNum)
     end
 end
 
+local function SotC(calcedSpell, effectNum)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effectNum];
+
+    if SpellCalc_settings.ttHit then
+        --SCT:SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(calcedEffect.ticks));
+        SCT:SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(calcedEffect.avgAfterMitigation));
+    end
+
+    if SpellCalc_settings.ttPerSecond then
+        SCT:SingleLine(L["TT_PERSEC_DAMAGE"], ("%.1f"):format(calcedEffect.perSec));
+    end
+
+    if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
+        SCT:SingleLine(L["TT_PER_MANA_DAMAGE"], ("%.2f"):format(calcedEffect.perResource));
+    end
+end
 
 SCT:AddDummyHandler(SEAL_OF_COMMAND, SoC);
 SCT:AddDummyHandler(SEAL_OF_RIGHTEOUSNESS, SoR);

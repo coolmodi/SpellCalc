@@ -39,6 +39,10 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 2,
     },
+    [GetSpellInfo(20162)] = { -- Seal of the Crusader
+        school = 1,
+        defType = 2,
+    },
     [GetSpellInfo(20187)] = { -- Judgement of Righteousness
         school = 2,
         defType = 1,
@@ -482,6 +486,21 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20162] = { -- Seal of the Crusader(Rank 2)
+        spellLevel = 12,
+        maxLevel = 20,
+        duration = 30,
+        baseCost = 40,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 51,
+                perLevel = 1.1,
+                coef = 0,
+            },
+        }
+    },
     [20187] = { -- Judgement of Righteousness(Rank 1)
         spellLevel = 1,
         maxLevel = 7,
@@ -687,6 +706,66 @@ _addon.spellRankInfo = {
                 min = 1786,
                 perLevel = 47,
                 coef = 0.1,
+            },
+        }
+    },
+    [20305] = { -- Seal of the Crusader(Rank 3)
+        spellLevel = 22,
+        maxLevel = 30,
+        duration = 30,
+        baseCost = 65,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 94,
+                perLevel = 1.7,
+                coef = 0,
+            },
+        }
+    },
+    [20306] = { -- Seal of the Crusader(Rank 4)
+        spellLevel = 32,
+        maxLevel = 40,
+        duration = 30,
+        baseCost = 90,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 145,
+                perLevel = 2,
+                coef = 0,
+            },
+        }
+    },
+    [20307] = { -- Seal of the Crusader(Rank 5)
+        spellLevel = 42,
+        maxLevel = 50,
+        duration = 30,
+        baseCost = 125,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 221,
+                perLevel = 2.2,
+                coef = 0,
+            },
+        }
+    },
+    [20308] = { -- Seal of the Crusader(Rank 6)
+        spellLevel = 52,
+        maxLevel = 60,
+        duration = 30,
+        baseCost = 160,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 306,
+                perLevel = 2.4,
+                coef = 0,
             },
         }
     },
@@ -923,6 +1002,21 @@ _addon.spellRankInfo = {
                 max = 188,
                 perLevel = 3.05,
                 coef = 0.429,
+            },
+        }
+    },
+    [21082] = { -- Seal of the Crusader(Rank 1)
+        spellLevel = 6,
+        maxLevel = 12,
+        duration = 30,
+        baseCost = 25,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 31,
+                perLevel = 0.7,
+                coef = 0,
             },
         }
     },

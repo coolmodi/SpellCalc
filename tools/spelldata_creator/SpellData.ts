@@ -92,7 +92,7 @@ export interface SpellMisc {
     CastingTimeIndex: number,
     DurationIndex: number,
     RangeIndex: number,
-    SchoolMask: 1|2|4|8|16|32|64,
+    SchoolMask: SCHOOL_MASK,
     Speed: number,
     LaunchDelay: number,
     MinDuration: number,
@@ -193,7 +193,7 @@ export class SpellData {
         
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
-        fixSpellEffects(this.spellEffects, this.spellCategories);
+        fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs);
 
         // make sure direct dmg is always the 1st effect on spells that also have a duration effect
         for (let eff1 in this.spellEffects) {
