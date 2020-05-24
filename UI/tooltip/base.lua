@@ -485,3 +485,38 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal)
 end
 
 SCT:AddHandler(BaseTooltips);
+
+--- Special tooltip for Curse of Agony
+---@param calcedSpell CalcedSpell
+---@param effectNum number
+local function CoA(calcedSpell, effectNum)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effectNum];
+
+    if SpellCalc_settings.ttHit then
+        local avgTickNoSP = calcedEffect.min - calcedEffect.effectivePower;
+        local tickStart = avgTickNoSP * 0.5 + calcedEffect.effectivePower;
+        local tickEnd = avgTickNoSP * 1.5 + calcedEffect.effectivePower;
+        local total = calcedEffect.min * calcedEffect.ticks;
+        SCT:SingleLine(L["TT_DAMAGE"], ("4x %.1f, 4x %.1f, 4x %.1f | %d total"):format(tickStart, calcedEffect.min, tickEnd, total));
+    end
+
+    if SpellCalc_settings.ttCoef then
+        SCT:SingleLine(L["TT_COEF"], ("%.1f%%"):format(calcedEffect.effectiveSpCoef * 100 * calcedEffect.ticks));
+    end
+
+    if SpellCalc_settings.ttPower then
+        local fullSP = calcedEffect.spellPower * calcedEffect.effectiveSpCoef * calcedEffect.ticks;
+        SCT:SingleLine(L["TT_POWER"], ("%d (of %d)"):format(SCT:Round(fullSP), calcedEffect.spellPower));
+    end
+
+    AppendMitigation(calcedSpell);
+
+    if SpellCalc_settings.ttPerSecond then
+        SCT:DoubleLine(L["TT_PERSEC_DAMAGE"], ("%.1f"):format(calcedEffect.perSec), L["TT_PERSECDUR_DAMAGE"], ("%.1f"):format(calcedEffect.perSecDurOrCD));
+    end
+
+    AppendEfficiency(calcedSpell, effectNum);
+end
+local CURSE_OF_AGONY = GetSpellInfo(1014);
+SCT:AddDummyHandler(CURSE_OF_AGONY, CoA);

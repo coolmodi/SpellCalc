@@ -141,17 +141,14 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
         end
 
         local isHeal = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
-
         local isHandled = false;
+        local sname = GetSpellInfo(spellID);
 
-        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
-            local sname = GetSpellInfo(spellID);
-            if dummyHandler[sname] == nil then
-                _addon:PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
-            else
-                dummyHandler[sname](calcedSpell, i);
-            end
+        if dummyHandler[sname] ~= nil then
+            dummyHandler[sname](calcedSpell, i);
             isHandled = true;
+        elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
+            _addon:PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
         else
             for _, func in ipairs(tooltipHandler) do
                 if func(calcedSpell, i, isHeal, spellID) then
@@ -162,7 +159,7 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
         end
 
         if not isHandled then
-            _addon:PrintError("No tooltip handler for spell ("..spellID..")! Please report this to the addon author.");
+            _addon:PrintError("No tooltip handler for spell "..sname.."! Please report this to the addon author!");
         end
     end
 
