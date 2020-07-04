@@ -1402,3 +1402,303 @@ _addon.spellRankInfo = {
     },
 };
 
+_addon.spellClassSet = {
+    [0] = {
+        [1] = {
+            5176, -- Wrath(Rank 1)
+            5177, -- Wrath(Rank 2)
+            5178, -- Wrath(Rank 3)
+            5179, -- Wrath(Rank 4)
+            5180, -- Wrath(Rank 5)
+            6780, -- Wrath(Rank 6)
+            8905, -- Wrath(Rank 7)
+            9912, -- Wrath(Rank 8)
+        },
+        [2] = {
+            8921, -- Moonfire(Rank 1)
+            8924, -- Moonfire(Rank 2)
+            8925, -- Moonfire(Rank 3)
+            8926, -- Moonfire(Rank 4)
+            8927, -- Moonfire(Rank 5)
+            8928, -- Moonfire(Rank 6)
+            8929, -- Moonfire(Rank 7)
+            9833, -- Moonfire(Rank 8)
+            9834, -- Moonfire(Rank 9)
+            9835, -- Moonfire(Rank 10)
+            20690, -- Moonfire
+            21669, -- Moonfire
+        },
+        [4] = {
+            2912, -- Starfire(Rank 1)
+            8949, -- Starfire(Rank 2)
+            8950, -- Starfire(Rank 3)
+            8951, -- Starfire(Rank 4)
+            9875, -- Starfire(Rank 5)
+            9876, -- Starfire(Rank 6)
+            20687, -- Starfall
+            21668, -- Starfire
+            25298, -- Starfire(Rank 7)
+        },
+        [8] = {
+            99, -- Demoralizing Roar(Rank 1)
+            1735, -- Demoralizing Roar(Rank 2)
+            9490, -- Demoralizing Roar(Rank 3)
+            9747, -- Demoralizing Roar(Rank 4)
+            9898, -- Demoralizing Roar(Rank 5)
+        },
+        [16] = {
+            774, -- Rejuvenation(Rank 1)
+            1058, -- Rejuvenation(Rank 2)
+            1430, -- Rejuvenation(Rank 3)
+            2090, -- Rejuvenation(Rank 4)
+            2091, -- Rejuvenation(Rank 5)
+            3627, -- Rejuvenation(Rank 6)
+            8910, -- Rejuvenation(Rank 7)
+            9839, -- Rejuvenation(Rank 8)
+            9840, -- Rejuvenation(Rank 9)
+            9841, -- Rejuvenation(Rank 10)
+            25299, -- Rejuvenation(Rank 11)
+            27813, -- Blessed Recovery(Rank 1)
+            27817, -- Blessed Recovery(Rank 2)
+            27818, -- Blessed Recovery(Rank 3)
+        },
+        [32] = {
+            5185, -- Healing Touch(Rank 1)
+            5186, -- Healing Touch(Rank 2)
+            5187, -- Healing Touch(Rank 3)
+            5188, -- Healing Touch(Rank 4)
+            5189, -- Healing Touch(Rank 5)
+            6778, -- Healing Touch(Rank 6)
+            8903, -- Healing Touch(Rank 7)
+            9758, -- Healing Touch(Rank 8)
+            9888, -- Healing Touch(Rank 9)
+            9889, -- Healing Touch(Rank 10)
+            25297, -- Healing Touch(Rank 11)
+        },
+        [64] = {
+            8936, -- Regrowth(Rank 1)
+            8938, -- Regrowth(Rank 2)
+            8939, -- Regrowth(Rank 3)
+            8940, -- Regrowth(Rank 4)
+            8941, -- Regrowth(Rank 5)
+            9750, -- Regrowth(Rank 6)
+            9856, -- Regrowth(Rank 7)
+            9857, -- Regrowth(Rank 8)
+            9858, -- Regrowth(Rank 9)
+        },
+        [128] = {
+            740, -- Tranquility(Rank 1)
+            8918, -- Tranquility(Rank 2)
+            9862, -- Tranquility(Rank 3)
+            9863, -- Tranquility(Rank 4)
+            21791, -- Tranquility
+            21793, -- Twisted Tranquility
+            25817, -- Tranquility
+        },
+        [256] = {
+            467, -- Thorns(Rank 1)
+            782, -- Thorns(Rank 2)
+            1075, -- Thorns(Rank 3)
+            8914, -- Thorns(Rank 4)
+            9756, -- Thorns(Rank 5)
+            9910, -- Thorns(Rank 6)
+            16877, -- Thorns(Rank 6)
+            21335, -- Thorns
+            21337, -- Thorns
+            22128, -- Thorns
+            22696, -- Thorns
+            22781, -- Thornling
+            25059, -- Dmg Shield
+            25640, -- Thorns
+            25777, -- Thorns
+            26666, -- Dmg Shield2
+        },
+        [512] = {
+            339, -- Entangling Roots(Rank 1)
+            1062, -- Entangling Roots(Rank 2)
+            5195, -- Entangling Roots(Rank 3)
+            5196, -- Entangling Roots(Rank 4)
+            9852, -- Entangling Roots(Rank 5)
+            9853, -- Entangling Roots(Rank 6)
+            19970, -- Entangling Roots(Rank 6)
+            19971, -- Entangling Roots(Rank 5)
+            19972, -- Entangling Roots(Rank 4)
+            19973, -- Entangling Roots(Rank 3)
+            19974, -- Entangling Roots(Rank 2)
+            19975, -- Entangling Roots(Rank 1)
+        },
+        [1024] = {
+            770, -- Faerie Fire(Rank 1)
+            778, -- Faerie Fire(Rank 2)
+            9749, -- Faerie Fire(Rank 3)
+            9907, -- Faerie Fire(Rank 4)
+            16857, -- Faerie Fire (Feral)(Rank 1)
+            17390, -- Faerie Fire (Feral)(Rank 2)
+            17391, -- Faerie Fire (Feral)(Rank 3)
+            17392, -- Faerie Fire (Feral)(Rank 4)
+        },
+        [2048] = {
+            769, -- Swipe(Rank 3)
+            779, -- Swipe(Rank 1)
+            780, -- Swipe(Rank 2)
+            6807, -- Maul(Rank 1)
+            6808, -- Maul(Rank 2)
+            6809, -- Maul(Rank 3)
+            8972, -- Maul(Rank 4)
+            9745, -- Maul(Rank 5)
+            9754, -- Swipe(Rank 4)
+            9880, -- Maul(Rank 6)
+            9881, -- Maul(Rank 7)
+            9908, -- Swipe(Rank 5)
+            27554, -- Swipe
+        },
+        [4096] = {
+            1082, -- Claw(Rank 1)
+            1822, -- Rake(Rank 1)
+            1823, -- Rake(Rank 2)
+            1824, -- Rake(Rank 3)
+            3029, -- Claw(Rank 2)
+            5201, -- Claw(Rank 3)
+            9849, -- Claw(Rank 4)
+            9850, -- Claw(Rank 5)
+            9904, -- Rake(Rank 4)
+            24187, -- Claw
+            24331, -- Rake
+            24332, -- Rake
+            27555, -- Shred
+            27556, -- Rake
+            27638, -- Rake
+        },
+        [8192] = {
+            5211, -- Bash(Rank 1)
+            6798, -- Bash(Rank 2)
+            8983, -- Bash(Rank 3)
+        },
+        [16384] = {
+            5215, -- Prowl(Rank 1)
+            6783, -- Prowl(Rank 2)
+            9913, -- Prowl(Rank 3)
+        },
+        [32768] = {
+            5221, -- Shred(Rank 1)
+            6800, -- Shred(Rank 2)
+            8992, -- Shred(Rank 3)
+            9829, -- Shred(Rank 4)
+            9830, -- Shred(Rank 5)
+        },
+        [65536] = {
+            6785, -- Ravage(Rank 1)
+            6787, -- Ravage(Rank 2)
+            9866, -- Ravage(Rank 3)
+            9867, -- Ravage(Rank 4)
+        },
+        [131072] = {
+            9005, -- Pounce(Rank 1)
+            9823, -- Pounce(Rank 2)
+            9827, -- Pounce(Rank 3)
+        },
+        [262144] = {
+            1126, -- Mark of the Wild(Rank 1)
+            5232, -- Mark of the Wild(Rank 2)
+            5234, -- Mark of the Wild(Rank 4)
+            6756, -- Mark of the Wild(Rank 3)
+            8907, -- Mark of the Wild(Rank 5)
+            9884, -- Mark of the Wild(Rank 6)
+            9885, -- Mark of the Wild(Rank 7)
+            21187, -- Stormpike Reputation +5
+            21849, -- Gift of the Wild(Rank 1)
+            21850, -- Gift of the Wild(Rank 2)
+            24752, -- Mark of the Wild(Rank 7)
+        },
+        [524288] = {
+            5229, -- Enrage
+            25503, -- Enrage
+        },
+        [1048576] = {
+            16689, -- Nature's Grasp(Rank 1)
+            16810, -- Nature's Grasp(Rank 2)
+            16811, -- Nature's Grasp(Rank 3)
+            16812, -- Nature's Grasp(Rank 4)
+            16813, -- Nature's Grasp(Rank 5)
+            17329, -- Nature's Grasp(Rank 6)
+        },
+        [2097152] = {
+            5570, -- Insect Swarm(Rank 1)
+            24974, -- Insect Swarm(Rank 2)
+            24975, -- Insect Swarm(Rank 3)
+            24976, -- Insect Swarm(Rank 4)
+            24977, -- Insect Swarm(Rank 5)
+        },
+        [4194304] = {
+            16914, -- Hurricane(Rank 1)
+            17401, -- Hurricane(Rank 2)
+            17402, -- Hurricane(Rank 3)
+            27530, -- Hurricane
+        },
+        [8388608] = {
+            1079, -- Rip(Rank 1)
+            9492, -- Rip(Rank 2)
+            9493, -- Rip(Rank 3)
+            9752, -- Rip(Rank 4)
+            9894, -- Rip(Rank 5)
+            9896, -- Rip(Rank 6)
+            22568, -- Ferocious Bite(Rank 1)
+            22827, -- Ferocious Bite(Rank 2)
+            22828, -- Ferocious Bite(Rank 3)
+            22829, -- Ferocious Bite(Rank 4)
+            27557, -- Ferocious Bite
+            31018, -- Ferocious Bite(Rank 5)
+        },
+        [16777216] = {
+            2637, -- Hibernate(Rank 1)
+            2908, -- Soothe Animal(Rank 1)
+            8955, -- Soothe Animal(Rank 2)
+            9901, -- Soothe Animal(Rank 3)
+            18657, -- Hibernate(Rank 2)
+            18658, -- Hibernate(Rank 3)
+            20484, -- Rebirth(Rank 1)
+            20739, -- Rebirth(Rank 2)
+            20742, -- Rebirth(Rank 3)
+            20747, -- Rebirth(Rank 4)
+            20748, -- Rebirth(Rank 5)
+        },
+        [33554432] = {
+            775, -- Tree Form(Shapeshift)
+            21178, -- Bear Form (Passive2)(Passive)
+        },
+        [67108864] = {
+            9033, -- Shapeshift Form Effect
+        },
+        [134217728] = {
+            3025, -- Cat Form (Passive)(Passive)
+            24868, -- Predatory Strikes
+        },
+        [268435456] = {
+            20484, -- Rebirth(Rank 1)
+            20739, -- Rebirth(Rank 2)
+            20742, -- Rebirth(Rank 3)
+            20747, -- Rebirth(Rank 4)
+            20748, -- Rebirth(Rank 5)
+        },
+        [536870912] = {
+            783, -- Travel Form(Shapeshift)
+            1066, -- Aquatic Form(Shapeshift)
+            24858, -- Moonkin Form(Shapeshift)
+            27546, -- Faerie Dragon Form
+        },
+        [1073741824] = {
+            5487, -- Bear Form(Shapeshift)
+            9634, -- Dire Bear Form(Shapeshift)
+        },
+        [2147483648] = {
+            768, -- Cat Form(Shapeshift)
+        },
+    },
+    [1] = {
+    },
+    [2] = {
+    },
+    [3] = {
+    },
+};
+

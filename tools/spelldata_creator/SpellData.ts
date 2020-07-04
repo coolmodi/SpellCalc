@@ -32,6 +32,10 @@ function readCSV(path: string, index: string) {
         }
         if (!thisData[index]) 
             throw new Error("CSV index not found!");
+
+        if (data[thisData[index]])
+            throw "Duplicate index encountered!";
+        
         data[thisData[index]] = thisData;
     }
     return data;
@@ -84,6 +88,17 @@ export interface SpellEffect {
     "ImplicitTarget[0]": number,
     "ImplicitTarget[1]": number,
     SpellID: number
+}
+
+export interface SpellClassOptions {
+    ID: number,
+    SpellID: number,
+    ModalNextSpell: number,
+    SpellClassSet: number,
+    "SpellClassMask[0]": number,
+    "SpellClassMask[1]": number,
+    "SpellClassMask[2]": number,
+    "SpellClassMask[3]": number,
 }
 
 export interface SpellMisc {
@@ -169,6 +184,7 @@ export class SpellData {
     private spellCategories: {[index: number]: SpellCategory};
     private spellCooldowns: {[index: number]: SpellCooldown};
     private spellPowerCost: {[index: number]: SpellPower};
+    private spellClassOptions: {[index: number]: SpellClassOptions};
 
     constructor() {
         console.log("Creating SpellData");
@@ -190,7 +206,9 @@ export class SpellData {
         this.spellCooldowns = readCSV("data/dbc/spellcooldowns.csv", "SpellID");
         // @ts-ignore
         this.spellPowerCost = readCSV("data/dbc/spellpower.csv", "ID");
-        
+        // @ts-ignore
+        this.spellClassOptions = readCSV("data/dbc/spellclassoptions.csv", "SpellID");
+
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
         fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs);
@@ -313,5 +331,17 @@ export class SpellData {
         }
 
         return costs;
+    }
+
+    getSpellClassOption(spellId: number) {
+        for (let scoid in this.spellClassOptions) {
+            if (this.spellClassOptions[scoid].SpellID == spellId) return this.spellClassOptions[scoid];
+        }
+
+        throw "No spell class options for spell ID!";
+    }
+
+    getSpellClassOptions() {
+        return this.spellClassOptions;
     }
 }

@@ -1173,3 +1173,281 @@ _addon.buffData[21084] = { -- Seal of Righteousness(Rank 1)
     value = 20187
 };
 
+_addon.spellClassSet = {
+    [0] = {
+        [1] = {
+            22270, -- Divine Intervention (NEWTEST)
+            25780, -- Righteous Fury
+        },
+        [2] = {
+            19740, -- Blessing of Might(Rank 1)
+            19834, -- Blessing of Might(Rank 2)
+            19835, -- Blessing of Might(Rank 3)
+            19836, -- Blessing of Might(Rank 4)
+            19837, -- Blessing of Might(Rank 5)
+            19838, -- Blessing of Might(Rank 6)
+            25291, -- Blessing of Might(Rank 7)
+            25782, -- Greater Blessing of Might(Rank 1)
+            25916, -- Greater Blessing of Might(Rank 2)
+        },
+        [4] = {
+            20066, -- Repentance
+        },
+        [8] = {
+            7294, -- Retribution Aura(Rank 1)
+            10298, -- Retribution Aura(Rank 2)
+            10299, -- Retribution Aura(Rank 3)
+            10300, -- Retribution Aura(Rank 4)
+            10301, -- Retribution Aura(Rank 5)
+        },
+        [16] = {
+            1044, -- Blessing of Freedom
+        },
+        [32] = {
+            20116, -- Consecration(Rank 2)
+            20922, -- Consecration(Rank 3)
+            20923, -- Consecration(Rank 4)
+            20924, -- Consecration(Rank 5)
+            26573, -- Consecration(Rank 1)
+        },
+        [64] = {
+            465, -- Devotion Aura(Rank 1)
+            643, -- Devotion Aura(Rank 3)
+            1032, -- Devotion Aura(Rank 5)
+            10290, -- Devotion Aura(Rank 2)
+            10291, -- Devotion Aura(Rank 4)
+            10292, -- Devotion Aura(Rank 6)
+            10293, -- Devotion Aura(Rank 7)
+        },
+        [128] = {
+            1022, -- Blessing of Protection(Rank 1)
+            5599, -- Blessing of Protection(Rank 2)
+            10278, -- Blessing of Protection(Rank 3)
+            23415, -- Improved Blessing of Protection
+            25282, -- Shield of Rajaxx
+        },
+        [256] = {
+            1038, -- Blessing of Salvation
+            25895, -- Greater Blessing of Salvation
+        },
+        [512] = {
+            20162, -- Seal of the Crusader(Rank 2)
+            20305, -- Seal of the Crusader(Rank 3)
+            20306, -- Seal of the Crusader(Rank 4)
+            20307, -- Seal of the Crusader(Rank 5)
+            20308, -- Seal of the Crusader(Rank 6)
+            21082, -- Seal of the Crusader(Rank 1)
+        },
+        [1024] = {
+            20187, -- Judgement of Righteousness(Rank 1)
+            20280, -- Judgement of Righteousness(Rank 2)
+            20281, -- Judgement of Righteousness(Rank 3)
+            20282, -- Judgement of Righteousness(Rank 4)
+            20283, -- Judgement of Righteousness(Rank 5)
+            20284, -- Judgement of Righteousness(Rank 6)
+            20285, -- Judgement of Righteousness(Rank 7)
+            20286, -- Judgement of Righteousness(Rank 8)
+        },
+        [2048] = {
+            853, -- Hammer of Justice(Rank 1)
+            5588, -- Hammer of Justice(Rank 2)
+            5589, -- Hammer of Justice(Rank 3)
+            10308, -- Hammer of Justice(Rank 4)
+        },
+        [4096] = {
+            4987, -- Cleanse
+            27847, -- Cleanse Cost Reduced
+            28852, -- Improved Seal of the Crusader
+        },
+        [8192] = {
+            19993, -- Flash of Light
+        },
+        [16384] = {
+            19968, -- Holy Light
+            19980, -- Holy Light
+            19981, -- Holy Light
+            19982, -- Holy Light
+        },
+        [32768] = {
+            633, -- Lay on Hands(Rank 1)
+            2800, -- Lay on Hands(Rank 2)
+            10310, -- Lay on Hands(Rank 3)
+        },
+        [65536] = {
+            19742, -- Blessing of Wisdom(Rank 1)
+            19850, -- Blessing of Wisdom(Rank 2)
+            19852, -- Blessing of Wisdom(Rank 3)
+            19853, -- Blessing of Wisdom(Rank 4)
+            19854, -- Blessing of Wisdom(Rank 5)
+            25290, -- Blessing of Wisdom(Rank 6)
+            25894, -- Greater Blessing of Wisdom(Rank 1)
+            25918, -- Greater Blessing of Wisdom(Rank 2)
+        },
+        [131072] = {
+            19746, -- Concentration Aura
+            27733, -- Ironweave Battlesuit
+        },
+        [262144] = {
+            20167, -- Seal of Light(Rank 1)
+            20168, -- Seal of Wisdom(Rank 1)
+            20333, -- Seal of Light(Rank 2)
+            20334, -- Seal of Light(Rank 3)
+            20340, -- Seal of Light(Rank 4)
+            20350, -- Seal of Wisdom(Rank 2)
+            20351, -- Seal of Wisdom(Rank 3)
+        },
+        [524288] = {
+            20185, -- Judgement of Light(Rank 1)
+            20186, -- Judgement of Wisdom(Rank 1)
+            20344, -- Judgement of Light(Rank 2)
+            20345, -- Judgement of Light(Rank 3)
+            20346, -- Judgement of Light(Rank 4)
+            20354, -- Judgement of Wisdom(Rank 2)
+            20355, -- Judgement of Wisdom(Rank 3)
+            25751, -- Copy of Judgement of Light(Rank 4)
+            25752, -- Judgement of Light
+            25753, -- Judgement of Light
+            25757, -- Judgement of Wisdom
+            25758, -- Judgement of Wisdom
+        },
+        [1048576] = {
+            20184, -- Judgement of Justice(Rank 1)
+        },
+        [2097152] = {
+            20473, -- Holy Shock(Rank 1)
+            20929, -- Holy Shock(Rank 2)
+            20930, -- Holy Shock(Rank 3)
+            25902, -- Holy Shock(Rank 3)
+            25903, -- Holy Shock(Rank 3)
+            25911, -- Holy Shock(Rank 2)
+            25912, -- Holy Shock(Rank 1)
+            25913, -- Holy Shock(Rank 2)
+            25914, -- Holy Shock(Rank 1)
+        },
+        [8388608] = {
+            20271, -- Judgement
+        },
+        [16777216] = {
+            20217, -- Blessing of Kings
+            25898, -- Greater Blessing of Kings
+        },
+        [33554432] = {
+            20375, -- Seal of Command(Rank 1)
+            20915, -- Seal of Command(Rank 2)
+            20918, -- Seal of Command(Rank 3)
+            20919, -- Seal of Command(Rank 4)
+            20920, -- Seal of Command(Rank 5)
+        },
+        [67108864] = {
+            19876, -- Shadow Resistance Aura(Rank 1)
+            19888, -- Frost Resistance Aura(Rank 1)
+            19891, -- Fire Resistance Aura(Rank 1)
+            19895, -- Shadow Resistance Aura(Rank 2)
+            19896, -- Shadow Resistance Aura(Rank 3)
+            19897, -- Frost Resistance Aura(Rank 2)
+            19898, -- Frost Resistance Aura(Rank 3)
+            19899, -- Fire Resistance Aura(Rank 2)
+            19900, -- Fire Resistance Aura(Rank 3)
+            20218, -- Sanctity Aura
+        },
+        [134217728] = {
+            20154, -- Seal of Righteousness(Rank 1)
+            20164, -- Seal of Justice
+            20165, -- Seal of Light(Rank 1)
+            20166, -- Seal of Wisdom(Rank 1)
+            20287, -- Seal of Righteousness(Rank 2)
+            20288, -- Seal of Righteousness(Rank 3)
+            20289, -- Seal of Righteousness(Rank 4)
+            20290, -- Seal of Righteousness(Rank 5)
+            20291, -- Seal of Righteousness(Rank 6)
+            20292, -- Seal of Righteousness(Rank 7)
+            20293, -- Seal of Righteousness(Rank 8)
+            20347, -- Seal of Light(Rank 2)
+            20348, -- Seal of Light(Rank 3)
+            20349, -- Seal of Light(Rank 4)
+            20356, -- Seal of Wisdom(Rank 2)
+            20357, -- Seal of Wisdom(Rank 3)
+            21084, -- Seal of Righteousness(Rank 1)
+        },
+        [268435456] = {
+            1022, -- Blessing of Protection(Rank 1)
+            1038, -- Blessing of Salvation
+            1044, -- Blessing of Freedom
+            5599, -- Blessing of Protection(Rank 2)
+            6940, -- Blessing of Sacrifice(Rank 1)
+            10278, -- Blessing of Protection(Rank 3)
+            19740, -- Blessing of Might(Rank 1)
+            19742, -- Blessing of Wisdom(Rank 1)
+            19834, -- Blessing of Might(Rank 2)
+            19835, -- Blessing of Might(Rank 3)
+            19836, -- Blessing of Might(Rank 4)
+            19837, -- Blessing of Might(Rank 5)
+            19838, -- Blessing of Might(Rank 6)
+            19850, -- Blessing of Wisdom(Rank 2)
+            19852, -- Blessing of Wisdom(Rank 3)
+            19853, -- Blessing of Wisdom(Rank 4)
+            19854, -- Blessing of Wisdom(Rank 5)
+            19977, -- Blessing of Light(Rank 1)
+            19978, -- Blessing of Light(Rank 2)
+            19979, -- Blessing of Light(Rank 3)
+            20217, -- Blessing of Kings
+            20729, -- Blessing of Sacrifice(Rank 2)
+            20911, -- Blessing of Sanctuary(Rank 1)
+            20912, -- Blessing of Sanctuary(Rank 2)
+            20913, -- Blessing of Sanctuary(Rank 3)
+            20914, -- Blessing of Sanctuary(Rank 4)
+            23415, -- Improved Blessing of Protection
+            25282, -- Shield of Rajaxx
+            25290, -- Blessing of Wisdom(Rank 6)
+            25291, -- Blessing of Might(Rank 7)
+            25782, -- Greater Blessing of Might(Rank 1)
+            25890, -- Greater Blessing of Light(Rank 1)
+            25894, -- Greater Blessing of Wisdom(Rank 1)
+            25895, -- Greater Blessing of Salvation
+            25898, -- Greater Blessing of Kings
+            25899, -- Greater Blessing of Sanctuary(Rank 1)
+            25916, -- Greater Blessing of Might(Rank 2)
+            25918, -- Greater Blessing of Wisdom(Rank 2)
+        },
+        [536870912] = {
+            20188, -- Judgement of the Crusader(Rank 2)
+            20300, -- Judgement of the Crusader(Rank 3)
+            20301, -- Judgement of the Crusader(Rank 4)
+            20302, -- Judgement of the Crusader(Rank 5)
+            20303, -- Judgement of the Crusader(Rank 6)
+            21183, -- Judgement of the Crusader(Rank 1)
+            25942, -- Judgement of the Crusader
+            25943, -- Judgement of the Crusader
+            29203, -- Healing Way
+        },
+        [1073741824] = {
+            19750, -- Flash of Light(Rank 1)
+            19939, -- Flash of Light(Rank 2)
+            19940, -- Flash of Light(Rank 3)
+            19941, -- Flash of Light(Rank 4)
+            19942, -- Flash of Light(Rank 5)
+            19943, -- Flash of Light(Rank 6)
+        },
+        [2147483648] = {
+            635, -- Holy Light(Rank 1)
+            639, -- Holy Light(Rank 2)
+            647, -- Holy Light(Rank 3)
+            1026, -- Holy Light(Rank 4)
+            1042, -- Holy Light(Rank 5)
+            3472, -- Holy Light(Rank 6)
+            10328, -- Holy Light(Rank 7)
+            10329, -- Holy Light(Rank 8)
+            25292, -- Holy Light(Rank 9)
+        },
+    },
+    [1] = {
+        [2] = {
+            4987, -- Cleanse
+        },
+    },
+    [2] = {
+    },
+    [3] = {
+    },
+};
+

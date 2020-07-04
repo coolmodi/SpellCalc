@@ -1964,3 +1964,424 @@ _addon.spellRankInfo = {
     },
 };
 
+_addon.spellClassSet = {
+    [0] = {
+        [1] = {
+            17, -- Power Word: Shield(Rank 1)
+            592, -- Power Word: Shield(Rank 2)
+            600, -- Power Word: Shield(Rank 3)
+            3747, -- Power Word: Shield(Rank 4)
+            6065, -- Power Word: Shield(Rank 5)
+            6066, -- Power Word: Shield(Rank 6)
+            10898, -- Power Word: Shield(Rank 7)
+            10899, -- Power Word: Shield(Rank 8)
+            10900, -- Power Word: Shield(Rank 9)
+            10901, -- Power Word: Shield(Rank 10)
+            27607, -- Power Word: Shield(Rank 10)
+            27779, -- Divine Protection
+        },
+        [2] = {
+            588, -- Inner Fire(Rank 1)
+            602, -- Inner Fire(Rank 3)
+            1006, -- Inner Fire(Rank 4)
+            7128, -- Inner Fire(Rank 2)
+            10951, -- Inner Fire(Rank 5)
+            10952, -- Inner Fire(Rank 6)
+            16329, -- Juju Might
+        },
+        [4] = {
+            15286, -- Vampiric Embrace
+            22751, -- Fury of the Frostwolf
+            23693, -- Stormpike's Salvation
+            23964, -- Bloodrager's Requiem
+            28418, -- General's Warcry
+            28419, -- General's Warcry
+            28420, -- General's Warcry
+        },
+        [8] = {
+            1243, -- Power Word: Fortitude(Rank 1)
+            1244, -- Power Word: Fortitude(Rank 2)
+            1245, -- Power Word: Fortitude(Rank 3)
+            2791, -- Power Word: Fortitude(Rank 4)
+            10937, -- Power Word: Fortitude(Rank 5)
+            10938, -- Power Word: Fortitude(Rank 6)
+            16873, -- Holy Word: Fortitude(Rank 6)
+            21562, -- Prayer of Fortitude(Rank 1)
+            21564, -- Prayer of Fortitude(Rank 2)
+            23947, -- Power Word: Fortitude(Rank 5)
+            23948, -- Power Word: Fortitude(Rank 6)
+        },
+        [16] = {
+            8129, -- Mana Burn(Rank 1)
+            8131, -- Mana Burn(Rank 2)
+            10874, -- Mana Burn(Rank 3)
+            10875, -- Mana Burn(Rank 4)
+            10876, -- Mana Burn(Rank 5)
+        },
+        [32] = {
+            21074, -- Test NPC Resurrection(Rank 1)
+        },
+        [64] = {
+            139, -- Renew(Rank 1)
+            6074, -- Renew(Rank 2)
+            6075, -- Renew(Rank 3)
+            6076, -- Renew(Rank 4)
+            6077, -- Renew(Rank 5)
+            6078, -- Renew(Rank 6)
+            10927, -- Renew(Rank 7)
+            10928, -- Renew(Rank 8)
+            10929, -- Renew(Rank 9)
+            15229, -- Crystal Restore
+            25315, -- Renew(Rank 10)
+            27606, -- Renew(Rank 9)
+        },
+        [128] = {
+            585, -- Smite(Rank 1)
+            591, -- Smite(Rank 2)
+            598, -- Smite(Rank 3)
+            984, -- Smite(Rank 4)
+            1004, -- Smite(Rank 5)
+            6060, -- Smite(Rank 6)
+            10933, -- Smite(Rank 7)
+            10934, -- Smite(Rank 8)
+        },
+        [256] = {
+            976, -- Shadow Protection(Rank 1)
+            10957, -- Shadow Protection(Rank 2)
+            10958, -- Shadow Protection(Rank 3)
+            16874, -- Shadow Protection(Rank 3)
+            17151, -- Shadow Barrier
+            27683, -- Prayer of Shadow Protection(Rank 1)
+        },
+        [512] = {
+            596, -- Prayer of Healing(Rank 1)
+            996, -- Prayer of Healing(Rank 2)
+            10960, -- Prayer of Healing(Rank 3)
+            10961, -- Prayer of Healing(Rank 4)
+            25316, -- Prayer of Healing(Rank 5)
+        },
+        [1024] = {
+            2054, -- Heal(Rank 1)
+            2055, -- Heal(Rank 2)
+            6063, -- Heal(Rank 3)
+            6064, -- Heal(Rank 4)
+        },
+        [2048] = {
+            2061, -- Flash Heal(Rank 1)
+            9472, -- Flash Heal(Rank 2)
+            9473, -- Flash Heal(Rank 3)
+            9474, -- Flash Heal(Rank 4)
+            10915, -- Flash Heal(Rank 5)
+            10916, -- Flash Heal(Rank 6)
+            10917, -- Flash Heal(Rank 7)
+            17137, -- Flash Heal
+            17138, -- Flash Heal
+            17843, -- Flash Heal
+            27608, -- Flash Heal(Rank 7)
+        },
+        [4096] = {
+            2060, -- Greater Heal(Rank 1)
+            10963, -- Greater Heal(Rank 2)
+            10964, -- Greater Heal(Rank 3)
+            10965, -- Greater Heal(Rank 4)
+            15068, -- TEST Heal Self
+            25314, -- Greater Heal(Rank 5)
+            26565, -- Heal Brethren
+        },
+        [8192] = {
+            8092, -- Mind Blast(Rank 1)
+            8102, -- Mind Blast(Rank 2)
+            8103, -- Mind Blast(Rank 3)
+            8104, -- Mind Blast(Rank 4)
+            8105, -- Mind Blast(Rank 5)
+            8106, -- Mind Blast(Rank 6)
+            10945, -- Mind Blast(Rank 7)
+            10946, -- Mind Blast(Rank 8)
+            10947, -- Mind Blast(Rank 9)
+        },
+        [16384] = {
+            586, -- Fade(Rank 1)
+            9578, -- Fade(Rank 2)
+            9579, -- Fade(Rank 3)
+            9592, -- Fade(Rank 4)
+            10941, -- Fade(Rank 5)
+            10942, -- Fade(Rank 6)
+        },
+        [32768] = {
+            589, -- Shadow Word: Pain(Rank 1)
+            594, -- Shadow Word: Pain(Rank 2)
+            970, -- Shadow Word: Pain(Rank 3)
+            992, -- Shadow Word: Pain(Rank 4)
+            2767, -- Shadow Word: Pain(Rank 5)
+            10892, -- Shadow Word: Pain(Rank 6)
+            10893, -- Shadow Word: Pain(Rank 7)
+            10894, -- Shadow Word: Pain(Rank 8)
+            27605, -- Shadow Word: Pain(Rank 8)
+        },
+        [65536] = {
+            8122, -- Psychic Scream(Rank 1)
+            8124, -- Psychic Scream(Rank 2)
+            10888, -- Psychic Scream(Rank 3)
+            10890, -- Psychic Scream(Rank 4)
+            27610, -- Psychic Scream(Rank 4)
+        },
+        [131072] = {
+            605, -- Mind Control(Rank 1)
+            10911, -- Mind Control(Rank 2)
+            10912, -- Mind Control(Rank 3)
+            16053, -- Dominion of Soul
+        },
+        [262144] = {
+            2050, -- Lesser Heal(Rank 1)
+            2052, -- Lesser Heal(Rank 2)
+            2053, -- Lesser Heal(Rank 3)
+        },
+        [524288] = {
+            2943, -- Touch of Weakness(Rank 1)
+            16875, -- Divine Spirit(Rank 3)
+            19249, -- Touch of Weakness(Rank 2)
+            19251, -- Touch of Weakness(Rank 3)
+            19252, -- Touch of Weakness(Rank 4)
+            19253, -- Touch of Weakness(Rank 5)
+            19254, -- Touch of Weakness(Rank 6)
+        },
+        [1048576] = {
+            14914, -- Holy Fire(Rank 1)
+            15261, -- Holy Fire(Rank 8)
+            15262, -- Holy Fire(Rank 2)
+            15263, -- Holy Fire(Rank 3)
+            15264, -- Holy Fire(Rank 4)
+            15265, -- Holy Fire(Rank 5)
+            15266, -- Holy Fire(Rank 6)
+            15267, -- Holy Fire(Rank 7)
+            17140, -- Holy Fire
+            17141, -- Holy Fire
+            17142, -- Holy Fire
+            18165, -- Holy Fire
+            18167, -- Holy Fire
+            23860, -- Holy Fire
+        },
+        [2097152] = {
+            10797, -- Starshards(Rank 1)
+            19296, -- Starshards(Rank 2)
+            19299, -- Starshards(Rank 3)
+            19302, -- Starshards(Rank 4)
+            19303, -- Starshards(Rank 5)
+            19304, -- Starshards(Rank 6)
+            19305, -- Starshards(Rank 7)
+            27636, -- Starshards
+        },
+        [4194304] = {
+            15237, -- Holy Nova(Rank 1)
+            15430, -- Holy Nova(Rank 2)
+            15431, -- Holy Nova(Rank 3)
+            20694, -- Holy Nova
+            23458, -- Holy Nova(Rank 2)
+            23858, -- Holy Nova
+            24022, -- Cleanse Nova
+            27799, -- Holy Nova(Rank 4)
+            27800, -- Holy Nova(Rank 5)
+            27801, -- Holy Nova(Rank 6)
+        },
+        [8388608] = {
+            15407, -- Mind Flay(Rank 1)
+            16568, -- Mind Flay
+            17165, -- Mind Flay
+            17311, -- Mind Flay(Rank 2)
+            17312, -- Mind Flay(Rank 3)
+            17313, -- Mind Flay(Rank 4)
+            17314, -- Mind Flay(Rank 5)
+            18807, -- Mind Flay(Rank 6)
+            22203, -- Blue Beam
+            22205, -- Trigger Blue Beam
+            22313, -- Purple Hands
+            22800, -- Entangling Roots
+            22802, -- Choking Spores
+            22803, -- Dire Maul Trap - Summon
+            22821, -- Warpwood Spores
+            22919, -- Mind Flay
+            23642, -- Corruption
+            23953, -- Mind Flay
+            23979, -- Holy Wrath
+            24152, -- Whipweed Roots
+            26044, -- Mind Flay
+            26143, -- Mind Flay
+            27286, -- Shadow Wrath
+            27640, -- Baron Rivendare's Soul Drain
+            28309, -- Copy of Corruption
+            28310, -- Mind Flay
+            28883, -- Holy Wrath
+            29407, -- Mind Flay
+        },
+        [16777216] = {
+            13908, -- Desperate Prayer(Rank 1)
+            19236, -- Desperate Prayer(Rank 2)
+            19238, -- Desperate Prayer(Rank 3)
+            19240, -- Desperate Prayer(Rank 4)
+            19241, -- Desperate Prayer(Rank 5)
+            19242, -- Desperate Prayer(Rank 6)
+            19243, -- Desperate Prayer(Rank 7)
+        },
+        [33554432] = {
+            2944, -- Devouring Plague(Rank 1)
+            19276, -- Devouring Plague(Rank 2)
+            19277, -- Devouring Plague(Rank 3)
+            19278, -- Devouring Plague(Rank 4)
+            19279, -- Devouring Plague(Rank 5)
+            19280, -- Devouring Plague(Rank 6)
+            28377, -- Shadowguard(Rank 1)
+            28378, -- Shadowguard(Rank 2)
+            28379, -- Shadowguard(Rank 3)
+            28380, -- Shadowguard(Rank 4)
+            28381, -- Shadowguard(Rank 5)
+            28382, -- Shadowguard(Rank 6)
+        },
+        [67108864] = {
+            453, -- Mind Soothe(Rank 1)
+            2096, -- Mind Vision(Rank 1)
+            2652, -- Touch of Weakness(Rank 1)
+            8192, -- Mind Soothe(Rank 2)
+            9035, -- Hex of Weakness(Rank 1)
+            10909, -- Mind Vision(Rank 2)
+            10953, -- Mind Soothe(Rank 3)
+            15258, -- Shadow Vulnerability(Rank 1)
+            15286, -- Vampiric Embrace
+            15487, -- Silence
+            19261, -- Touch of Weakness(Rank 2)
+            19262, -- Touch of Weakness(Rank 3)
+            19264, -- Touch of Weakness(Rank 4)
+            19265, -- Touch of Weakness(Rank 5)
+            19266, -- Touch of Weakness(Rank 6)
+            19281, -- Hex of Weakness(Rank 2)
+            19282, -- Hex of Weakness(Rank 3)
+            19283, -- Hex of Weakness(Rank 4)
+            19284, -- Hex of Weakness(Rank 5)
+            19285, -- Hex of Weakness(Rank 6)
+            25816, -- Hex of Weakness(Rank 6)
+        },
+        [134217728] = {
+            15007, -- Resurrection Sickness
+            23455, -- Holy Nova(Rank 1)
+            23458, -- Holy Nova(Rank 2)
+            23459, -- Holy Nova(Rank 3)
+            27803, -- Holy Nova(Rank 4)
+            27804, -- Holy Nova(Rank 5)
+            27805, -- Holy Nova(Rank 6)
+        },
+        [268435456] = {
+            15068, -- TEST Heal Self
+            17137, -- Flash Heal
+            17138, -- Flash Heal
+            17843, -- Flash Heal
+        },
+        [536870912] = {
+            6788, -- Weakened Soul
+            22752, -- Fevered Exhaustion
+        },
+        [1073741824] = {
+            724, -- Lightwell(Rank 1)
+            2006, -- Resurrection(Rank 1)
+            2010, -- Resurrection(Rank 2)
+            9484, -- Shackle Undead(Rank 1)
+            9485, -- Shackle Undead(Rank 2)
+            10880, -- Resurrection(Rank 3)
+            10881, -- Resurrection(Rank 4)
+            10955, -- Shackle Undead(Rank 3)
+            15090, -- Dispel Magic
+            17201, -- Dispel Magic
+            20770, -- Resurrection(Rank 5)
+            23859, -- Dispel Magic
+            25808, -- Dispel
+            27870, -- Lightwell(Rank 2)
+            27871, -- Lightwell(Rank 3)
+        },
+        [2147483648] = {
+            453, -- Mind Soothe(Rank 1)
+            527, -- Dispel Magic(Rank 1)
+            528, -- Cure Disease
+            552, -- Abolish Disease
+            988, -- Dispel Magic(Rank 2)
+            1706, -- Levitate
+            2651, -- Elune's Grace(Rank 1)
+            2652, -- Touch of Weakness(Rank 1)
+            6346, -- Fear Ward
+            8192, -- Mind Soothe(Rank 2)
+            9035, -- Hex of Weakness(Rank 1)
+            10060, -- Power Infusion
+            10953, -- Mind Soothe(Rank 3)
+            13896, -- Feedback(Rank 1)
+            14752, -- Divine Spirit(Rank 1)
+            14818, -- Divine Spirit(Rank 2)
+            14819, -- Divine Spirit(Rank 3)
+            15090, -- Dispel Magic
+            15229, -- Crystal Restore
+            15286, -- Vampiric Embrace
+            15473, -- Shadowform
+            15487, -- Silence
+            16329, -- Juju Might
+            16873, -- Holy Word: Fortitude(Rank 6)
+            16874, -- Shadow Protection(Rank 3)
+            16875, -- Divine Spirit(Rank 3)
+            17151, -- Shadow Barrier
+            17201, -- Dispel Magic
+            18137, -- Shadowguard(Rank 1)
+            19261, -- Touch of Weakness(Rank 2)
+            19262, -- Touch of Weakness(Rank 3)
+            19264, -- Touch of Weakness(Rank 4)
+            19265, -- Touch of Weakness(Rank 5)
+            19266, -- Touch of Weakness(Rank 6)
+            19271, -- Feedback(Rank 2)
+            19273, -- Feedback(Rank 3)
+            19274, -- Feedback(Rank 4)
+            19275, -- Feedback(Rank 5)
+            19281, -- Hex of Weakness(Rank 2)
+            19282, -- Hex of Weakness(Rank 3)
+            19283, -- Hex of Weakness(Rank 4)
+            19284, -- Hex of Weakness(Rank 5)
+            19285, -- Hex of Weakness(Rank 6)
+            19289, -- Elune's Grace(Rank 2)
+            19291, -- Elune's Grace(Rank 3)
+            19292, -- Elune's Grace(Rank 4)
+            19293, -- Elune's Grace(Rank 5)
+            19308, -- Shadowguard(Rank 2)
+            19309, -- Shadowguard(Rank 3)
+            19310, -- Shadowguard(Rank 4)
+            19311, -- Shadowguard(Rank 5)
+            19312, -- Shadowguard(Rank 6)
+            20694, -- Holy Nova
+            22751, -- Fury of the Frostwolf
+            22822, -- Starshards
+            22823, -- Starshards
+            23693, -- Stormpike's Salvation
+            23858, -- Holy Nova
+            23859, -- Dispel Magic
+            23964, -- Bloodrager's Requiem
+            24022, -- Cleanse Nova
+            25808, -- Dispel
+            25816, -- Hex of Weakness(Rank 6)
+            27609, -- Dispel Magic(Rank 2)
+            27681, -- Prayer of Spirit(Rank 1)
+            27841, -- Divine Spirit(Rank 4)
+            27986, -- Levitate
+            28133, -- Cure Disease
+            28418, -- General's Warcry
+            28419, -- General's Warcry
+            28420, -- General's Warcry
+            30238, -- Lordaeron's Blessing
+        },
+    },
+    [1] = {
+        [1] = {
+            527, -- Dispel Magic(Rank 1)
+            528, -- Cure Disease
+            552, -- Abolish Disease
+            988, -- Dispel Magic(Rank 2)
+            30238, -- Lordaeron's Blessing
+        },
+    },
+    [2] = {
+    },
+    [3] = {
+    },
+};
+

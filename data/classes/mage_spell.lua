@@ -1832,3 +1832,611 @@ _addon.spellRankInfo = {
     },
 };
 
+_addon.spellClassSet = {
+    [0] = {
+        [1] = {
+            133, -- Fireball(Rank 1)
+            143, -- Fireball(Rank 2)
+            145, -- Fireball(Rank 3)
+            3140, -- Fireball(Rank 4)
+            8400, -- Fireball(Rank 5)
+            8401, -- Fireball(Rank 6)
+            8402, -- Fireball(Rank 7)
+            10148, -- Fireball(Rank 8)
+            10149, -- Fireball(Rank 9)
+            10150, -- Fireball(Rank 10)
+            10151, -- Fireball(Rank 11)
+            21230, -- "Fireball
+            25306, -- Fireball(Rank 12)
+        },
+        [2] = {
+            2136, -- Fire Blast(Rank 1)
+            2137, -- Fire Blast(Rank 2)
+            2138, -- Fire Blast(Rank 3)
+            8412, -- Fire Blast(Rank 4)
+            8413, -- Fire Blast(Rank 5)
+            10197, -- Fire Blast(Rank 6)
+            10199, -- Fire Blast(Rank 7)
+            13339, -- Fire Blast
+            13340, -- Fire Blast
+            13341, -- Fire Blast
+            13342, -- Fire Blast
+            13374, -- Fire Blast
+            14145, -- Fire Blast
+            15574, -- Fire Blast
+            16144, -- Fire Blast
+            17276, -- Scald
+            17492, -- Hand of Thaurissan
+            20623, -- Fire Blast
+            20679, -- Fire Blast
+            20795, -- Fire Blast
+            20832, -- Fire Blast
+            24530, -- Felfire
+            25028, -- Fire Blast
+            31378, -- Worm Blast
+        },
+        [4] = {
+            2120, -- Flamestrike(Rank 1)
+            2121, -- Flamestrike(Rank 2)
+            8422, -- Flamestrike(Rank 3)
+            8423, -- Flamestrike(Rank 4)
+            10215, -- Flamestrike(Rank 5)
+            10216, -- Flamestrike(Rank 6)
+            12354, -- Flame of Hakkar
+            18948, -- Dark Energy
+            18949, -- Atal'ai Poison
+        },
+        [8] = {
+            543, -- Fire Ward(Rank 1)
+            8457, -- Fire Ward(Rank 2)
+            8458, -- Fire Ward(Rank 3)
+            10223, -- Fire Ward(Rank 4)
+            10225, -- Fire Ward(Rank 5)
+            15041, -- Fire Ward
+        },
+        [16] = {
+            2948, -- Scorch(Rank 1)
+            8444, -- Scorch(Rank 2)
+            8445, -- Scorch(Rank 3)
+            8446, -- Scorch(Rank 4)
+            10205, -- Scorch(Rank 5)
+            10206, -- Scorch(Rank 6)
+            10207, -- Scorch(Rank 7)
+            13878, -- Scorch
+            15241, -- Scorch
+            17195, -- Scorch
+            29515, -- TEST Scorch
+        },
+        [32] = {
+            116, -- Frostbolt(Rank 1)
+            205, -- Frostbolt(Rank 2)
+            837, -- Frostbolt(Rank 3)
+            7322, -- Frostbolt(Rank 4)
+            8406, -- Frostbolt(Rank 5)
+            8407, -- Frostbolt(Rank 6)
+            8408, -- Frostbolt(Rank 7)
+            10179, -- Frostbolt(Rank 8)
+            10180, -- Frostbolt(Rank 9)
+            10181, -- Frostbolt(Rank 10)
+            21229, -- "Frostbolt
+            25304, -- Frostbolt(Rank 11)
+            29163, -- Copy of Frostbolt(Rank 1)
+        },
+        [64] = {
+            122, -- Frost Nova(Rank 1)
+            865, -- Frost Nova(Rank 2)
+            6131, -- Frost Nova(Rank 3)
+            10230, -- Frost Nova(Rank 4)
+        },
+        [128] = {
+            10, -- Blizzard(Rank 1)
+            6141, -- Blizzard(Rank 2)
+            8427, -- Blizzard(Rank 3)
+            10185, -- Blizzard(Rank 4)
+            10186, -- Blizzard(Rank 5)
+            10187, -- Blizzard(Rank 6)
+            27618, -- Blizzard(Rank 6)
+            28863, -- Void Zone
+        },
+        [256] = {
+            6143, -- Frost Ward(Rank 1)
+            8461, -- Frost Ward(Rank 2)
+            8462, -- Frost Ward(Rank 3)
+            10177, -- Frost Ward(Rank 4)
+            15044, -- Frost Ward
+            28609, -- Frost Ward(Rank 5)
+        },
+        [512] = {
+            120, -- Cone of Cold(Rank 1)
+            8492, -- Cone of Cold(Rank 2)
+            10159, -- Cone of Cold(Rank 3)
+            10160, -- Cone of Cold(Rank 4)
+            10161, -- Cone of Cold(Rank 5)
+            12557, -- Cone of Cold
+            12611, -- Cone of Cold
+            15244, -- Cone of Cold
+            20828, -- Cone of Cold
+            22746, -- Cone of Cold
+            30095, -- Cone of Cold
+        },
+        [1024] = {
+            1459, -- Arcane Intellect(Rank 1)
+            1460, -- Arcane Intellect(Rank 2)
+            1461, -- Arcane Intellect(Rank 3)
+            10156, -- Arcane Intellect(Rank 4)
+            10157, -- Arcane Intellect(Rank 5)
+            13326, -- Arcane Intellect
+            15288, -- Fury of Ragnaros
+            16327, -- Juju Guile
+            16876, -- Arcane Intellect(Rank 5)
+            17150, -- Arcane Might
+            23028, -- Arcane Brilliance(Rank 1)
+        },
+        [2048] = {
+            5143, -- Arcane Missiles(Rank 1)
+            5144, -- Arcane Missiles(Rank 2)
+            5145, -- Arcane Missiles(Rank 3)
+            8416, -- Arcane Missiles(Rank 4)
+            8417, -- Arcane Missiles(Rank 5)
+            10211, -- Arcane Missiles(Rank 6)
+            10212, -- Arcane Missiles(Rank 7)
+            15735, -- Arcane Missiles
+            15736, -- Arcane Missiles
+            15790, -- Arcane Missiles
+            15791, -- Arcane Missiles
+            16070, -- Nefarius Attack 000
+            22272, -- Arcane Missiles
+            22273, -- Arcane Missiles
+            25345, -- Arcane Missiles(Rank 8)
+        },
+        [4096] = {
+            1449, -- Arcane Explosion(Rank 1)
+            8437, -- Arcane Explosion(Rank 2)
+            8438, -- Arcane Explosion(Rank 3)
+            8439, -- Arcane Explosion(Rank 4)
+            10201, -- Arcane Explosion(Rank 5)
+            10202, -- Arcane Explosion(Rank 6)
+            22460, -- Arcane Explosion
+        },
+        [8192] = {
+            604, -- Dampen Magic(Rank 1)
+            1008, -- Amplify Magic(Rank 1)
+            8450, -- Dampen Magic(Rank 2)
+            8451, -- Dampen Magic(Rank 3)
+            8455, -- Amplify Magic(Rank 2)
+            10169, -- Amplify Magic(Rank 3)
+            10170, -- Amplify Magic(Rank 4)
+            10173, -- Dampen Magic(Rank 4)
+            10174, -- Dampen Magic(Rank 5)
+        },
+        [16384] = {
+            2139, -- Counterspell
+            15122, -- Counterspell
+            19715, -- Counterspell
+            20537, -- Counterspell
+            20788, -- Counterspell
+        },
+        [32768] = {
+            1463, -- Mana Shield(Rank 1)
+            8494, -- Mana Shield(Rank 2)
+            8495, -- Mana Shield(Rank 3)
+            10191, -- Mana Shield(Rank 4)
+            10192, -- Mana Shield(Rank 5)
+            10193, -- Mana Shield(Rank 6)
+            17740, -- Mana Shield
+            17741, -- Mana Shield
+        },
+        [65536] = {
+            1953, -- Blink
+            14514, -- Blink
+            21655, -- Blink
+            28391, -- Blink
+            28401, -- Blink
+            29207, -- Copy of Blink
+            29208, -- Blink
+            29209, -- Blink
+            29210, -- Blink
+            29211, -- Blink
+        },
+        [131072] = {
+            13339, -- Fire Blast
+            13340, -- Fire Blast
+            13341, -- Fire Blast
+            13342, -- Fire Blast
+            13374, -- Fire Blast
+            13878, -- Scorch
+            14145, -- Fire Blast
+            15041, -- Fire Ward
+            15091, -- Blast Wave
+            15241, -- Scorch
+            15574, -- Fire Blast
+            15744, -- Blast Wave
+            16046, -- Blast Wave
+            16144, -- Fire Blast
+            16785, -- Flamebreak
+            17145, -- Blast Wave
+            17195, -- Scorch
+            17273, -- Pyroblast
+            17274, -- Pyroblast
+            17276, -- Scald
+            17277, -- Blast Wave
+            17492, -- Hand of Thaurissan
+            20228, -- Pyroblast
+            20229, -- Blast Wave
+            20623, -- Fire Blast
+            20679, -- Fire Blast
+            20795, -- Fire Blast
+            20832, -- Fire Blast
+            22424, -- Blast Wave
+            23039, -- Blast Wave
+            23113, -- Blast Wave
+            23331, -- Blast Wave
+            24530, -- Felfire
+            25028, -- Fire Blast
+            25049, -- Blast Wave
+            28323, -- Flameshocker's Revenge
+            30092, -- Blast Wave
+            31378, -- Worm Blast
+        },
+        [262144] = {
+            118, -- Polymorph(Rank 1)
+            700, -- Sleep(Rank 1)
+            1090, -- Sleep(Rank 2)
+            1449, -- Arcane Explosion(Rank 1)
+            2139, -- Counterspell
+            5143, -- Arcane Missiles(Rank 1)
+            5144, -- Arcane Missiles(Rank 2)
+            5145, -- Arcane Missiles(Rank 3)
+            8416, -- Arcane Missiles(Rank 4)
+            8417, -- Arcane Missiles(Rank 5)
+            8437, -- Arcane Explosion(Rank 2)
+            8438, -- Arcane Explosion(Rank 3)
+            8439, -- Arcane Explosion(Rank 4)
+            10201, -- Arcane Explosion(Rank 5)
+            10202, -- Arcane Explosion(Rank 6)
+            10211, -- Arcane Missiles(Rank 6)
+            10212, -- Arcane Missiles(Rank 7)
+            12824, -- Polymorph(Rank 2)
+            12825, -- Polymorph(Rank 3)
+            12826, -- Polymorph(Rank 4)
+            15122, -- Counterspell
+            15735, -- Arcane Missiles
+            15790, -- Arcane Missiles
+            19715, -- Counterspell
+            20537, -- Counterspell
+            20788, -- Counterspell
+            22272, -- Arcane Missiles
+            22460, -- Arcane Explosion
+            23603, -- Wild Polymorph
+            25345, -- Arcane Missiles(Rank 8)
+            28270, -- Polymorph: Cow
+            28271, -- Polymorph(Turtle)
+            28272, -- Polymorph(Pig)
+            29124, -- Polymorph
+        },
+        [524288] = {
+            10, -- Blizzard(Rank 1)
+            116, -- Frostbolt(Rank 1)
+            120, -- Cone of Cold(Rank 1)
+            122, -- Frost Nova(Rank 1)
+            168, -- Frost Armor(Rank 1)
+            205, -- Frostbolt(Rank 2)
+            837, -- Frostbolt(Rank 3)
+            865, -- Frost Nova(Rank 2)
+            6131, -- Frost Nova(Rank 3)
+            6141, -- Blizzard(Rank 2)
+            6143, -- Frost Ward(Rank 1)
+            7300, -- Frost Armor(Rank 2)
+            7301, -- Frost Armor(Rank 3)
+            7302, -- Ice Armor(Rank 1)
+            7320, -- Ice Armor(Rank 2)
+            7322, -- Frostbolt(Rank 4)
+            8406, -- Frostbolt(Rank 5)
+            8407, -- Frostbolt(Rank 6)
+            8408, -- Frostbolt(Rank 7)
+            8427, -- Blizzard(Rank 3)
+            8461, -- Frost Ward(Rank 2)
+            8462, -- Frost Ward(Rank 3)
+            8492, -- Cone of Cold(Rank 2)
+            10159, -- Cone of Cold(Rank 3)
+            10160, -- Cone of Cold(Rank 4)
+            10161, -- Cone of Cold(Rank 5)
+            10177, -- Frost Ward(Rank 4)
+            10179, -- Frostbolt(Rank 8)
+            10180, -- Frostbolt(Rank 9)
+            10181, -- Frostbolt(Rank 10)
+            10185, -- Blizzard(Rank 4)
+            10186, -- Blizzard(Rank 5)
+            10187, -- Blizzard(Rank 6)
+            10219, -- Ice Armor(Rank 3)
+            10220, -- Ice Armor(Rank 4)
+            10230, -- Frost Nova(Rank 4)
+            11426, -- Ice Barrier(Rank 1)
+            11958, -- Ice Block
+            12529, -- Chilling Touch
+            12544, -- Frost Armor
+            12556, -- Frost Armor
+            12557, -- Cone of Cold
+            12611, -- Cone of Cold
+            13031, -- Ice Barrier(Rank 2)
+            13032, -- Ice Barrier(Rank 3)
+            13033, -- Ice Barrier(Rank 4)
+            15044, -- Frost Ward
+            15244, -- Cone of Cold
+            15784, -- Frost Armor
+            15849, -- Chill Wind
+            17010, -- Freezing Claw
+            18100, -- Frost Armor
+            18146, -- Chilling Touch
+            20828, -- Cone of Cold
+            22746, -- Cone of Cold
+            25023, -- Hallow's End Fright
+            25304, -- Frostbolt(Rank 11)
+            27618, -- Blizzard(Rank 6)
+            27619, -- Ice Block
+            28609, -- Frost Ward(Rank 5)
+            28863, -- Void Zone
+            29163, -- Copy of Frostbolt(Rank 1)
+            30095, -- Cone of Cold
+        },
+        [1048576] = {
+            116, -- Frostbolt(Rank 1)
+            120, -- Cone of Cold(Rank 1)
+            205, -- Frostbolt(Rank 2)
+            837, -- Frostbolt(Rank 3)
+            6136, -- Chilled(Rank 1)
+            7321, -- Chilled(Rank 1)
+            7322, -- Frostbolt(Rank 4)
+            8406, -- Frostbolt(Rank 5)
+            8407, -- Frostbolt(Rank 6)
+            8408, -- Frostbolt(Rank 7)
+            8492, -- Cone of Cold(Rank 2)
+            10159, -- Cone of Cold(Rank 3)
+            10160, -- Cone of Cold(Rank 4)
+            10161, -- Cone of Cold(Rank 5)
+            10179, -- Frostbolt(Rank 8)
+            10180, -- Frostbolt(Rank 9)
+            10181, -- Frostbolt(Rank 10)
+            12484, -- Chilled(Rank 1)
+            12485, -- Chilled(Rank 2)
+            12486, -- Chilled(Rank 3)
+            12531, -- Chilling Touch
+            12557, -- Cone of Cold
+            12611, -- Cone of Cold
+            15244, -- Cone of Cold
+            15850, -- Chilled
+            17011, -- Freezing Claw
+            18101, -- Chilled(Rank 1)
+            20828, -- Cone of Cold
+            22746, -- Cone of Cold
+            25022, -- Hallow's End Fright
+            25304, -- Frostbolt(Rank 11)
+            29163, -- Copy of Frostbolt(Rank 1)
+            30095, -- Cone of Cold
+        },
+        [2097152] = {
+            7268, -- Arcane Missile(Rank 1)
+            7269, -- Arcane Missiles(Rank 2)
+            7270, -- Arcane Missiles(Rank 3)
+            8418, -- Arcane Missiles(Rank 5)
+            8419, -- Arcane Missiles(Rank 4)
+            10273, -- Arcane Missiles(Rank 6)
+            10274, -- Arcane Missiles(Rank 7)
+            25346, -- Arcane Missiles(Rank 8)
+            31751, -- Arcane Missiles
+        },
+        [4194304] = {
+            11366, -- Pyroblast(Rank 1)
+            12505, -- Pyroblast(Rank 2)
+            12522, -- Pyroblast(Rank 3)
+            12523, -- Pyroblast(Rank 4)
+            12524, -- Pyroblast(Rank 5)
+            12525, -- Pyroblast(Rank 6)
+            12526, -- Pyroblast(Rank 7)
+            17273, -- Pyroblast
+            17274, -- Pyroblast
+            18809, -- Pyroblast(Rank 8)
+            20228, -- Pyroblast
+        },
+        [8388608] = {
+            11113, -- Blast Wave(Rank 1)
+            13018, -- Blast Wave(Rank 2)
+            13019, -- Blast Wave(Rank 3)
+            13020, -- Blast Wave(Rank 4)
+            13021, -- Blast Wave(Rank 5)
+        },
+        [16777216] = {
+            118, -- Polymorph(Rank 1)
+            12824, -- Polymorph(Rank 2)
+            12825, -- Polymorph(Rank 3)
+            12826, -- Polymorph(Rank 4)
+            23603, -- Wild Polymorph
+            28270, -- Polymorph: Cow
+            28271, -- Polymorph(Turtle)
+            28272, -- Polymorph(Pig)
+            29124, -- Polymorph
+        },
+        [33554432] = {
+            168, -- Frost Armor(Rank 1)
+            7300, -- Frost Armor(Rank 2)
+            7301, -- Frost Armor(Rank 3)
+            7302, -- Ice Armor(Rank 1)
+            7320, -- Ice Armor(Rank 2)
+            10219, -- Ice Armor(Rank 3)
+            10220, -- Ice Armor(Rank 4)
+        },
+        [67108864] = {
+            12051, -- Evocation
+        },
+        [134217728] = {
+            12654, -- Ignite
+        },
+        [268435456] = {
+            6117, -- Mage Armor(Rank 1)
+            22782, -- Mage Armor(Rank 2)
+            22783, -- Mage Armor(Rank 3)
+        },
+        [1073741824] = {
+            116, -- Frostbolt(Rank 1)
+            118, -- Polymorph(Rank 1)
+            133, -- Fireball(Rank 1)
+            143, -- Fireball(Rank 2)
+            145, -- Fireball(Rank 3)
+            205, -- Frostbolt(Rank 2)
+            587, -- Conjure Food(Rank 1)
+            597, -- Conjure Food(Rank 2)
+            759, -- Conjure Mana Agate
+            837, -- Frostbolt(Rank 3)
+            990, -- Conjure Food(Rank 3)
+            2120, -- Flamestrike(Rank 1)
+            2121, -- Flamestrike(Rank 2)
+            2948, -- Scorch(Rank 1)
+            3140, -- Fireball(Rank 4)
+            3552, -- Conjure Mana Jade
+            5504, -- Conjure Water(Rank 1)
+            5505, -- Conjure Water(Rank 2)
+            5506, -- Conjure Water(Rank 3)
+            6127, -- Conjure Water(Rank 4)
+            6129, -- Conjure Food(Rank 4)
+            7322, -- Frostbolt(Rank 4)
+            8400, -- Fireball(Rank 5)
+            8401, -- Fireball(Rank 6)
+            8402, -- Fireball(Rank 7)
+            8406, -- Frostbolt(Rank 5)
+            8407, -- Frostbolt(Rank 6)
+            8408, -- Frostbolt(Rank 7)
+            8422, -- Flamestrike(Rank 3)
+            8423, -- Flamestrike(Rank 4)
+            8444, -- Scorch(Rank 2)
+            8445, -- Scorch(Rank 3)
+            8446, -- Scorch(Rank 4)
+            10053, -- Conjure Mana Citrine
+            10054, -- Conjure Mana Ruby
+            10138, -- Conjure Water(Rank 5)
+            10139, -- Conjure Water(Rank 6)
+            10140, -- Conjure Water(Rank 7)
+            10144, -- Conjure Food(Rank 5)
+            10145, -- Conjure Food(Rank 6)
+            10148, -- Fireball(Rank 8)
+            10149, -- Fireball(Rank 9)
+            10150, -- Fireball(Rank 10)
+            10151, -- Fireball(Rank 11)
+            10179, -- Frostbolt(Rank 8)
+            10180, -- Frostbolt(Rank 9)
+            10181, -- Frostbolt(Rank 10)
+            10205, -- Scorch(Rank 5)
+            10206, -- Scorch(Rank 6)
+            10207, -- Scorch(Rank 7)
+            10215, -- Flamestrike(Rank 5)
+            10216, -- Flamestrike(Rank 6)
+            11366, -- Pyroblast(Rank 1)
+            12505, -- Pyroblast(Rank 2)
+            12522, -- Pyroblast(Rank 3)
+            12523, -- Pyroblast(Rank 4)
+            12524, -- Pyroblast(Rank 5)
+            12525, -- Pyroblast(Rank 6)
+            12526, -- Pyroblast(Rank 7)
+            12824, -- Polymorph(Rank 2)
+            12825, -- Polymorph(Rank 3)
+            12826, -- Polymorph(Rank 4)
+            17273, -- Pyroblast
+            17274, -- Pyroblast
+            18809, -- Pyroblast(Rank 8)
+            20228, -- Pyroblast
+            22460, -- Arcane Explosion
+            23603, -- Wild Polymorph
+            24006, -- Bounty of the Harvest
+            25304, -- Frostbolt(Rank 11)
+            25306, -- Fireball(Rank 12)
+            28270, -- Polymorph: Cow
+            28271, -- Polymorph(Turtle)
+            28272, -- Polymorph(Pig)
+            28612, -- Conjure Food(Rank 7)
+            29124, -- Polymorph
+            29163, -- Copy of Frostbolt(Rank 1)
+            29515, -- TEST Scorch
+        },
+        [2147483648] = {
+            66, -- Lesser Invisibility
+            118, -- Polymorph(Rank 1)
+            130, -- Slow Fall
+            475, -- Remove Lesser Curse
+            491, -- Khadgar's Unlocking(Rank 1)
+            587, -- Conjure Food(Rank 1)
+            597, -- Conjure Food(Rank 2)
+            759, -- Conjure Mana Agate
+            857, -- Khadgar's Unlocking(Rank 2)
+            885, -- Invisibility
+            990, -- Conjure Food(Rank 3)
+            1008, -- Amplify Magic(Rank 1)
+            2855, -- Detect Magic
+            3552, -- Conjure Mana Jade
+            3561, -- Teleport: Stormwind
+            3562, -- Teleport: Ironforge
+            3563, -- Teleport: Undercity
+            3565, -- Teleport: Darnassus
+            3566, -- Teleport: Thunder Bluff
+            3567, -- Teleport: Orgrimmar
+            5504, -- Conjure Water(Rank 1)
+            5505, -- Conjure Water(Rank 2)
+            5506, -- Conjure Water(Rank 3)
+            6127, -- Conjure Water(Rank 4)
+            6129, -- Conjure Food(Rank 4)
+            8455, -- Amplify Magic(Rank 2)
+            10053, -- Conjure Mana Citrine
+            10054, -- Conjure Mana Ruby
+            10059, -- Portal: Stormwind
+            10138, -- Conjure Water(Rank 5)
+            10139, -- Conjure Water(Rank 6)
+            10140, -- Conjure Water(Rank 7)
+            10144, -- Conjure Food(Rank 5)
+            10145, -- Conjure Food(Rank 6)
+            10165, -- Khadgar's Unlocking(Rank 3)
+            10166, -- Khadgar's Unlocking(Rank 4)
+            10169, -- Amplify Magic(Rank 3)
+            10170, -- Amplify Magic(Rank 4)
+            10228, -- Greater Invisibility
+            11416, -- Portal: Ironforge
+            11417, -- Portal: Orgrimmar
+            11418, -- Portal: Undercity
+            11419, -- Portal: Darnassus
+            11420, -- Portal: Thunder Bluff
+            12824, -- Polymorph(Rank 2)
+            12825, -- Polymorph(Rank 3)
+            12826, -- Polymorph(Rank 4)
+            13912, -- Princess Summons Portal
+            16380, -- Greater Invisibility
+            22959, -- Fire Vulnerability
+            23603, -- Wild Polymorph
+            24006, -- Bounty of the Harvest
+            26373, -- Lunar Invititation
+            26406, -- Holiday - Lunar Teleport Cap: Stormwind
+            26408, -- Holiday - Lunar Teleport Cap: Ironforge
+            26409, -- Holiday - Lunar Teleport Cap: Darnassus
+            26410, -- Holiday - Lunar Teleport Cap: Undercity
+            26412, -- Holiday - Lunar Teleport Cap: Thunderbluff
+            26414, -- Holiday - Lunar Teleport Cap: Orgrimmar
+            26448, -- Holiday - Teleport: Moonglade
+            26450, -- Holiday - Lunar Teleport: Darnassus
+            26451, -- Holiday - Teleport: Moonglade (self)
+            26452, -- Holiday - Lunar Teleport: Ironforge
+            26453, -- Holiday - Lunar Teleport: Orgrimmar
+            26454, -- Holiday - Lunar Teleport: Stormwind
+            26455, -- Holiday - Lunar Teleport: Thunderbluff
+            26456, -- Holiday - Lunar Teleport: Undercity
+            28146, -- Copy of Portal: Undercity
+            28270, -- Polymorph: Cow
+            28271, -- Polymorph(Turtle)
+            28272, -- Polymorph(Pig)
+            28612, -- Conjure Food(Rank 7)
+            29124, -- Polymorph
+        },
+    },
+    [1] = {
+    },
+    [2] = {
+    },
+    [3] = {
+    },
+};
+

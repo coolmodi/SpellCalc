@@ -1395,3 +1395,337 @@ _addon.spellRankInfo = {
     },
 };
 
+_addon.spellClassSet = {
+    [0] = {
+        [1] = {
+            686, -- Shadow Bolt(Rank 1)
+            695, -- Shadow Bolt(Rank 2)
+            705, -- Shadow Bolt(Rank 3)
+            1088, -- Shadow Bolt(Rank 4)
+            1106, -- Shadow Bolt(Rank 5)
+            7641, -- Shadow Bolt(Rank 6)
+            11659, -- Shadow Bolt(Rank 7)
+            11660, -- Shadow Bolt(Rank 8)
+            11661, -- Shadow Bolt(Rank 9)
+            25307, -- Shadow Bolt(Rank 10)
+        },
+        [2] = {
+            172, -- Corruption(Rank 1)
+            6222, -- Corruption(Rank 2)
+            6223, -- Corruption(Rank 3)
+            7648, -- Corruption(Rank 4)
+            11671, -- Corruption(Rank 5)
+            11672, -- Corruption(Rank 6)
+            18376, -- Corruption
+            21068, -- Corruption
+            25311, -- Corruption(Rank 7)
+        },
+        [4] = {
+            265, -- Area Death (TEST)
+            348, -- Immolate(Rank 1)
+            707, -- Immolate(Rank 2)
+            1094, -- Immolate(Rank 3)
+            2941, -- Immolate(Rank 4)
+            11665, -- Immolate(Rank 5)
+            11667, -- Immolate(Rank 6)
+            11668, -- Immolate(Rank 7)
+            12256, -- Add Moogly Radius (PT)
+            13716, -- AOD
+            25309, -- Immolate(Rank 8)
+            30879, -- Permanent Area Damage 50k(QASpell)
+        },
+        [8] = {
+            689, -- Drain Life(Rank 1)
+            699, -- Drain Life(Rank 2)
+            709, -- Drain Life(Rank 3)
+            7651, -- Drain Life(Rank 4)
+            11699, -- Drain Life(Rank 5)
+            11700, -- Drain Life(Rank 6)
+        },
+        [16] = {
+            5138, -- Drain Mana(Rank 1)
+            6226, -- Drain Mana(Rank 2)
+            11703, -- Drain Mana(Rank 3)
+            11704, -- Drain Mana(Rank 4)
+            18394, -- Drain Mana(Rank 1)
+        },
+        [32] = {
+            5740, -- Rain of Fire(Rank 1)
+            6219, -- Rain of Fire(Rank 2)
+            11677, -- Rain of Fire(Rank 3)
+            11678, -- Rain of Fire(Rank 4)
+        },
+        [64] = {
+            1949, -- Hellfire(Rank 1)
+            5857, -- Hellfire Effect(Rank 1)
+            6353, -- Soul Fire(Rank 1)
+            11681, -- Hellfire Effect(Rank 2)
+            11682, -- Hellfire Effect(Rank 3)
+            11683, -- Hellfire(Rank 2)
+            11684, -- Hellfire(Rank 3)
+            17924, -- Soul Fire(Rank 2)
+            24826, -- Infernal Fire
+        },
+        [128] = {
+            17877, -- Shadowburn(Rank 1)
+            18867, -- Shadowburn(Rank 2)
+            18868, -- Shadowburn(Rank 3)
+            18869, -- Shadowburn(Rank 4)
+            18870, -- Shadowburn(Rank 5)
+            18871, -- Shadowburn(Rank 6)
+        },
+        [256] = {
+            5676, -- Searing Pain(Rank 1)
+            17919, -- Searing Pain(Rank 2)
+            17920, -- Searing Pain(Rank 3)
+            17921, -- Searing Pain(Rank 4)
+            17922, -- Searing Pain(Rank 5)
+            17923, -- Searing Pain(Rank 6)
+        },
+        [512] = {
+            17962, -- Conflagrate(Rank 1)
+            18930, -- Conflagrate(Rank 2)
+            18931, -- Conflagrate(Rank 3)
+            18932, -- Conflagrate(Rank 4)
+        },
+        [1024] = {
+            980, -- Curse of Agony(Rank 1)
+            1014, -- Curse of Agony(Rank 2)
+            6217, -- Curse of Agony(Rank 3)
+            11711, -- Curse of Agony(Rank 4)
+            11712, -- Curse of Agony(Rank 5)
+            11713, -- Curse of Agony(Rank 6)
+            28608, -- Test Curse of Agony(Rank 6)
+        },
+        [2048] = {
+            1098, -- Enslave Demon(Rank 1)
+            11725, -- Enslave Demon(Rank 2)
+            11726, -- Enslave Demon(Rank 3)
+            20882, -- Enslave Demon
+        },
+        [4096] = {
+            3110, -- Firebolt(Rank 1)
+            7799, -- Firebolt(Rank 2)
+            7800, -- Firebolt(Rank 3)
+            7801, -- Firebolt(Rank 4)
+            7802, -- Firebolt(Rank 5)
+            11762, -- Firebolt(Rank 6)
+            11763, -- Firebolt(Rank 7)
+            20801, -- Firebolt
+        },
+        [8192] = {
+            7814, -- Lash of Pain(Rank 1)
+            7815, -- Lash of Pain(Rank 2)
+            7816, -- Lash of Pain(Rank 3)
+            11778, -- Lash of Pain(Rank 4)
+            11779, -- Lash of Pain(Rank 5)
+            11780, -- Lash of Pain(Rank 6)
+        },
+        [16384] = {
+            1120, -- Drain Soul(Rank 1)
+            8288, -- Drain Soul(Rank 2)
+            8289, -- Drain Soul(Rank 3)
+            11675, -- Drain Soul(Rank 4)
+        },
+        [32768] = {
+            702, -- Curse of Weakness(Rank 1)
+            1108, -- Curse of Weakness(Rank 2)
+            6205, -- Curse of Weakness(Rank 3)
+            7646, -- Curse of Weakness(Rank 4)
+            11707, -- Curse of Weakness(Rank 5)
+            11708, -- Curse of Weakness(Rank 6)
+        },
+        [65536] = {
+            5720, -- Healthstone
+            5723, -- Greater Healthstone
+            6262, -- Minor Healthstone
+            6263, -- Lesser Healthstone
+            11732, -- Major Healthstone
+            18671, -- Curse of Agony
+            23468, -- Minor Healthstone
+            23469, -- Minor Healthstone
+            23470, -- Lesser Healthstone
+            23471, -- Lesser Healthstone
+            23472, -- Healthstone
+            23473, -- Healthstone
+            23474, -- Greater Healthstone
+            23475, -- Greater Healthstone
+            23476, -- Major Healthstone
+            23477, -- Major Healthstone
+        },
+        [131072] = {
+            128, -- Spellstone
+            17729, -- Greater Spellstone
+            17730, -- Major Spellstone
+        },
+        [262144] = {
+            1454, -- Life Tap(Rank 1)
+            1455, -- Life Tap(Rank 2)
+            1456, -- Life Tap(Rank 3)
+            11687, -- Life Tap(Rank 4)
+            11688, -- Life Tap(Rank 5)
+            11689, -- Life Tap(Rank 6)
+            24893, -- Black Sapphire
+            31818, -- Life Tap
+        },
+        [524288] = {
+            6789, -- Death Coil(Rank 1)
+            17925, -- Death Coil(Rank 2)
+            17926, -- Death Coil(Rank 3)
+            28412, -- Death Coil
+        },
+        [1048576] = {
+            693, -- Create Soulstone (Minor)
+            2362, -- Create Spellstone
+            5699, -- Create Healthstone
+            6201, -- Create Healthstone (Minor)
+            6202, -- Create Healthstone (Lesser)
+            6366, -- Create Firestone (Lesser)
+            11729, -- Create Healthstone (Greater)
+            11730, -- Create Healthstone (Major)
+            17727, -- Create Spellstone (Greater)
+            17728, -- Create Spellstone (Major)
+            17951, -- Create Firestone
+            17952, -- Create Firestone (Greater)
+            17953, -- Create Firestone (Major)
+            20018, -- Create Healthstone (Major)
+            20022, -- Create Soulstone
+            20752, -- Create Soulstone (Lesser)
+            20755, -- Create Soulstone
+            20756, -- Create Soulstone (Greater)
+            20757, -- Create Soulstone (Major)
+            28023, -- Create Healthstone
+        },
+        [2097152] = {
+            17809, -- Lesser Firestone Attack
+            17933, -- Firestone Attack
+            17934, -- Greater Firestone Attack
+            17935, -- Major Firestone Attack
+            23480, -- Increase Fire Dam 10(Rank 1)
+            23481, -- Increase Fire Dam 14(Rank 2)
+            23482, -- Increase Fire Dam 17(Rank 3)
+            23483, -- Increase Fire Dam 21(Rank 4)
+        },
+        [4194304] = {
+            18223, -- Curse of Exhaustion
+        },
+        [8388608] = {
+            2947, -- Fire Shield(Rank 1)
+            6307, -- Blood Pact(Rank 1)
+            7804, -- Blood Pact(Rank 2)
+            7805, -- Blood Pact(Rank 3)
+            8316, -- Fire Shield(Rank 2)
+            8317, -- Fire Shield(Rank 3)
+            11766, -- Blood Pact(Rank 4)
+            11767, -- Blood Pact(Rank 5)
+            11770, -- Fire Shield(Rank 4)
+            11771, -- Fire Shield(Rank 5)
+        },
+        [16777216] = {
+            755, -- Health Funnel(Rank 1)
+            3698, -- Health Funnel(Rank 2)
+            3699, -- Health Funnel(Rank 3)
+            3700, -- Health Funnel(Rank 4)
+            11693, -- Health Funnel(Rank 5)
+            11694, -- Health Funnel(Rank 6)
+            11695, -- Health Funnel(Rank 7)
+            19952, -- Heal Ragnaros
+        },
+        [33554432] = {
+            3716, -- Torment(Rank 1)
+            7809, -- Torment(Rank 2)
+            7810, -- Torment(Rank 3)
+            7811, -- Torment(Rank 4)
+            7812, -- Sacrifice(Rank 1)
+            11774, -- Torment(Rank 5)
+            11775, -- Torment(Rank 6)
+            17735, -- Suffering(Rank 1)
+            17750, -- Suffering(Rank 2)
+            17751, -- Suffering(Rank 3)
+            17752, -- Suffering(Rank 4)
+            17767, -- Consume Shadows(Rank 1)
+            17850, -- Consume Shadows(Rank 2)
+            17851, -- Consume Shadows(Rank 3)
+            17852, -- Consume Shadows(Rank 4)
+            17853, -- Consume Shadows(Rank 5)
+            17854, -- Consume Shadows(Rank 6)
+            19438, -- Sacrifice(Rank 2)
+            19440, -- Sacrifice(Rank 3)
+            19441, -- Sacrifice(Rank 4)
+            19442, -- Sacrifice(Rank 5)
+            19443, -- Sacrifice(Rank 6)
+            26281, -- Taunt
+            28447, -- Shadow Burst
+        },
+        [67108864] = {
+            18727, -- Tamed Pet Passive (DND)
+            18728, -- Tamed Pet Passive (DND)
+            18729, -- Tamed Pet Passive (DND)
+            18730, -- Tamed Pet Passive (DND)
+        },
+        [134217728] = {
+            18735, -- Tamed Pet Passive (DND)
+            18736, -- Tamed Pet Passive (DND)
+            18737, -- Tamed Pet Passive (DND)
+            18738, -- Tamed Pet Passive (DND)
+        },
+        [268435456] = {
+            18739, -- Tamed Pet Passive (DND)
+            18740, -- Tamed Pet Passive (DND)
+            18741, -- Tamed Pet Passive (DND)
+            18742, -- Tamed Pet Passive (DND)
+        },
+        [536870912] = {
+            688, -- Summon Imp(Summon)
+            691, -- Summon Felhunter(Summon)
+            697, -- Summon Voidwalker(Summon)
+            712, -- Summon Succubus(Summon)
+            23500, -- Summon Felhunter
+            23501, -- Summon Voidwalker
+            23502, -- Summon Succubus
+            23503, -- Summon Imp
+            25112, -- Summon Voidwalker(Summon)
+        },
+        [1073741824] = {
+            6358, -- Seduction
+            6360, -- Soothing Kiss(Rank 1)
+            7813, -- Soothing Kiss(Rank 2)
+            7870, -- Lesser Invisibility
+            11784, -- Soothing Kiss(Rank 3)
+            11785, -- Soothing Kiss(Rank 4)
+        },
+        [2147483648] = {
+            603, -- Curse of Doom
+            704, -- Curse of Recklessness(Rank 1)
+            1010, -- Curse of Idiocy(Rank 1)
+            1490, -- Curse of the Elements(Rank 1)
+            1714, -- Curse of Tongues(Rank 1)
+            5484, -- Howl of Terror(Rank 1)
+            5782, -- Fear(Rank 1)
+            6213, -- Fear(Rank 2)
+            6215, -- Fear(Rank 3)
+            7658, -- Curse of Recklessness(Rank 2)
+            7659, -- Curse of Recklessness(Rank 3)
+            11717, -- Curse of Recklessness(Rank 4)
+            11719, -- Curse of Tongues(Rank 2)
+            11721, -- Curse of the Elements(Rank 2)
+            11722, -- Curse of the Elements(Rank 3)
+            17862, -- Curse of Shadow(Rank 1)
+            17928, -- Howl of Terror(Rank 2)
+            17937, -- Curse of Shadow(Rank 2)
+            18220, -- Dark Pact(Rank 1)
+            18937, -- Dark Pact(Rank 2)
+            18938, -- Dark Pact(Rank 3)
+        },
+    },
+    [1] = {
+        [2] = {
+            603, -- Curse of Doom
+        },
+    },
+    [2] = {
+    },
+    [3] = {
+    },
+};
+

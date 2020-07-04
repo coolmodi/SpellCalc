@@ -75,6 +75,18 @@ const spellData = new SpellData();
 
 let judgementRemap: {[index: number]: number} = {}
 
+const SpellClassSet = {
+    MAGE: 3,
+    WARRIOR: 4,
+    WARLOCK: 5,
+    PRIEST: 6,
+    DRUID: 7,
+    ROGUE: 8,
+    HUNTER: 9,
+    PALADIN: 10,
+    SHAMAN: 11,
+}
+
 /**
  * Get list of valid/handled spells for a class
  * @param pclass 
@@ -544,6 +556,59 @@ end
             str += "};\n\n";
         }
     }
+
+
+    console.log("Creating spell sets...");
+
+    interface SpellSet {[bit: number]: {[spellId: number]: true}}
+    const spellSets: [SpellSet, SpellSet, SpellSet, SpellSet] = [{},{},{},{}];
+    const scopts = spellData.getSpellClassOptions();
+    // @ts-ignore
+    const classSetNum: number = SpellClassSet[pclass.toUpperCase()];
+
+    for (let spellId in scopts) {
+        const scopt = scopts[spellId];
+
+        if (scopt.SpellClassSet != classSetNum) continue;
+
+        for (let i = 0; i < 4; i++) {
+            // @ts-ignore
+            const mask = scopt["SpellClassMask[" + i + "]"];
+            if (mask == 0) break;
+            let bit = 1;
+            while (bit != 0) {
+                if (bit & mask) {
+                    if (!spellSets[i][bit]) spellSets[i][bit] = {};
+                    spellSets[i][bit][spellId] = true;
+                }
+                bit = bit << 1;
+            }
+        }
+    }
+
+    str += "_addon.spellClassSet = {\n";
+    for (let i = 0; i < 4; i++) {
+        let sset = spellSets[i];
+        str += `\t[${i}] = {\n`;
+        
+        for (let bit in sset) {
+            let setEntry = sset[bit];
+            // Lua 1 << 31 is 2147483648 and not -2147483648
+            str += `\t\t[${Math.abs(parseInt(bit))}] = {\n`;
+            
+            for (let spellId in setEntry) {
+                const spellIdNum = parseInt(spellId);
+                const spellName = spellData.getSpellName(spellIdNum).Name_lang;
+                const spellspell = spellData.getSpell(spellIdNum);
+                str += `\t\t\t${spellId}, -- ${spellName + ( (spellspell.NameSubtext_lang.length) ? `(${spellspell.NameSubtext_lang})` : "" )}\n`;
+            }
+            
+            str += `\t\t},\n`;
+        }
+
+        str += `\t},\n`;
+    }
+    str += "};\n\n";
 
     str = str.replace(/\t/gm, "    ");
 
