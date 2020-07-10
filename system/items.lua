@@ -159,12 +159,19 @@ local function EquipItem(itemId, slotId)
             itemSubType = FISHING_POLE_NAME;
         end
 
+        local weaponTypeMask = WTTM[itemSubType];
+
+        if weaponTypeMask == nil then
+            weaponTypeMask = _addon.WEAPON_TYPES_MASK.MISC;
+            _addon:PrintDebug("Invalid/Unknown weapon type, falling back to MISC!");
+        end
+
         if slotId == 16 then
-            weapontypes.mh = WTTM[itemSubType];
+            weapontypes.mh = weaponTypeMask;
         elseif slotId == 17 then
-            weapontypes.oh = WTTM[itemSubType];
+            weapontypes.oh = weaponTypeMask;
         elseif slotId == 18 then
-            weapontypes.r = WTTM[itemSubType];
+            weapontypes.r = weaponTypeMask;
         end
     end
 

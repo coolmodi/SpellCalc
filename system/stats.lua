@@ -92,6 +92,7 @@ _addon.stats = {
             [_addon.WEAPON_TYPES_MASK.BOW]          = {val=0, buffs={}},
             [_addon.WEAPON_TYPES_MASK.CROSSBOW]     = {val=0, buffs={}},
             [_addon.WEAPON_TYPES_MASK.GUN]          = {val=0, buffs={}},
+            [_addon.WEAPON_TYPES_MASK.MISC]         = {val=0, buffs={}},
         },
         spell = {}
     },
