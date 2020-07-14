@@ -331,7 +331,7 @@ _addon.spellRankInfo = {
     },
     [1535] = { -- Fire Nova Totem(Rank 1)
         spellLevel = 12,
-        maxLevel = 0,
+        maxLevel = 17,
         duration = 5,
         baseCost = 95,
         effects = {
@@ -735,7 +735,7 @@ _addon.spellRankInfo = {
     },
     [8498] = { -- Fire Nova Totem(Rank 2)
         spellLevel = 22,
-        maxLevel = 0,
+        maxLevel = 27,
         duration = 5,
         baseCost = 170,
         effects = {
@@ -750,7 +750,7 @@ _addon.spellRankInfo = {
     },
     [8499] = { -- Fire Nova Totem(Rank 3)
         spellLevel = 32,
-        maxLevel = 0,
+        maxLevel = 37,
         duration = 5,
         baseCost = 280,
         effects = {
@@ -1165,7 +1165,7 @@ _addon.spellRankInfo = {
     },
     [11314] = { -- Fire Nova Totem(Rank 4)
         spellLevel = 42,
-        maxLevel = 0,
+        maxLevel = 47,
         duration = 5,
         baseCost = 395,
         effects = {
@@ -1180,7 +1180,7 @@ _addon.spellRankInfo = {
     },
     [11315] = { -- Fire Nova Totem(Rank 5)
         spellLevel = 52,
-        maxLevel = 0,
+        maxLevel = 57,
         duration = 5,
         baseCost = 520,
         effects = {

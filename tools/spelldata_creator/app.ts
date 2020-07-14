@@ -282,6 +282,10 @@ function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: num
     if (!totemSpell) throw new Error("Totem spell not found!");
     const totemEffects = spellData.getSpellEffects(totemSpell);
     const totemSpellCat = spellData.getSpellCategory(totemSpell);
+    const totemSpellLevel = spellData.getSpellLevel(totemSpell);
+
+    rankInfo.maxLevel = totemSpellLevel.MaxLevel;
+
     switch(spellName) {
         case "Searing Totem":
             directDmg(rankInfo, totemEffects[0], effectNum);
@@ -469,6 +473,11 @@ function buildSpellInfo(pclass: string) {
         // Handle effects
         for (let i = 0; i < effects.length; i++) {
             effectInfoHandler[effects[i].Effect](classInfo.rankInfo[effects[i].SpellID], effects[i], i, spellName, classInfo.baseInfo[spellName]);
+
+            // Make sure maxlevel is defined for spells with level scaling
+            if (classInfo.rankInfo[effects[0].SpellID].effects[i] 
+                && classInfo.rankInfo[effects[0].SpellID].effects[i].perLevel != 0 
+                && classInfo.rankInfo[effects[0].SpellID].maxLevel == 0) throw "Effect has perlevel scaling but maxlevel of the spell is 0!";
         }
     }
 
