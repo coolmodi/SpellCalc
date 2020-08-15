@@ -402,6 +402,28 @@ function _addon:UpdateBuffs(clearOnly)
         end
     end
 
+    local hasMhEnch, _, _, mhEnchId, hasOhEnch, _, _, ohEnchId = GetWeaponEnchantInfo();
+
+    if hasMhEnch and self.buffData[mhEnchId] ~= nil then
+        local enchName = self.buffData[mhEnchId].name.."-MH";
+        if activeRelevantBuffs[mhEnchId] == nil then
+            self:PrintDebug("Add buff " .. enchName);
+            ApplyBuffEffect(self.buffData[mhEnchId], mhEnchId, enchName, -1);
+            buffsChanged = true;
+        end
+        activeRelevantBuffs[mhEnchId] = true;
+    end
+
+    if hasOhEnch and self.buffData[ohEnchId] ~= nil then
+        local enchName = self.buffData[ohEnchId].name.."-OH";
+        if activeRelevantBuffs[ohEnchId] == nil then
+            self:PrintDebug("Add buff " .. enchName);
+            ApplyBuffEffect(self.buffData[ohEnchId], ohEnchId, enchName, -2);
+            buffsChanged = true;
+        end
+        activeRelevantBuffs[ohEnchId] = true;
+    end
+
     for usedKeyIt, _ in pairs(activeRelevantBuffs) do
         if activeRelevantBuffs[usedKeyIt] == false then
             self:PrintDebug("Remove buff " .. usedKeyIt);

@@ -59,6 +59,22 @@ _addon.buffData = {
         affectSchool = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
         value = 100,
     },
+    [2624] = { -- Minor Mana Oil (Temp enchant ID!)
+        name = GetSpellInfo(25118),
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 4,
+    },
+    [2625] = { -- Lesser Mana Oil (Temp enchant ID!)
+        name = GetSpellInfo(25120),
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 8,
+    },
+    [2629] = { -- Brilliant Mana Oil (Temp enchant ID!)
+        name = GetSpellInfo(25123),
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 12,
+    },
+
     -- TODO: Other buffs that are outside the scope of base API queries
 };
 

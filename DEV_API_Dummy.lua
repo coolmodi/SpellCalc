@@ -295,3 +295,7 @@ local SpellRankInfo = {
 
 ---@type SettingsTable
 SpellCalc_settings = SpellCalc_settings;
+
+function GetWeaponEnchantInfo()
+    return true, 1, 1, 1, true, 1, 1, 1;
+end
