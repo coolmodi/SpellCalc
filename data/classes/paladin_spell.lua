@@ -53,11 +53,12 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(20467)] = { -- Judgement of Command
         school = 2,
-        defType = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
     },
     [GetSpellInfo(20473)] = { -- Holy Shock
         school = 2,
-        defType = 0,
+        defType = 1,
     },
     [GetSpellInfo(24239)] = { -- Hammer of Wrath
         school = 2,

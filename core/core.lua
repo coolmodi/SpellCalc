@@ -233,7 +233,7 @@ local function CalcSpell(spellId)
     calcedSpell:ResetBuffList();
 
     if spellBaseInfo.school == SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MELEE then
-        meleeCalc:Init(calcedSpell, false, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0);
+        meleeCalc:Init(calcedSpell, false, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0, spellBaseInfo.cantDogeParryBlock);
     end
 
     if spellBaseInfo.school ~= SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MAGIC then
@@ -353,7 +353,7 @@ local function CalcSpell(spellId)
 
         local ohd = calcedSpell[1].offhandAttack;
 
-        meleeCalc:Init(calcedSpell, true, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0);
+        meleeCalc:Init(calcedSpell, true, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0, false);
         local hit, dodge, parry, glancing, block, hitBonus, glancingDmg = meleeCalc:GetMDPGB();
 
         ohd.hitChance = math.min(100, hit + hitBonus);

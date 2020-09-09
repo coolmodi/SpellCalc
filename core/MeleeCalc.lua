@@ -21,7 +21,8 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param isOffhand boolean @Use offhand weapon skill
 ---@param isWhitehit boolean @Is for auto attack
-function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit)
+---@param cantDodgeParryBlock boolean
+function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, cantDodgeParryBlock)
     _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit));
     local tData = _addon.target;
     local ldef = tData.level * 5; -- Level based def value
@@ -61,6 +62,7 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit)
     self.calcedSpell = calcedSpell;
     self.isOffhand = isOffhand;
     self.isWhitehit = isWhitehit;
+    self.cantDodgeParryBlock = cantDodgeParryBlock;
 end
 
 --- Get crit chance
@@ -143,26 +145,29 @@ function MeleeCalc:GetCrit()
 end
 
 --- Get parry chance against target
----@param isPvP boolean @Is the target a player
----@param levelDiff number @Level difference with target
-local function GetParryChance(isPvP, levelDiff)
-    if isPvP or not SpellCalc_settings.meleeFromFront then
+---@param calc MeleeCalc
+local function GetParryChance(calc)
+    if calc.isPvP or not SpellCalc_settings.meleeFromFront or calc.cantDodgeParryBlock then
         return 0;
     end
 
     -- TODO: this is probably not correct at all
-    if levelDiff < 2 then
-        return math.max(0, 5 + levelDiff);
+    if calc.levelDiff < 2 then
+        return math.max(0, 5 + calc.levelDiff);
     else
         return 14;
     end
 end
 
 --- Get dodge chance against target
----@param isPvP boolean @Is the target a player
+---@param calc MeleeCalc
 ---@param skillDiff number @Differenmce between attack skill and defense skill
-local function GetDodgeChance(isPvP, skillDiff)
-    if isPvP then
+local function GetDodgeChance(calc, skillDiff)
+    if calc.cantDodgeParryBlock then
+        return 0;
+    end
+
+    if calc.isPvP then
         return 0; -- dodge + skillDiff * 0.04;
     end
 
@@ -214,8 +219,8 @@ local function GetGlancingChanceAndDamage(ldef, baseAtk, atk)
     return glancing, glancingDamage;
 end
 
-local function GetBlockChancePH(isPvP, skillDiff)
-    if isPvP or not SpellCalc_settings.meleeFromFront then
+local function GetBlockChancePH(calc, skillDiff)
+    if calc.isPvP or not SpellCalc_settings.meleeFromFront or calc.cantDodgeParryBlock then
         return 0;
     end
     return math.min(5, 5 + skillDiff * 0.1);
@@ -255,14 +260,14 @@ function MeleeCalc:GetMDPGB()
     local realMiss = math.max(0, 100 - hit + hitBonus);
     total = total - realMiss;
 
-    local dodge = GetDodgeChance(self.isPvP, skillDiff);
+    local dodge = GetDodgeChance(self, skillDiff);
 
     if total < dodge then
         return hit, total, 0, 0, 0, hitBonus, 0;
     end
     total = total - dodge;
 
-    local parry = GetParryChance(self.isPvP, self.levelDiff);
+    local parry = GetParryChance(self);
 
     if total < parry then
         return hit, dodge, total, 0, 0, hitBonus, 0;
@@ -281,7 +286,7 @@ function MeleeCalc:GetMDPGB()
         total = total - glancing;
     end
 
-    local block = GetBlockChancePH(self.isPvP, skillDiff);
+    local block = GetBlockChancePH(self, skillDiff);
 
     if total < block then
         return hit, dodge, parry, glancing, total, hitBonus, glancingDmg;

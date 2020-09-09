@@ -145,6 +145,8 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 clone.EffectIndex = 1;
                 clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
                 se[clone.ID] = clone;
+
+                sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
             }
         } else if (eff.SpellID == 20929) {
             if (eff.EffectIndex == 0) {
@@ -157,6 +159,8 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 clone.EffectIndex = 1;
                 clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
                 se[clone.ID] = clone;
+
+                sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
             }
         } else if (eff.SpellID == 20930) {
             if (eff.EffectIndex == 0) {
@@ -169,6 +173,8 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 clone.EffectIndex = 1;
                 clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
                 se[clone.ID] = clone;
+
+                sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
             }
         } else {
             // replace SoC judgement dummy spell id, it's inside even another spell
@@ -180,7 +186,6 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                     if (jeff.SpellID == jdId) {
                         eff.EffectBasePoints = jeff.EffectBasePoints;
                         jdId = jeff.EffectBasePoints + 1;
-                        sc[jdId].DefenseType = DEFENSE_TYPE.MAGIC;
                         break;
                     }
                 }

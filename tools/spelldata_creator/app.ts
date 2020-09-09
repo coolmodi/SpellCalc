@@ -441,6 +441,7 @@ function buildSpellInfo(pclass: string) {
                 isBinary: false,
                 gcd: spellcd.StartRecoveryTime / 1000,
                 defenseType: spellcat.DefenseType,
+                cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
             };
         }
 
@@ -510,6 +511,7 @@ end
         if (bi.isBinary) str += `\t\tisBinary = true,\n`;
         if (bi.gcd != 1.5) str += `\t\tGCD = ${bi.gcd},\n`;
         str += `\t\tdefType = ${bi.defenseType},\n`;
+        if (bi.cantDogeParryBlock) str += `\t\tcantDogeParryBlock = true,\n`;
         str += `\t},\n`;
     }
     str += "};\n\n";

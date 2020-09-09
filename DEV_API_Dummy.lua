@@ -250,6 +250,8 @@ local SpellBaseInfo = {
     GCD = nil,
     ---@type number
     defType = math.random(),
+    ---@type boolean|nil
+    cantDogeParryBlock = nil
 }
 
 ---@class SpellRankEffectData

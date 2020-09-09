@@ -30,6 +30,10 @@ const enum DEFENSE_TYPE {
     RANGED = 3
 }
 
+const enum SPELL_ATTR0 {
+    SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK = 0x200000,
+}
+
 const enum SPELL_ATTR1 {
     SPELL_ATTR_EX_CHANNELED1 = 0x4,
     SPELL_ATTR_EX_CHANNELED2 = 0x40,
@@ -54,6 +58,7 @@ interface BaseInfo {
     isBinary: boolean,
     gcd: number,
     defenseType: DEFENSE_TYPE,
+    cantDogeParryBlock: boolean
 }
 
 interface EffectInfo {
