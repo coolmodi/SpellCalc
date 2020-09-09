@@ -251,7 +251,9 @@ local SpellBaseInfo = {
     ---@type number
     defType = math.random(),
     ---@type boolean|nil
-    cantDogeParryBlock = nil
+    cantDogeParryBlock = nil,
+    ---@type number|nil
+    usedWeaponMask = nil
 }
 
 ---@class SpellRankEffectData

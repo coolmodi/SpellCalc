@@ -173,6 +173,14 @@ export interface SpellPower {
     SpellID: number
 }
 
+export interface SpellEquippedItems {
+    ID: number,
+    SpellID: number,
+    EquippedItemClass: ItemClass,
+    EquippedItemInvTypes: number,
+    EquippedItemSubclass: number
+}
+
 export class SpellData {
     private spellEffects: {[index: number]: SpellEffect};
     private spellLevels: {[index: number]: SpellLevel};
@@ -185,6 +193,7 @@ export class SpellData {
     private spellCooldowns: {[index: number]: SpellCooldown};
     private spellPowerCost: {[index: number]: SpellPower};
     private spellClassOptions: {[index: number]: SpellClassOptions};
+    private spellEquippedItems: {[index: number]: SpellEquippedItems};
 
     constructor() {
         console.log("Creating SpellData");
@@ -208,6 +217,8 @@ export class SpellData {
         this.spellPowerCost = readCSV("data/dbc/spellpower.csv", "ID");
         // @ts-ignore
         this.spellClassOptions = readCSV("data/dbc/spellclassoptions.csv", "SpellID");
+        // @ts-ignore
+        this.spellEquippedItems = readCSV("data/dbc/spellequippeditems.csv", "SpellID");
 
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
@@ -343,5 +354,9 @@ export class SpellData {
 
     getSpellClassOptions() {
         return this.spellClassOptions;
+    }
+
+    getSpellEquipeedItems(spellId: number): SpellEquippedItems | undefined {
+        return this.spellEquippedItems[spellId];
     }
 }

@@ -1,4 +1,4 @@
-import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown, SpellPower } from "./SpellData";
+import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown, SpellPower, SpellEquippedItems } from "./SpellData";
 import * as fs from "fs";
 import { isSeal, isJudgeDummy, SealType } from "./paladinCrap";
 
@@ -418,6 +418,7 @@ function buildSpellInfo(pclass: string) {
     let spellcat: SpellCategory;
     let spellcd: SpellCooldown;
     let spellCosts: SpellPower[];
+    let spellEquippedItems: SpellEquippedItems | undefined;
 
     for (let s in list) {
         effects = list[s];
@@ -428,6 +429,7 @@ function buildSpellInfo(pclass: string) {
         spellcat = spellData.getSpellCategory(effects[0].SpellID);
         spellcd = spellData.getSpellCooldown(effects[0].SpellID);
         spellCosts = spellData.getSpellPowerCosts(effects[0].SpellID);
+        spellEquippedItems = spellData.getSpellEquipeedItems(effects[0].SpellID);
 
         // Skip physical spells except auto attack and SOtC for now
         if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID, SealType.SOtC)) continue;
@@ -442,6 +444,7 @@ function buildSpellInfo(pclass: string) {
                 gcd: spellcd.StartRecoveryTime / 1000,
                 defenseType: spellcat.DefenseType,
                 cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
+                usedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0
             };
         }
 
@@ -512,6 +515,7 @@ end
         if (bi.gcd != 1.5) str += `\t\tGCD = ${bi.gcd},\n`;
         str += `\t\tdefType = ${bi.defenseType},\n`;
         if (bi.cantDogeParryBlock) str += `\t\tcantDogeParryBlock = true,\n`;
+        if (bi.usedWeaponMask != 0) str += `\t\tusedWeaponMask = ${bi.usedWeaponMask},\n`;
         str += `\t},\n`;
     }
     str += "};\n\n";
