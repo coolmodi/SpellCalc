@@ -124,32 +124,72 @@ _addon.WEAPON_TYPES = {
 }
 
 _addon.WEAPON_TYPES_MASK = {
-    FISHING_POLE = 0x1,
-    POLEARM = 0x2,
-    STAVE = 0x4,
-    AXE_2H = 0x8,
-    MACE_2H = 0x10,
-    SWORD_2H = 0x20,
+    -- these are as used in DBC for spells (equipped sub classes)
+    AXE_1H      = 0x1,
+    AXE_2H      = 0x2,
+    BOW         = 0x4,
+    GUN         = 0x8,
+    MACE_1H     = 0x10,
+    MACE_2H     = 0x20,
+    POLEARM     = 0x40,
+    SWORD_1H    = 0x80,
+    SWORD_2H    = 0x100,
+    STAVE       = 0x400,
+    FIST        = 0x2000,
+    MISC        = 0x4000,
+    DAGGER      = 0x8000,
+    THROWN      = 0x10000,
+    CROSSBOW    = 0x40000,
+    WAND        = 0x80000,
+    FISHING_POLE = 0x100000,
 
-    DAGGER = 0x100,
-    FIST = 0x200,
-    AXE_1H = 0x400,
-    MACE_1H = 0x800,
-    SWORD_1H = 0x1000,
+    -- not used by the game, only internally
+    UNARMED     = 0x40000000,
+}
+-- family masks
+_addon.WEAPON_TYPES_MASK.ONE_HAND = (
+    _addon.WEAPON_TYPES_MASK.AXE_1H
+    + _addon.WEAPON_TYPES_MASK.MACE_1H
+    + _addon.WEAPON_TYPES_MASK.SWORD_1H
+    + _addon.WEAPON_TYPES_MASK.DAGGER
+);
+_addon.WEAPON_TYPES_MASK.TWO_HAND = (
+    _addon.WEAPON_TYPES_MASK.AXE_2H
+    + _addon.WEAPON_TYPES_MASK.MACE_2H
+    + _addon.WEAPON_TYPES_MASK.SWORD_2H
+    + _addon.WEAPON_TYPES_MASK.POLEARM
+    + _addon.WEAPON_TYPES_MASK.STAVE
+);
+_addon.WEAPON_TYPES_MASK.MELEE = _addon.WEAPON_TYPES_MASK.ONE_HAND + _addon.WEAPON_TYPES_MASK.TWO_HAND;
+_addon.WEAPON_TYPES_MASK.RANGED = (
+    _addon.WEAPON_TYPES_MASK.BOW
+    + _addon.WEAPON_TYPES_MASK.GUN
+    + _addon.WEAPON_TYPES_MASK.CROSSBOW
+);
 
-    BOW = 0x10000,
-    CROSSBOW = 0x20000,
-    GUN = 0x40000,
-
-    UNARMED = 0x1000000,
-    THROWN = 0x2000000,
-    WAND = 0x4000000,
-    MISC = 0x8000000,
-
-    TWO_HAND = 0xFF,
-    ONE_HAND = 0xFF00,
-    RANGED = 0xFF0000,
-    MELEE = 0xFFFF
+--- Weapon subclasses as used in DBC
+_addon.DBC_WEAPON_SUBCLASSES = {
+    [0] = _addon.WEAPON_TYPES_MASK.AXE_1H,
+    [1] = _addon.WEAPON_TYPES_MASK.AXE_2H,
+    [2] = _addon.WEAPON_TYPES_MASK.BOW,
+    [3] = _addon.WEAPON_TYPES_MASK.GUN,
+    [4] = _addon.WEAPON_TYPES_MASK.MACE_1H,
+    [5] = _addon.WEAPON_TYPES_MASK.MACE_2H,
+    [6] = _addon.WEAPON_TYPES_MASK.POLEARM,
+    [7] = _addon.WEAPON_TYPES_MASK.SWORD_1H,
+    [8] = _addon.WEAPON_TYPES_MASK.SWORD_2H,
+    -- whatever 9 is, it's called "Obsolete"
+    [10] = _addon.WEAPON_TYPES_MASK.STAVE,
+    -- whatever 11 is, it's called "Exotic 1H"
+    -- whatever 12 is, it's called "Exotic 2H"
+    [13] = _addon.WEAPON_TYPES_MASK.FIST,
+    [14] = _addon.WEAPON_TYPES_MASK.MISC,
+    [15] = _addon.WEAPON_TYPES_MASK.DAGGER,
+    [16] = _addon.WEAPON_TYPES_MASK.THROWN,
+    -- 17 is "Spears", don't think that is used for anything
+    [18] = _addon.WEAPON_TYPES_MASK.CROSSBOW,
+    [19] = _addon.WEAPON_TYPES_MASK.WAND,
+    [20] = _addon.WEAPON_TYPES_MASK.FISHING_POLE,
 }
 
 --- Resolve WEAPON_TYPES (itemSubType) to their WEAPON_TYPES_MASK
