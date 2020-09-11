@@ -82,6 +82,27 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
+    s = string.find(arg, "cs");
+    if s ~= nil then
+        local spellId = string.match(arg, "(%d+)");
+        if spellId == nil then
+            _addon:PrintWarn("spellId is nil!");
+            return;
+        end
+
+        local calcedSpell = _addon:GetCalcedSpell(tonumber(spellId));
+        if calcedSpell == nil then
+            _addon:PrintWarn("No data for spell with ID "..spellId);
+            return;
+        end
+
+        print("=== Data for spell "..spellId.." ===============");
+        _addon:PrintTable(calcedSpell);
+        print("=========================================");
+
+        return;
+    end
+
     if arg == "i" or arg == "info" then
 		if SpellCalcStatScreen:IsShown() then
             SpellCalcStatScreen:Hide();
