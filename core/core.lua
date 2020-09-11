@@ -232,7 +232,7 @@ local function CalcSpell(spellId)
 
     calcedSpell:ResetBuffList();
 
-    if spellBaseInfo.school == SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MELEE then
+    if spellBaseInfo.school == SCHOOL.PHYSICAL or spellBaseInfo.defType ~= DEF_TYPE.MAGIC then
         meleeCalc:Init(
             calcedSpell,
             false,

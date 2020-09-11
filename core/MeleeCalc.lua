@@ -25,7 +25,7 @@ end
 ---@param cantDodgeParryBlock boolean
 ---@param dontUseWeapon boolean
 function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeParryBlock, dontUseWeapon)
-    _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged).." Weap: "..tostring(dontUseWeapon));
+    _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged).." noweapon: "..tostring(dontUseWeapon));
     local tData = _addon.target;
     local ldef = tData.level * 5; -- Level based def value
     local latk = 5 * UnitLevel("player"); -- Level based attack value
