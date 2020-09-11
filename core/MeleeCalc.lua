@@ -21,38 +21,64 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param isOffhand boolean @Use offhand weapon skill
 ---@param isWhitehit boolean @Is for auto attack
+---@param isRanged boolean
 ---@param cantDodgeParryBlock boolean
-function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, cantDodgeParryBlock)
-    _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit));
+---@param dontUseWeapon boolean
+function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeParryBlock, dontUseWeapon)
+    _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged).." Weap: "..tostring(dontUseWeapon));
     local tData = _addon.target;
     local ldef = tData.level * 5; -- Level based def value
     local latk = 5 * UnitLevel("player"); -- Level based attack value
     local ratk = latk; -- Real attack value
 
     if tData.isPlayer then
-        if race == "Orc" then
-            if _addon:IsWeaponTypeEquipped(_addon.WEAPON_TYPES_MASK.AXE_1H + _addon.WEAPON_TYPES_MASK.AXE_2H, isOffhand and "oh" or "mh") then
-                ratk = ratk + 5;
-            end
-        elseif race == "Human" then
-            local WTM = _addon.WEAPON_TYPES_MASK;
-            if _addon:IsWeaponTypeEquipped(WTM.SWORD_1H + WTM.SWORD_2H + WTM.MACE_1H + WTM.MACE_2H, isOffhand and "oh" or "mh") then
-                ratk = ratk + 5;
+        if not dontUseWeapon then
+            if not isRanged then
+                if race == "Orc" then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_TYPES_MASK.AXE_1H + _addon.WEAPON_TYPES_MASK.AXE_2H, isOffhand and "oh" or "mh") then
+                        ratk = ratk + 5;
+                    end
+                elseif race == "Human" then
+                    local WTM = _addon.WEAPON_TYPES_MASK;
+                    if _addon:IsWeaponTypeEquipped(WTM.SWORD_1H + WTM.SWORD_2H + WTM.MACE_1H + WTM.MACE_2H, isOffhand and "oh" or "mh") then
+                        ratk = ratk + 5;
+                    end
+                end
+            else
+                if race == "Troll" then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_TYPES_MASK.BOW, "r") then
+                        ratk = ratk + 5;
+                    end
+                elseif race == "Dwarf" then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_TYPES_MASK.GUN, "r") then
+                        ratk = ratk + 5;
+                    end
+                end
             end
         end
 
         self.isPvP = true;
     else
-        ratk = isOffhand and stats.attack.oh or stats.attack.mh;
-        if class == "DRUID" then
-            local form = _addon:GetShapeshiftName();
-            if form and (form == "bear" or form == "cat") then
-                ratk = latk;
+        if not dontUseWeapon then
+            if isRanged then
+                ratk = stats.attack.r;
+            else
+                ratk = isOffhand and stats.attack.oh or stats.attack.mh;
+            end
+
+            -- TODO: druid melee spells don't use weapons I think, remove when implementing druid melee
+            if class == "DRUID" then
+                local form = _addon:GetShapeshiftName();
+                if form and (form == "bear" or form == "cat") then
+                    ratk = latk;
+                end
             end
         end
 
         self.isPvP = false;
     end
+
+    _addon:PrintDebug("Using ldef: "..ldef.." latk: "..latk.." ratk: "..latk);
 
     self.ldef = ldef;
     self.latk = latk;
@@ -63,11 +89,12 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, cantDodgeParryBlock)
     self.isOffhand = isOffhand;
     self.isWhitehit = isWhitehit;
     self.cantDodgeParryBlock = cantDodgeParryBlock;
+    self.isRanged = isRanged;
 end
 
 --- Get crit chance
 function MeleeCalc:GetCrit()
-    local basecrit = stats.attackCrit.mh;
+    local basecrit = self.isRanged and stats.attackCrit.r or stats.attackCrit.mh;
 
     if self.isOffhand then
         -- adjust attack skill based crit for offhand
@@ -75,6 +102,7 @@ function MeleeCalc:GetCrit()
         basecrit = basecrit - (stats.attack.oh - stats.attack.mh) * 0.04;
 
         -- adjust offhand crit for weapon specific talents (warrior axe spec and rogue dagger and fisting spec)
+        -- TODO: this is bullshit lol
         if _addon:GetWeaponType("mh") ~= _addon:GetWeaponType("oh") then
             local WM = _addon.WEAPON_TYPES_MASK;
 
@@ -140,14 +168,22 @@ function MeleeCalc:GetCrit()
         crit = 100;
     end
 
-    _addon:PrintDebug("Melee crit: " .. crit);
+    if self.isRanged then
+        _addon:PrintDebug("Ranged crit: " .. crit);
+    else
+        _addon:PrintDebug("Melee crit: " .. crit);
+    end
+
     return crit;
 end
 
 --- Get parry chance against target
 ---@param calc MeleeCalc
 local function GetParryChance(calc)
-    if calc.isPvP or not SpellCalc_settings.meleeFromFront or calc.cantDodgeParryBlock then
+    if calc.isPvP 
+    or not SpellCalc_settings.meleeFromFront 
+    or calc.cantDodgeParryBlock
+    or calc.isRanged then
         return 0;
     end
 
@@ -163,7 +199,7 @@ end
 ---@param calc MeleeCalc
 ---@param skillDiff number @Differenmce between attack skill and defense skill
 local function GetDodgeChance(calc, skillDiff)
-    if calc.cantDodgeParryBlock then
+    if calc.cantDodgeParryBlock or calc.isRanged then
         return 0;
     end
 
@@ -175,14 +211,12 @@ local function GetDodgeChance(calc, skillDiff)
 end
 
 --- Get miss chance against target
----@param isPvP boolean @Is the target a player
----@param isWhitehit boolean @Is it a white hit
----@param skillDiff number @Differenmce between attack skill and defense skill
----@param targetLevel number @Level of the target
-local function GetMissChance(isPvP, isWhitehit, skillDiff, targetLevel)
+---@param calc MeleeCalc
+local function GetMissChance(calc)
     local miss;
+    local skillDiff = calc.ldef - calc.ratk;
 
-    if isPvP then
+    if calc.isPvP then
         miss = math.max(0, 5 + skillDiff * 0.04);
     else
         if skillDiff > 10 then
@@ -191,12 +225,12 @@ local function GetMissChance(isPvP, isWhitehit, skillDiff, targetLevel)
             miss = math.max(0, 5 + skillDiff * 0.1);
         end
  
-        if targetLevel < 10 then
-            miss = miss * targetLevel / 10;
+        if calc.targetLevel < 10 then
+            miss = miss * calc.targetLevel / 10;
         end
     end
 
-    if isWhitehit and _addon:IsDualWieldEquipped() then
+    if calc.isWhitehit and not calc.isRanged and _addon:IsDualWieldEquipped() then
         miss = 0.8 * miss + 20;
     end
 
@@ -237,7 +271,7 @@ end
 function MeleeCalc:GetMDPGB()
     local skillDiff = self.ldef - self.ratk;
 
-    local hit = 100 - GetMissChance(self.isPvP, self.isWhitehit, skillDiff, self.targetLevel);
+    local hit = 100 - GetMissChance(self);
     local hitBonus = 0;
 
     if stats.hitBonus.val > 0 then
@@ -275,7 +309,7 @@ function MeleeCalc:GetMDPGB()
     total = total - parry;
 
     local glancing, glancingDmg;
-    if self.isWhitehit and not self.isPvP then
+    if self.isWhitehit and not self.isPvP and not self.isRanged then
         glancing, glancingDmg = GetGlancingChanceAndDamage(self.ldef, self.latk, self.ratk);
     end
 

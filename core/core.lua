@@ -233,7 +233,14 @@ local function CalcSpell(spellId)
     calcedSpell:ResetBuffList();
 
     if spellBaseInfo.school == SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MELEE then
-        meleeCalc:Init(calcedSpell, false, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0, spellBaseInfo.cantDogeParryBlock);
+        meleeCalc:Init(
+            calcedSpell,
+            false,
+            bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0,
+            spellBaseInfo.defType == DEF_TYPE.RANGED,
+            spellBaseInfo.cantDogeParryBlock,
+            spellBaseInfo.usedWeaponMask == nil
+        );
     end
 
     if spellBaseInfo.school ~= SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MAGIC then
@@ -321,7 +328,18 @@ local function CalcSpell(spellId)
                 calcedSpell.meleeMitigation.glancingDmg = glancingDmg;
             end
         else
-            -- TODO: ranged miss, block?
+            local hit, _, _, _, block, hitBonus = meleeCalc:GetMDPGB();
+            calcedSpell.hitChance = math.min(100, hit + hitBonus);
+            calcedSpell.hitChanceBase = hit;
+            calcedSpell.hitChanceBonus = hitBonus;
+
+            calcedSpell.meleeMitigation = {
+                dodge = 0,
+                parry = 0,
+                block = block,
+                glancing = 0,
+                glancingDmg = 0,
+            };
         end
     end
 
@@ -353,7 +371,15 @@ local function CalcSpell(spellId)
 
         local ohd = calcedSpell[1].offhandAttack;
 
-        meleeCalc:Init(calcedSpell, true, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0, false);
+        meleeCalc:Init(
+            calcedSpell,
+            true,
+            bit.band(calcedSpell[1].effectFlags,
+            SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0,
+            false,
+            false,
+            false
+        );
         local hit, dodge, parry, glancing, block, hitBonus, glancingDmg = meleeCalc:GetMDPGB();
 
         ohd.hitChance = math.min(100, hit + hitBonus);
