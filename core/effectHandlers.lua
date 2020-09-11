@@ -478,6 +478,9 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
         calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
     end
 
+    -- TODO: Melee mitigation is also needed here (e.g. Swipe), will probably be needed for other effects too!
+    -- Ranged works fine as is, can't dodge or parry. If block is ever implemented it will be needed too though.
+    -- Move mitigation to a common function or handle before so it applies to all effects as applicable.
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedSpell.hitChance/100;
 
     if calcedSpell.hitChanceBinaryLoss == nil then
@@ -649,8 +652,9 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     local meleeMit = calcedSpell.meleeMitigation;
 
     local glancePart = meleeMit.glancing / 100;
-    local critPart = calcedSpell.critChance / 100;
-    local hitPart = (calcedSpell.hitChance - meleeMit.dodge - meleeMit.parry) / 100 - critPart - glancePart;
+    local critChanceRemainder = math.min(calcedSpell.critChance, calcedSpell.hitChance - meleeMit.dodge - meleeMit.parry - meleeMit.glancing - meleeMit.block);
+    local critPart = critChanceRemainder / 100;
+    local hitPart = (calcedSpell.hitChance - meleeMit.dodge - meleeMit.parry) / 100 - glancePart - critPart;
 
     local glancePartialAvg = calcedEffect.avg * meleeMit.glancingDmg * glancePart;
     local critPartialAvg = calcedEffect.avgCrit * critPart;
@@ -680,8 +684,9 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     ohd.avgCrit = (ohd.minCrit + ohd.maxCrit) / 2;
 
     glancePart = ohdMit.glancing / 100;
-    critPart = ohd.critChance / 100;
-    hitPart = (ohd.hitChance - ohdMit.dodge - ohdMit.parry) / 100 - critPart - glancePart;
+    critChanceRemainder = math.min(ohd.critChance, ohd.hitChance - ohdMit.dodge - ohdMit.parry - ohdMit.glancing - ohdMit.block);
+    critPart = critChanceRemainder / 100;
+    hitPart = (ohd.hitChance - ohdMit.dodge - ohdMit.parry) / 100 - glancePart- critPart;
 
     glancePartialAvg = ohd.avg * ohdMit.glancingDmg * glancePart;
     critPartialAvg = ohd.avgCrit * critPart;
