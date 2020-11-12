@@ -19,8 +19,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
-    local s = string.find(arg, "tt");
-    if s ~= nil then
+    if string.find(arg, "tt") then
         local talentOverride = {};
 
         for tripel in string.gmatch(arg, "%d %d+ %d") do
@@ -61,8 +60,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
-    s = string.find(arg, "ps");
-    if s ~= nil then
+    if string.find(arg, "ps") then
         local spellId = string.match(arg, "(%d+)");
         if spellId == nil then
             _addon:PrintWarn("spellId is nil!");
@@ -82,8 +80,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
-    s = string.find(arg, "cs");
-    if s ~= nil then
+    if string.find(arg, "cs") then
         local spellId = string.match(arg, "(%d+)");
         if spellId == nil then
             _addon:PrintWarn("spellId is nil!");
@@ -110,6 +107,14 @@ SlashCmdList["SPELLCALC"] = function(arg)
             SpellCalcStatScreen:Show();
         end
 		return;
+    end
+
+    if string.find(arg, "dii") then
+        local iid, slotid = strmatch(arg, "(%d+) (%d+)");
+        if iid and slotid then
+            _addon:PrintWarn("Debug equip item "..iid.." into slot "..slotid.."!");
+            _addon:DebugEquipItem(tonumber(iid), tonumber(slotid));
+        end
     end
 
     InterfaceOptionsFrame_OpenToCategory(_addonName);

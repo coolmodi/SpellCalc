@@ -52,6 +52,7 @@ end
 
 local dummyAuraHandlers = {};
 
+-- TBC: bonus damage dependent on weapon speed?
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
 ---@param spellBaseInfo SpellBaseInfo

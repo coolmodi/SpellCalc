@@ -11,13 +11,46 @@ _addon.buffData = {
         effect = _addon.EFFECT_TYPE.MP5,
         value = 10,
     },
-    [BLESSING_OF_WISDOM] = {
+    -- Same thing as with totems (see below)...
+    [19742] = { -- Blessing of Wisdom 1
         effect = _addon.EFFECT_TYPE.MP5,
-        ttValue = "(%d+)",
+        value = 10,
+        ttValue = "(%d+)"
     },
-    [GREATER_BLESSING_OF_WISDOM] = {
+    [19850] = { -- Blessing of Wisdom 2
         effect = _addon.EFFECT_TYPE.MP5,
-        ttValue = "(%d+)",
+        value = 15,
+        ttValue = "(%d+)"
+    },
+    [19852] = { -- Blessing of Wisdom 3
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 20,
+        ttValue = "(%d+)"
+    },
+    [19853] = { -- Blessing of Wisdom 4
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 25,
+        ttValue = "(%d+)"
+    },
+    [19854] = { -- Blessing of Wisdom 5
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 30,
+        ttValue = "(%d+)"
+    },
+    [25290] = { -- Blessing of Wisdom 6
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 33,
+        ttValue = "(%d+)"
+    },
+    [25894] = { -- Greater Blessing of Wisdom 1
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 30,
+        ttValue = "(%d+)"
+    },
+    [25918] = { -- Greater Blessing of Wisdom 2
+        effect = _addon.EFFECT_TYPE.MP5,
+        value = 33,
+        ttValue = "(%d+)"
     },
     -- For some reason the tooltip of other's totem buffs can't be read when aura is gained
     -- So yeah, lets just put them here like that so I don't have to find out why...

@@ -309,50 +309,77 @@ scanTt:AddFontStrings(
     scanTt:CreateFontString("$parentTextRight1", nil, "GameTooltipText"));
 local buffDesc = _G["SpellCalcScanTooltipTextLeft2"];
 
+--- Get buff description if possible.
+---@param slot number
+---@return string|nil
 local function GetBuffDescription(slot)
     scanTt:ClearLines();
     scanTt:SetUnitAura("player", slot, "HELPFUL");
     return buffDesc:GetText();
 end
 
+--- Apply buff effect using tooltip or hardcoded values.
+---@param effectData any
+---@param usedKey string
+---@param name string
+---@param buffSlot number|nil
+---@param effectSlot number|nil
 local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
-    local value = effectData.value;
-    if value == nil then
-        local desc = GetBuffDescription(buffSlot);
-        if desc == nil then
-            -- TODO: for some reason totem buffs just don't work here,
-            -- they are found as buff with correct name but setting tooltip just does nothing
-            -- only if you aren't the shaman yourself
-            -- all other aura like buffs seem to work
-            _addon:PrintError("Buff " .. name .. " in slot " .. buffSlot .. " has no description!");
-            -- so it doesn't throw errors around, just ignore the effect
-            value = 0;
-        end
-        value = tonumber(string.match(desc, effectData.ttValue));
-        buffValueCache[usedKey] = value;
-    end
+    local value;
 
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
+    end
+
+    if effectData.ttValue then
+        local desc = GetBuffDescription(buffSlot);
+        if desc then
+            value = tonumber(string.match(desc, effectData.ttValue));
+            buffValueCache[usedKey] = value;
+        else
+            -- TODO: for some reason totem buffs just don't work here,
+            -- they are found as buff with correct name but setting tooltip just does nothing
+            -- only if you aren't the shaman yourself
+            -- all other aura like buffs seem to work
+            -- Update: GBOW is aparently also a POS (now?). Hardcode values...
+            _addon:PrintError("Buff " .. name .. " in slot " .. buffSlot .. " has no description!");
+        end
+    end
+
+    if value == nil then
+        if effectData.value then
+            value = effectData.value;
+        else
+            _addon:PrintError("Can't resolve value for buff " .. name .. " in slot " .. buffSlot .. "! Buff will be ignored!");
+            value = 0;
+        end
     end
 
     ChangeBuff(true, name, effectData.effect, value, effectData.affectSchool, effectData.affectSpell);
 end
 
+--- Remove buff effect using cached tooltip or hardcoded values.
+---@param effectData any
+---@param usedKey string
+---@param name string
+---@param effectSlot number|nil
 local function RemoveBuffEffect(effectData, usedKey, name, effectSlot)
-    local value = effectData.value;
-    if value == nil then
-        value = buffValueCache[usedKey];
-    end
+    local value;
 
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
 
+    if buffValueCache[usedKey] then
+        value = buffValueCache[usedKey];
+        buffValueCache[usedKey] = nil;
+    else
+        value = effectData.value;
+    end
+
     ChangeBuff(false, name, effectData.effect, value, effectData.affectSchool, effectData.affectSpell);
-    buffValueCache[usedKey] = nil;
 end
 
 --- Update player buffs

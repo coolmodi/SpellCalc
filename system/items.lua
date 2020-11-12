@@ -310,3 +310,10 @@ end
 function _addon:GetWeaponType(slot)
     return weapontypes[slot];
 end
+
+--- (DEBUG) Equip item to test effects. It will just overwrite the slot!
+---@param itemId number
+---@param slotId number
+function _addon:DebugEquipItem(itemId, slotId)
+    EquipItem(itemId, slotId)
+end
