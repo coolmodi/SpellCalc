@@ -263,7 +263,7 @@ export class SpellData {
     getSpellLevel(spellId: number) {
         if (this.spellLevels[spellId]) return this.spellLevels[spellId];
 
-        if (spellId == AUTO_ATTACK_ID) {
+        if (spellId == AUTO_ATTACK_ID || spellId == 23590) {
             return {
                 ID: 0,
                 DifficultyID: 0,
@@ -313,6 +313,13 @@ export class SpellData {
         if (spellId == AUTO_ATTACK_ID) {
             let sc: SpellCategory = {
                 DefenseType: DEFENSE_TYPE.MELEE
+            }
+            return sc;
+        }
+
+        if (spellId == 23590) {
+            let sc: SpellCategory = {
+                DefenseType: DEFENSE_TYPE.NONE
             }
             return sc;
         }

@@ -4,19 +4,6 @@ if playerClass ~= "DRUID" then
     return;
 end
 
-local MOONFIRE = GetSpellInfo(8921);
-local THORNS = GetSpellInfo(782);
-local STARFIRE = GetSpellInfo(2912);
-local WRATH = GetSpellInfo(5176);
-local REJUVENATION = GetSpellInfo(1058);
-local REGROWTH = GetSpellInfo(8936);
-
-local FEROCIOUS_BITE = GetSpellInfo(22827);
-local CLAW = GetSpellInfo(1082);
-local RAKE = GetSpellInfo(1822);
-local MAUL = GetSpellInfo(6808);
-local SWIPE = GetSpellInfo(779);
-
 _addon.talentData = {
     { -- Improve Moonfire
         tree = 1,
@@ -24,12 +11,12 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {MOONFIRE},
+                affectSpell = {2},
                 perPoint = 2
             },
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {MOONFIRE},
+                affectSpell = {2},
                 perPoint = 2
             }
         }
@@ -40,7 +27,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {THORNS},
+                affectSpell = {256},
                 perPoint = 25
             }
         }
@@ -51,7 +38,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.CRIT_MULT,
-                affectSpell = {STARFIRE, WRATH, MOONFIRE},
+                affectSpell = {7},
                 perPoint = 20
             }
         }
@@ -72,19 +59,19 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {STARFIRE, WRATH, MOONFIRE},
+                affectSpell = {7},
                 perPoint = 2
             }
         }
     },
 
-    { -- Feral Aggression
+    { -- Feral Aggression (TODO: mask includes Rip, should it?)
         tree = 2,
         talent = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {FEROCIOUS_BITE},
+                affectSpell = {8388608},
                 perPoint = 3
             }
         }
@@ -95,7 +82,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {CLAW, RAKE, MAUL, SWIPE},
+                affectSpell = {4096 + 2048},
                 perPoint = 10
             }
         }
@@ -117,7 +104,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {REJUVENATION},
+                affectSpell = {16},
                 perPoint = 5
             }
         }
@@ -128,6 +115,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                affectSpell = {240},
                 perPoint = 2
             }
         }
@@ -138,7 +126,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {REGROWTH},
+                affectSpell = {64},
                 perPoint = 10
             }
         }

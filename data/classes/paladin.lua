@@ -4,12 +4,6 @@ if playerClass ~= "PALADIN" then
     return;
 end
 
-local HOLY_LIGHT = GetSpellInfo(635);
-local FLASH_OF_LIGHT = GetSpellInfo(19750);
-local HOLY_SHOCK = GetSpellInfo(20473);
-local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20288);
-local JUDGEMENT_OF_RIGHTEOUSNESS = GetSpellInfo(20286);
-
 _addon.talentData = {
     { -- Healing Light
         tree = 1,
@@ -17,7 +11,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {HOLY_LIGHT, FLASH_OF_LIGHT},
+                affectSpell = {-1073741824},
                 perPoint = 4
             }
         }
@@ -28,7 +22,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {SEAL_OF_RIGHTEOUSNESS, JUDGEMENT_OF_RIGHTEOUSNESS},
+                affectSpell = {134217728 + 1024},
                 perPoint = 3
             }
         }
@@ -70,7 +64,7 @@ _addon.talentData = {
 
 _addon.buffData[20216] = { -- Divine Favor
     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-    affectSpell = {HOLY_LIGHT, HOLY_SHOCK, FLASH_OF_LIGHT},
+    affectSpell = {2147483648 + 1073741824 + 2097152},
     value = 100,
 };
 

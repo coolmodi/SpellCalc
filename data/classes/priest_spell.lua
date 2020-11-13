@@ -1856,6 +1856,20 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [22009] = { -- Greater Heal
+        spellLevel = 32,
+        maxLevel = 37,
+        duration = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                min = 63,
+                coef = 0.2,
+            },
+        }
+    },
     [25314] = { -- Greater Heal(Rank 5)
         spellLevel = 60,
         maxLevel = 65,
@@ -1965,7 +1979,7 @@ _addon.spellRankInfo = {
 };
 
 _addon.spellClassSet = {
-    [0] = {
+    [1] = {
         [1] = {
             17, -- Power Word: Shield(Rank 1)
             592, -- Power Word: Shield(Rank 2)
@@ -2370,7 +2384,7 @@ _addon.spellClassSet = {
             30238, -- Lordaeron's Blessing
         },
     },
-    [1] = {
+    [2] = {
         [1] = {
             527, -- Dispel Magic(Rank 1)
             528, -- Cure Disease
@@ -2379,9 +2393,9 @@ _addon.spellClassSet = {
             30238, -- Lordaeron's Blessing
         },
     },
-    [2] = {
-    },
     [3] = {
+    },
+    [4] = {
     },
 };
 

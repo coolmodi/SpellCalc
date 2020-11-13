@@ -6,20 +6,6 @@ end
 
 local L = _addon:GetLocalization();
 
-local CORRUPTION = GetSpellInfo(172);
-local SHADOW_BOLT = GetSpellInfo(686);
-local IMMOLATE = GetSpellInfo(348);
-local SEARING_PAIN = GetSpellInfo(5676);
-local SHADOW_BURN = GetSpellInfo(17877);
-local DEATH_COIL = GetSpellInfo(6789);
-local DRAIN_LIFE = GetSpellInfo(689);
-local CURSE_OF_AGONY = GetSpellInfo(980);
-local DRAIN_SOUL = GetSpellInfo(1120);
-local SOUL_FIRE = GetSpellInfo(1571);
-local CONFLAGRATE = GetSpellInfo(17962);
-local CURSE_OF_DOOM = GetSpellInfo(603);
-local SIPHON_LIFE = GetSpellInfo(18265);
-
 _addon.talentData = {
     { -- Supression
         tree = 1,
@@ -27,7 +13,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-                affectSpell = {CORRUPTION, CURSE_OF_AGONY, SIPHON_LIFE, DRAIN_LIFE, DRAIN_SOUL, DEATH_COIL, CURSE_OF_DOOM},
+                affectSpell = {-2142714854, 1},
                 perPoint = 2
             }
         }
@@ -38,7 +24,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {DRAIN_LIFE},
+                affectSpell = {8},
                 perPoint = 2
             }
         }
@@ -49,7 +35,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {CURSE_OF_AGONY},
+                affectSpell = {1024},
                 perPoint = 2
             }
         }
@@ -60,7 +46,12 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.SHADOW,
+                affectSpell = {145 + 2},
+                perPoint = 2
+            },
+            {
+                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {541704, 1},
                 perPoint = 2
             }
         }
@@ -72,6 +63,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                affectSpell = {16777216},
                 perPoint = 10
             }
         }
@@ -93,7 +85,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {SHADOW_BOLT, SOUL_FIRE, SHADOW_BURN, CONFLAGRATE, IMMOLATE, SEARING_PAIN},
+                affectSpell = {997},
                 perPoint = 1
             }
         }
@@ -104,7 +96,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {SEARING_PAIN},
+                affectSpell = {256},
                 perPoint = 2
             }
         }
@@ -115,7 +107,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {IMMOLATE},
+                affectSpell = {4},
                 perPoint = 5
             }
         }
@@ -126,7 +118,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.CRIT_MULT,
-                affectSpell = {SHADOW_BOLT, SOUL_FIRE, SHADOW_BURN, CONFLAGRATE, IMMOLATE, SEARING_PAIN},
+                affectSpell = {997},
                 perPoint = 100
             }
         }
@@ -137,7 +129,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.FIRE,
+                affectSpell = {868},
                 perPoint = 2
             }
         }
@@ -147,7 +139,7 @@ _addon.talentData = {
 -- Amplify Curse
 _addon.buffData[18288] = {
     effect = _addon.EFFECT_TYPE.MOD_EFFECT,
-    affectSpell = {CURSE_OF_AGONY, CURSE_OF_DOOM},
+    affectSpell = {1024},
     value = 50,
 };
 

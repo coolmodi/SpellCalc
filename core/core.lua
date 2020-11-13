@@ -83,31 +83,37 @@ end
 ---@param school number
 ---@param isDmg boolean
 ---@param isHeal boolean
----@param spellName string
+---@param spellId number
 ---@param calcedSpell CalcedSpell
 ---@return number @baseMod affecting the base value of the spell
 ---@return number @bonusMod affecting only the bonus SP/AP of the spell
-local function GetBaseModifiers(school, isDmg, isHeal, spellName, calcedSpell)
+local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
     local bonusMod = 1;
     local baseMod = stats.effectMods.school[school].val;
     calcedSpell:AddToBuffList(stats.effectMods.school[school].buffs);
 
-    if stats.effectMods.spell[spellName] ~= nil then
-        baseMod = baseMod * stats.effectMods.spell[spellName].val;
-        calcedSpell:AddToBuffList(stats.effectMods.spell[spellName].buffs);
+    if stats.effectMods.spell[spellId] ~= nil then
+        baseMod = baseMod * stats.effectMods.spell[spellId].val;
+        calcedSpell:AddToBuffList(stats.effectMods.spell[spellId].buffs);
     end
 
     if isDmg then
         bonusMod = bonusMod * stats.dmgDoneMods.school[school].val;
         calcedSpell:AddToBuffList(stats.dmgDoneMods.school[school].buffs);
 
-        if stats.dmgDoneMods.spell[spellName] ~= nil then
-            bonusMod = bonusMod * stats.dmgDoneMods.spell[spellName].val;
-            calcedSpell:AddToBuffList(stats.dmgDoneMods.spell[spellName].buffs);
+        if stats.dmgDoneMods.spell[spellId] ~= nil then
+            bonusMod = bonusMod * stats.dmgDoneMods.spell[spellId].val;
+            calcedSpell:AddToBuffList(stats.dmgDoneMods.spell[spellId].buffs);
         end
     elseif isHeal then
         baseMod = baseMod * stats.healingDoneMod.val;
         calcedSpell:AddToBuffList(stats.healingDoneMod.buffs);
+
+        if stats.healingDoneMod.spell[spellId] ~= nil then
+            baseMod = baseMod * stats.healingDoneMod.spell[spellId].val;
+            calcedSpell:AddToBuffList(stats.healingDoneMod.spell[spellId].buffs);
+        end
+
         bonusMod = bonusMod * stats.healingDoneModAll.val;
         calcedSpell:AddToBuffList(stats.healingDoneModAll.buffs);
     end
@@ -244,15 +250,15 @@ local function CalcSpell(spellId)
     end
 
     if spellBaseInfo.school ~= SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MAGIC then
-        magicCalc:Init(calcedSpell, spellBaseInfo, spellName);
+        magicCalc:Init(calcedSpell, spellBaseInfo, spellId);
     end
 
     ----------------------------------------------------------------------------------------------------------------------
     -- Cast time and GCD
 
-    if stats.gcdMods[spellName] ~= nil then
-        GCD = GCD + stats.gcdMods[spellName].val / 100;
-        calcedSpell:AddToBuffList(stats.gcdMods[spellName].buffs);
+    if stats.gcdMods[spellId] ~= nil then
+        GCD = GCD + stats.gcdMods[spellId].val / 100;
+        calcedSpell:AddToBuffList(stats.gcdMods[spellId].buffs);
     end
 
     if spellBaseInfo.isChannel then
@@ -274,9 +280,13 @@ local function CalcSpell(spellId)
         calcedSpell.critChance = magicCalc:GetSchoolCritChance();
     end
 
-    if calcedSpell.critChance > 0 and stats.critMods.spell[spellName] ~= nil then
-        calcedSpell.critChance = calcedSpell.critChance + stats.critMods.spell[spellName].val;
-        calcedSpell:AddToBuffList(stats.critMods.spell[spellName].buffs);
+    if calcedSpell.critChance > 0 and stats.critMods.spell[spellId] ~= nil then
+        calcedSpell.critChance = calcedSpell.critChance + stats.critMods.spell[spellId].val;
+        calcedSpell:AddToBuffList(stats.critMods.spell[spellId].buffs);
+    end
+
+    if calcedSpell.critChance > 100 then
+        calcedSpell.critChance = 100;
     end
 
     local cmbonus = calcedSpell.critMult - 1;
@@ -286,9 +296,9 @@ local function CalcSpell(spellId)
         calcedSpell:AddToBuffList(stats.critMult.school[spellBaseInfo.school].buffs);
     end
 
-    if stats.critMult.spell[spellName] ~= nil then
-        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.critMult.spell[spellName].val/100;
-        calcedSpell:AddToBuffList(stats.critMult.spell[spellName].buffs);
+    if stats.critMult.spell[spellId] ~= nil then
+        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.critMult.spell[spellId].val/100;
+        calcedSpell:AddToBuffList(stats.critMult.spell[spellId].buffs);
     end
 
     ----------------------------------------------------------------------------------------------------------------------
@@ -405,7 +415,7 @@ local function CalcSpell(spellId)
     --------------------------
     -- Cast time mods
 
-    if stats.mageNWRProc[spellName] ~= nil and stats.mageNWRProc[spellName].val ~= 0 and castTime > 0 then
+    if stats.mageNWRProc[spellId] ~= nil and stats.mageNWRProc[spellId].val ~= 0 and castTime > 0 then
         -- E.g. with a 10% chance every 10th cast will proc, causing the next to be 1.5s (GCD).
         -- NWR has a 10sec ICD, therefore 1 instant + floor(8.5/castTime) casts can't proc it after a proc.
         -- So in reality you have 10 normal casts, 1 GCD and floor(8.5/castTime) additional normal casts.
@@ -413,7 +423,7 @@ local function CalcSpell(spellId)
         local castsInICD = math.floor(8.5/effCastTime);
         effCastTime = (GCD + (10 + castsInICD) * effCastTime) / (11 + castsInICD);
         effCastTime = math.max(effCastTime, GCD);
-        calcedSpell:AddToBuffList(stats.mageNWRProc[spellName].buffs);
+        calcedSpell:AddToBuffList(stats.mageNWRProc[spellId].buffs);
     end
 
     if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
@@ -440,15 +450,15 @@ local function CalcSpell(spellId)
     -- Flat mods
 
     local flatMod = 0;
-    if stats.flatMods[spellName] ~= nil then
-        flatMod = stats.flatMods[spellName].val;
-        calcedSpell:AddToBuffList(stats.flatMods[spellName].buffs);
+    if stats.flatMods[spellId] ~= nil then
+        flatMod = stats.flatMods[spellId].val;
+        calcedSpell:AddToBuffList(stats.flatMods[spellId].buffs);
     end
 
     local extraSp = 0;
-    if stats.extraSp[spellName] ~= nil then
-        extraSp = stats.extraSp[spellName].val;
-        calcedSpell:AddToBuffList(stats.extraSp[spellName].buffs);
+    if stats.extraSp[spellId] ~= nil then
+        extraSp = stats.extraSp[spellId].val;
+        calcedSpell:AddToBuffList(stats.extraSp[spellId].buffs);
     end
 
     --------------------------
@@ -466,7 +476,7 @@ local function CalcSpell(spellId)
 
         local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
         local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
-        local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellName, calcedSpell);
+        local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellId, calcedSpell);
 
         --------------------------
         -- Effect bonus power scaling
@@ -494,7 +504,7 @@ local function CalcSpell(spellId)
             _addon:PrintError("Please report this to the addon author.");
             return;
         else
-            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName);
+            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
         end
     end
 
@@ -570,7 +580,10 @@ end
 --- Return the handled spell ID (if different) or false if spell is not handled by the addon
 ---@param spellID number
 function _addon:GetHandledSpellID(spellID)
-    if spellID == self.JUDGEMENT_ID and self.judgementSpell then
+    if spellID == self.JUDGEMENT_ID then
+        if not self.judgementSpell then
+            return false;
+        end
         spellID = self.judgementSpell;
     end
 

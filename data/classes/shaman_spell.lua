@@ -1259,7 +1259,7 @@ _addon.spellRankInfo = {
 };
 
 _addon.spellClassSet = {
-    [0] = {
+    [1] = {
         [1] = {
             403, -- Lightning Bolt(Rank 1)
             529, -- Lightning Bolt(Rank 2)
@@ -1589,11 +1589,29 @@ _addon.spellClassSet = {
             10473, -- Frost Shock(Rank 4)
         },
     },
-    [1] = {
-    },
     [2] = {
+        [1] = {
+            3600, -- Earthbind
+        },
+        [2] = {
+            8516, -- Windfury Totem(Rank 1)
+            10608, -- Windfury Totem(Rank 2)
+            10610, -- Windfury Totem(Rank 3)
+        },
+        [4] = {
+            8248, -- Flametongue Totem Proc(Rank 2)
+            8253, -- Flametongue Totem Proc(Rank 1)
+            10523, -- Flametongue Totem Proc(Rank 3)
+            16389, -- Flametongue Totem Proc(Rank 4)
+        },
+        [8] = {
+            526, -- Cure Poison
+            2870, -- Cure Disease
+        },
     },
     [3] = {
+    },
+    [4] = {
     },
 };
 

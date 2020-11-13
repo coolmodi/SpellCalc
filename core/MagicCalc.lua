@@ -18,12 +18,12 @@ end
 --- Initialize for new spell
 ---@param calcedSpell CalcedSpell
 ---@param spellBaseInfo SpellBaseInfo
----@param spellName string
-function MagicCalc:Init(calcedSpell, spellBaseInfo, spellName)
+---@param spellId number
+function MagicCalc:Init(calcedSpell, spellBaseInfo, spellId)
     _addon:PrintDebug("Init MagicCalc");
     self.spellBaseInfo = spellBaseInfo;
     self.calcedSpell = calcedSpell;
-    self.spellName = spellName;
+    self.spellId = spellId;
 end
 
 --- Get base spell crit chance for spell school
@@ -72,9 +72,9 @@ end
 --- Get spell hit bonus from gear and talents
 ---@param school number
 ---@param calcedSpell CalcedSpell
----@param spellName string
+---@param spellId number
 ---@return number
-local function GetSpellHitBonus(school, calcedSpell, spellName)
+local function GetSpellHitBonus(school, calcedSpell, spellId)
     local hitChanceBonus = 0;
 
     hitChanceBonus = hitChanceBonus + stats.hitMods.school[school].val;
@@ -83,9 +83,9 @@ local function GetSpellHitBonus(school, calcedSpell, spellName)
     hitChanceBonus = hitChanceBonus + stats.hitBonusSpell.val;
     calcedSpell:AddToBuffList(stats.hitBonusSpell.buffs);
 
-    if stats.hitMods.spell[spellName] ~= nil then
-        hitChanceBonus = hitChanceBonus + stats.hitMods.spell[spellName].val;
-        calcedSpell:AddToBuffList(stats.hitMods.spell[spellName].buffs);
+    if stats.hitMods.spell[spellId] ~= nil then
+        hitChanceBonus = hitChanceBonus + stats.hitMods.spell[spellId].val;
+        calcedSpell:AddToBuffList(stats.hitMods.spell[spellId].buffs);
     end
 
     return hitChanceBonus;
@@ -99,7 +99,7 @@ end
 ---@return number @binary loss if binary spell
 function MagicCalc:GetHitChances(avgResist)
     local base = GetSpellHitChance();
-    local bonus = GetSpellHitBonus(self.spellBaseInfo.school, self.calcedSpell, self.spellName);
+    local bonus = GetSpellHitBonus(self.spellBaseInfo.school, self.calcedSpell, self.spellId);
     local binaryLoss;
 
     local full = base + bonus;

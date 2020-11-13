@@ -583,13 +583,13 @@ end
 
     for (let spellId in scopts) {
         const scopt = scopts[spellId];
-
+        
         if (scopt.SpellClassSet != classSetNum) continue;
 
         for (let i = 0; i < 4; i++) {
             // @ts-ignore
             const mask = scopt["SpellClassMask[" + i + "]"];
-            if (mask == 0) break;
+            if (mask == 0) continue;
             let bit = 1;
             while (bit != 0) {
                 if (bit & mask) {
@@ -604,7 +604,7 @@ end
     str += "_addon.spellClassSet = {\n";
     for (let i = 0; i < 4; i++) {
         let sset = spellSets[i];
-        str += `\t[${i}] = {\n`;
+        str += `\t[${i + 1}] = {\n`;
         
         for (let bit in sset) {
             let setEntry = sset[bit];

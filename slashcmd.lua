@@ -115,6 +115,15 @@ SlashCmdList["SPELLCALC"] = function(arg)
             _addon:PrintWarn("Debug equip item "..iid.." into slot "..slotid.."!");
             _addon:DebugEquipItem(tonumber(iid), tonumber(slotid));
         end
+        return;
+    end
+
+    if string.find(arg, "dab") then
+        local spellId = strmatch(arg, "(%d+)");
+        if spellId then
+            _addon:DebugApplyBuff(tonumber(spellId));
+        end
+        return;
     end
 
     InterfaceOptionsFrame_OpenToCategory(_addonName);

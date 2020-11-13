@@ -1396,7 +1396,7 @@ _addon.spellRankInfo = {
 };
 
 _addon.spellClassSet = {
-    [0] = {
+    [1] = {
         [1] = {
             686, -- Shadow Bolt(Rank 1)
             695, -- Shadow Bolt(Rank 2)
@@ -1718,14 +1718,20 @@ _addon.spellClassSet = {
             18938, -- Dark Pact(Rank 3)
         },
     },
-    [1] = {
+    [2] = {
+        [1] = {
+            18265, -- Siphon Life(Rank 1)
+            18879, -- Siphon Life(Rank 2)
+            18880, -- Siphon Life(Rank 3)
+            18881, -- Siphon Life(Rank 4)
+        },
         [2] = {
             603, -- Curse of Doom
         },
     },
-    [2] = {
-    },
     [3] = {
+    },
+    [4] = {
     },
 };
 

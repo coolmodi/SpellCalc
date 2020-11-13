@@ -78,7 +78,7 @@ _addon.buffData = {
         effects = {
             {
                 effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.ALL,
+                affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
                 value = 20,
             },
             {

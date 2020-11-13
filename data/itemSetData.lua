@@ -1,25 +1,6 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
 
-local PRAYER_OF_HEALING = GetSpellInfo(10960);
-local SHADOW_WORD_PAIN = GetSpellInfo(589);
-local FIREBALL = GetSpellInfo(3140);
-local FROST_BOLT = GetSpellInfo(837);
-local ARCANE_MISSILES = GetSpellInfo(7268);
-local DRAIN_LIFE = GetSpellInfo(689);
-local CORRUPTION = GetSpellInfo(172);
-local IMMOLATE = GetSpellInfo(348);
-local THORNS = GetSpellInfo(782);
-local STARFIRE = GetSpellInfo(2912);
-local REJUVENATION = GetSpellInfo(1058);
-local EARTH_SHOCK = GetSpellInfo(8042);
-local FLAME_SHOCK = GetSpellInfo(8050);
-local FROST_SHOCK = GetSpellInfo(8056);
-local RENEW = GetSpellInfo(139);
-local CHAIN_HEAL = GetSpellInfo(1064);
-local CHAIN_LIGHTNING = GetSpellInfo(1064);
-local FLASH_HEAL = GetSpellInfo(2061);
-
 _addon.itemSetData = {
     [121] = {
         name = "Cadaverous Garb",
@@ -68,7 +49,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
-                    affectSpell = {FLASH_HEAL},
+                    affectSpell = {2048},
                     value = -100,
                 }
             },
@@ -76,20 +57,20 @@ _addon.itemSetData = {
                 need = 8,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-                    affectSpell = {PRAYER_OF_HEALING},
+                    affectSpell = {512},
                     value = 25,
                 }
             },
         },
     },
-    [203] = {
+    [203] = { -- TODO: This probably only affects healing
         name = "Felheart Raiment",
         effects = {
             [1] = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_EFFECT,
-                    affectSpell = {DRAIN_LIFE},
+                    affectSpell = {8},
                     value = 15,
                 }
             },
@@ -102,7 +83,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_FLAT_VALUE,
-                    affectSpell = {THORNS},
+                    affectSpell = {256},
                     value = 4,
                 }
             },
@@ -136,7 +117,7 @@ _addon.itemSetData = {
                 need = 8,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MAGE_NWR_PROC,
-                    affectSpell = {ARCANE_MISSILES, FROST_BOLT, FIREBALL},
+                    affectSpell = {33},
                     value = 1
                 }
             },
@@ -181,7 +162,7 @@ _addon.itemSetData = {
                 need = 8,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_DURATION,
-                    affectSpell = {REJUVENATION},
+                    affectSpell = {16},
                     value = 3,
                 }
             },
@@ -194,7 +175,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
-                    affectSpell = {CHAIN_HEAL},
+                    affectSpell = {256},
                     value = 30,
                 }
             },
@@ -225,7 +206,7 @@ _addon.itemSetData = {
                 need = 4,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-                    affectSpell = {FROST_SHOCK, EARTH_SHOCK, FLAME_SHOCK},
+                    affectSpell = {2147483648 + 1048576 + 268435456},
                     perPoint = 2
                 }
             },
@@ -238,7 +219,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-                    affectSpell = {FROST_SHOCK, EARTH_SHOCK, FLAME_SHOCK},
+                    affectSpell = {2147483648 + 1048576 + 268435456},
                     perPoint = 2
                 }
             },
@@ -251,7 +232,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
-                    affectSpell = {IMMOLATE},
+                    affectSpell = {4},
                     perPoint = -200
                 }
             },
@@ -264,7 +245,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
-                    affectSpell = {IMMOLATE},
+                    affectSpell = {4},
                     perPoint = -200
                 }
             },
@@ -333,7 +314,7 @@ _addon.itemSetData = {
                 need = 5,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-                    affectSpell = {STARFIRE},
+                    affectSpell = {4},
                     value = 3,
                 }
             },
@@ -345,8 +326,8 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
-                    affectSpell = {CORRUPTION},
+                    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                    affectSpell = {2},
                     value = 2,
                 }
             },
@@ -414,7 +395,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_EFFECT,
-                    affectSpell = {IMMOLATE},
+                    affectSpell = {4},
                     value = 5,
                 }
             },
@@ -427,7 +408,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
-                    affectSpell = {CHAIN_LIGHTNING},
+                    affectSpell = {2},
                     value = 5,
                 }
             },
@@ -438,7 +419,11 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 3,
-                effect = "$s1% increase to the total damage absorbed by Mana Shield.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+                    affectSpell = {32768},
+                    value = 15,
+                }
             },
         },
     },
@@ -458,7 +443,7 @@ _addon.itemSetData = {
                 need = 5,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_DURATION,
-                    affectSpell = {RENEW},
+                    affectSpell = {64},
                     value = 3,
                 }
             },
@@ -471,7 +456,7 @@ _addon.itemSetData = {
                 need = 3,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_EFFECT,
-                    affectSpell = {SHADOW_WORD_PAIN},
+                    affectSpell = {32768},
                     value = 5,
                 }
             },
@@ -524,7 +509,11 @@ _addon.itemSetData = {
         effects = {
             [1] = {
                 need = 4,
-                effect = "Increases damage caused by your Corruption by $s1%.",
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                    affectSpell = {2},
+                    value = 12
+                },
             },
         },
     },
@@ -571,7 +560,7 @@ _addon.itemSetData = {
                 need = 4,
                 effect = {
                     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-                    affectSpell = {FROST_SHOCK, EARTH_SHOCK, FLAME_SHOCK},
+                    affectSpell = {2147483648 + 1048576 + 268435456},
                     perPoint = 2
                 }
             },
@@ -584,7 +573,7 @@ _addon.itemSetData = {
                 need = 4,
                 effect = {
                     effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
-                    affectSpell = {IMMOLATE},
+                    affectSpell = {4},
                     perPoint = -200
                 }
             },
@@ -597,7 +586,7 @@ _addon.itemSetData = {
                 need = 4,
                 effect = {
                     effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
-                    affectSpell = {IMMOLATE},
+                    affectSpell = {4},
                     perPoint = -200
                 }
             },

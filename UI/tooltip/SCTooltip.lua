@@ -16,14 +16,14 @@ local tooltipHandler = {};
 local dummyHandler = {};
 
 --- Add tooltip handler
----@param func fun:boolean
+---@param func function:boolean
 function SCTooltip:AddHandler(func)
     table.insert(tooltipHandler, func);
 end
 
 --- Add tooltip handler for dummy spell
 ---@param spellName string
----@param func fun:boolean
+---@param func function:boolean
 function SCTooltip:AddDummyHandler(spellName, func)
     dummyHandler[spellName] = func;
 end

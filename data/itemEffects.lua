@@ -1,16 +1,6 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
 
-local FLASH_OF_LIGHT = GetSpellInfo(19750);
-local MANA_SHIELD = GetSpellInfo(1463);
-local LIGHTNING_BOLT = GetSpellInfo(403);
-local CHAIN_LIGHTNING = GetSpellInfo(421);
-local LESSER_HEALING_WAVE = GetSpellInfo(8004);
-local EARTH_SHOCK = GetSpellInfo(8042);
-local FLAME_SHOCK = GetSpellInfo(8050);
-local FROST_SHOCK = GetSpellInfo(8056);
-local REJUVENATION = GetSpellInfo(1058);
-
 _addon.itemEffects = {
     [18608] = { -- Benediction
         {
@@ -22,14 +12,14 @@ _addon.itemEffects = {
     [23201] = { -- Libram of Divinity
         {
             type = _addon.EFFECT_TYPE.EXTRA_SP,
-            affectSpell = {FLASH_OF_LIGHT},
+            affectSpell = {1073741824},
             value = 53
         }
     },
     [23006] = { -- Libram of Light
         {
             type = _addon.EFFECT_TYPE.EXTRA_SP,
-            affectSpell = {FLASH_OF_LIGHT},
+            affectSpell = {1073741824},
             value = 83
         }
     },
@@ -37,42 +27,42 @@ _addon.itemEffects = {
     [16540] = { -- General's Silk Handguards
         {
             type = _addon.EFFECT_TYPE.MOD_FLAT_VALUE,
-            affectSpell = {MANA_SHIELD},
+            affectSpell = {32768},
             value = 285
         }
     },
     [16440] = { -- Marshal's Silk Gloves
         {
             type = _addon.EFFECT_TYPE.MOD_FLAT_VALUE,
-            affectSpell = {MANA_SHIELD},
+            affectSpell = {32768},
             value = 285
         }
     },
     [23199] = { -- Totem of the Storm
         {
             type = _addon.EFFECT_TYPE.EXTRA_SP,
-            affectSpell = {LIGHTNING_BOLT, CHAIN_LIGHTNING},
+            affectSpell = {1 + 2},
             value = 33
         }
     },
     [23200] = { -- Totem of Sustaining
         {
             type = _addon.EFFECT_TYPE.EXTRA_SP,
-            affectSpell = {LESSER_HEALING_WAVE},
+            affectSpell = {128},
             value = 53
         }
     },
     [22396] = { -- Totem of Life
         {
             type = _addon.EFFECT_TYPE.EXTRA_SP,
-            affectSpell = {LESSER_HEALING_WAVE},
+            affectSpell = {128},
             value = 80
         }
     },
     [22395] = { -- Totem of Rage
         {
             type = _addon.EFFECT_TYPE.EXTRA_SP,
-            affectSpell = {EARTH_SHOCK, FLAME_SHOCK, FROST_SHOCK},
+            affectSpell = {1048576 + 268435456 + 2147483648},
             value = 30
         }
     },
@@ -80,14 +70,14 @@ _addon.itemEffects = {
     [22398] = { -- Idol of Rejuvenation
         {
             type = _addon.EFFECT_TYPE.EXTRA_SP,
-            affectSpell = {REJUVENATION},
+            affectSpell = {16},
             value = 50
         }
     },
     [22399] = { -- Idol of Health (Dummy effect to trigger update)
         {
             type = _addon.EFFECT_TYPE.MOD_EFFECT,
-            affectSpell = {REJUVENATION},
+            affectSpell = {32},
             value = 0
         }
     },

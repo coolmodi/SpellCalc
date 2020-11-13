@@ -40,7 +40,7 @@ end
 ---@param destTable table @The destination table
 ---@param spellList string[] @The list of spellNames to affect
 ---@param isMultiplicative boolean @Treat multiplicatively
-local function ApplyOrRemoveSpellAffect(apply, name, value, destTable, spellList, isMultiplicative)
+local function DEPR_ApplyOrRemoveSpellAffect(apply, name, value, destTable, spellList, isMultiplicative)
     for k, spellName in ipairs(spellList) do
         if destTable[spellName] == nil then
             if isMultiplicative then
@@ -50,6 +50,32 @@ local function ApplyOrRemoveSpellAffect(apply, name, value, destTable, spellList
             end
         end
         ApplyOrRemove(apply, value, destTable[spellName], name, isMultiplicative);
+    end
+end
+
+--- Apply or remove effect affecting a SpellClassSet
+---@param apply boolean
+---@param name string @The name of the buff
+---@param value number @The effect value, negative to remove buff
+---@param destTable table @The destination table
+---@param setMasks number[] @The masks of class spell sets to affect
+---@param isMultiplicative boolean @Treat multiplicatively
+local function ApplyOrRemoveSpellSet(apply, name, value, destTable, setMasks, isMultiplicative)
+    for k, setMask in ipairs(setMasks) do
+        for setBit, spellSet in pairs(_addon.spellClassSet[k]) do
+            if bit.band(setBit, setMask) > 0 then
+                for _, spellId in ipairs(spellSet) do
+                    if destTable[spellId] == nil then
+                        if isMultiplicative then
+                            destTable[spellId] = {val=1, buffs={}};
+                        else
+                            destTable[spellId] = {val=0, buffs={}};
+                        end
+                    end
+                    ApplyOrRemove(apply, value, destTable[spellId], name, isMultiplicative);
+                end
+            end
+        end
     end
 end
 
@@ -102,7 +128,7 @@ end
 ---@param effect number @The effect type
 ---@param value number @The effect value
 ---@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
----@param affectSpell string|nil @The spells it affects, nil if no specific spell(s) affected
+---@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
 local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     if apply == false then
         value = -value;
@@ -114,13 +140,17 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     end
     if affectSpell then
         _addon:PrintDebug("Affects spell list");
+        if (type(affectSpell[1]) == "string") then
+            _addon:PrintWarn("affectSpell is still used with strings for " .. name.. "! Please report this error!");
+            return;
+        end
     end
     
     if effect == EFFECT_TYPE.MOD_EFFECT then
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.effectMods.school, affectSchool, true);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.effectMods.spell, affectSpell, true);
+            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.effectMods.spell, affectSpell, true);
         end
         return;
     end
@@ -129,13 +159,17 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.dmgDoneMods.school, affectSchool, true);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.dmgDoneMods.spell, affectSpell, true);
+            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.dmgDoneMods.spell, affectSpell, true);
         end
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_HEALING_DONE then
-        ApplyOrRemove(apply, value, _addon.stats.healingDoneMod, name, true);
+        if affectSpell ~= nil then
+            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.healingDoneMod.spell, affectSpell, true);
+        else
+            ApplyOrRemove(apply, value, _addon.stats.healingDoneMod, name, true);
+        end
         return;
     end
 
@@ -148,7 +182,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.hitMods.school, affectSchool);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.hitMods.spell, affectSpell);
+            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.hitMods.spell, affectSpell);
         else
             ApplyOrRemove(apply, value, _addon.stats.hitBonusSpell, name);
         end
@@ -159,7 +193,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.critMods.school, affectSchool);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.critMods.spell, affectSpell);
+            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.critMods.spell, affectSpell);
         end
         return;
     end
@@ -201,7 +235,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         if affectSchool ~= nil then
             ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.critMult.school, affectSchool);
         elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.critMult.spell, affectSpell);
+            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.critMult.spell, affectSpell);
         end
         return;
     end
@@ -217,22 +251,22 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     end
 
     if effect == EFFECT_TYPE.MAGE_NWR_PROC then
-        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.mageNWRProc, affectSpell);
+        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.mageNWRProc, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_DURATION then
-        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.durationMods, affectSpell);
+        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.durationMods, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.MOD_FLAT_VALUE then
-        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.flatMods, affectSpell);
+        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.flatMods, affectSpell);
         return;
     end
 
     if effect == EFFECT_TYPE.EXTRA_SP then
-        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.extraSp, affectSpell);
+        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.extraSp, affectSpell);
         return;
     end
 
@@ -254,7 +288,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     end
 
     if effect == EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST then
-        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.chainMultMods, affectSpell);
+        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.chainMultMods, affectSpell);
         return;
     end
 
@@ -274,7 +308,7 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     end
 
     if effect == EFFECT_TYPE.SPELLMOD_GCD then
-        ApplyOrRemoveSpellAffect(apply, name, value, _addon.stats.gcdMods, affectSpell);
+        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.gcdMods, affectSpell);
         return;
     end
 end
@@ -284,7 +318,7 @@ end
 ---@param effect number @The effect type
 ---@param value number @The effect value
 ---@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
----@param affectSpell string|nil @The spells it affects, nil if no specific spell(s) affected
+---@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
 function _addon:ApplyBuff(name, effect, value, affectSchool, affectSpell)
     ChangeBuff(true, name, effect, value, affectSchool, affectSpell);
 end
@@ -294,7 +328,7 @@ end
 ---@param effect number @The effect type
 ---@param value number @The effect value
 ---@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
----@param affectSpell string|nil @The spells it affects, nil if no specific spell(s) affected
+---@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
 function _addon:RemoveBuff(name, effect, value, affectSchool, affectSpell)
     ChangeBuff(false, name, effect, value, affectSchool, affectSpell);
 end
@@ -477,6 +511,36 @@ function _addon:UpdateBuffs(clearOnly)
     if buffsChanged then
         self:TriggerUpdate();
     end
+end
+
+--- Simulate having a buff.
+---@param spellId number
+function _addon:DebugApplyBuff(spellId)
+    local buffdata = self.buffData[spellId];
+    local name = GetSpellInfo(spellId);
+    local usedKey = spellId;
+    local usedSlot = 32;
+    if buffdata == nil then
+        buffdata = self.buffData[name];
+        usedKey = name;
+    end
+
+    if buffdata == nil then
+        self:PrintError("No data for ID "..spellId);
+        return;
+    end
+
+    self:PrintWarn("Add buff " .. name .. " (" .. usedKey .. ") in slot " .. usedSlot);
+
+    if buffdata.effects == nil then
+        ApplyBuffEffect(buffdata, usedKey, name, usedSlot);
+    else
+        for k, effect in ipairs(buffdata.effects) do
+            ApplyBuffEffect(effect, usedKey, name, usedSlot, k);
+        end
+    end
+
+    self:TriggerUpdate();
 end
 
 local activeRelevantTalents = {};

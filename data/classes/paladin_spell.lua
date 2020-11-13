@@ -60,6 +60,10 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 1,
     },
+    [GetSpellInfo(23590)] = { -- Judgement
+        school = 2,
+        defType = 0,
+    },
     [GetSpellInfo(24239)] = { -- Hammer of Wrath
         school = 2,
         GCD = 1,
@@ -1036,6 +1040,18 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [23590] = { -- Judgement
+        spellLevel = 0,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 60,
+                max = 67,
+                coef = 0,
+            },
+        }
+    },
     [24239] = { -- Hammer of Wrath(Rank 3)
         spellLevel = 60,
         maxLevel = 65,
@@ -1175,7 +1191,7 @@ _addon.buffData[21084] = { -- Seal of Righteousness(Rank 1)
 };
 
 _addon.spellClassSet = {
-    [0] = {
+    [1] = {
         [1] = {
             22270, -- Divine Intervention (NEWTEST)
             25780, -- Righteous Fury
@@ -1441,14 +1457,15 @@ _addon.spellClassSet = {
             25292, -- Holy Light(Rank 9)
         },
     },
-    [1] = {
+    [2] = {
         [2] = {
+            1152, -- Purify
             4987, -- Cleanse
         },
     },
-    [2] = {
-    },
     [3] = {
+    },
+    [4] = {
     },
 };
 

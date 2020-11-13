@@ -1403,7 +1403,7 @@ _addon.spellRankInfo = {
 };
 
 _addon.spellClassSet = {
-    [0] = {
+    [1] = {
         [1] = {
             5176, -- Wrath(Rank 1)
             5177, -- Wrath(Rank 2)
@@ -1694,11 +1694,25 @@ _addon.spellClassSet = {
             768, -- Cat Form(Shapeshift)
         },
     },
-    [1] = {
-    },
     [2] = {
+        [1] = {
+            16979, -- Feral Charge
+        },
+        [2] = {
+            18562, -- Swiftmend
+        },
+        [4] = {
+            2782, -- Remove Curse
+            2893, -- Abolish Poison
+            8946, -- Cure Poison
+        },
+        [8] = {
+            6795, -- Growl
+        },
     },
     [3] = {
+    },
+    [4] = {
     },
 };
 

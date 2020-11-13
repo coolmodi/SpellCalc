@@ -1833,7 +1833,7 @@ _addon.spellRankInfo = {
 };
 
 _addon.spellClassSet = {
-    [0] = {
+    [1] = {
         [1] = {
             133, -- Fireball(Rank 1)
             143, -- Fireball(Rank 2)
@@ -2432,11 +2432,11 @@ _addon.spellClassSet = {
             29124, -- Polymorph
         },
     },
-    [1] = {
-    },
     [2] = {
     },
     [3] = {
+    },
+    [4] = {
     },
 };
 

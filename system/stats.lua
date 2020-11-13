@@ -48,7 +48,11 @@ _addon.stats = {
         },
         spell = {}
     },
-    healingDoneMod = {val=1, buffs={}}, -- multiplicatively!
+    healingDoneMod = { -- multiplicatively!
+        val=1,
+        buffs={},
+        spell = {}
+    },
     healingDoneModAll = {val=1, buffs={}}, -- multiplicatively!
     effectMods = { -- multiplicatively!
         school = {

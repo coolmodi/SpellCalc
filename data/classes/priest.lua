@@ -4,18 +4,6 @@ if playerClass ~= "PRIEST" then
     return;
 end
 
-local MIND_BLAST = GetSpellInfo(8092);
-local SHADOW_WORD_PAIN = GetSpellInfo(589);
-local POWER_WORD_SHIELD = GetSpellInfo(17);
-local SMITE = GetSpellInfo(585);
-local HOLY_FIRE = GetSpellInfo(14914);
-local HOLY_NOVA = GetSpellInfo(15237);
-local RENEW = GetSpellInfo(139);
-local SHADOW_GUARD = GetSpellInfo(28377);
-local DEVOURING_PLAGUE = GetSpellInfo(2944);
-local MIND_FLAY = GetSpellInfo(17312);
-local TOUCH_OF_WEAKNESS = GetSpellInfo(19251);
-
 _addon.talentData = {
     -- Meditation
     {
@@ -35,7 +23,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {POWER_WORD_SHIELD},
+                affectSpell = {1},
                 perPoint = 5
             }
         }
@@ -47,12 +35,12 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
+                affectSpell = {16294032},
                 perPoint = 1
             },
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {SMITE, MIND_BLAST, HOLY_FIRE, HOLY_NOVA},
+                affectSpell = {139993232},
                 perPoint = 1
             }
         }
@@ -65,7 +53,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {RENEW},
+                affectSpell = {64},
                 perPoint = 5
             }
         }
@@ -77,7 +65,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSchool = _addon.SCHOOL_MASK.HOLY,
+                affectSpell = {156507776},
                 perPoint = 1
             }
         }
@@ -88,7 +76,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {SMITE, HOLY_FIRE},
+                affectSpell = {1048704},
                 perPoint = 5
             }
         }
@@ -99,6 +87,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                affectSpell = {151264832},
                 perPoint = 2
             }
         }
@@ -111,7 +100,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DURATION,
-                affectSpell = {SHADOW_WORD_PAIN},
+                affectSpell = {32768},
                 perPoint = 3
             }
         }
@@ -123,7 +112,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-                affectSchool = _addon.SCHOOL_MASK.SHADOW,
+                affectSpell = {109813760},
                 perPoint = 2
             }
         }
@@ -135,12 +124,12 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {MIND_BLAST, SHADOW_GUARD, DEVOURING_PLAGUE},
+                affectSpell = {33562624},
                 perPoint = 2
             },
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {SHADOW_WORD_PAIN, MIND_FLAY, TOUCH_OF_WEAKNESS},
+                affectSpell = {8421376 + 524288},
                 perPoint = 2
             }
         }
@@ -157,6 +146,6 @@ _addon.buffData[15473] = {
 -- Inner Focus
 _addon.buffData[14751] = {
     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-    affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
+    affectSpell = {-917225840},
     value = 25
 }

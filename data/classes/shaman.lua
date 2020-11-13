@@ -4,17 +4,7 @@ if playerClass ~= "SHAMAN" then
     return;
 end
 
-local LIGHTNING_BOLT = GetSpellInfo(403);
-local CHAIN_LIGHTNING = GetSpellInfo(421);
-local EARTH_SHOCK = GetSpellInfo(8042);
-local FLAME_SHOCK = GetSpellInfo(8050);
 local LIGHTNING_SHIELD = GetSpellInfo(8788);
-local FROST_SHOCK = GetSpellInfo(8056);
-
-local SEARING_TOTEM = GetSpellInfo(3599);
-local MAGMA_TOTEM = GetSpellInfo(8190);
-local FIRE_NOVA_TOTEM = GetSpellInfo(1535);
-local HEALING_STREAM_TOTEM = GetSpellInfo(5394);
 
 _addon.talentData = {
     { -- Concussion
@@ -23,7 +13,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {LIGHTNING_BOLT, CHAIN_LIGHTNING, EARTH_SHOCK, FLAME_SHOCK, FROST_SHOCK},
+                affectSpell = {-1877999613},
                 perPoint = 1
             }
         }
@@ -34,7 +24,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {SEARING_TOTEM, FIRE_NOVA_TOTEM, MAGMA_TOTEM},
+                affectSpell = {4096 + 16 + 134217728},
                 perPoint = 5
             }
         }
@@ -55,7 +45,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {CHAIN_LIGHTNING, LIGHTNING_BOLT},
+                affectSpell = {3},
                 perPoint = 1
             }
         }
@@ -66,7 +56,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.CRIT_MULT,
-                affectSchool = _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.NATURE,
+                affectSpell = {1 + 2 + 1048576 + 268435456 + 2147483648 + 2097152 + 16777216 + 4096 + 16 + 134217728},
                 perPoint = 100
             }
         }
@@ -78,7 +68,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_EFFECT,
-                affectSpell = {HEALING_STREAM_TOTEM},
+                affectSpell = {524288},
                 perPoint = 5
             }
         }
@@ -89,7 +79,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSchool = _addon.SCHOOL_MASK.NATURE,
+                affectSpell = {1475},
                 perPoint = 1
             }
         }
@@ -100,6 +90,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                affectSpell = {448},
                 perPoint = 2
             }
         }
@@ -108,7 +99,7 @@ _addon.talentData = {
 
 _addon.buffData[16166] = { -- Elemental Mastery
     effect = _addon.EFFECT_TYPE.MOD_CRIT,
-    affectSpell = {LIGHTNING_BOLT, CHAIN_LIGHTNING, EARTH_SHOCK, FLAME_SHOCK, FROST_SHOCK},
+    affectSpell = {-1877999613},
     value = 100,
 };
 

@@ -4,11 +4,6 @@ if playerClass ~= "MAGE" then
     return;
 end
 
-local ARCANE_EXPLOSION = GetSpellInfo(1449);
-local FIRE_BLAST = GetSpellInfo(10197);
-local SCORCH = GetSpellInfo(10205);
-local FLAME_STRIKE = GetSpellInfo(2120);
-local CONE_OF_COLD = GetSpellInfo(8492);
 local MAGE_ARMOR = GetSpellInfo(6117);
 
 _addon.talentData = {
@@ -18,7 +13,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.RESISTANCE_PEN,
-                affectSchool = _addon.SCHOOL_MASK.ARCANE,
+                affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 5
             }
         }
@@ -29,7 +24,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-                affectSchool = _addon.SCHOOL_MASK.ARCANE,
+                affectSpell = {2359296},
                 perPoint = 2
             }
         }
@@ -50,7 +45,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {ARCANE_EXPLOSION},
+                affectSpell = {4096},
                 perPoint = 2
             }
         }
@@ -71,12 +66,12 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
+                affectSpell = {12589815},
                 perPoint = 1
             },
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
+                affectSpell = {12589815},
                 perPoint = 1
             }
         }
@@ -98,7 +93,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {FIRE_BLAST, SCORCH},
+                affectSpell = {18},
                 perPoint = 2
             }
         }
@@ -109,7 +104,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSpell = {FLAME_STRIKE},
+                affectSpell = {4},
                 perPoint = 5
             }
         }
@@ -130,7 +125,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_CRIT,
-                affectSchool = _addon.SCHOOL_MASK.FIRE,
+                affectSpell = {12582935},
                 perPoint = 2
             }
         }
@@ -141,7 +136,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.FIRE,
+                affectSpell = {12582935},
                 perPoint = 2
             }
         }
@@ -153,7 +148,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
-                affectSchool = _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.FIRE,
+                affectSpell = {12583671},
                 perPoint = 2
             }
         }
@@ -164,7 +159,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.CRIT_MULT,
-                affectSchool = _addon.SCHOOL_MASK.FROST,
+                affectSpell = {736},
                 perPoint = 20
             }
         }
@@ -175,7 +170,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSchool = _addon.SCHOOL_MASK.FROST,
+                affectSpell = {736},
                 perPoint = 2
             }
         }
@@ -186,7 +181,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-                affectSpell = {CONE_OF_COLD},
+                affectSpell = {512},
                 perPoint = 10,
                 base = 5
             }
@@ -196,7 +191,7 @@ _addon.talentData = {
 
 _addon.buffData[12042] = { -- Arcane Power
     effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
-    affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
+    affectSpell = {12589815},
     value = 30,
 };
 
