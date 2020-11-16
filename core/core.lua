@@ -257,6 +257,7 @@ local function CalcSpell(spellId)
     -- Cast time and GCD
 
     if stats.gcdMods[spellId] ~= nil then
+        -- TODO: this should probably be / 1000
         GCD = GCD + stats.gcdMods[spellId].val / 100;
         calcedSpell:AddToBuffList(stats.gcdMods[spellId].buffs);
     end
@@ -555,10 +556,11 @@ do
     local timerDiff = 0;
     local waitForUpdate = false;
 
-    -- Only update every 1/3 sec instead of possibly after every single change
+    -- Only update every 1 sec instead of possibly after every single change
+    -- Everything below 1 sec doesn't seem to catch cast time changes. Double batching?
     local function UpdateUpdate(self, diff)
         timerDiff = timerDiff + diff;
-        if timerDiff > 0.333 then
+        if timerDiff > 1 then
             currentState = currentState + 1;
             _addon:PrintDebug("Increment state! " .. currentState);
             updateStaggerFrame:SetScript("OnUpdate", nil);

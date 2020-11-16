@@ -54,6 +54,7 @@ _addon.EFFECT_TYPE = {
     MOD_HEALING_DONE_ALL = 24,
     SPELLMOD_EFFECT_PAST_FIRST = 25,
     SPELLMOD_GCD = 26,
+    TRIGGER_UPDATE = 27
 };
 
 --- Defense type (Decides mitigation types used)

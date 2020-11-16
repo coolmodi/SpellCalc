@@ -134,7 +134,6 @@ _addon.talentData = {
 };
 
 _addon.buffData[17116] = { -- Nature's Swiftness dummy
-    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
-    affectSchool = _addon.SCHOOL_MASK.NATURE,
-    value = 0,
+    effect = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+    value = 0
 };

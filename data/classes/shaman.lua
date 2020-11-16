@@ -104,9 +104,8 @@ _addon.buffData[16166] = { -- Elemental Mastery
 };
 
 _addon.buffData[16188] = { -- Nature's Swiftness dummy
-    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
-    affectSchool = _addon.SCHOOL_MASK.NATURE,
-    value = 0,
+    effect = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+    value = 0
 };
 
 _addon.buffData[LIGHTNING_SHIELD] = { -- for T3 setbonus

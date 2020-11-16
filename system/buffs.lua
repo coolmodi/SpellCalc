@@ -311,6 +311,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.gcdMods, affectSpell);
         return;
     end
+
+    if effect == EFFECT_TYPE.TRIGGER_UPDATE then
+        _addon:TriggerUpdate();
+        return;
+    end
 end
 
 --- Apply a buff

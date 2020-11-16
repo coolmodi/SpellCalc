@@ -76,8 +76,7 @@ _addon.itemEffects = {
     },
     [22399] = { -- Idol of Health (Dummy effect to trigger update)
         {
-            type = _addon.EFFECT_TYPE.MOD_EFFECT,
-            affectSpell = {32},
+            type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
             value = 0
         }
     },
