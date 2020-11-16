@@ -7,26 +7,9 @@ if playerClass ~= "DRUID" then
 end
 
 _addon.spellBaseInfo = {
-    [GetSpellInfo(339)] = { -- Entangling Roots
-        school = 4,
-        defType = 1,
-    },
-    [GetSpellInfo(467)] = { -- Thorns
-        school = 4,
-        defType = 1,
-    },
-    [GetSpellInfo(740)] = { -- Tranquility
-        school = 4,
-        isChannel = true,
-        defType = 1,
-    },
-    [GetSpellInfo(774)] = { -- Rejuvenation
-        school = 4,
-        defType = 1,
-    },
-    [GetSpellInfo(2912)] = { -- Starfire
-        school = 7,
-        defType = 1,
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        defType = 2,
     },
     [GetSpellInfo(5176)] = { -- Wrath
         school = 4,
@@ -36,29 +19,46 @@ _addon.spellBaseInfo = {
         school = 4,
         defType = 1,
     },
-    [GetSpellInfo(5570)] = { -- Insect Swarm
+    [GetSpellInfo(774)] = { -- Rejuvenation
         school = 4,
         defType = 1,
     },
-    [GetSpellInfo(6603)] = { -- Attack
-        school = 1,
-        defType = 2,
-    },
     [GetSpellInfo(8921)] = { -- Moonfire
         school = 7,
+        defType = 1,
+    },
+    [GetSpellInfo(467)] = { -- Thorns
+        school = 4,
+        defType = 1,
+    },
+    [GetSpellInfo(339)] = { -- Entangling Roots
+        school = 4,
         defType = 1,
     },
     [GetSpellInfo(8936)] = { -- Regrowth
         school = 4,
         defType = 1,
     },
-    [GetSpellInfo(16914)] = { -- Hurricane
-        school = 4,
-        isChannel = true,
+    [GetSpellInfo(2912)] = { -- Starfire
+        school = 7,
         defType = 1,
     },
     [GetSpellInfo(18562)] = { -- Swiftmend
         school = 4,
+        defType = 1,
+    },
+    [GetSpellInfo(740)] = { -- Tranquility
+        school = 4,
+        isChannel = true,
+        defType = 1,
+    },
+    [GetSpellInfo(5570)] = { -- Insect Swarm
+        school = 4,
+        defType = 1,
+    },
+    [GetSpellInfo(16914)] = { -- Hurricane
+        school = 4,
+        isChannel = true,
         defType = 1,
     },
 };

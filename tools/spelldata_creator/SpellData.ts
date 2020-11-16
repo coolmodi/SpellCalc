@@ -1,45 +1,9 @@
 import * as fs from "fs";
 import { fixSpellEffects } from "./spellDataFixes";
 import { isSeal } from "./paladinCrap";
+import { readDBCSV } from "./CSVReader";
 
 const AUTO_ATTACK_ID = 6603;
-
-/**
- * Read CSV
- * @param path 
- * @param index 
- */
-function readCSV(path: string, index: string) {
-    let raw = fs.readFileSync(path, "utf8");
-    raw = raw.replace(/"(.|\r|\n)*?"/g, (subs) => {
-        return subs.replace(/\s/g, "");
-    });
-    let lines = raw.replace("\r","").split("\n");
-    let headers = lines[0].split(",");
-    let data: {[index: string]: {[index: string]: number | string}} = {};
-    for (let i = 1; i < lines.length; i++) {
-        if (lines[i].length < 2) continue;
-        let lineData = lines[i].split(",");
-        let thisData: {[index: string]: number | string} = {};
-        for (let j = 0; j < headers.length; j++) {
-            if (lineData[j].match(/\d\.\d/)) {
-                thisData[headers[j]] = parseFloat(lineData[j]);
-            } else if (headers[j] == "Name_lang" || headers[j] == "NameSubtext_lang" || headers[j] == "Description_lang" || headers[j] == "AuraDescription_lang") {
-                thisData[headers[j]] = lineData[j];
-            } else {
-                thisData[headers[j]] = parseInt(lineData[j]);
-            }
-        }
-        if (!thisData[index]) 
-            throw new Error("CSV index not found!");
-
-        if (data[thisData[index]])
-            throw "Duplicate index encountered!";
-        
-        data[thisData[index]] = thisData;
-    }
-    return data;
-}
 
 export interface SpellLevel {
     ID: number,
@@ -181,6 +145,19 @@ export interface SpellEquippedItems {
     EquippedItemSubclass: number
 }
 
+export interface SpellAuraOptions {
+    ID: number,
+    DifficultyID: number,
+    CumulativeAura: number,
+    ProcCategoryRecovery: number,
+    ProcChance: number,
+    ProcCharges: number,
+    SpellProcsPerMinuteID: number,
+    ["ProcTypeMask[0]"]: number,
+    ["ProcTypeMask[1]"]: number,
+    SpellID: number,
+}
+
 export class SpellData {
     private spellEffects: {[index: number]: SpellEffect};
     private spellLevels: {[index: number]: SpellLevel};
@@ -194,31 +171,22 @@ export class SpellData {
     private spellPowerCost: {[index: number]: SpellPower};
     private spellClassOptions: {[index: number]: SpellClassOptions};
     private spellEquippedItems: {[index: number]: SpellEquippedItems};
+    private spellAuraOptions: {[index: number]: SpellAuraOptions};
 
     constructor() {
         console.log("Creating SpellData");
-        // @ts-ignore
-        this.spellEffects = readCSV("data/dbc/spelleffect.csv", "ID");
-        // @ts-ignore
-        this.spellLevels = readCSV("data/dbc/spelllevels.csv", "SpellID");
-        // @ts-ignore
-        this.spellMiscs = readCSV("data/dbc/spellmisc.csv", "SpellID");
-        // @ts-ignore
-        this.spellNames = readCSV("data/dbc/spellname.csv", "ID");
-        // @ts-ignore
-        this.spell = readCSV("data/dbc/spell.csv", "ID");
-        // @ts-ignore
-        this.spellDuration = readCSV("data/dbc/spellduration.csv", "ID");
-        // @ts-ignore
-        this.spellCategories = readCSV("data/dbc/spellcategories.csv", "SpellID");
-        // @ts-ignore
-        this.spellCooldowns = readCSV("data/dbc/spellcooldowns.csv", "SpellID");
-        // @ts-ignore
-        this.spellPowerCost = readCSV("data/dbc/spellpower.csv", "ID");
-        // @ts-ignore
-        this.spellClassOptions = readCSV("data/dbc/spellclassoptions.csv", "SpellID");
-        // @ts-ignore
-        this.spellEquippedItems = readCSV("data/dbc/spellequippeditems.csv", "SpellID");
+        this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
+        this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
+        this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID");
+        this.spellNames = readDBCSV<SpellName>("data/dbc/spellname.csv", "ID");
+        this.spell = readDBCSV<Spell>("data/dbc/spell.csv", "ID");
+        this.spellDuration = readDBCSV<SpellDuration>("data/dbc/spellduration.csv", "ID");
+        this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID");
+        this.spellCooldowns = readDBCSV<SpellCooldown>("data/dbc/spellcooldowns.csv", "SpellID");
+        this.spellPowerCost = readDBCSV<SpellPower>("data/dbc/spellpower.csv", "ID");
+        this.spellClassOptions = readDBCSV<SpellClassOptions>("data/dbc/spellclassoptions.csv", "SpellID");
+        this.spellEquippedItems = readDBCSV<SpellEquippedItems>("data/dbc/spellequippeditems.csv", "SpellID");
+        this.spellAuraOptions = readDBCSV<SpellAuraOptions>("data/dbc/spellauraoptions.csv", "SpellID");
 
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
@@ -365,5 +333,11 @@ export class SpellData {
 
     getSpellEquipeedItems(spellId: number): SpellEquippedItems | undefined {
         return this.spellEquippedItems[spellId];
+    }
+
+    getSpellAuraOptions(spellId: number)
+    {
+        if (!this.spellAuraOptions[spellId]) throw "SpellAuraOptions not forund for spell " + spellId;
+        return this.spellAuraOptions[spellId];
     }
 }

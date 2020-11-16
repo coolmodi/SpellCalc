@@ -7,7 +7,11 @@ if playerClass ~= "WARLOCK" then
 end
 
 _addon.spellBaseInfo = {
-    [GetSpellInfo(172)] = { -- Corruption
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        defType = 2,
+    },
+    [GetSpellInfo(686)] = { -- Shadow Bolt
         school = 6,
         defType = 1,
     },
@@ -15,22 +19,8 @@ _addon.spellBaseInfo = {
         school = 3,
         defType = 1,
     },
-    [GetSpellInfo(603)] = { -- Curse of Doom
+    [GetSpellInfo(172)] = { -- Corruption
         school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(686)] = { -- Shadow Bolt
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(689)] = { -- Drain Life
-        school = 6,
-        isChannel = true,
-        defType = 1,
-    },
-    [GetSpellInfo(755)] = { -- Health Funnel
-        school = 6,
-        isChannel = true,
         defType = 1,
     },
     [GetSpellInfo(980)] = { -- Curse of Agony
@@ -42,8 +32,13 @@ _addon.spellBaseInfo = {
         isChannel = true,
         defType = 1,
     },
-    [GetSpellInfo(1949)] = { -- Hellfire
-        school = 3,
+    [GetSpellInfo(755)] = { -- Health Funnel
+        school = 6,
+        isChannel = true,
+        defType = 1,
+    },
+    [GetSpellInfo(689)] = { -- Drain Life
+        school = 6,
         isChannel = true,
         defType = 1,
     },
@@ -56,32 +51,37 @@ _addon.spellBaseInfo = {
         isChannel = true,
         defType = 1,
     },
+    [GetSpellInfo(17877)] = { -- Shadowburn
+        school = 6,
+        defType = 1,
+    },
+    [GetSpellInfo(1949)] = { -- Hellfire
+        school = 3,
+        isChannel = true,
+        defType = 1,
+    },
     [GetSpellInfo(6229)] = { -- Shadow Ward
         school = 6,
         defType = 1,
     },
-    [GetSpellInfo(6353)] = { -- Soul Fire
-        school = 3,
+    [GetSpellInfo(18265)] = { -- Siphon Life
+        school = 6,
         defType = 1,
-    },
-    [GetSpellInfo(6603)] = { -- Attack
-        school = 1,
-        defType = 2,
     },
     [GetSpellInfo(6789)] = { -- Death Coil
         school = 6,
         isBinary = true,
         defType = 1,
     },
-    [GetSpellInfo(17877)] = { -- Shadowburn
-        school = 6,
+    [GetSpellInfo(6353)] = { -- Soul Fire
+        school = 3,
         defType = 1,
     },
     [GetSpellInfo(17962)] = { -- Conflagrate
         school = 3,
         defType = 1,
     },
-    [GetSpellInfo(18265)] = { -- Siphon Life
+    [GetSpellInfo(603)] = { -- Curse of Doom
         school = 6,
         defType = 1,
     },

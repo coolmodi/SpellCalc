@@ -7,6 +7,22 @@ if playerClass ~= "PRIEST" then
 end
 
 _addon.spellBaseInfo = {
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        defType = 2,
+    },
+    [GetSpellInfo(585)] = { -- Smite
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(2050)] = { -- Lesser Heal
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(589)] = { -- Shadow Word: Pain
+        school = 6,
+        defType = 1,
+    },
     [GetSpellInfo(17)] = { -- Power Word: Shield
         school = 2,
         defType = 1,
@@ -15,48 +31,12 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 1,
     },
-    [GetSpellInfo(585)] = { -- Smite
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(589)] = { -- Shadow Word: Pain
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(596)] = { -- Prayer of Healing
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2050)] = { -- Lesser Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2054)] = { -- Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2060)] = { -- Greater Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2061)] = { -- Flash Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2652)] = { -- Touch of Weakness
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(2944)] = { -- Devouring Plague
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(6603)] = { -- Attack
-        school = 1,
-        defType = 2,
-    },
     [GetSpellInfo(8092)] = { -- Mind Blast
         school = 6,
+        defType = 1,
+    },
+    [GetSpellInfo(13908)] = { -- Desperate Prayer
+        school = 2,
         defType = 1,
     },
     [GetSpellInfo(10797)] = { -- Starshards
@@ -64,12 +44,28 @@ _addon.spellBaseInfo = {
         isChannel = true,
         defType = 1,
     },
-    [GetSpellInfo(13908)] = { -- Desperate Prayer
+    [GetSpellInfo(2652)] = { -- Touch of Weakness
+        school = 6,
+        defType = 1,
+    },
+    [GetSpellInfo(2054)] = { -- Heal
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(2061)] = { -- Flash Heal
         school = 2,
         defType = 1,
     },
     [GetSpellInfo(14914)] = { -- Holy Fire
         school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(2944)] = { -- Devouring Plague
+        school = 6,
+        defType = 1,
+    },
+    [GetSpellInfo(18137)] = { -- Shadowguard
+        school = 6,
         defType = 1,
     },
     [GetSpellInfo(15237)] = { -- Holy Nova
@@ -82,8 +78,12 @@ _addon.spellBaseInfo = {
         isBinary = true,
         defType = 1,
     },
-    [GetSpellInfo(18137)] = { -- Shadowguard
-        school = 6,
+    [GetSpellInfo(596)] = { -- Prayer of Healing
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(2060)] = { -- Greater Heal
+        school = 2,
         defType = 1,
     },
 };

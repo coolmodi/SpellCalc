@@ -1,6 +1,9 @@
 import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown, SpellPower, SpellEquippedItems } from "./SpellData";
 import * as fs from "fs";
-import { isSeal, isJudgeDummy, SealType } from "./paladinCrap";
+import { isSeal, SealType } from "./paladinCrap";
+import { ItemSetCreator } from "./ItemSetCreator";
+import { ClassSpellLists } from "./ClassSpellLists";
+import { ClassSpellSets } from "./ClassSpellSets";
 
 const outputdir = __dirname + "/../../../data/classes/";
 
@@ -15,50 +18,6 @@ const CLASSES = [
     //"rogue",
     //"warrior"
 ];
-const DO_EFFECTS = [
-    EFFECT_TYPE.SPELL_EFFECT_HEAL,
-    EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA,
-    EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE,
-    EFFECT_TYPE.SPELL_EFFECT_HEALTH_LEECH,
-    EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA,
-    EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC,
-    EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE,
-    EFFECT_TYPE.SPELL_EFFECT_ATTACK,
-    EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE,
-    EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY
-];
-const DO_AURAS = [
-    AURA_TYPE.SPELL_AURA_PERIODIC_HEAL,
-    AURA_TYPE.SPELL_AURA_SCHOOL_ABSORB,
-    AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE,
-    AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL,
-    AURA_TYPE.SPELL_AURA_PERIODIC_LEECH,
-    AURA_TYPE.SPELL_AURA_MANA_SHIELD,
-    AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD,
-    AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL,
-    AURA_TYPE.SPELL_AURA_DUMMY
-];
-
-const DMG_SHIELD_DATA: {[index: string]: number} = {
-    "Shadowguard": 3,
-    "Lightning Shield": 3,
-    "Touch of Weakness": 1
-}
-
-const TRIGGER_SPELL_IGNORE: {[spellName: string]: boolean} = {
-    "Feedback": true,
-    "Frost Armor": true,
-    "Ice Armor": true,
-    "Drain Soul": true,
-    "Nature's Grasp": true,
-    "Seal of Justice": true,
-    "Seal of Light": true, // no scaling, no need to handle
-    "Seal of Wisdom": true
-}
-
-const PTSA_IGNORES = [
-    552, 1515, 2893, 1949, 11683, 11684
-];
 
 const SCHOOL_MASK_TO_ENUM = {
     [SCHOOL_MASK.NONE]: 0,
@@ -72,8 +31,8 @@ const SCHOOL_MASK_TO_ENUM = {
 }
 
 const spellData = new SpellData();
-
-let judgementRemap: {[index: number]: number} = {}
+const classSpellLists = new ClassSpellLists(spellData, CLASSES);
+const classSpellSets = new ClassSpellSets(spellData);
 
 const SpellClassSet = {
     MAGE: 3,
@@ -85,85 +44,6 @@ const SpellClassSet = {
     HUNTER: 9,
     PALADIN: 10,
     SHAMAN: 11,
-}
-
-/**
- * Get list of valid/handled spells for a class
- * @param pclass 
- */
-function getValidSpellList(pclass: string) {
-    console.log("Building list of spells for class " + pclass);
-    let data: {[index: string]: number} = JSON.parse(fs.readFileSync("data/class_spells/" + pclass + ".json", "utf8"));
-    let list: {[index: number]: SpellEffect[]} = {};
-    let binaryCache: {[index: number]: SpellEffect} = {};
-
-    for (let nameRank in data) {
-        let spellEffects = spellData.getSpellEffects(data[nameRank]);
-        for (let i = 0; i < spellEffects.length; i++) {
-            let effect = spellEffects[i];
-
-            if (DO_EFFECTS.indexOf(effect.Effect) == -1) continue;
-            
-            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA 
-                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA 
-                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY) {
-                if (DO_AURAS.indexOf(effect.EffectAura) == -1) {
-                    if (effect.EffectMechanic != 0 && effect.EffectIndex != 0) {
-                        binaryCache[effect.SpellID] = effect;
-                    }
-                    continue;
-                };
-
-                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL) {
-                    let spellName = spellData.getSpellName(effect.SpellID).Name_lang;
-                    if (TRIGGER_SPELL_IGNORE[spellName]) {
-                        console.log("Ignoring spell " + spellName);
-                        continue;
-                    }
-                    if (!DMG_SHIELD_DATA[spellName]) {
-                        console.error("Spell " + effect.SpellID + " " + spellName + " not handled correctly!");
-                        throw "SPELL_AURA_PROC_TRIGGER_SPELL not handled!";
-                    }
-                    console.log("have trigger aura " + effect.SpellID + " " + spellName);
-                }
-
-                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL ) {
-                    if (PTSA_IGNORES.indexOf(effect.SpellID) != -1 || effect.EffectTriggerSpell == 0) continue;
-                }
-
-                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY) {
-                    // pala seals
-                    let stype = isJudgeDummy(effect);
-                    if (stype !== false) {
-                        const jspell = spellData.getSpellEffects(effect.EffectBasePoints + 1); 
-                        if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-                        if (!list[jspell[0].SpellID]) list[jspell[0].SpellID] = [];
-                        list[jspell[0].SpellID].push(jspell[0]);
-                        judgementRemap[effect.SpellID] = jspell[0].SpellID;
-                        // don't use this effect
-                        continue;
-                    }
-                    // only add SoR or SoC attack effect
-                    if (!(effect.EffectIndex == 0 && isSeal(effect.SpellID))) continue;
-                }
-            }
-
-            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC) {
-                if (!spellData.getTotemSpell(effect.SpellID)) continue;
-            }
-
-            if (!list[effect.SpellID]) list[effect.SpellID] = [];
-            list[effect.SpellID].push(effect);
-        }
-    }
-
-    for (let sid in binaryCache) {
-        if (list[sid]) {
-            list[sid].push(binaryCache[sid]);
-        }
-    }
-
-    return list;
 }
 
 function handleDummyAura(effect: SpellEffect, ei: EffectInfo) {
@@ -210,7 +90,8 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL:
         case AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD:
-            rankInfo.effects[effectNum].charges = (DMG_SHIELD_DATA[spellName]) ? DMG_SHIELD_DATA[spellName] : -1;
+            const saopts = spellData.getSpellAuraOptions(effect.SpellID);
+            rankInfo.effects[effectNum].charges = (saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
             break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
             const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
@@ -404,7 +285,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
  */
 function buildSpellInfo(pclass: string) {
     console.log("Building spell data for class " + pclass);
-    let list = getValidSpellList(pclass);
+    const list = classSpellLists.getListForClass(pclass);
     let classInfo: ClassInfo = {
         baseInfo: {},
         rankInfo: {},
@@ -420,16 +301,16 @@ function buildSpellInfo(pclass: string) {
     let spellCosts: SpellPower[];
     let spellEquippedItems: SpellEquippedItems | undefined;
 
-    for (let s in list) {
-        effects = list[s];
-        spellMisc = spellData.getSpellMisc(effects[0].SpellID);
-        spellName = spellData.getSpellName(effects[0].SpellID).Name_lang;
-        spellLevel = spellData.getSpellLevel(effects[0].SpellID);
-        spellspell = spellData.getSpell(effects[0].SpellID);
-        spellcat = spellData.getSpellCategory(effects[0].SpellID);
-        spellcd = spellData.getSpellCooldown(effects[0].SpellID);
-        spellCosts = spellData.getSpellPowerCosts(effects[0].SpellID);
-        spellEquippedItems = spellData.getSpellEquipeedItems(effects[0].SpellID);
+    for (const [spellId, spellEffects] of list) {
+        effects = spellEffects;
+        spellMisc = spellData.getSpellMisc(spellId);
+        spellName = spellData.getSpellName(spellId).Name_lang;
+        spellLevel = spellData.getSpellLevel(spellId);
+        spellspell = spellData.getSpell(spellId);
+        spellcat = spellData.getSpellCategory(spellId);
+        spellcd = spellData.getSpellCooldown(spellId);
+        spellCosts = spellData.getSpellPowerCosts(spellId);
+        spellEquippedItems = spellData.getSpellEquipeedItems(spellId);
 
         // Skip physical spells except auto attack and SOtC for now
         if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID, SealType.SOtC)) continue;
@@ -437,7 +318,7 @@ function buildSpellInfo(pclass: string) {
         // Create base info if needed
         if (!classInfo.baseInfo[spellName]) {
             classInfo.baseInfo[spellName] = {
-                getspellinfoid: effects[0].SpellID,
+                getspellinfoid: spellId,
                 school: SCHOOL_MASK_TO_ENUM[spellMisc.SchoolMask],
                 isChannel: ((spellMisc["Attributes[1]"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
                 isBinary: false,
@@ -449,9 +330,9 @@ function buildSpellInfo(pclass: string) {
         }
 
         // Create rank info if needed
-        if (!classInfo.rankInfo[effects[0].SpellID]) {
+        if (!classInfo.rankInfo[spellId]) {
             let dur = (spellMisc.DurationIndex) ? spellData.getSpellDuration(spellMisc.DurationIndex).Duration / 1000 : 0;
-            classInfo.rankInfo[effects[0].SpellID] = {
+            classInfo.rankInfo[spellId] = {
                 spellnamecomment: spellName + ( (spellspell.NameSubtext_lang.length) ? `(${spellspell.NameSubtext_lang})` : "" ),
                 spellLevel: spellLevel.SpellLevel,
                 maxLevel: spellLevel.MaxLevel,
@@ -462,12 +343,12 @@ function buildSpellInfo(pclass: string) {
 
             if (spellCosts.length === 1) {
                 if (spellCosts[0].PowerType == PowerType.MANA || spellCosts[0].PowerType == PowerType.RAGE || spellCosts[0].PowerType == PowerType.ENERGY) {
-                    classInfo.rankInfo[effects[0].SpellID].baseCost = spellCosts[0].ManaCost;
+                    classInfo.rankInfo[spellId].baseCost = spellCosts[0].ManaCost;
                 }
             } else if (spellCosts.length > 1) {
                 for (let cinfo of spellCosts) {
                     if (cinfo.PowerType == PowerType.MANA || cinfo.PowerType == PowerType.RAGE || cinfo.PowerType == PowerType.ENERGY) {
-                        classInfo.rankInfo[effects[0].SpellID].baseCost = cinfo.ManaCost;
+                        classInfo.rankInfo[spellId].baseCost = cinfo.ManaCost;
                         break;
                     }
                 }
@@ -479,9 +360,9 @@ function buildSpellInfo(pclass: string) {
             effectInfoHandler[effects[i].Effect](classInfo.rankInfo[effects[i].SpellID], effects[i], i, spellName, classInfo.baseInfo[spellName]);
 
             // Make sure maxlevel is defined for spells with level scaling
-            if (classInfo.rankInfo[effects[0].SpellID].effects[i] 
-                && classInfo.rankInfo[effects[0].SpellID].effects[i].perLevel != 0 
-                && classInfo.rankInfo[effects[0].SpellID].maxLevel == 0) throw "Effect has perlevel scaling but maxlevel of the spell is 0!";
+            if (classInfo.rankInfo[spellId].effects[i] 
+                && classInfo.rankInfo[spellId].effects[i].perLevel != 0 
+                && classInfo.rankInfo[spellId].maxLevel == 0) throw "Effect has perlevel scaling but maxlevel of the spell is 0!";
         }
     }
 
@@ -560,50 +441,24 @@ end
     if (pclass == "paladin") {
         let spellName: string;
         let spellspell: Spell;
-        for (let seal in judgementRemap) {
-            let sealId = parseInt(seal);
+        for (const [sealId, remapId] of classSpellLists.getJudgementRemap()) {
             spellName = spellData.getSpellName(sealId).Name_lang;
             spellspell = spellData.getSpell(sealId);
             const name = spellName + ( (spellspell.NameSubtext_lang.length) ? `(${spellspell.NameSubtext_lang})` : "" );
             str += `_addon.buffData[${sealId}] = { -- ${name}\n`;
             str += "\teffect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,\n";
-            str += `\tvalue = ${judgementRemap[seal]}\n`;
+            str += `\tvalue = ${remapId}\n`;
             str += "};\n\n";
         }
     }
 
-
-    console.log("Creating spell sets...");
-
-    interface SpellSet {[bit: number]: {[spellId: number]: true}}
-    const spellSets: [SpellSet, SpellSet, SpellSet, SpellSet] = [{},{},{},{}];
-    const scopts = spellData.getSpellClassOptions();
     // @ts-ignore
     const classSetNum: number = SpellClassSet[pclass.toUpperCase()];
-
-    for (let spellId in scopts) {
-        const scopt = scopts[spellId];
-        
-        if (scopt.SpellClassSet != classSetNum) continue;
-
-        for (let i = 0; i < 4; i++) {
-            // @ts-ignore
-            const mask = scopt["SpellClassMask[" + i + "]"];
-            if (mask == 0) continue;
-            let bit = 1;
-            while (bit != 0) {
-                if (bit & mask) {
-                    if (!spellSets[i][bit]) spellSets[i][bit] = {};
-                    spellSets[i][bit][spellId] = true;
-                }
-                bit = bit << 1;
-            }
-        }
-    }
+    const classSpellSet = classSpellSets.getClassSets(classSetNum);
 
     str += "_addon.spellClassSet = {\n";
     for (let i = 0; i < 4; i++) {
-        let sset = spellSets[i];
+        let sset = classSpellSet[i];
         str += `\t[${i + 1}] = {\n`;
         
         for (let bit in sset) {
@@ -630,7 +485,9 @@ end
     fs.writeFileSync(outputdir + pclass + "_spell.lua", str);
 }
 
-
 for (let i = 0; i < CLASSES.length; i++) {
     createLua(CLASSES[i]);
 }
+
+const isc = new ItemSetCreator(spellData, classSpellLists, classSpellSets);
+fs.writeFileSync(__dirname + "/../../../data/itemSetData.lua", isc.getItemSetLua());

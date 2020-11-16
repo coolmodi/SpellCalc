@@ -7,19 +7,23 @@ if playerClass ~= "PALADIN" then
 end
 
 _addon.spellBaseInfo = {
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        defType = 2,
+    },
     [GetSpellInfo(635)] = { -- Holy Light
         school = 2,
         defType = 1,
     },
-    [GetSpellInfo(879)] = { -- Exorcism
+    [GetSpellInfo(21084)] = { -- Seal of Righteousness
+        school = 2,
+        defType = 2,
+    },
+    [GetSpellInfo(20187)] = { -- Judgement of Righteousness
         school = 2,
         defType = 1,
     },
-    [GetSpellInfo(2812)] = { -- Holy Wrath
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(6603)] = { -- Attack
+    [GetSpellInfo(21082)] = { -- Seal of the Crusader
         school = 1,
         defType = 2,
     },
@@ -27,23 +31,15 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 1,
     },
+    [GetSpellInfo(879)] = { -- Exorcism
+        school = 2,
+        defType = 1,
+    },
     [GetSpellInfo(19750)] = { -- Flash of Light
         school = 2,
         defType = 1,
     },
-    [GetSpellInfo(20116)] = { -- Consecration
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(20154)] = { -- Seal of Righteousness
-        school = 2,
-        defType = 2,
-    },
-    [GetSpellInfo(20162)] = { -- Seal of the Crusader
-        school = 1,
-        defType = 2,
-    },
-    [GetSpellInfo(20187)] = { -- Judgement of Righteousness
+    [GetSpellInfo(26573)] = { -- Consecration
         school = 2,
         defType = 1,
     },
@@ -56,18 +52,22 @@ _addon.spellBaseInfo = {
         defType = 2,
         cantDogeParryBlock = true,
     },
+    [GetSpellInfo(24275)] = { -- Hammer of Wrath
+        school = 2,
+        GCD = 1,
+        defType = 3,
+    },
     [GetSpellInfo(20473)] = { -- Holy Shock
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(2812)] = { -- Holy Wrath
         school = 2,
         defType = 1,
     },
     [GetSpellInfo(23590)] = { -- Judgement
         school = 2,
         defType = 0,
-    },
-    [GetSpellInfo(24239)] = { -- Hammer of Wrath
-        school = 2,
-        GCD = 1,
-        defType = 3,
     },
 };
 
@@ -1125,6 +1125,11 @@ _addon.spellRankInfo = {
     },
 };
 
+_addon.buffData[21084] = { -- Seal of Righteousness(Rank 1)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20187
+};
+
 _addon.buffData[20287] = { -- Seal of Righteousness(Rank 2)
     effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20280
@@ -1140,14 +1145,34 @@ _addon.buffData[20289] = { -- Seal of Righteousness(Rank 4)
     value = 20282
 };
 
+_addon.buffData[20375] = { -- Seal of Command(Rank 1)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20467
+};
+
+_addon.buffData[20915] = { -- Seal of Command(Rank 2)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20963
+};
+
 _addon.buffData[20290] = { -- Seal of Righteousness(Rank 5)
     effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20283
 };
 
+_addon.buffData[20918] = { -- Seal of Command(Rank 3)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20964
+};
+
 _addon.buffData[20291] = { -- Seal of Righteousness(Rank 6)
     effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20284
+};
+
+_addon.buffData[20919] = { -- Seal of Command(Rank 4)
+    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 20965
 };
 
 _addon.buffData[20292] = { -- Seal of Righteousness(Rank 7)
@@ -1160,34 +1185,9 @@ _addon.buffData[20293] = { -- Seal of Righteousness(Rank 8)
     value = 20286
 };
 
-_addon.buffData[20375] = { -- Seal of Command(Rank 1)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
-    value = 20467
-};
-
-_addon.buffData[20915] = { -- Seal of Command(Rank 2)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
-    value = 20963
-};
-
-_addon.buffData[20918] = { -- Seal of Command(Rank 3)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
-    value = 20964
-};
-
-_addon.buffData[20919] = { -- Seal of Command(Rank 4)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
-    value = 20965
-};
-
 _addon.buffData[20920] = { -- Seal of Command(Rank 5)
     effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20966
-};
-
-_addon.buffData[21084] = { -- Seal of Righteousness(Rank 1)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
-    value = 20187
 };
 
 _addon.spellClassSet = {

@@ -7,9 +7,12 @@ if playerClass ~= "MAGE" then
 end
 
 _addon.spellBaseInfo = {
-    [GetSpellInfo(10)] = { -- Blizzard
-        school = 5,
-        isChannel = true,
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        defType = 2,
+    },
+    [GetSpellInfo(133)] = { -- Fireball
+        school = 3,
         defType = 1,
     },
     [GetSpellInfo(116)] = { -- Frostbolt
@@ -17,41 +20,7 @@ _addon.spellBaseInfo = {
         isBinary = true,
         defType = 1,
     },
-    [GetSpellInfo(120)] = { -- Cone of Cold
-        school = 5,
-        isBinary = true,
-        defType = 1,
-    },
-    [GetSpellInfo(122)] = { -- Frost Nova
-        school = 5,
-        isBinary = true,
-        defType = 1,
-    },
-    [GetSpellInfo(133)] = { -- Fireball
-        school = 3,
-        defType = 1,
-    },
-    [GetSpellInfo(543)] = { -- Fire Ward
-        school = 3,
-        defType = 1,
-    },
-    [GetSpellInfo(1449)] = { -- Arcane Explosion
-        school = 7,
-        defType = 1,
-    },
-    [GetSpellInfo(1463)] = { -- Mana Shield
-        school = 7,
-        defType = 1,
-    },
-    [GetSpellInfo(2120)] = { -- Flamestrike
-        school = 3,
-        defType = 1,
-    },
     [GetSpellInfo(2136)] = { -- Fire Blast
-        school = 3,
-        defType = 1,
-    },
-    [GetSpellInfo(2948)] = { -- Scorch
         school = 3,
         defType = 1,
     },
@@ -60,21 +29,52 @@ _addon.spellBaseInfo = {
         isChannel = true,
         defType = 1,
     },
+    [GetSpellInfo(122)] = { -- Frost Nova
+        school = 5,
+        isBinary = true,
+        defType = 1,
+    },
+    [GetSpellInfo(1449)] = { -- Arcane Explosion
+        school = 7,
+        defType = 1,
+    },
+    [GetSpellInfo(2120)] = { -- Flamestrike
+        school = 3,
+        defType = 1,
+    },
+    [GetSpellInfo(10)] = { -- Blizzard
+        school = 5,
+        isChannel = true,
+        defType = 1,
+    },
+    [GetSpellInfo(543)] = { -- Fire Ward
+        school = 3,
+        defType = 1,
+    },
+    [GetSpellInfo(1463)] = { -- Mana Shield
+        school = 7,
+        defType = 1,
+    },
     [GetSpellInfo(6143)] = { -- Frost Ward
         school = 5,
         defType = 1,
     },
-    [GetSpellInfo(6603)] = { -- Attack
-        school = 1,
-        defType = 2,
-    },
-    [GetSpellInfo(11113)] = { -- Blast Wave
+    [GetSpellInfo(2948)] = { -- Scorch
         school = 3,
-        isBinary = true,
         defType = 1,
     },
     [GetSpellInfo(11366)] = { -- Pyroblast
         school = 3,
+        defType = 1,
+    },
+    [GetSpellInfo(120)] = { -- Cone of Cold
+        school = 5,
+        isBinary = true,
+        defType = 1,
+    },
+    [GetSpellInfo(11113)] = { -- Blast Wave
+        school = 3,
+        isBinary = true,
         defType = 1,
     },
     [GetSpellInfo(11426)] = { -- Ice Barrier

@@ -7,9 +7,9 @@ if playerClass ~= "SHAMAN" then
 end
 
 _addon.spellBaseInfo = {
-    [GetSpellInfo(324)] = { -- Lightning Shield
-        school = 4,
-        defType = 1,
+    [GetSpellInfo(6603)] = { -- Attack
+        school = 1,
+        defType = 2,
     },
     [GetSpellInfo(331)] = { -- Healing Wave
         school = 4,
@@ -19,15 +19,15 @@ _addon.spellBaseInfo = {
         school = 4,
         defType = 1,
     },
-    [GetSpellInfo(421)] = { -- Chain Lightning
+    [GetSpellInfo(8042)] = { -- Earth Shock
         school = 4,
         defType = 1,
     },
-    [GetSpellInfo(1064)] = { -- Chain Heal
+    [GetSpellInfo(324)] = { -- Lightning Shield
         school = 4,
         defType = 1,
     },
-    [GetSpellInfo(1535)] = { -- Fire Nova Totem
+    [GetSpellInfo(8050)] = { -- Flame Shock
         school = 3,
         defType = 1,
     },
@@ -35,24 +35,16 @@ _addon.spellBaseInfo = {
         school = 3,
         defType = 1,
     },
-    [GetSpellInfo(5394)] = { -- Healing Stream Totem
-        school = 5,
+    [GetSpellInfo(1535)] = { -- Fire Nova Totem
+        school = 3,
         defType = 1,
-    },
-    [GetSpellInfo(6603)] = { -- Attack
-        school = 1,
-        defType = 2,
     },
     [GetSpellInfo(8004)] = { -- Lesser Healing Wave
         school = 4,
         defType = 1,
     },
-    [GetSpellInfo(8042)] = { -- Earth Shock
-        school = 4,
-        defType = 1,
-    },
-    [GetSpellInfo(8050)] = { -- Flame Shock
-        school = 3,
+    [GetSpellInfo(5394)] = { -- Healing Stream Totem
+        school = 5,
         defType = 1,
     },
     [GetSpellInfo(8056)] = { -- Frost Shock
@@ -62,6 +54,14 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(8190)] = { -- Magma Totem
         school = 3,
+        defType = 1,
+    },
+    [GetSpellInfo(421)] = { -- Chain Lightning
+        school = 4,
+        defType = 1,
+    },
+    [GetSpellInfo(1064)] = { -- Chain Heal
+        school = 4,
         defType = 1,
     },
 };
