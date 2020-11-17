@@ -89,33 +89,31 @@ end
 ---@return number @bonusMod affecting only the bonus SP/AP of the spell
 local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
     local bonusMod = 1;
-    local baseMod = stats.effectMods.school[school].val;
-    calcedSpell:AddToBuffList(stats.effectMods.school[school].buffs);
+    local baseMod = 1;
 
-    if stats.effectMods.spell[spellId] ~= nil then
-        baseMod = baseMod * stats.effectMods.spell[spellId].val;
-        calcedSpell:AddToBuffList(stats.effectMods.spell[spellId].buffs);
+    if stats.spellModPctEffect[spellId] ~= nil then
+        baseMod = baseMod + stats.spellModPctEffect[spellId].val / 100;
+        calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
     end
 
     if isDmg then
-        bonusMod = bonusMod * stats.dmgDoneMods.school[school].val;
-        calcedSpell:AddToBuffList(stats.dmgDoneMods.school[school].buffs);
-
-        if stats.dmgDoneMods.spell[spellId] ~= nil then
-            bonusMod = bonusMod * stats.dmgDoneMods.spell[spellId].val;
-            calcedSpell:AddToBuffList(stats.dmgDoneMods.spell[spellId].buffs);
+        if stats.spellModPctDamage[spellId] ~= nil then
+            bonusMod = bonusMod + stats.spellModPctDamage[spellId].val / 100;
+            calcedSpell:AddToBuffList(stats.spellModPctDamage[spellId].buffs);
         end
+
+        bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
+        calcedSpell:AddToBuffList(stats.schoolModPctDamage[school].buffs);
+
     elseif isHeal then
-        baseMod = baseMod * stats.healingDoneMod.val;
-        calcedSpell:AddToBuffList(stats.healingDoneMod.buffs);
-
-        if stats.healingDoneMod.spell[spellId] ~= nil then
-            baseMod = baseMod * stats.healingDoneMod.spell[spellId].val;
-            calcedSpell:AddToBuffList(stats.healingDoneMod.spell[spellId].buffs);
+        if stats.spellModPctHealing[spellId] ~= nil then
+            -- This is the very same as spellModPctEffect, just limited to healing internally in this addon
+            baseMod = baseMod + stats.spellModPctHealing[spellId].val / 100;
+            calcedSpell:AddToBuffList(stats.spellModPctHealing[spellId].buffs);
         end
 
-        bonusMod = bonusMod * stats.healingDoneModAll.val;
-        calcedSpell:AddToBuffList(stats.healingDoneModAll.buffs);
+        bonusMod = bonusMod + stats.modhealingDone.val / 100;
+        calcedSpell:AddToBuffList(stats.modhealingDone.buffs);
     end
 
     baseMod = baseMod * bonusMod;

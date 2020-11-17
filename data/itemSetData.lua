@@ -269,7 +269,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                     affectSpell = {2, 0, 0, 0},
                     value = 2,
                 }
@@ -301,7 +301,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                     affectSpell = {4, 0, 0, 0},
                     value = 5,
                 }
@@ -327,7 +327,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                     affectSpell = {32768, 0, 0, 0},
                     value = 15,
                 }
@@ -353,7 +353,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                     affectSpell = {32768, 0, 0, 0},
                     value = 5,
                 }
@@ -390,7 +390,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                     affectSpell = {2, 0, 0, 0},
                     value = 12,
                 }

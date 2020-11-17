@@ -229,11 +229,11 @@ class AuraHandlers
             switch (effect["EffectMiscValue[0]"])
             {
                 case 8: // SPELLMOD_ALL_EFFECTS
-                    aed.effect = ADDON_EFFECT_TYPE.MOD_EFFECT;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELL_MOD_PCT_EFFECT;
                     break;
                 case 0: // SPELLMOD_DAMAGE
                 case 22: // SPELLMOD_DOT
-                    aed.effect = ADDON_EFFECT_TYPE.MOD_DMG_DONE;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE;
                     break;
                 case 20: // SPELLMOD_EFFECT_PAST_FIRST
                     aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST;

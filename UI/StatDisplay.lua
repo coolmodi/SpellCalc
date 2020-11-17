@@ -297,14 +297,12 @@ AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
 AddWeaponTableUniform(stats.hitMods.weapon, nil, "%");
 AddSpellTable(stats.hitMods.spell, nil, "%");
 
-AddSchoolTableUniform(stats.dmgDoneMods.school, "Dmg done mods", "x");
-AddSpellTable(stats.dmgDoneMods.spell, nil, "x");
-AddUniformStatTable(stats.healingDoneMod, "Healing done mod", "x");
-AddSpellTable(stats.healingDoneMod.spell, nil, "x");
-AddUniformStatTable(stats.healingDoneModAll, "Healing done mod (all)", "x");
+AddSpellTable(stats.spellModPctHealing, "Spell Pct Healing", "%");
+AddUniformStatTable(stats.modhealingDone, "Healing done mod (all)", "%");
 
-AddSchoolTableUniform(stats.effectMods.school, "Effect mods", "x");
-AddSpellTable(stats.effectMods.spell, nil, "x");
+AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
+AddSpellTable(stats.spellModPctDamage, "Spell Pct Damage", "%");
+AddSchoolTableUniform(stats.spellModPctDamage, "School Pct Damage", "%");
 
 AddSpellTable(stats.durationMods, "Duration mods:", "s");
 AddSpellTable(stats.flatMods, "Flat mods", "");

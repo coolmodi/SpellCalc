@@ -10,7 +10,7 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {-1073741824},
                 perPoint = 4
             }
@@ -21,7 +21,7 @@ _addon.talentData = {
         talent = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {134217728 + 1024},
                 perPoint = 3
             }
@@ -69,31 +69,31 @@ _addon.buffData[20216] = { -- Divine Favor
 };
 
 _addon.buffData[20050] = { -- Vengeance 1
-    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+    effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
     affectSchool = _addon.SCHOOL_MASK.HOLY,
     value = 3
 };
 
 _addon.buffData[20052] = { -- Vengeance 2
-    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+    effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
     affectSchool = _addon.SCHOOL_MASK.HOLY,
     value = 6
 };
 
 _addon.buffData[20053] = { -- Vengeance 3
-    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+    effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
     affectSchool = _addon.SCHOOL_MASK.HOLY,
     value = 9
 };
 
 _addon.buffData[20054] = { -- Vengeance 4
-    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+    effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
     affectSchool = _addon.SCHOOL_MASK.HOLY,
     value = 12
 };
 
 _addon.buffData[20055] = { -- Vengeance 5
-    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+    effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
     affectSchool = _addon.SCHOOL_MASK.HOLY,
     value = 15
 };

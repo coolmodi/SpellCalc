@@ -15,7 +15,7 @@ _addon.talentData = {
                 perPoint = 2
             },
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {2},
                 perPoint = 2
             }
@@ -26,7 +26,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {256},
                 perPoint = 25
             }
@@ -58,7 +58,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {7},
                 perPoint = 2
             }
@@ -70,7 +70,7 @@ _addon.talentData = {
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {8388608},
                 perPoint = 3
             }
@@ -81,7 +81,7 @@ _addon.talentData = {
         talent = 13,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {4096 + 2048},
                 perPoint = 10
             }
@@ -103,7 +103,7 @@ _addon.talentData = {
         talent = 10,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {16},
                 perPoint = 5
             }
@@ -114,7 +114,7 @@ _addon.talentData = {
         talent = 12,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_HEALING,
                 affectSpell = {240},
                 perPoint = 2
             }

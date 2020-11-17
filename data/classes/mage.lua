@@ -65,7 +65,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {12589815},
                 perPoint = 1
             },
@@ -135,7 +135,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {12582935},
                 perPoint = 2
             }
@@ -169,7 +169,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {736},
                 perPoint = 2
             }
@@ -180,7 +180,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {512},
                 perPoint = 10,
                 base = 5
@@ -190,7 +190,7 @@ _addon.talentData = {
 };
 
 _addon.buffData[12042] = { -- Arcane Power
-    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
     affectSpell = {12589815},
     value = 30,
 };

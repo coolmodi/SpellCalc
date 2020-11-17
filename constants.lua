@@ -28,13 +28,10 @@ _addon.SCHOOL_MASK = {
 
 --- Buff/Aura effects
 _addon.EFFECT_TYPE = {
-    MOD_EFFECT = 1,
-    MOD_DMG_DONE = 2,
     MOD_HIT_SPELL = 3,
     FSR_REGEN = 4,
     MOD_CRIT = 5,
     MP5 = 6,
-    MOD_HEALING_DONE = 7,
     RESISTANCE_PEN = 8,
     CLEARCAST_CHANCE = 9,
     ILLUMINATION = 10,
@@ -51,10 +48,14 @@ _addon.EFFECT_TYPE = {
     DRUID_NATURES_GRACE = 21,
     JUDGEMENT_SPELL = 22,
     MOD_HIT_WEAPON = 23,
-    MOD_HEALING_DONE_ALL = 24,
     SPELLMOD_EFFECT_PAST_FIRST = 25,
     SPELLMOD_GCD = 26,
-    TRIGGER_UPDATE = 27
+    TRIGGER_UPDATE = 27,
+    SPELL_MOD_PCT_EFFECT = 28,
+    SPELL_MOD_PCT_DAMAGE = 29,
+    SPELL_MOD_PCT_HEALING = 30,
+    SCHOOL_MOD_PCT_DAMAGE = 31,
+    MOD_PCT_HEALING = 32
 };
 
 --- Defense type (Decides mitigation types used)

@@ -77,12 +77,12 @@ _addon.buffData = {
     [10060] = { -- Power Infusion
         effects = {
             {
-                effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
                 affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
                 value = 20,
             },
             {
-                effect = _addon.EFFECT_TYPE.MOD_HEALING_DONE_ALL,
+                effect = _addon.EFFECT_TYPE.MOD_PCT_HEALING,
                 value = 20,
             }
         }

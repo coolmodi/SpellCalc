@@ -22,7 +22,7 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {1},
                 perPoint = 5
             }
@@ -34,7 +34,7 @@ _addon.talentData = {
         talent = 14,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {16294032},
                 perPoint = 1
             },
@@ -52,7 +52,7 @@ _addon.talentData = {
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {64},
                 perPoint = 5
             }
@@ -75,7 +75,7 @@ _addon.talentData = {
         talent = 11,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {1048704},
                 perPoint = 5
             }
@@ -86,7 +86,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_HEALING_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_HEALING,
                 affectSpell = {151264832},
                 perPoint = 2
             }
@@ -123,12 +123,12 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
                 affectSpell = {33562624},
                 perPoint = 2
             },
             {
-                type = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
                 affectSpell = {8421376 + 524288},
                 perPoint = 2
             }
@@ -138,7 +138,7 @@ _addon.talentData = {
 
 -- Shadowform
 _addon.buffData[15473] = {
-    effect = _addon.EFFECT_TYPE.MOD_DMG_DONE,
+    effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
     affectSchool = _addon.SCHOOL_MASK.SHADOW,
     value = 15,
 }

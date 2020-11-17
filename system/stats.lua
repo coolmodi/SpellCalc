@@ -36,35 +36,18 @@ _addon.stats = {
     },
     mp5 = {val=0, buffs={}};
     fsrRegenMult = {val=0, buffs={}};
-    dmgDoneMods = { -- multiplicatively!
-        school = {
-            [_addon.SCHOOL.PHYSICAL]    = {val=1, buffs={}},
-            [_addon.SCHOOL.HOLY]        = {val=1, buffs={}},
-            [_addon.SCHOOL.FIRE]        = {val=1, buffs={}},
-            [_addon.SCHOOL.NATURE]      = {val=1, buffs={}},
-            [_addon.SCHOOL.FROST]       = {val=1, buffs={}},
-            [_addon.SCHOOL.SHADOW]      = {val=1, buffs={}},
-            [_addon.SCHOOL.ARCANE]      = {val=1, buffs={}},
-        },
-        spell = {}
-    },
-    healingDoneMod = { -- multiplicatively!
-        val=1,
-        buffs={},
-        spell = {}
-    },
-    healingDoneModAll = {val=1, buffs={}}, -- multiplicatively!
-    effectMods = { -- multiplicatively!
-        school = {
-            [_addon.SCHOOL.PHYSICAL]    = {val=1, buffs={}},
-            [_addon.SCHOOL.HOLY]        = {val=1, buffs={}},
-            [_addon.SCHOOL.FIRE]        = {val=1, buffs={}},
-            [_addon.SCHOOL.NATURE]      = {val=1, buffs={}},
-            [_addon.SCHOOL.FROST]       = {val=1, buffs={}},
-            [_addon.SCHOOL.SHADOW]      = {val=1, buffs={}},
-            [_addon.SCHOOL.ARCANE]      = {val=1, buffs={}},
-        },
-        spell = {}
+    spellModPctHealing = {},
+    modhealingDone = {val=0, buffs={}},
+    spellModPctEffect = {},
+    spellModPctDamage = {},
+    schoolModPctDamage = {
+        [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
+        [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
+        [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
+        [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
+        [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
+        [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
+        [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
     },
     hitBonus = {val=0, buffs={}};
     hitBonusSpell = {val=0, buffs={}};
