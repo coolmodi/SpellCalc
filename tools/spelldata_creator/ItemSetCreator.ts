@@ -443,7 +443,7 @@ export class ItemSetCreator
             return;
         }
 
-        for (let i = 1; i <= 16; i++)
+        for (let i = 0; i <= 16; i++)
         {
             const itemKey = ("ItemID[" + i + "]") as keyof ItemSet;
             if (setDataEntry[itemKey] != 0) setAddonData.items.push(setDataEntry[itemKey] as number);
