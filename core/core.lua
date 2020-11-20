@@ -257,8 +257,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
     if parentEffCastTime == nil then
         if stats.gcdMods[spellId] ~= nil then
-            -- TODO: this should probably be / 1000
-            GCD = GCD + stats.gcdMods[spellId].val / 100;
+            GCD = GCD + stats.gcdMods[spellId].val / 1000;
             calcedSpell:AddToBuffList(stats.gcdMods[spellId].buffs);
         end
 
@@ -522,7 +521,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
     --------------------------
     -- Handle triggered spell effect
-    -- TODO: for dmg spells use mitigation (NOT RESIST) values from triggering spell in triggered spell calc
 
     do
         local triggerFromSpell = spellId;

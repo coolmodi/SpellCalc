@@ -339,7 +339,6 @@ local function ManaShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, eff
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
 end
 
--- TODO: test with searing totem (2 levels to go!)
 --- Handler for things like Arcane Missiles or Searing Totem.
 --- That is, periodic spells with ticks that behave much like a direct damage effect.
 ---@param calcedSpell CalcedSpell

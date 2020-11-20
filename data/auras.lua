@@ -107,8 +107,6 @@ _addon.buffData = {
         effect = _addon.EFFECT_TYPE.MP5,
         value = 12,
     },
-
-    -- TODO: Other buffs that are outside the scope of base API queries
 };
 
 -- Buffs the target can have (NYI)

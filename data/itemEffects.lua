@@ -80,6 +80,5 @@ _addon.itemEffects = {
             value = 0
         }
     },
-    -- TODO: https://classic.wowhead.com/item=23197/idol-of-the-moon
     -- TODO: https://classic.wowhead.com/item=23004/idol-of-longevity
 }
