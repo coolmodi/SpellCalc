@@ -285,6 +285,15 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
+    if effect == EFFECT_TYPE.TRIGGER_SPELL_EFFECT then
+        if affectSpell == nil then
+            _addon:PrintError("Aura "..name.." uses TRIGGER_SPELL_EFFECT without a spell mask! Report this please.");
+        end
+        -- TODO: If a spell is ever affected by more than one of those it will break!
+        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.spellTriggerSpellEffect, affectSpell);
+        return;
+    end
+
     _addon:PrintError("Aura "..name.." uses unknown effect "..effect.."! Report this please.");
 end
 

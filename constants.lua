@@ -55,7 +55,8 @@ _addon.EFFECT_TYPE = {
     SPELL_MOD_PCT_DAMAGE = 29,
     SPELL_MOD_PCT_HEALING = 30,
     SCHOOL_MOD_PCT_DAMAGE = 31,
-    MOD_PCT_HEALING = 32
+    MOD_PCT_HEALING = 32,
+    TRIGGER_SPELL_EFFECT = 33,
 };
 
 --- Defense type (Decides mitigation types used)
@@ -77,6 +78,7 @@ _addon.SPELL_EFFECT_FLAGS = {
     TRIGGER_SPELL_AURA = 0x20,
     AUTO_ATTACK = 0x40,
     DUMMY_AURA = 0x80,
+    TRIGGERED_SPELL = 0x100
 };
 
 _addon.HEALING_CLASSES = {

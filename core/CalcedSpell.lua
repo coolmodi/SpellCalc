@@ -165,6 +165,29 @@ function CalcedSpell:ResetBuffList()
     wipe(self.buffs);
 end
 
+--- Set 2nd effect to be a triggered spell.
+---@param calcedSpell CalcedSpell
+function CalcedSpell:SetTriggeredSpell(calcedSpell)
+    if self[2] ~= nil and self[2].effectFlags ~= SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+        _addon:PrintError("Tried to add triggered spell when 2nd effect is already in use!");
+        return;
+    end
+
+    if self[2] == nil then
+        self[2] = {
+            effectFlags = SPELL_EFFECT_FLAGS.TRIGGERED_SPELL,
+            spellData = calcedSpell
+        }
+    end
+end
+
+--- Remove 2nd effect if it is a triggered spell.
+function CalcedSpell:UnsetTriggeredSpell()
+    if self[2] ~= nil and self[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+        self[2] = nil;
+    end
+end
+
 --- Add table for combined spells.
 ---@param so CalcedSpell
 local function AddCombinedData(so)

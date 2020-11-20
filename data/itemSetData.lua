@@ -86,6 +86,14 @@ _addon.itemSetData = {
                     value = 15,
                 }
             },
+            [2] = {
+                need = 8,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.TRIGGER_SPELL_EFFECT,
+                    affectSpell = {4096, 0, 0, 0},
+                    value = 22009,
+                }
+            },
         }
     },
     [214] = {

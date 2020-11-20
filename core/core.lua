@@ -152,10 +152,14 @@ end
 
 --- Calculate spell values with current stats
 ---@param spellId number
-local function CalcSpell(spellId)
+---@param calcedSpell CalcedSpell|nil
+---@param parentSpellData CalcedSpell|nil
+---@param parentEffCastTime number|nil
+---@return CalcedSpell
+local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTime)
     local spellName, _, _, castTime = GetSpellInfo(spellId);
     _addon:PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
-    local effCastTime = 0;
+    local effCastTime = parentEffCastTime or 0;
     ---@type SpellBaseInfo
     local spellBaseInfo = _addon.spellBaseInfo[spellName];
     ---@type SpellRankInfo
@@ -182,7 +186,7 @@ local function CalcSpell(spellId)
     --------------------------
     -- Calculation objects
 
-    if calcedSpells[spellId] == nil then
+    if calcedSpell == nil then
         local effectFlags = {};
 
         for i = 1, 2, 1 do
@@ -228,11 +232,8 @@ local function CalcSpell(spellId)
         end
 
         _addon:PrintDebug("Has " .. #spellRankInfo.effects .. " effects with flags (" .. effectFlags[1] .. ", " .. tostring(effectFlags[2]) .. ")");
-        calcedSpells[spellId] = NewCalcedSpell(effectFlags);
+        calcedSpell = NewCalcedSpell(effectFlags);
     end
-
-    ---@type CalcedSpell
-    local calcedSpell = calcedSpells[spellId];
 
     calcedSpell:ResetBuffList();
 
@@ -254,18 +255,20 @@ local function CalcSpell(spellId)
     ----------------------------------------------------------------------------------------------------------------------
     -- Cast time and GCD
 
-    if stats.gcdMods[spellId] ~= nil then
-        -- TODO: this should probably be / 1000
-        GCD = GCD + stats.gcdMods[spellId].val / 100;
-        calcedSpell:AddToBuffList(stats.gcdMods[spellId].buffs);
-    end
+    if parentEffCastTime == nil then
+        if stats.gcdMods[spellId] ~= nil then
+            -- TODO: this should probably be / 1000
+            GCD = GCD + stats.gcdMods[spellId].val / 100;
+            calcedSpell:AddToBuffList(stats.gcdMods[spellId].buffs);
+        end
 
-    if spellBaseInfo.isChannel then
-        castTime = spellRankInfo.duration;
-        effCastTime = castTime;
-    else
-        castTime = castTime / 1000;
-        effCastTime = math.max(GCD, castTime);
+        if spellBaseInfo.isChannel then
+            castTime = spellRankInfo.duration;
+            effCastTime = castTime;
+        else
+            castTime = castTime / 1000;
+            effCastTime = math.max(GCD, castTime);
+        end
     end
 
     ----------------------------------------------------------------------------------------------------------------------
@@ -414,35 +417,42 @@ local function CalcSpell(spellId)
     --------------------------
     -- Cast time mods
 
-    if stats.mageNWRProc[spellId] ~= nil and stats.mageNWRProc[spellId].val ~= 0 and castTime > 0 then
-        -- E.g. with a 10% chance every 10th cast will proc, causing the next to be 1.5s (GCD).
-        -- NWR has a 10sec ICD, therefore 1 instant + floor(8.5/castTime) casts can't proc it after a proc.
-        -- So in reality you have 10 normal casts, 1 GCD and floor(8.5/castTime) additional normal casts.
-        -- The effective cast time is then (10*castTime + 1.5 + floor(8.5/castTime)*castTime)/(10 + floor(8.5/castTime) + 1)
-        local castsInICD = math.floor(8.5/effCastTime);
-        effCastTime = (GCD + (10 + castsInICD) * effCastTime) / (11 + castsInICD);
-        effCastTime = math.max(effCastTime, GCD);
-        calcedSpell:AddToBuffList(stats.mageNWRProc[spellId].buffs);
-    end
+    if parentEffCastTime == nil then
+        if stats.mageNWRProc[spellId] ~= nil and stats.mageNWRProc[spellId].val ~= 0 and castTime > 0 then
+            -- E.g. with a 10% chance every 10th cast will proc, causing the next to be 1.5s (GCD).
+            -- NWR has a 10sec ICD, therefore 1 instant + floor(8.5/castTime) casts can't proc it after a proc.
+            -- So in reality you have 10 normal casts, 1 GCD and floor(8.5/castTime) additional normal casts.
+            -- The effective cast time is then (10*castTime + 1.5 + floor(8.5/castTime)*castTime)/(10 + floor(8.5/castTime) + 1)
+            local castsInICD = math.floor(8.5/effCastTime);
+            effCastTime = (GCD + (10 + castsInICD) * effCastTime) / (11 + castsInICD);
+            effCastTime = math.max(effCastTime, GCD);
+            calcedSpell:AddToBuffList(stats.mageNWRProc[spellId].buffs);
+        end
 
-    if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
-        effCastTime = effCastTime - (calcedSpell.critChance/100) * 0.5;
-        effCastTime = math.max(effCastTime, GCD);
-        calcedSpell:AddToBuffList(stats.druidNaturesGrace.buffs);
+        if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
+            effCastTime = effCastTime - (calcedSpell.critChance/100) * 0.5;
+            effCastTime = math.max(effCastTime, GCD);
+            calcedSpell:AddToBuffList(stats.druidNaturesGrace.buffs);
+        end
     end
 
     ----------------------------------------------------------------------------------------------------------------------
     -- Cost
 
-    calcedSpell.baseCost = spellCost;
-    calcedSpell.effectiveCost = spellCost;
+    if parentSpellData == nil then
+        calcedSpell.baseCost = spellCost;
+        calcedSpell.effectiveCost = spellCost;
 
-    if costType == 0 then -- mana
-        costHandler:Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellBaseInfo.school, spellName);
-    elseif costType == 1 then -- rage
-        -- TODO: rage (on next melee, proc on crit etc.)
-    elseif costType == 3 then -- energy
-        -- TODO: energy??
+        if costType == 0 then -- mana
+            costHandler:Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellBaseInfo.school, spellName);
+        elseif costType == 1 then -- rage
+            -- TODO: rage (on next melee, proc on crit etc.)
+        elseif costType == 3 then -- energy
+            -- TODO: energy??
+        end
+    else
+        calcedSpell.baseCost = parentSpellData.baseCost;
+        calcedSpell.effectiveCost = parentSpellData.effectiveCost;
     end
 
     --------------------------
@@ -507,6 +517,32 @@ local function CalcSpell(spellId)
         end
     end
 
+    --------------------------
+    -- Handle triggered spell effect
+    -- TODO: for dmg spells use mitigation (NOT RESIST) values from triggering spell in triggered spell calc
+
+    if stats.spellTriggerSpellEffect[spellId] ~= nil then
+        if stats.spellTriggerSpellEffect[spellId].val > 0 then
+            _addon:PrintDebug("Add triggered spell "..stats.spellTriggerSpellEffect[spellId].val.." on spell "..spellId);
+            local triggeredId = _addon:GetHandledSpellID(stats.spellTriggerSpellEffect[spellId].val);
+            if not triggeredId then
+                _addon:PrintError("Spell "..spellId.." has added trigger effect "..stats.spellTriggerSpellEffect[spellId].val.." but that spell isn't handled!");
+            else
+                local triggeredSpell;
+                if calcedSpell[2] and calcedSpell[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+                    triggeredSpell = calcedSpell[2].spellData;
+                end
+                calcedSpell:SetTriggeredSpell(CalcSpell(triggeredId, triggeredSpell, calcedSpell, effCastTime));
+            end
+        elseif calcedSpell[2] and calcedSpell[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+            _addon:PrintDebug("Remove triggered effect from spell "..spellId);
+            calcedSpell:UnsetTriggeredSpell();
+        end
+    end
+
+    --------------------------
+    -- Combined direct + HoT/DoT data
+
     if calcedSpell.combined ~= nil then
         ---@type CombinedData
         local cd = calcedSpell.combined;
@@ -547,6 +583,8 @@ local function CalcSpell(spellId)
     -- _addon:PrintDebug("== Updated spell (".. spellId .. ") " .. spellName .. " ==");
     -- _addon:PrintDebug(calcedSpell);
     -- _addon:PrintDebug("===========================================");
+
+    return calcedSpell;
 end
 
 do
@@ -577,18 +615,19 @@ do
     end
 end
 
---- Return the handled spell ID (if different) or false if spell is not handled by the addon
+--- Return the handled spell ID (if different) or nil if spell is not handled by the addon
 ---@param spellID number
+---@return number|nil
 function _addon:GetHandledSpellID(spellID)
     if spellID == self.JUDGEMENT_ID then
         if not self.judgementSpell then
-            return false;
+            return;
         end
         spellID = self.judgementSpell;
     end
 
     if self.spellBaseInfo[GetSpellInfo(spellID)] == nil then
-        return false;
+        return;
     end
 
     return spellID;
@@ -605,7 +644,7 @@ function _addon:GetCalcedSpell(spellID)
     end
 
     if calcedSpells[spellID] == nil or calcedSpells[spellID].updated < currentState then
-        CalcSpell(spellID);
+        calcedSpells[spellID] = CalcSpell(spellID, calcedSpells[spellID]);
     end
 
     return calcedSpells[spellID];

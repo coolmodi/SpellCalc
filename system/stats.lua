@@ -120,6 +120,7 @@ _addon.stats = {
     druidNaturesGrace = {val=0, buffs={}},
     chainMultMods = {},
     gcdMods = {},
+    spellTriggerSpellEffect = {},
 
     attackSpeed = {
         mh = 0,

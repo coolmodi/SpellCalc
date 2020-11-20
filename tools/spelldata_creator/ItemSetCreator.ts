@@ -311,9 +311,14 @@ class AuraHandlers
                         effect: ADDON_EFFECT_TYPE.CONDITION_TRIGGER,
                         value: "_addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS"
                     }
+                case 22009: // Greater Heal (Renew)
+                    return {
+                        effect: ADDON_EFFECT_TYPE.TRIGGER_SPELL_EFFECT,
+                        affectSpell: this.getAffectSpell(effect),
+                        value: 22009
+                    }
                 case 28839:
                 // TODO: these
-                case 22009: // Greater Heal (Renew)
                 case 23590: // Judgement (Dmg proc)
                 case 28788: // Your Cleanse spell also heals the target for 200.
                 case 28815: // Revealed Flaw

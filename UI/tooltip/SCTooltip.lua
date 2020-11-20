@@ -136,18 +136,34 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
             break;
         end
 
-        if #calcedSpell > 1 and (i == 2 or calcedSpell.combined == nil) then
-            SCTooltip:HeaderLine(GetEffectTitle(calcedEffect.effectFlags));
+        local isTriggerEffect = false;
+        local effectFlags = calcedEffect.effectFlags;
+
+        if bit.band(effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
+            isTriggerEffect = true;
+            effectFlags = calcedEffect.spellData[1].effectFlags;
         end
 
-        local isHeal = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
+        if #calcedSpell > 1 and (i == 2 or calcedSpell.combined == nil) then
+            SCTooltip:HeaderLine(GetEffectTitle(effectFlags));
+        end
+
+        local isHeal = bit.band(effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
         local isHandled = false;
         local sname = GetSpellInfo(spellID);
 
-        if dummyHandler[sname] ~= nil then
+        if isTriggerEffect then
+            -- TODO: should be displayed as if it's the 2nd effect
+            for _, func in ipairs(tooltipHandler) do
+                if func(calcedEffect.spellData, 1, isHeal, spellID) then
+                    isHandled = true;
+                    break;
+                end
+            end
+        elseif dummyHandler[sname] ~= nil then
             dummyHandler[sname](calcedSpell, i);
             isHandled = true;
-        elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
+        elseif bit.band(effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
             _addon:PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
         else
             for _, func in ipairs(tooltipHandler) do
