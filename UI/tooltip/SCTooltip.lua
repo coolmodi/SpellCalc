@@ -153,13 +153,18 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
         local sname = GetSpellInfo(spellID);
 
         if isTriggerEffect then
-            -- TODO: should be displayed as if it's the 2nd effect
+            if calcedEffect.spellData[2] ~= nil then
+                _addon:PrintError("Triggered spell on "..sname.." has 2 effects, this is not supported for tooltips! Please report.");
+                return;
+            end
+            calcedEffect.spellData[2] = calcedEffect.spellData[1];
             for _, func in ipairs(tooltipHandler) do
-                if func(calcedEffect.spellData, 1, isHeal, spellID) then
+                if func(calcedEffect.spellData, 2, isHeal, spellID) then
                     isHandled = true;
                     break;
                 end
             end
+            calcedEffect.spellData[2] = nil;
         elseif dummyHandler[sname] ~= nil then
             dummyHandler[sname](calcedSpell, i);
             isHandled = true;

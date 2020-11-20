@@ -62,6 +62,7 @@ _addon.EFFECT_TYPE = {
 --- Defense type (Decides mitigation types used)
 ---@class SpellDefenseType
 _addon.DEF_TYPE = {
+    NONE = 0,
     MAGIC = 1,
     MELEE = 2,
     RANGED = 3

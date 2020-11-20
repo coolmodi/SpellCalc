@@ -129,6 +129,19 @@ _addon.itemSetData = {
             },
         }
     },
+    [217] = {
+        name = "Judgement Armor",
+        effects = {
+            [1] = {
+                need = 8,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.TRIGGER_SPELL_EFFECT,
+                    affectSpell = {8388608, 0, 0, 0},
+                    value = 23590,
+                }
+            },
+        }
+    },
     [301] = {
         name = "Champion's Earthshaker",
         effects = {
@@ -511,6 +524,14 @@ _addon.setItemData = {
     [16949] = 216,
     [16947] = 216,
     [16946] = 216,
+    [16952] = 217,
+    [16951] = 217,
+    [16958] = 217,
+    [16955] = 217,
+    [16956] = 217,
+    [16954] = 217,
+    [16957] = 217,
+    [16953] = 217,
     [16519] = 301,
     [16518] = 301,
     [16522] = 301,
