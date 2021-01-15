@@ -41,7 +41,7 @@ function MagicCalc:GetAvgResist()
     local tData = _addon.target;
     local pLevel = UnitLevel("player");
     local baseRes = tData.resistance[self.spellBaseInfo.school];
-    local effectiveRes = baseRes + math.max((tData.level - pLevel)*5, 0) - math.min(baseRes, stats.spellPen[self.spellBaseInfo.school].val);
+    local effectiveRes = baseRes + math.max((tData.level - pLevel)*8, 0) - math.min(baseRes, stats.spellPen[self.spellBaseInfo.school].val);
     return math.min(0.75 * (effectiveRes / math.max(pLevel * 5, 100)), 0.75);
 end
 
