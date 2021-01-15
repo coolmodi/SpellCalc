@@ -351,11 +351,11 @@ function ActionbarValues:Setup()
         _addon:PrintDebug("Add ElvUI support");
         for i = 1, 12 do
             AddStringToButton(_G["ElvUI_Bar1Button"..i], i);
-            AddStringToButton(_G["ElvUI_Bar2Button"..i], i+48);
-            AddStringToButton(_G["ElvUI_Bar3Button"..i], i+60);
+            AddStringToButton(_G["ElvUI_Bar2Button"..i], i+12);
+            AddStringToButton(_G["ElvUI_Bar3Button"..i], i+24);
             AddStringToButton(_G["ElvUI_Bar4Button"..i], i+36);
-            AddStringToButton(_G["ElvUI_Bar5Button"..i], i+24);
-            AddStringToButton(_G["ElvUI_Bar6Button"..i], i+12);
+            AddStringToButton(_G["ElvUI_Bar5Button"..i], i+48);
+            AddStringToButton(_G["ElvUI_Bar6Button"..i], i+60);
             AddStringToButton(_G["ElvUI_Bar7Button"..i], i+72);
             AddStringToButton(_G["ElvUI_Bar8Button"..i], i+84);
             AddStringToButton(_G["ElvUI_Bar9Button"..i], i+96);
