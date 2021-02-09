@@ -1,7 +1,7 @@
 ## Interface: 11305
 ## Title: SpellCalc
 ## Author: coolmodi
-## Version: 0.8.1
+## Version: 0.8.2
 ## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
 ## OptionalDeps: Dominos, ElvUI, Bartender4
@@ -58,4 +58,5 @@ UI/tooltip/SCTooltip.lua
 UI/tooltip/base.lua
 UI/tooltip/seals.lua
 UI/StatDisplay.lua
-UI/ActionbarValues.lua
+UI/actionbar/buttonText.lua
+UI/actionbar/ActionBarValues.lua

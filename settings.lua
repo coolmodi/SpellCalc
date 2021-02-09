@@ -81,10 +81,10 @@ local function AfterSave()
 	_addon:UpdateTarget();
 
 	if not SpellCalc_settings.abShow then
-		_addon.ActionbarValues:Clear();
+		_addon.ActionBarValues:Clear();
 	end
 
-	_addon.ActionbarValues:UpdateStyle();
+	_addon.ActionBarValues:UpdateStyle();
 
 	_addon:TriggerUpdate();
 end

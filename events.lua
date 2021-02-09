@@ -28,7 +28,7 @@ end
 
 function handlers.PLAYER_ENTERING_WORLD()
     _addon:FullUpdate();
-    _addon.ActionbarValues:Setup();
+    _addon.ActionBarValues:Setup();
 end
 
 function handlers.UNIT_AURA(unit)
@@ -83,7 +83,9 @@ function handlers.PLAYER_TARGET_CHANGED()
 end
 
 function handlers.ACTIONBAR_SLOT_CHANGED(slot)
-    _addon.ActionbarValues:SlotUpdate(slot)
+    if slot >= 1 and slot <= 120 then
+        _addon.ActionBarValues:SlotUpdate(slot)
+    end
 end
 
 function handlers.UNIT_ATTACK_SPEED(unit)
@@ -113,10 +115,6 @@ function handlers.UNIT_RANGEDDAMAGE(unit)
         return;
     end
     _addon:UpdateRangedAttackDmg();
-end
-
-function handlers.UPDATE_SHAPESHIFT_FORM()
-    _addon.ActionbarValues:ShapeShiftUpdate();
 end
 
 frame:SetScript( "OnEvent",function(self, event, ...) 
