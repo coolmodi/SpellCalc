@@ -242,7 +242,7 @@ do
             updateOffset = defaultOffset
         }
 
-        if currentPage ~= barNum and currentPage ~= 0 then
+        if currentPage and currentPage ~= barNum and currentPage ~= 0 then
             PageActionbar(barPageData[barName], (currentPage - 1) * 12);
         end
     end
