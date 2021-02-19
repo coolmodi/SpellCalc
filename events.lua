@@ -26,9 +26,12 @@ function handlers.ADDON_LOADED(addonName)
 	end
 end
 
+function handlers.PLAYER_LOGIN()
+    _addon.ActionBarValues:Setup();
+end
+
 function handlers.PLAYER_ENTERING_WORLD()
     _addon:FullUpdate();
-    _addon.ActionBarValues:Setup();
 end
 
 function handlers.UNIT_AURA(unit)
