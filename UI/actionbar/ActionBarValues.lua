@@ -307,6 +307,10 @@ end
 
 --- Setup action button values.
 function ActionBarValues:Setup()
+    if buttonText then
+        return;
+    end
+
     buttonText = _addon:SetupActionButtonText();
     actionbarSupport = buttonText.detectedBars;
 

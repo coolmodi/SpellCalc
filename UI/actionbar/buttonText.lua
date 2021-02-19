@@ -2,7 +2,7 @@
 local _addon = select(2, ...);
 
 local buttonFontStrings = {};
-local isSetup = false;
+local isSetup = nil;
 
 ------------------------------------------------------------------------
 -- Button Fontstring
@@ -119,7 +119,7 @@ end
 --- Setup strings for all action buttons.
 function _addon:SetupActionButtonText()
     if isSetup then
-        return;
+        return isSetup;
     end
 
     ---@class ActionButtonText
@@ -181,6 +181,6 @@ function _addon:SetupActionButtonText()
 
     buttonText.UpdateFonts();
 
-    isSetup = true;
+    isSetup = buttonText;
     return buttonText;
 end
