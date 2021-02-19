@@ -1,12 +1,17 @@
-## Interface: 11305
+## Interface: 11306
 ## Title: SpellCalc
 ## Author: coolmodi
-## Version: 0.8.2
+## Version: 0.8.3
 ## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
 ## OptionalDeps: Dominos, ElvUI, Bartender4
 
-libs/SettingsCreator.lua
+libs\Ace3\LibStub\LibStub.lua
+libs\Ace3\CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs\Ace3\AceGUI-3.0\AceGUI-3.0.xml
+libs\Ace3\AceConfig-3.0\AceConfig-3.0.xml
+libs\LibSharedMedia-3.0\lib.xml
+libs\AceGUI-3.0-SharedMediaWidgets\widget.xml
 
 i18n/loc.lua
 i18n/enUS.lua

@@ -192,9 +192,13 @@ _addon.buffData[25228] = {
 };
 
 --- Add class settings page
-function _addon:ClassSettings(settings)
-    settings:MakeCheckboxOption("useImpSB", L["SETTINGS_WL_USE_IMP_SB"], L["SETTINGS_WL_USE_IMP_SB_TT"]);
-    return {
-        useImpSB = false;
-    };
+if SpellCalc_settings.useImpSB == nil then
+    SpellCalc_settings.useImpSB = false;
 end
+_addon.classSettings = {
+    useImpSB = {
+        type = "toggle",
+        name = L["SETTINGS_WL_USE_IMP_SB"],
+        desc = L["SETTINGS_WL_USE_IMP_SB_TT"],
+    }
+}

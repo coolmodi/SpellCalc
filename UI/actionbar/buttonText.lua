@@ -1,8 +1,12 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
 
+local LSM = LibStub("LibSharedMedia-3.0");
+
 local buttonFontStrings = {};
 local isSetup = nil;
+local colorHarm = {1, 1, 0.3};
+local colorHelp = {0.3, 1, 0.3};
 
 ------------------------------------------------------------------------
 -- Button Fontstring
@@ -34,10 +38,11 @@ end
 ---@param isHeal boolean
 local function SetIsHeal(self, isHeal)
     if isHeal then
-        self:SetTextColor(0.3, 1, 0.3);
+        self:SetTextColor(colorHelp[1], colorHelp[2], colorHelp[3]);
     else
-        self:SetTextColor(1, 1, 0.3);
+        self:SetTextColor(colorHarm[1], colorHarm[2], colorHarm[3]);
     end
+    self.isHeal = isHeal;
 end
 
 --- Add string to the given button frame.
@@ -104,7 +109,7 @@ local function CreateBT4ButtonFS()
                 if name:find("BT4Button") then
                     _addon:PrintDebug("Add bartender4 button " .. name);
                     buttonFontStrings[slotId] = CreateActionButtonFS(_G[name]);
-                    buttonFontStrings[slotId]:SetFont("Fonts\\ARIALN.TTF", SpellCalc_settings.abSize, "OUTLINE");
+                    buttonFontStrings[slotId]:SetFont(LSM:Fetch("font", SpellCalc_settings.abFont), SpellCalc_settings.abSize, SpellCalc_settings.abFontFlags);
                     buttonFontStrings[slotId]:UpdatePosition(SpellCalc_settings.abPosition);
                 end
             end);
@@ -135,8 +140,12 @@ function _addon:SetupActionButtonText()
 
     --- Update font style based on current settings.
     buttonText.UpdateFonts = function()
+        local font = LSM:Fetch("font", SpellCalc_settings.abFont);
+        colorHarm = SpellCalc_settings.abColorHarm;
+        colorHelp = SpellCalc_settings.abColorHelp;
         for _, v in pairs(buttonFontStrings) do
-            v:SetFont("Fonts\\ARIALN.TTF", SpellCalc_settings.abSize, "OUTLINE");
+            v:SetFont(font, SpellCalc_settings.abSize, SpellCalc_settings.abFontFlags);
+            v:SetIsHeal(v.isHeal);
         end
     end;
 

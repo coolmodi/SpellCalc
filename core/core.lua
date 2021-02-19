@@ -130,13 +130,13 @@ function _addon:GetEffectiveManaPool()
         mana = mana + 1200;
     end
 
-    if SpellCalc_settings.calcEffManaPotion then
-        local potVal = 0; -- Major
-        if SpellCalc_settings.calcEffManaPotionType == "MAJOR" then
+    if SpellCalc_settings.calcEffManaPotionTypeNew ~= "NONE" then
+        local potVal = 0;
+        if SpellCalc_settings.calcEffManaPotionTypeNew == "MAJOR" then
             potVal = 1800;
-        elseif SpellCalc_settings.calcEffManaPotionType == "GREATER" then
+        elseif SpellCalc_settings.calcEffManaPotionTypeNew == "GREATER" then
             potVal = 800;
-        elseif SpellCalc_settings.calcEffManaPotionType == "SUPERIOR" then
+        elseif SpellCalc_settings.calcEffManaPotionTypeNew == "SUPERIOR" then
             potVal = 1200;
         end
         mana = mana + potVal;
