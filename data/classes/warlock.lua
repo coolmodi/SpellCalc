@@ -191,14 +191,16 @@ _addon.buffData[25228] = {
     value = 3,
 };
 
---- Add class settings page
-if SpellCalc_settings.useImpSB == nil then
-    SpellCalc_settings.useImpSB = false;
-end
-_addon.classSettings = {
-    useImpSB = {
-        type = "toggle",
-        name = L["SETTINGS_WL_USE_IMP_SB"],
-        desc = L["SETTINGS_WL_USE_IMP_SB_TT"],
+-- Add class settings page
+function _addon:ClassSettings()
+    if SpellCalc_settings.useImpSB == nil then
+        SpellCalc_settings.useImpSB = false;
+    end
+    return {
+        useImpSB = {
+            type = "toggle",
+            name = L["SETTINGS_WL_USE_IMP_SB"],
+            desc = L["SETTINGS_WL_USE_IMP_SB_TT"],
+        }
     }
-}
+end

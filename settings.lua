@@ -74,7 +74,7 @@ local function defaultSet(info, val)
 	_addon:TriggerUpdate();
 end
 
-local SETTINGS_GENERAL = {
+local SETTINGS_TABLE = {
 	type = "group",
 	get = defaultGet,
 	set = defaultSet,
@@ -82,7 +82,6 @@ local SETTINGS_GENERAL = {
 		targetGroup = {
 			order = 2,
 			type = "group",
-			guiInline = true,
 			name = L["SETTINGS_HEAD_TARGET"],
 			args = {
 				defaultTargetLvlOffset = {
@@ -151,359 +150,348 @@ local SETTINGS_GENERAL = {
 					step = 1
 				}
 			}
-		}
-	}
-}
-
-local SETTINGS_TOOLTIPS = {
-	type = "group",
-	get = defaultGet,
-	set = defaultSet,
-	args = {
-		ttDesc = {
-			order = 0,
-			type = "description",
-			name = L["SETTINGS_HEAD_TOOLTIP"]
 		},
 
-		ttHit = {
-			order = 1,
-			type = "toggle",
-			name = L["SETTINGS_TT_HITVAL_LABEL"]
-		},
-		ttCrit = {
-			order = 2,
-			type = "toggle",
-			name = L["SETTINGS_TT_CRIT_LABEL"]
-		},
-		ttAverages = {
-			order = 3,
-			type = "toggle",
-			name = L["SETTINGS_TT_AVG_LABEL"]
-		},
-
-		ttPower = {
-			order = 10,
-			type = "toggle",
-			name = L["SETTINGS_TT_POWER_LABEL"],
-			desc = L["SETTINGS_TT_POWER_TT"]
-		},
-		ttCoef = {
-			order = 11,
-			type = "toggle",
-			name = L["SETTINGS_TT_COEF_LABEL"]
-		},
-
-		ttHitChance = {
-			order = 20,
-			type = "toggle",
-			name = L["SETTINGS_TT_HITCHANCE_LABEL"]
-		},
-		ttHitDetail = {
-			order = 21,
-			type = "toggle",
-			name = L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"],
-			desc = L["SETTINGS_TT_HITCHANCE_DETAIL_TT"]
-		},
-		ttResist = {
-			order = 22,
-			type = "toggle",
-			name = L["SETTINGS_TT_RESISTANCE_LABEL"],
-			desc = L["SETTINGS_TT_RESISTANCE_TT"]
-		},
-
-		ttPerSecond = {
-			order = 30,
-			type = "toggle",
-			name = L["SETTINGS_TT_PERSEC_LABEL"]
-		},
-
-		ttEffCost = {
-			order = 40,
-			type = "toggle",
-			name = L["SETTINGS_TT_RESISTANCE_LABEL"],
-			desc = L["SETTINGS_TT_EFFCOST_TT"]
-		},
-		ttPerMana = {
-			order = 41,
-			type = "toggle",
-			name = L["SETTINGS_TT_PERMANA_LABEL"]
-		},
-		ttToOom = {
-			order = 42,
-			type = "toggle",
-			name = L["SETTINGS_TT_OOM_LABEL"]
-		},
-
-		ttCombined = {
-			order = 50,
-			type = "toggle",
-			name = L["SETTINGS_TT_COMBINED_LABEL"],
-			desc = L["SETTINGS_TT_COMBINED_TT"]
-		},
-	}
-}
-
-local SETTINGS_ACTIONBAR = {
-	type = "group",
-	get = defaultGet,
-	set = defaultSet,
-	args = {
-		abShow = {
-			order = 1,
-			type = "toggle",
-			name = L["SETTINGS_AB_SHOW"],
-			width = 1.25,
-			set = function(i, val)
-				SpellCalc_settings.abShow = val;
-				if not val then
-					_addon.ActionBarValues:Clear();
-				end
-			end
-		},
-		abPosition = {
-			order = 2,
-			type = "range",
-			name = L["SETTINGS_AB_POS"],
-			desc = L["SETTINGS_AB_POS_TT"],
-			min = 0,
-			max = 100,
-			step = 1,
-			set = function(i, val)
-				SpellCalc_settings.abPosition = val;
-				_addon.ActionBarValues:UpdateStyle();
-			end
-		},
-		fontSettings = {
-			order = 3,
+		tooltipGroup = {
+			order = 4,
 			type = "group",
-			guiInline = true,
-			name = L["SETTINGS_AB_FONT"],
+			name = L["SETTINGS_TOOLTIP_TITLE"],
 			args = {
-				abFont = {
+				ttDesc = {
+					order = 0,
+					type = "description",
+					name = L["SETTINGS_HEAD_TOOLTIP"]
+				},
+
+				ttHit = {
 					order = 1,
-					type = "select", 
-					dialogControl = "LSM30_Font",
-					name = L["SETTINGS_AB_FONT"],
-					values = AceGUIWidgetLSMlists.font,
+					type = "toggle",
+					name = L["SETTINGS_TT_HITVAL_LABEL"]
+				},
+				ttCrit = {
+					order = 2,
+					type = "toggle",
+					name = L["SETTINGS_TT_CRIT_LABEL"]
+				},
+				ttAverages = {
+					order = 3,
+					type = "toggle",
+					name = L["SETTINGS_TT_AVG_LABEL"]
+				},
+
+				ttPower = {
+					order = 10,
+					type = "toggle",
+					name = L["SETTINGS_TT_POWER_LABEL"],
+					desc = L["SETTINGS_TT_POWER_TT"]
+				},
+				ttCoef = {
+					order = 11,
+					type = "toggle",
+					name = L["SETTINGS_TT_COEF_LABEL"]
+				},
+
+				ttHitChance = {
+					order = 20,
+					type = "toggle",
+					name = L["SETTINGS_TT_HITCHANCE_LABEL"]
+				},
+				ttHitDetail = {
+					order = 21,
+					type = "toggle",
+					name = L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"],
+					desc = L["SETTINGS_TT_HITCHANCE_DETAIL_TT"]
+				},
+				ttResist = {
+					order = 22,
+					type = "toggle",
+					name = L["SETTINGS_TT_RESISTANCE_LABEL"],
+					desc = L["SETTINGS_TT_RESISTANCE_TT"]
+				},
+
+				ttPerSecond = {
+					order = 30,
+					type = "toggle",
+					name = L["SETTINGS_TT_PERSEC_LABEL"]
+				},
+
+				ttEffCost = {
+					order = 40,
+					type = "toggle",
+					name = L["SETTINGS_TT_RESISTANCE_LABEL"],
+					desc = L["SETTINGS_TT_EFFCOST_TT"]
+				},
+				ttPerMana = {
+					order = 41,
+					type = "toggle",
+					name = L["SETTINGS_TT_PERMANA_LABEL"]
+				},
+				ttToOom = {
+					order = 42,
+					type = "toggle",
+					name = L["SETTINGS_TT_OOM_LABEL"]
+				},
+
+				ttCombined = {
+					order = 50,
+					type = "toggle",
+					name = L["SETTINGS_TT_COMBINED_LABEL"],
+					desc = L["SETTINGS_TT_COMBINED_TT"]
+				},
+			}
+		},
+
+		actionbarGroup = {
+			order = 6,
+			type = "group",
+			name = L["SETTINGS_AB_TITLE"],
+			args = {
+				abShow = {
+					order = 1,
+					type = "toggle",
+					name = L["SETTINGS_AB_SHOW"],
+					width = 1.25,
 					set = function(i, val)
-						SpellCalc_settings.abFont = val;
-						_addon.ActionBarValues:UpdateStyle();
+						SpellCalc_settings.abShow = val;
+						if not val then
+							_addon.ActionBarValues:Clear();
+						end
 					end
 				},
-				abSize = {
+				abPosition = {
 					order = 2,
 					type = "range",
-					name = L["SETTINGS_AB_SIZE"],
-					min = 8,
-					max = 20,
+					name = L["SETTINGS_AB_POS"],
+					desc = L["SETTINGS_AB_POS_TT"],
+					min = 0,
+					max = 100,
 					step = 1,
 					set = function(i, val)
-						SpellCalc_settings.abSize = val;
+						SpellCalc_settings.abPosition = val;
 						_addon.ActionBarValues:UpdateStyle();
 					end
 				},
-				abFontFlags = {
+				fontSettings = {
 					order = 3,
-					type = "select",
-					name = L["SETTINGS_AB_FONT_STYLE"],
-					values = {
-						NONE = L["NONE"],
-						OUTLINE = L["SETTINGS_AB_FONT_STYLE_OUTLINE"],
-						MONOCHROME = L["SETTINGS_AB_FONT_STYLE_MONOCHROME"],
-						["MONOCHROME,OUTLINE"] = L["SETTINGS_AB_FONT_STYLE_MONOCHROME_OUTLINE"],
+					type = "group",
+					guiInline = true,
+					name = L["SETTINGS_AB_FONT"],
+					args = {
+						abFont = {
+							order = 1,
+							type = "select", 
+							dialogControl = "LSM30_Font",
+							name = L["SETTINGS_AB_FONT"],
+							values = AceGUIWidgetLSMlists.font,
+							set = function(i, val)
+								SpellCalc_settings.abFont = val;
+								_addon.ActionBarValues:UpdateStyle();
+							end
+						},
+						abSize = {
+							order = 2,
+							type = "range",
+							name = L["SETTINGS_AB_SIZE"],
+							min = 8,
+							max = 20,
+							step = 1,
+							set = function(i, val)
+								SpellCalc_settings.abSize = val;
+								_addon.ActionBarValues:UpdateStyle();
+							end
+						},
+						abFontFlags = {
+							order = 3,
+							type = "select",
+							name = L["SETTINGS_AB_FONT_STYLE"],
+							values = {
+								NONE = L["NONE"],
+								OUTLINE = L["SETTINGS_AB_FONT_STYLE_OUTLINE"],
+								MONOCHROME = L["SETTINGS_AB_FONT_STYLE_MONOCHROME"],
+								["MONOCHROME,OUTLINE"] = L["SETTINGS_AB_FONT_STYLE_MONOCHROME_OUTLINE"],
+							},
+							set = function(i, val)
+								SpellCalc_settings.abFontFlags = val;
+								_addon.ActionBarValues:UpdateStyle();
+							end
+						},
 					},
-					set = function(i, val)
-						SpellCalc_settings.abFontFlags = val;
-						_addon.ActionBarValues:UpdateStyle();
-					end
 				},
-			},
-		},
-		colorSettings = {
-			order = 4,
-			type = "group",
-			guiInline = true,
-			name = L["SETTINGS_AB_COLORS"],
-			args = {
-				abColorHarm = {
-					order = 1,
-					type = "color",
-					name = L["SETTINGS_AB_COLOR_HARM"],
-					hasAlpha = false,
-					get = function()
-						return unpack(SpellCalc_settings.abColorHarm);
-					end,
-					set = function(info, r, g, b, a)
-						SpellCalc_settings.abColorHarm[1] = r;
-						SpellCalc_settings.abColorHarm[2] = g;
-						SpellCalc_settings.abColorHarm[3] = b;
-						_addon.ActionBarValues:UpdateStyle();
-					end
-				},
-				abColorHelp = {
-					order = 2,
-					type = "color",
-					name = L["SETTINGS_AB_COLOR_HELP"],
-					hasAlpha = false,
-					get = function()
-						return unpack(SpellCalc_settings.abColorHelp);
-					end,
-					set = function(info, r, g, b, a)
-						SpellCalc_settings.abColorHelp[1] = r;
-						SpellCalc_settings.abColorHelp[2] = g;
-						SpellCalc_settings.abColorHelp[3] = b;
-						_addon.ActionBarValues:UpdateStyle();
-					end
-				}
-			}
-		},
-		valueSettings = {
-			order = 4,
-			type = "group",
-			guiInline = true,
-			name = L["SETTINGS_AB_HEAD"],
-			args = {
-				abDirectValue = {
-					order = 1,
-					type = "select",
-					name = L["SETTINGS_AB_DIRECT_VALUE"],
-					values = {
-						hitAvg = L["SETTINGS_AB_DIRECT_VALUE_AVG"],
-						critAvg = L["SETTINGS_AB_DIRECT_VALUE_CRITAVG"],
-						avgAfterMitigation = L["SETTINGS_AB_DIRECT_VALUE_REALAVG"]
-					}
-				},
-				abDurationValue = {
-					order = 2,
-					type = "select",
-					name = L["SETTINGS_AB_DURATION_VALUE"],
-					values = {
-						perTick = L["SETTINGS_AB_DURATION_VALUE_TICK"],
-						allTicks = L["SETTINGS_AB_DURATION_VALUE_ALL"],
-						avgAfterMitigation = L["SETTINGS_AB_DURATION_VALUE_REALAVG"]
-					}
-				},
-				abSealValue = {
-					order = 3,
-					type = "select",
-					name = L["SETTINGS_AB_SEAL_VALUE"],
-					values = {
-						hitAvg = L["SETTINGS_AB_SEAL_VALUE_HIT"],
-						avgTriggerHits = L["SETTINGS_AB_SEAL_VALUE_OVERDUR"],
-						perSecond = L["SETTINGS_AB_SEAL_VALUE_PERSEC"]
-					}
-				},
-			}
-		},
-	}
-}
-
-local SETTINGS_CALC = {
-	type = "group",
-	get = defaultGet,
-	set = defaultSet,
-	args = {
-		useRealToOom = {
-			order = 1,
-			type = "toggle",
-			name = L["SETTINGS_CALC_REAL_OOM"],
-			desc = L["SETTINGS_CALC_REAL_OOM_TT"]
-		},
-		effManaGroup = {
-			order = 2,
-			type = "group",
-			guiInline = true,
-			name = L["SETTINGS_CALC_EM_HEAD"],
-			args = {
-				desc = {
-					order = 1,
-					type = "description",
-					name = L["SETTINGS_CALC_EM_DESC"]
-				},
-				calcEffManaInnervate = {
-					order = 2,
-					type = "toggle",
-					name = L["SETTINGS_CALC_EM_INNER"]
-				},
-				calcEffManaRune = {
-					order = 3,
-					type = "toggle",
-					name = L["SETTINGS_CALC_EM_RUNE"]
-				},
-				calcEffManaPotionTypeNew = {
+				colorSettings = {
 					order = 4,
-					type = "select",
-					name = L["SETTINGS_CALC_EM_POTION"],
-					values = {
-						NONE = L["NONE"],
-						MAJOR = L["SETTINGS_CALC_EM_POTION_MAJOR"],
-						SUPERIOR = L["SETTINGS_CALC_EM_POTION_SUPERIOR"],
-						GREATER = L["SETTINGS_CALC_EM_POTION_GREATER"]
+					type = "group",
+					guiInline = true,
+					name = L["SETTINGS_AB_COLORS"],
+					args = {
+						abColorHarm = {
+							order = 1,
+							type = "color",
+							name = L["SETTINGS_AB_COLOR_HARM"],
+							hasAlpha = false,
+							get = function()
+								return unpack(SpellCalc_settings.abColorHarm);
+							end,
+							set = function(info, r, g, b, a)
+								SpellCalc_settings.abColorHarm[1] = r;
+								SpellCalc_settings.abColorHarm[2] = g;
+								SpellCalc_settings.abColorHarm[3] = b;
+								_addon.ActionBarValues:UpdateStyle();
+							end
+						},
+						abColorHelp = {
+							order = 2,
+							type = "color",
+							name = L["SETTINGS_AB_COLOR_HELP"],
+							hasAlpha = false,
+							get = function()
+								return unpack(SpellCalc_settings.abColorHelp);
+							end,
+							set = function(info, r, g, b, a)
+								SpellCalc_settings.abColorHelp[1] = r;
+								SpellCalc_settings.abColorHelp[2] = g;
+								SpellCalc_settings.abColorHelp[3] = b;
+								_addon.ActionBarValues:UpdateStyle();
+							end
+						}
+					}
+				},
+				valueSettings = {
+					order = 4,
+					type = "group",
+					guiInline = true,
+					name = L["SETTINGS_AB_HEAD"],
+					args = {
+						abDirectValue = {
+							order = 1,
+							type = "select",
+							name = L["SETTINGS_AB_DIRECT_VALUE"],
+							values = {
+								hitAvg = L["SETTINGS_AB_DIRECT_VALUE_AVG"],
+								critAvg = L["SETTINGS_AB_DIRECT_VALUE_CRITAVG"],
+								avgAfterMitigation = L["SETTINGS_AB_DIRECT_VALUE_REALAVG"]
+							}
+						},
+						abDurationValue = {
+							order = 2,
+							type = "select",
+							name = L["SETTINGS_AB_DURATION_VALUE"],
+							values = {
+								perTick = L["SETTINGS_AB_DURATION_VALUE_TICK"],
+								allTicks = L["SETTINGS_AB_DURATION_VALUE_ALL"],
+								avgAfterMitigation = L["SETTINGS_AB_DURATION_VALUE_REALAVG"]
+							}
+						},
+						abSealValue = {
+							order = 3,
+							type = "select",
+							name = L["SETTINGS_AB_SEAL_VALUE"],
+							values = {
+								hitAvg = L["SETTINGS_AB_SEAL_VALUE_HIT"],
+								avgTriggerHits = L["SETTINGS_AB_SEAL_VALUE_OVERDUR"],
+								perSecond = L["SETTINGS_AB_SEAL_VALUE_PERSEC"]
+							}
+						},
+					}
+				},
+			}
+		},
+
+		calcGroup = {
+			order = 8,
+			type = "group",
+			name = L["SETTINGS_CALC_HEAD"],
+			args = {
+				useRealToOom = {
+					order = 1,
+					type = "toggle",
+					name = L["SETTINGS_CALC_REAL_OOM"],
+					desc = L["SETTINGS_CALC_REAL_OOM_TT"]
+				},
+				effManaGroup = {
+					order = 2,
+					type = "group",
+					guiInline = true,
+					name = L["SETTINGS_CALC_EM_HEAD"],
+					args = {
+						desc = {
+							order = 1,
+							type = "description",
+							name = L["SETTINGS_CALC_EM_DESC"]
+						},
+						calcEffManaInnervate = {
+							order = 2,
+							type = "toggle",
+							name = L["SETTINGS_CALC_EM_INNER"]
+						},
+						calcEffManaRune = {
+							order = 3,
+							type = "toggle",
+							name = L["SETTINGS_CALC_EM_RUNE"]
+						},
+						calcEffManaPotionTypeNew = {
+							order = 4,
+							type = "select",
+							name = L["SETTINGS_CALC_EM_POTION"],
+							values = {
+								NONE = L["NONE"],
+								MAJOR = L["SETTINGS_CALC_EM_POTION_MAJOR"],
+								SUPERIOR = L["SETTINGS_CALC_EM_POTION_SUPERIOR"],
+								GREATER = L["SETTINGS_CALC_EM_POTION_GREATER"]
+							}
+						}
 					}
 				}
 			}
-		}
-	}
-}
-
-local SETTINGS_HEAL = {
-	type = "group",
-	get = defaultGet,
-	set = defaultSet,
-	args = {
-		healTargetHps = {
-			order = 1,
-			type = "range",
-			name = L["SETTINGS_HEAL_TARGET_HPS"],
-			desc = L["SETTINGS_HEAL_TARGET_HPS_TT"],
-			min = 0,
-			max = 10000,
-			softMax = 1500,
-			step = 25
 		},
-		healDisregardCrit = {
-			order = 2,
-			type = "toggle",
-			name = L["SETTINGS_HEAL_NO_CRIT"],
-			desc = L["SETTINGS_HEAL_NO_CRIT_TT"]
-		}
-	}
-}
 
-local SETTINGS_MELEE = {
-	type = "group",
-	get = defaultGet,
-	set = defaultSet,
-	args = {
-		meleeFromFront = {
-			order = 1,
-			type = "toggle",
-			name = L["SETTINGS_MELEE_FROM_FRONT"],
-			desc = L["SETTINGS_MELEE_FROM_FRONT_TT"]
-		}
-	}
-}
-
-local SETTINGS_DEBUG = {
-	type = "group",
-	get = defaultGet,
-	set = defaultSet,
-	args = {
-		ttShowBuffs = {
-			order = 1,
-			type = "toggle",
-			name = L["SETTINGS_TT_BUFFS_LABEL"],
-			desc = L["SETTINGS_TT_BUFFS_TT"]
-		},
-		debug = {
-			order = 2,
-			type = "toggle",
-			name = "Debug"
+		debugGroup = {
+			order = -1,
+			type = "group",
+			name = "Debug",
+			args = {
+				ttShowBuffs = {
+					order = 1,
+					type = "toggle",
+					name = L["SETTINGS_TT_BUFFS_LABEL"],
+					desc = L["SETTINGS_TT_BUFFS_TT"]
+				},
+				debug = {
+					order = 2,
+					type = "toggle",
+					name = "Debug"
+				},
+			}
 		},
 	}
 }
 
+local ARGS_HEAL = {
+	healTargetHps = {
+		order = 1,
+		type = "range",
+		name = L["SETTINGS_HEAL_TARGET_HPS"],
+		desc = L["SETTINGS_HEAL_TARGET_HPS_TT"],
+		min = 0,
+		max = 10000,
+		softMax = 1500,
+		step = 25
+	},
+	healDisregardCrit = {
+		order = 2,
+		type = "toggle",
+		name = L["SETTINGS_HEAL_NO_CRIT"],
+		desc = L["SETTINGS_HEAL_NO_CRIT_TT"]
+	}
+}
+
+local ARGS_MELEE = {
+	meleeFromFront = {
+		order = 1,
+		type = "toggle",
+		name = L["SETTINGS_MELEE_FROM_FRONT"],
+		desc = L["SETTINGS_MELEE_FROM_FRONT_TT"]
+	}
+}
 
 --- Setup SV tables, check settings and setup settings menu
 function _addon:SetupSettings()
@@ -518,47 +506,33 @@ function _addon:SetupSettings()
 		end
 	end
 
-	AceConfigRegistry:RegisterOptionsTable(_addonName, SETTINGS_GENERAL);
-	local options = AceConfigDialog:AddToBlizOptions(_addonName, _addonName);
-
-	options:HookScript("OnShow", function()
-		for i, button in pairs(InterfaceOptionsFrameAddOns.buttons) do
-            if button.element and button.element.name == _addonName and button.element.collapsed then
-                OptionsListButtonToggle_OnClick(button.toggle);
-            end
-        end
-    end);
-
-	AceConfigRegistry:RegisterOptionsTable(_addonName.." "..L["SETTINGS_TOOLTIP_TITLE"], SETTINGS_TOOLTIPS);
-	AceConfigDialog:AddToBlizOptions(_addonName.." "..L["SETTINGS_TOOLTIP_TITLE"], L["SETTINGS_TOOLTIP_TITLE"], _addonName);
-
-	AceConfigRegistry:RegisterOptionsTable(_addonName.." "..L["SETTINGS_AB_TITLE"], SETTINGS_ACTIONBAR);
-	AceConfigDialog:AddToBlizOptions(_addonName.." "..L["SETTINGS_AB_TITLE"], L["SETTINGS_AB_TITLE"], _addonName);
-
-	AceConfigRegistry:RegisterOptionsTable(_addonName.." "..L["SETTINGS_CALC_HEAD"], SETTINGS_CALC);
-	AceConfigDialog:AddToBlizOptions(_addonName.." "..L["SETTINGS_CALC_HEAD"], L["SETTINGS_CALC_HEAD"], _addonName);
-
-	if self.classSettings ~= nil then
-		local cs = {
+	if self.ClassSettings ~= nil then
+		SETTINGS_TABLE.args.classGroup = {
+			order = 10,
 			type = "group",
-			get = defaultGet,
-			set = defaultSet,
-			args = self.classSettings
+			name = classLoc,
+			args = self:ClassSettings()
 		}
-		AceConfigRegistry:RegisterOptionsTable(_addonName.." "..classLoc, cs);
-		AceConfigDialog:AddToBlizOptions(_addonName.." "..classLoc, classLoc, _addonName);
 	end
 
 	if _addon.MELEE_CLASSES[class] then
-		AceConfigRegistry:RegisterOptionsTable(_addonName.." "..L["SETTINGS_MELEE_HEAD"], SETTINGS_MELEE);
-		AceConfigDialog:AddToBlizOptions(_addonName.." "..L["SETTINGS_MELEE_HEAD"], L["SETTINGS_MELEE_HEAD"], _addonName);
+		SETTINGS_TABLE.args.meleeGroup = {
+			order = 12,
+			type = "group",
+			name = L["SETTINGS_MELEE_HEAD"],
+			args = ARGS_MELEE
+		}
 	end
 
 	if _addon.HEALING_CLASSES[class] then
-		AceConfigRegistry:RegisterOptionsTable(_addonName.." "..L["SETTINGS_HEAL_HEAD"], SETTINGS_HEAL);
-		AceConfigDialog:AddToBlizOptions(_addonName.." "..L["SETTINGS_HEAL_HEAD"], L["SETTINGS_HEAL_HEAD"], _addonName);
+		SETTINGS_TABLE.args.healGroup = {
+			order = 14,
+			type = "group",
+			name = L["SETTINGS_HEAL_HEAD"],
+			args = ARGS_HEAL
+		}
 	end
 
-	AceConfigRegistry:RegisterOptionsTable(_addonName.." Debug", SETTINGS_DEBUG);
-	AceConfigDialog:AddToBlizOptions(_addonName.." Debug", "Debug", _addonName);
+	AceConfigRegistry:RegisterOptionsTable(_addonName, SETTINGS_TABLE);
+	AceConfigDialog:AddToBlizOptions(_addonName, _addonName);
 end
