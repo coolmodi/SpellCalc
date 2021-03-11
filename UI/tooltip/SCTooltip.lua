@@ -12,6 +12,7 @@ local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 local SCTooltip = {};
 _addon.SCTooltip = SCTooltip;
 
+local tt = GameTooltip;
 local tooltipHandler = {};
 local dummyHandler = {};
 
@@ -37,7 +38,7 @@ end
 --- Add heading to tooltip
 ---@param text string @The heading text
 function SCTooltip:HeaderLine(text)
-    GameTooltip:AddLine(text, 0.5, 1, 0.5);
+    tt:AddLine(text, 0.5, 1, 0.5);
 end
 
 --- Add single line to tooltip
@@ -49,7 +50,7 @@ function SCTooltip:SingleLine(label, text)
         t1 = TTC_LABEL..label..": "..t1;
     end
 
-    GameTooltip:AddLine(t1);
+    tt:AddLine(t1);
 end
 
 --- Add double line to tooltip
@@ -71,7 +72,7 @@ function SCTooltip:DoubleLine(label, text, labelr, textr)
         t2 = TTC_LABEL..labelr..": "..t2;
     end
 
-    GameTooltip:AddDoubleLine(t1, t2);
+    tt:AddDoubleLine(t1, t2);
 end
 
 --- Append "label: min[ - max [(avg)]] [lr: ][tr]",
@@ -119,15 +120,16 @@ local function GetEffectTitle(flags)
     return L["TT_TITLE_DAMAGE"];
 end
 
--- This happens for every spell tooltip using the stock tooltip object.
--- Appends data if spell is known to the addon.
-GameTooltip:SetScript("OnTooltipSetSpell", function(self)
-    local _, spellID = GameTooltip:GetSpell();
+--- Append data to tooltip if spell is known to the addon.
+local function TooltipHandler(toolTipFrame)
+    local _, spellID = toolTipFrame:GetSpell();
     local calcedSpell = _addon:GetCalcedSpell(spellID);
 
     if calcedSpell == nil then
         return;
     end
+
+    tt = toolTipFrame;
 
     for i = 1, 2, 1 do
         ---@type CalcedEffect
@@ -185,7 +187,12 @@ GameTooltip:SetScript("OnTooltipSetSpell", function(self)
     end
 
     if SpellCalc_settings.ttShowBuffs and #calcedSpell.buffs > 0 then
-        GameTooltip:AddLine(L["TT_BUFFS"], 0.5, 1, 0.5);
-        GameTooltip:AddLine(TTC_DEFAULT..table.concat(calcedSpell.buffs, ", "));
+        toolTipFrame:AddLine(L["TT_BUFFS"], 0.5, 1, 0.5);
+        toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell.buffs, ", "));
     end
-end);
+end
+
+GameTooltip:HookScript("OnTooltipSetSpell", TooltipHandler);
+if ElvUISpellBookTooltip then
+    ElvUISpellBookTooltip:HookScript("OnTooltipSetSpell", TooltipHandler);
+end
