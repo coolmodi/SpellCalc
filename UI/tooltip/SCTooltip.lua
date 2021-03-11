@@ -103,21 +103,21 @@ end
 local function GetEffectTitle(flags)
     if bit.band(flags, SPELL_EFFECT_FLAGS.HEAL) > 0 then
         if bit.band(flags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
-            return L["TT_TITLE_HOT"];
+            return L.HEAL_OVER_TIME_SHORT;
         end
 
-        return L["TT_TITLE_HEAL"];
+        return L.HEAL;
     end
 
     if bit.band(flags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
-        return L["TT_TITLE_DOT"];
+        return L.DMG_OVER_TIME_SHORT;
     end
 
     if bit.band(flags, SPELL_EFFECT_FLAGS.ABSORB) > 0 then
-        return L["TT_TITLE_ABSORB"];
+        return L.ABSORB;
     end
 
-    return L["TT_TITLE_DAMAGE"];
+    return L.DAMAGE;
 end
 
 --- Append data to tooltip if spell is known to the addon.
@@ -147,7 +147,7 @@ local function TooltipHandler(toolTipFrame)
         end
 
         if #calcedSpell > 1 and (i == 2 or calcedSpell.combined == nil) then
-            SCTooltip:HeaderLine(GetEffectTitle(effectFlags));
+            SCTooltip:HeaderLine(GetEffectTitle(effectFlags)..":");
         end
 
         local isHeal = bit.band(effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
@@ -187,7 +187,7 @@ local function TooltipHandler(toolTipFrame)
     end
 
     if SpellCalc_settings.ttShowBuffs and #calcedSpell.buffs > 0 then
-        toolTipFrame:AddLine(L["TT_BUFFS"], 0.5, 1, 0.5);
+        toolTipFrame:AddLine(L.TT_BUFFS, 0.5, 1, 0.5);
         toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell.buffs, ", "));
     end
 end

@@ -25,7 +25,7 @@ function _addon:AddLocalization(locale, default)
 end
 
 --- Get localization table
----@return table<string, string>
+---@return LocaleTable
 function _addon:GetLocalization()
 	return localStrings;
 end

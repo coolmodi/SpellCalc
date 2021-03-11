@@ -199,8 +199,8 @@ function _addon:ClassSettings()
     return {
         useImpSB = {
             type = "toggle",
-            name = L["SETTINGS_WL_USE_IMP_SB"],
-            desc = L["SETTINGS_WL_USE_IMP_SB_TT"],
+            name = L.SETTINGS_WL_USE_IMP_SB,
+            desc = L.SETTINGS_WL_USE_IMP_SB_TT,
         }
     }
 end

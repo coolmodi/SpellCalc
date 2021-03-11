@@ -82,12 +82,12 @@ local SETTINGS_TABLE = {
 		targetGroup = {
 			order = 2,
 			type = "group",
-			name = L["SETTINGS_HEAD_TARGET"],
+			name = L.SETTINGS_HEAD_TARGET,
 			args = {
 				defaultTargetLvlOffset = {
 					order = 1,
 					type = "range",
-					name = L["SETTINGS_TAR_DEFLEVEL_LABEL"],
+					name = L.SETTINGS_TAR_DEFLEVEL_LABEL,
 					min = -3,
 					max = 13,
 					step = 1
@@ -95,24 +95,24 @@ local SETTINGS_TABLE = {
 				useCurrentTarget = {
 					order = 2,
 					type = "toggle",
-					name = L["SETTINGS_TT_USECURRENT_LABEL"],
-					desc = L["SETTINGS_TT_USECURRENT_TT"]
+					name = L.SETTINGS_TT_USECURRENT_LABEL,
+					desc = L.SETTINGS_TT_USECURRENT_TT
 				},
 
 				resHead = {
 					order = 10,
 					type = "header",
-					name = L["SETTINGS_HEAD_RESISTANCE"]
+					name = L.SETTINGS_HEAD_RESISTANCE
 				},
 				resDesc = {
 					order = 11,
 					type = "description",
-					name = L["SETTINGS_RESISTANCE_DESC"]
+					name = L.SETTINGS_RESISTANCE_DESC
 				},
 				resOverrideFrost = {
 					order = 12,
 					type = "range",
-					name = L["SETTINGS_TT_FROST_LABEL"],
+					name = L.SETTINGS_TT_FROST_LABEL,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -120,7 +120,7 @@ local SETTINGS_TABLE = {
 				resOverrideFire = {
 					order = 13,
 					type = "range",
-					name = L["SETTINGS_TT_FIRE_LABEL"],
+					name = L.SETTINGS_TT_FIRE_LABEL,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -128,7 +128,7 @@ local SETTINGS_TABLE = {
 				resOverrideShadow = {
 					order = 14,
 					type = "range",
-					name = L["SETTINGS_TT_SHADOW_LABEL"],
+					name = L.SETTINGS_TT_SHADOW_LABEL,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -136,7 +136,7 @@ local SETTINGS_TABLE = {
 				resOverrideNature = {
 					order = 15,
 					type = "range",
-					name = L["SETTINGS_TT_NATURE_LABEL"],
+					name = L.SETTINGS_TT_NATURE_LABEL,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -144,7 +144,7 @@ local SETTINGS_TABLE = {
 				resOverrideArcane = {
 					order = 16,
 					type = "range",
-					name = L["SETTINGS_TT_ARCANE_LABEL"],
+					name = L.SETTINGS_TT_ARCANE_LABEL,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -155,88 +155,88 @@ local SETTINGS_TABLE = {
 		tooltipGroup = {
 			order = 4,
 			type = "group",
-			name = L["SETTINGS_TOOLTIP_TITLE"],
+			name = L.SETTINGS_TOOLTIP_TITLE,
 			args = {
 				ttDesc = {
 					order = 0,
 					type = "description",
-					name = L["SETTINGS_HEAD_TOOLTIP"]
+					name = L.SETTINGS_HEAD_TOOLTIP
 				},
 
 				ttHit = {
 					order = 1,
 					type = "toggle",
-					name = L["SETTINGS_TT_HITVAL_LABEL"]
+					name = L.SETTINGS_TT_HITVAL_LABEL
 				},
 				ttCrit = {
 					order = 2,
 					type = "toggle",
-					name = L["SETTINGS_TT_CRIT_LABEL"]
+					name = L.SETTINGS_TT_CRIT_LABEL
 				},
 				ttAverages = {
 					order = 3,
 					type = "toggle",
-					name = L["SETTINGS_TT_AVG_LABEL"]
+					name = L.SETTINGS_TT_AVG_LABEL
 				},
 
 				ttPower = {
 					order = 10,
 					type = "toggle",
-					name = L["SETTINGS_TT_POWER_LABEL"],
-					desc = L["SETTINGS_TT_POWER_TT"]
+					name = L.SETTINGS_TT_POWER_LABEL,
+					desc = L.SETTINGS_TT_POWER_TT
 				},
 				ttCoef = {
 					order = 11,
 					type = "toggle",
-					name = L["SETTINGS_TT_COEF_LABEL"]
+					name = L.SETTINGS_TT_COEF_LABEL
 				},
 
 				ttHitChance = {
 					order = 20,
 					type = "toggle",
-					name = L["SETTINGS_TT_HITCHANCE_LABEL"]
+					name = L.SETTINGS_TT_HITCHANCE_LABEL
 				},
 				ttHitDetail = {
 					order = 21,
 					type = "toggle",
-					name = L["SETTINGS_TT_HITCHANCE_DETAIL_LABEL"],
-					desc = L["SETTINGS_TT_HITCHANCE_DETAIL_TT"]
+					name = L.SETTINGS_TT_HITCHANCE_DETAIL_LABEL,
+					desc = L.SETTINGS_TT_HITCHANCE_DETAIL_TT
 				},
 				ttResist = {
 					order = 22,
 					type = "toggle",
-					name = L["SETTINGS_TT_RESISTANCE_LABEL"],
-					desc = L["SETTINGS_TT_RESISTANCE_TT"]
+					name = L.SETTINGS_TT_RESISTANCE_LABEL,
+					desc = L.SETTINGS_TT_RESISTANCE_TT
 				},
 
 				ttPerSecond = {
 					order = 30,
 					type = "toggle",
-					name = L["SETTINGS_TT_PERSEC_LABEL"]
+					name = L.SETTINGS_TT_PERSEC_LABEL
 				},
 
 				ttEffCost = {
 					order = 40,
 					type = "toggle",
-					name = L["SETTINGS_TT_RESISTANCE_LABEL"],
-					desc = L["SETTINGS_TT_EFFCOST_TT"]
+					name = L.SETTINGS_TT_RESISTANCE_LABEL,
+					desc = L.SETTINGS_TT_EFFCOST_TT
 				},
 				ttPerMana = {
 					order = 41,
 					type = "toggle",
-					name = L["SETTINGS_TT_PERMANA_LABEL"]
+					name = L.SETTINGS_TT_PERMANA_LABEL
 				},
 				ttToOom = {
 					order = 42,
 					type = "toggle",
-					name = L["SETTINGS_TT_OOM_LABEL"]
+					name = L.SETTINGS_TT_OOM_LABEL
 				},
 
 				ttCombined = {
 					order = 50,
 					type = "toggle",
-					name = L["SETTINGS_TT_COMBINED_LABEL"],
-					desc = L["SETTINGS_TT_COMBINED_TT"]
+					name = L.SETTINGS_TT_COMBINED_LABEL,
+					desc = L.SETTINGS_TT_COMBINED_TT
 				},
 			}
 		},
@@ -244,12 +244,12 @@ local SETTINGS_TABLE = {
 		actionbarGroup = {
 			order = 6,
 			type = "group",
-			name = L["SETTINGS_AB_TITLE"],
+			name = L.SETTINGS_AB_TITLE,
 			args = {
 				abShow = {
 					order = 1,
 					type = "toggle",
-					name = L["SETTINGS_AB_SHOW"],
+					name = L.SETTINGS_AB_SHOW,
 					width = 1.25,
 					set = function(i, val)
 						SpellCalc_settings.abShow = val;
@@ -261,8 +261,8 @@ local SETTINGS_TABLE = {
 				abPosition = {
 					order = 2,
 					type = "range",
-					name = L["SETTINGS_AB_POS"],
-					desc = L["SETTINGS_AB_POS_TT"],
+					name = L.SETTINGS_AB_POS,
+					desc = L.SETTINGS_AB_POS_TT,
 					min = 0,
 					max = 100,
 					step = 1,
@@ -275,13 +275,13 @@ local SETTINGS_TABLE = {
 					order = 3,
 					type = "group",
 					guiInline = true,
-					name = L["SETTINGS_AB_FONT"],
+					name = L.SETTINGS_AB_FONT,
 					args = {
 						abFont = {
 							order = 1,
 							type = "select", 
 							dialogControl = "LSM30_Font",
-							name = L["SETTINGS_AB_FONT"],
+							name = L.SETTINGS_AB_FONT,
 							values = AceGUIWidgetLSMlists.font,
 							set = function(i, val)
 								SpellCalc_settings.abFont = val;
@@ -291,7 +291,7 @@ local SETTINGS_TABLE = {
 						abSize = {
 							order = 2,
 							type = "range",
-							name = L["SETTINGS_AB_SIZE"],
+							name = L.SETTINGS_AB_SIZE,
 							min = 8,
 							max = 20,
 							step = 1,
@@ -303,12 +303,12 @@ local SETTINGS_TABLE = {
 						abFontFlags = {
 							order = 3,
 							type = "select",
-							name = L["SETTINGS_AB_FONT_STYLE"],
+							name = L.SETTINGS_AB_FONT_STYLE,
 							values = {
-								NONE = L["NONE"],
-								OUTLINE = L["SETTINGS_AB_FONT_STYLE_OUTLINE"],
-								MONOCHROME = L["SETTINGS_AB_FONT_STYLE_MONOCHROME"],
-								["MONOCHROME,OUTLINE"] = L["SETTINGS_AB_FONT_STYLE_MONOCHROME_OUTLINE"],
+								NONE = L.NONE,
+								OUTLINE = L.SETTINGS_AB_FONT_STYLE_OUTLINE,
+								MONOCHROME = L.SETTINGS_AB_FONT_STYLE_MONOCHROME,
+								["MONOCHROME,OUTLINE"] = L.SETTINGS_AB_FONT_STYLE_MONOCHROME_OUTLINE,
 							},
 							set = function(i, val)
 								SpellCalc_settings.abFontFlags = val;
@@ -321,12 +321,12 @@ local SETTINGS_TABLE = {
 					order = 4,
 					type = "group",
 					guiInline = true,
-					name = L["SETTINGS_AB_COLORS"],
+					name = L.SETTINGS_AB_COLORS,
 					args = {
 						abColorHarm = {
 							order = 1,
 							type = "color",
-							name = L["SETTINGS_AB_COLOR_HARM"],
+							name = L.SETTINGS_AB_COLOR_HARM,
 							hasAlpha = false,
 							get = function()
 								return unpack(SpellCalc_settings.abColorHarm);
@@ -341,7 +341,7 @@ local SETTINGS_TABLE = {
 						abColorHelp = {
 							order = 2,
 							type = "color",
-							name = L["SETTINGS_AB_COLOR_HELP"],
+							name = L.SETTINGS_AB_COLOR_HELP,
 							hasAlpha = false,
 							get = function()
 								return unpack(SpellCalc_settings.abColorHelp);
@@ -359,36 +359,36 @@ local SETTINGS_TABLE = {
 					order = 4,
 					type = "group",
 					guiInline = true,
-					name = L["SETTINGS_AB_HEAD"],
+					name = L.SETTINGS_AB_HEAD,
 					args = {
 						abDirectValue = {
 							order = 1,
 							type = "select",
-							name = L["SETTINGS_AB_DIRECT_VALUE"],
+							name = L.SETTINGS_AB_DIRECT_VALUE,
 							values = {
-								hitAvg = L["SETTINGS_AB_DIRECT_VALUE_AVG"],
-								critAvg = L["SETTINGS_AB_DIRECT_VALUE_CRITAVG"],
-								avgAfterMitigation = L["SETTINGS_AB_DIRECT_VALUE_REALAVG"]
+								hitAvg = L.SETTINGS_AB_DIRECT_VALUE_AVG,
+								critAvg = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
+								avgAfterMitigation = L.SETTINGS_AB_DIRECT_VALUE_REALAVG
 							}
 						},
 						abDurationValue = {
 							order = 2,
 							type = "select",
-							name = L["SETTINGS_AB_DURATION_VALUE"],
+							name = L.SETTINGS_AB_DURATION_VALUE,
 							values = {
-								perTick = L["SETTINGS_AB_DURATION_VALUE_TICK"],
-								allTicks = L["SETTINGS_AB_DURATION_VALUE_ALL"],
-								avgAfterMitigation = L["SETTINGS_AB_DURATION_VALUE_REALAVG"]
+								perTick = L.SETTINGS_AB_DURATION_VALUE_TICK,
+								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
+								avgAfterMitigation = L.SETTINGS_AB_DURATION_VALUE_REALAVG
 							}
 						},
 						abSealValue = {
 							order = 3,
 							type = "select",
-							name = L["SETTINGS_AB_SEAL_VALUE"],
+							name = L.SETTINGS_AB_SEAL_VALUE,
 							values = {
-								hitAvg = L["SETTINGS_AB_SEAL_VALUE_HIT"],
-								avgTriggerHits = L["SETTINGS_AB_SEAL_VALUE_OVERDUR"],
-								perSecond = L["SETTINGS_AB_SEAL_VALUE_PERSEC"]
+								hitAvg = L.SETTINGS_AB_SEAL_VALUE_HIT,
+								avgTriggerHits = L.SETTINGS_AB_SEAL_VALUE_OVERDUR,
+								perSecond = L.SETTINGS_AB_SEAL_VALUE_PERSEC
 							}
 						},
 					}
@@ -399,44 +399,44 @@ local SETTINGS_TABLE = {
 		calcGroup = {
 			order = 8,
 			type = "group",
-			name = L["SETTINGS_CALC_HEAD"],
+			name = L.SETTINGS_CALC_HEAD,
 			args = {
 				useRealToOom = {
 					order = 1,
 					type = "toggle",
-					name = L["SETTINGS_CALC_REAL_OOM"],
-					desc = L["SETTINGS_CALC_REAL_OOM_TT"]
+					name = L.SETTINGS_CALC_REAL_OOM,
+					desc = L.SETTINGS_CALC_REAL_OOM_TT
 				},
 				effManaGroup = {
 					order = 2,
 					type = "group",
 					guiInline = true,
-					name = L["SETTINGS_CALC_EM_HEAD"],
+					name = L.SETTINGS_CALC_EM_HEAD,
 					args = {
 						desc = {
 							order = 1,
 							type = "description",
-							name = L["SETTINGS_CALC_EM_DESC"]
+							name = L.SETTINGS_CALC_EM_DESC
 						},
 						calcEffManaInnervate = {
 							order = 2,
 							type = "toggle",
-							name = L["SETTINGS_CALC_EM_INNER"]
+							name = L.SETTINGS_CALC_EM_INNER
 						},
 						calcEffManaRune = {
 							order = 3,
 							type = "toggle",
-							name = L["SETTINGS_CALC_EM_RUNE"]
+							name = L.SETTINGS_CALC_EM_RUNE
 						},
 						calcEffManaPotionTypeNew = {
 							order = 4,
 							type = "select",
-							name = L["SETTINGS_CALC_EM_POTION"],
+							name = L.SETTINGS_CALC_EM_POTION,
 							values = {
-								NONE = L["NONE"],
-								MAJOR = L["SETTINGS_CALC_EM_POTION_MAJOR"],
-								SUPERIOR = L["SETTINGS_CALC_EM_POTION_SUPERIOR"],
-								GREATER = L["SETTINGS_CALC_EM_POTION_GREATER"]
+								NONE = L.NONE,
+								MAJOR = L.SETTINGS_CALC_EM_POTION_MAJOR,
+								SUPERIOR = L.SETTINGS_CALC_EM_POTION_SUPERIOR,
+								GREATER = L.SETTINGS_CALC_EM_POTION_GREATER
 							}
 						}
 					}
@@ -452,8 +452,8 @@ local SETTINGS_TABLE = {
 				ttShowBuffs = {
 					order = 1,
 					type = "toggle",
-					name = L["SETTINGS_TT_BUFFS_LABEL"],
-					desc = L["SETTINGS_TT_BUFFS_TT"]
+					name = L.SETTINGS_TT_BUFFS_LABEL,
+					desc = L.SETTINGS_TT_BUFFS_TT
 				},
 				debug = {
 					order = 2,
@@ -469,8 +469,8 @@ local ARGS_HEAL = {
 	healTargetHps = {
 		order = 1,
 		type = "range",
-		name = L["SETTINGS_HEAL_TARGET_HPS"],
-		desc = L["SETTINGS_HEAL_TARGET_HPS_TT"],
+		name = L.SETTINGS_HEAL_TARGET_HPS,
+		desc = L.SETTINGS_HEAL_TARGET_HPS_TT,
 		min = 0,
 		max = 10000,
 		softMax = 1500,
@@ -479,8 +479,8 @@ local ARGS_HEAL = {
 	healDisregardCrit = {
 		order = 2,
 		type = "toggle",
-		name = L["SETTINGS_HEAL_NO_CRIT"],
-		desc = L["SETTINGS_HEAL_NO_CRIT_TT"]
+		name = L.SETTINGS_HEAL_NO_CRIT,
+		desc = L.SETTINGS_HEAL_NO_CRIT_TT
 	}
 }
 
@@ -488,8 +488,8 @@ local ARGS_MELEE = {
 	meleeFromFront = {
 		order = 1,
 		type = "toggle",
-		name = L["SETTINGS_MELEE_FROM_FRONT"],
-		desc = L["SETTINGS_MELEE_FROM_FRONT_TT"]
+		name = L.SETTINGS_MELEE_FROM_FRONT,
+		desc = L.SETTINGS_MELEE_FROM_FRONT_TT
 	}
 }
 
@@ -519,7 +519,7 @@ function _addon:SetupSettings()
 		SETTINGS_TABLE.args.meleeGroup = {
 			order = 12,
 			type = "group",
-			name = L["SETTINGS_MELEE_HEAD"],
+			name = L.SETTINGS_MELEE_HEAD,
 			args = ARGS_MELEE
 		}
 	end
@@ -528,7 +528,7 @@ function _addon:SetupSettings()
 		SETTINGS_TABLE.args.healGroup = {
 			order = 14,
 			type = "group",
-			name = L["SETTINGS_HEAL_HEAD"],
+			name = L.SETTINGS_HEAL_HEAD,
 			args = ARGS_HEAL
 		}
 	end

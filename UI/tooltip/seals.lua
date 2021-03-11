@@ -11,37 +11,35 @@ local SCT = _addon.SCTooltip;
 local function SoR(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
-    local unitString = L["TT_DAMAGE"];
-    local unitPart = "DAMAGE";
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine(unitString, ("%.1f"):format(calcedEffect.avg));
+        SCT:SingleLine(L.DAMAGE, ("%.1f"):format(calcedEffect.avg));
     end
 
     if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L["TT_COEF"], ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
+        SCT:SingleLine(L.TT_COEF, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
     end
 
     if SpellCalc_settings.ttPower then
         local usedSP = SCT:Round(calcedEffect.spellPower * calcedEffect.effectiveSpCoef);
-        SCT:SingleLine(L["TT_POWER"], ("%d (of %d)"):format(usedSP, calcedEffect.spellPower));
+        SCT:SingleLine(L.TT_POWER, ("%d (of %d)"):format(usedSP, calcedEffect.spellPower));
     end
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
-        SCT:SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResist * 100));
+        SCT:SingleLine(L.TT_RESIST, ("%.1f%%"):format(calcedSpell.avgResist * 100));
     end
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(calcedEffect.avgAfterMitigation));
+        SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
+        SCT:SingleLine(L.TT_DMG_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
     end
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(calcedEffect.perSec));
+        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
     end
 
     if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(calcedEffect.perResource));
+        SCT:SingleLine(L.DMG_PER_MANA_SHORT, ("%.2f"):format(calcedEffect.perResource));
     end
 end
 
@@ -50,62 +48,60 @@ end
 local function SoC(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
-    local unitString = L["TT_DAMAGE"];
-    local unitPart = "DAMAGE";
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(unitString, calcedEffect.min, calcedEffect.max, calcedEffect.avg);
+        SCT:AppendMinMaxAvgLine(L.DAMAGE, calcedEffect.min, calcedEffect.max, calcedEffect.avg);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L["TT_CRITICAL"], calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L["TT_CHANCE"]));
+        SCT:AppendMinMaxAvgLine(L.TT_CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.TT_CHANCE));
     end
 
     if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L["TT_COEF"], ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
+        SCT:SingleLine(L.TT_COEF, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
     end
 
     if SpellCalc_settings.ttPower then
         local usedSP = SCT:Round(calcedEffect.spellPower * calcedEffect.effectiveSpCoef);
-        SCT:SingleLine(L["TT_POWER"], ("%d (of %d)"):format(usedSP, calcedEffect.spellPower));
+        SCT:SingleLine(L.TT_POWER, ("%d (of %d)"):format(usedSP, calcedEffect.spellPower));
     end
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
-        SCT:SingleLine(L["TT_RESIST"], ("%.1f%%"):format(calcedSpell.avgResist * 100));
+        SCT:SingleLine(L.TT_RESIST, ("%.1f%%"):format(calcedSpell.avgResist * 100));
     end
 
     if SpellCalc_settings.ttHitChance then
         if SpellCalc_settings.ttHitDetail then
-            SCT:SingleLine(L["TT_HITCHANCE"], ("%.1f%% (%.1f%% + %d%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
+            SCT:SingleLine(L.TT_HITCHANCE, ("%.1f%% (%.1f%% + %d%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
         else
-            SCT:SingleLine(L["TT_HITCHANCE"], ("%.1f%%"):format(calcedSpell.hitChance));
+            SCT:SingleLine(L.TT_HITCHANCE, ("%.1f%%"):format(calcedSpell.hitChance));
         end
 
         local mmit = calcedSpell.meleeMitigation;
         if mmit.dodge > 0 then
-            SCT:SingleLine(L["TT_DODGECHANCE"], ("%.1f%%"):format(mmit.dodge));
+            SCT:SingleLine(L.TT_DODGECHANCE, ("%.1f%%"):format(mmit.dodge));
         end
         if mmit.parry > 0 then
-            SCT:SingleLine(L["TT_PARRYCHANCE"], ("%.1f%%"):format(mmit.parry));
+            SCT:SingleLine(L.TT_PARRYCHANCE, ("%.1f%%"):format(mmit.parry));
         end
         if mmit.block > 0 then
-            SCT:SingleLine(L["TT_BLOCKCHANCE"], ("%.1f%%"):format(mmit.block));
+            SCT:SingleLine(L.TT_BLOCKCHANCE, ("%.1f%%"):format(mmit.block));
         end
     end
 
-    SCT:SingleLine(L["TT_PROCCHANCE"], ("%.1f%%"):format(calcedEffect.charges * 100));
+    SCT:SingleLine(L.TT_PROCCHANCE, ("%.1f%%"):format(calcedEffect.charges * 100));
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(calcedEffect.avgAfterMitigation));
+        SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
+        SCT:SingleLine(L.TT_DMG_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
     end
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L["TT_PERSEC_"..unitPart], ("%.1f"):format(calcedEffect.perSec));
+        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
     end
 
     if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine(L["TT_PER_MANA_"..unitPart], ("%.2f"):format(calcedEffect.perResource));
+        SCT:SingleLine(L.DMG_PER_MANA_SHORT, ("%.2f"):format(calcedEffect.perResource));
     end
 end
 
@@ -114,16 +110,16 @@ local function SotC(calcedSpell, effectNum)
     local calcedEffect = calcedSpell[effectNum];
 
     if SpellCalc_settings.ttHit then
-        --SCT:SingleLine(L["TT_HITS_OVER_DURATION"], ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L["TT_DMG_OVER_DURATION"], ("%.1f"):format(calcedEffect.avgAfterMitigation));
+        --SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
+        SCT:SingleLine(L.TT_DMG_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
     end
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L["TT_PERSEC_DAMAGE"], ("%.1f"):format(calcedEffect.perSec));
+        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
     end
 
     if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine(L["TT_PER_MANA_DAMAGE"], ("%.2f"):format(calcedEffect.perResource));
+        SCT:SingleLine(L.DMG_PER_MANA_SHORT, ("%.2f"):format(calcedEffect.perResource));
     end
 end
 
