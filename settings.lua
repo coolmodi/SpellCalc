@@ -82,7 +82,7 @@ local SETTINGS_TABLE = {
 		targetGroup = {
 			order = 2,
 			type = "group",
-			name = L.SETTINGS_HEAD_TARGET,
+			name = L.TARGET,
 			args = {
 				defaultTargetLvlOffset = {
 					order = 1,
@@ -112,7 +112,7 @@ local SETTINGS_TABLE = {
 				resOverrideFrost = {
 					order = 12,
 					type = "range",
-					name = L.SETTINGS_TT_FROST_LABEL,
+					name = L.FROST,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -120,7 +120,7 @@ local SETTINGS_TABLE = {
 				resOverrideFire = {
 					order = 13,
 					type = "range",
-					name = L.SETTINGS_TT_FIRE_LABEL,
+					name = L.FIRE,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -128,7 +128,7 @@ local SETTINGS_TABLE = {
 				resOverrideShadow = {
 					order = 14,
 					type = "range",
-					name = L.SETTINGS_TT_SHADOW_LABEL,
+					name = L.SHADOW,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -136,7 +136,7 @@ local SETTINGS_TABLE = {
 				resOverrideNature = {
 					order = 15,
 					type = "range",
-					name = L.SETTINGS_TT_NATURE_LABEL,
+					name = L.NATURE,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -144,7 +144,7 @@ local SETTINGS_TABLE = {
 				resOverrideArcane = {
 					order = 16,
 					type = "range",
-					name = L.SETTINGS_TT_ARCANE_LABEL,
+					name = L.ARCANE,
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -155,7 +155,7 @@ local SETTINGS_TABLE = {
 		tooltipGroup = {
 			order = 4,
 			type = "group",
-			name = L.SETTINGS_TOOLTIP_TITLE,
+			name = L.TOOLTIP,
 			args = {
 				ttDesc = {
 					order = 0,
@@ -171,7 +171,7 @@ local SETTINGS_TABLE = {
 				ttCrit = {
 					order = 2,
 					type = "toggle",
-					name = L.SETTINGS_TT_CRIT_LABEL
+					name = L.CRITICAL
 				},
 				ttAverages = {
 					order = 3,
@@ -188,13 +188,13 @@ local SETTINGS_TABLE = {
 				ttCoef = {
 					order = 11,
 					type = "toggle",
-					name = L.SETTINGS_TT_COEF_LABEL
+					name = L.COEFFICIENT
 				},
 
 				ttHitChance = {
 					order = 20,
 					type = "toggle",
-					name = L.SETTINGS_TT_HITCHANCE_LABEL
+					name = L.HIT_CHANCE
 				},
 				ttHitDetail = {
 					order = 21,
@@ -218,7 +218,7 @@ local SETTINGS_TABLE = {
 				ttEffCost = {
 					order = 40,
 					type = "toggle",
-					name = L.SETTINGS_TT_RESISTANCE_LABEL,
+					name = L.EFFECTIVE_COST,
 					desc = L.SETTINGS_TT_EFFCOST_TT
 				},
 				ttPerMana = {
@@ -235,6 +235,7 @@ local SETTINGS_TABLE = {
 				ttCombined = {
 					order = 50,
 					type = "toggle",
+					width = "double",
 					name = L.SETTINGS_TT_COMBINED_LABEL,
 					desc = L.SETTINGS_TT_COMBINED_TT
 				},
@@ -368,7 +369,7 @@ local SETTINGS_TABLE = {
 							values = {
 								hitAvg = L.SETTINGS_AB_DIRECT_VALUE_AVG,
 								critAvg = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
-								avgAfterMitigation = L.SETTINGS_AB_DIRECT_VALUE_REALAVG
+								avgAfterMitigation = L.REAL_AVERAGE
 							}
 						},
 						abDurationValue = {
@@ -378,7 +379,7 @@ local SETTINGS_TABLE = {
 							values = {
 								perTick = L.SETTINGS_AB_DURATION_VALUE_TICK,
 								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
-								avgAfterMitigation = L.SETTINGS_AB_DURATION_VALUE_REALAVG
+								avgAfterMitigation = L.REAL_AVERAGE
 							}
 						},
 						abSealValue = {
@@ -387,8 +388,8 @@ local SETTINGS_TABLE = {
 							name = L.SETTINGS_AB_SEAL_VALUE,
 							values = {
 								hitAvg = L.SETTINGS_AB_SEAL_VALUE_HIT,
-								avgTriggerHits = L.SETTINGS_AB_SEAL_VALUE_OVERDUR,
-								perSecond = L.SETTINGS_AB_SEAL_VALUE_PERSEC
+								avgTriggerHits = L.DAMAGE_OVER_DURATION,
+								perSecond = L.DMG_PER_SEC_SHORT
 							}
 						},
 					}

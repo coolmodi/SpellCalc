@@ -17,7 +17,7 @@ local function SoR(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L.TT_COEF, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
+        SCT:SingleLine(L.COEFFICIENT, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
     end
 
     if SpellCalc_settings.ttPower then
@@ -31,7 +31,7 @@ local function SoR(calcedSpell, effectNum)
 
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L.TT_DMG_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
+        SCT:SingleLine(L.DAMAGE_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
     end
 
     if SpellCalc_settings.ttPerSecond then
@@ -54,11 +54,11 @@ local function SoC(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.TT_CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.TT_CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
     end
 
     if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L.TT_COEF, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
+        SCT:SingleLine(L.COEFFICIENT, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
     end
 
     if SpellCalc_settings.ttPower then
@@ -72,9 +72,9 @@ local function SoC(calcedSpell, effectNum)
 
     if SpellCalc_settings.ttHitChance then
         if SpellCalc_settings.ttHitDetail then
-            SCT:SingleLine(L.TT_HITCHANCE, ("%.1f%% (%.1f%% + %d%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
+            SCT:SingleLine(L.HIT_CHANCE, ("%.1f%% (%.1f%% + %d%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
         else
-            SCT:SingleLine(L.TT_HITCHANCE, ("%.1f%%"):format(calcedSpell.hitChance));
+            SCT:SingleLine(L.HIT_CHANCE, ("%.1f%%"):format(calcedSpell.hitChance));
         end
 
         local mmit = calcedSpell.meleeMitigation;
@@ -93,7 +93,7 @@ local function SoC(calcedSpell, effectNum)
 
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L.TT_DMG_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
+        SCT:SingleLine(L.DAMAGE_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
     end
 
     if SpellCalc_settings.ttPerSecond then
@@ -111,7 +111,7 @@ local function SotC(calcedSpell, effectNum)
 
     if SpellCalc_settings.ttHit then
         --SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L.TT_DMG_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
+        SCT:SingleLine(L.DAMAGE_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
     end
 
     if SpellCalc_settings.ttPerSecond then
