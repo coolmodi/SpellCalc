@@ -13,16 +13,6 @@ local slotMap = {};
 local actionbarSupport = "STOCK";
 ---@type ActionButtonText
 local buttonText;
--- For compatibility with old setting keys
--- TODO: Update settings? Change how it's done?
-local settingsToKeyMap = {
-    perSecond = "perSec",
-    avgAfterMitigation = "avgAfterMitigation",
-    avgTriggerHits = "avgAfterMitigation",
-    perTick = "avgCombined",
-    critAvg = "avgCrit",
-    hitAvg = "avg", 
-};
 
 _addon.ActionBarValues = ActionBarValues;
 
@@ -43,14 +33,16 @@ local function GetDummyValue(calcedEffect, spellName)
     local k = SpellCalc_settings.abSealValue;
 
     if spellName == SEAL_OF_RIGHTEOUSNESS or spellName == SEAL_OF_COMMAND then
-        if settingsToKeyMap[k] then
-            return calcedEffect[settingsToKeyMap[k]];
+        if calcedEffect[k] then
+            return calcedEffect[k];
         end
     elseif spellName == SEAL_OF_THE_CRUSADER then
-        if k == "hitAvg" then
+        if k == "avg" then
             return "";
         end
-        return calcedEffect[settingsToKeyMap[k]];
+        if calcedEffect[k] then
+            return calcedEffect[k];
+        end
     end
 
     return "ERR!";
@@ -65,8 +57,8 @@ local function GetDurationValue(calcedEffect)
         return calcedEffect.avgCombined * calcedEffect.ticks;
     end
 
-    if settingsToKeyMap[k] then
-        return calcedEffect[settingsToKeyMap[k]];
+    if calcedEffect[k] then
+        return calcedEffect[k];
     end
 
     return "ERR!";
@@ -77,12 +69,12 @@ end
 ---@param critChance number
 local function GetDirectValue(calcedEffect, critChance)
     local k = SpellCalc_settings.abDirectValue;
-    if k == "critAvg" and critChance == 0 then
-        k = "hitAvg";
+    if k == "avgCrit" and critChance == 0 then
+        k = "avg";
     end
 
-    if settingsToKeyMap[k] then
-        return calcedEffect[settingsToKeyMap[k]];
+    if calcedEffect[k] then
+        return calcedEffect[k];
     end
 
     return "ERR!";

@@ -61,7 +61,7 @@ local DEFAULTSETTINGS = {
 	calcEffManaPotionTypeNew = "NONE",
 	calcEffManaRune = false,
 
-	["version"] = GetAddOnMetadata(_addonName, "Version")
+	["version"] = 1
 };
 
 local function defaultGet(info)
@@ -367,9 +367,10 @@ local SETTINGS_TABLE = {
 							type = "select",
 							name = L.SETTINGS_AB_DIRECT_VALUE,
 							values = {
-								hitAvg = L.SETTINGS_AB_DIRECT_VALUE_AVG,
-								critAvg = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
-								avgAfterMitigation = L.REAL_AVERAGE
+								avg = L.SETTINGS_AB_DIRECT_VALUE_AVG,
+								avgCrit = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
+								avgAfterMitigation = L.REAL_AVERAGE,
+								perSec = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT
 							}
 						},
 						abDurationValue = {
@@ -377,9 +378,11 @@ local SETTINGS_TABLE = {
 							type = "select",
 							name = L.SETTINGS_AB_DURATION_VALUE,
 							values = {
-								perTick = L.SETTINGS_AB_DURATION_VALUE_TICK,
+								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
 								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
-								avgAfterMitigation = L.REAL_AVERAGE
+								avgAfterMitigation = L.REAL_AVERAGE,
+								perSec = L.DMG_PER_SEC_CAST_SHORT.."/"..L.HEAL_PER_SEC_CAST_SHORT,
+								perSecDurOrCD = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT
 							}
 						},
 						abSealValue = {
@@ -387,9 +390,10 @@ local SETTINGS_TABLE = {
 							type = "select",
 							name = L.SETTINGS_AB_SEAL_VALUE,
 							values = {
-								hitAvg = L.SETTINGS_AB_SEAL_VALUE_HIT,
-								avgTriggerHits = L.DAMAGE_OVER_DURATION,
-								perSecond = L.DMG_PER_SEC_SHORT
+								avg = L.SETTINGS_AB_SEAL_VALUE_HIT,
+								avgCrit = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
+								avgAfterMitigation = L.DAMAGE_OVER_DURATION,
+								perSec = L.DMG_PER_SEC_SHORT
 							}
 						},
 					}
@@ -494,6 +498,34 @@ local ARGS_MELEE = {
 	}
 }
 
+--- Update SV data if needed.
+local function CheckUpdates()
+	local sv = SpellCalc_settings;
+	local oldSettingsVer = type(sv.version) == "number" and sv.version or 0;
+
+	if oldSettingsVer < 1 then
+		-- Remove deprecated entries
+		sv.calcEffManaPotionType = nil;
+		sv.calcEffManaPotion = nil;
+		sv.abOutline = nil;
+		sv.abScale = nil;
+
+		-- Update action bar value keys
+		local oldToNew = {
+			perSecond = "perSec",
+			avgTriggerHits = "avgAfterMitigation",
+			perTick = "avgCombined",
+			critAvg = "avgCrit",
+			hitAvg = "avg"
+		};
+		if oldToNew[sv.abDirectValue] then sv.abDirectValue = oldToNew[sv.abDirectValue] end
+		if oldToNew[sv.abDurationValue] then sv.abDurationValue = oldToNew[sv.abDurationValue] end
+		if oldToNew[sv.abSealValue] then sv.abSealValue = oldToNew[sv.abSealValue] end
+
+		sv.version = 1;
+	end
+end
+
 --- Setup SV tables, check settings and setup settings menu
 function _addon:SetupSettings()
     if SpellCalc_settings == nil then
@@ -506,6 +538,8 @@ function _addon:SetupSettings()
 			SpellCalc_settings[k] = v;
 		end
 	end
+
+	CheckUpdates();
 
 	if self.ClassSettings ~= nil then
 		SETTINGS_TABLE.args.classGroup = {
