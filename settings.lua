@@ -70,7 +70,7 @@ end
 
 local function defaultSet(info, val)
 	SpellCalc_settings[info[#info]] = val;
-	_addon:UpdateTarget();
+	_addon.Target:Update();
 	_addon:TriggerUpdate();
 end
 

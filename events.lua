@@ -83,7 +83,7 @@ function handlers.UNIT_INVENTORY_CHANGED(unit)
 end
 
 function handlers.PLAYER_TARGET_CHANGED()
-    _addon:UpdateTarget();
+    _addon.Target:Update();
 end
 
 function handlers.ACTIONBAR_SLOT_CHANGED(slot)

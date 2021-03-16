@@ -66,7 +66,9 @@ local function AppendMitigation(calcedSpell)
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 
     and calcedSpell.hitChanceBinaryLoss == nil or calcedSpell.hitChanceBinaryLoss == 0 then
-        SCT:SingleLine(L.TT_RESIST, ("%.1f%%"):format(calcedSpell.avgResist * 100));
+        local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
+        local strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
+        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 end
 

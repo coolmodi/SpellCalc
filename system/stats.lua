@@ -322,7 +322,7 @@ function _addon:FullUpdate()
     self:UpdateBuffs();
     self:UpdateTalents();
     self:UpdateItems();
-    self:UpdateTarget();
+    self.Target:Update();
     self:UpdateAttackSpeeds();
     self:UpdateWeaponAttack();
     self:UpdateAttackDmg();

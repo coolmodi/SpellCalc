@@ -36,19 +36,26 @@ function MagicCalc:GetSchoolCritChance()
     return chance;
 end
 
---- Get the average dmg resisted by target due to resistance after penetration
+--- Get the average dmg resisted by target due to resistance
+---@return number avgResisted
+---@return number baseRes
+---@return number penetration
+---@return number resistanceFromLevel
 function MagicCalc:GetAvgResist()
-    local tData = _addon.target;
+    local tData = _addon.Target;
     local pLevel = UnitLevel("player");
     local baseRes = tData.resistance[self.spellBaseInfo.school];
-    local effectiveRes = baseRes + math.max((tData.level - pLevel)*8, 0) - math.min(baseRes, stats.spellPen[self.spellBaseInfo.school].val);
-    return math.min(0.75 * (effectiveRes / math.max(pLevel * 5, 100)), 0.75);
+    local resistanceFromLevel = math.max(tData.levelDiff * 8, 0);
+    local penetration = stats.spellPen[self.spellBaseInfo.school].val;
+    local effectiveRes = baseRes + resistanceFromLevel - math.min(baseRes, penetration);
+    local avgResisted = math.min(0.75 * (effectiveRes / math.max(pLevel * 5, 100)), 0.75);
+    return avgResisted, baseRes, penetration, resistanceFromLevel;
 end
 
 --- Get level based spell hit chance against the current target
 ---@return number @The hit chance in percent
 local function GetSpellHitChance()
-    local tData = _addon.target;
+    local tData = _addon.Target;
 
     if tData.levelDiff < -2 then
         return 99;

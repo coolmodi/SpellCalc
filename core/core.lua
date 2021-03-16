@@ -306,9 +306,15 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Mitigation
 
     if spellBaseInfo.school == SCHOOL.PHYSICAL then
-        calcedSpell.avgResist = meleeCalc:GetArmorDR();
+        local mitigtation, armor = meleeCalc:GetArmorDR();
+        calcedSpell.avgResist = mitigtation;
+        calcedSpell.resistance = armor;
     else
-        calcedSpell.avgResist = magicCalc:GetAvgResist();
+        local avgResist, baseRes, pen, levelRes = magicCalc:GetAvgResist();
+        calcedSpell.avgResist = avgResist;
+        calcedSpell.resistance = baseRes;
+        calcedSpell.resistancePen = pen;
+        calcedSpell.resistanceFromLevel = levelRes;
     end
 
     if bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then

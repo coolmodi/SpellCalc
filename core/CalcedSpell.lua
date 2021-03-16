@@ -126,6 +126,9 @@ local CalcedSpell = {
     effectiveCost = 0,      -- Cost after regeneration while casting and other returns
 
     avgResist = -1,         -- By res for magic (avg), armor for physical (static)
+    resistance = 0,         -- Resistance used for school. Armor for physical effects
+    resistanceFromLevel = 0,    -- Resistance caused by level difference for magic spells
+    resistancePen = 0,      -- Spell/armor penetration
     hitChance = -1,
     hitChanceBase = -1,
     hitChanceBonus = 0,

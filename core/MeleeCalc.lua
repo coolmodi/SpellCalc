@@ -26,7 +26,7 @@ end
 ---@param dontUseWeapon boolean
 function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeParryBlock, dontUseWeapon)
     _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged).." noweapon: "..tostring(dontUseWeapon));
-    local tData = _addon.target;
+    local tData = _addon.Target;
     local ldef = tData.level * 5; -- Level based def value
     local latk = 5 * UnitLevel("player"); -- Level based attack value
     local ratk = latk; -- Real attack value
@@ -330,10 +330,13 @@ function MeleeCalc:GetMDPGB()
 end
 
 --- Get damage reduction from armor for current target
+---@return number mitigation
+---@return number armor
 function MeleeCalc:GetArmorDR()
-    local armor = _addon.target.resistance[1];
+    local armor = _addon.Target.resistance[1];
     local pLevel = UnitLevel("player");
-    return armor / (armor + 400 + pLevel * 85);
+    local mitigation = math.min(armor / (armor + 400 + pLevel * 85), 0.75);
+    return mitigation, armor;
 end
 
 _addon.MeleeCalc = MeleeCalc;
