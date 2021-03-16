@@ -67,15 +67,15 @@ local function GetBasicValue(calcedSpell, critChance, valueKey)
     end
 
     if valueKey == "casts" then
-        if calcedSpell.castingData.castsToOom == -1 then
-            return "";
+        if calcedSpell.castingData.castsToOom <= -1 then
+            return "∞";
         end
         return calcedSpell.castingData.castsToOom - 0.5;
     end
 
     if valueKey == "castsTime" then
-        if calcedSpell.castingData.timeToOom == -1 then
-            return "";
+        if calcedSpell.castingData.timeToOom <= -1 then
+            return "∞";
         end
         return calcedSpell.castingData.timeToOom - 0.5;
     end
