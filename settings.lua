@@ -15,8 +15,6 @@ local DEFAULTSETTINGS = {
 	["firstStart"] = true,
 	["debug"] = false,
 
-	["useRealToOom"] = false,
-
 	["ttHit"] = true,
 	["ttCrit"] = true,
 	["ttAverages"] = true,
@@ -57,6 +55,8 @@ local DEFAULTSETTINGS = {
 
 	["meleeFromFront"] = false,
 
+	["useRealToOom"] = false,
+	useCurrentPowerLevel = false,
 	calcEffManaInnervate = false,
 	calcEffManaPotionTypeNew = "NONE",
 	calcEffManaRune = false,
@@ -370,7 +370,9 @@ local SETTINGS_TABLE = {
 								avg = L.SETTINGS_AB_DIRECT_VALUE_AVG,
 								avgCrit = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
 								avgAfterMitigation = L.REAL_AVERAGE,
-								perSec = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT
+								perSec = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT,
+								casts = L.SETTINGS_CALC_TOOM_HEAD,
+								castsTime = L.TIME_TO_OOM
 							}
 						},
 						abDurationValue = {
@@ -382,7 +384,9 @@ local SETTINGS_TABLE = {
 								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
 								avgAfterMitigation = L.REAL_AVERAGE,
 								perSec = L.DMG_PER_SEC_CAST_SHORT.."/"..L.HEAL_PER_SEC_CAST_SHORT,
-								perSecDurOrCD = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT
+								perSecDurOrCD = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT,
+								casts = L.SETTINGS_CALC_TOOM_HEAD,
+								castsTime = L.TIME_TO_OOM
 							}
 						},
 						abSealValue = {
@@ -396,6 +400,11 @@ local SETTINGS_TABLE = {
 								perSec = L.DMG_PER_SEC_SHORT
 							}
 						},
+						desc = {
+							order = 4,
+							type = "description",
+							name = L.SETTINGS_AB_VAL_INFO
+						},
 					}
 				},
 			}
@@ -406,14 +415,32 @@ local SETTINGS_TABLE = {
 			type = "group",
 			name = L.SETTINGS_CALC_HEAD,
 			args = {
-				useRealToOom = {
+				toOomGroup = {
 					order = 1,
-					type = "toggle",
-					name = L.SETTINGS_CALC_REAL_OOM,
-					desc = L.SETTINGS_CALC_REAL_OOM_TT
+					type = "group",
+					guiInline = true,
+					name = L.SETTINGS_CALC_TOOM_HEAD,
+					args = {
+						useRealToOom = {
+							order = 1,
+							type = "toggle",
+							name = L.SETTINGS_CALC_REAL_OOM,
+							desc = L.SETTINGS_CALC_REAL_OOM_TT
+						},
+						useCurrentPowerLevel = {
+							order = 2,
+							type = "toggle",
+							name = L.SETTINGS_CALC_REMAINING,
+							desc = L.SETTINGS_CALC_REMAINING_DESC,
+							set = function(info, value)
+								SpellCalc_settings.useCurrentPowerLevel = value;
+								_addon.events:TogglePowerUpdate(value);
+							end
+						},
+					}
 				},
 				effManaGroup = {
-					order = 2,
+					order = 3,
 					type = "group",
 					guiInline = true,
 					name = L.SETTINGS_CALC_EM_HEAD,

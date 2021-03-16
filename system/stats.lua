@@ -4,6 +4,7 @@ local _addon = select(2, ...);
 ---@class InternalStats
 _addon.stats = {
     mana = 0,
+    curMana = 0,
     baseManaReg = 0,
     manaReg = 0,
     spellPower = {
@@ -202,6 +203,22 @@ local function UpdateFunction(self, passed)
     end
 end
 
+--- Update power values.
+---@param powerType string|nil
+function _addon:UpdatePower(powerType)
+    if powerType == nil then
+        _addon.stats.curMana = UnitPower("player", 0);
+        _addon:TriggerUpdate();
+        return;
+    end
+
+    if powerType == "MANA" then
+        _addon.stats.curMana = UnitPower("player", 0);
+        _addon:TriggerUpdate();
+        return;
+    end
+end
+
 --- Update general stats from API
 function _addon:UpdateStats()
     _addon:PrintDebug("Updating stats");
@@ -311,4 +328,5 @@ function _addon:FullUpdate()
     self:UpdateAttackDmg();
     self:UpdateRangedAttackDmg();
     self:CombatRatingUpdate();
+    self:UpdatePower();
 end

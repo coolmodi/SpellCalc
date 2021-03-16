@@ -124,7 +124,7 @@ end
 
 --- Get effective mana pool
 function _addon:GetEffectiveManaPool()
-    local mana = stats.mana;
+    local mana = SpellCalc_settings.useCurrentPowerLevel and stats.curMana or stats.mana;
 
     if SpellCalc_settings.calcEffManaRune then
         mana = mana + 1200;

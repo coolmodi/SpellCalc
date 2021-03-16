@@ -6,9 +6,6 @@ if L == nil then return; end
 
 L.NONE = "None";
 
-L.SETTINGS_CALC_REAL_OOM = "Real until OOM";
-L.SETTINGS_CALC_REAL_OOM_TT = "Show real done until oom value. That means until mana<spellcost instead of 0.";
-
 L.TARGET = "Target";
 L.SETTINGS_TAR_DEFLEVEL_LABEL = "Default level difference";
 L.SETTINGS_TT_USECURRENT_LABEL = "Use current target";
@@ -83,6 +80,11 @@ L.SETTINGS_MELEE_FROM_FRONT = "Attacking from front";
 L.SETTINGS_MELEE_FROM_FRONT_TT = "Use parry and block against PvE targets.";
 
 L.SETTINGS_CALC_HEAD = "Calculation";
+L.SETTINGS_CALC_TOOM_HEAD = "Possible Casts";
+L.SETTINGS_CALC_REAL_OOM = "Real until OOM";
+L.SETTINGS_CALC_REAL_OOM_TT = "Consider mana below spellcost as 0 mana instead of calculating with theoretical partial casts.";
+L.SETTINGS_CALC_REMAINING = "Remaining Casts";
+L.SETTINGS_CALC_REMAINING_DESC = "Calculate possible casts with current mana value instead of always assuming full mana.";
 L.SETTINGS_CALC_EM_HEAD = "Effective Mana Pool";
 L.SETTINGS_CALC_EM_DESC = "Consider mana gained from chosen effects for relevant calculations.";
 L.SETTINGS_CALC_EM_INNER = "Use Innervate";
@@ -91,6 +93,9 @@ L.SETTINGS_CALC_EM_POTION_MAJOR = "Major Mana Potion";
 L.SETTINGS_CALC_EM_POTION_SUPERIOR = "Superior Mana Potion";
 L.SETTINGS_CALC_EM_POTION_GREATER = "Greater Mana Potion";
 L.SETTINGS_CALC_EM_RUNE = "Use Rune";
+
+L.TIME_TO_OOM = "Time to OOM";
+L.SETTINGS_AB_VAL_INFO = "If using "..L.TIME_TO_OOM.." or "..L.SETTINGS_CALC_TOOM_HEAD.." you may want to enable "..L.SETTINGS_CALC_REMAINING.." in "..L.SETTINGS_CALC_HEAD.." settings!";
 
 L.TT_TITLE_COMB = "Combined:";
 L.TT_TITLE_CHAINS = "With Chaining:";

@@ -20,6 +20,7 @@ function handlers.ADDON_LOADED(addonName)
     end
 	frame:UnregisterEvent("ADDON_LOADED");
     _addon:SetupSettings();
+    _addon.events:TogglePowerUpdate(SpellCalc_settings.useCurrentPowerLevel);
 
     if _addon.spellRankInfo == nil or _addon.talentData == nil then
 		_addon:PrintError(_addonName .. ": No data for this class (yet)! Addon won't work!");
@@ -120,10 +121,30 @@ function handlers.UNIT_RANGEDDAMAGE(unit)
     _addon:UpdateRangedAttackDmg();
 end
 
+function handlers.UNIT_POWER_UPDATE(unit, powerType)
+    if unit ~= "player" then
+        return;
+    end
+    _addon:UpdatePower(powerType);
+end
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)
 
 for k,_ in pairs(handlers) do
     frame:RegisterEvent(k);
+end
+
+_addon.events = {};
+
+--- Toggle power updates via UNIT_POWER_UPDATE
+---@param active boolean
+function _addon.events:TogglePowerUpdate(active)
+    if active then
+        frame:RegisterEvent("UNIT_POWER_UPDATE");
+    else
+        frame:UnregisterEvent("UNIT_POWER_UPDATE");
+    end
+    _addon:UpdatePower();
 end

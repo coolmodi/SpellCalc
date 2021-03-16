@@ -48,33 +48,44 @@ local function GetDummyValue(calcedEffect, spellName)
     return "ERR!";
 end
 
---- Get value to show for a DoT/HoT or PTSA effect
----@param calcedEffect CalcedEffect
-local function GetDurationValue(calcedEffect)
-    local k = SpellCalc_settings.abDurationValue;
-
-    if k == "allTicks" then
-        return calcedEffect.avgCombined * calcedEffect.ticks;
-    end
-
-    if calcedEffect[k] then
-        return calcedEffect[k];
-    end
-
-    return "ERR!";
-end
-
---- Get value to show for a direct effect
----@param calcedEffect CalcedEffect
+--- Get value to show for a direct or duration effect.
 ---@param critChance number
-local function GetDirectValue(calcedEffect, critChance)
-    local k = SpellCalc_settings.abDirectValue;
-    if k == "avgCrit" and critChance == 0 then
-        k = "avg";
+---@param calcedSpell CalcedSpell
+---@param valueKey string
+local function GetBasicValue(calcedSpell, critChance, valueKey)
+    local calcedEffect = calcedSpell[1];
+
+    if valueKey == "allTicks" then
+        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+            if calcedEffect.charges > 1 then
+                return calcedEffect.avgCombined * calcedEffect.charges;
+            end
+            return calcedEffect.avgCombined;
+        else
+            return calcedEffect.avgCombined * calcedEffect.ticks;
+        end
     end
 
-    if calcedEffect[k] then
-        return calcedEffect[k];
+    if valueKey == "casts" then
+        if calcedSpell.castingData.castsToOom == -1 then
+            return "";
+        end
+        return calcedSpell.castingData.castsToOom - 0.5;
+    end
+
+    if valueKey == "castsTime" then
+        if calcedSpell.castingData.timeToOom == -1 then
+            return "";
+        end
+        return calcedSpell.castingData.timeToOom - 0.5;
+    end
+
+    if valueKey == "avgCrit" and critChance == 0 then
+        valueKey = "avg";
+    end
+
+    if calcedEffect[valueKey] then
+        return calcedEffect[valueKey];
     end
 
     return "ERR!";
@@ -116,12 +127,11 @@ do
                 if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
                     local spellName = GetSpellInfo(spellId);
                     showValue = GetDummyValue(calcedEffect, spellName);
-                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
-                    showValue = GetDurationValue(calcedEffect);
-                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
-                    showValue = calcedEffect.avgCombined;
+                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0
+                or bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+                    showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDurationValue);
                 else
-                    showValue = GetDirectValue(calcedEffect, calcedSpell.critChance);
+                    showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDirectValue);
                 end
 
                 if type(showValue) == "number" then
