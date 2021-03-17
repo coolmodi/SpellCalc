@@ -670,7 +670,8 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     local normalPartialAvg = calcedEffect.avg * hitPart;
     local avgResultDmg = normalPartialAvg + critPartialAvg + glancePartialAvg;
 
-    calcedEffect.perSec = avgResultDmg / stats.attackSpeed.mh;
+    calcedEffect.avgAfterMitigation = avgResultDmg * (1 - calcedSpell.avgResist);
+    calcedEffect.perSec = calcedEffect.avgAfterMitigation / stats.attackSpeed.mh;
 
     if not _addon:IsDualWieldEquipped() then
         if calcedEffect.offhandAttack then
@@ -702,7 +703,8 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     normalPartialAvg = ohd.avg * hitPart;
     avgResultDmg = normalPartialAvg + critPartialAvg + glancePartialAvg;
 
-    ohd.perSec = avgResultDmg / stats.attackSpeed.oh;
+    ohd.avgAfterMitigation = avgResultDmg * (1 - calcedSpell.avgResist);
+    ohd.perSec = ohd.avgAfterMitigation / stats.attackSpeed.oh;
 end
 
 
