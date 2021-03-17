@@ -33,14 +33,4 @@ _addon.npcResistances = {
         [SSM.SHADOW] = 100,
         [SSM.FROST] = 200
     },
-
-
-
-
-    [2955] = { -- TEST: Mottled Boar
-        [SSM.PHYSICAL] = 2020,
-        [SSM.SHADOW] = 100,
-        [SSM.FROST] = 200,
-        [SSM.NATURE] = 36
-    }
 }
