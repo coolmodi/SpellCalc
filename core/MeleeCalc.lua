@@ -4,6 +4,7 @@ local _addon = select(2, ...);
 local _, race = UnitRace("player");
 local _, class = UnitClass("player");
 local stats = _addon.stats;
+local SCHOOL_PHYSICAL = _addon.SCHOOL.PHYSICAL;
 
 ---@class MeleeCalc
 local MeleeCalc = {};
@@ -333,7 +334,7 @@ end
 ---@return number mitigation
 ---@return number armor
 function MeleeCalc:GetArmorDR()
-    local armor = _addon.Target.resistance[1];
+    local armor = _addon.Target.resistance[SCHOOL_PHYSICAL];
     local pLevel = UnitLevel("player");
     local mitigation = math.min(armor / (armor + 400 + pLevel * 85), 0.75);
     return mitigation, armor;

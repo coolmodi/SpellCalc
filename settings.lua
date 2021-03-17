@@ -38,6 +38,7 @@ local DEFAULTSETTINGS = {
 	["resOverrideShadow"] = 0,
 	["resOverrideNature"] = 0,
 	["resOverrideArcane"] = 0,
+	resOverrideArmor = 0,
 
 	["abShow"] = true,
 	["abDirectValue"] = "hitAvg",
@@ -147,6 +148,14 @@ local SETTINGS_TABLE = {
 					name = L.ARCANE,
 					min = 0,
 					max = MAX_RESIST,
+					step = 1
+				},
+				resOverrideArmor = {
+					order = 17,
+					type = "range",
+					name = L.ARMOR,
+					min = 0,
+					max = 17265,
 					step = 1
 				}
 			}

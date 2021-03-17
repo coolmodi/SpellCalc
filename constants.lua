@@ -252,3 +252,14 @@ _addon.SPELL_AURA_TYPES = {
     SPELL_AURA_SCHOOL_ABSORB = 69,
     SPELL_AURA_MANA_SHIELD = 97,
 }
+
+_addon.CREATURE_TYPE = {
+    BEAST = "Beast",
+    DEMON = "Demon",
+    DRAGONKIN = "Dragonkin",
+    ELEMENTAL = "Elemental",
+    GIANT = "Giant",
+    HUMANOID = "Humanoid",
+    MECHANICAL = "Mechanical",
+    UNDEAD = "Undead"
+}

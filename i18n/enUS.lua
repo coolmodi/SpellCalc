@@ -19,6 +19,7 @@ L.FIRE = "Fire";
 L.SHADOW = "Shadow";
 L.NATURE = "Nature";
 L.ARCANE = "Arcane";
+L.ARMOR = "Armor";
 
 L.TOOLTIP = "Tooltip";
 L.SETTINGS_HEAD_TOOLTIP = "Values to show in tooltips.";

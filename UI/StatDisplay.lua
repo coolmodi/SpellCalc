@@ -209,7 +209,12 @@ local function UpdateDisplay(self, passed)
     timePassed = 0;
 
     for k, data in ipairs(singleStats) do
-        local ostr = KEY_COLOR .. data.title .. ": " .. VALUE_COLOR .. math.floor(data.tab[data.key]*100 + 0.5)/100;
+        local ostr = KEY_COLOR .. data.title .. ": " .. VALUE_COLOR;
+        if type(data.tab[data.key]) == "number" then
+            ostr = ostr .. math.floor(data.tab[data.key]*100 + 0.5)/100;
+        else
+            ostr = ostr .. tostring(data.tab[data.key]);
+        end
         if data.unit then
             ostr = ostr .. UNIT_COLOR .. data.unit;
         end
@@ -340,3 +345,13 @@ AddUniformStatTable(stats.ignite, "Ignite", "");
 AddUniformStatTable(stats.impShadowBolt, "Imp Shadow Bolt", "%");
 AddUniformStatTable(stats.earthfuryReturn, "Earthfury return", "");
 AddUniformStatTable(stats.druidNaturesGrace, "Nature's Grace", "");
+
+AddTitle("Target");
+AddSingleStat("Level", _addon.Target, "level", "");
+AddSingleStat("LevelDiff", _addon.Target, "levelDiff", "");
+AddSingleStat("Player", _addon.Target, "isPlayer", "");
+AddSingleStat("Class", _addon.Target, "class", "");
+AddSingleStat("Type", _addon.Target, "creatureType", "");
+for key, schoolNum in pairs(_addon.SCHOOL) do
+    AddSingleStat(key, _addon.Target.resistance, schoolNum, "");
+end
