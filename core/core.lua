@@ -488,6 +488,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.extraSp[spellId].buffs);
     end
 
+    if stats.targetTypeFlatSpell[_addon.Target.creatureType] then
+        extraSp = extraSp + stats.targetTypeFlatSpell[_addon.Target.creatureType].val;
+        calcedSpell:AddToBuffList(stats.targetTypeFlatSpell[_addon.Target.creatureType].buffs);
+    end
+
     --------------------------
     -- Effects
 

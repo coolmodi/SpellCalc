@@ -318,6 +318,11 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
+    if effect == EFFECT_TYPE.MOD_FLAT_SPELL_DAMAGE_VERSUS then
+        ApplyOrRemoveByMask(apply, name, value, _addon.stats.targetTypeFlatSpell, affectSchool);
+        return;
+    end
+
     _addon:PrintError("Aura "..name.." uses unknown effect "..effect.."! Report this please.");
 end
 

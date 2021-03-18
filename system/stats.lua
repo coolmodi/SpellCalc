@@ -148,6 +148,19 @@ _addon.stats = {
         [_addon.CREATURE_TYPE.NOT_SPECIFIED] = {val=0, buffs={}},
         [_addon.CREATURE_TYPE.TOTEM] = {val=0, buffs={}},
     },
+    targetTypeFlatSpell = {
+        [_addon.CREATURE_TYPE.BEAST] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.DRAGONKIN] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.DEMON] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.ELEMENTAL] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.GIANT] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.UNDEAD] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.HUMANOID] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.CRITTER] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.MECHANICAL] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.NOT_SPECIFIED] = {val=0, buffs={}},
+        [_addon.CREATURE_TYPE.TOTEM] = {val=0, buffs={}},
+    },
 
     attackSpeed = {
         mh = 0,

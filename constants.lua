@@ -59,6 +59,7 @@ _addon.EFFECT_TYPE = {
     TRIGGER_SPELL_EFFECT = 33,
     MOD_DAMAGE_DONE_VERSUS = 34,
     MOD_CRIT_DAMAGE_DONE_VERSUS = 35,
+    MOD_FLAT_SPELL_DAMAGE_VERSUS = 36
 };
 
 --- Defense type (Decides mitigation types used)
