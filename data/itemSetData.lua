@@ -418,6 +418,58 @@ _addon.itemSetData = {
             },
         }
     },
+    [533] = {
+        name = "Battlegear of Undead Slaying",
+        effects = {
+            [1] = {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
+                    affectSchool = 32,
+                    value = 2,
+                }
+            },
+        }
+    },
+    [534] = {
+        name = "Undead Slayer's Armor",
+        effects = {
+            [1] = {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
+                    affectSchool = 32,
+                    value = 2,
+                }
+            },
+        }
+    },
+    [535] = {
+        name = "Garb of the Undead Slayer",
+        effects = {
+            [1] = {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
+                    affectSchool = 32,
+                    value = 2,
+                }
+            },
+        }
+    },
+    [536] = {
+        name = "Regalia of Undead Cleansing",
+        effects = {
+            [1] = {
+                need = 3,
+                effect = {
+                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
+                    affectSchool = 32,
+                    value = 2,
+                }
+            },
+        }
+    },
     [538] = {
         name = "Champion's Stormcaller",
         effects = {
@@ -640,6 +692,18 @@ _addon.setItemData = {
     [22508] = 529,
     [22507] = 529,
     [23063] = 529,
+    [23090] = 533,
+    [23087] = 533,
+    [23078] = 533,
+    [23081] = 534,
+    [23089] = 534,
+    [23093] = 534,
+    [23088] = 535,
+    [23082] = 535,
+    [23092] = 535,
+    [23091] = 536,
+    [23084] = 536,
+    [23085] = 536,
     [22857] = 538,
     [22867] = 538,
     [22876] = 538,

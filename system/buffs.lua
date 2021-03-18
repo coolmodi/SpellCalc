@@ -71,6 +71,20 @@ local function ApplyOrRemoveSchoolAffect(apply, name, value, destTable, schoolMa
     end
 end
 
+--- Apply or remove effect by mask for table with bit position as keys.
+---@param apply boolean
+---@param name string @The name of the buff
+---@param value number @The effect value, negative to remove buff
+---@param destTable table @The destination table
+---@param mask number @The mask of keys to affect
+local function ApplyOrRemoveByMask(apply, name, value, destTable, mask)
+    for bitPos in pairs(destTable) do
+        if bit.band(mask, bit.lshift(1, bitPos - 1)) > 0 then
+            ApplyOrRemove(apply, value, destTable[bitPos], name);
+        end
+    end
+end
+
 --- Apply or remove effect affecting weapon types
 ---@param apply boolean
 ---@param name string @The name of the buff
@@ -291,6 +305,16 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         end
         -- TODO: If a spell is ever affected by more than one of those it will break!
         ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.spellTriggerSpellEffect, affectSpell);
+        return;
+    end
+
+    if effect == EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS then
+        ApplyOrRemoveByMask(apply, name, value, _addon.stats.targetTypeDmgMult, affectSchool);
+        return;
+    end
+
+    if effect == EFFECT_TYPE.MOD_CRIT_DAMAGE_DONE_VERSUS then
+        ApplyOrRemoveByMask(apply, name, value, _addon.stats.targetTypeCritDmgMult, affectSchool);
         return;
     end
 

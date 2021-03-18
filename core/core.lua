@@ -105,6 +105,11 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
         bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
         calcedSpell:AddToBuffList(stats.schoolModPctDamage[school].buffs);
 
+        if stats.targetTypeDmgMult[_addon.Target.creatureType] then
+            bonusMod = bonusMod * (100 + stats.targetTypeDmgMult[_addon.Target.creatureType].val) / 100;
+            calcedSpell:AddToBuffList(stats.targetTypeDmgMult[_addon.Target.creatureType].buffs);
+        end
+
     elseif isHeal then
         if stats.spellModPctHealing[spellId] ~= nil then
             -- This is the very same as spellModPctEffect, just limited to healing internally in this addon
@@ -300,6 +305,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     if stats.critMult.spell[spellId] ~= nil then
         calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.critMult.spell[spellId].val/100;
         calcedSpell:AddToBuffList(stats.critMult.spell[spellId].buffs);
+    end
+
+    if stats.targetTypeCritDmgMult[_addon.Target.creatureType] then
+        calcedSpell.critMult = calcedSpell.critMult * (100 + stats.targetTypeCritDmgMult[_addon.Target.creatureType].val) / 100;
+        calcedSpell:AddToBuffList(stats.targetTypeCritDmgMult[_addon.Target.creatureType].buffs);
     end
 
     ----------------------------------------------------------------------------------------------------------------------

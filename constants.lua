@@ -57,6 +57,8 @@ _addon.EFFECT_TYPE = {
     SCHOOL_MOD_PCT_DAMAGE = 31,
     MOD_PCT_HEALING = 32,
     TRIGGER_SPELL_EFFECT = 33,
+    MOD_DAMAGE_DONE_VERSUS = 34,
+    MOD_CRIT_DAMAGE_DONE_VERSUS = 35,
 };
 
 --- Defense type (Decides mitigation types used)
@@ -254,12 +256,29 @@ _addon.SPELL_AURA_TYPES = {
 }
 
 _addon.CREATURE_TYPE = {
-    BEAST = "Beast",
-    DEMON = "Demon",
-    DRAGONKIN = "Dragonkin",
-    ELEMENTAL = "Elemental",
-    GIANT = "Giant",
-    HUMANOID = "Humanoid",
-    MECHANICAL = "Mechanical",
-    UNDEAD = "Undead"
+    BEAST = 1,
+    DRAGONKIN = 2,
+    DEMON = 3,
+    ELEMENTAL = 4,
+    GIANT = 5,
+    UNDEAD = 6,
+    HUMANOID = 7,
+    CRITTER = 8,
+    MECHANICAL = 9,
+    NOT_SPECIFIED = 10,
+    TOTEM = 11,
+}
+
+_addon.CREATURE_TYPE_MASK = {
+    BEAST = 0x1,
+    DRAGONKIN = 0x2,
+    DEMON = 0x4,
+    ELEMENTAL = 0x8,
+    GIANT = 0x10,
+    UNDEAD = 0x20,
+    HUMANOID = 0x40,
+    CRITTER = 0x80,
+    MECHANICAL = 0x100,
+    NOT_SPECIFIED = 0x200,
+    TOTEM = 0x400
 }

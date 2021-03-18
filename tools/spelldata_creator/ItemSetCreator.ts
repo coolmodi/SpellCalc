@@ -18,7 +18,6 @@ const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
     [AURA_TYPE.SPELL_AURA_MOD_PARRY_PERCENT]: true,
     [AURA_TYPE.SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS]: true, // TODO: future
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER_VERSUS]: true, // TODO: future
-    [AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE_VERSUS]: true, // TODO: future
     [AURA_TYPE.SPELL_AURA_MOD_THREAT]: true,
     [AURA_TYPE.SPELL_AURA_MOD_SPELL_CRIT_CHANCE_SCHOOL]: true,
     [AURA_TYPE.SPELL_AURA_MOD_POWER_COST_SCHOOL_PCT]: true,
@@ -347,6 +346,15 @@ class AuraHandlers
                 default:
                     throw "SPELL_AURA_OVERRIDE_CLASS_SCRIPTS spell not handled!";
             }
+        }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE_VERSUS] = (effect) =>
+        {
+            return {
+                effect: ADDON_EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
+                affectSchool: effect["EffectMiscValue[0]"],
+                value: effect.EffectBasePoints + 1,
+            };
         }
     }
 
