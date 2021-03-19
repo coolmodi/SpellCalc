@@ -139,6 +139,8 @@ do
                 end
 
                 buttonText.SetButtonText(slot, showValue, isHeal);
+            else
+                buttonText.SetButtonText(slot, "");
             end
 
             needsUpdate[slot] = nil;
