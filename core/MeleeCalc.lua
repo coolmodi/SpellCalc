@@ -24,66 +24,60 @@ end
 ---@param isWhitehit boolean @Is for auto attack
 ---@param isRanged boolean
 ---@param cantDodgeParryBlock boolean
----@param dontUseWeapon boolean
-function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeParryBlock, dontUseWeapon)
-    _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged).." noweapon: "..tostring(dontUseWeapon));
+function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeParryBlock)
+    _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged));
     local tData = _addon.Target;
     local ldef = tData.level * 5; -- Level based def value
     local latk = 5 * UnitLevel("player"); -- Level based attack value
     local ratk = latk; -- Real attack value
 
     if tData.isPlayer then
-        if not dontUseWeapon then
-            if not isRanged then
-                if race == "Orc" then
-                    local slot = isOffhand and "offhand" or "mainhand";
-                    local WSC = _addon.WEAPON_SUBCLASS;
-                    if _addon:IsWeaponTypeEquipped(WSC.AXE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.AXE_2H, slot) then
-                        ratk = ratk + 5;
-                    end
-                elseif race == "Human" then
-                    local slot = isOffhand and "offhand" or "mainhand";
-                    local WSC = _addon.WEAPON_SUBCLASS;
-                    if _addon:IsWeaponTypeEquipped(WSC.SWORD_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.SWORD_2H, slot)
-                    or _addon:IsWeaponTypeEquipped(WSC.MACE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.MACE_2H, slot) then
-                        ratk = ratk + 5;
-                    end
+        if not isRanged then
+            if race == "Orc" then
+                local slot = isOffhand and "offhand" or "mainhand";
+                local WSC = _addon.WEAPON_SUBCLASS;
+                if _addon:IsWeaponTypeEquipped(WSC.AXE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.AXE_2H, slot) then
+                    ratk = ratk + 5;
                 end
-            else
-                if race == "Troll" then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.BOW, "ranged") then
-                        ratk = ratk + 5;
-                    end
-                elseif race == "Dwarf" then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.GUN, "ranged") then
-                        ratk = ratk + 5;
-                    end
+            elseif race == "Human" then
+                local slot = isOffhand and "offhand" or "mainhand";
+                local WSC = _addon.WEAPON_SUBCLASS;
+                if _addon:IsWeaponTypeEquipped(WSC.SWORD_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.SWORD_2H, slot)
+                or _addon:IsWeaponTypeEquipped(WSC.MACE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.MACE_2H, slot) then
+                    ratk = ratk + 5;
+                end
+            end
+        else
+            if race == "Troll" then
+                if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.BOW, "ranged") then
+                    ratk = ratk + 5;
+                end
+            elseif race == "Dwarf" then
+                if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.GUN, "ranged") then
+                    ratk = ratk + 5;
                 end
             end
         end
 
         self.isPvP = true;
     else
-        if not dontUseWeapon then
-            if isRanged then
-                ratk = stats.attack.r;
-            else
-                ratk = isOffhand and stats.attack.oh or stats.attack.mh;
-            end
+        if isRanged then
+            ratk = stats.attack.r;
+        else
+            ratk = isOffhand and stats.attack.oh or stats.attack.mh;
+        end
 
-            -- TODO: druid melee spells don't use weapons I think, remove when implementing druid melee
-            if class == "DRUID" then
-                local form = _addon:GetShapeshiftName();
-                if form and (form == "bear" or form == "cat") then
-                    ratk = latk;
-                end
+        if class == "DRUID" then
+            local form = _addon:GetShapeshiftName();
+            if form and (form == "bear" or form == "cat") then
+                ratk = latk;
             end
         end
 
         self.isPvP = false;
     end
 
-    _addon:PrintDebug("Using ldef: "..ldef.." latk: "..latk.." ratk: "..latk);
+    _addon:PrintDebug("Using ldef: "..ldef.." latk: "..latk.." ratk: "..ratk);
 
     self.ldef = ldef;
     self.latk = latk;

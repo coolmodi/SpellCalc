@@ -246,8 +246,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             false,
             bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0,
             spellBaseInfo.defType == DEF_TYPE.RANGED,
-            spellBaseInfo.cantDogeParryBlock,
-            spellBaseInfo.usedWeaponMask == nil
+            spellBaseInfo.cantDogeParryBlock
         );
     end
 
@@ -399,15 +398,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
         local ohd = calcedSpell[1].offhandAttack;
 
-        meleeCalc:Init(
-            calcedSpell,
-            true,
-            bit.band(calcedSpell[1].effectFlags,
-            SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0,
-            false,
-            false,
-            false
-        );
+        meleeCalc:Init(calcedSpell, true, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0, false, false);
         local hit, dodge, parry, glancing, block, hitBonus, glancingDmg = meleeCalc:GetMDPGB();
 
         ohd.hitChance = math.min(100, hit + hitBonus);
