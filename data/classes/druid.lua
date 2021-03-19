@@ -137,3 +137,20 @@ _addon.buffData[17116] = { -- Nature's Swiftness dummy
     effect = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
     value = 0
 };
+
+_addon.itemEffects[22398] = { -- Idol of Rejuvenation
+    {
+        type = _addon.EFFECT_TYPE.EXTRA_SP,
+        affectSpell = {16},
+        value = 50
+    }
+}
+
+_addon.itemEffects[22399] = { -- Idol of Health (Dummy effect to trigger update)
+    {
+        type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 0
+    }
+}
+
+-- TODO: https://classic.wowhead.com/item=23004/idol-of-longevity

@@ -97,3 +97,21 @@ _addon.buffData[20055] = { -- Vengeance 5
     affectSchool = _addon.SCHOOL_MASK.HOLY,
     value = 15
 };
+
+_addon.itemEffects[23201] = { -- Libram of Divinity
+    {
+        type = _addon.EFFECT_TYPE.EXTRA_SP,
+        affectSpell = {1073741824},
+        value = 53
+    }
+}
+
+_addon.itemEffects[23006] = { -- Libram of Light
+    {
+        type = _addon.EFFECT_TYPE.EXTRA_SP,
+        affectSpell = {1073741824},
+        value = 83
+    }
+}
+
+-- TODO: https://classic.wowhead.com/item=23203/libram-of-fervor
