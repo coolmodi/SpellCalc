@@ -60,6 +60,14 @@ function debugprofilestop()
     return 123;
 end
 
+--- Splits a string using a delimiter (optionally: into a specified number of pieces)
+---@param delimiter string
+---@param subject string
+---@param pieces number|nil
+function strsplit(delimiter, subject, pieces)
+    return "","","","","","","","","","";
+end
+
 function CreateFrame(frameType, frameName, parentFrame, inheritsFrame)
     return {}
 end
@@ -197,6 +205,14 @@ function GetRealmName()
     return "";
 end
 
+---@param libName string
+---@return table|nil
+function LibStub(libName)
+    return {};
+end
+
+Bartender4 = {}
+
 Bartender4DB = {
     namespaces = {},
     profileKeys = {},
@@ -206,6 +222,8 @@ DominosDB = {
     profileKeys = {},
     profiles = {},
 }
+
+ElvUISpellBookTooltip = {};
 
 ElvDB = {
     profileKeys = {},
@@ -228,6 +246,29 @@ end
 
 function GetSpellHitModifier()
     return 1;
+end
+
+--- Returns the current power of the specified unit.
+---@param unitId string
+---@param powerType number @Type of resource (mana/rage/energy/etc) to query
+---@param unmodified boolean @Return the higher precision internal value (for graphical use only)
+---@return number
+function UnitPower(unitId, powerType, unmodified)
+    return 1;
+end
+
+--- Returns the GUID of the specified unit.
+---@param unitId string
+---@return string
+function UnitGUID(unitId)
+    return "Creature-0-1133-870-141-71953-0000432FBD";
+end
+
+--- Returns the creature type of the specified unit.
+---@param unitId string
+---@return string
+function UnitCreatureType(unitId)
+    return "Beast";
 end
 
 function InterfaceOptionsFrame_OpenToCategory(panelName) end
@@ -303,3 +344,39 @@ SpellCalc_settings = SpellCalc_settings;
 function GetWeaponEnchantInfo()
     return true, 1, 1, 1, true, 1, 1, 1;
 end
+
+SpellCalcStatScreen = {}
+
+---@type AddonEnv
+local _addon = select(2, ...);
+---@class TalentEffect
+local TalentEffect = {
+    type = math.random(),
+    ---@type integer[]|nil
+    affectSpell = nil,
+    ---@type integer|nil
+    affectSchool = nil,
+    ---@type integer|nil
+    base = nil,
+    perPoint = math.random(),
+}
+---@class TalentDataEntry
+local TalentDataEntry = {
+    tree = math.random(),
+    talent = math.random(),
+    ---@type TalentEffect[]
+    effects = {}
+}
+---@type TalentDataEntry[]
+_addon.talentData = {}
+
+---@return table<string,table>
+_addon.ClassSettings = function()
+    return {};
+end
+
+---@type table<string, SpellBaseInfo>
+_addon.spellBaseInfo = {};
+
+---@type table<integer, SpellRankInfo>
+_addon.spellRankInfo = {};

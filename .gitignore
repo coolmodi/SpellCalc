@@ -1,6 +1,7 @@
 *.zip
 *.txt
 *.code-workspace
+/.vscode/
 /extractor/
 /DATABASE/
 /Alel/

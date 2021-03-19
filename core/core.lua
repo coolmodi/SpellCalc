@@ -165,9 +165,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     local spellName, _, _, castTime = GetSpellInfo(spellId);
     _addon:PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
     local effCastTime = parentEffCastTime or 0;
-    ---@type SpellBaseInfo
     local spellBaseInfo = _addon.spellBaseInfo[spellName];
-    ---@type SpellRankInfo
     local spellRankInfo = _addon.spellRankInfo[spellId];
     local GCD = spellBaseInfo.GCD or 1.5;
     local costs;
