@@ -1,13 +1,8 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
-
-local SCHOOL = _addon.SCHOOL;
-local SCHOOL_MASK = _addon.SCHOOL_MASK;
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
-
-local conditionsActive = 0;
-
 local stats = _addon.stats;
+local conditionsActive = 0;
 
 --- Apply or remove effect for destination
 ---@param apply boolean
@@ -44,33 +39,6 @@ local function ApplyOrRemoveSpellSet(apply, name, value, destTable, setMasks)
     end
 end
 
---- Apply or remove effect affecting schools
----@param apply boolean
----@param name string @The name of the buff
----@param value number @The effect value, negative to remove buff
----@param destTable table @The destination table
----@param schoolMask number @The mask of schools to affect
-local function ApplyOrRemoveSchoolAffect(apply, name, value, destTable, schoolMask)
-    if bit.band(schoolMask, SCHOOL_MASK.HOLY) > 0 then
-        ApplyOrRemove(apply, value, destTable[SCHOOL.HOLY], name);
-    end
-    if bit.band(schoolMask, SCHOOL_MASK.FIRE) > 0 then
-        ApplyOrRemove(apply, value, destTable[SCHOOL.FIRE], name);
-    end
-    if bit.band(schoolMask, SCHOOL_MASK.NATURE) > 0 then
-        ApplyOrRemove(apply, value, destTable[SCHOOL.NATURE], name);
-    end
-    if bit.band(schoolMask, SCHOOL_MASK.FROST) > 0 then
-        ApplyOrRemove(apply, value, destTable[SCHOOL.FROST], name);
-    end
-    if bit.band(schoolMask, SCHOOL_MASK.SHADOW) > 0 then
-        ApplyOrRemove(apply, value, destTable[SCHOOL.SHADOW], name);
-    end
-    if bit.band(schoolMask, SCHOOL_MASK.ARCANE) > 0 then
-        ApplyOrRemove(apply, value, destTable[SCHOOL.ARCANE], name);
-    end
-end
-
 --- Apply or remove effect by mask for table with bit position as keys.
 ---@param apply boolean
 ---@param name string @The name of the buff
@@ -99,6 +67,73 @@ local function ApplyOrRemoveWeaponAffect(apply, name, value, destTable, weaponMa
     end
 end
 
+local effectAffectSpellSet = {
+    [EFFECT_TYPE.SPELL_MOD_PCT_EFFECT]  = stats.spellModPctEffect,
+    [EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE]  = stats.spellModPctDamage,
+    [EFFECT_TYPE.SPELL_MOD_PCT_HEALING] = stats.spellModPctHealing,
+    [EFFECT_TYPE.MOD_CRIT]              = stats.critMods.spell,
+    [EFFECT_TYPE.MOD_HIT_SPELL]         = stats.hitMods.spell,
+    [EFFECT_TYPE.MAGE_NWR_PROC]         = stats.mageNWRProc,
+    [EFFECT_TYPE.MOD_DURATION]          = stats.durationMods,
+    [EFFECT_TYPE.MOD_FLAT_VALUE]        = stats.flatMods,
+    [EFFECT_TYPE.EXTRA_SP]              = stats.extraSp,
+    [EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST] = stats.chainMultMods,
+    [EFFECT_TYPE.SPELLMOD_GCD]          = stats.gcdMods,
+    [EFFECT_TYPE.TRIGGER_SPELL_EFFECT]  = stats.spellTriggerSpellEffect, -- TODO: If a spell is ever affected by more than one of those it will break!
+    [EFFECT_TYPE.CRIT_MULT]             = stats.critMult.spell,
+}
+
+local effectSimpleStat = {
+    [EFFECT_TYPE.MOD_PCT_HEALING]       = stats.modhealingDone,
+    [EFFECT_TYPE.MOD_HIT_SPELL]         = stats.hitBonusSpell,
+    [EFFECT_TYPE.MP5]                   = stats.mp5,
+    [EFFECT_TYPE.CLEARCAST_CHANCE]      = stats.clearCastChance,
+    [EFFECT_TYPE.CLEARCAST_CHANCE_DMG]  = stats.clearCastChanceDmg,
+    [EFFECT_TYPE.ILLUMINATION]          = stats.illumination,
+    [EFFECT_TYPE.IGNITE]                = stats.ignite,
+    [EFFECT_TYPE.WL_IMP_SB]             = stats.impShadowBolt,
+    [EFFECT_TYPE.EARTHFURY_RETURN]      = stats.earthfuryReturn,
+    [EFFECT_TYPE.DRUID_NATURES_GRACE]   = stats.druidNaturesGrace,
+}
+
+local effectAffectWeapon = {
+    [EFFECT_TYPE.MOD_HIT_WEAPON]        = stats.hitMods.weapon,
+}
+
+local effectAffectMask = {
+    [EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE] = stats.schoolModPctDamage,
+    [EFFECT_TYPE.RESISTANCE_PEN]        = stats.spellPen,
+    [EFFECT_TYPE.MOD_CRIT]              = stats.critMods.school,
+    [EFFECT_TYPE.MOD_HIT_SPELL]         = stats.hitMods.school,
+    [EFFECT_TYPE.CRIT_MULT]             = stats.critMult.school,
+    [EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS]  = stats.targetTypeDmgMult,
+    [EFFECT_TYPE.MOD_CRIT_DAMAGE_DONE_VERSUS]  = stats.targetTypeCritDmgMult,
+    [EFFECT_TYPE.MOD_FLAT_SPELL_DAMAGE_VERSUS]  = stats.targetTypeFlatSpell,
+}
+
+local effectCustom = {
+    [EFFECT_TYPE.FSR_REGEN] = function(apply, name, value)
+        ApplyOrRemove(apply, value, stats.fsrRegenMult, name);
+        stats.manaReg = stats.baseManaReg * (stats.fsrRegenMult.val / 100);
+    end,
+    [EFFECT_TYPE.CONDITION_TRIGGER] = function(apply, name, value)
+        conditionsActive = conditionsActive + value;
+        _addon:PrintDebug("Condition change!");
+        _addon:UpdateBuffs();
+    end,
+    [EFFECT_TYPE.JUDGEMENT_SPELL] = function(apply, name, value)
+        if value > 0 then
+            _addon.judgementSpell = value;
+        elseif -_addon.judgementSpell == value then
+            _addon.judgementSpell = nil;
+        end
+        _addon:PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
+    end,
+    [EFFECT_TYPE.TRIGGER_UPDATE] = function()
+        _addon:TriggerUpdate();
+    end
+}
+
 --- Change buff effect value (add/remove)
 ---@param apply boolean @True to apply, false to remove
 ---@param name string @The name of the buff
@@ -110,216 +145,30 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
     if apply == false then
         value = -value;
     end
-    
     _addon:PrintDebug(("Change buff %s effect %d > %f"):format(name, effect, value));
-    if affectSchool then
-        _addon:PrintDebug(("Affects school: %d"):format(affectSchool));
-    end
-    if affectSpell then
-        _addon:PrintDebug("Affects spell list");
-        if (type(affectSpell[1]) == "string") then
-            _addon:PrintWarn("affectSpell is still used with strings for " .. name.. "! Please report this error!");
-            return;
-        end
-    end
 
-    if effect == EFFECT_TYPE.SPELL_MOD_PCT_EFFECT then
-        if affectSpell == nil then
-            _addon:PrintError("Aura "..name.." uses SPELL_MOD_PCT_EFFECT without a spell mask! Report this please.");
-        end
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.spellModPctEffect, affectSpell);
+    if effectAffectSpellSet[effect] then
+        ApplyOrRemoveSpellSet(apply, name, value, effectAffectSpellSet[effect], affectSpell);
         return;
     end
 
-    if effect == EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE then
-        if affectSpell == nil then
-            _addon:PrintError("Aura "..name.." uses SPELL_MOD_PCT_DAMAGE without a spell mask! Report this please.");
-        end
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.spellModPctDamage, affectSpell);
+    if effectSimpleStat[effect] then
+        ApplyOrRemove(apply, value, effectSimpleStat[effect], name);
         return;
     end
 
-    if effect == EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE then
-        if affectSchool == nil then
-            _addon:PrintError("Aura "..name.." uses SCHOOL_MOD_PCT_DAMAGE without a school mask! Report this please.");
-        end
-        ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.schoolModPctDamage, affectSchool);
+    if effectAffectWeapon[effect] then
+        ApplyOrRemoveWeaponAffect(apply, name, value, effectAffectWeapon[effect], affectSchool);
         return;
     end
 
-    if effect == EFFECT_TYPE.SPELL_MOD_PCT_HEALING then
-        if affectSpell == nil then
-            _addon:PrintError("Aura "..name.." uses SPELL_MOD_PCT_HEALING without a spell mask! Report this please.");
-        end
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.spellModPctHealing, affectSpell);
+    if effectAffectMask[effect] then
+        ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effect], affectSchool);
         return;
     end
 
-    if effect == EFFECT_TYPE.MOD_PCT_HEALING then
-        ApplyOrRemove(apply, value, _addon.stats.modhealingDone, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_HIT_SPELL then
-        if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.hitMods.school, affectSchool);
-        elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.hitMods.spell, affectSpell);
-        else
-            ApplyOrRemove(apply, value, _addon.stats.hitBonusSpell, name);
-        end
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_CRIT then
-        if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.critMods.school, affectSchool);
-        elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.critMods.spell, affectSpell);
-        end
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MP5 then
-        ApplyOrRemove(apply, value, _addon.stats.mp5, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.FSR_REGEN then
-        ApplyOrRemove(apply, value, _addon.stats.fsrRegenMult, name);
-        _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.RESISTANCE_PEN then
-        if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.spellPen, affectSchool);
-        end
-        return;
-    end
-
-    if effect == EFFECT_TYPE.CLEARCAST_CHANCE then
-        ApplyOrRemove(apply, value, _addon.stats.clearCastChance, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.CLEARCAST_CHANCE_DMG then
-        ApplyOrRemove(apply, value, _addon.stats.clearCastChanceDmg, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.ILLUMINATION then
-        ApplyOrRemove(apply, value, _addon.stats.illumination, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.CRIT_MULT then
-        if affectSchool ~= nil then
-            ApplyOrRemoveSchoolAffect(apply, name, value, _addon.stats.critMult.school, affectSchool);
-        elseif affectSpell ~= nil then
-            ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.critMult.spell, affectSpell);
-        end
-        return;
-    end
-
-    if effect == EFFECT_TYPE.IGNITE then
-        ApplyOrRemove(apply, value, _addon.stats.ignite, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.WL_IMP_SB then
-        ApplyOrRemove(apply, value, _addon.stats.impShadowBolt, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MAGE_NWR_PROC then
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.mageNWRProc, affectSpell);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_DURATION then
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.durationMods, affectSpell);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_FLAT_VALUE then
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.flatMods, affectSpell);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.EXTRA_SP then
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.extraSp, affectSpell);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.EARTHFURY_RETURN then
-        ApplyOrRemove(apply, value, _addon.stats.earthfuryReturn, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.CONDITION_TRIGGER then
-        conditionsActive = conditionsActive + value;
-        _addon:PrintDebug("Condition change!");
-        _addon:UpdateBuffs();
-        return;
-    end
-
-    if effect == EFFECT_TYPE.DRUID_NATURES_GRACE then
-        ApplyOrRemove(apply, value, _addon.stats.druidNaturesGrace, name);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST then
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.chainMultMods, affectSpell);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_HIT_WEAPON then
-        ApplyOrRemoveWeaponAffect(apply, name, value, _addon.stats.hitMods.weapon, affectSchool)
-        return;
-    end
-
-    if effect == EFFECT_TYPE.JUDGEMENT_SPELL then
-        if value > 0 then
-            _addon.judgementSpell = value;
-        elseif -_addon.judgementSpell == value then
-            _addon.judgementSpell = nil;
-        end
-        _addon:PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
-        return;
-    end
-
-    if effect == EFFECT_TYPE.SPELLMOD_GCD then
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.gcdMods, affectSpell);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.TRIGGER_UPDATE then
-        _addon:TriggerUpdate();
-        return;
-    end
-
-    if effect == EFFECT_TYPE.TRIGGER_SPELL_EFFECT then
-        if affectSpell == nil then
-            _addon:PrintError("Aura "..name.." uses TRIGGER_SPELL_EFFECT without a spell mask! Report this please.");
-        end
-        -- TODO: If a spell is ever affected by more than one of those it will break!
-        ApplyOrRemoveSpellSet(apply, name, value, _addon.stats.spellTriggerSpellEffect, affectSpell);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS then
-        ApplyOrRemoveByMask(apply, name, value, _addon.stats.targetTypeDmgMult, affectSchool);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_CRIT_DAMAGE_DONE_VERSUS then
-        ApplyOrRemoveByMask(apply, name, value, _addon.stats.targetTypeCritDmgMult, affectSchool);
-        return;
-    end
-
-    if effect == EFFECT_TYPE.MOD_FLAT_SPELL_DAMAGE_VERSUS then
-        ApplyOrRemoveByMask(apply, name, value, _addon.stats.targetTypeFlatSpell, affectSchool);
+    if effectCustom[effect] then
+        effectCustom[effect](apply, name, value);
         return;
     end
 

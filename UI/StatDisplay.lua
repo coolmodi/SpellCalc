@@ -309,6 +309,18 @@ AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
 AddSpellTable(stats.spellModPctDamage, "Spell Pct Damage", "%");
 AddSchoolTableUniform(stats.spellModPctDamage, "School Pct Damage", "%");
 
+AddTitle("Creature Type Flat SP");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.BEAST], "BEAST", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.DRAGONKIN], "DRAGONKIN", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.DEMON], "DEMON", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.ELEMENTAL], "ELEMENTAL", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.GIANT], "GIANT", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.UNDEAD], "UNDEAD", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.HUMANOID], "HUMANOID", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.CRITTER], "CRITTER", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.MECHANICAL], "MECHANICAL", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.NOT_SPECIFIED], "NOT_SPECIFIED", "%");
+AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.TOTEM], "TOTEM", "%");
 AddTitle("Creature Type Mult");
 AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.BEAST], "BEAST", "%");
 AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.DRAGONKIN], "DRAGONKIN", "%");
