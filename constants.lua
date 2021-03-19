@@ -107,28 +107,28 @@ _addon.BUFF_CONDITIONS = {
 
 _addon.JUDGEMENT_ID = 20271;
 
---- Weapon types as localized itemSubType name, equals proficiency name
-_addon.WEAPON_TYPES = {
-    FISHING_POLE = GetSpellInfo(7738),
-    POLEARM = GetSpellInfo(200),
-    STAVE = GetSpellInfo(227),
-    AXE_2H = GetSpellInfo(197),
-    MACE_2H = GetSpellInfo(199),
-    SWORD_2H = GetSpellInfo(202),
-
-    DAGGER = GetSpellInfo(1180),
-    FIST = GetSpellInfo(15590),
-    AXE_1H = GetSpellInfo(196),
-    MACE_1H = GetSpellInfo(198),
-    SWORD_1H = GetSpellInfo(201),
-
-    BOW = GetSpellInfo(264),
-    CROSSBOW = GetSpellInfo(5011),
-    GUN = GetSpellInfo(266),
-
-    THROWN = GetSpellInfo(2567),
-    UNARMED = GetSpellInfo(203),
-    WAND = GetSpellInfo(5009),
+_addon.WEAPON_SUBCLASS = {
+    AXE_1H = 0,
+    AXE_2H = 1,
+    BOW = 2,
+    GUN = 3,
+    MACE_1H = 4,
+    MACE_2H = 5,
+    POLEARM = 6,
+    SWORD_1H = 7,
+    SWORD_2H = 8,
+    -- WARGLAIVE = 9, -- Not used
+    STAFF = 10,
+    -- BEARCLAW = 11, -- Not used
+    -- CATCLAW = 12, -- Not used
+    FIST = 13,
+    MISC = 14,
+    DAGGER = 15,
+    THROWN = 16,
+    -- 17 is "Spears", don't think that is ever used for anything
+    CROSSBOW = 18,
+    WAND = 19,
+    FISHING_POLE = 20,
 }
 
 _addon.WEAPON_TYPES_MASK = {
@@ -150,9 +150,6 @@ _addon.WEAPON_TYPES_MASK = {
     CROSSBOW    = 0x40000,
     WAND        = 0x80000,
     FISHING_POLE = 0x100000,
-
-    -- not used by the game, only internally
-    UNARMED     = 0x40000000,
 }
 -- family masks
 _addon.WEAPON_TYPES_MASK.ONE_HAND = (
@@ -174,65 +171,6 @@ _addon.WEAPON_TYPES_MASK.RANGED = (
     + _addon.WEAPON_TYPES_MASK.GUN
     + _addon.WEAPON_TYPES_MASK.CROSSBOW
 );
-
---- Weapon subclasses as used in DBC
-_addon.DBC_WEAPON_SUBCLASSES = {
-    [0] = _addon.WEAPON_TYPES_MASK.AXE_1H,
-    [1] = _addon.WEAPON_TYPES_MASK.AXE_2H,
-    [2] = _addon.WEAPON_TYPES_MASK.BOW,
-    [3] = _addon.WEAPON_TYPES_MASK.GUN,
-    [4] = _addon.WEAPON_TYPES_MASK.MACE_1H,
-    [5] = _addon.WEAPON_TYPES_MASK.MACE_2H,
-    [6] = _addon.WEAPON_TYPES_MASK.POLEARM,
-    [7] = _addon.WEAPON_TYPES_MASK.SWORD_1H,
-    [8] = _addon.WEAPON_TYPES_MASK.SWORD_2H,
-    -- whatever 9 is, it's called "Obsolete"
-    [10] = _addon.WEAPON_TYPES_MASK.STAVE,
-    -- whatever 11 is, it's called "Exotic 1H"
-    -- whatever 12 is, it's called "Exotic 2H"
-    [13] = _addon.WEAPON_TYPES_MASK.FIST,
-    [14] = _addon.WEAPON_TYPES_MASK.MISC,
-    [15] = _addon.WEAPON_TYPES_MASK.DAGGER,
-    [16] = _addon.WEAPON_TYPES_MASK.THROWN,
-    -- 17 is "Spears", don't think that is used for anything
-    [18] = _addon.WEAPON_TYPES_MASK.CROSSBOW,
-    [19] = _addon.WEAPON_TYPES_MASK.WAND,
-    [20] = _addon.WEAPON_TYPES_MASK.FISHING_POLE,
-}
-
---- Resolve WEAPON_TYPES (itemSubType) to their WEAPON_TYPES_MASK
-_addon.WEAPON_TYPE_TO_MASK = {
-    [_addon.WEAPON_TYPES.FISHING_POLE] = _addon.WEAPON_TYPES_MASK.FISHING_POLE,
-    [_addon.WEAPON_TYPES.POLEARM] = _addon.WEAPON_TYPES_MASK.POLEARM,
-    [_addon.WEAPON_TYPES.STAVE] = _addon.WEAPON_TYPES_MASK.STAVE,
-    [_addon.WEAPON_TYPES.AXE_2H] = _addon.WEAPON_TYPES_MASK.AXE_2H,
-    [_addon.WEAPON_TYPES.MACE_2H] = _addon.WEAPON_TYPES_MASK.MACE_2H,
-    [_addon.WEAPON_TYPES.SWORD_2H] = _addon.WEAPON_TYPES_MASK.SWORD_2H,
-
-    [_addon.WEAPON_TYPES.DAGGER] = _addon.WEAPON_TYPES_MASK.DAGGER,
-    [_addon.WEAPON_TYPES.FIST] = _addon.WEAPON_TYPES_MASK.FIST,
-    [_addon.WEAPON_TYPES.AXE_1H] = _addon.WEAPON_TYPES_MASK.AXE_1H,
-    [_addon.WEAPON_TYPES.MACE_1H] = _addon.WEAPON_TYPES_MASK.MACE_1H,
-    [_addon.WEAPON_TYPES.SWORD_1H] = _addon.WEAPON_TYPES_MASK.SWORD_1H,
-
-    [_addon.WEAPON_TYPES.BOW] = _addon.WEAPON_TYPES_MASK.BOW,
-    [_addon.WEAPON_TYPES.CROSSBOW] = _addon.WEAPON_TYPES_MASK.CROSSBOW,
-    [_addon.WEAPON_TYPES.GUN] = _addon.WEAPON_TYPES_MASK.GUN,
-
-    [_addon.WEAPON_TYPES.UNARMED] = _addon.WEAPON_TYPES_MASK.UNARMED,
-    [_addon.WEAPON_TYPES.THROWN] = _addon.WEAPON_TYPES_MASK.THROWN,
-    [_addon.WEAPON_TYPES.WAND] = _addon.WEAPON_TYPES_MASK.WAND,
-}
-
-_addon.FISHING_POLES = {
-    [6365] = true, -- Strong Fishing Pole
-    [6256] = true, -- Fishing Pole
-    [6366] = true, -- Darkwood Fishing Pole
-    [12225] = true, -- Blump Family Fishing Pole
-    [6367] = true, -- Big Iron Fishing Pole
-    [19022] = true, -- Nat Pagle's Extreme Angler FC-5000
-    [19970] = true -- Arcanite Fishing Pole
-}
 
 _addon.SPELL_EFFECT_TYPES = {
     SPELL_EFFECT_SCHOOL_DAMAGE = 2,

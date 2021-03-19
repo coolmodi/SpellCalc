@@ -21,18 +21,14 @@ local ITEM_SLOTS = {
     [18] = "ranged",
 };
 
-local WTTM = _addon.WEAPON_TYPE_TO_MASK;
-local UNARMED = _addon.WEAPON_TYPES_MASK.UNARMED;
-local FISHING_POLE_NAME = _addon.WEAPON_TYPES.FISHING_POLE;
-
 local retryFrame = CreateFrame("Frame");
 local retryTimer = 0;
 local items = {};
 local sets = {};
-local weapontypes = {
-    mh = UNARMED,
-    oh = UNARMED,
-    r = UNARMED
+local weaponSubClass = {
+    mainHand = nil,
+    offHand = nil,
+    ranged = nil
 };
 
 --- Apply or remove effect for destination
@@ -99,17 +95,6 @@ local function ChangeItemEffects(itemData, itemName, remove)
         ApplyOrRemove(val, _addon.stats.mp5, itemName);
     end
 
-    -- All flat hit bonus aruras on items should appear in GetSpellHitModifier()
-    -- if itemData.hit then
-    --     val = remove and -itemData.hit or itemData.hit;
-    --     ApplyOrRemove(val, _addon.stats.hitBonus, itemName);
-    -- end
-
-    -- if itemData.spellHit then
-    --     val = remove and -itemData.spellHit or itemData.spellHit;
-    --     ApplyOrRemove(val, _addon.stats.hitBonusSpell, itemName);
-    -- end
-
     if itemData.spellPen then
         val = remove and -itemData.spellPen or itemData.spellPen;
         for i=3,7 do
@@ -142,7 +127,7 @@ end
 local function EquipItem(itemId, slotId)
     _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
     local itemData = _addon.itemData[itemId];
-    local itemName, _, _, _, _, _, itemSubType = GetItemInfo(itemId);
+    local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, classID, subclassID  = GetItemInfo(itemId);
     local setId = _addon.setItemData[itemId];
 
     if itemName == nil then
@@ -152,26 +137,13 @@ local function EquipItem(itemId, slotId)
     end
 
     if slotId >= 16 and slotId <= 18 then
-        _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubType);
-
-        -- hackfix for fishing poles
-        if _addon.FISHING_POLES[itemId] then
-            itemSubType = FISHING_POLE_NAME;
-        end
-
-        local weaponTypeMask = WTTM[itemSubType];
-
-        if weaponTypeMask == nil then
-            weaponTypeMask = _addon.WEAPON_TYPES_MASK.MISC;
-            _addon:PrintDebug("Invalid/Unknown weapon type, falling back to MISC!");
-        end
-
+        _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);
         if slotId == 16 then
-            weapontypes.mh = weaponTypeMask;
+            weaponSubClass.mainHand = subclassID;
         elseif slotId == 17 then
-            weapontypes.oh = weaponTypeMask;
+            weaponSubClass.offHand = subclassID;
         elseif slotId == 18 then
-            weapontypes.r = weaponTypeMask;
+            weaponSubClass.ranged = subclassID;
         end
     end
 
@@ -224,11 +196,11 @@ local function UnequipItem(slotId)
     if slotId >= 16 and slotId <= 18 then
         _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now unarmed");
         if slotId == 16 then
-            weapontypes.mh = UNARMED;
+            weaponSubClass.mainHand = nil;
         elseif slotId == 17 then
-            weapontypes.oh = UNARMED;
+            weaponSubClass.offHand = nil;
         elseif slotId == 18 then
-            weapontypes.r = UNARMED;
+            weaponSubClass.ranged = nil;
         end
     end
 
@@ -275,29 +247,30 @@ end
 
 --- Return true if a two handed weapon is in the main hand slot
 function _addon:IsTwoHandEquipped()
-    return weapontypes.mh and bit.band(weapontypes.mh, self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
+    return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
 end
 
 --- Return true if a one handed weapon is in the main hand slot
 function _addon:IsOneHandEquipped()
-    return weapontypes.mh and bit.band(weapontypes.mh, self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
+    return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
 end
 
 --- Return true if a weapon is in the mainhand slot
 function _addon:IsMainHandWeaponEquipped()
-    return weapontypes.mh and bit.band(weapontypes.mh, self.WEAPON_TYPES_MASK.MELEE) > 0;
+    return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
 --- Return true if a weapon is in the offhand slot
 function _addon:IsOffHandWeaponEquipped()
-    return weapontypes.oh and bit.band(weapontypes.oh, self.WEAPON_TYPES_MASK.MELEE) > 0;
+    return weaponSubClass.offHand and bit.band(bit.lshift(1, weaponSubClass.offHand), self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
---- Return true if any of the given weapon types is equipped
----@param weaponMask number
----@param slot string
-function _addon:IsWeaponTypeEquipped(weaponMask, slot)
-    return weapontypes[slot] and bit.band(weaponMask, weapontypes[slot]) > 0;
+--- Return true if the given weapon class is equipped
+---@param weaponSubClassId number
+---@param slot string @mainhand, offhand or ranged
+function _addon:IsWeaponTypeEquipped(weaponSubClassId, slot)
+    assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
+    return weaponSubClass[slot] == weaponSubClassId;
 end
 
 --- Return true if both weapon slots have a weapon equipped
@@ -305,10 +278,12 @@ function _addon:IsDualWieldEquipped()
     return self:IsMainHandWeaponEquipped() and self:IsOffHandWeaponEquipped();
 end
 
---- Return WEAPON_TYPES_MASK for weapon in given slot ("mh", "oh" or "r")
----@param slot string
+--- Return WEAPON_SUBCLASS for weapon in given slot if a weapon is equipped
+---@param slot string @mainhand, offhand or ranged
+---@return number|nil
 function _addon:GetWeaponType(slot)
-    return weapontypes[slot];
+    assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
+    return weaponSubClass[slot];
 end
 
 --- (DEBUG) Equip item to test effects. It will just overwrite the slot!

@@ -46,23 +46,11 @@ end
 ---@param destTable table @The destination table
 ---@param mask number @The mask of keys to affect
 local function ApplyOrRemoveByMask(apply, name, value, destTable, mask)
+    -- Weapons start at 0, other stuff at 1, should always be compatible with everything this way
+    local offset = destTable[0] == nil and 1 or 0;
     for bitPos in pairs(destTable) do
-        if bit.band(mask, bit.lshift(1, bitPos - 1)) > 0 then
+        if bit.band(mask, bit.lshift(1, bitPos - offset)) > 0 then
             ApplyOrRemove(apply, value, destTable[bitPos], name);
-        end
-    end
-end
-
---- Apply or remove effect affecting weapon types
----@param apply boolean
----@param name string @The name of the buff
----@param value number @The effect value, negative to remove buff
----@param destTable table @The destination table
----@param weaponMask number @The mask of weapon types to affec
-local function ApplyOrRemoveWeaponAffect(apply, name, value, destTable, weaponMask)
-    for typeKey in pairs(destTable) do
-        if bit.band(typeKey, weaponMask) > 0 then
-            ApplyOrRemove(apply, value, destTable[typeKey], name);
         end
     end
 end
@@ -96,10 +84,6 @@ local effectSimpleStat = {
     [EFFECT_TYPE.DRUID_NATURES_GRACE]   = stats.druidNaturesGrace,
 }
 
-local effectAffectWeapon = {
-    [EFFECT_TYPE.MOD_HIT_WEAPON]        = stats.hitMods.weapon,
-}
-
 local effectAffectMask = {
     [EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE] = stats.schoolModPctDamage,
     [EFFECT_TYPE.RESISTANCE_PEN]        = stats.spellPen,
@@ -109,6 +93,7 @@ local effectAffectMask = {
     [EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS]  = stats.targetTypeDmgMult,
     [EFFECT_TYPE.MOD_CRIT_DAMAGE_DONE_VERSUS]  = stats.targetTypeCritDmgMult,
     [EFFECT_TYPE.MOD_FLAT_SPELL_DAMAGE_VERSUS]  = stats.targetTypeFlatSpell,
+    [EFFECT_TYPE.MOD_HIT_WEAPON]        = stats.hitMods.weapon,
 }
 
 local effectCustom = {
@@ -154,11 +139,6 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
 
     if effectSimpleStat[effect] then
         ApplyOrRemove(apply, value, effectSimpleStat[effect], name);
-        return;
-    end
-
-    if effectAffectWeapon[effect] then
-        ApplyOrRemoveWeaponAffect(apply, name, value, effectAffectWeapon[effect], affectSchool);
         return;
     end
 

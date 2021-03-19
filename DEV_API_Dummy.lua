@@ -146,9 +146,27 @@ function UnitRangedDamage(unit)
     return 1.5, 0, 0, 0, 0, 0;
 end
 
---- itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType,itemSubType, itemStackCount, itemEquipLoc, itemTexture, itemSellPrice
+--- Returns information about an item. 
+---@param itemID_itemString_itemName_itemLink string|number @ItemLink, Name or ID
+---@return string itemName
+---@return string itemLink
+---@return number itemQuality
+---@return number itemLevel
+---@return number itemMinLevel
+---@return string itemType
+---@return string itemSubType
+---@return number itemStackCount
+---@return string itemEquipLoc
+---@return number itemTexture
+---@return number sellPrice
+---@return number classID
+---@return number subclassID
+---@return number bindType
+---@return number expacID
+---@return number setID
+---@return boolean isCraftingReagent
 function GetItemInfo(itemID_itemString_itemName_itemLink)
-    return "itemName", "itemLink", 1, 1, 1, "itemType", "itemSubType", 1, "itemEquipLoc", "itemTexture", 1;
+    return;
 end
 
 function GetInventoryItemID(unit, slot)
@@ -380,3 +398,17 @@ _addon.spellBaseInfo = {};
 
 ---@type table<integer, SpellRankInfo>
 _addon.spellRankInfo = {};
+
+---@class ItemDataEntry
+local ItemDataEntry = {
+    ---@type number|nil
+    spellHit = nil,
+    ---@type number|nil
+    hit = nil,
+    ---@type number|nil
+    mp5 = nil,
+    ---@type number|nil
+    spellPen = nil
+}
+---@type table <integer, ItemDataEntry>
+_addon.itemData = {}

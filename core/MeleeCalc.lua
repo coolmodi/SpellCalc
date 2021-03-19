@@ -36,22 +36,26 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
         if not dontUseWeapon then
             if not isRanged then
                 if race == "Orc" then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_TYPES_MASK.AXE_1H + _addon.WEAPON_TYPES_MASK.AXE_2H, isOffhand and "oh" or "mh") then
+                    local slot = isOffhand and "offhand" or "mainhand";
+                    local WSC = _addon.WEAPON_SUBCLASS;
+                    if _addon:IsWeaponTypeEquipped(WSC.AXE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.AXE_2H, slot) then
                         ratk = ratk + 5;
                     end
                 elseif race == "Human" then
-                    local WTM = _addon.WEAPON_TYPES_MASK;
-                    if _addon:IsWeaponTypeEquipped(WTM.SWORD_1H + WTM.SWORD_2H + WTM.MACE_1H + WTM.MACE_2H, isOffhand and "oh" or "mh") then
+                    local slot = isOffhand and "offhand" or "mainhand";
+                    local WSC = _addon.WEAPON_SUBCLASS;
+                    if _addon:IsWeaponTypeEquipped(WSC.SWORD_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.SWORD_2H, slot)
+                    or _addon:IsWeaponTypeEquipped(WSC.MACE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.MACE_2H, slot) then
                         ratk = ratk + 5;
                     end
                 end
             else
                 if race == "Troll" then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_TYPES_MASK.BOW, "r") then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.BOW, "ranged") then
                         ratk = ratk + 5;
                     end
                 elseif race == "Dwarf" then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_TYPES_MASK.GUN, "r") then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.GUN, "ranged") then
                         ratk = ratk + 5;
                     end
                 end
@@ -104,33 +108,31 @@ function MeleeCalc:GetCrit()
 
         -- adjust offhand crit for weapon specific talents (warrior axe spec and rogue dagger and fisting spec)
         -- TODO: this is bullshit lol
-        if _addon:GetWeaponType("mh") ~= _addon:GetWeaponType("oh") then
-            local WM = _addon.WEAPON_TYPES_MASK;
-
+        if _addon:GetWeaponType("mainhand") ~= _addon:GetWeaponType("offhand") then
             if class == "WARRIOR" then
                 local _, _, _, _, curRank = GetTalentInfo(1, 12); -- axe spec
                 if curRank > 0 then
-                    if bit.band(_addon:GetWeaponType("mh"), WM.AXE_2H + WM.AXE_1H) > 0 then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "mainhand") then
                         basecrit = basecrit - curRank;
-                    elseif bit.band(_addon:GetWeaponType("oh"), WM.AXE_2H + WM.AXE_1H) > 0 then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "offhand") then
                         basecrit = basecrit + curRank;
                     end
                 end
             elseif class == "ROGUE" then
                 local _, _, _, _, curRank = GetTalentInfo(2, 11); -- dagger spec
                 if curRank > 0 then
-                    if bit.band(_addon:GetWeaponType("mh"), WM.DAGGER) > 0 then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "mainhand") then
                         basecrit = basecrit - curRank;
-                    elseif bit.band(_addon:GetWeaponType("oh"), WM.DAGGER) > 0 then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "offhand") then
                         basecrit = basecrit + curRank;
                     end
                 end
 
                 _, _, _, _, curRank = GetTalentInfo(2, 16); -- fisting spec
                 if curRank > 0 then
-                    if bit.band(_addon:GetWeaponType("mh"), WM.FIST) > 0 then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "mainhand") then
                         basecrit = basecrit - curRank;
-                    elseif bit.band(_addon:GetWeaponType("oh"), WM.FIST) > 0 then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "offhand") then
                         basecrit = basecrit + curRank;
                     end
                 end
@@ -213,9 +215,9 @@ end
 
 --- Get miss chance against target
 ---@param calc MeleeCalc
-local function GetMissChance(calc)
+---@param skillDiff number
+local function GetMissChance(calc, skillDiff)
     local miss;
-    local skillDiff = calc.ldef - calc.ratk;
 
     if calc.isPvP then
         miss = math.max(0, 5 + skillDiff * 0.04);
@@ -272,7 +274,7 @@ end
 function MeleeCalc:GetMDPGB()
     local skillDiff = self.ldef - self.ratk;
 
-    local hit = 100 - GetMissChance(self);
+    local hit = 100 - GetMissChance(self, skillDiff);
     local hitBonus = 0;
 
     if stats.hitBonus.val > 0 then
@@ -280,8 +282,8 @@ function MeleeCalc:GetMDPGB()
         self.calcedSpell:AddToBuffList(stats.hitBonus.buffs);
     end
 
-    local weaponType = _addon:GetWeaponType(self.isOffhand and "oh" or "mh");
-    if stats.hitMods.weapon[weaponType].val > 0 then
+    local weaponType = _addon:GetWeaponType(self.isOffhand and "offhand" or "mainhand");
+    if weaponType and stats.hitMods.weapon[weaponType].val > 0 then
         hitBonus = hitBonus + stats.hitMods.weapon[weaponType].val;
         self.calcedSpell:AddToBuffList(stats.hitMods.weapon[weaponType].buffs);
     end
