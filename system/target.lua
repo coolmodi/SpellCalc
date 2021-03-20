@@ -136,7 +136,6 @@ local Target = {
 
 --- Update resistance values for current target.
 -- Use override values or known values for some NPCs.
--- TODO: everything armor
 function Target:UpdateResistances()
     for _, schoolNum in pairs(SCHOOL) do
         self.resistance[schoolNum] = 0;

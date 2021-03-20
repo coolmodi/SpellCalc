@@ -202,6 +202,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
 
     if spellBaseInfo.isChannel then
         -- TODO: Fix hardcoded GCD!
+        -- TODO: I have no clue what I was thinking above, can't even see a gcd here...
         calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
     else
         calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
@@ -382,6 +383,7 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
 
     if spellBaseInfo.isChannel then
         -- TODO: Fix hardcoded GCD!
+        -- TODO: ???????
         calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
     else
         calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
