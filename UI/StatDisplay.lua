@@ -280,8 +280,8 @@ end);
 -- Add stats to UI
 
 AddSingleStat("Mana", stats, "mana");
-AddSingleStat("Spirit regen", stats, "baseManaReg", " mana/s");
-AddSingleStat("FSR regen", stats, "manaReg", " mana/s");
+AddSingleStat("Spirit regen", stats, "manaRegBase", " mana/s");
+AddSingleStat("FSR regen", stats, "manaRegCasting", " mana/s");
 AddUniformStatTable(stats.fsrRegenMult, "FSR regen mult", "%");
 AddUniformStatTable(stats.mp5, "Mp5 regen", " mana/5s");
 
@@ -354,23 +354,23 @@ AddSpellTable(stats.chainMultMods, "Chain multiplier mods", "%");
 AddSpellTable(stats.gcdMods, "GCD modifiers", "ms");
 
 AddTitle("Weapon attack speed");
-AddSingleStat("Mainhand", stats.attackSpeed, "mh");
-AddSingleStat("Offhand", stats.attackSpeed, "oh");
-AddSingleStat("Ranged", stats.attackSpeed, "r");
+AddSingleStat("Mainhand", stats.attackSpeed, "mainhand");
+AddSingleStat("Offhand", stats.attackSpeed, "offhand");
+AddSingleStat("Ranged", stats.attackSpeed, "ranged");
 AddTitle("Weapon attack");
-AddSingleStat("Mainhand", stats.attack, "mh");
-AddSingleStat("Offhand", stats.attack, "oh");
-AddSingleStat("Ranged", stats.attack, "r");
+AddSingleStat("Mainhand", stats.attack, "mainhand");
+AddSingleStat("Offhand", stats.attack, "offhand");
+AddSingleStat("Ranged", stats.attack, "ranged");
 AddTitle("Weapon crit");
-AddSingleStat("Melee", stats.attackCrit, "mh", "%");
-AddSingleStat("Ranged", stats.attackCrit, "r", "%");
+AddSingleStat("Melee", stats.attackCrit, "mainhand", "%");
+AddSingleStat("Ranged", stats.attackCrit, "ranged", "%");
 AddTitle("Weapon dmg");
-AddSingleStat("Mainhand min", stats.attackDmg.mh, "min");
-AddSingleStat("Mainhand max", stats.attackDmg.mh, "max");
-AddSingleStat("Offhand min", stats.attackDmg.oh, "min");
-AddSingleStat("Offhand max", stats.attackDmg.oh, "max");
-AddSingleStat("Ranged min", stats.attackDmg.r, "min");
-AddSingleStat("Ranged max", stats.attackDmg.r, "max");
+AddSingleStat("Mainhand min", stats.attackDmg.mainhand, "min");
+AddSingleStat("Mainhand max", stats.attackDmg.mainhand, "max");
+AddSingleStat("Offhand min", stats.attackDmg.offhand, "min");
+AddSingleStat("Offhand max", stats.attackDmg.offhand, "max");
+AddSingleStat("Ranged min", stats.attackDmg.ranged, "min");
+AddSingleStat("Ranged max", stats.attackDmg.ranged, "max");
 
 AddTitle("Clearcast");
 AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");

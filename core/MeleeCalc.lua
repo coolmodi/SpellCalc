@@ -62,9 +62,9 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
         self.isPvP = true;
     else
         if isRanged then
-            ratk = stats.attack.r;
+            ratk = stats.attack.ranged;
         else
-            ratk = isOffhand and stats.attack.oh or stats.attack.mh;
+            ratk = isOffhand and stats.attack.offhand or stats.attack.mainhand;
         end
 
         if class == "DRUID" then
@@ -93,12 +93,12 @@ end
 
 --- Get crit chance
 function MeleeCalc:GetCrit()
-    local basecrit = self.isRanged and stats.attackCrit.r or stats.attackCrit.mh;
+    local basecrit = self.isRanged and stats.attackCrit.ranged or stats.attackCrit.mainhand;
 
     if self.isOffhand then
         -- adjust attack skill based crit for offhand
         -- MINOR PROBLEM: this will create bullshit results if mainhand skill is low enough to fall below minimum crit
-        basecrit = basecrit - (stats.attack.oh - stats.attack.mh) * 0.04;
+        basecrit = basecrit - (stats.attack.offhand - stats.attack.mainhand) * 0.04;
 
         -- adjust offhand crit for weapon specific talents (warrior axe spec and rogue dagger and fisting spec)
         -- TODO: this is bullshit lol

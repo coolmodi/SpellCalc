@@ -68,7 +68,7 @@ local function SealOfRighteousness(calcedSpell, effNum, spellBaseInfo, spellRank
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    local as = stats.attackSpeed.mh;
+    local as = stats.attackSpeed.mainhand;
     local multiplier = _addon:IsTwoHandEquipped() and 1.2 or 0.85;
     local dmgbase = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) * multiplier * as/100;
 
@@ -104,11 +104,11 @@ local function SealOfCommand(calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    local as = stats.attackSpeed.mh;
+    local as = stats.attackSpeed.mainhand;
     local coef = effectData.weaponCoef;
 
-    calcedEffect.min = (coef * stats.attackDmg.mh.min + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.max = (coef * stats.attackDmg.mh.max + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (coef * stats.attackDmg.mainhand.min + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = (coef * stats.attackDmg.mainhand.max + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
 
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
@@ -150,7 +150,7 @@ local function SealOfTheCrusader(calcedSpell, effNum, spellBaseInfo, spellRankIn
     local dpsFromAP = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) / 14;
     local mmit = calcedSpell.meleeMitigation;
     local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
-    local as = stats.attackSpeed.mh;
+    local as = stats.attackSpeed.mainhand;
     local hits = math.floor(spellRankInfo.duration / as);
     local dpsAfterMitigation = dpsFromAP * effectiveHitChance * (1 - calcedSpell.avgResist);
 
@@ -574,14 +574,14 @@ local function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
         calcedEffect.thpsData.secNoCast = secondsNoCast;
 
         if secondsNoCast > 0 then
-            local manaGained = secondsNoCast * (stats.mp5.val/5 + stats.manaReg);
+            local manaGained = secondsNoCast * (stats.mp5.val/5 + stats.manaRegCasting);
             local secOutOfFSR = secondsNoCast - 5 + effCastTime;
 
             if secOutOfFSR > 0 then
                 calcedEffect.thpsData.secNoFsr = secOutOfFSR;
                 -- Also need to remove previously added normal mana regen during secOutOfFSR 
                 -- effectiveCost calculation deducted it for the castTime, so secOutOfFSR is fine to use
-                manaGained = manaGained - secOutOfFSR * stats.manaReg + stats.baseManaReg * secOutOfFSR;
+                manaGained = manaGained - secOutOfFSR * stats.manaRegCasting + stats.manaRegBase * secOutOfFSR;
             else
                 calcedEffect.thpsData.secNoFsr = 0;
             end
@@ -650,8 +650,8 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
 
     -- MAIN HAND
 
-    calcedEffect.min = stats.attackDmg.mh.min * effectMod;
-    calcedEffect.max = stats.attackDmg.mh.max * effectMod;
+    calcedEffect.min = stats.attackDmg.mainhand.min * effectMod;
+    calcedEffect.max = stats.attackDmg.mainhand.max * effectMod;
     calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
 
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
@@ -671,7 +671,7 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     local avgResultDmg = normalPartialAvg + critPartialAvg + glancePartialAvg;
 
     calcedEffect.avgAfterMitigation = avgResultDmg * (1 - calcedSpell.avgResist);
-    calcedEffect.perSec = calcedEffect.avgAfterMitigation / stats.attackSpeed.mh;
+    calcedEffect.perSec = calcedEffect.avgAfterMitigation / stats.attackSpeed.mainhand;
 
     if not _addon:IsDualWieldEquipped() then
         if calcedEffect.offhandAttack then
@@ -685,8 +685,8 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     local ohd = calcedEffect.offhandAttack;
     local ohdMit = ohd.meleeMitigation;
 
-    ohd.min = stats.attackDmg.oh.min * effectMod;
-    ohd.max = stats.attackDmg.oh.max * effectMod;
+    ohd.min = stats.attackDmg.offhand.min * effectMod;
+    ohd.max = stats.attackDmg.offhand.max * effectMod;
     ohd.avg = (ohd.min + ohd.max) / 2;
 
     ohd.minCrit = ohd.min * calcedSpell.critMult;
@@ -704,7 +704,7 @@ local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     avgResultDmg = normalPartialAvg + critPartialAvg + glancePartialAvg;
 
     ohd.avgAfterMitigation = avgResultDmg * (1 - calcedSpell.avgResist);
-    ohd.perSec = ohd.avgAfterMitigation / stats.attackSpeed.oh;
+    ohd.perSec = ohd.avgAfterMitigation / stats.attackSpeed.offhand;
 end
 
 

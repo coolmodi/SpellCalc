@@ -96,7 +96,7 @@ local effectAffectMask = {
 local effectCustom = {
     [EFFECT_TYPE.FSR_SPIRIT_REGEN] = function(apply, name, value)
         ApplyOrRemove(apply, value, stats.fsrRegenMult, name);
-        stats.manaReg = stats.baseManaReg * (stats.fsrRegenMult.val / 100);
+        stats.manaRegCasting = stats.manaRegBase * (stats.fsrRegenMult.val / 100);
     end,
     [EFFECT_TYPE.CONDITION_TRIGGER] = function(apply, name, value)
         conditionsActive = conditionsActive + value;

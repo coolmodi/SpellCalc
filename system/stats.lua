@@ -75,10 +75,10 @@ end
 
 ---@class InternalStats
 _addon.stats = {
-    mana = 0,
-    curMana = 0,
-    baseManaReg = 0,
-    manaReg = 0,
+    manaMax = 0, -- Maximum mana
+    manaCurrent = 0, -- Current mana if update is active
+    manaRegBase = 0, -- Mana regen based on spirit
+    manaRegCasting = 0, -- Mana regen from spirit while casting
     spellPower = {
         [_addon.SCHOOL.PHYSICAL] = 0,
         [_addon.SCHOOL.HOLY] = 0,
@@ -99,29 +99,29 @@ _addon.stats = {
         [_addon.SCHOOL.ARCANE] = 0
     },
     attackSpeed = {
-        mh = 0,
-        oh = 0,
-        r = 0
+        mainhand = 0,
+        offhand = 0,
+        ranged = 0
     },
     attack = {
-        mh = 0,
-        oh = 0,
-        r = 0
+        mainhand = 0,
+        offhand = 0,
+        ranged = 0
     },
     attackCrit = {
-        mh = 0,
-        r = 0
+        mainhand = 0,
+        ranged = 0
     },
     attackDmg = {
-        mh = {
+        mainhand = {
             min = 0,
             max = 0
         },
-        oh = {
+        offhand = {
             min = 0,
             max = 0
         },
-        r = {
+        ranged = {
             min = 0,
             max = 0
         }
@@ -194,8 +194,8 @@ function _addon:UpdateDmgDoneMods()
     end
 
     -- TODO: does this include talents and buffs reliably?
-    self.stats.attackCrit.mh = GetCritChance();
-    self.stats.attackCrit.r = GetRangedCritChance();
+    self.stats.attackCrit.mainhand = GetCritChance();
+    self.stats.attackCrit.ranged = GetRangedCritChance();
 
     self:TriggerUpdate();
 end
@@ -212,8 +212,8 @@ local function UpdateFunction(self, passed)
     local curRegen = GetManaRegen();
     if curRegen > 0.5 then
         _addon:PrintDebug("Spirit regen seems normal again, updating it");
-        _addon.stats.baseManaReg = curRegen;
-        _addon.stats.manaReg = _addon.stats.baseManaReg * (_addon.stats.fsrRegenMult.val/100);
+        _addon.stats.manaRegBase = curRegen;
+        _addon.stats.manaRegCasting = _addon.stats.manaRegBase * (_addon.stats.fsrRegenMult.val/100);
         queueFrame:SetScript("OnUpdate", nil);
         _addon:TriggerUpdate();
     end
@@ -223,13 +223,13 @@ end
 ---@param powerType string|nil
 function _addon:UpdatePower(powerType)
     if powerType == nil then
-        _addon.stats.curMana = UnitPower("player", 0);
+        _addon.stats.manaCurrent = UnitPower("player", 0);
         _addon:TriggerUpdate();
         return;
     end
 
     if powerType == "MANA" then
-        _addon.stats.curMana = UnitPower("player", 0);
+        _addon.stats.manaCurrent = UnitPower("player", 0);
         _addon:TriggerUpdate();
         return;
     end
@@ -239,15 +239,15 @@ end
 function _addon:UpdateStats()
     _addon:PrintDebug("Updating stats");
 
-    self.stats.mana = UnitPowerMax("player", 0);
+    self.stats.manaMax = UnitPowerMax("player", 0);
 
     -- The function only a value if out of FSR, 
     -- otherwise always 0.00 something, even with FSR mana regen talents
     -- Only update if value makes sense, otherwise queue up an update
     local curRegen = GetManaRegen();
     if curRegen > 0.5 then
-        self.stats.baseManaReg = curRegen;
-        self.stats.manaReg = self.stats.baseManaReg * (self.stats.fsrRegenMult.val/100);
+        self.stats.manaRegBase = curRegen;
+        self.stats.manaRegCasting = self.stats.manaRegBase * (self.stats.fsrRegenMult.val/100);
     else
         self:PrintDebug("Have to queue spirit regen update");
         queueFrame:SetScript("OnUpdate", UpdateFunction);
@@ -261,11 +261,11 @@ function _addon:UpdateAttackSpeeds()
     local m,o = UnitAttackSpeed("player");
     local r = UnitRangedDamage("player");
 
-    self.stats.attackSpeed.mh = m and m or 0;
-    self.stats.attackSpeed.oh = o and o or 0;
-    self.stats.attackSpeed.r = r and r or 0;
+    self.stats.attackSpeed.mainhand = m and m or 0;
+    self.stats.attackSpeed.offhand = o and o or 0;
+    self.stats.attackSpeed.ranged = r and r or 0;
 
-    _addon:PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mh, self.stats.attackSpeed.oh, self.stats.attackSpeed.r));
+    _addon:PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mainhand, self.stats.attackSpeed.offhand, self.stats.attackSpeed.ranged));
 
     self:TriggerUpdate();
 end
@@ -275,9 +275,9 @@ function _addon:UpdateWeaponAttack()
     local mh, mhMod, oh, ohMod = UnitAttackBothHands("player");
     local r, rMod = UnitRangedAttack("player");
 
-    self.stats.attack.mh = mh + mhMod;
-    self.stats.attack.oh = oh + ohMod;
-    self.stats.attack.r = r + rMod;
+    self.stats.attack.mainhand = mh + mhMod;
+    self.stats.attack.offhand = oh + ohMod;
+    self.stats.attack.ranged = r + rMod;
 
     _addon:PrintDebug(("Updated attack: M: %d + %d O: %d + %d R: %d + %d"):format(mh, mhMod, oh, ohMod, r, rMod));
 
@@ -287,7 +287,7 @@ end
 --- Update melee attack damage
 function _addon:UpdateAttackDmg()
     _addon:PrintDebug("Updated melee dmg");
-    self.stats.attackDmg.mh.min, self.stats.attackDmg.mh.max, self.stats.attackDmg.oh.min, self.stats.attackDmg.oh.max = UnitDamage("player");
+    self.stats.attackDmg.mainhand.min, self.stats.attackDmg.mainhand.max, self.stats.attackDmg.offhand.min, self.stats.attackDmg.offhand.max = UnitDamage("player");
     self:TriggerUpdate();
 end
 
@@ -295,8 +295,8 @@ end
 function _addon:UpdateRangedAttackDmg()
     _addon:PrintDebug("Updated ranged dmg");
     local _, lowDmg, hiDmg = UnitRangedDamage("player");
-    self.stats.attackDmg.r.min = lowDmg;
-    self.stats.attackDmg.r.max = hiDmg;
+    self.stats.attackDmg.ranged.min = lowDmg;
+    self.stats.attackDmg.ranged.max = hiDmg;
     self:TriggerUpdate();
 end
 

@@ -35,14 +35,14 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
     end
 
     local mps = stats.mp5.val / 5;
-    calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaReg + mps);
+    calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
         local ofsrRegen;
         -- Can't leave FSR while channeling, no base regen even after 5s!
         if bit.band(calcedSpell[1].effectFlags, SEF.CHANNEL) > 0 then
-            ofsrRegen = stats.manaReg + mps;
+            ofsrRegen = stats.manaRegCasting + mps;
         else
-            ofsrRegen = stats.baseManaReg + mps;
+            ofsrRegen = stats.manaRegBase + mps;
         end
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - (effCastTime - 5) * ofsrRegen;
     end

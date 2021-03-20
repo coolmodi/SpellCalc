@@ -129,7 +129,7 @@ end
 
 --- Get effective mana pool
 function _addon:GetEffectiveManaPool()
-    local mana = SpellCalc_settings.useCurrentPowerLevel and stats.curMana or stats.mana;
+    local mana = SpellCalc_settings.useCurrentPowerLevel and stats.manaCurrent or stats.manaMax;
 
     if SpellCalc_settings.calcEffManaRune then
         mana = mana + 1200;
@@ -149,7 +149,7 @@ function _addon:GetEffectiveManaPool()
 
     if SpellCalc_settings.calcEffManaInnervate then
         -- Regen in 5sec rule is already accounted for in effective mana cost, we can't add it again here!
-        mana = mana + stats.baseManaReg * 100 - stats.manaReg * 20;
+        mana = mana + stats.manaRegBase * 100 - stats.manaRegCasting * 20;
     end
 
     return mana;
