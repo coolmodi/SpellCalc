@@ -56,25 +56,24 @@ local function ApplyOrRemoveByMask(apply, name, value, destTable, mask)
 end
 
 local effectAffectSpellSet = {
-    [EFFECT_TYPE.SPELL_MOD_PCT_EFFECT]  = stats.spellModPctEffect,
-    [EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE]  = stats.spellModPctDamage,
-    [EFFECT_TYPE.SPELL_MOD_PCT_HEALING] = stats.spellModPctHealing,
-    [EFFECT_TYPE.MOD_CRIT]              = stats.critMods.spell,
-    [EFFECT_TYPE.MOD_HIT_SPELL]         = stats.hitMods.spell,
-    [EFFECT_TYPE.MAGE_NWR_PROC]         = stats.mageNWRProc,
-    [EFFECT_TYPE.MOD_DURATION]          = stats.durationMods,
-    [EFFECT_TYPE.MOD_FLAT_VALUE]        = stats.flatMods,
-    [EFFECT_TYPE.EXTRA_SP]              = stats.extraSp,
+    [EFFECT_TYPE.SPELLMOD_PCT_EFFECT]   = stats.spellModPctEffect,
+    [EFFECT_TYPE.SPELLMOD_PCT_DAMAGE]   = stats.spellModPctDamage,
+    [EFFECT_TYPE.SPELLMOD_PCT_HEALING] = stats.spellModPctHealing,
+    [EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE] = stats.critMods.spell,
+    [EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE] = stats.hitMods.spell,
+    [EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC] = stats.mageNWRProc,
+    [EFFECT_TYPE.SPELLMOD_FLAT_DURATION] = stats.durationMods,
+    [EFFECT_TYPE.SPELLMOD_FLAT_VALUE]   = stats.flatMods,
+    [EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER] = stats.extraSp,
     [EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST] = stats.chainMultMods,
-    [EFFECT_TYPE.SPELLMOD_GCD]          = stats.gcdMods,
-    [EFFECT_TYPE.TRIGGER_SPELL_EFFECT]  = stats.spellTriggerSpellEffect, -- TODO: If a spell is ever affected by more than one of those it will break!
-    [EFFECT_TYPE.CRIT_MULT]             = stats.critMult.spell,
+    [EFFECT_TYPE.SPELLMOD_GCD_MS]       = stats.gcdMods,
+    [EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL] = stats.spellTriggerSpellEffect, -- TODO: If a spell is ever affected by more than one of those it will break!
+    [EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT] = stats.critMult.spell,
 }
 
 local effectSimpleStat = {
-    [EFFECT_TYPE.MOD_PCT_HEALING]       = stats.modhealingDone,
-    [EFFECT_TYPE.MOD_HIT_SPELL]         = stats.hitBonusSpell,
-    [EFFECT_TYPE.MP5]                   = stats.mp5,
+    [EFFECT_TYPE.PCT_HEALING]           = stats.modhealingDone,
+    [EFFECT_TYPE.MOD_MANA_PER_5]        = stats.mp5,
     [EFFECT_TYPE.CLEARCAST_CHANCE]      = stats.clearCastChance,
     [EFFECT_TYPE.CLEARCAST_CHANCE_DMG]  = stats.clearCastChanceDmg,
     [EFFECT_TYPE.ILLUMINATION]          = stats.illumination,
@@ -85,19 +84,17 @@ local effectSimpleStat = {
 }
 
 local effectAffectMask = {
-    [EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE] = stats.schoolModPctDamage,
-    [EFFECT_TYPE.RESISTANCE_PEN]        = stats.spellPen,
-    [EFFECT_TYPE.MOD_CRIT]              = stats.critMods.school,
-    [EFFECT_TYPE.MOD_HIT_SPELL]         = stats.hitMods.school,
-    [EFFECT_TYPE.CRIT_MULT]             = stats.critMult.school,
-    [EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS]  = stats.targetTypeDmgMult,
-    [EFFECT_TYPE.MOD_CRIT_DAMAGE_DONE_VERSUS]  = stats.targetTypeCritDmgMult,
-    [EFFECT_TYPE.MOD_FLAT_SPELL_DAMAGE_VERSUS]  = stats.targetTypeFlatSpell,
-    [EFFECT_TYPE.MOD_HIT_WEAPON]        = stats.hitMods.weapon,
+    [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE]  = stats.schoolModPctDamage,
+    [EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION] = stats.spellPen,
+    [EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT]   = stats.critMods.school,
+    [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS] = stats.targetTypeDmgMult,
+    [EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_DAMAGE_VERSUS] = stats.targetTypeCritDmgMult,
+    [EFFECT_TYPE.SCHOOLMOD_FLAT_SPELLPOWER_VERSUS] = stats.targetTypeFlatSpell,
+    [EFFECT_TYPE.WEAPONMOD_FLAT_HIT_CHANCE] = stats.hitMods.weapon,
 }
 
 local effectCustom = {
-    [EFFECT_TYPE.FSR_REGEN] = function(apply, name, value)
+    [EFFECT_TYPE.FSR_SPIRIT_REGEN] = function(apply, name, value)
         ApplyOrRemove(apply, value, stats.fsrRegenMult, name);
         stats.manaReg = stats.baseManaReg * (stats.fsrRegenMult.val / 100);
     end,
@@ -124,15 +121,15 @@ local effectCustom = {
 ---@param name string @The name of the buff
 ---@param effect number @The effect type
 ---@param value number @The effect value
----@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
----@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
-local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
+---@param affectMask number|nil @The mask of affected things if applicable
+---@param affectSpell number[]|nil @The affected spell set if applicable
+local function ChangeBuff(apply, name, effect, value, affectMask, affectSpell)
     if apply == false then
         value = -value;
     end
     _addon:PrintDebug(("Change buff %s effect %d > %f"):format(name, effect, value));
 
-    if effectAffectSpellSet[effect] then
+    if affectSpell and effectAffectSpellSet[effect] then
         ApplyOrRemoveSpellSet(apply, name, value, effectAffectSpellSet[effect], affectSpell);
         return;
     end
@@ -142,8 +139,8 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
-    if effectAffectMask[effect] then
-        ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effect], affectSchool);
+    if affectMask and effectAffectMask[effect] then
+        ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effect], affectMask);
         return;
     end
 
@@ -152,27 +149,27 @@ local function ChangeBuff(apply, name, effect, value, affectSchool, affectSpell)
         return;
     end
 
-    _addon:PrintError("Aura "..name.." uses unknown effect "..effect.."! Report this please.");
+    _addon:PrintError("Aura "..name.." uses unknown effect "..effect.." or invalid effect setup! Report this please.");
 end
 
 --- Apply a buff
 ---@param name string @The name of the buff
 ---@param effect number @The effect type
 ---@param value number @The effect value
----@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
+---@param affectMask number|nil @The mask of affected things if applicable
 ---@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
-function _addon:ApplyBuff(name, effect, value, affectSchool, affectSpell)
-    ChangeBuff(true, name, effect, value, affectSchool, affectSpell);
+function _addon:ApplyBuff(name, effect, value, affectMask, affectSpell)
+    ChangeBuff(true, name, effect, value, affectMask, affectSpell);
 end
 
 --- Remove a previously applied buff
 ---@param name string @The name of the buff
 ---@param effect number @The effect type
 ---@param value number @The effect value
----@param affectSchool number|nil @The mask of schools it affects, nil if no school affected
+---@param affectMask number|nil @The mask of affected things if applicable
 ---@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
-function _addon:RemoveBuff(name, effect, value, affectSchool, affectSpell)
-    ChangeBuff(false, name, effect, value, affectSchool, affectSpell);
+function _addon:RemoveBuff(name, effect, value, affectMask, affectSpell)
+    ChangeBuff(false, name, effect, value, affectMask, affectSpell);
 end
 
 local activeRelevantBuffs = {};
@@ -232,7 +229,7 @@ local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
         end
     end
 
-    ChangeBuff(true, name, effectData.effect, value, effectData.affectSchool, effectData.affectSpell);
+    ChangeBuff(true, name, effectData.effect, value, effectData.affectMask, effectData.affectSpell);
 end
 
 --- Remove buff effect using cached tooltip or hardcoded values.
@@ -255,7 +252,7 @@ local function RemoveBuffEffect(effectData, usedKey, name, effectSlot)
         value = effectData.value;
     end
 
-    ChangeBuff(false, name, effectData.effect, value, effectData.affectSchool, effectData.affectSpell);
+    ChangeBuff(false, name, effectData.effect, value, effectData.affectMask, effectData.affectSpell);
 end
 
 --- Update player buffs
@@ -415,7 +412,7 @@ function _addon:UpdateTalents(forceTalents)
                     value = value + effect.base;
                 end
                 local useName = (k > 1) and oldIdName.."-"..k or oldIdName;
-                ChangeBuff(false, useName, effect.type, value, effect.affectSchool, effect.affectSpell);
+                ChangeBuff(false, useName, effect.type, value, effect.affectMask, effect.affectSpell);
             end
             activeRelevantTalents[name] = nil;
         end
@@ -430,7 +427,7 @@ function _addon:UpdateTalents(forceTalents)
                     value = value + effect.base;
                 end
                 local useName = (k > 1) and idName.."-"..k or idName;
-                ChangeBuff(true, useName, effect.type, value, effect.affectSchool, effect.affectSpell);
+                ChangeBuff(true, useName, effect.type, value, effect.affectMask, effect.affectSpell);
             end
             activeRelevantTalents[name] = curRank;
         end

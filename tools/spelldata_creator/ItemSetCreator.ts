@@ -70,7 +70,7 @@ interface ItemSetSpell
 interface AddonEffectData
 {
     effect: string,
-    affectSchool?: number,
+    affectMask?: number,
     affectSpell?: number[],
     value: number | string
 }
@@ -151,7 +151,7 @@ class AuraHandlers
                     }
                 case 22008: // Netherwind Focus
                     return {
-                        effect: ADDON_EFFECT_TYPE.MAGE_NWR_PROC,
+                        effect: ADDON_EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC,
                         affectSpell: [33],
                         value: 1
                     }
@@ -165,8 +165,8 @@ class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_TARGET_RESISTANCE] = (effect) =>
         {
             const aed: AddonEffectData = {
-                effect: ADDON_EFFECT_TYPE.RESISTANCE_PEN,
-                affectSchool: effect["EffectMiscValue[0]"],
+                effect: ADDON_EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+                affectMask: effect["EffectMiscValue[0]"],
                 value: -(effect.EffectBasePoints + 1)
             }
             return aed;
@@ -183,21 +183,21 @@ class AuraHandlers
             switch (effect["EffectMiscValue[0]"])
             {
                 case 21: // SPELLMOD_CASTING_TIME_OLD (GCD reduction)
-                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_GCD;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_GCD_MS;
                     break;
                 case 7: // SPELLMOD_CRITICAL_CHANCE
-                    aed.effect = ADDON_EFFECT_TYPE.MOD_CRIT;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE;
                     break;
                 case 8: // SPELLMOD_ALL_EFFECTS
                 case 0: // SPELLMOD_DAMAGE
-                    aed.effect = ADDON_EFFECT_TYPE.MOD_FLAT_VALUE;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE;
                     break;
                 case 1: // SPELLMOD_DURATION
-                    aed.effect = ADDON_EFFECT_TYPE.MOD_DURATION;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_DURATION;
                     aed.value /= 1000;
                     break;
                 case 16: // SPELLMOD_RESIST_MISS_CHANCE
-                    aed.effect = ADDON_EFFECT_TYPE.MOD_HIT_SPELL;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE;
                     break;
                 case 14: // SPELLMOD_COST
                 case 10: // SPELLMOD_CASTING_TIME (handled by addon api, gear change will always trigger update)
@@ -228,11 +228,11 @@ class AuraHandlers
             switch (effect["EffectMiscValue[0]"])
             {
                 case 8: // SPELLMOD_ALL_EFFECTS
-                    aed.effect = ADDON_EFFECT_TYPE.SPELL_MOD_PCT_EFFECT;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_PCT_EFFECT;
                     break;
                 case 0: // SPELLMOD_DAMAGE
                 case 22: // SPELLMOD_DOT
-                    aed.effect = ADDON_EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE;
+                    aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_PCT_DAMAGE;
                     break;
                 case 20: // SPELLMOD_EFFECT_PAST_FIRST
                     aed.effect = ADDON_EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST;
@@ -257,7 +257,7 @@ class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_MANA_REGEN_INTERRUPT] = (effect) =>
         {
             const aed: AddonEffectData = {
-                effect: ADDON_EFFECT_TYPE.FSR_REGEN,
+                effect: ADDON_EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 value: effect.EffectBasePoints + 1
             }
             return aed;
@@ -313,7 +313,7 @@ class AuraHandlers
                 case 22009: // Greater Heal (Renew)
                 case 23590: // Judgement (Dmg proc)
                     return {
-                        effect: ADDON_EFFECT_TYPE.TRIGGER_SPELL_EFFECT,
+                        effect: ADDON_EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
                         affectSpell: this.getAffectSpell(effect),
                         value: effect.EffectTriggerSpell
                     }
@@ -330,7 +330,7 @@ class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN] = (effect) =>
         {
             return {
-                effect: ADDON_EFFECT_TYPE.MP5,
+                effect: ADDON_EFFECT_TYPE.MOD_MANA_PER_5,
                 value: effect.EffectBasePoints + 1,
             };
         }
@@ -351,8 +351,8 @@ class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE_VERSUS] = (effect) =>
         {
             return {
-                effect: ADDON_EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
-                affectSchool: effect["EffectMiscValue[0]"],
+                effect: ADDON_EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                affectMask: effect["EffectMiscValue[0]"],
                 value: effect.EffectBasePoints + 1,
             };
         }
@@ -562,7 +562,7 @@ _addon.itemSetData = {\n`;
                 lua += `                need = ${eff.need},\n`;
                 lua += `                effect = {\n`;
                 lua += `                    effect = ${eff.effect.effect},\n`;
-                if (eff.effect.affectSchool) lua += `                    affectSchool = ${eff.effect.affectSchool},\n`;
+                if (eff.effect.affectMask) lua += `                    affectMask = ${eff.effect.affectMask},\n`;
                 if (eff.effect.affectSpell) lua += `                    affectSpell = {${eff.effect.affectSpell.join(", ")}},\n`;
                 if (typeof eff.effect.value !== "undefined") lua += `                    value = ${eff.effect.value},\n`;
                 lua += `                }\n`;

@@ -10,12 +10,12 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {2},
                 perPoint = 2
             },
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {2},
                 perPoint = 2
             }
@@ -26,7 +26,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {256},
                 perPoint = 25
             }
@@ -37,7 +37,7 @@ _addon.talentData = {
         talent = 11,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.CRIT_MULT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
                 affectSpell = {7},
                 perPoint = 20
             }
@@ -58,7 +58,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {7},
                 perPoint = 2
             }
@@ -70,7 +70,7 @@ _addon.talentData = {
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {8388608},
                 perPoint = 3
             }
@@ -81,7 +81,7 @@ _addon.talentData = {
         talent = 13,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {4096 + 2048},
                 perPoint = 10
             }
@@ -93,7 +93,7 @@ _addon.talentData = {
         talent = 6,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.FSR_REGEN,
+                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 perPoint = 5
             }
         }
@@ -103,7 +103,7 @@ _addon.talentData = {
         talent = 10,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {16},
                 perPoint = 5
             }
@@ -114,7 +114,7 @@ _addon.talentData = {
         talent = 12,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_HEALING,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
                 affectSpell = {240},
                 perPoint = 2
             }
@@ -125,7 +125,7 @@ _addon.talentData = {
         talent = 12,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {64},
                 perPoint = 10
             }
@@ -140,7 +140,7 @@ _addon.buffData[17116] = { -- Nature's Swiftness dummy
 
 _addon.itemEffects[22398] = { -- Idol of Rejuvenation
     {
-        type = _addon.EFFECT_TYPE.EXTRA_SP,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
         affectSpell = {16},
         value = 50
     }

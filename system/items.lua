@@ -68,7 +68,7 @@ local function UpdateSet(setId, change)
                     local ed = effectData.effect;
                     local bname = setData.name .. effectData.need;
                     _addon:PrintDebug(("Add set bonus %s"):format(bname));
-                    _addon:ApplyBuff(bname, ed.effect, ed.value, ed.affectSchool, ed.affectSpell);
+                    _addon:ApplyBuff(bname, ed.effect, ed.value, ed.affectMask, ed.affectSpell);
                 end
             end
 
@@ -78,7 +78,7 @@ local function UpdateSet(setId, change)
                     local ed = effectData.effect;
                     local bname = setData.name .. effectData.need;
                     _addon:PrintDebug(("Remove set bonus %s"):format(bname));
-                    _addon:RemoveBuff(bname, ed.effect, ed.value, ed.affectSchool, ed.affectSpell);
+                    _addon:RemoveBuff(bname, ed.effect, ed.value, ed.affectMask, ed.affectSpell);
                 end
             end
         end
@@ -154,7 +154,7 @@ local function EquipItem(itemId, slotId)
 
     if _addon.itemEffects[itemId] then
         for _, effect in ipairs(_addon.itemEffects[itemId]) do
-            _addon:ApplyBuff(itemName, effect.type, effect.value, effect.affectSchool, effect.affectSpell);
+            _addon:ApplyBuff(itemName, effect.type, effect.value, effect.affectMask, effect.affectSpell);
         end
         _addon:TriggerUpdate();
     end
@@ -181,7 +181,7 @@ local function UnequipItem(slotId)
 
     if _addon.itemEffects[items[slotId]] then
         for _, effect in ipairs(_addon.itemEffects[items[slotId]]) do
-            _addon:RemoveBuff(itemName, effect.type, effect.value, effect.affectSchool, effect.affectSpell);
+            _addon:RemoveBuff(itemName, effect.type, effect.value, effect.affectMask, effect.affectSpell);
         end
         _addon:TriggerUpdate();
     end

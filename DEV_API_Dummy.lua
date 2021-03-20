@@ -373,7 +373,7 @@ local TalentEffect = {
     ---@type integer[]|nil
     affectSpell = nil,
     ---@type integer|nil
-    affectSchool = nil,
+    affectMask = nil,
     ---@type integer|nil
     base = nil,
     perPoint = math.random(),

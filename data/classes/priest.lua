@@ -11,7 +11,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.FSR_REGEN,
+                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 perPoint = 5
             }
         }
@@ -22,7 +22,7 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {1},
                 perPoint = 5
             }
@@ -34,12 +34,12 @@ _addon.talentData = {
         talent = 14,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {16294032},
                 perPoint = 1
             },
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {139993232},
                 perPoint = 1
             }
@@ -52,7 +52,7 @@ _addon.talentData = {
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {64},
                 perPoint = 5
             }
@@ -64,7 +64,7 @@ _addon.talentData = {
         talent = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {156507776},
                 perPoint = 1
             }
@@ -75,7 +75,7 @@ _addon.talentData = {
         talent = 11,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {1048704},
                 perPoint = 5
             }
@@ -86,7 +86,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_HEALING,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
                 affectSpell = {151264832},
                 perPoint = 2
             }
@@ -99,7 +99,7 @@ _addon.talentData = {
         talent = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_DURATION,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                 affectSpell = {32768},
                 perPoint = 3
             }
@@ -111,7 +111,7 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
                 affectSpell = {109813760},
                 perPoint = 2
             }
@@ -123,12 +123,12 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {33562624},
                 perPoint = 2
             },
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {8421376 + 524288},
                 perPoint = 2
             }
@@ -138,22 +138,22 @@ _addon.talentData = {
 
 -- Shadowform
 _addon.buffData[15473] = {
-    effect = _addon.EFFECT_TYPE.SCHOOL_MOD_PCT_DAMAGE,
-    affectSchool = _addon.SCHOOL_MASK.SHADOW,
+    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    affectMask = _addon.SCHOOL_MASK.SHADOW,
     value = 15,
 }
 
 -- Inner Focus
 _addon.buffData[14751] = {
-    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
     affectSpell = {-917225840},
     value = 25
 }
 
 _addon.itemEffects[18608] = { -- Benediction
     {
-        type = _addon.EFFECT_TYPE.MOD_CRIT,
-        affectSchool = _addon.SCHOOL_MASK.HOLY,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT,
+        affectMask = _addon.SCHOOL_MASK.HOLY,
         value = 2
     }
 }

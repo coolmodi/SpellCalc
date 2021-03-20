@@ -12,8 +12,8 @@ _addon.talentData = {
         talent = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.RESISTANCE_PEN,
-                affectSchool = _addon.SCHOOL_MASK.ALL_SPELL,
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 5
             }
         }
@@ -23,7 +23,7 @@ _addon.talentData = {
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
                 affectSpell = {2359296},
                 perPoint = 2
             }
@@ -44,7 +44,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {4096},
                 perPoint = 2
             }
@@ -55,7 +55,7 @@ _addon.talentData = {
         talent = 12,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.FSR_REGEN,
+                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 perPoint = 5
             }
         }
@@ -65,12 +65,12 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {12589815},
                 perPoint = 1
             },
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {12589815},
                 perPoint = 1
             }
@@ -92,7 +92,7 @@ _addon.talentData = {
         talent = 6,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {18},
                 perPoint = 2
             }
@@ -103,7 +103,7 @@ _addon.talentData = {
         talent = 7,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {4},
                 perPoint = 5
             }
@@ -124,7 +124,7 @@ _addon.talentData = {
         talent = 13,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {12582935},
                 perPoint = 2
             }
@@ -135,7 +135,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {12582935},
                 perPoint = 2
             }
@@ -147,7 +147,7 @@ _addon.talentData = {
         talent = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MOD_HIT_SPELL,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
                 affectSpell = {12583671},
                 perPoint = 2
             }
@@ -158,7 +158,7 @@ _addon.talentData = {
         talent = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.CRIT_MULT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
                 affectSpell = {736},
                 perPoint = 20
             }
@@ -169,7 +169,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {736},
                 perPoint = 2
             }
@@ -180,7 +180,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {512},
                 perPoint = 10,
                 base = 5
@@ -190,19 +190,19 @@ _addon.talentData = {
 };
 
 _addon.buffData[12042] = { -- Arcane Power
-    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
     affectSpell = {12589815},
     value = 30,
 };
 
 _addon.buffData[MAGE_ARMOR] = {
-    effect = _addon.EFFECT_TYPE.FSR_REGEN,
+    effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
     value = 30,
 };
 
 _addon.itemEffects[16540] = { -- General's Silk Handguards
     {
-        type = _addon.EFFECT_TYPE.MOD_FLAT_VALUE,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {32768},
         value = 285
     }
@@ -210,7 +210,7 @@ _addon.itemEffects[16540] = { -- General's Silk Handguards
 
 _addon.itemEffects[16440] = { -- Marshal's Silk Gloves
     {
-        type = _addon.EFFECT_TYPE.MOD_FLAT_VALUE,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {32768},
         value = 285
     }

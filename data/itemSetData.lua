@@ -10,8 +10,8 @@ _addon.itemSetData = {
             [1] = {
                 need = 5,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.RESISTANCE_PEN,
-                    affectSchool = 124,
+                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+                    affectMask = 124,
                     value = 10,
                 }
             },
@@ -23,7 +23,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                     affectSpell = {2048, 0, 0, 0},
                     value = -100,
                 }
@@ -31,7 +31,7 @@ _addon.itemSetData = {
             [2] = {
                 need = 8,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                     affectSpell = {512, 0, 0, 0},
                     value = 25,
                 }
@@ -44,7 +44,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_FLAT_VALUE,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
                     affectSpell = {256, 0, 0, 0},
                     value = 4,
                 }
@@ -69,7 +69,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 8,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MAGE_NWR_PROC,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC,
                     affectSpell = {33},
                     value = 1,
                 }
@@ -82,14 +82,14 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.FSR_REGEN,
+                    effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                     value = 15,
                 }
             },
             [2] = {
                 need = 8,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.TRIGGER_SPELL_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
                     affectSpell = {4096, 0, 0, 0},
                     value = 22009,
                 }
@@ -102,14 +102,14 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.FSR_REGEN,
+                    effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                     value = 15,
                 }
             },
             [2] = {
                 need = 8,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DURATION,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                     affectSpell = {16, 0, 0, 0},
                     value = 3,
                 }
@@ -135,7 +135,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 8,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.TRIGGER_SPELL_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
                     affectSpell = {8388608, 0, 0, 0},
                     value = 23590,
                 }
@@ -148,7 +148,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                     affectSpell = {-1877999616, 0, 0, 0},
                     value = 2,
                 }
@@ -161,7 +161,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                     affectSpell = {4, 0, 0, 0},
                     value = -200,
                 }
@@ -174,7 +174,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                     affectSpell = {4, 0, 0, 0},
                     value = -200,
                 }
@@ -187,7 +187,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                     affectSpell = {-1877999616, 0, 0, 0},
                     value = 2,
                 }
@@ -200,7 +200,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                     affectSpell = {4, 0, 0, 0},
                     value = -200,
                 }
@@ -213,7 +213,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                     affectSpell = {4, 0, 0, 0},
                     value = -200,
                 }
@@ -226,7 +226,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MP5,
+                    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
                     value = 12,
                 }
             },
@@ -238,7 +238,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 2,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MP5,
+                    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
                     value = 4,
                 }
             },
@@ -250,14 +250,14 @@ _addon.itemSetData = {
             [1] = {
                 need = 2,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MP5,
+                    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
                     value = 4,
                 }
             },
             [2] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DURATION,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                     affectSpell = {-2147483648, 0, 0, 0},
                     value = 1,
                 }
@@ -270,14 +270,14 @@ _addon.itemSetData = {
             [1] = {
                 need = 2,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MP5,
+                    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
                     value = 4,
                 }
             },
             [2] = {
                 need = 5,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                     affectSpell = {4, 0, 0, 0},
                     value = 3,
                 }
@@ -290,7 +290,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                     affectSpell = {2, 0, 0, 0},
                     value = 2,
                 }
@@ -303,14 +303,14 @@ _addon.itemSetData = {
             [1] = {
                 need = 2,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MP5,
+                    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
                     value = 3,
                 }
             },
             [2] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.FSR_REGEN,
+                    effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                     value = 15,
                 }
             },
@@ -322,7 +322,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                     affectSpell = {4, 0, 0, 0},
                     value = 5,
                 }
@@ -348,7 +348,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                     affectSpell = {32768, 0, 0, 0},
                     value = 15,
                 }
@@ -361,7 +361,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 5,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DURATION,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                     affectSpell = {64, 0, 0, 0},
                     value = 3,
                 }
@@ -374,7 +374,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_EFFECT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                     affectSpell = {32768, 0, 0, 0},
                     value = 5,
                 }
@@ -411,7 +411,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELL_MOD_PCT_DAMAGE,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                     affectSpell = {2, 0, 0, 0},
                     value = 12,
                 }
@@ -424,8 +424,8 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
-                    affectSchool = 32,
+                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    affectMask = 32,
                     value = 2,
                 }
             },
@@ -437,8 +437,8 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
-                    affectSchool = 32,
+                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    affectMask = 32,
                     value = 2,
                 }
             },
@@ -450,8 +450,8 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
-                    affectSchool = 32,
+                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    affectMask = 32,
                     value = 2,
                 }
             },
@@ -463,8 +463,8 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_DAMAGE_DONE_VERSUS,
-                    affectSchool = 32,
+                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    affectMask = 32,
                     value = 2,
                 }
             },
@@ -476,7 +476,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_CRIT,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                     affectSpell = {-1877999616, 0, 0, 0},
                     value = 2,
                 }
@@ -489,7 +489,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                     affectSpell = {4, 0, 0, 0},
                     value = -200,
                 }
@@ -502,7 +502,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 4,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD,
+                    effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                     affectSpell = {4, 0, 0, 0},
                     value = -200,
                 }
