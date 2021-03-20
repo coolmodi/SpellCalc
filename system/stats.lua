@@ -1,6 +1,78 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
 
+local function UniformStat()
+    ---@class UniformStat
+    return {
+        ---@type number
+        val = 0,
+        ---@type string[]
+        buffs = {}
+    }
+end
+
+local function SchoolStatTable()
+    -- Keys are school types found in _addon.SCHOOL
+    local schoolTable = {
+        [_addon.SCHOOL.PHYSICAL] = UniformStat(),
+        [_addon.SCHOOL.HOLY] = UniformStat(),
+        [_addon.SCHOOL.FIRE] = UniformStat(),
+        [_addon.SCHOOL.NATURE] = UniformStat(),
+        [_addon.SCHOOL.FROST] = UniformStat(),
+        [_addon.SCHOOL.SHADOW] = UniformStat(),
+        [_addon.SCHOOL.ARCANE] = UniformStat()
+    }
+    return schoolTable;
+end
+
+local function WeaponStatTable()
+    -- Keys are weapon types found in _addon.WEAPON_SUBCLASS
+    local weaponTable = {
+        [_addon.WEAPON_SUBCLASS.AXE_1H] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.AXE_2H] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.BOW] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.GUN] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.MACE_1H] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.MACE_2H] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.POLEARM] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.SWORD_1H] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.SWORD_2H] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.STAFF] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.FIST] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.MISC] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.DAGGER] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.THROWN] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.CROSSBOW] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.WAND] = UniformStat(),
+        [_addon.WEAPON_SUBCLASS.FISHING_POLE] = UniformStat()
+    }
+    return weaponTable;
+end
+
+local function CreatureTypeStatTable()
+    -- Keys are creature types found in _addon.CREATURE_TYPE
+    local creatureTable = {
+        [_addon.CREATURE_TYPE.BEAST]    = UniformStat(),
+        [_addon.CREATURE_TYPE.DRAGONKIN] = UniformStat(),
+        [_addon.CREATURE_TYPE.DEMON] = UniformStat(),
+        [_addon.CREATURE_TYPE.ELEMENTAL] = UniformStat(),
+        [_addon.CREATURE_TYPE.GIANT] = UniformStat(),
+        [_addon.CREATURE_TYPE.UNDEAD] = UniformStat(),
+        [_addon.CREATURE_TYPE.HUMANOID] = UniformStat(),
+        [_addon.CREATURE_TYPE.CRITTER] = UniformStat(),
+        [_addon.CREATURE_TYPE.MECHANICAL] = UniformStat(),
+        [_addon.CREATURE_TYPE.NOT_SPECIFIED] = UniformStat(),
+        [_addon.CREATURE_TYPE.TOTEM] = UniformStat()
+    }
+    return creatureTable;
+end
+
+local function SpellStatTable()
+    ---@type table<number, UniformStat>
+    local spellTable = {};
+    return spellTable;
+end
+
 ---@class InternalStats
 _addon.stats = {
     mana = 0,
@@ -26,141 +98,6 @@ _addon.stats = {
         [_addon.SCHOOL.SHADOW] = 0,
         [_addon.SCHOOL.ARCANE] = 0
     },
-    spellPen = {
-        [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
-        [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
-        [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
-        [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
-        [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
-        [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
-        [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
-    },
-    mp5 = {val=0, buffs={}};
-    fsrRegenMult = {val=0, buffs={}};
-    spellModPctHealing = {},
-    modhealingDone = {val=0, buffs={}},
-    spellModPctEffect = {},
-    spellModPctDamage = {},
-    schoolModPctDamage = {
-        [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
-        [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
-        [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
-        [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
-        [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
-        [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
-        [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
-    },
-    hitBonus = {val=0, buffs={}};
-    hitBonusSpell = {val=0, buffs={}};
-    hitMods = {
-        school = {
-            [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
-            [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
-            [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
-            [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
-            [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
-            [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
-            [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
-        },
-        weapon = {
-            [_addon.WEAPON_SUBCLASS.AXE_1H]         = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.AXE_2H]         = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.BOW]            = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.GUN]            = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.MACE_1H]        = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.MACE_2H]        = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.POLEARM]        = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.SWORD_1H]       = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.SWORD_2H]       = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.STAFF]          = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.FIST]           = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.MISC]           = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.DAGGER]         = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.THROWN]         = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.CROSSBOW]       = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.WAND]           = {val=0, buffs={}},
-            [_addon.WEAPON_SUBCLASS.FISHING_POLE]   = {val=0, buffs={}},
-        },
-        spell = {}
-    },
-    critMods = {
-        school = {
-            [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
-            [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
-            [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
-            [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
-            [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
-            [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
-            [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
-        },
-        spell = {}
-    },
-    clearCastChance = {val=0, buffs={}},
-    clearCastChanceDmg = {val=0, buffs={}},
-    illumination = {val=0, buffs={}},
-    critMult = {
-        school = {
-            [_addon.SCHOOL.PHYSICAL]    = {val=0, buffs={}},
-            [_addon.SCHOOL.HOLY]        = {val=0, buffs={}},
-            [_addon.SCHOOL.FIRE]        = {val=0, buffs={}},
-            [_addon.SCHOOL.NATURE]      = {val=0, buffs={}},
-            [_addon.SCHOOL.FROST]       = {val=0, buffs={}},
-            [_addon.SCHOOL.SHADOW]      = {val=0, buffs={}},
-            [_addon.SCHOOL.ARCANE]      = {val=0, buffs={}},
-        },
-        spell = {}
-    },
-    durationMods = {},
-    flatMods = {},
-    extraSp = {},
-    ignite = {val=0, buffs={}},
-    impShadowBolt = {val=0, buffs={}},
-    earthfuryReturn = {val=0, buffs={}},
-    mageNWRProc = {},
-    druidNaturesGrace = {val=0, buffs={}},
-    chainMultMods = {},
-    gcdMods = {},
-    spellTriggerSpellEffect = {},
-    targetTypeDmgMult = {
-        [_addon.CREATURE_TYPE.BEAST] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.DRAGONKIN] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.DEMON] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.ELEMENTAL] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.GIANT] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.UNDEAD] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.HUMANOID] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.CRITTER] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.MECHANICAL] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.NOT_SPECIFIED] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.TOTEM] = {val=0, buffs={}},
-    },
-    targetTypeCritDmgMult = {
-        [_addon.CREATURE_TYPE.BEAST] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.DRAGONKIN] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.DEMON] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.ELEMENTAL] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.GIANT] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.UNDEAD] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.HUMANOID] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.CRITTER] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.MECHANICAL] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.NOT_SPECIFIED] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.TOTEM] = {val=0, buffs={}},
-    },
-    targetTypeFlatSpell = {
-        [_addon.CREATURE_TYPE.BEAST] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.DRAGONKIN] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.DEMON] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.ELEMENTAL] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.GIANT] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.UNDEAD] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.HUMANOID] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.CRITTER] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.MECHANICAL] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.NOT_SPECIFIED] = {val=0, buffs={}},
-        [_addon.CREATURE_TYPE.TOTEM] = {val=0, buffs={}},
-    },
-
     attackSpeed = {
         mh = 0,
         oh = 0,
@@ -188,7 +125,48 @@ _addon.stats = {
             min = 0,
             max = 0
         }
-    }
+    },
+
+    spellPen = SchoolStatTable(),
+    mp5 = UniformStat();
+    fsrRegenMult = UniformStat();
+    spellModPctHealing = SpellStatTable(),
+    modhealingDone = UniformStat(),
+    spellModPctEffect = SpellStatTable(),
+    spellModPctDamage = SpellStatTable(),
+    schoolModPctDamage = SchoolStatTable(),
+    hitBonus = UniformStat();
+    hitBonusSpell = UniformStat();
+    hitMods = {
+        school = SchoolStatTable(),
+        weapon = WeaponStatTable(),
+        spell = SpellStatTable()
+    },
+    critMods = {
+        school = SchoolStatTable(),
+        spell = SpellStatTable()
+    },
+    clearCastChance = UniformStat(),
+    clearCastChanceDmg = UniformStat(),
+    illumination = UniformStat(),
+    critMult = {
+        school = SchoolStatTable(),
+        spell = SpellStatTable()
+    },
+    durationMods = SpellStatTable(),
+    flatMods = SpellStatTable(),
+    extraSp = SpellStatTable(),
+    ignite = UniformStat(),
+    impShadowBolt = UniformStat(),
+    earthfuryReturn = UniformStat(),
+    mageNWRProc = SpellStatTable(),
+    druidNaturesGrace = UniformStat(),
+    chainMultMods = SpellStatTable(),
+    gcdMods = SpellStatTable(),
+    spellTriggerSpellEffect = SpellStatTable(),
+    targetTypeDmgMult = CreatureTypeStatTable(),
+    targetTypeCritDmgMult = CreatureTypeStatTable(),
+    targetTypeFlatSpell = CreatureTypeStatTable(),
 };
 
 --- Update spell power stats from API

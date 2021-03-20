@@ -412,3 +412,14 @@ local ItemDataEntry = {
 }
 ---@type table <integer, ItemDataEntry>
 _addon.itemData = {}
+
+_addon.spellClassSet = {
+    ---@type table<number, number[]>
+    [1] = {},
+    ---@type table<number, number[]>
+    [2] = {},
+    ---@type table<number, number[]>
+    [3] = {},
+    ---@type table<number, number[]>
+    [4] = {},
+};
