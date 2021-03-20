@@ -59,16 +59,16 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_PCT_EFFECT]   = stats.spellModPctEffect,
     [EFFECT_TYPE.SPELLMOD_PCT_DAMAGE]   = stats.spellModPctDamage,
     [EFFECT_TYPE.SPELLMOD_PCT_HEALING] = stats.spellModPctHealing,
-    [EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE] = stats.critMods.spell,
-    [EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE] = stats.hitMods.spell,
-    [EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC] = stats.mageNWRProc,
-    [EFFECT_TYPE.SPELLMOD_FLAT_DURATION] = stats.durationMods,
-    [EFFECT_TYPE.SPELLMOD_FLAT_VALUE]   = stats.flatMods,
-    [EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER] = stats.extraSp,
-    [EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST] = stats.chainMultMods,
-    [EFFECT_TYPE.SPELLMOD_GCD_MS]       = stats.gcdMods,
-    [EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL] = stats.spellTriggerSpellEffect, -- TODO: If a spell is ever affected by more than one of those it will break!
-    [EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT] = stats.critMult.spell,
+    [EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE] = stats.spellModFlatCritChance,
+    [EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE] = stats.spellModFlatHitChance,
+    [EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC] = stats.spellModMageNWR,
+    [EFFECT_TYPE.SPELLMOD_FLAT_DURATION] = stats.spellModFlatDuration,
+    [EFFECT_TYPE.SPELLMOD_FLAT_VALUE]   = stats.spellModFlatValue,
+    [EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER] = stats.spellModFlatSpellpower,
+    [EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST] = stats.spellModChainMult,
+    [EFFECT_TYPE.SPELLMOD_GCD_MS]       = stats.spellModGCDms,
+    [EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL] = stats.spellModAddTriggerSpell, -- TODO: If a spell is ever affected by more than one of those it will break!
+    [EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT] = stats.spellModPctCritMult,
 }
 
 local effectSimpleStat = {
@@ -85,12 +85,12 @@ local effectSimpleStat = {
 
 local effectAffectMask = {
     [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE]  = stats.schoolModPctDamage,
-    [EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION] = stats.spellPen,
-    [EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT]   = stats.critMods.school,
-    [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS] = stats.targetTypeDmgMult,
-    [EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_DAMAGE_VERSUS] = stats.targetTypeCritDmgMult,
-    [EFFECT_TYPE.SCHOOLMOD_FLAT_SPELLPOWER_VERSUS] = stats.targetTypeFlatSpell,
-    [EFFECT_TYPE.WEAPONMOD_FLAT_HIT_CHANCE] = stats.hitMods.weapon,
+    [EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION] = stats.schoolModSpellPen,
+    [EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT]   = stats.schoolModFlatCritChance,
+    [EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE] = stats.versusModPctDamage,
+    [EFFECT_TYPE.VERSUSMOD_PCT_CRIT_DAMAGE] = stats.versusModPctCritDamage,
+    [EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER] = stats.versusModFlatSpellpower,
+    [EFFECT_TYPE.WEAPONMOD_FLAT_HIT_CHANCE] = stats.weaponModFlatHitChance,
 }
 
 local effectCustom = {

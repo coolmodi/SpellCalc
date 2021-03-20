@@ -98,7 +98,7 @@ local function ChangeItemEffects(itemData, itemName, remove)
     if itemData.spellPen then
         val = remove and -itemData.spellPen or itemData.spellPen;
         for i=3,7 do
-            ApplyOrRemove(val, _addon.stats.spellPen[i], itemName);
+            ApplyOrRemove(val, _addon.stats.schoolModSpellPen[i], itemName);
         end
     end
 

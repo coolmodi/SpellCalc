@@ -30,8 +30,8 @@ end
 function MagicCalc:GetSchoolCritChance()
     local chance = stats.spellCrit[self.spellBaseInfo.school];
 
-    chance = chance + stats.critMods.school[self.spellBaseInfo.school].val;
-    self.calcedSpell:AddToBuffList(stats.critMods.school[self.spellBaseInfo.school].buffs);
+    chance = chance + stats.schoolModFlatCritChance[self.spellBaseInfo.school].val;
+    self.calcedSpell:AddToBuffList(stats.schoolModFlatCritChance[self.spellBaseInfo.school].buffs);
 
     return chance;
 end
@@ -46,7 +46,7 @@ function MagicCalc:GetAvgResist()
     local pLevel = UnitLevel("player");
     local baseRes = tData.resistance[self.spellBaseInfo.school];
     local resistanceFromLevel = math.max(tData.levelDiff * 8, 0);
-    local penetration = stats.spellPen[self.spellBaseInfo.school].val;
+    local penetration = stats.schoolModSpellPen[self.spellBaseInfo.school].val;
     local effectiveRes = baseRes + resistanceFromLevel - math.min(baseRes, penetration);
     local avgResisted = math.min(0.75 * (effectiveRes / math.max(pLevel * 5, 100)), 0.75);
     return avgResisted, baseRes, penetration, resistanceFromLevel;
@@ -84,15 +84,12 @@ end
 local function GetSpellHitBonus(school, calcedSpell, spellId)
     local hitChanceBonus = 0;
 
-    hitChanceBonus = hitChanceBonus + stats.hitMods.school[school].val;
-    calcedSpell:AddToBuffList(stats.hitMods.school[school].buffs);
-
     hitChanceBonus = hitChanceBonus + stats.hitBonusSpell.val;
     calcedSpell:AddToBuffList(stats.hitBonusSpell.buffs);
 
-    if stats.hitMods.spell[spellId] ~= nil then
-        hitChanceBonus = hitChanceBonus + stats.hitMods.spell[spellId].val;
-        calcedSpell:AddToBuffList(stats.hitMods.spell[spellId].buffs);
+    if stats.spellModFlatHitChance[spellId] ~= nil then
+        hitChanceBonus = hitChanceBonus + stats.spellModFlatHitChance[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModFlatHitChance[spellId].buffs);
     end
 
     return hitChanceBonus;

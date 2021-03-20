@@ -33,7 +33,7 @@ function handlers.PLAYER_LOGIN()
     -- Beast Slaying (Troll Racial)
     local _, raceEn = UnitRace("player");
     if raceEn == "Troll" then
-        _addon:ApplyBuff(GetSpellInfo(20557), _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS, 5, _addon.CREATURE_TYPE_MASK.BEAST);
+        _addon:ApplyBuff(GetSpellInfo(20557), _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE, 5, _addon.CREATURE_TYPE_MASK.BEAST);
     end
 end
 

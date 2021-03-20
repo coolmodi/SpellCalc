@@ -105,9 +105,9 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
         bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
         calcedSpell:AddToBuffList(stats.schoolModPctDamage[school].buffs);
 
-        if stats.targetTypeDmgMult[_addon.Target.creatureType] then
-            bonusMod = bonusMod * (100 + stats.targetTypeDmgMult[_addon.Target.creatureType].val) / 100;
-            calcedSpell:AddToBuffList(stats.targetTypeDmgMult[_addon.Target.creatureType].buffs);
+        if stats.versusModPctDamage[_addon.Target.creatureType] then
+            bonusMod = bonusMod * (100 + stats.versusModPctDamage[_addon.Target.creatureType].val) / 100;
+            calcedSpell:AddToBuffList(stats.versusModPctDamage[_addon.Target.creatureType].buffs);
         end
 
     elseif isHeal then
@@ -258,9 +258,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Cast time and GCD
 
     if parentEffCastTime == nil then
-        if stats.gcdMods[spellId] ~= nil then
-            GCD = GCD + stats.gcdMods[spellId].val / 1000;
-            calcedSpell:AddToBuffList(stats.gcdMods[spellId].buffs);
+        if stats.spellModGCDms[spellId] ~= nil then
+            GCD = GCD + stats.spellModGCDms[spellId].val / 1000;
+            calcedSpell:AddToBuffList(stats.spellModGCDms[spellId].buffs);
         end
 
         if spellBaseInfo.isChannel then
@@ -283,9 +283,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.critChance = magicCalc:GetSchoolCritChance();
     end
 
-    if calcedSpell.critChance > 0 and stats.critMods.spell[spellId] ~= nil then
-        calcedSpell.critChance = calcedSpell.critChance + stats.critMods.spell[spellId].val;
-        calcedSpell:AddToBuffList(stats.critMods.spell[spellId].buffs);
+    if calcedSpell.critChance > 0 and stats.spellModFlatCritChance[spellId] ~= nil then
+        calcedSpell.critChance = calcedSpell.critChance + stats.spellModFlatCritChance[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModFlatCritChance[spellId].buffs);
     end
 
     if calcedSpell.critChance > 100 then
@@ -294,19 +294,19 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
     local cmbonus = calcedSpell.critMult - 1;
 
-    if stats.critMult.school[spellBaseInfo.school].val > 0 then
-        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.critMult.school[spellBaseInfo.school].val/100;
-        calcedSpell:AddToBuffList(stats.critMult.school[spellBaseInfo.school].buffs);
+    if stats.schoolModPctCritMult[spellBaseInfo.school].val > 0 then
+        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.schoolModPctCritMult[spellBaseInfo.school].val/100;
+        calcedSpell:AddToBuffList(stats.schoolModPctCritMult[spellBaseInfo.school].buffs);
     end
 
-    if stats.critMult.spell[spellId] ~= nil then
-        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.critMult.spell[spellId].val/100;
-        calcedSpell:AddToBuffList(stats.critMult.spell[spellId].buffs);
+    if stats.spellModPctCritMult[spellId] ~= nil then
+        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.spellModPctCritMult[spellId].val/100;
+        calcedSpell:AddToBuffList(stats.spellModPctCritMult[spellId].buffs);
     end
 
-    if stats.targetTypeCritDmgMult[_addon.Target.creatureType] then
-        calcedSpell.critMult = calcedSpell.critMult * (100 + stats.targetTypeCritDmgMult[_addon.Target.creatureType].val) / 100;
-        calcedSpell:AddToBuffList(stats.targetTypeCritDmgMult[_addon.Target.creatureType].buffs);
+    if stats.versusModPctCritDamage[_addon.Target.creatureType] then
+        calcedSpell.critMult = calcedSpell.critMult + stats.versusModPctCritDamage[_addon.Target.creatureType].val / 100;
+        calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);
     end
 
     ----------------------------------------------------------------------------------------------------------------------
@@ -425,7 +425,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Cast time mods
 
     if parentEffCastTime == nil then
-        if stats.mageNWRProc[spellId] ~= nil and stats.mageNWRProc[spellId].val ~= 0 and castTime > 0 then
+        if stats.spellModMageNWR[spellId] ~= nil and stats.spellModMageNWR[spellId].val ~= 0 and castTime > 0 then
             -- E.g. with a 10% chance every 10th cast will proc, causing the next to be 1.5s (GCD).
             -- NWR has a 10sec ICD, therefore 1 instant + floor(8.5/castTime) casts can't proc it after a proc.
             -- So in reality you have 10 normal casts, 1 GCD and floor(8.5/castTime) additional normal casts.
@@ -433,7 +433,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local castsInICD = math.floor(8.5/effCastTime);
             effCastTime = (GCD + (10 + castsInICD) * effCastTime) / (11 + castsInICD);
             effCastTime = math.max(effCastTime, GCD);
-            calcedSpell:AddToBuffList(stats.mageNWRProc[spellId].buffs);
+            calcedSpell:AddToBuffList(stats.spellModMageNWR[spellId].buffs);
         end
 
         if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
@@ -466,20 +466,20 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Flat mods
 
     local flatMod = 0;
-    if stats.flatMods[spellId] ~= nil then
-        flatMod = stats.flatMods[spellId].val;
-        calcedSpell:AddToBuffList(stats.flatMods[spellId].buffs);
+    if stats.spellModFlatValue[spellId] ~= nil then
+        flatMod = stats.spellModFlatValue[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModFlatValue[spellId].buffs);
     end
 
     local extraSp = 0;
-    if stats.extraSp[spellId] ~= nil then
-        extraSp = stats.extraSp[spellId].val;
-        calcedSpell:AddToBuffList(stats.extraSp[spellId].buffs);
+    if stats.spellModFlatSpellpower[spellId] ~= nil then
+        extraSp = stats.spellModFlatSpellpower[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModFlatSpellpower[spellId].buffs);
     end
 
-    if stats.targetTypeFlatSpell[_addon.Target.creatureType] then
-        extraSp = extraSp + stats.targetTypeFlatSpell[_addon.Target.creatureType].val;
-        calcedSpell:AddToBuffList(stats.targetTypeFlatSpell[_addon.Target.creatureType].buffs);
+    if stats.versusModFlatSpellpower[_addon.Target.creatureType] then
+        extraSp = extraSp + stats.versusModFlatSpellpower[_addon.Target.creatureType].val;
+        calcedSpell:AddToBuffList(stats.versusModFlatSpellpower[_addon.Target.creatureType].buffs);
     end
 
     --------------------------
@@ -538,8 +538,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             triggerFromSpell = _addon.JUDGEMENT_ID;
         end
 
-        if stats.spellTriggerSpellEffect[triggerFromSpell] ~= nil then
-            local triggeredSpellId = stats.spellTriggerSpellEffect[triggerFromSpell].val;
+        if stats.spellModAddTriggerSpell[triggerFromSpell] ~= nil then
+            local triggeredSpellId = stats.spellModAddTriggerSpell[triggerFromSpell].val;
             if triggeredSpellId > 0 then
                 _addon:PrintDebug("Add triggered spell "..triggeredSpellId.." on spell "..spellId);
                 local triggeredId = _addon:GetHandledSpellID(triggeredSpellId);

@@ -188,9 +188,9 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
     local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
     local duration = spellRankInfo.duration;
 
-    if stats.durationMods[spellId] ~= nil then
-        duration = duration + stats.durationMods[spellId].val;
-        calcedSpell:AddToBuffList(stats.durationMods[spellId].buffs);
+    if stats.spellModFlatDuration[spellId] ~= nil then
+        duration = duration + stats.spellModFlatDuration[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
     calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
@@ -233,9 +233,9 @@ local function PeriodicHeal(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
 
     local duration = spellRankInfo.duration;
 
-    if stats.durationMods[spellId] ~= nil then
-        duration = duration + stats.durationMods[spellId].val;
-        calcedSpell:AddToBuffList(stats.durationMods[spellId].buffs);
+    if stats.spellModFlatDuration[spellId] ~= nil then
+        duration = duration + stats.spellModFlatDuration[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
     calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
@@ -358,9 +358,9 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
     local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
     local duration = spellRankInfo.duration;
 
-    if stats.durationMods[spellId] ~= nil then
-        duration = duration + stats.durationMods[spellId].val;
-        calcedSpell:AddToBuffList(stats.durationMods[spellId].buffs);
+    if stats.spellModFlatDuration[spellId] ~= nil then
+        duration = duration + stats.spellModFlatDuration[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
     calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
@@ -508,9 +508,9 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
     if effectData.chains and effectData.chains > 1 then
         calcedEffect.chains = effectData.chains;
         local mult = effectData.chainMult;
-        if stats.chainMultMods[spellId] then
-            mult = mult * (1 + stats.chainMultMods[spellId].val / 100);
-            calcedSpell:AddToBuffList(stats.chainMultMods[spellId].buffs);
+        if stats.spellModChainMult[spellId] then
+            mult = mult * (1 + stats.spellModChainMult[spellId].val / 100);
+            calcedSpell:AddToBuffList(stats.spellModChainMult[spellId].buffs);
         end
         calcedEffect.chainMult = mult;
     end
@@ -602,9 +602,9 @@ local function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     if effectData.chains and effectData.chains > 1 then
         calcedEffect.chains = effectData.chains;
         local mult = effectData.chainMult;
-        if stats.chainMultMods[spellId] then
-            mult = mult * (1 + stats.chainMultMods[spellId].val / 100);
-            calcedSpell:AddToBuffList(stats.chainMultMods[spellId].buffs);
+        if stats.spellModChainMult[spellId] then
+            mult = mult * (1 + stats.spellModChainMult[spellId].val / 100);
+            calcedSpell:AddToBuffList(stats.spellModChainMult[spellId].buffs);
         end
         calcedEffect.chainMult = mult;
     end

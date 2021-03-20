@@ -277,9 +277,9 @@ function MeleeCalc:GetMDPGB()
     end
 
     local weaponType = _addon:GetWeaponType(self.isOffhand and "offhand" or "mainhand");
-    if weaponType and stats.hitMods.weapon[weaponType].val > 0 then
-        hitBonus = hitBonus + stats.hitMods.weapon[weaponType].val;
-        self.calcedSpell:AddToBuffList(stats.hitMods.weapon[weaponType].buffs);
+    if weaponType and stats.weaponModFlatHitChance[weaponType].val > 0 then
+        hitBonus = hitBonus + stats.weaponModFlatHitChance[weaponType].val;
+        self.calcedSpell:AddToBuffList(stats.weaponModFlatHitChance[weaponType].buffs);
     end
 
     if self.levelDiff > 2 then

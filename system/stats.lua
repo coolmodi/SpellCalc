@@ -127,46 +127,43 @@ _addon.stats = {
         }
     },
 
-    spellPen = SchoolStatTable(),
-    mp5 = UniformStat();
-    fsrRegenMult = UniformStat();
+    schoolModSpellPen = SchoolStatTable(),
+    schoolModPctDamage = SchoolStatTable(),
+    schoolModFlatCritChance = SchoolStatTable(),
+    schoolModPctCritMult = SchoolStatTable(),
+
     spellModPctHealing = SpellStatTable(),
-    modhealingDone = UniformStat(),
     spellModPctEffect = SpellStatTable(),
     spellModPctDamage = SpellStatTable(),
-    schoolModPctDamage = SchoolStatTable(),
+    spellModFlatDuration = SpellStatTable(), -- In seconds
+    spellModFlatValue = SpellStatTable(),
+    spellModFlatSpellpower = SpellStatTable(),
+    spellModMageNWR = SpellStatTable(),
+    spellModGCDms = SpellStatTable(), -- In ms
+    spellModChainMult = SpellStatTable(),
+    spellModAddTriggerSpell = SpellStatTable(),
+    spellModFlatHitChance = SpellStatTable(),
+    spellModFlatCritChance = SpellStatTable(),
+    spellModPctCritMult = SpellStatTable(),
+
+    weaponModFlatHitChance = WeaponStatTable(),
+
+    versusModPctDamage = CreatureTypeStatTable(),
+    versusModPctCritDamage = CreatureTypeStatTable(),
+    versusModFlatSpellpower = CreatureTypeStatTable(),
+
+    mp5 = UniformStat();
+    fsrRegenMult = UniformStat();
+    modhealingDone = UniformStat(),
     hitBonus = UniformStat();
     hitBonusSpell = UniformStat();
-    hitMods = {
-        school = SchoolStatTable(),
-        weapon = WeaponStatTable(),
-        spell = SpellStatTable()
-    },
-    critMods = {
-        school = SchoolStatTable(),
-        spell = SpellStatTable()
-    },
     clearCastChance = UniformStat(),
     clearCastChanceDmg = UniformStat(),
     illumination = UniformStat(),
-    critMult = {
-        school = SchoolStatTable(),
-        spell = SpellStatTable()
-    },
-    durationMods = SpellStatTable(),
-    flatMods = SpellStatTable(),
-    extraSp = SpellStatTable(),
     ignite = UniformStat(),
     impShadowBolt = UniformStat(),
     earthfuryReturn = UniformStat(),
-    mageNWRProc = SpellStatTable(),
     druidNaturesGrace = UniformStat(),
-    chainMultMods = SpellStatTable(),
-    gcdMods = SpellStatTable(),
-    spellTriggerSpellEffect = SpellStatTable(),
-    targetTypeDmgMult = CreatureTypeStatTable(),
-    targetTypeCritDmgMult = CreatureTypeStatTable(),
-    targetTypeFlatSpell = CreatureTypeStatTable(),
 };
 
 --- Update spell power stats from API

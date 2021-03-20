@@ -197,6 +197,29 @@ local function AddWeaponTableUniform(weaponTable, title, unit)
     end
 end
 
+--- Add a school stat list with "uniform stat entries" to the list
+---@param versusTable table @The creature type stat table
+---@param title string|nil @The title for these stats
+---@param unit string @The unit for the values
+local function AddVersusTypeTableUniform(versusTable, title, unit)
+    if title then
+        local row = CreateStatRow();
+        local text = row:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2");
+        text:SetPoint("LEFT", 0, 0);
+        text:SetText(title);
+        row:SetHeight(text:GetHeight() + 10);
+    end
+    for typeNum, _ in pairs(versusTable) do
+        local label;
+        for k, v in pairs(_addon.CREATURE_TYPE) do
+            if v == typeNum then
+                label = k;
+            end
+        end
+        AddUniformStatTable(versusTable[typeNum], label, unit);
+    end
+end
+
 -------------------------------------------------------
 -- Update UI
 
@@ -289,18 +312,17 @@ AddSchoolTableSingle(stats.spellPower, "Spell power");
 AddSingleStat("Healing bonus", stats, "spellHealing");
 
 AddSchoolTableSingle(stats.spellCrit, "Spell crit", "%");
-AddSchoolTableUniform(stats.critMods.school, "Crit mods", "%");
-AddSpellTable(stats.critMods.spell, nil, "%");
-AddSchoolTableUniform(stats.critMult.school, "Crit mult mods", "%");
-AddSpellTable(stats.critMult.spell, nil, "%");
+AddSchoolTableUniform(stats.schoolModFlatCritChance, "Crit mods", "%");
+AddSpellTable(stats.spellModFlatCritChance, nil, "%");
+AddSchoolTableUniform(stats.schoolModPctCritMult, "Crit mult mods", "%");
+AddSpellTable(stats.spellModPctCritMult, nil, "%");
 
-AddSchoolTableUniform(stats.spellPen, "Spell pen", "");
+AddSchoolTableUniform(stats.schoolModSpellPen, "Spell pen", "");
 
-AddSchoolTableUniform(stats.hitMods.school, "Hit mods", "%");
 AddUniformStatTable(stats.hitBonusSpell, "Spell +hit", "%");
 AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
-AddWeaponTableUniform(stats.hitMods.weapon, nil, "%");
-AddSpellTable(stats.hitMods.spell, nil, "%");
+AddWeaponTableUniform(stats.weaponModFlatHitChance, nil, "%");
+AddSpellTable(stats.spellModFlatHitChance, nil, "%");
 
 AddSpellTable(stats.spellModPctHealing, "Spell Pct Healing", "%");
 AddUniformStatTable(stats.modhealingDone, "Healing done mod (all)", "%");
@@ -309,49 +331,12 @@ AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
 AddSpellTable(stats.spellModPctDamage, "Spell Pct Damage", "%");
 AddSchoolTableUniform(stats.spellModPctDamage, "School Pct Damage", "%");
 
-AddTitle("Creature Type Flat SP");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.BEAST], "BEAST", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.DRAGONKIN], "DRAGONKIN", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.DEMON], "DEMON", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.ELEMENTAL], "ELEMENTAL", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.GIANT], "GIANT", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.UNDEAD], "UNDEAD", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.HUMANOID], "HUMANOID", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.CRITTER], "CRITTER", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.MECHANICAL], "MECHANICAL", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.NOT_SPECIFIED], "NOT_SPECIFIED", "%");
-AddUniformStatTable(stats.targetTypeFlatSpell[_addon.CREATURE_TYPE.TOTEM], "TOTEM", "%");
-AddTitle("Creature Type Mult");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.BEAST], "BEAST", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.DRAGONKIN], "DRAGONKIN", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.DEMON], "DEMON", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.ELEMENTAL], "ELEMENTAL", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.GIANT], "GIANT", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.UNDEAD], "UNDEAD", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.HUMANOID], "HUMANOID", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.CRITTER], "CRITTER", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.MECHANICAL], "MECHANICAL", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.NOT_SPECIFIED], "NOT_SPECIFIED", "%");
-AddUniformStatTable(stats.targetTypeDmgMult[_addon.CREATURE_TYPE.TOTEM], "TOTEM", "%");
-AddTitle("Creature Type Crit Mult");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.BEAST], "BEAST", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.DRAGONKIN], "DRAGONKIN", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.DEMON], "DEMON", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.ELEMENTAL], "ELEMENTAL", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.GIANT], "GIANT", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.UNDEAD], "UNDEAD", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.HUMANOID], "HUMANOID", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.CRITTER], "CRITTER", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.MECHANICAL], "MECHANICAL", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.NOT_SPECIFIED], "NOT_SPECIFIED", "%");
-AddUniformStatTable(stats.targetTypeCritDmgMult[_addon.CREATURE_TYPE.TOTEM], "TOTEM", "%");
-
-AddSpellTable(stats.durationMods, "Duration mods:", "s");
-AddSpellTable(stats.flatMods, "Flat mods", "");
-AddSpellTable(stats.extraSp, "Extra SP", "");
-AddSpellTable(stats.mageNWRProc, "Mage NWR proc", "");
-AddSpellTable(stats.chainMultMods, "Chain multiplier mods", "%");
-AddSpellTable(stats.gcdMods, "GCD modifiers", "ms");
+AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "s");
+AddSpellTable(stats.spellModFlatValue, "Flat mods", "");
+AddSpellTable(stats.spellModFlatSpellpower, "Extra SP", "");
+AddSpellTable(stats.spellModMageNWR, "Mage NWR proc", "");
+AddSpellTable(stats.spellModChainMult, "Chain multiplier mods", "%");
+AddSpellTable(stats.spellModGCDms, "GCD modifiers", "ms");
 
 AddTitle("Weapon attack speed");
 AddSingleStat("Mainhand", stats.attackSpeed, "mainhand");
@@ -392,3 +377,7 @@ AddSingleStat("Type", _addon.Target, "creatureType", "");
 for key, schoolNum in pairs(_addon.SCHOOL) do
     AddSingleStat(key, _addon.Target.resistance, schoolNum, "");
 end
+
+AddVersusTypeTableUniform(stats.versusModFlatSpellpower, "Creature Type Flat SP", "%");
+AddVersusTypeTableUniform(stats.versusModPctDamage, "Creature Type Mult", "%");
+AddVersusTypeTableUniform(stats.versusModPctCritDamage, "Creature Type Crit Mult", "%");

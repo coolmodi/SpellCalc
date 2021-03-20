@@ -351,7 +351,7 @@ class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE_VERSUS] = (effect) =>
         {
             return {
-                effect: ADDON_EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                effect: ADDON_EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask: effect["EffectMiscValue[0]"],
                 value: effect.EffectBasePoints + 1,
             };

@@ -424,7 +424,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                     affectMask = 32,
                     value = 2,
                 }
@@ -437,7 +437,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                     affectMask = 32,
                     value = 2,
                 }
@@ -450,7 +450,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                     affectMask = 32,
                     value = 2,
                 }
@@ -463,7 +463,7 @@ _addon.itemSetData = {
             [1] = {
                 need = 3,
                 effect = {
-                    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE_VERSUS,
+                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                     affectMask = 32,
                     value = 2,
                 }
