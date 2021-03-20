@@ -157,6 +157,10 @@ _addon.buffData = {
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD + _addon.CREATURE_TYPE_MASK.DEMON,
         value = 5
     },
+    [28145] = { -- Power of the Guardian (Druid)
+        effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+        value = 11,
+    }
 };
 
 -- Buffs the target can have (NYI)
