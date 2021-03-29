@@ -149,11 +149,3 @@ _addon.buffData[14751] = {
     affectSpell = {-917225840},
     value = 25
 }
-
-_addon.itemEffects[18608] = { -- Benediction
-    {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT,
-        affectMask = _addon.SCHOOL_MASK.HOLY,
-        value = 2
-    }
-}

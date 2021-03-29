@@ -4,6 +4,7 @@ import { isSeal, SealType } from "./paladinCrap";
 import { ItemSetCreator } from "./ItemSetCreator";
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
+import { ItemEffectsCreator } from "./ItemEffectsCreator";
 
 const outputdir = __dirname + "/../../../data/classes/";
 
@@ -491,3 +492,14 @@ for (let i = 0; i < CLASSES.length; i++) {
 
 const isc = new ItemSetCreator(spellData, classSpellLists, classSpellSets);
 fs.writeFileSync(__dirname + "/../../../data/itemSetData.lua", isc.getItemSetLua());
+
+const iec = new ItemEffectsCreator(spellData, classSpellLists, classSpellSets);
+iec.getItemEffectLua()
+.then(lua => {
+    fs.writeFileSync(__dirname + "/../../../data/itemEffects.lua", lua.GENERAL);
+    for (const classname in lua)
+    {
+        if (classname == "GENERAL") continue;
+        fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemEffects.lua", lua[classname as keyof typeof lua]);
+    }
+});

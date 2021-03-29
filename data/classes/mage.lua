@@ -199,19 +199,3 @@ _addon.buffData[MAGE_ARMOR] = {
     effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
     value = 30,
 };
-
-_addon.itemEffects[16540] = { -- General's Silk Handguards
-    {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
-        affectSpell = {32768},
-        value = 285
-    }
-}
-
-_addon.itemEffects[16440] = { -- Marshal's Silk Gloves
-    {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
-        affectSpell = {32768},
-        value = 285
-    }
-}

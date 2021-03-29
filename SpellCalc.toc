@@ -34,6 +34,15 @@ data/classes/rogue_spell.lua
 data/classes/shaman_spell.lua
 data/classes/warlock_spell.lua
 data/classes/warrior_spell.lua
+data/classes/druid_itemEffects.lua
+data/classes/hunter_itemEffects.lua
+data/classes/mage_itemEffects.lua
+data/classes/paladin_itemEffects.lua
+data/classes/priest_itemEffects.lua
+data/classes/rogue_itemEffects.lua
+data/classes/shaman_itemEffects.lua
+data/classes/warlock_itemEffects.lua
+data/classes/warrior_itemEffects.lua
 data/classes/druid.lua
 data/classes/hunter.lua
 data/classes/mage.lua

@@ -1,10 +1,6 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
 
-local BLESSING_OF_WISDOM = GetSpellInfo(19852);
-local GREATER_BLESSING_OF_WISDOM = GetSpellInfo(25918);
-
-
 -- Buffs the player can have
 _addon.buffData = {
     [16609] = { -- Warchief's Blessing

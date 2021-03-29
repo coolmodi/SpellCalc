@@ -8,6 +8,10 @@
   },
   "author": "coolmodi",
   "devDependencies": {
+    "@types/mysql": "^2.15.18",
     "@types/node": "^12.11.2"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
   }
 }

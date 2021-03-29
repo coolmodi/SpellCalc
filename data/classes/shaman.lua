@@ -113,37 +113,3 @@ _addon.buffData[LIGHTNING_SHIELD] = { -- for T3 setbonus
     effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
     value = 15,
 }
-
-_addon.itemEffects[23199] = { -- Totem of the Storm
-    {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1 + 2},
-        value = 33
-    }
-}
-
-_addon.itemEffects[23200] = { -- Totem of Sustaining
-    {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {128},
-        value = 53
-    }
-}
-
-_addon.itemEffects[22396] = { -- Totem of Life
-    {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {128},
-        value = 80
-    }
-}
-
-_addon.itemEffects[22395] = { -- Totem of Rage
-    {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1048576 + 268435456 + 2147483648},
-        value = 30
-    }
-}
-
--- TODO: https://classic.wowhead.com/item=23005/totem-of-flowing-water
