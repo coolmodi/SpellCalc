@@ -2,6 +2,7 @@ import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers } from "./ItemAuraHandlers";
+import { orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
@@ -215,56 +216,125 @@ export class ItemSetCreator
     /**
      * Get Lua code for item set data file.
      */
-    getItemSetLua()
+    async getItemSetLua()
     {
         console.log("Creating Lua for  item set data...");
         const processedData = this.getProcessedSetData();
 
-        let lua = `-- GENERATED! DO NOT EDIT!
+        const itemToSetId = new Map<number, ItemSetAddonData>();
+        for (const setData of processedData.values())
+        {
+            itemToSetId.set(setData.items[0], setData);
+        }
+        const ordered = await orderItemsByClass(itemToSetId);
+
+        const luaStrings = {
+            warrior: "",
+            paladin: "",
+            hunter: "",
+            rogue: "",
+            priest: "",
+            shaman: "",
+            mage: "",
+            warlock: "",
+            druid: "",
+            GENERAL: ""
+        };
+
+        luaStrings.GENERAL = `-- GENERATED! DO NOT EDIT!
 
 ---@type AddonEnv
 local _addon = select(2, ...);
 
 _addon.itemSetData = {\n`;
 
-        for (const [setId, setData] of processedData)
+        for (const setData of ordered.GENERAL.values())
         {
-            lua += `    [${setId}] = {\n`;
-            lua += `        name = "${setData.name}",\n`;
-            lua += `        effects = {\n`;
+            luaStrings.GENERAL += `    [${setData.ID}] = {\n`;
+            luaStrings.GENERAL += `        name = "${setData.name}",\n`;
+            luaStrings.GENERAL += `        effects = {\n`;
 
             for (let i = 0; i < setData.effects.length; i++)
             {
                 const eff = setData.effects[i];
-                lua += `            [${i + 1}] = {\n`;
-                lua += `                need = ${eff.need},\n`;
-                lua += `                effect = {\n`;
-                lua += `                    effect = ${eff.effect.effect},\n`;
-                if (eff.effect.affectMask) lua += `                    affectMask = ${eff.effect.affectMask},\n`;
-                if (eff.effect.affectSpell) lua += `                    affectSpell = {${eff.effect.affectSpell.join(", ")}},\n`;
-                if (typeof eff.effect.value !== "undefined") lua += `                    value = ${eff.effect.value},\n`;
-                lua += `                }\n`;
-                lua += `            },\n`;
+                luaStrings.GENERAL += `            [${i + 1}] = {\n`;
+                luaStrings.GENERAL += `                need = ${eff.need},\n`;
+                luaStrings.GENERAL += `                effect = {\n`;
+                luaStrings.GENERAL += `                    effect = ${eff.effect.effect},\n`;
+                if (eff.effect.affectMask) luaStrings.GENERAL += `                    affectMask = ${eff.effect.affectMask},\n`;
+                if (eff.effect.affectSpell) luaStrings.GENERAL += `                    affectSpell = {${eff.effect.affectSpell.join(", ")}},\n`;
+                if (typeof eff.effect.value !== "undefined") luaStrings.GENERAL += `                    value = ${eff.effect.value},\n`;
+                luaStrings.GENERAL += `                }\n`;
+                luaStrings.GENERAL += `            },\n`;
             }
 
-            lua += `        }\n`;
-            lua += `    },\n`;
+            luaStrings.GENERAL += `        }\n`;
+            luaStrings.GENERAL += `    },\n`;
         }
 
-        lua += "}\n\n_addon.setItemData = {\n";
+        luaStrings.GENERAL += `}\n\n_addon.setItemData = {\n`;
 
-        for (const [setId, setData] of processedData)
+        for (const setData of ordered.GENERAL.values())
         {
             for (const itemId of setData.items)
             {
-                lua += `    [${itemId}] = ${setId},\n`
+                luaStrings.GENERAL += `    [${itemId}] = ${setData.ID},\n`
             }
         }
 
-        lua += "}";
+        luaStrings.GENERAL += "}";
+
+        for (const className in ordered)
+        {
+            if (className == "GENERAL") continue;
+
+            luaStrings[className as keyof typeof ordered] = `-- GENERATED! DO NOT EDIT!
+
+---@type AddonEnv
+local _addon = select(2, ...);
+local _, playerClass = UnitClass("player");
+if playerClass ~= "${className.toUpperCase()}" then
+    return;
+end\n\n`;
+
+            for (const setData of ordered[className as keyof typeof ordered].values())
+            {
+
+
+                let entrystr = `_addon.itemSetData[${setData.ID}] = {\n`;
+                entrystr += `    name = "${setData.name}",\n`;
+                entrystr += `    effects = {\n`;
+
+                for (let i = 0; i < setData.effects.length; i++)
+                {
+                    const eff = setData.effects[i];
+                    entrystr += `        [${i + 1}] = {\n`;
+                    entrystr += `            need = ${eff.need},\n`;
+                    entrystr += `            effect = {\n`;
+                    entrystr += `                effect = ${eff.effect.effect},\n`;
+                    if (eff.effect.affectMask) entrystr += `                affectMask = ${eff.effect.affectMask},\n`;
+                    if (eff.effect.affectSpell) entrystr += `                affectSpell = {${eff.effect.affectSpell.join(", ")}},\n`;
+                    if (typeof eff.effect.value !== "undefined") entrystr += `                value = ${eff.effect.value},\n`;
+                    entrystr += `            }\n`;
+                    entrystr += `        },\n`;
+                }
+
+                entrystr += `    }\n`;
+                entrystr += `}\n`;
+
+                for (const itemId of setData.items)
+                {
+                    entrystr += `_addon.setItemData[${itemId}] = ${setData.ID};\n`
+                }
+
+                entrystr += "\n";
+
+                luaStrings[className as keyof typeof ordered] += entrystr;
+            }
+        }
 
         console.log("Lua item set data created!");
-        return lua;
+        return luaStrings;
     }
 }
 

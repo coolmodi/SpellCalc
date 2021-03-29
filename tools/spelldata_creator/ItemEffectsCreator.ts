@@ -1,8 +1,8 @@
-import { createConnection } from "mysql";
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers } from "./ItemAuraHandlers";
+import { getItemDbData, orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
@@ -150,40 +150,8 @@ export class ItemEffectsCreator
     {
         console.log("Creating Lua for  item effect data...");
 
-        const dbData: { [itemId: number]: DbRow } = {};
-        await new Promise<void>(resolve =>
-        {
-            // dbc has no useful item data (name, class restrictions etc.) for 1.13
-            createConnection({
-                host: "localhost",
-                user: "root",
-                password: "",
-                database: "classicmangos"
-            })
-                .query("SELECT entry, name, AllowableClass, class, subclass FROM item_template;", (error, results: DbRow[]) =>
-                {
-                    if (error) throw error;
-                    for (const row of results)
-                    {
-                        dbData[row.entry!] = row;
-                    }
-                    resolve();
-                });
-        });
-
+        const dbData = await getItemDbData();
         const itemEffectData = this.getItemEffectData(dbData);
-
-        const classMask = {
-            warrior: 1,
-            paladin: 1 << 1,
-            hunter: 1 << 2,
-            rogue: 1 << 3,
-            priest: 1 << 4,
-            shaman: 1 << 6,
-            mage: 1 << 7,
-            warlock: 1 << 8,
-            druid: 1 << 10
-        };
 
         const luaStrings = {
             warrior: "",
@@ -198,26 +166,7 @@ export class ItemEffectsCreator
             GENERAL: ""
         };
 
-        const ordered = {
-            warrior: new Map<number, AddonEffectData[]>(),
-            paladin: new Map<number, AddonEffectData[]>(),
-            hunter: new Map<number, AddonEffectData[]>(),
-            rogue: new Map<number, AddonEffectData[]>(),
-            priest: new Map<number, AddonEffectData[]>(),
-            shaman: new Map<number, AddonEffectData[]>(),
-            mage: new Map<number, AddonEffectData[]>(),
-            warlock: new Map<number, AddonEffectData[]>(),
-            druid: new Map<number, AddonEffectData[]>(),
-            GENERAL: new Map<number, AddonEffectData[]>(),
-        };
-
-        const LE_ITEM_CLASS_ARMOR = 4;
-        const LE_ITEM_ARMOR_LIBRAM 	= 7;
-        const LE_ITEM_ARMOR_IDOL = 8;
-        const LE_ITEM_ARMOR_TOTEM = 9;
-
-        let allClasses = 0;
-        for (const className in classMask) allClasses |= classMask[className as keyof typeof classMask];
+        const ordered = await orderItemsByClass(itemEffectData);
 
         luaStrings.GENERAL = `-- GENERATED! DO NOT EDIT!
 
@@ -226,9 +175,11 @@ local _addon = select(2, ...);
 
 _addon.itemEffects = {\n`;
 
-        for (const className in classMask)
+        for (const className in ordered)
         {
-            luaStrings[className as keyof typeof classMask] = `-- GENERATED! DO NOT EDIT!
+            if (className == "GENERAL") continue;
+
+            luaStrings[className as keyof typeof ordered] = `-- GENERATED! DO NOT EDIT!
 
 ---@type AddonEnv
 local _addon = select(2, ...);
@@ -236,42 +187,6 @@ local _, playerClass = UnitClass("player");
 if playerClass ~= "${className.toUpperCase()}" then
     return;
 end\n\n`;
-        }
-
-        for (const [itemId, effects] of itemEffectData)
-        {
-            const dbentry = dbData[itemId];
-
-            if (dbentry.class === LE_ITEM_CLASS_ARMOR && dbentry.subclass == LE_ITEM_ARMOR_IDOL)
-            {
-                ordered.druid.set(itemId, effects);
-            }
-            else if (dbentry.class === LE_ITEM_CLASS_ARMOR && dbentry.subclass == LE_ITEM_ARMOR_LIBRAM)
-            {
-                ordered.paladin.set(itemId, effects);
-            }
-            else if (dbentry.class === LE_ITEM_CLASS_ARMOR && dbentry.subclass == LE_ITEM_ARMOR_TOTEM)
-            {
-                ordered.shaman.set(itemId, effects);
-            }
-            else if (itemId === 20006)
-            {
-                ordered.priest.set(itemId, effects);
-            }
-            else if ((dbentry.AllowableClass & allClasses) === allClasses)
-            {
-                ordered.GENERAL.set(itemId, effects);
-            }
-            else
-            {
-                for (const className in classMask)
-                {
-                    if (dbentry.AllowableClass & classMask[className as keyof typeof classMask])
-                    {
-                        ordered[className as keyof typeof classMask].set(itemId, effects);
-                    }
-                }
-            }
         }
 
         for (const [itemId, effects] of ordered.GENERAL)
@@ -295,9 +210,11 @@ end\n\n`;
 
         luaStrings.GENERAL += `}\n`;
 
-        for (const className in classMask)
+        for (const className in ordered)
         {
-            for (const [itemId, effects] of ordered[className as keyof typeof classMask])
+            if (className == "GENERAL") continue;
+
+            for (const [itemId, effects] of ordered[className as keyof typeof ordered])
             {
                 const dbentry = dbData[itemId];
 
@@ -316,7 +233,7 @@ end\n\n`;
     
                 entrystr += `}\n\n`;
 
-                luaStrings[className as keyof typeof classMask] += entrystr; 
+                luaStrings[className as keyof typeof ordered] += entrystr; 
             }
         }
 

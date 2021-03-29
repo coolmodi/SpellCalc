@@ -21,10 +21,11 @@ constants.lua
 helper.lua
 
 data/auras.lua
+data/npcResistances.lua
+
 data/itemData.lua
 data/itemEffects.lua
 data/itemSetData.lua
-data/npcResistances.lua
 data/classes/druid_spell.lua
 data/classes/hunter_spell.lua
 data/classes/mage_spell.lua
@@ -43,6 +44,16 @@ data/classes/rogue_itemEffects.lua
 data/classes/shaman_itemEffects.lua
 data/classes/warlock_itemEffects.lua
 data/classes/warrior_itemEffects.lua
+data/classes/druid_itemSetData.lua
+data/classes/hunter_itemSetData.lua
+data/classes/mage_itemSetData.lua
+data/classes/paladin_itemSetData.lua
+data/classes/priest_itemSetData.lua
+data/classes/rogue_itemSetData.lua
+data/classes/shaman_itemSetData.lua
+data/classes/warlock_itemSetData.lua
+data/classes/warrior_itemSetData.lua
+
 data/classes/druid.lua
 data/classes/hunter.lua
 data/classes/mage.lua

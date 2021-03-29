@@ -486,20 +486,30 @@ end
     fs.writeFileSync(outputdir + pclass + "_spell.lua", str);
 }
 
+/**
+ * Create lua files for item effect and set data
+ */
+async function createItemLua() {
+    const isc = new ItemSetCreator(spellData, classSpellLists, classSpellSets);
+    const setLua = await isc.getItemSetLua();
+    fs.writeFileSync(__dirname + "/../../../data/itemSetData.lua", setLua.GENERAL);
+    for (const classname in setLua)
+    {
+        if (classname == "GENERAL") continue;
+        fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemSetData.lua", setLua[classname as keyof typeof setLua]);
+    }
+
+    const iec = new ItemEffectsCreator(spellData, classSpellLists, classSpellSets);
+    const itemLua = await iec.getItemEffectLua();
+    fs.writeFileSync(__dirname + "/../../../data/itemEffects.lua", itemLua.GENERAL);
+    for (const classname in itemLua)
+    {
+        if (classname == "GENERAL") continue;
+        fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemEffects.lua", itemLua[classname as keyof typeof itemLua]);
+    }
+}
+
 for (let i = 0; i < CLASSES.length; i++) {
     createLua(CLASSES[i]);
 }
-
-const isc = new ItemSetCreator(spellData, classSpellLists, classSpellSets);
-fs.writeFileSync(__dirname + "/../../../data/itemSetData.lua", isc.getItemSetLua());
-
-const iec = new ItemEffectsCreator(spellData, classSpellLists, classSpellSets);
-iec.getItemEffectLua()
-.then(lua => {
-    fs.writeFileSync(__dirname + "/../../../data/itemEffects.lua", lua.GENERAL);
-    for (const classname in lua)
-    {
-        if (classname == "GENERAL") continue;
-        fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemEffects.lua", lua[classname as keyof typeof lua]);
-    }
-});
+createItemLua();
