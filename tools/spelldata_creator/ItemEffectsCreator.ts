@@ -2,7 +2,7 @@ import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers } from "./ItemAuraHandlers";
-import { getItemDbData, orderItemsByClass } from "./itemFunctions";
+import { createEffectLua, createFileHead, getItemDbData, orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
@@ -168,43 +168,16 @@ export class ItemEffectsCreator
 
         const ordered = await orderItemsByClass(itemEffectData);
 
-        luaStrings.GENERAL = `-- GENERATED! DO NOT EDIT!
-
----@type AddonEnv
-local _addon = select(2, ...);
-
-_addon.itemEffects = {\n`;
-
-        for (const className in ordered)
-        {
-            if (className == "GENERAL") continue;
-
-            luaStrings[className as keyof typeof ordered] = `-- GENERATED! DO NOT EDIT!
-
----@type AddonEnv
-local _addon = select(2, ...);
-local _, playerClass = UnitClass("player");
-if playerClass ~= "${className.toUpperCase()}" then
-    return;
-end\n\n`;
-        }
+        luaStrings.GENERAL = createFileHead();
+        luaStrings.GENERAL += "_addon.itemEffects = {\n";
 
         for (const [itemId, effects] of ordered.GENERAL)
         {
-            const dbentry = dbData[itemId];
-            luaStrings.GENERAL += `    [${itemId}] = { -- ${dbentry.name}\n`;
-
+            luaStrings.GENERAL += `    [${itemId}] = { -- ${dbData[itemId].name}\n`;
             for (let i = 0; i < effects.length; i++)
             {
-                const eff = effects[i];
-                luaStrings.GENERAL += `        {\n`;
-                luaStrings.GENERAL += `            type = ${eff.effect},\n`;
-                if (eff.affectMask) luaStrings.GENERAL += `            affectMask = ${eff.affectMask},\n`;
-                if (eff.affectSpell) luaStrings.GENERAL += `            affectSpell = {${eff.affectSpell.join(", ")}},\n`;
-                if (typeof eff.value !== "undefined") luaStrings.GENERAL += `            value = ${eff.value},\n`;
-                luaStrings.GENERAL += `        },\n`;
+                luaStrings.GENERAL += createEffectLua("        ", effects[i]);
             }
-
             luaStrings.GENERAL += `    },\n`;
         }
 
@@ -212,27 +185,21 @@ end\n\n`;
 
         for (const className in ordered)
         {
+            if (className != "GENERAL") luaStrings[className as keyof typeof ordered] = createFileHead(className);
+        }
+
+        for (const className in ordered)
+        {
             if (className == "GENERAL") continue;
 
             for (const [itemId, effects] of ordered[className as keyof typeof ordered])
             {
-                const dbentry = dbData[itemId];
-
-                let entrystr = `_addon.itemEffects[${itemId}] = { -- ${dbentry.name}\n`;
-    
+                let entrystr = `_addon.itemEffects[${itemId}] = { -- ${dbData[itemId].name}\n`;
                 for (let i = 0; i < effects.length; i++)
                 {
-                    const eff = effects[i];
-                    entrystr += `    {\n`;
-                    entrystr += `        type = ${eff.effect},\n`;
-                    if (eff.affectMask) entrystr += `        affectMask = ${eff.affectMask},\n`;
-                    if (eff.affectSpell) entrystr += `        affectSpell = {${eff.affectSpell.join(", ")}},\n`;
-                    if (typeof eff.value !== "undefined") entrystr += `        value = ${eff.value},\n`;
-                    entrystr += `    },\n`;
+                    entrystr += createEffectLua("    ", effects[i]);
                 }
-    
                 entrystr += `}\n\n`;
-
                 luaStrings[className as keyof typeof ordered] += entrystr; 
             }
         }

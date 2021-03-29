@@ -423,3 +423,49 @@ _addon.spellClassSet = {
     ---@type table<number, number[]>
     [4] = {},
 };
+
+---@class AuraEffect
+local AuraEffect = {
+    type = 0,
+    ---@type number|nil
+    affectMask = 0,
+    ---@type number[]|nil
+    affectSpell = {0,0,0,0},
+    ---@type string|number
+    value = 0,
+}
+
+---@class SetBonusAuraEffect : AuraEffect
+local SetBonusAuraEffect = {
+    ---@type number
+    need = 0
+}
+
+---@class ItemSetData
+local ItemSetData = {
+    ---@type string
+    name = "Bloodsoul Embrace",
+    ---@type SetBonusAuraEffect[]
+    effects = {}
+}
+
+---@type table<number, ItemSetData>
+_addon.itemSetData = {}
+
+---@type table<number, AuraEffect[]>
+_addon.itemEffects = {};
+
+-- TODO: fix this stupid structure
+---@class BuffData : AuraEffect
+local BuffData = {
+    ---@type nil|AuraEffect[]
+    effects = {},
+    ---@type nil|number
+    condition = 0,
+    ---@type nil|string
+    ttValue = "",
+    ---@type nil|string
+    name = "",
+}
+---@type table<number|string, BuffData>
+_addon.buffData = {};

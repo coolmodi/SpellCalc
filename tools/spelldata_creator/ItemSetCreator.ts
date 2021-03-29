@@ -2,7 +2,7 @@ import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers } from "./ItemAuraHandlers";
-import { orderItemsByClass } from "./itemFunctions";
+import { createEffectLua, createFileHead, orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
@@ -241,33 +241,18 @@ export class ItemSetCreator
             GENERAL: ""
         };
 
-        luaStrings.GENERAL = `-- GENERATED! DO NOT EDIT!
-
----@type AddonEnv
-local _addon = select(2, ...);
-
-_addon.itemSetData = {\n`;
+        luaStrings.GENERAL = createFileHead();
+        luaStrings.GENERAL += "_addon.itemSetData = {\n";
 
         for (const setData of ordered.GENERAL.values())
         {
             luaStrings.GENERAL += `    [${setData.ID}] = {\n`;
             luaStrings.GENERAL += `        name = "${setData.name}",\n`;
             luaStrings.GENERAL += `        effects = {\n`;
-
             for (let i = 0; i < setData.effects.length; i++)
             {
-                const eff = setData.effects[i];
-                luaStrings.GENERAL += `            [${i + 1}] = {\n`;
-                luaStrings.GENERAL += `                need = ${eff.need},\n`;
-                luaStrings.GENERAL += `                effect = {\n`;
-                luaStrings.GENERAL += `                    effect = ${eff.effect.effect},\n`;
-                if (eff.effect.affectMask) luaStrings.GENERAL += `                    affectMask = ${eff.effect.affectMask},\n`;
-                if (eff.effect.affectSpell) luaStrings.GENERAL += `                    affectSpell = {${eff.effect.affectSpell.join(", ")}},\n`;
-                if (typeof eff.effect.value !== "undefined") luaStrings.GENERAL += `                    value = ${eff.effect.value},\n`;
-                luaStrings.GENERAL += `                }\n`;
-                luaStrings.GENERAL += `            },\n`;
+                luaStrings.GENERAL += createEffectLua("            ", setData.effects[i].effect, { need: setData.effects[i].need });
             }
-
             luaStrings.GENERAL += `        }\n`;
             luaStrings.GENERAL += `    },\n`;
         }
@@ -288,45 +273,23 @@ _addon.itemSetData = {\n`;
         {
             if (className == "GENERAL") continue;
 
-            luaStrings[className as keyof typeof ordered] = `-- GENERATED! DO NOT EDIT!
-
----@type AddonEnv
-local _addon = select(2, ...);
-local _, playerClass = UnitClass("player");
-if playerClass ~= "${className.toUpperCase()}" then
-    return;
-end\n\n`;
+            luaStrings[className as keyof typeof ordered] = createFileHead(className);
 
             for (const setData of ordered[className as keyof typeof ordered].values())
             {
-
-
                 let entrystr = `_addon.itemSetData[${setData.ID}] = {\n`;
                 entrystr += `    name = "${setData.name}",\n`;
                 entrystr += `    effects = {\n`;
-
                 for (let i = 0; i < setData.effects.length; i++)
                 {
-                    const eff = setData.effects[i];
-                    entrystr += `        [${i + 1}] = {\n`;
-                    entrystr += `            need = ${eff.need},\n`;
-                    entrystr += `            effect = {\n`;
-                    entrystr += `                effect = ${eff.effect.effect},\n`;
-                    if (eff.effect.affectMask) entrystr += `                affectMask = ${eff.effect.affectMask},\n`;
-                    if (eff.effect.affectSpell) entrystr += `                affectSpell = {${eff.effect.affectSpell.join(", ")}},\n`;
-                    if (typeof eff.effect.value !== "undefined") entrystr += `                value = ${eff.effect.value},\n`;
-                    entrystr += `            }\n`;
-                    entrystr += `        },\n`;
+                    entrystr += createEffectLua("        ", setData.effects[i].effect, { need: setData.effects[i].need });
                 }
-
                 entrystr += `    }\n`;
                 entrystr += `}\n`;
-
                 for (const itemId of setData.items)
                 {
                     entrystr += `_addon.setItemData[${itemId}] = ${setData.ID};\n`
                 }
-
                 entrystr += "\n";
 
                 luaStrings[className as keyof typeof ordered] += entrystr;

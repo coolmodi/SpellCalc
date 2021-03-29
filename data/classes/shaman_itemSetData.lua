@@ -10,12 +10,10 @@ end
 _addon.itemSetData[207] = {
     name = "The Earthfury",
     effects = {
-        [1] = {
+        {
             need = 5,
-            effect = {
-                effect = _addon.EFFECT_TYPE.EARTHFURY_RETURN,
-                value = 1,
-            }
+            type = _addon.EFFECT_TYPE.EARTHFURY_RETURN,
+            value = 1,
         },
     }
 }
@@ -31,13 +29,11 @@ _addon.setItemData[16843] = 207;
 _addon.itemSetData[216] = {
     name = "The Ten Storms",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
-                affectSpell = {256, 0, 0, 0},
-                value = 30,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+            affectSpell = {256, 0, 0, 0},
+            value = 30,
         },
     }
 }
@@ -53,13 +49,11 @@ _addon.setItemData[16946] = 216;
 _addon.itemSetData[301] = {
     name = "Champion's Earthshaker",
     effects = {
-        [1] = {
+        {
             need = 4,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {-1877999616, 0, 0, 0},
-                value = 2,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {-1877999616, 0, 0, 0},
+            value = 2,
         },
     }
 }
@@ -73,13 +67,11 @@ _addon.setItemData[16524] = 301;
 _addon.itemSetData[386] = {
     name = "Warlord's Earthshaker",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {-1877999616, 0, 0, 0},
-                value = 2,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {-1877999616, 0, 0, 0},
+            value = 2,
         },
     }
 }
@@ -93,20 +85,16 @@ _addon.setItemData[16579] = 386;
 _addon.itemSetData[476] = {
     name = "Augur's Regalia",
     effects = {
-        [1] = {
+        {
             need = 2,
-            effect = {
-                effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-                value = 4,
-            }
+            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
         },
-        [2] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
-                affectSpell = {-2147483648, 0, 0, 0},
-                value = 1,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {-2147483648, 0, 0, 0},
+            value = 1,
         },
     }
 }
@@ -119,13 +107,11 @@ _addon.setItemData[19828] = 476;
 _addon.itemSetData[502] = {
     name = "Gift of the Gathering Storm",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
-                affectSpell = {2, 0, 0, 0},
-                value = 5,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+            affectSpell = {2, 0, 0, 0},
+            value = 5,
         },
     }
 }
@@ -136,12 +122,10 @@ _addon.setItemData[21399] = 502;
 _addon.itemSetData[527] = {
     name = "The Earthshatterer",
     effects = {
-        [1] = {
+        {
             need = 8,
-            effect = {
-                effect = _addon.EFFECT_TYPE.CONDITION_TRIGGER,
-                value = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS,
-            }
+            type = _addon.EFFECT_TYPE.CONDITION_TRIGGER,
+            value = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS,
         },
     }
 }
@@ -158,13 +142,11 @@ _addon.setItemData[23065] = 527;
 _addon.itemSetData[538] = {
     name = "Champion's Stormcaller",
     effects = {
-        [1] = {
+        {
             need = 4,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {-1877999616, 0, 0, 0},
-                value = 2,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {-1877999616, 0, 0, 0},
+            value = 2,
         },
     }
 }

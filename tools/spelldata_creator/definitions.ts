@@ -195,8 +195,8 @@ const enum ADDON_EFFECT_TYPE {
 
 interface AddonEffectData
 {
-    effect: string,
+    type: string,
     affectMask?: number,
     affectSpell?: number[],
-    value: number | string
+    value?: number | string
 }

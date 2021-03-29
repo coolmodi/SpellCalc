@@ -128,3 +128,61 @@ export async function orderItemsByClass<T>(itemMap: Map<number, T>)
 
     return ordered;
 }
+
+/**
+ * Return string of format
+ * {
+ *     type = type,
+ *     [affectMask = affectMask,]
+ *     [affectSpell = affectSpell,]
+ *     [value = value]
+ * },\n
+ * @param indent 
+ * @param eff 
+ */
+export function createEffectLua(indent: string, eff: AddonEffectData, additionalMembers?: {[key: string]: any})
+{
+    let lua = `${indent}{\n`;
+    if (additionalMembers)
+    {
+        for (const k in additionalMembers)
+        {
+            lua += `${indent}    ${k} = ${additionalMembers[k]},\n`;
+        }
+    }
+    lua += `${indent}    type = ${eff.type},\n`;
+    if (eff.affectMask) lua += `${indent}    affectMask = ${eff.affectMask},\n`;
+    if (eff.affectSpell) lua += `${indent}    affectSpell = {${eff.affectSpell.join(", ")}},\n`;
+    if (typeof eff.value !== "undefined") lua += `${indent}    value = ${eff.value},\n`;
+    lua += `${indent}},\n`;
+    return lua;
+}
+
+/**
+ * Create a head for a data file.
+ * @param classNameRestriction
+ * @returns 
+ */
+export function createFileHead(classNameRestriction?: string)
+{
+    if (classNameRestriction)
+    {
+        return `-- GENERATED! DO NOT EDIT!
+
+---@type AddonEnv
+local _addon = select(2, ...);
+local _, playerClass = UnitClass("player");
+if playerClass ~= "${classNameRestriction.toUpperCase()}" then
+    return;
+end
+
+`;
+    }
+
+    return `-- GENERATED! DO NOT EDIT!
+
+---@type AddonEnv
+local _addon = select(2, ...);
+
+`;
+}

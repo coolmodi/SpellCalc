@@ -10,13 +10,11 @@ end
 _addon.itemSetData[205] = {
     name = "Cenarion Raiment",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
-                affectSpell = {256, 0, 0, 0},
-                value = 4,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+            affectSpell = {256, 0, 0, 0},
+            value = 4,
         },
     }
 }
@@ -32,20 +30,16 @@ _addon.setItemData[16836] = 205;
 _addon.itemSetData[214] = {
     name = "Stormrage Raiment",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                value = 15,
-            }
+            type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+            value = 15,
         },
-        [2] = {
+        {
             need = 8,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
-                affectSpell = {16, 0, 0, 0},
-                value = 3,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {16, 0, 0, 0},
+            value = 3,
         },
     }
 }
@@ -61,20 +55,16 @@ _addon.setItemData[16902] = 214;
 _addon.itemSetData[479] = {
     name = "Haruspex's Garb",
     effects = {
-        [1] = {
+        {
             need = 2,
-            effect = {
-                effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-                value = 4,
-            }
+            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
         },
-        [2] = {
+        {
             need = 5,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {4, 0, 0, 0},
-                value = 3,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {4, 0, 0, 0},
+            value = 3,
         },
     }
 }
@@ -87,12 +77,10 @@ _addon.setItemData[19838] = 479;
 _addon.itemSetData[521] = {
     name = "Dreamwalker Raiment",
     effects = {
-        [1] = {
+        {
             need = 8,
-            effect = {
-                effect = _addon.EFFECT_TYPE.ILLUMINATION,
-                value = 30,
-            }
+            type = _addon.EFFECT_TYPE.ILLUMINATION,
+            value = 30,
         },
     }
 }

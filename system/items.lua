@@ -60,26 +60,16 @@ local function UpdateSet(setId, change)
     _addon:PrintDebug(("Updating set: %s (%d -> %d)"):format(setData.name, oldCount, newCount));
 
     for k, effectData in ipairs(setData.effects) do
+        local bname = string.format("%s%d-%dp", setData.name, k, effectData.need);
         if effectData.need <= newCount then
             if effectData.need > oldCount then
-                if type(effectData.effect) ~= "table" then
-                    _addon:PrintWarn(("Set bonus %d not implemented for %s: %s"):format(effectData.need, setData.name, effectData.effect));
-                else
-                    local ed = effectData.effect;
-                    local bname = setData.name .. effectData.need;
-                    _addon:PrintDebug(("Add set bonus %s"):format(bname));
-                    _addon:ApplyBuff(bname, ed.effect, ed.value, ed.affectMask, ed.affectSpell);
-                end
+                _addon:PrintDebug(("Add set bonus %s"):format(bname));
+                _addon:ApplyBuff(bname, effectData.type, effectData.value, effectData.affectMask, effectData.affectSpell);
             end
-
         else
             if effectData.need <= oldCount then
-                if type(effectData.effect) == "table" then
-                    local ed = effectData.effect;
-                    local bname = setData.name .. effectData.need;
-                    _addon:PrintDebug(("Remove set bonus %s"):format(bname));
-                    _addon:RemoveBuff(bname, ed.effect, ed.value, ed.affectMask, ed.affectSpell);
-                end
+                _addon:PrintDebug(("Remove set bonus %s"):format(bname));
+                _addon:RemoveBuff(bname, effectData.type, effectData.value, effectData.affectMask, effectData.affectSpell);
             end
         end
     end

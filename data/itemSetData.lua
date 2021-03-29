@@ -7,83 +7,69 @@ _addon.itemSetData = {
     [443] = {
         name = "Bloodsoul Embrace",
         effects = {
-            [1] = {
+            {
                 need = 3,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-                    value = 12,
-                }
+                type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+                value = 12,
             },
         }
     },
     [490] = {
         name = "Green Dragon Mail",
         effects = {
-            [1] = {
+            {
                 need = 2,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-                    value = 3,
-                }
+                type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+                value = 3,
             },
-            [2] = {
+            {
                 need = 3,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                    value = 15,
-                }
+                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                value = 15,
             },
         }
     },
     [533] = {
         name = "Battlegear of Undead Slaying",
         effects = {
-            [1] = {
+            {
                 need = 3,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-                    affectMask = 32,
-                    value = 2,
-                }
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
             },
         }
     },
     [534] = {
         name = "Undead Slayer's Armor",
         effects = {
-            [1] = {
+            {
                 need = 3,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-                    affectMask = 32,
-                    value = 2,
-                }
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
             },
         }
     },
     [535] = {
         name = "Garb of the Undead Slayer",
         effects = {
-            [1] = {
+            {
                 need = 3,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-                    affectMask = 32,
-                    value = 2,
-                }
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
             },
         }
     },
     [536] = {
         name = "Regalia of Undead Cleansing",
         effects = {
-            [1] = {
+            {
                 need = 3,
-                effect = {
-                    effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-                    affectMask = 32,
-                    value = 2,
-                }
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
             },
         }
     },

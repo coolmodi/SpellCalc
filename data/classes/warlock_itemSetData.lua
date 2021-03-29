@@ -10,13 +10,11 @@ end
 _addon.itemSetData[345] = {
     name = "Champion's Threads",
     effects = {
-        [1] = {
+        {
             need = 4,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
-                affectSpell = {4, 0, 0, 0},
-                value = -200,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            affectSpell = {4, 0, 0, 0},
+            value = -200,
         },
     }
 }
@@ -30,13 +28,11 @@ _addon.setItemData[17573] = 345;
 _addon.itemSetData[346] = {
     name = "Lieutenant Commander's Threads",
     effects = {
-        [1] = {
+        {
             need = 4,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
-                affectSpell = {4, 0, 0, 0},
-                value = -200,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            affectSpell = {4, 0, 0, 0},
+            value = -200,
         },
     }
 }
@@ -50,13 +46,11 @@ _addon.setItemData[17566] = 346;
 _addon.itemSetData[391] = {
     name = "Warlord's Threads",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
-                affectSpell = {4, 0, 0, 0},
-                value = -200,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            affectSpell = {4, 0, 0, 0},
+            value = -200,
         },
     }
 }
@@ -70,13 +64,11 @@ _addon.setItemData[17592] = 391;
 _addon.itemSetData[392] = {
     name = "Field Marshal's Threads",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
-                affectSpell = {4, 0, 0, 0},
-                value = -200,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            affectSpell = {4, 0, 0, 0},
+            value = -200,
         },
     }
 }
@@ -90,13 +82,11 @@ _addon.setItemData[17578] = 392;
 _addon.itemSetData[481] = {
     name = "Demoniac's Threads",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {2, 0, 0, 0},
-                value = 2,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            affectSpell = {2, 0, 0, 0},
+            value = 2,
         },
     }
 }
@@ -109,13 +99,11 @@ _addon.setItemData[20033] = 481;
 _addon.itemSetData[499] = {
     name = "Doomcaller's Attire",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
-                affectSpell = {4, 0, 0, 0},
-                value = 5,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+            affectSpell = {4, 0, 0, 0},
+            value = 5,
         },
     }
 }
@@ -128,13 +116,11 @@ _addon.setItemData[21336] = 499;
 _addon.itemSetData[529] = {
     name = "Plagueheart Raiment",
     effects = {
-        [1] = {
+        {
             need = 4,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {2, 0, 0, 0},
-                value = 12,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            affectSpell = {2, 0, 0, 0},
+            value = 12,
         },
     }
 }
@@ -151,13 +137,11 @@ _addon.setItemData[23063] = 529;
 _addon.itemSetData[541] = {
     name = "Champion's Dreadgear",
     effects = {
-        [1] = {
+        {
             need = 4,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
-                affectSpell = {4, 0, 0, 0},
-                value = -200,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            affectSpell = {4, 0, 0, 0},
+            value = -200,
         },
     }
 }
@@ -171,13 +155,11 @@ _addon.setItemData[22884] = 541;
 _addon.itemSetData[547] = {
     name = "Lieutenant Commander's Dreadgear",
     effects = {
-        [1] = {
+        {
             need = 4,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
-                affectSpell = {4, 0, 0, 0},
-                value = -200,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            affectSpell = {4, 0, 0, 0},
+            value = -200,
         },
     }
 }

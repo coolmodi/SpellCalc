@@ -10,13 +10,11 @@ end
 _addon.itemSetData[201] = {
     name = "Arcanist Regalia",
     effects = {
-        [1] = {
+        {
             need = 5,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
-                affectMask = 124,
-                value = 10,
-            }
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+            affectMask = 124,
+            value = 10,
         },
     }
 }
@@ -32,13 +30,11 @@ _addon.setItemData[16798] = 201;
 _addon.itemSetData[210] = {
     name = "Netherwind Regalia",
     effects = {
-        [1] = {
+        {
             need = 8,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC,
-                affectSpell = {33},
-                value = 1,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC,
+            affectSpell = {33},
+            value = 1,
         },
     }
 }
@@ -54,13 +50,11 @@ _addon.setItemData[16916] = 210;
 _addon.itemSetData[504] = {
     name = "Trappings of Vaulted Secrets",
     effects = {
-        [1] = {
+        {
             need = 3,
-            effect = {
-                effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
-                affectSpell = {32768, 0, 0, 0},
-                value = 15,
-            }
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+            affectSpell = {32768, 0, 0, 0},
+            value = 15,
         },
     }
 }
