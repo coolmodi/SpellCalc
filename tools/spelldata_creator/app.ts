@@ -446,7 +446,7 @@ end
             spellName = spellData.getSpellName(sealId).Name_lang;
             spellspell = spellData.getSpell(sealId);
             const name = spellName + ( (spellspell.NameSubtext_lang.length) ? `(${spellspell.NameSubtext_lang})` : "" );
-            str += `_addon.buffData[${sealId}] = { -- ${name}\n`;
+            str += `_addon.aurasPlayer[${sealId}] = { -- ${name}\n`;
             str += "\teffect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,\n";
             str += `\tvalue = ${remapId}\n`;
             str += "};\n\n";

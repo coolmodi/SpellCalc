@@ -97,18 +97,18 @@ _addon.talentData = {
     },
 };
 
-_addon.buffData[16166] = { -- Elemental Mastery
+_addon.aurasPlayer[16166] = { -- Elemental Mastery
     effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
     affectSpell = {-1877999613},
     value = 100,
 };
 
-_addon.buffData[16188] = { -- Nature's Swiftness dummy
+_addon.aurasPlayer[16188] = { -- Nature's Swiftness dummy
     effect = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
     value = 0
 };
 
-_addon.buffData[LIGHTNING_SHIELD] = { -- for T3 setbonus
+_addon.aurasPlayer[LIGHTNING_SHIELD] = { -- for T3 setbonus
     condition = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS,
     effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
     value = 15,

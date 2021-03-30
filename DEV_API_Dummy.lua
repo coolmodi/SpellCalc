@@ -456,8 +456,8 @@ _addon.itemSetData = {}
 _addon.itemEffects = {};
 
 -- TODO: fix this stupid structure
----@class BuffData : AuraEffect
-local BuffData = {
+---@class PlayerAura : AuraEffect
+local PlayerAura = {
     ---@type nil|AuraEffect[]
     effects = {},
     ---@type nil|number
@@ -465,8 +465,8 @@ local BuffData = {
     ---@type nil|string
     ttValue = "",
 }
----@type table<number|string, BuffData>
-_addon.buffData = {};
+---@type table<number|string, PlayerAura>
+_addon.aurasPlayer = {};
 
 ---@class EnchantData : AuraEffect
 local EnchantData = {

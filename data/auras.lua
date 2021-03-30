@@ -2,7 +2,7 @@
 local _addon = select(2, ...);
 
 -- Buffs the player can have
-_addon.buffData = {
+_addon.aurasPlayer = {
     [16609] = { -- Warchief's Blessing
         effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
         value = 10,
@@ -136,14 +136,9 @@ _addon.buffData = {
     }
 };
 
--- Buffs the target can have (NYI)
-_addon.targetBuffs = {
-    -- TODO: buffs on the target
+-- Buffs and debuffs the target can have (NYI)
+_addon.aurasTarget = {
+    -- TODO: auras on the target
     -- e.g. pala blessing for more heal, mage magic buffy thingy, etc.
-};
-
--- Debuffs the target can have (NYI)
-_addon.debuffData = {
-    -- TODO: debuffs on the target
     -- e.g. shadow weaving, mage frosty thingy, etc.
 };

@@ -271,11 +271,11 @@ function _addon:UpdateBuffs(clearOnly)
         local name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
         local usedKey;
         while name do
-            if self.buffData[spellId] ~= nil or self.buffData[name] ~= nil then
-                local buffdata = self.buffData[spellId];
+            if self.aurasPlayer[spellId] ~= nil or self.aurasPlayer[name] ~= nil then
+                local buffdata = self.aurasPlayer[spellId];
                 usedKey = spellId;
                 if buffdata == nil then
-                    buffdata = self.buffData[name];
+                    buffdata = self.aurasPlayer[name];
                     usedKey = name;
                 end
 
@@ -329,7 +329,7 @@ function _addon:UpdateBuffs(clearOnly)
     for usedKeyIt, _ in pairs(activeRelevantBuffs) do
         if activeRelevantBuffs[usedKeyIt] == false then
             self:PrintDebug("Remove buff " .. usedKeyIt);
-            local buffdata = self.buffData[usedKeyIt];
+            local buffdata = self.aurasPlayer[usedKeyIt];
             local name = usedKeyIt;
 
             if type(name) == "number" then
@@ -357,12 +357,12 @@ end
 --- Simulate having a buff.
 ---@param spellId number
 function _addon:DebugApplyBuff(spellId)
-    local buffdata = self.buffData[spellId];
+    local buffdata = self.aurasPlayer[spellId];
     local name = GetSpellInfo(spellId);
     local usedKey = spellId;
     local usedSlot = 32;
     if buffdata == nil then
-        buffdata = self.buffData[name];
+        buffdata = self.aurasPlayer[name];
         usedKey = name;
     end
 

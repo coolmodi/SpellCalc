@@ -189,13 +189,13 @@ _addon.talentData = {
     },
 };
 
-_addon.buffData[12042] = { -- Arcane Power
+_addon.aurasPlayer[12042] = { -- Arcane Power
     effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
     affectSpell = {12589815},
     value = 30,
 };
 
-_addon.buffData[MAGE_ARMOR] = {
+_addon.aurasPlayer[MAGE_ARMOR] = {
     effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
     value = 30,
 };
