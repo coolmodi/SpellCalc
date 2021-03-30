@@ -302,23 +302,25 @@ function _addon:UpdateBuffs(clearOnly)
         end
     end
 
+    -- TODO: Doesn't work for same enchant on both weapons! Will only apply one effect.
+    -- Will this stay relevant in TBC? MP5 should be available from the API then, are there other enchants?
     local hasMhEnch, _, _, mhEnchId, hasOhEnch, _, _, ohEnchId = GetWeaponEnchantInfo();
 
-    if hasMhEnch and self.buffData[mhEnchId] ~= nil then
-        local enchName = self.buffData[mhEnchId].name.."-MH";
+    if hasMhEnch and self.enchantData[mhEnchId] ~= nil then
+        local enchName = self.enchantData[mhEnchId].name.."-MH";
         if activeRelevantBuffs[mhEnchId] == nil then
             self:PrintDebug("Add buff " .. enchName);
-            ApplyBuffEffect(self.buffData[mhEnchId], mhEnchId, enchName, -1);
+            ApplyBuffEffect(self.enchantData[mhEnchId], mhEnchId, enchName, -1);
             buffsChanged = true;
         end
         activeRelevantBuffs[mhEnchId] = true;
     end
 
-    if hasOhEnch and self.buffData[ohEnchId] ~= nil then
-        local enchName = self.buffData[ohEnchId].name.."-OH";
+    if hasOhEnch and self.enchantData[ohEnchId] ~= nil then
+        local enchName = self.enchantData[ohEnchId].name.."-OH";
         if activeRelevantBuffs[ohEnchId] == nil then
             self:PrintDebug("Add buff " .. enchName);
-            ApplyBuffEffect(self.buffData[ohEnchId], ohEnchId, enchName, -2);
+            ApplyBuffEffect(self.enchantData[ohEnchId], ohEnchId, enchName, -2);
             buffsChanged = true;
         end
         activeRelevantBuffs[ohEnchId] = true;

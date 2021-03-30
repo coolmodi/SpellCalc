@@ -464,8 +464,14 @@ local BuffData = {
     condition = 0,
     ---@type nil|string
     ttValue = "",
-    ---@type nil|string
-    name = "",
 }
 ---@type table<number|string, BuffData>
 _addon.buffData = {};
+
+---@class EnchantData : AuraEffect
+local EnchantData = {
+    ---@type string
+    name = "",
+}
+---@type table<number, EnchantData>
+_addon.enchantData = {};

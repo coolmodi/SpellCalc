@@ -88,67 +88,44 @@ _addon.buffData = {
         affectMask = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
         value = 100,
     },
-    [2624] = { -- Minor Mana Oil (Temp enchant ID!)
-        name = GetSpellInfo(25118),
-        effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 4,
-    },
-    [2625] = { -- Lesser Mana Oil (Temp enchant ID!)
-        name = GetSpellInfo(25120),
-        effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 8,
-    },
-    [2629] = { -- Brilliant Mana Oil (Temp enchant ID!)
-        name = GetSpellInfo(25123),
-        effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 12,
-    },
 
     [30880] = { -- Echoes of Lordaeron H 1
-        name = GetSpellInfo(30880),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
         value = 1
     },
     [30683] = { -- Echoes of Lordaeron H 2
-        name = GetSpellInfo(30683),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
         value = 2
     },
     [30682] = { -- Echoes of Lordaeron H 3
-        name = GetSpellInfo(30682),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
         value = 3
     },
     [29520] = { -- Echoes of Lordaeron H 4
-        name = GetSpellInfo(29520),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
         value = 5
     },
 
     [11413] = { -- Echoes of Lordaeron A 1
-        name = GetSpellInfo(11413),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
         value = 1
     },
     [11414] = { -- Echoes of Lordaeron A 2
-        name = GetSpellInfo(11414),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
         value = 2
     },
     [11415] = { -- Echoes of Lordaeron A 3
-        name = GetSpellInfo(11415),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
         value = 3
     },
     [1386] = { -- Echoes of Lordaeron A 4
-        name = GetSpellInfo(1386),
         effect = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD + _addon.CREATURE_TYPE_MASK.DEMON,
         value = 5
