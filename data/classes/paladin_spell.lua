@@ -1126,67 +1126,67 @@ _addon.spellRankInfo = {
 };
 
 _addon.aurasPlayer[21084] = { -- Seal of Righteousness(Rank 1)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20187
 };
 
 _addon.aurasPlayer[20287] = { -- Seal of Righteousness(Rank 2)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20280
 };
 
 _addon.aurasPlayer[20288] = { -- Seal of Righteousness(Rank 3)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20281
 };
 
 _addon.aurasPlayer[20289] = { -- Seal of Righteousness(Rank 4)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20282
 };
 
 _addon.aurasPlayer[20375] = { -- Seal of Command(Rank 1)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20467
 };
 
 _addon.aurasPlayer[20915] = { -- Seal of Command(Rank 2)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20963
 };
 
 _addon.aurasPlayer[20290] = { -- Seal of Righteousness(Rank 5)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20283
 };
 
 _addon.aurasPlayer[20918] = { -- Seal of Command(Rank 3)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20964
 };
 
 _addon.aurasPlayer[20291] = { -- Seal of Righteousness(Rank 6)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20284
 };
 
 _addon.aurasPlayer[20919] = { -- Seal of Command(Rank 4)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20965
 };
 
 _addon.aurasPlayer[20292] = { -- Seal of Righteousness(Rank 7)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20285
 };
 
 _addon.aurasPlayer[20293] = { -- Seal of Righteousness(Rank 8)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20286
 };
 
 _addon.aurasPlayer[20920] = { -- Seal of Command(Rank 5)
-    effect = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 20966
 };
 

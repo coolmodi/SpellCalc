@@ -101,7 +101,7 @@ local effectCustom = {
     [EFFECT_TYPE.CONDITION_TRIGGER] = function(apply, name, value)
         conditionsActive = conditionsActive + value;
         _addon:PrintDebug("Condition change!");
-        _addon:UpdateBuffs();
+        _addon:UpdatePlayerAuras();
     end,
     [EFFECT_TYPE.JUDGEMENT_SPELL] = function(apply, name, value)
         if value > 0 then
@@ -116,64 +116,59 @@ local effectCustom = {
     end
 }
 
---- Change buff effect value (add/remove)
+--- Apply or remove an aura effect.
 ---@param apply boolean @True to apply, false to remove
 ---@param name string @The name of the buff
----@param effect number @The effect type
+---@param effectBase AuraEffectBase
 ---@param value number @The effect value
----@param affectMask number|nil @The mask of affected things if applicable
----@param affectSpell number[]|nil @The affected spell set if applicable
-local function ChangeBuff(apply, name, effect, value, affectMask, affectSpell)
+local function AuraEffectUpdate(apply, name, effectBase, value)
     if apply == false then
         value = -value;
     end
-    _addon:PrintDebug(("Change buff %s effect %d > %f"):format(name, effect, value));
+    _addon:PrintDebug(("Change buff %s effect %d > %f"):format(name, effectBase.type, value));
 
-    if affectSpell and effectAffectSpellSet[effect] then
-        ApplyOrRemoveSpellSet(apply, name, value, effectAffectSpellSet[effect], affectSpell);
+    if effectBase.affectSpell and effectAffectSpellSet[effectBase.type] then
+        ApplyOrRemoveSpellSet(apply, name, value, effectAffectSpellSet[effectBase.type], effectBase.affectSpell);
         return;
     end
 
-    if effectSimpleStat[effect] then
-        ApplyOrRemove(apply, value, effectSimpleStat[effect], name);
+    if effectSimpleStat[effectBase.type] then
+        ApplyOrRemove(apply, value, effectSimpleStat[effectBase.type], name);
         return;
     end
 
-    if affectMask and effectAffectMask[effect] then
-        ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effect], affectMask);
+    if effectBase.affectMask and effectAffectMask[effectBase.type] then
+        ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effectBase.type], effectBase.affectMask);
         return;
     end
 
-    if effectCustom[effect] then
-        effectCustom[effect](apply, name, value);
+    if effectCustom[effectBase.type] then
+        effectCustom[effectBase.type](apply, name, value);
         return;
     end
 
-    _addon:PrintError("Aura "..name.." uses unknown effect "..effect.." or invalid effect setup! Report this please.");
+    _addon:PrintError("Aura "..name.." uses unknown effect "..effectBase.type.." or invalid effect setup! Report this please.");
 end
 
 --- Apply a buff
 ---@param name string @The name of the buff
----@param effect number @The effect type
+---@param effectBase AuraEffectBase
 ---@param value number @The effect value
----@param affectMask number|nil @The mask of affected things if applicable
----@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
-function _addon:ApplyBuff(name, effect, value, affectMask, affectSpell)
-    ChangeBuff(true, name, effect, value, affectMask, affectSpell);
+function _addon:ApplyAuraEffect(name, effectBase, value)
+    AuraEffectUpdate(true, name, effectBase, value);
 end
 
 --- Remove a previously applied buff
 ---@param name string @The name of the buff
----@param effect number @The effect type
+---@param effectBase AuraEffectBase
 ---@param value number @The effect value
----@param affectMask number|nil @The mask of affected things if applicable
----@param affectSpell number[]|nil @The spells it affects, nil if no specific spell(s) affected
-function _addon:RemoveBuff(name, effect, value, affectMask, affectSpell)
-    ChangeBuff(false, name, effect, value, affectMask, affectSpell);
+function _addon:RemoveAuraEffect(name, effectBase, value)
+    AuraEffectUpdate(false, name, effectBase, value);
 end
 
 ---@type table<number, boolean>
 local activeRelevantBuffs = {};
+---@type table<string, number>
 local buffValueCache = {};
 
 local scanTt = CreateFrame("GameTooltip", "SpellCalcScanTooltip", nil, "GameTooltipTemplate");
@@ -193,12 +188,12 @@ local function GetBuffDescription(slot)
 end
 
 --- Apply buff effect using tooltip or hardcoded values.
----@param effectData any
+---@param playerAuraEffect PlayerAuraEffect
 ---@param usedKey string
 ---@param name string
 ---@param buffSlot number|nil
 ---@param effectSlot number|nil
-local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
+local function ApplyPlayerAuraEffect(playerAuraEffect, usedKey, name, buffSlot, effectSlot)
     local value;
 
     if effectSlot then
@@ -206,10 +201,10 @@ local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
         name = name.."-"..effectSlot;
     end
 
-    if effectData.ttValue then
+    if playerAuraEffect.ttValue then
         local desc = GetBuffDescription(buffSlot);
         if desc then
-            value = tonumber(string.match(desc, effectData.ttValue));
+            value = tonumber(string.match(desc, playerAuraEffect.ttValue));
             buffValueCache[usedKey] = value;
         else
             -- TODO: for some reason totem buffs just don't work here,
@@ -222,23 +217,23 @@ local function ApplyBuffEffect(effectData, usedKey, name, buffSlot, effectSlot)
     end
 
     if value == nil then
-        if effectData.value then
-            value = effectData.value;
+        if playerAuraEffect.value then
+            value = playerAuraEffect.value;
         else
             _addon:PrintError("Can't resolve value for buff " .. name .. " in slot " .. buffSlot .. "! Buff will be ignored!");
             value = 0;
         end
     end
 
-    ChangeBuff(true, name, effectData.effect, value, effectData.affectMask, effectData.affectSpell);
+    AuraEffectUpdate(true, name, playerAuraEffect, value);
 end
 
 --- Remove buff effect using cached tooltip or hardcoded values.
----@param effectData any
+---@param playerAuraEffect PlayerAuraEffect
 ---@param usedKey string
 ---@param name string
 ---@param effectSlot number|nil
-local function RemoveBuffEffect(effectData, usedKey, name, effectSlot)
+local function RemovePlayerAuraEffect(playerAuraEffect, usedKey, name, effectSlot)
     local value;
 
     if effectSlot then
@@ -250,15 +245,15 @@ local function RemoveBuffEffect(effectData, usedKey, name, effectSlot)
         value = buffValueCache[usedKey];
         buffValueCache[usedKey] = nil;
     else
-        value = effectData.value;
+        value = playerAuraEffect.value;
     end
 
-    ChangeBuff(false, name, effectData.effect, value, effectData.affectMask, effectData.affectSpell);
+    AuraEffectUpdate(false, name, playerAuraEffect, value);
 end
 
---- Update player buffs
+--- Update player auras
 ---@param clearOnly boolean
-function _addon:UpdateBuffs(clearOnly)
+function _addon:UpdatePlayerAuras(clearOnly)
     self:PrintDebug("Updating buffs");
 
     for k, v in pairs(activeRelevantBuffs) do
@@ -280,10 +275,10 @@ function _addon:UpdateBuffs(clearOnly)
                         self:PrintDebug("Add buff " .. name .. " (" .. spellId .. ") slot " .. i);
 
                         if buffdata.effects == nil then
-                            ApplyBuffEffect(buffdata, spellId, name, i);
+                            ApplyPlayerAuraEffect(buffdata, spellId, name, i);
                         else
                             for k, effect in ipairs(buffdata.effects) do
-                                ApplyBuffEffect(effect, spellId, name, i, k);
+                                ApplyPlayerAuraEffect(effect, spellId, name, i, k);
                             end
                         end
 
@@ -305,7 +300,7 @@ function _addon:UpdateBuffs(clearOnly)
         local enchName = self.enchantData[mhEnchId].name.."-MH";
         if activeRelevantBuffs[mhEnchId] == nil then
             self:PrintDebug("Add buff " .. enchName);
-            ApplyBuffEffect(self.enchantData[mhEnchId], mhEnchId, enchName, -1);
+            ApplyPlayerAuraEffect(self.enchantData[mhEnchId], mhEnchId, enchName, -1);
             buffsChanged = true;
         end
         activeRelevantBuffs[mhEnchId] = true;
@@ -315,7 +310,7 @@ function _addon:UpdateBuffs(clearOnly)
         local enchName = self.enchantData[ohEnchId].name.."-OH";
         if activeRelevantBuffs[ohEnchId] == nil then
             self:PrintDebug("Add buff " .. enchName);
-            ApplyBuffEffect(self.enchantData[ohEnchId], ohEnchId, enchName, -2);
+            ApplyPlayerAuraEffect(self.enchantData[ohEnchId], ohEnchId, enchName, -2);
             buffsChanged = true;
         end
         activeRelevantBuffs[ohEnchId] = true;
@@ -328,10 +323,10 @@ function _addon:UpdateBuffs(clearOnly)
             local name = GetSpellInfo(spellId);
 
             if buffdata.effects == nil then
-                RemoveBuffEffect(buffdata, spellId, name);
+                RemovePlayerAuraEffect(buffdata, spellId, name);
             else
                 for k, effect in ipairs(buffdata.effects) do
-                    RemoveBuffEffect(effect, spellId, name, k)
+                    RemovePlayerAuraEffect(effect, spellId, name, k)
                 end
             end
 
@@ -360,10 +355,10 @@ function _addon:DebugApplyBuff(spellId)
     self:PrintWarn("Add buff " .. name .. " (" .. spellId .. ") in slot " .. usedSlot);
 
     if buffdata.effects == nil then
-        ApplyBuffEffect(buffdata, spellId, name, usedSlot);
+        ApplyPlayerAuraEffect(buffdata, spellId, name, usedSlot);
     else
         for k, effect in ipairs(buffdata.effects) do
-            ApplyBuffEffect(effect, spellId, name, usedSlot, k);
+            ApplyPlayerAuraEffect(effect, spellId, name, usedSlot, k);
         end
     end
 
@@ -400,7 +395,7 @@ function _addon:UpdateTalents(forceTalents)
                     value = value + effect.base;
                 end
                 local useName = (k > 1) and oldIdName.."-"..k or oldIdName;
-                ChangeBuff(false, useName, effect.type, value, effect.affectMask, effect.affectSpell);
+                AuraEffectUpdate(false, useName, effect, value);
             end
             activeRelevantTalents[name] = nil;
         end
@@ -415,7 +410,7 @@ function _addon:UpdateTalents(forceTalents)
                     value = value + effect.base;
                 end
                 local useName = (k > 1) and idName.."-"..k or idName;
-                ChangeBuff(true, useName, effect.type, value, effect.affectMask, effect.affectSpell);
+                AuraEffectUpdate(true, useName, effect, value);
             end
             activeRelevantTalents[name] = curRank;
         end

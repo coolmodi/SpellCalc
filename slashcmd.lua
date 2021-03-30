@@ -14,8 +14,8 @@ SlashCmdList["SPELLCALC"] = function(arg)
     end
 
     if arg == "ub" then
-        _addon:UpdateBuffs(true);
-        _addon:UpdateBuffs();
+        _addon:UpdatePlayerAuras(true);
+        _addon:UpdatePlayerAuras();
         return;
     end
 
