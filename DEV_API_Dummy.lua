@@ -465,7 +465,7 @@ local PlayerAura = {
     ---@type nil|string
     ttValue = "",
 }
----@type table<number|string, PlayerAura>
+---@type table<number, PlayerAura>
 _addon.aurasPlayer = {};
 
 ---@class EnchantData : AuraEffect

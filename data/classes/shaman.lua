@@ -4,8 +4,6 @@ if playerClass ~= "SHAMAN" then
     return;
 end
 
-local LIGHTNING_SHIELD = GetSpellInfo(8788);
-
 _addon.talentData = {
     { -- Concussion
         tree = 1,
@@ -108,8 +106,15 @@ _addon.aurasPlayer[16188] = { -- Nature's Swiftness dummy
     value = 0
 };
 
-_addon.aurasPlayer[LIGHTNING_SHIELD] = { -- for T3 setbonus
+local T3LightningShieldEffect = {
     condition = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS,
     effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
     value = 15,
 }
+_addon.aurasPlayer[324] = T3LightningShieldEffect;
+_addon.aurasPlayer[325] = T3LightningShieldEffect;
+_addon.aurasPlayer[905] = T3LightningShieldEffect;
+_addon.aurasPlayer[945] = T3LightningShieldEffect;
+_addon.aurasPlayer[8134] = T3LightningShieldEffect;
+_addon.aurasPlayer[10431] = T3LightningShieldEffect;
+_addon.aurasPlayer[10432] = T3LightningShieldEffect;

@@ -4,8 +4,6 @@ if playerClass ~= "MAGE" then
     return;
 end
 
-local MAGE_ARMOR = GetSpellInfo(6117);
-
 _addon.talentData = {
     { -- Arcane Subtlety
         tree = 1,
@@ -195,7 +193,10 @@ _addon.aurasPlayer[12042] = { -- Arcane Power
     value = 30,
 };
 
-_addon.aurasPlayer[MAGE_ARMOR] = {
+local MageArmorEffect = {
     effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
     value = 30,
 };
+_addon.aurasPlayer[6117] = MageArmorEffect;
+_addon.aurasPlayer[22782] = MageArmorEffect;
+_addon.aurasPlayer[22783] = MageArmorEffect;

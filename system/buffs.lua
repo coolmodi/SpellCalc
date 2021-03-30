@@ -172,6 +172,7 @@ function _addon:RemoveBuff(name, effect, value, affectMask, affectSpell)
     ChangeBuff(false, name, effect, value, affectMask, affectSpell);
 end
 
+---@type table<number, boolean>
 local activeRelevantBuffs = {};
 local buffValueCache = {};
 
@@ -269,32 +270,26 @@ function _addon:UpdateBuffs(clearOnly)
     if not clearOnly then
         local i = 1;
         local name, _, count, _, _, _, _, _, _, spellId = UnitBuff("player", i);
-        local usedKey;
         while name do
-            if self.aurasPlayer[spellId] ~= nil or self.aurasPlayer[name] ~= nil then
+            if self.aurasPlayer[spellId] ~= nil then
                 local buffdata = self.aurasPlayer[spellId];
-                usedKey = spellId;
-                if buffdata == nil then
-                    buffdata = self.aurasPlayer[name];
-                    usedKey = name;
-                end
 
                 if buffdata.condition == nil or buffdata.condition == 0 
                 or bit.band(buffdata.condition, conditionsActive) == buffdata.condition then
-                    if activeRelevantBuffs[usedKey] == nil then
-                        self:PrintDebug("Add buff " .. name .. " (" .. usedKey .. ") slot " .. i);
+                    if activeRelevantBuffs[spellId] == nil then
+                        self:PrintDebug("Add buff " .. name .. " (" .. spellId .. ") slot " .. i);
 
                         if buffdata.effects == nil then
-                            ApplyBuffEffect(buffdata, usedKey, name, i);
+                            ApplyBuffEffect(buffdata, spellId, name, i);
                         else
                             for k, effect in ipairs(buffdata.effects) do
-                                ApplyBuffEffect(effect, usedKey, name, i, k);
+                                ApplyBuffEffect(effect, spellId, name, i, k);
                             end
                         end
 
                         buffsChanged = true;
                     end
-                    activeRelevantBuffs[usedKey] = true;
+                    activeRelevantBuffs[spellId] = true;
                 end
             end
             i = i + 1;
@@ -326,25 +321,21 @@ function _addon:UpdateBuffs(clearOnly)
         activeRelevantBuffs[ohEnchId] = true;
     end
 
-    for usedKeyIt, _ in pairs(activeRelevantBuffs) do
-        if activeRelevantBuffs[usedKeyIt] == false then
-            self:PrintDebug("Remove buff " .. usedKeyIt);
-            local buffdata = self.aurasPlayer[usedKeyIt];
-            local name = usedKeyIt;
-
-            if type(name) == "number" then
-                name = GetSpellInfo(name);
-            end
+    for spellId, _ in pairs(activeRelevantBuffs) do
+        if activeRelevantBuffs[spellId] == false then
+            self:PrintDebug("Remove buff " .. spellId);
+            local buffdata = self.aurasPlayer[spellId];
+            local name = GetSpellInfo(spellId);
 
             if buffdata.effects == nil then
-                RemoveBuffEffect(buffdata, usedKeyIt, name);
+                RemoveBuffEffect(buffdata, spellId, name);
             else
                 for k, effect in ipairs(buffdata.effects) do
-                    RemoveBuffEffect(effect, usedKeyIt, name, k)
+                    RemoveBuffEffect(effect, spellId, name, k)
                 end
             end
 
-            activeRelevantBuffs[usedKeyIt] = nil;
+            activeRelevantBuffs[spellId] = nil;
             buffsChanged = true;
         end
     end
@@ -359,25 +350,20 @@ end
 function _addon:DebugApplyBuff(spellId)
     local buffdata = self.aurasPlayer[spellId];
     local name = GetSpellInfo(spellId);
-    local usedKey = spellId;
     local usedSlot = 32;
-    if buffdata == nil then
-        buffdata = self.aurasPlayer[name];
-        usedKey = name;
-    end
 
     if buffdata == nil then
         self:PrintError("No data for ID "..spellId);
         return;
     end
 
-    self:PrintWarn("Add buff " .. name .. " (" .. usedKey .. ") in slot " .. usedSlot);
+    self:PrintWarn("Add buff " .. name .. " (" .. spellId .. ") in slot " .. usedSlot);
 
     if buffdata.effects == nil then
-        ApplyBuffEffect(buffdata, usedKey, name, usedSlot);
+        ApplyBuffEffect(buffdata, spellId, name, usedSlot);
     else
         for k, effect in ipairs(buffdata.effects) do
-            ApplyBuffEffect(effect, usedKey, name, usedSlot, k);
+            ApplyBuffEffect(effect, spellId, name, usedSlot, k);
         end
     end
 
