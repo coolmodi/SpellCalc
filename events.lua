@@ -46,6 +46,7 @@ function handlers.UNIT_AURA(unit)
         return;
     end
     _addon:UpdatePlayerAuras();
+    _addon:UpdateWeaponEnchants();
 end
 
 function handlers.UNIT_STATS(unit)

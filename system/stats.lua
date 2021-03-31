@@ -333,6 +333,7 @@ function _addon:FullUpdate()
     self:UpdateSpellPower();
     self:UpdateDmgDoneMods();
     self:UpdatePlayerAuras();
+    self:UpdateWeaponEnchants();
     self:UpdateTalents();
     self:UpdateItems();
     self.Target:Update();
