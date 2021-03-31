@@ -144,7 +144,7 @@ local function EquipItem(itemId, slotId)
 
     if _addon.itemEffects[itemId] then
         for _, effect in ipairs(_addon.itemEffects[itemId]) do
-            _addon:ApplyBuff(itemName, effect.type, effect.value, effect.affectMask, effect.affectSpell);
+            _addon:ApplyAuraEffect(itemName, effect, effect.value);
         end
         _addon:TriggerUpdate();
     end
@@ -171,7 +171,7 @@ local function UnequipItem(slotId)
 
     if _addon.itemEffects[items[slotId]] then
         for _, effect in ipairs(_addon.itemEffects[items[slotId]]) do
-            _addon:RemoveAuraEffect(itemName, effect.type, effect.value, effect.affectMask, effect.affectSpell);
+            _addon:RemoveAuraEffect(itemName, effect, effect.value);
         end
         _addon:TriggerUpdate();
     end
