@@ -21,8 +21,7 @@ local ITEM_SLOTS = {
     [18] = "ranged",
 };
 
-local retryFrame = CreateFrame("Frame");
-local retryTimer = 0;
+local missingItems = { _count = 0 };
 local items = {};
 local sets = {};
 local weaponSubClass = {
@@ -95,20 +94,17 @@ local function ChangeItemEffects(itemData, itemName, remove)
     _addon:TriggerUpdate();
 end
 
---- Trigger full item update when time is up
--- If items are unknown we need to check back after a moment
--- Also on fresh login for some items now for some reason!
--- See EquipItem(), it will trigger this to happen again and again until item names can be resolved
--- TODO: Could use items ID as name, it's just for internal and debug use anyways
-local function RetryUpdate(self, delta)
-    retryTimer = retryTimer + delta;
-    if retryTimer < 0.25 then
-        return;
+---Handle item update after recieved item data.
+---@param itemId number
+function _addon:UpdateRecievedItemData(itemId)
+    if missingItems[itemId] then
+        missingItems[itemId] = 0;
+        missingItems._count = missingItems._count - 1;
+        if missingItems._count == 0 then
+            self:PrintDebug("Data for all items recieved, updating items");
+            self:UpdateItems();
+        end
     end
-    retryTimer = 0;
-    _addon:PrintDebug("Retry item update");
-    retryFrame:SetScript("OnUpdate", nil);
-    _addon:UpdateItems();
 end
 
 --- Equip item for slot
@@ -117,12 +113,15 @@ end
 local function EquipItem(itemId, slotId)
     _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
     local itemData = _addon.itemData[itemId];
-    local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, classID, subclassID  = GetItemInfo(itemId);
+    local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, _, subclassID  = GetItemInfo(itemId);
     local setId = _addon.setItemData[itemId];
 
     if itemName == nil then
-        _addon:PrintDebug("Item " .. itemId .. " name unknown, trigger retry!");
-        retryFrame:SetScript("OnUpdate", RetryUpdate);
+        if not missingItems[itemId] then
+            missingItems[itemId] = true;
+            missingItems._count = missingItems._count + 1;
+            _addon:PrintDebug("Don't have data for item " .. itemId .. " slot " .. slotId .. ", waiting for data");
+        end
         return;
     end
 
@@ -199,39 +198,32 @@ end
 
 --- Update all item slots
 function _addon:UpdateItems()
-    _addon:PrintDebug("Update items");
-
+    self:PrintDebug("Update items");
     for slot, slotName in pairs(ITEM_SLOTS) do
         local itemId = GetInventoryItemID("player", slot);
-
         if itemId ~= nil then
             local durability = GetInventoryItemDurability(slot);
-
             if items[slot] ~= itemId  then
                 if items[slot] ~= nil then
-                    _addon:PrintDebug("Unequip old item from slot "..slotName);
+                    self:PrintDebug("Unequip old item from slot "..slotName);
                     UnequipItem(slot);
                 end
-
                 if durability == nil or durability > 0 then
-                    _addon:PrintDebug("Equip new item " .. itemId .. " in slot "..slotName);
+                    self:PrintDebug("Equip new item " .. itemId .. " in slot "..slotName);
                     EquipItem(itemId, slot);
                 end
-
             else
                 if durability ~= nil and durability == 0 then
-                    _addon:PrintDebug("Unequip item " .. itemId .. " in slot "..slotName.." because it is broken");
+                    self:PrintDebug("Unequip item " .. itemId .. " in slot "..slotName.." because it is broken");
                     UnequipItem(slot);
                 end
             end
-
         else
             if items[slot] ~= nil then
-                _addon:PrintDebug("Unequip old item from slot "..slotName);
+                self:PrintDebug("Unequip old item from slot "..slotName);
                 UnequipItem(slot);
             end
         end
-
     end
 end
 

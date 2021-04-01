@@ -135,6 +135,10 @@ function handlers.UNIT_POWER_UPDATE(unit, powerType)
     _addon:UpdatePower(powerType);
 end
 
+function handlers.GET_ITEM_INFO_RECEIVED(itemId)
+    _addon:UpdateRecievedItemData(itemId);
+end
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)
