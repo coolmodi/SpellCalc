@@ -1,38 +1,15 @@
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { readDBCSVtoMap } from "./CSVReader";
-import { AuraHandlers } from "./ItemAuraHandlers";
+import { AuraHandlers, USELESS_AURAS } from "./ItemAuraHandlers";
 import { createEffectLua, createFileHead, orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
-    [AURA_TYPE.SPELL_AURA_MOD_ATTACK_POWER]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_RESISTANCE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SKILL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_CRIT_PERCENT]: true, // TODO: why do I ignore this?
-    [AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE]: true, // spell bonus damage
-    [AURA_TYPE.SPELL_AURA_MOD_HEALING_DONE]: true, // spell bonus heal
-    [AURA_TYPE.SPELL_AURA_MOD_INCREASE_SPEED]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_STAT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE]: true, // can get from ingame API
-    [AURA_TYPE.SPELL_AURA_MOD_SPELL_HIT_CHANCE]: true, // can get from ingame API
-    [AURA_TYPE.SPELL_AURA_MOD_PARRY_PERCENT]: true,
     [AURA_TYPE.SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS]: true, // TODO: future
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER_VERSUS]: true, // TODO: future
-    [AURA_TYPE.SPELL_AURA_MOD_THREAT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SPELL_CRIT_CHANCE_SCHOOL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_POWER_COST_SCHOOL_PCT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_INCREASE_ENERGY]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SHIELD_BLOCKVALUE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SPEED_ALWAYS]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_INCREASE_SPEED]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_INCREASE_SWIM_SPEED]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_DODGE_PERCENT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_BLOCK_PERCENT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_MECHANIC_RESISTANCE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_CRITICAL_THREAT]: true,
 }
+Object.assign(AURA_TYPES_TO_IGNORE, USELESS_AURAS);
 
 interface ItemSet
 {

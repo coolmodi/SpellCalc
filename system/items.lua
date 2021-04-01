@@ -30,19 +30,6 @@ local weaponSubClass = {
     ranged = nil
 };
 
---- Apply or remove effect for destination
----@param value number
----@param dest table
----@param name string
-local function ApplyOrRemove(value, dest, name)
-    dest.val = dest.val + value;
-    if value > 0 then
-        table.insert(dest.buffs, name);
-    else
-        _addon:RemoveTableEntry(dest.buffs, name);
-    end
-end
-
 --- Update set item count and add/remove buffs as needed
 ---@param setId number
 ---@param change number
@@ -74,26 +61,6 @@ local function UpdateSet(setId, change)
     end
 end
 
----@param itemData any
----@param itemName string
----@param remove boolean
-local function ChangeItemEffects(itemData, itemName, remove)
-    local val;
-    if itemData.mp5 then
-        val = remove and -itemData.mp5 or itemData.mp5;
-        ApplyOrRemove(val, _addon.stats.mp5, itemName);
-    end
-
-    if itemData.spellPen then
-        val = remove and -itemData.spellPen or itemData.spellPen;
-        for i=3,7 do
-            ApplyOrRemove(val, _addon.stats.schoolModSpellPen[i], itemName);
-        end
-    end
-
-    _addon:TriggerUpdate();
-end
-
 ---Handle item update after recieved item data.
 ---@param itemId number
 function _addon:UpdateRecievedItemData(itemId)
@@ -112,7 +79,6 @@ end
 ---@param slotId number
 local function EquipItem(itemId, slotId)
     _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
-    local itemData = _addon.itemData[itemId];
     local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, _, subclassID  = GetItemInfo(itemId);
     local setId = _addon.setItemData[itemId];
 
@@ -136,11 +102,6 @@ local function EquipItem(itemId, slotId)
         end
     end
 
-    if itemData then
-        _addon:PrintDebug("Item has effect");
-        ChangeItemEffects(itemData, itemName);
-    end
-
     if _addon.itemEffects[itemId] then
         for _, effect in ipairs(_addon.itemEffects[itemId]) do
             _addon:ApplyAuraEffect(itemName, effect, effect.value);
@@ -159,14 +120,8 @@ end
 --- Unequip previously equipped item
 ---@param slotId number
 local function UnequipItem(slotId)
-    local itemData = _addon.itemData[items[slotId]];
     local itemName = GetItemInfo(items[slotId]);
     local setId = _addon.setItemData[items[slotId]];
-
-    if itemData then
-        _addon:PrintDebug("Item had effect");
-        ChangeItemEffects(itemData, itemName, true);
-    end
 
     if _addon.itemEffects[items[slotId]] then
         for _, effect in ipairs(_addon.itemEffects[items[slotId]]) do

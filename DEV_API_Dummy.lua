@@ -379,20 +379,6 @@ _addon.spellBaseInfo = {};
 ---@type table<integer, SpellRankInfo>
 _addon.spellRankInfo = {};
 
----@class ItemDataEntry
-local ItemDataEntry = {
-    ---@type number|nil
-    spellHit = nil,
-    ---@type number|nil
-    hit = nil,
-    ---@type number|nil
-    mp5 = nil,
-    ---@type number|nil
-    spellPen = nil
-}
----@type table <integer, ItemDataEntry>
-_addon.itemData = {}
-
 _addon.spellClassSet = {
     ---@type table<number, number[]>
     [1] = {},

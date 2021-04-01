@@ -24,7 +24,6 @@ data/auras.lua
 data/enchants.lua
 data/npcResistances.lua
 
-data/itemData.lua
 data/itemEffects.lua
 data/itemSetData.lua
 data/classes/druid_spell.lua

@@ -1,62 +1,25 @@
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { readDBCSVtoMap } from "./CSVReader";
-import { AuraHandlers } from "./ItemAuraHandlers";
+import { AuraHandlers, USELESS_AURAS } from "./ItemAuraHandlers";
 import { createEffectLua, createFileHead, getItemDbData, orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
-    [AURA_TYPE.SPELL_AURA_MOD_ATTACK_POWER]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_RESISTANCE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SKILL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_CRIT_PERCENT]: true, // TODO: why do I ignore this?
-    [AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE]: true, // spell bonus damage
-    [AURA_TYPE.SPELL_AURA_MOD_HEALING_DONE]: true, // spell bonus heal
-    [AURA_TYPE.SPELL_AURA_MOD_INCREASE_SPEED]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_STAT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE]: true, // can get from ingame API
-    [AURA_TYPE.SPELL_AURA_MOD_SPELL_HIT_CHANCE]: true, // can get from ingame API
-    [AURA_TYPE.SPELL_AURA_MOD_PARRY_PERCENT]: true,
+    //[AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN]: true, // TODO: phase out old item system completely
+    //[AURA_TYPE.SPELL_AURA_MOD_TARGET_RESISTANCE]: true, // TODO: phase out old item system completely
+    [AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE_PERCENT]: true,
+    [AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE]: true,
+    [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE]: true,
+    [AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_RANGED_AMMO_HASTE]: true, // TODO: needed or from ingame API?
+    [AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL]: true,
+    [AURA_TYPE.SPELL_AURA_PERIODIC_HEAL]: true,
     [AURA_TYPE.SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS]: true, // TODO: future
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER_VERSUS]: true, // TODO: future
-    [AURA_TYPE.SPELL_AURA_MOD_THREAT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SPELL_CRIT_CHANCE_SCHOOL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_POWER_COST_SCHOOL_PCT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_INCREASE_ENERGY]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SHIELD_BLOCKVALUE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SPEED_ALWAYS]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_INCREASE_SWIM_SPEED]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_DODGE_PERCENT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_BLOCK_PERCENT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_MECHANIC_RESISTANCE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_CRITICAL_THREAT]: true,
-    [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL]: true,
-    [AURA_TYPE.SPELL_AURA_PERIODIC_HEAL]: true,
-    [AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_RANGED_AMMO_HASTE]: true, // TODO: needed or from ingame API?
-    [AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD]: true,
-    [AURA_TYPE.SPELL_AURA_TRACK_RESOURCES]: true,
-    [AURA_TYPE.SPELL_AURA_WATER_BREATHING]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_STEALTH_LEVEL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_HEALTH_REGEN_IN_COMBAT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_STEALTH_DETECT]: true,
-    [AURA_TYPE.SPELL_AURA_MECHANIC_IMMUNITY]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_MOUNTED_SPEED_ALWAYS]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_INVISIBILITY_DETECTION]: true,
-    [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_SPELL_CRIT_CHANCE]: true, // this seems to show up in addon API data
-    [AURA_TYPE.SPELL_AURA_PERIODIC_MANA_LEECH]: true,
-    [AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_HASTE]: true,
-    [AURA_TYPE.SPELL_AURA_SAFE_FALL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_DAMAGE_TAKEN]: true,
-    [AURA_TYPE.SPELL_AURA_FORCE_REACTION]: true,
-    [AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE_PERCENT]: true,
-
-    [AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN]: true, // TODO: phase out old item system completely
-    [AURA_TYPE.SPELL_AURA_MOD_TARGET_RESISTANCE]: true, // TODO: phase out old item system completely
+    [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL]: true, // TODO: check this?
 }
+Object.assign(AURA_TYPES_TO_IGNORE, USELESS_AURAS);
 
 interface ItemEffect
 {
