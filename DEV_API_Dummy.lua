@@ -367,26 +367,6 @@ SpellCalcStatScreen = {}
 
 ---@type AddonEnv
 local _addon = select(2, ...);
----@class TalentEffect
-local TalentEffect = {
-    type = math.random(),
-    ---@type integer[]|nil
-    affectSpell = nil,
-    ---@type integer|nil
-    affectMask = nil,
-    ---@type integer|nil
-    base = nil,
-    perPoint = math.random(),
-}
----@class TalentDataEntry
-local TalentDataEntry = {
-    tree = math.random(),
-    talent = math.random(),
-    ---@type TalentEffect[]
-    effects = {}
-}
----@type TalentDataEntry[]
-_addon.talentData = {}
 
 ---@return table<string,table>
 _addon.ClassSettings = function()
@@ -424,18 +404,22 @@ _addon.spellClassSet = {
     [4] = {},
 };
 
----@class AuraEffect
-local AuraEffect = {
+---@class AuraEffectBase
+local AuraEffectBase = {
     type = 0,
     ---@type number|nil
     affectMask = 0,
     ---@type number[]|nil
     affectSpell = {0,0,0,0},
-    ---@type string|number
+}
+
+---@class UnitAuraEffect : AuraEffectBase
+local UnitAuraEffect = {
+    ---@type number
     value = 0,
 }
 
----@class SetBonusAuraEffect : AuraEffect
+---@class SetBonusAuraEffect : UnitAuraEffect
 local SetBonusAuraEffect = {
     ---@type number
     need = 0
@@ -452,26 +436,42 @@ local ItemSetData = {
 ---@type table<number, ItemSetData>
 _addon.itemSetData = {}
 
----@type table<number, AuraEffect[]>
+---@type table<number, UnitAuraEffect[]>
 _addon.itemEffects = {};
 
 -- TODO: fix this stupid structure
----@class BuffData : AuraEffect
-local BuffData = {
-    ---@type nil|AuraEffect[]
+---@class PlayerAuraEffect : UnitAuraEffect
+local PlayerAura = {
+    ---@type nil|UnitAuraEffect[]
     effects = {},
     ---@type nil|number
     condition = 0,
     ---@type nil|string
     ttValue = "",
 }
----@type table<number|string, BuffData>
-_addon.buffData = {};
+---@type table<number, PlayerAuraEffect>
+_addon.aurasPlayer = {};
 
----@class EnchantData : AuraEffect
+---@class EnchantData : UnitAuraEffect
 local EnchantData = {
     ---@type string
     name = "",
 }
 ---@type table<number, EnchantData>
 _addon.enchantData = {};
+
+---@class TalentEffect : AuraEffectBase
+local TalentEffect = {
+    ---@type integer|nil
+    base = nil,
+    perPoint = math.random(),
+}
+---@class TalentDataEntry
+local TalentDataEntry = {
+    tree = math.random(),
+    talent = math.random(),
+    ---@type TalentEffect[]
+    effects = {}
+}
+---@type TalentDataEntry[]
+_addon.talentData = {}

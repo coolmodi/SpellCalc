@@ -332,7 +332,8 @@ function _addon:FullUpdate()
     self:UpdateStats();
     self:UpdateSpellPower();
     self:UpdateDmgDoneMods();
-    self:UpdateBuffs();
+    self:UpdatePlayerAuras();
+    self:UpdateWeaponEnchants();
     self:UpdateTalents();
     self:UpdateItems();
     self.Target:Update();

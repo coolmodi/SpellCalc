@@ -62,38 +62,38 @@ _addon.talentData = {
     },
 };
 
-_addon.buffData[20216] = { -- Divine Favor
-    effect = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+_addon.aurasPlayer[20216] = { -- Divine Favor
+    type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
     affectSpell = {2147483648 + 1073741824 + 2097152},
     value = 100,
 };
 
-_addon.buffData[20050] = { -- Vengeance 1
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[20050] = { -- Vengeance 1
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.HOLY,
     value = 3
 };
 
-_addon.buffData[20052] = { -- Vengeance 2
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[20052] = { -- Vengeance 2
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.HOLY,
     value = 6
 };
 
-_addon.buffData[20053] = { -- Vengeance 3
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[20053] = { -- Vengeance 3
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.HOLY,
     value = 9
 };
 
-_addon.buffData[20054] = { -- Vengeance 4
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[20054] = { -- Vengeance 4
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.HOLY,
     value = 12
 };
 
-_addon.buffData[20055] = { -- Vengeance 5
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[20055] = { -- Vengeance 5
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.HOLY,
     value = 15
 };

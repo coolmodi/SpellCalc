@@ -70,7 +70,10 @@ slashcmd.lua
 events.lua
 
 system/stats.lua
-system/buffs.lua
+system/aura.lua
+system/weaponEnchants.lua
+system/talents.lua
+system/playerAuras.lua
 system/items.lua
 system/target.lua
 

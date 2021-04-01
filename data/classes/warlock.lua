@@ -137,56 +137,56 @@ _addon.talentData = {
 }
 
 -- Amplify Curse
-_addon.buffData[18288] = {
-    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+_addon.aurasPlayer[18288] = {
+    type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
     affectSpell = {1024},
     value = 50,
 };
 
 -- Demonic Sacrifice Succubus
-_addon.buffData[18791] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[18791] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.SHADOW,
     value = 15,
 };
 
 -- Demonic Sacrifice Imp
-_addon.buffData[18789] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[18789] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.FIRE,
     value = 15,
 };
 
 -- Master Demonologist dmg done
-_addon.buffData[23761] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[23761] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
     value = 2,
 };
-_addon.buffData[23833] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[23833] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
     value = 4,
 };
-_addon.buffData[23834] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[23834] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
     value = 6,
 };
-_addon.buffData[23835] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[23835] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
     value = 8,
 };
-_addon.buffData[23836] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[23836] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
     value = 10,
 };
 
 -- Soul Link
-_addon.buffData[25228] = {
-    effect = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[25228] = {
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
     value = 3,
 };

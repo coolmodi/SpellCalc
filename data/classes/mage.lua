@@ -4,8 +4,6 @@ if playerClass ~= "MAGE" then
     return;
 end
 
-local MAGE_ARMOR = GetSpellInfo(6117);
-
 _addon.talentData = {
     { -- Arcane Subtlety
         tree = 1,
@@ -189,13 +187,16 @@ _addon.talentData = {
     },
 };
 
-_addon.buffData[12042] = { -- Arcane Power
-    effect = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+_addon.aurasPlayer[12042] = { -- Arcane Power
+    type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
     affectSpell = {12589815},
     value = 30,
 };
 
-_addon.buffData[MAGE_ARMOR] = {
-    effect = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+local MageArmorEffect = {
+    type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
     value = 30,
 };
+_addon.aurasPlayer[6117] = MageArmorEffect;
+_addon.aurasPlayer[22782] = MageArmorEffect;
+_addon.aurasPlayer[22783] = MageArmorEffect;

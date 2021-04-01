@@ -64,12 +64,12 @@ local function UpdateSet(setId, change)
         if effectData.need <= newCount then
             if effectData.need > oldCount then
                 _addon:PrintDebug(("Add set bonus %s"):format(bname));
-                _addon:ApplyBuff(bname, effectData.type, effectData.value, effectData.affectMask, effectData.affectSpell);
+                _addon:ApplyAuraEffect(bname, effectData, effectData.value);
             end
         else
             if effectData.need <= oldCount then
                 _addon:PrintDebug(("Remove set bonus %s"):format(bname));
-                _addon:RemoveBuff(bname, effectData.type, effectData.value, effectData.affectMask, effectData.affectSpell);
+                _addon:RemoveAuraEffect(bname, effectData, effectData.value);
             end
         end
     end
@@ -144,7 +144,7 @@ local function EquipItem(itemId, slotId)
 
     if _addon.itemEffects[itemId] then
         for _, effect in ipairs(_addon.itemEffects[itemId]) do
-            _addon:ApplyBuff(itemName, effect.type, effect.value, effect.affectMask, effect.affectSpell);
+            _addon:ApplyAuraEffect(itemName, effect, effect.value);
         end
         _addon:TriggerUpdate();
     end
@@ -171,7 +171,7 @@ local function UnequipItem(slotId)
 
     if _addon.itemEffects[items[slotId]] then
         for _, effect in ipairs(_addon.itemEffects[items[slotId]]) do
-            _addon:RemoveBuff(itemName, effect.type, effect.value, effect.affectMask, effect.affectSpell);
+            _addon:RemoveAuraEffect(itemName, effect, effect.value);
         end
         _addon:TriggerUpdate();
     end
