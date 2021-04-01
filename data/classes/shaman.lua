@@ -108,7 +108,7 @@ _addon.aurasPlayer[16188] = { -- Nature's Swiftness dummy
 
 local T3LightningShieldEffect = {
     condition = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS,
-    effect = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+    type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
     value = 15,
 }
 _addon.aurasPlayer[324] = T3LightningShieldEffect;

@@ -19,7 +19,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
-    if string.find(arg, "tt") then
+    if string.find(arg, "^tt") then
         local talentOverride = {};
 
         for tripel in string.gmatch(arg, "%d %d+ %d") do
@@ -114,6 +114,17 @@ SlashCmdList["SPELLCALC"] = function(arg)
         if iid and slotid then
             _addon:PrintWarn("Debug equip item "..iid.." into slot "..slotid.."!");
             _addon:DebugEquipItem(tonumber(iid), tonumber(slotid));
+        end
+        return;
+    end
+
+    if string.find(arg, "dis") then
+        local slotid, itemLink = strmatch(arg, "(%d+) (.+)");
+        print(slotid, itemLink);
+        if itemLink and slotid then
+            local _, _, Color, Ltype, Id, Enchant, Gem1, Gem2, Gem3, Gem4, Suffix, Unique, LinkLvl, reforging, Name = string.find(itemLink, "|?c?f?f?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
+            _addon:PrintWarn("Debug equip item "..Id.." into slot "..slotid.."!");
+            _addon:DebugEquipItem(tonumber(Id), tonumber(slotid));
         end
         return;
     end
