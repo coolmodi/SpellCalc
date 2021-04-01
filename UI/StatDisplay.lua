@@ -87,6 +87,8 @@ local function CreateUniformStatStrings(parent)
     local affectedBy = parent:CreateFontString(nil, "OVERLAY", "GameFontWhiteTiny");
     affectedBy:SetPoint("TOPLEFT", text, "BOTTOMLEFT", 9, 0);
     affectedBy:SetText("-");
+    affectedBy:SetWidth(375);
+    affectedBy:SetWordWrap(true);
     parent:SetHeight(text:GetHeight() + affectedBy:GetHeight());
     return text, affectedBy;
 end
