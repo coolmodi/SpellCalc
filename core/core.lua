@@ -611,11 +611,10 @@ do
     local timerDiff = 0;
     local waitForUpdate = false;
 
-    -- Only update every 1 sec instead of possibly after every single change
-    -- Everything below 1 sec doesn't seem to catch cast time changes. Double batching?
+    -- Only update every 1/3 sec instead of possibly after every single change
     local function UpdateUpdate(self, diff)
         timerDiff = timerDiff + diff;
-        if timerDiff > 1 then
+        if timerDiff > 0.333 then
             currentState = currentState + 1;
             _addon:PrintDebug("Increment state! " .. currentState);
             updateStaggerFrame:SetScript("OnUpdate", nil);

@@ -93,6 +93,45 @@ local effectAffectMask = {
     [EFFECT_TYPE.WEAPONMOD_FLAT_HIT_CHANCE] = stats.weaponModFlatHitChance,
 }
 
+local DelayedUpdateTimer = CreateFrame("Frame");
+DelayedUpdateTimer.timerDiff = 0;
+---@type number[]
+DelayedUpdateTimer.timers = {};
+DelayedUpdateTimer.timerCount = 0;
+do
+    local function TimerUpdate(self, diff)
+        self.timerDiff = self.timerDiff + diff;
+        if self.timerDiff > 0.1 then
+            local timers = self.timers;
+            for i = self.timerCount, 1, -1 do
+                timers[i] = timers[i] - self.timerDiff;
+                if timers[i] <= 0 then
+                    _addon:PrintDebug("A delayed update timer finished");
+                    _addon:TriggerUpdate();
+                    table.remove(timers, i);
+                    self.timerCount = self.timerCount - 1;
+                end
+            end
+            if self.timerCount == 0 then
+                _addon:PrintDebug("No more delayed update timers");
+                self:SetScript("OnUpdate", nil);
+            end
+            self.timerDiff = 0;
+        end
+    end
+
+    --- Add delayed update trigger.
+    ---@param delay number @Delay in ms
+    function DelayedUpdateTimer:Add(delay)
+        _addon:PrintDebug("Trigger delayed update in " .. delay .. "ms");
+        table.insert(self.timers, delay/1000);
+        self.timerCount = self.timerCount + 1;
+        if self.timerCount == 1 then
+            self:SetScript("OnUpdate", TimerUpdate);
+        end
+    end
+end
+
 local effectCustom = {
     [EFFECT_TYPE.FSR_SPIRIT_REGEN] = function(apply, name, value)
         ApplyOrRemove(apply, value, stats.fsrRegenMult, name);
@@ -111,8 +150,14 @@ local effectCustom = {
         end
         _addon:PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
     end,
-    [EFFECT_TYPE.TRIGGER_UPDATE] = function()
+    [EFFECT_TYPE.TRIGGER_UPDATE] = function(apply, name, value)
         _addon:TriggerUpdate();
+        if value ~= 0 then
+            if value < 0 then
+                value = -value;
+            end
+            DelayedUpdateTimer:Add(value);
+        end
     end
 }
 

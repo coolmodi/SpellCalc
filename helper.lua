@@ -98,3 +98,48 @@ function _addon:PrintDebug(o)
 		
 	print(o);
 end
+
+--[[ local HT4ID = 5188;
+local NSID = 17116;
+local currentCastTime = 0;
+local hasNS = false;
+
+local frame = CreateFrame("Frame");
+local dstart = debugprofilestop();
+local function getts()
+	return debugprofilestop() - dstart;
+end
+
+
+frame:SetScript("OnUpdate", function(self, d)
+    local spellName, _, _, castTime = GetSpellInfo(HT4ID);
+    if castTime ~= currentCastTime then
+        print(getts() .. ": CT change -> "..castTime);
+        currentCastTime = castTime;
+    end
+end);
+
+frame:SetScript("OnEvent", function(self, ev, arg)
+    if ev == "UNIT_AURA" and arg == "player" then
+        local nspresent = false;
+        for i = 1, 40 do
+            local name, _, _, _, _, _, _, _, _, spellId = UnitBuff("player", i);
+            if name == nil then
+                break;
+            end
+            if spellId == NSID then
+                nspresent = true;
+				break;
+            end
+        end
+        if nspresent and not hasNS then
+            hasNS = true;
+            print(getts() .. ": NS applied");
+        elseif not nspresent and hasNS then
+            hasNS = false;
+            print(getts() .. ": NS removed");
+        end
+    end
+end);
+
+frame:RegisterEvent("UNIT_AURA"); ]]

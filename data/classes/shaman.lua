@@ -103,7 +103,7 @@ _addon.aurasPlayer[16166] = { -- Elemental Mastery
 
 _addon.aurasPlayer[16188] = { -- Nature's Swiftness dummy
     type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
-    value = 0
+    value = 1500
 };
 
 local T3LightningShieldEffect = {

@@ -149,3 +149,9 @@ _addon.aurasPlayer[14751] = {
     affectSpell = {-917225840},
     value = 25
 }
+
+-- Rapid Healing (ZG trinket)
+_addon.aurasPlayer[24546] = {
+    type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+    value = 1500
+}
