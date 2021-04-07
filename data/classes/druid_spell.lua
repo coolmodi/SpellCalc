@@ -64,6 +64,10 @@ _addon.spellBaseInfo = {
         defType = 1,
         noCrit = true,
     },
+    [GetSpellInfo(33763)] = { -- Lifebloom
+        school = 4,
+        defType = 1,
+    },
 };
 
 _addon.spellRankInfo = {
@@ -1400,6 +1404,264 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 222,
                 coef = 0.2,
+            },
+        }
+    },
+    [26978] = { -- Healing Touch(Rank 12)
+        spellLevel = 62,
+        maxLevel = 67,
+        baseCost = 820,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 2364,
+                max = 2791,
+                perLevel = 7.4,
+                coef = 1,
+            },
+        }
+    },
+    [26979] = { -- Healing Touch(Rank 13)
+        spellLevel = 69,
+        maxLevel = 74,
+        baseCost = 935,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 2707,
+                max = 3198,
+                perLevel = 8.2,
+                coef = 1,
+            },
+        }
+    },
+    [26980] = { -- Regrowth(Rank 10)
+        spellLevel = 65,
+        maxLevel = 70,
+        duration = 21,
+        baseCost = 675,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 1215,
+                max = 1356,
+                perLevel = 7.7,
+                coef = 0.286,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                min = 182,
+                coef = 0.1,
+            },
+        }
+    },
+    [26981] = { -- Rejuvenation(Rank 12)
+        spellLevel = 63,
+        maxLevel = 68,
+        duration = 12,
+        baseCost = 370,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                min = 233,
+                coef = 0.2,
+            },
+        }
+    },
+    [26982] = { -- Rejuvenation(Rank 13)
+        spellLevel = 69,
+        maxLevel = 74,
+        duration = 12,
+        baseCost = 415,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                min = 265,
+                coef = 0.2,
+            },
+        }
+    },
+    [26983] = { -- Tranquility(Rank 5)
+        spellLevel = 70,
+        maxLevel = 76,
+        duration = 8,
+        baseCost = 1650,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                min = 1518,
+                perLevel = 4.5,
+                coef = 0.286,
+            },
+        }
+    },
+    [26984] = { -- Wrath(Rank 9)
+        spellLevel = 61,
+        maxLevel = 67,
+        baseCost = 210,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 278,
+                max = 313,
+                perLevel = 2.4,
+                coef = 0.571,
+            },
+        }
+    },
+    [26985] = { -- Wrath(Rank 10)
+        spellLevel = 69,
+        maxLevel = 75,
+        baseCost = 255,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 381,
+                max = 430,
+                perLevel = 2.7,
+                coef = 0.571,
+            },
+        }
+    },
+    [26986] = { -- Starfire(Rank 8)
+        spellLevel = 67,
+        maxLevel = 73,
+        baseCost = 370,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 540,
+                max = 637,
+                perLevel = 3.4,
+                coef = 1,
+            },
+        }
+    },
+    [26987] = { -- Moonfire(Rank 11)
+        spellLevel = 63,
+        maxLevel = 68,
+        duration = 12,
+        baseCost = 430,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 220,
+                max = 259,
+                perLevel = 3.6,
+                coef = 0.15,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 111,
+                coef = 0.13,
+            },
+        }
+    },
+    [26988] = { -- Moonfire(Rank 12)
+        spellLevel = 70,
+        maxLevel = 75,
+        duration = 12,
+        baseCost = 495,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 305,
+                max = 358,
+                perLevel = 3.9,
+                coef = 0.15,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 150,
+                coef = 0.13,
+            },
+        }
+    },
+    [26989] = { -- Entangling Roots(Rank 7)
+        spellLevel = 68,
+        maxLevel = 77,
+        duration = 27,
+        baseCost = 160,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 39,
+                coef = 0.1,
+            },
+        }
+    },
+    [26992] = { -- Thorns(Rank 7)
+        spellLevel = 64,
+        maxLevel = 0,
+        duration = 600,
+        baseCost = 400,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 15,
+                charges = -1,
+                min = 25,
+                coef = 0,
+            },
+        }
+    },
+    [27012] = { -- Hurricane(Rank 4)
+        spellLevel = 70,
+        maxLevel = 76,
+        duration = 10,
+        baseCost = 1905,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                min = 206,
+                perLevel = 0.4,
+                coef = 0.129,
+            },
+        }
+    },
+    [27013] = { -- Insect Swarm(Rank 6)
+        spellLevel = 70,
+        maxLevel = 79,
+        duration = 12,
+        baseCost = 175,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                min = 132,
+                coef = 0.127,
+            },
+        }
+    },
+    [33763] = { -- Lifebloom(Rank 1)
+        spellLevel = 64,
+        maxLevel = 69,
+        duration = 7,
+        baseCost = 220,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 1,
+                min = 39,
+                coef = 0.0742,
             },
         }
     },
