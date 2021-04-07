@@ -200,7 +200,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 local red = spellRankInfo.effects[i];
                 effectFlags[i] = 0;
 
-                if IsHealEffect(red.effectType, red.auraType) then
+                if IsHealEffect(red.effectType, red.auraType) or spellBaseInfo.forceHeal then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.HEAL;
                 end
 

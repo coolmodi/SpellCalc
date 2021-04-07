@@ -5,7 +5,7 @@ import * as fs from "fs";
  * @param path 
  * @param index The index column.
  */
-export function readDBCSV<T>(path: string, index: string): {[index: string]: T} {
+export function readDBCSV<T>(path: string, index: string, filter?: {key: keyof T, is: any}[]): {[index: string]: T} {
     let raw = fs.readFileSync(path, "utf8");
     raw = raw.replace(/"(.|\r|\n)*?"/g, (subs) => {
         return subs.replace(/\s/g, "");
@@ -26,6 +26,28 @@ export function readDBCSV<T>(path: string, index: string): {[index: string]: T} 
                 thisData[headers[j]] = parseInt(lineData[j]);
             }
         }
+
+        if (filter)
+        {
+            let doContinue = false;
+            for (const fentry of filter)
+            {
+                if (typeof fentry.is !== "undefined")
+                {
+                    // @ts-ignore
+                    const t1 = thisData[fentry.key as string];
+                    // @ts-ignore
+                    const t2 = fentry.is;
+                    if (thisData[fentry.key as string] != fentry.is)
+                    {
+                        doContinue = true;
+                        break;
+                    }
+                }
+            }
+            if (doContinue) continue;
+        }
+
         if (!thisData[index]) 
             throw new Error("CSV index not found!");
 

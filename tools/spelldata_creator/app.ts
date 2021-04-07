@@ -9,13 +9,16 @@ import { ItemEffectsCreator } from "./ItemEffectsCreator";
 const outputdir = __dirname + "/../../../data/classes/";
 
 const CLASSES = [
-    "priest", 
-    //"hunter",
-    "mage", 
-    "warlock", 
     "druid", 
-    "paladin", 
-    "shaman",
+
+    // TODO: other classes
+    //"priest", 
+    //"mage", 
+    //"warlock", 
+    //"paladin", 
+    //"shaman",
+
+    //"hunter",
     //"rogue",
     //"warrior"
 ];
@@ -92,7 +95,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL:
         case AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD:
             const saopts = spellData.getSpellAuraOptions(effect.SpellID);
-            rankInfo.effects[effectNum].charges = (saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
+            rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
             break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
             const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
@@ -100,7 +103,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             baseInfo.defenseType = tspellCat.DefenseType;
             let found = false;
             for (let i = 0; i < tspell.length; i++) {
-                if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) {
+                if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) {
                     const teffect = tspell[i];
                     const spellLevel = spellData.getSpellLevel(teffect.SpellID);
                     found = true;
@@ -112,8 +115,9 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     rankInfo.effects[effectNum].max = teffect.EffectBasePoints + 1 + ((teffect.EffectDieSides > 1) ? teffect.EffectDieSides : 0),
                     rankInfo.effects[effectNum].perLevel = teffect.EffectRealPointsPerLevel;
                     const misc = spellData.getSpellMisc(teffect.SpellID);
-                    //if ((misc["Attributes[2]"] & 0x20000000) == 0) baseInfo.forceCanCrit = true;
-                    if ((misc["Attributes[2]"] & 0x20000000) != 0) throw "OH WTF IT HAPPENED! Now you have to find out why this wasn't supposed to crit, or why this condition was here...";
+                    // 0x20000000 = spell can't crit
+                    if ((misc["Attributes[2]"] & 0x20000000) == 0) baseInfo.noCrit = true;
+                    if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) baseInfo.forceHeal = true;
                     break;
                 }
             }
@@ -326,7 +330,9 @@ function buildSpellInfo(pclass: string) {
                 gcd: spellcd.StartRecoveryTime / 1000,
                 defenseType: spellcat.DefenseType,
                 cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
-                usedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0
+                usedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
+                noCrit: false,
+                forceHeal: false,
             };
         }
 
@@ -398,6 +404,8 @@ end
         str += `\t\tdefType = ${bi.defenseType},\n`;
         if (bi.cantDogeParryBlock) str += `\t\tcantDogeParryBlock = true,\n`;
         if (bi.usedWeaponMask != 0) str += `\t\tusedWeaponMask = ${bi.usedWeaponMask},\n`;
+        if (bi.noCrit) str += `\t\tnoCrit = ${bi.noCrit},\n`;
+        if (bi.forceHeal) str += `\t\tforceHeal = ${bi.forceHeal},\n`;
         str += `\t},\n`;
     }
     str += "};\n\n";
@@ -489,6 +497,7 @@ end
 /**
  * Create lua files for item effect and set data
  */
+//@ts-ignore
 async function createItemLua() {
     const isc = new ItemSetCreator(spellData, classSpellLists, classSpellSets);
     const setLua = await isc.getItemSetLua();
@@ -512,4 +521,5 @@ async function createItemLua() {
 for (let i = 0; i < CLASSES.length; i++) {
     createLua(CLASSES[i]);
 }
-createItemLua();
+// TODO: items!
+//createItemLua();

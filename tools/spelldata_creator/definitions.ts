@@ -111,7 +111,9 @@ interface BaseInfo {
     gcd: number,
     defenseType: DEFENSE_TYPE,
     cantDogeParryBlock: boolean,
-    usedWeaponMask: number
+    usedWeaponMask: number,
+    noCrit: boolean,
+    forceHeal: boolean,
 }
 
 interface EffectInfo {

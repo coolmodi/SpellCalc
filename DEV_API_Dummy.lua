@@ -312,7 +312,11 @@ local SpellBaseInfo = {
     ---@type boolean|nil
     cantDogeParryBlock = nil,
     ---@type number|nil
-    usedWeaponMask = nil
+    usedWeaponMask = nil,
+    ---@type boolean|nil
+    noCrit = nil,
+    ---@type boolean|nil
+    forceHeal = nil,
 }
 
 ---@class SpellRankEffectData
