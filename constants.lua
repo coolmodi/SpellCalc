@@ -53,7 +53,7 @@ _addon.EFFECT_TYPE = {
     TRIGGER_UPDATE = 27,
     SPELLMOD_PCT_EFFECT = 28,
     SPELLMOD_PCT_DAMAGE = 29,
-    SPELLMOD_PCT_HEALING = 30,
+    SPELLMOD_PCT_HEALING = 30, -- SPELLMOD_PCT_DAMAGE and SPELLMOD_PCT_DAMAGE is the same thing in the game, just a distinction in this addon (Holy Nova...)
     SCHOOLMOD_PCT_DAMAGE = 31,
     PCT_HEALING = 32,
     SPELLMOD_ADD_TRIGGER_SPELL = 33,
@@ -63,8 +63,9 @@ _addon.EFFECT_TYPE = {
     SCHOOLMOD_FLAT_CRIT = 37,
     SPECIAL_TRIGGER = 38,
 
-    SPELLMOD_PCT_SPELL_SCALE = 39,
-    GLOBAL_FLAT_HIT_CHANCE_SPELL = 40
+    SPELLMOD_FLAT_SPELL_SCALE = 39,
+    GLOBAL_FLAT_HIT_CHANCE_SPELL = 40,
+    SPELLMOD_PCT_SPELL_SCALE = 41,
 };
 
 --- Defense type (Decides mitigation types used)

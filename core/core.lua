@@ -112,12 +112,12 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
 
     elseif isHeal then
         if stats.spellModPctHealing[spellId] ~= nil then
-            -- This is the very same as spellModPctEffect, just limited to healing internally in this addon
-            baseMod = baseMod + stats.spellModPctHealing[spellId].val / 100;
+            -- This is the very same as schoolModPctDamage, just limited to healing internally in this addon
+            bonusMod = bonusMod * (100 + stats.spellModPctHealing[spellId].val) / 100;
             calcedSpell:AddToBuffList(stats.spellModPctHealing[spellId].buffs);
         end
 
-        bonusMod = bonusMod + stats.modhealingDone.val / 100;
+        bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;
         calcedSpell:AddToBuffList(stats.modhealingDone.buffs);
     end
 
@@ -514,10 +514,17 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
         -- Effective power
         local coef = effectData.coef and effectData.coef or 0;
+
+        if stats.spellModFlatSpellScale[spellId] then
+            coef = coef + stats.spellModFlatSpellScale[spellId].val / 100;
+            calcedSpell:AddToBuffList(stats.spellModFlatSpellScale[spellId].buffs);
+        end
+
         if stats.spellModPctSpellScale[spellId] then
-            coef = coef + stats.spellModPctSpellScale[spellId].val / 100;
+            coef = coef * (100 + stats.spellModPctSpellScale[spellId].val) / 100;
             calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
         end
+
         calcedEffect.effectiveSpCoef = coef * bonusMod;
         calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
         calcedEffect.flatMod = flatMod;

@@ -95,12 +95,12 @@ _addon.talentData = {
         talent = 20,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {4},
                 perPoint = 4
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {1},
                 perPoint = 2
             }
@@ -167,7 +167,7 @@ _addon.talentData = {
         talent = 14,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {32},
                 perPoint = 10
             }
