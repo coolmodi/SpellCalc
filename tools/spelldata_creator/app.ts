@@ -116,7 +116,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     rankInfo.effects[effectNum].perLevel = teffect.EffectRealPointsPerLevel;
                     const misc = spellData.getSpellMisc(teffect.SpellID);
                     // 0x20000000 = spell can't crit
-                    if ((misc["Attributes[2]"] & 0x20000000) == 0) baseInfo.noCrit = true;
+                    if ((misc["Attributes[2]"] & 0x20000000) === 0x20000000) baseInfo.noCrit = true;
                     if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) baseInfo.forceHeal = true;
                     break;
                 }
@@ -332,7 +332,7 @@ function buildSpellInfo(pclass: string) {
                 cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
                 usedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
                 noCrit: false,
-                forceHeal: false,
+                forceHeal: false
             };
         }
 

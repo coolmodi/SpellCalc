@@ -51,6 +51,8 @@ _addon.spellBaseInfo = {
         school = 4,
         isChannel = true,
         defType = 1,
+        noCrit = true,
+        forceHeal = true,
     },
     [GetSpellInfo(5570)] = { -- Insect Swarm
         school = 4,
@@ -60,6 +62,7 @@ _addon.spellBaseInfo = {
         school = 4,
         isChannel = true,
         defType = 1,
+        noCrit = true,
     },
 };
 
