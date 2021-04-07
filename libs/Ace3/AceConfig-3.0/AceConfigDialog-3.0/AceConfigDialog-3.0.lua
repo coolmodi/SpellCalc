@@ -545,7 +545,7 @@ end
 do
 	local frame = AceConfigDialog.popup
 	if not frame then
-		frame = CreateFrame("Frame", nil, UIParent)
+		frame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
 		AceConfigDialog.popup = frame
 		frame:Hide()
 		frame:SetPoint("CENTER", UIParent, "CENTER")

@@ -14,7 +14,7 @@ local spellLists = {};
 -------------------------------------------------------
 -- Setup UI
 
-local frame = CreateFrame("Frame", "SpellCalcStatScreen", UIParent);
+local frame = CreateFrame("Frame", "SpellCalcStatScreen", UIParent, "BackdropTemplate");
 frame:SetPoint("CENTER", 0, 0);
 frame:SetWidth(400);
 frame:SetHeight(500);

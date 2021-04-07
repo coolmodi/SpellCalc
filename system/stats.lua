@@ -206,6 +206,8 @@ local function UpdateFunction(self, passed)
     end
     timePassed = 0;
     _addon:PrintDebug("Check spirit regen");
+    -- TODO: this includes mp5 in TBC, currently bugged on beta though, wait for fix
+    -- Can calculate regen manually with the known formula, mp5 would be total - that then, can ditch mp5 tracking internally
     local curRegen = GetManaRegen();
     if curRegen > 0.5 then
         _addon:PrintDebug("Spirit regen seems normal again, updating it");
