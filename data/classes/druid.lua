@@ -191,7 +191,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
-                affectSpell = {208},
+                affectSpell = {208, 16},
                 perPoint = 4
             }
         }
@@ -202,10 +202,3 @@ _addon.aurasPlayer[17116] = { -- Nature's Swiftness dummy
     type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
     value = 1500
 };
-
-_addon.itemEffects[22399] = { -- Idol of Health (Dummy effect to trigger update)
-    {
-        type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
-        value = 1500
-    }
-}
