@@ -5,6 +5,9 @@ if playerClass ~= "DRUID" then
 end
 
 _addon.talentData = {
+    -----------------------------
+    -- Balance
+    -----------------------------
     { -- Focused Starlight
         tree = 1,
         talent = 5,
@@ -80,7 +83,7 @@ _addon.talentData = {
             },
         }
     },
-    { -- Balance of Power
+    { -- Balance of Power TODO: check if this is still not reflected in API on release
         tree = 1,
         talent = 16,
         effects = {
@@ -106,7 +109,9 @@ _addon.talentData = {
             }
         }
     },
-
+    -----------------------------
+    -- Feral
+    -----------------------------
     { -- Feral Aggression (TODO: mask includes Rip, should it?)
         tree = 2,
         talent = 2,
@@ -124,12 +129,14 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {4096 + 2048},
+                affectSpell = {4096, 1024},
                 perPoint = 10
             }
         }
     },
-
+    -----------------------------
+    -- Restoration
+    -----------------------------
     { -- Intensity
         tree = 3,
         talent = 6,
@@ -184,7 +191,6 @@ _addon.talentData = {
             }
         }
     },
-    -- Natural Perfection TODO: found by API?
     { -- Empowered Rejuvenation
         tree = 3,
         talent = 19,
