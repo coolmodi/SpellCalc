@@ -318,12 +318,13 @@ end
 --- Apend effect data for periodic trigger spells
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
-local function AppendPTSA(calcedSpell, effectNum)
+---@param isHeal boolean
+local function AppendPTSA(calcedSpell, effectNum, isHeal)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.DAMAGE, ("%dx %d"):format(calcedEffect.ticks, SCT:Round(calcedEffect.min)), calcedEffect.max, calcedEffect.avg);
+        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %d"):format(calcedEffect.ticks, SCT:Round(calcedEffect.min)), calcedEffect.max, calcedEffect.avg);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
@@ -335,21 +336,24 @@ local function AppendPTSA(calcedSpell, effectNum)
 
     AppendCoefData(calcedEffect);
 
-    if effectNum == 1 then
+    if not isHeal and effectNum == 1 then
         AppendMitigation(calcedSpell);
     end
 
     local isChannel = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.CHANNEL) > 0;
 
     if SpellCalc_settings.ttPerSecond then
+        local spersec = isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT;
         if not isChannel then
-            SCT:DoubleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec), L.DMG_OVER_TIME_SHORT.." "..L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSecDurOrCD));
+            local sperseccast = isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT;
+            local spersecdur = (isHeal and L.HEAL_OVER_TIME_SHORT or L.DMG_OVER_TIME_SHORT) .. " " .. spersec;
+            SCT:DoubleLine(sperseccast, ("%.1f"):format(calcedEffect.perSec), spersecdur, ("%.1f"):format(calcedEffect.perSecDurOrCD));
         else
-            SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
+            SCT:SingleLine(spersec, ("%.1f"):format(calcedEffect.perSec));
         end
     end
 
-    AppendEfficiency(calcedSpell, effectNum, false, isChannel);
+    AppendEfficiency(calcedSpell, effectNum, isHeal, isChannel);
 end
 
 --- Apend effect data for dmg shields
@@ -456,7 +460,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal)
         AppendDmgShieldEffect(calcedSpell, effectNum);
     elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
         if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
-            AppendPTSA(calcedSpell, effectNum);
+            AppendPTSA(calcedSpell, effectNum, isHeal);
         else
             AppendDurationEffect(calcedSpell, effectNum, isHeal);
         end

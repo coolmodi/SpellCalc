@@ -342,6 +342,7 @@ end
 
 --- Handler for things like Arcane Missiles or Searing Totem.
 --- That is, periodic spells with ticks that behave much like a direct damage effect.
+--- Can also be used for healing spells (e.g. Tranquility)
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
 ---@param spellBaseInfo SpellBaseInfo
@@ -366,31 +367,42 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
 
     calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
-    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.minCrit;
     calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
 
     if effectData.max then
         calcedEffect.max = (effectData.max + baseIncrease) * effectMod + calcedEffect.effectivePower;
         calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-        calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-        calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
     end
 
-    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+    if spellBaseInfo.noCrit then
+        calcedEffect.avgCombined = calcedEffect.avg;
+    else
+        calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
+        calcedEffect.avgCrit = calcedEffect.minCrit;
+        if effectData.max then
+            calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+            calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
+        end
+
+        calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+    end
 
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    if spellBaseInfo.isChannel then
-        -- TODO: Fix hardcoded GCD!
-        -- TODO: ???????
-        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
+    if spellBaseInfo.forceHeal then
+        calcedEffect.avgAfterMitigation = total;
     else
-        calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
-    end
+        if spellBaseInfo.isChannel then
+            -- TODO: Fix hardcoded GCD!
+            -- TODO: ???????
+            calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
+        else
+            calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
+        end
 
-    if calcedSpell.hitChanceBinaryLoss == nil then
-        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
+        if calcedSpell.hitChanceBinaryLoss == nil then
+            calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
+        end
     end
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
