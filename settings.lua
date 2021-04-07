@@ -41,9 +41,9 @@ local DEFAULTSETTINGS = {
 	resOverrideArmor = 0,
 
 	["abShow"] = true,
-	["abDirectValue"] = "hitAvg",
+	["abDirectValue"] = "avg",
 	["abDurationValue"] = "allTicks",
-	["abSealValue"] = "hitAvg",
+	["abSealValue"] = "avg",
 	["abPosition"] = 25,
 	["abSize"] = 12,
 	["abFont"] = "Friz Quadrata TT",
