@@ -436,7 +436,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             calcedSpell:AddToBuffList(stats.spellModMageNWR[spellId].buffs);
         end
 
-        if stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
+        if not spellBaseInfo.isChannel and not spellBaseInfo.noCrit
+        and stats.druidNaturesGrace.val > 0 and effCastTime > GCD then
             effCastTime = effCastTime - (calcedSpell.critChance/100) * 0.5;
             effCastTime = math.max(effCastTime, GCD);
             calcedSpell:AddToBuffList(stats.druidNaturesGrace.buffs);
