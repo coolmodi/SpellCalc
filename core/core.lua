@@ -513,7 +513,12 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedEffect.spellPower = extraSp + calcedEffect.spellPower;
 
         -- Effective power
-        calcedEffect.effectiveSpCoef = effectData.coef and (effectData.coef * bonusMod) or 0;
+        local coef = effectData.coef and effectData.coef or 0;
+        if stats.spellModPctSpellScale[spellId] then
+            coef = coef + stats.spellModPctSpellScale[spellId].val / 100;
+            calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
+        end
+        calcedEffect.effectiveSpCoef = coef * bonusMod;
         calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
         calcedEffect.flatMod = flatMod;
 

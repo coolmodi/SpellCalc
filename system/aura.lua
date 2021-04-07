@@ -69,6 +69,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_GCD_MS]       = stats.spellModGCDms,
     [EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL] = stats.spellModAddTriggerSpell, -- TODO: If a spell is ever affected by more than one of those it will break!
     [EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT] = stats.spellModPctCritMult,
+    [EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE] = stats.spellModPctSpellScale,
 }
 
 local effectSimpleStat = {
@@ -81,6 +82,7 @@ local effectSimpleStat = {
     [EFFECT_TYPE.WL_IMP_SB]             = stats.impShadowBolt,
     [EFFECT_TYPE.EARTHFURY_RETURN]      = stats.earthfuryReturn,
     [EFFECT_TYPE.DRUID_NATURES_GRACE]   = stats.druidNaturesGrace,
+    [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL] = stats.hitBonusSpell,
 }
 
 local effectAffectMask = {

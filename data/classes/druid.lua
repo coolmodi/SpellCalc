@@ -5,36 +5,52 @@ if playerClass ~= "DRUID" then
 end
 
 _addon.talentData = {
-    { -- Improve Moonfire
+    { -- Focused Starlight
         tree = 1,
         talent = 5,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {2},
+                affectSpell = {5},
                 perPoint = 2
+            }
+        }
+    },
+    { -- Improve Moonfire
+        tree = 1,
+        talent = 6,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {2},
+                perPoint = 5
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {2},
-                perPoint = 2
+                perPoint = 5
             }
         }
     },
     { -- Improve Thorns
         tree = 1,
-        talent = 8,
+        talent = 7,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {256},
+                perPoint = 25
+            },
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                affectSpell = {512},
                 perPoint = 25
             }
         }
     },
     { -- Vengeance
         tree = 1,
-        talent = 11,
+        talent = 10,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
@@ -58,8 +74,34 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {7},
+                perPoint = 2
+            },
+        }
+    },
+    { -- Balance of Power
+        tree = 1,
+        talent = 16,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                perPoint = 2
+            },
+        }
+    },
+    { -- Wrath of Cenarius
+        tree = 1,
+        talent = 20,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                affectSpell = {4},
+                perPoint = 4
+            },
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                affectSpell = {1},
                 perPoint = 2
             }
         }
@@ -88,13 +130,13 @@ _addon.talentData = {
         }
     },
 
-    { -- Reflection
+    { -- Intensity
         tree = 3,
         talent = 6,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                perPoint = 5
+                perPoint = 10
             }
         }
     },
@@ -103,7 +145,7 @@ _addon.talentData = {
         talent = 10,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
                 affectSpell = {16},
                 perPoint = 5
             }
@@ -120,14 +162,37 @@ _addon.talentData = {
             }
         }
     },
+    { -- Empowered Touch
+        tree = 3,
+        talent = 14,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                affectSpell = {32},
+                perPoint = 10
+            }
+        }
+    },
     { -- Improved Regrowth
         tree = 3,
-        talent = 12,
+        talent = 15,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {64},
                 perPoint = 10
+            }
+        }
+    },
+    -- Natural Perfection TODO: found by API?
+    { -- Empowered Rejuvenation
+        tree = 3,
+        talent = 19,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                affectSpell = {208},
+                perPoint = 4
             }
         }
     },
