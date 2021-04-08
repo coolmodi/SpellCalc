@@ -176,7 +176,7 @@ export class SpellData {
 
     constructor() {
         console.log("Creating SpellData");
-        this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
+        
         this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
         this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
         this.spellNames = readDBCSV<SpellName>("data/dbc/spellname.csv", "ID");
@@ -191,25 +191,31 @@ export class SpellData {
 
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
-        fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs);
+        try {
+            this.spellEffects = JSON.parse(fs.readFileSync("cache/spellEffects.json", "utf8"));
+        } catch (error) {
+            this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
+            // make sure direct dmg is always the 1st effect on spells that also have a duration effect
+            for (let eff1 in this.spellEffects) {
+                if (isSeal(this.spellEffects[eff1].SpellID) 
+                    || this.spellEffects[eff1].EffectIndex != 1 
+                    || this.spellEffects[eff1].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
+                console.log("Effindex is 1 and SPELL_EFFECT_SCHOOL_DAMAGE on spell " + this.spellEffects[eff1].SpellID);
 
-        // make sure direct dmg is always the 1st effect on spells that also have a duration effect
-        for (let eff1 in this.spellEffects) {
-            if (isSeal(this.spellEffects[eff1].SpellID) 
-                || this.spellEffects[eff1].EffectIndex != 1 
-                || this.spellEffects[eff1].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-            console.log("Effindex is 1 and SPELL_EFFECT_SCHOOL_DAMAGE on spell " + this.spellEffects[eff1].SpellID);
-
-            for (let eff2 in this.spellEffects) {
-                if (this.spellEffects[eff1].SpellID != this.spellEffects[eff2].SpellID
-                    || this.spellEffects[eff2].EffectIndex != 0
-                    || this.spellEffects[eff2].Effect != EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) continue;
-                console.log("Effindex is 0 and SPELL_EFFECT_APPLY_AURA on spell " + this.spellEffects[eff2].SpellID);
-                this.spellEffects[eff1].EffectIndex = 0;
-                this.spellEffects[eff2].EffectIndex = 1;
-                break;
+                for (let eff2 in this.spellEffects) {
+                    if (this.spellEffects[eff1].SpellID != this.spellEffects[eff2].SpellID
+                        || this.spellEffects[eff2].EffectIndex != 0
+                        || this.spellEffects[eff2].Effect != EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) continue;
+                    console.log("Effindex is 0 and SPELL_EFFECT_APPLY_AURA on spell " + this.spellEffects[eff2].SpellID);
+                    this.spellEffects[eff1].EffectIndex = 0;
+                    this.spellEffects[eff2].EffectIndex = 1;
+                    break;
+                }
             }
+            fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs);
+            fs.writeFileSync("cache/spellEffects.json", JSON.stringify(this.spellEffects, null, 4));
         }
+
         console.log("SpellData created!");
     }
 

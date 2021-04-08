@@ -497,7 +497,6 @@ end
 /**
  * Create lua files for item effect and set data
  */
-//@ts-ignore
 async function createItemLua() {
     const isc = new ItemSetCreator(spellData, classSpellLists, classSpellSets);
     const setLua = await isc.getItemSetLua();
@@ -521,5 +520,5 @@ async function createItemLua() {
 for (let i = 0; i < CLASSES.length; i++) {
     createLua(CLASSES[i]);
 }
-// TODO: items!
-//createItemLua();
+
+createItemLua();

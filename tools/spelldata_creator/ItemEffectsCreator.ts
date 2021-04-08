@@ -4,6 +4,7 @@ import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers, USELESS_AURAS } from "./ItemAuraHandlers";
 import { createEffectLua, createFileHead, getItemDbData, orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
+import { readFileSync, writeFileSync } from "fs";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
     //[AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN]: true, // TODO: phase out old item system completely
@@ -68,7 +69,8 @@ export class ItemEffectsCreator
         {
             if (spellId === 24746 || spellId === 7363 || spellId === 17816 || spellId === 24748
                 || spellId === 24782 || (spellId === 24392 && spellEffect.EffectIndex === 1)
-                || spellId === 28143 || spellId === 28144 || spellId === 28145 || spellId === 28142) continue;
+                || spellId === 28143 || spellId === 28144 || spellId === 28145 || spellId === 28142
+                || spellId === 28282 || spellId === 24346 || spellId === 50009) continue;
             if (spellEffect.Effect !== EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) throw "Item bonus effect doesn't apply an aura?!" + spellId;
             if (AURA_TYPES_TO_IGNORE[spellEffect.EffectAura]) continue;
             if (!this.auraHandlers.handlers[spellEffect.EffectAura]) throw "Aura type isn't ignore but also not handled!";
@@ -83,11 +85,41 @@ export class ItemEffectsCreator
     {
         const itemEffects = readDBCSVtoMap<ItemEffect>("data/dbc/itemeffect.csv", "ID");
         const filteredItems = new Map<number, AddonEffectData[]>();
+        let doneEffectIds: { [id: number]: true | { item: number, effs: AddonEffectData[] } };
+        try
+        {
+            console.log("Load done item effect cache...");
+            doneEffectIds = JSON.parse(readFileSync("cache/itemEffDoneCache.json", "utf-8"));
+            for (const id in doneEffectIds)
+            {
+                const effEntry = doneEffectIds[id];
+                if (effEntry === true) continue;
+                if (!filteredItems.has(effEntry.item)) filteredItems.set(effEntry.item, []);
+                const flistentry = filteredItems.get(effEntry.item)!;
+                for (const eff of effEntry.effs)
+                {
+                    flistentry.push(eff);
+                }
+            }
+        } catch (error)
+        {
+            console.log(error);
+            console.log("Can't load done item effect cache.");
+            doneEffectIds = {};
+        }
         let done = 0;
 
         for (const ie of itemEffects.values())
         {
             if (++done % 20 === 0) console.log("Doing item " + done + " of " + itemEffects.size);
+            
+            if (doneEffectIds[ie.ID]) continue;
+            doneEffectIds[ie.ID] = true;
+
+            if (done % 100 === 0)
+            {
+                writeFileSync("cache/itemEffDoneCache.json", JSON.stringify(doneEffectIds, null, 4));
+            }
 
             if (ie.TriggerType !== 1) continue; // 1 == on equip auras, we can ignore the rest
 
@@ -104,6 +136,8 @@ export class ItemEffectsCreator
             {
                 flistentry.push(eff);
             }
+
+            doneEffectIds[ie.ID] = { item: ie.ParentItemID, effs: addonSpellEffect };
         }
 
         return filteredItems;
@@ -163,7 +197,7 @@ export class ItemEffectsCreator
                     entrystr += createEffectLua("    ", effects[i]);
                 }
                 entrystr += `}\n\n`;
-                luaStrings[className as keyof typeof ordered] += entrystr; 
+                luaStrings[className as keyof typeof ordered] += entrystr;
             }
         }
 
