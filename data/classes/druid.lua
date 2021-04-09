@@ -209,3 +209,8 @@ _addon.aurasPlayer[17116] = { -- Nature's Swiftness dummy
     type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
     value = 1500
 };
+
+_addon.aurasPlayer[16886] = { -- Nature's Grace
+    type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+    value = 1500
+};
