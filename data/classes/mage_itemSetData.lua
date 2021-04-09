@@ -12,7 +12,7 @@ _addon.itemSetData[201] = {
     effects = {
         {
             need = 5,
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 124,
             value = 10,
         },

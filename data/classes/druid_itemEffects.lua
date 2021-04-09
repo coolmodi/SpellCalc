@@ -83,7 +83,7 @@ _addon.itemEffects[21355] = { -- Genesis Boots
         value = 4,
     },
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -98,7 +98,7 @@ _addon.itemEffects[21356] = { -- Genesis Trousers
 
 _addon.itemEffects[21565] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -106,7 +106,7 @@ _addon.itemEffects[21565] = { -- Rune of Perfection
 
 _addon.itemEffects[21566] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -640,7 +640,7 @@ _addon.itemEffects[33887] = { -- Vindicator's Kodohide Bracers
 
 _addon.itemEffects[34444] = { -- Thunderheart Wristguards
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 1,
         value = 91,
     },
@@ -704,7 +704,7 @@ _addon.itemEffects[34572] = { -- Thunderheart Footwraps
 
 _addon.itemEffects[33672] = { -- Vengeful Gladiator's Dragonhide Helm
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 1,
         value = 84,
     },
@@ -712,7 +712,7 @@ _addon.itemEffects[33672] = { -- Vengeful Gladiator's Dragonhide Helm
 
 _addon.itemEffects[33673] = { -- Vengeful Gladiator's Dragonhide Legguards
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 1,
         value = 84,
     },
@@ -720,7 +720,7 @@ _addon.itemEffects[33673] = { -- Vengeful Gladiator's Dragonhide Legguards
 
 _addon.itemEffects[33675] = { -- Vengeful Gladiator's Dragonhide Tunic
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 1,
         value = 84,
     },
@@ -798,7 +798,7 @@ _addon.itemEffects[33694] = { -- Vengeful Gladiator's Kodohide Tunic
 
 _addon.itemEffects[34999] = { -- Brutal Gladiator's Dragonhide Helm
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 1,
         value = 84,
     },
@@ -806,7 +806,7 @@ _addon.itemEffects[34999] = { -- Brutal Gladiator's Dragonhide Helm
 
 _addon.itemEffects[35000] = { -- Brutal Gladiator's Dragonhide Legguards
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 1,
         value = 84,
     },
@@ -821,7 +821,7 @@ _addon.itemEffects[35365] = { -- Kodohide Robe
 
 _addon.itemEffects[35002] = { -- Brutal Gladiator's Dragonhide Tunic
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 1,
         value = 84,
     },

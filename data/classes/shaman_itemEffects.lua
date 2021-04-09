@@ -158,7 +158,7 @@ _addon.itemEffects[22396] = { -- Totem of Life
 
 _addon.itemEffects[21565] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -166,7 +166,7 @@ _addon.itemEffects[21565] = { -- Rune of Perfection
 
 _addon.itemEffects[21566] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -174,7 +174,7 @@ _addon.itemEffects[21566] = { -- Rune of Perfection
 
 _addon.itemEffects[21373] = { -- Stormcaller's Footguards
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },

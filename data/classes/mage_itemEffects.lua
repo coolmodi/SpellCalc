@@ -9,7 +9,7 @@ end
 
 _addon.itemEffects[16536] = { -- Warlord's Silk Amice
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -17,7 +17,7 @@ _addon.itemEffects[16536] = { -- Warlord's Silk Amice
 
 _addon.itemEffects[16444] = { -- Field Marshal's Silk Spaulders
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -113,7 +113,7 @@ _addon.itemEffects[20061] = { -- Highlander's Epaulets
 
 _addon.itemEffects[21343] = { -- Enigma Robes
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -128,7 +128,7 @@ _addon.itemEffects[21344] = { -- Enigma Boots
 
 _addon.itemEffects[22503] = { -- Frostfire Bindings
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -143,7 +143,7 @@ _addon.itemEffects[20176] = { -- Defiler's Epaulets
 
 _addon.itemEffects[21345] = { -- Enigma Shoulderpads
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -155,7 +155,7 @@ _addon.itemEffects[21345] = { -- Enigma Shoulderpads
 
 _addon.itemEffects[21563] = { -- Don Rodrigo's Band
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -163,7 +163,7 @@ _addon.itemEffects[21563] = { -- Don Rodrigo's Band
 
 _addon.itemEffects[21565] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -171,7 +171,7 @@ _addon.itemEffects[21565] = { -- Rune of Perfection
 
 _addon.itemEffects[21566] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -202,7 +202,7 @@ _addon.itemEffects[22870] = { -- Blood Guard's Silk Handwraps
 
 _addon.itemEffects[22496] = { -- Frostfire Robe
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 13,
     },

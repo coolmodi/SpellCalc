@@ -10,7 +10,7 @@ _addon.talentData = {
         talent = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
                 affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 5
             }

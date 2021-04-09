@@ -172,7 +172,7 @@ export class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_TARGET_RESISTANCE] = (effect) =>
         {
             const aed: AddonEffectData = {
-                type: ADDON_EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+                type: ADDON_EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
                 affectMask: effect["EffectMiscValue[0]"],
                 value: -(effect.EffectBasePoints + 1)
             }

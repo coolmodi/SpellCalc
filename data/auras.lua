@@ -84,7 +84,7 @@ _addon.aurasPlayer = {
         }
     },
     [26166] = { -- Obsidian Insight
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
         value = 100,
     },

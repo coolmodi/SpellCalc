@@ -138,7 +138,7 @@ _addon.itemEffects[20006] = { -- Circle of Hope
 
 _addon.itemEffects[21351] = { -- Vestments of the Oracle
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -185,7 +185,7 @@ _addon.itemEffects[21350] = { -- Mantle of the Oracle
         value = 3,
     },
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -207,7 +207,7 @@ _addon.itemEffects[23262] = { -- Champion's Satin Mantle
 
 _addon.itemEffects[21563] = { -- Don Rodrigo's Band
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -215,7 +215,7 @@ _addon.itemEffects[21563] = { -- Don Rodrigo's Band
 
 _addon.itemEffects[21565] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -223,7 +223,7 @@ _addon.itemEffects[21565] = { -- Rune of Perfection
 
 _addon.itemEffects[21566] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_SPELL_PENETRATION,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
