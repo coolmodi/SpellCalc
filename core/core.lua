@@ -144,6 +144,8 @@ function _addon:GetEffectiveManaPool()
             potVal = 800;
         elseif SpellCalc_settings.calcEffManaPotionTypeNew == "SUPERIOR" then
             potVal = 1200;
+        elseif SpellCalc_settings.calcEffManaPotionTypeNew == "SUPER" then
+            potVal = 2400;
         end
         mana = mana + potVal;
     end
@@ -526,6 +528,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             coef = coef * (100 + stats.spellModPctSpellScale[spellId].val) / 100;
             calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
         end
+
+        -- TODO: Uncomment once downrank penalty is implemented
+        -- TODO: Spells seem to lack maxLevel very often, fix how?
+        -- local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
+        -- if downrank < 1 then coef = coef * downrank;
 
         calcedEffect.effectiveSpCoef = coef * bonusMod;
         calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
