@@ -23,19 +23,6 @@ _addon.aurasPlayer = {
         type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
         value = 50, -- 20/2s
     },
-    [10060] = { -- Power Infusion
-        effects = {
-            {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
-                value = 20,
-            },
-            {
-                type = _addon.EFFECT_TYPE.PCT_HEALING,
-                value = 20,
-            }
-        }
-    },
     [26166] = { -- Obsidian Insight
         type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,

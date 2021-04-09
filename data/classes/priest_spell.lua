@@ -41,7 +41,6 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(10797)] = { -- Starshards
         school = 7,
-        isChannel = true,
         defType = 1,
     },
     [GetSpellInfo(2652)] = { -- Touch of Weakness
@@ -85,6 +84,10 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(2060)] = { -- Greater Heal
         school = 2,
         defType = 1,
+    },
+    [GetSpellInfo(37563)] = { -- Renewal
+        school = 2,
+        defType = 0,
     },
 };
 
@@ -145,7 +148,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 5,
-                coef = 0.067,
+                coef = 0.0732,
             },
         }
     },
@@ -190,7 +193,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 11,
-                coef = 0.104,
+                coef = 0.114,
             },
         }
     },
@@ -204,7 +207,7 @@ _addon.spellRankInfo = {
                 min = 301,
                 max = 322,
                 perLevel = 1.3,
-                coef = 0.286,
+                coef = 0.429,
             },
         }
     },
@@ -249,7 +252,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 22,
-                coef = 0.154,
+                coef = 0.169,
             },
         }
     },
@@ -278,7 +281,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 39,
-                coef = 0.167,
+                coef = 0.183,
             },
         }
     },
@@ -292,7 +295,7 @@ _addon.spellRankInfo = {
                 min = 444,
                 max = 473,
                 perLevel = 1.6,
-                coef = 0.286,
+                coef = 0.429,
             },
         }
     },
@@ -434,7 +437,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 61,
-                coef = 0.167,
+                coef = 0.183,
             },
         }
     },
@@ -449,7 +452,7 @@ _addon.spellRankInfo = {
                 auraType = 53,
                 tickPeriod = 3,
                 min = 19,
-                coef = 0.063,
+                coef = 0.1,
             },
         }
     },
@@ -758,15 +761,14 @@ _addon.spellRankInfo = {
     [10797] = { -- Starshards(Rank 1)
         spellLevel = 10,
         maxLevel = 16,
-        duration = 6,
-        baseCost = 50,
+        duration = 15,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 1,
-                min = 14,
-                coef = 0.104,
+                tickPeriod = 3,
+                min = 12,
+                coef = 0.167,
             },
         }
     },
@@ -781,7 +783,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 85,
-                coef = 0.167,
+                coef = 0.183,
             },
         }
     },
@@ -796,7 +798,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 112,
-                coef = 0.167,
+                coef = 0.183,
             },
         }
     },
@@ -811,7 +813,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 3,
                 min = 142,
-                coef = 0.167,
+                coef = 0.183,
             },
         }
     },
@@ -1046,7 +1048,7 @@ _addon.spellRankInfo = {
                 min = 657,
                 max = 696,
                 perLevel = 2,
-                coef = 0.286,
+                coef = 0.429,
             },
         }
     },
@@ -1060,7 +1062,7 @@ _addon.spellRankInfo = {
                 min = 939,
                 max = 992,
                 perLevel = 2.4,
-                coef = 0.286,
+                coef = 0.429,
             },
         }
     },
@@ -1130,14 +1132,14 @@ _addon.spellRankInfo = {
                 min = 78,
                 max = 99,
                 perLevel = 1.5,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 6,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1151,14 +1153,14 @@ _addon.spellRankInfo = {
                 min = 28,
                 max = 33,
                 perLevel = 0.2,
-                coef = 0.107,
+                coef = 0.161,
             },
             [2] = {
                 effectType = 10,
                 min = 52,
                 max = 61,
                 perLevel = 0.3,
-                coef = 0.107,
+                coef = 0.161,
             },
         }
     },
@@ -1173,14 +1175,14 @@ _addon.spellRankInfo = {
                 min = 355,
                 max = 450,
                 perLevel = 3.4,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 29,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1195,14 +1197,14 @@ _addon.spellRankInfo = {
                 min = 96,
                 max = 121,
                 perLevel = 1.7,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 8,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1217,14 +1219,14 @@ _addon.spellRankInfo = {
                 min = 132,
                 max = 167,
                 perLevel = 2,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 11,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1239,14 +1241,14 @@ _addon.spellRankInfo = {
                 min = 165,
                 max = 210,
                 perLevel = 2.2,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 13,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1261,14 +1263,14 @@ _addon.spellRankInfo = {
                 min = 204,
                 max = 259,
                 perLevel = 2.5,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 17,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1283,14 +1285,14 @@ _addon.spellRankInfo = {
                 min = 254,
                 max = 323,
                 perLevel = 2.9,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 20,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1305,14 +1307,14 @@ _addon.spellRankInfo = {
                 min = 304,
                 max = 387,
                 perLevel = 3.2,
-                coef = 0.75,
+                coef = 0.857,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
                 min = 25,
-                coef = 0.05,
+                coef = 0.033,
             },
         }
     },
@@ -1327,7 +1329,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 1,
                 min = 25,
-                coef = 0.15,
+                coef = 0.19,
             },
         }
     },
@@ -1341,14 +1343,14 @@ _addon.spellRankInfo = {
                 min = 50,
                 max = 59,
                 perLevel = 0.4,
-                coef = 0.107,
+                coef = 0.161,
             },
             [2] = {
                 effectType = 10,
                 min = 86,
                 max = 99,
                 perLevel = 0.4,
-                coef = 0.107,
+                coef = 0.161,
             },
         }
     },
@@ -1362,14 +1364,14 @@ _addon.spellRankInfo = {
                 min = 76,
                 max = 89,
                 perLevel = 0.6,
-                coef = 0.107,
+                coef = 0.161,
             },
             [2] = {
                 effectType = 10,
                 min = 121,
                 max = 140,
                 perLevel = 0.5,
-                coef = 0.107,
+                coef = 0.161,
             },
         }
     },
@@ -1384,7 +1386,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 1,
                 min = 42,
-                coef = 0.15,
+                coef = 0.19,
             },
         }
     },
@@ -1399,7 +1401,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 1,
                 min = 62,
-                coef = 0.15,
+                coef = 0.19,
             },
         }
     },
@@ -1414,7 +1416,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 1,
                 min = 87,
-                coef = 0.15,
+                coef = 0.19,
             },
         }
     },
@@ -1429,7 +1431,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 1,
                 min = 110,
-                coef = 0.15,
+                coef = 0.19,
             },
         }
     },
@@ -1459,7 +1461,7 @@ _addon.spellRankInfo = {
                 auraType = 3,
                 tickPeriod = 1,
                 min = 142,
-                coef = 0.15,
+                coef = 0.19,
             },
         }
     },
@@ -1627,7 +1629,7 @@ _addon.spellRankInfo = {
                 auraType = 53,
                 tickPeriod = 3,
                 min = 34,
-                coef = 0.063,
+                coef = 0.1,
             },
         }
     },
@@ -1642,7 +1644,7 @@ _addon.spellRankInfo = {
                 auraType = 53,
                 tickPeriod = 3,
                 min = 50,
-                coef = 0.063,
+                coef = 0.1,
             },
         }
     },
@@ -1657,7 +1659,7 @@ _addon.spellRankInfo = {
                 auraType = 53,
                 tickPeriod = 3,
                 min = 68,
-                coef = 0.063,
+                coef = 0.1,
             },
         }
     },
@@ -1672,7 +1674,7 @@ _addon.spellRankInfo = {
                 auraType = 53,
                 tickPeriod = 3,
                 min = 89,
-                coef = 0.063,
+                coef = 0.1,
             },
         }
     },
@@ -1687,36 +1689,34 @@ _addon.spellRankInfo = {
                 auraType = 53,
                 tickPeriod = 3,
                 min = 113,
-                coef = 0.063,
+                coef = 0.1,
             },
         }
     },
     [19296] = { -- Starshards(Rank 2)
         spellLevel = 18,
         maxLevel = 24,
-        duration = 6,
-        baseCost = 85,
+        duration = 15,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 1,
-                min = 27,
-                coef = 0.154,
+                tickPeriod = 3,
+                min = 23,
+                coef = 0.167,
             },
         }
     },
     [19299] = { -- Starshards(Rank 3)
         spellLevel = 26,
         maxLevel = 32,
-        duration = 6,
-        baseCost = 140,
+        duration = 15,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 1,
-                min = 48,
+                tickPeriod = 3,
+                min = 40,
                 coef = 0.167,
             },
         }
@@ -1724,14 +1724,13 @@ _addon.spellRankInfo = {
     [19302] = { -- Starshards(Rank 4)
         spellLevel = 34,
         maxLevel = 40,
-        duration = 6,
-        baseCost = 190,
+        duration = 15,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 1,
-                min = 69,
+                tickPeriod = 3,
+                min = 58,
                 coef = 0.167,
             },
         }
@@ -1739,14 +1738,13 @@ _addon.spellRankInfo = {
     [19303] = { -- Starshards(Rank 5)
         spellLevel = 42,
         maxLevel = 48,
-        duration = 6,
-        baseCost = 245,
+        duration = 15,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 1,
-                min = 95,
+                tickPeriod = 3,
+                min = 79,
                 coef = 0.167,
             },
         }
@@ -1754,14 +1752,13 @@ _addon.spellRankInfo = {
     [19304] = { -- Starshards(Rank 6)
         spellLevel = 50,
         maxLevel = 56,
-        duration = 6,
-        baseCost = 300,
+        duration = 15,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 1,
-                min = 126,
+                tickPeriod = 3,
+                min = 105,
                 coef = 0.167,
             },
         }
@@ -1769,14 +1766,13 @@ _addon.spellRankInfo = {
     [19305] = { -- Starshards(Rank 7)
         spellLevel = 58,
         maxLevel = 64,
-        duration = 6,
-        baseCost = 350,
+        duration = 15,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 1,
-                min = 156,
+                tickPeriod = 3,
+                min = 130,
                 coef = 0.167,
             },
         }
@@ -1906,10 +1902,10 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 1041,
-                max = 1100,
+                min = 997,
+                max = 1054,
                 perLevel = 2.5,
-                coef = 0.286,
+                coef = 0.429,
             },
         }
     },
@@ -1923,14 +1919,14 @@ _addon.spellRankInfo = {
                 min = 106,
                 max = 123,
                 perLevel = 0.8,
-                coef = 0.107,
+                coef = 0.161,
             },
             [2] = {
                 effectType = 10,
                 min = 161,
                 max = 188,
                 perLevel = 0.6,
-                coef = 0.107,
+                coef = 0.161,
             },
         }
     },
@@ -1944,14 +1940,14 @@ _addon.spellRankInfo = {
                 min = 140,
                 max = 163,
                 perLevel = 1,
-                coef = 0.107,
+                coef = 0.161,
             },
             [2] = {
                 effectType = 10,
                 min = 235,
                 max = 272,
                 perLevel = 0.7,
-                coef = 0.107,
+                coef = 0.161,
             },
         }
     },
@@ -1965,14 +1961,28 @@ _addon.spellRankInfo = {
                 min = 181,
                 max = 210,
                 perLevel = 1.2,
-                coef = 0.107,
+                coef = 0.161,
             },
             [2] = {
                 effectType = 10,
                 min = 302,
                 max = 351,
                 perLevel = 0.8,
-                coef = 0.107,
+                coef = 0.161,
+            },
+        }
+    },
+    [37563] = { -- Renewal(Rank 1)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 9,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                min = 50,
+                coef = 0,
             },
         }
     },
@@ -1991,8 +2001,13 @@ _addon.spellClassSet = {
             10899, -- Power Word: Shield(Rank 8)
             10900, -- Power Word: Shield(Rank 9)
             10901, -- Power Word: Shield(Rank 10)
+            25217, -- Power Word: Shield(Rank 11)
+            25218, -- Power Word: Shield(Rank 12)
             27607, -- Power Word: Shield(Rank 10)
             27779, -- Divine Protection
+            44175, -- Power Word: Shield
+            44291, -- Power Word: Shield
+            46193, -- Power Word: Shield
         },
         [2] = {
             588, -- Inner Fire(Rank 1)
@@ -2002,6 +2017,7 @@ _addon.spellClassSet = {
             10951, -- Inner Fire(Rank 5)
             10952, -- Inner Fire(Rank 6)
             16329, -- Juju Might
+            25431, -- Inner Fire(Rank 7)
         },
         [4] = {
             15286, -- Vampiric Embrace
@@ -2024,6 +2040,18 @@ _addon.spellClassSet = {
             21564, -- Prayer of Fortitude(Rank 2)
             23947, -- Power Word: Fortitude(Rank 5)
             23948, -- Power Word: Fortitude(Rank 6)
+            25389, -- Power Word: Fortitude(Rank 7)
+            25392, -- Prayer of Fortitude(Rank 3)
+            31807, -- Mark of War
+            31808, -- Mark of Lore
+            31810, -- Mark of Lore
+            31811, -- Mark of Lore
+            31812, -- Mark of War
+            31813, -- Mark of War
+            31814, -- Mark of War
+            31815, -- Mark of Lore
+            32025, -- Test Buff (DND)
+            39231, -- Prayer of Fortitude(Rank 3)
         },
         [16] = {
             8129, -- Mana Burn(Rank 1)
@@ -2031,9 +2059,19 @@ _addon.spellClassSet = {
             10874, -- Mana Burn(Rank 3)
             10875, -- Mana Burn(Rank 4)
             10876, -- Mana Burn(Rank 5)
+            25379, -- Mana Burn(Rank 6)
+            25380, -- Mana Burn(Rank 7)
         },
         [32] = {
+            14752, -- Divine Spirit(Rank 1)
+            14818, -- Divine Spirit(Rank 2)
+            14819, -- Divine Spirit(Rank 3)
             21074, -- Test NPC Resurrection(Rank 1)
+            25312, -- Divine Spirit(Rank 5)
+            27681, -- Prayer of Spirit(Rank 1)
+            27841, -- Divine Spirit(Rank 4)
+            32999, -- Prayer of Spirit(Rank 2)
+            39234, -- Divine Spirit(Rank 4)
         },
         [64] = {
             139, -- Renew(Rank 1)
@@ -2045,9 +2083,13 @@ _addon.spellClassSet = {
             10927, -- Renew(Rank 7)
             10928, -- Renew(Rank 8)
             10929, -- Renew(Rank 9)
-            15229, -- Crystal Restore
+            25221, -- Renew(Rank 11)
+            25222, -- Renew(Rank 12)
             25315, -- Renew(Rank 10)
             27606, -- Renew(Rank 9)
+            32125, -- Medicinal Swamp Moss
+            44174, -- Renew
+            46192, -- Renew
         },
         [128] = {
             585, -- Smite(Rank 1)
@@ -2058,6 +2100,8 @@ _addon.spellClassSet = {
             6060, -- Smite(Rank 6)
             10933, -- Smite(Rank 7)
             10934, -- Smite(Rank 8)
+            25363, -- Smite(Rank 9)
+            25364, -- Smite(Rank 10)
         },
         [256] = {
             976, -- Shadow Protection(Rank 1)
@@ -2065,20 +2109,28 @@ _addon.spellClassSet = {
             10958, -- Shadow Protection(Rank 3)
             16874, -- Shadow Protection(Rank 3)
             17151, -- Shadow Barrier
+            25433, -- Shadow Protection(Rank 4)
             27683, -- Prayer of Shadow Protection(Rank 1)
+            37539, -- Nether Protection
+            39236, -- Prayer of Shadow Protection(Rank 1)
+            39374, -- Prayer of Shadow Protection(Rank 2)
         },
         [512] = {
             596, -- Prayer of Healing(Rank 1)
             996, -- Prayer of Healing(Rank 2)
             10960, -- Prayer of Healing(Rank 3)
             10961, -- Prayer of Healing(Rank 4)
+            25308, -- Prayer of Healing(Rank 6)
             25316, -- Prayer of Healing(Rank 5)
+            30604, -- Prayer of Healing
         },
         [1024] = {
             2054, -- Heal(Rank 1)
             2055, -- Heal(Rank 2)
             6063, -- Heal(Rank 3)
             6064, -- Heal(Rank 4)
+            37382, -- Health Link(Rank 1)
+            38395, -- Siphon Essence
         },
         [2048] = {
             2061, -- Flash Heal(Rank 1)
@@ -2091,7 +2143,19 @@ _addon.spellClassSet = {
             17137, -- Flash Heal
             17138, -- Flash Heal
             17843, -- Flash Heal
+            25233, -- Flash Heal(Rank 8)
+            25235, -- Flash Heal(Rank 9)
             27608, -- Flash Heal(Rank 7)
+            29564, -- Greater Heal
+            33641, -- Flash of Light
+            34176, -- QA Heal Coefficient 1(QASpell)
+            35096, -- Greater Heal
+            38580, -- Greater Heal
+            38588, -- Flash Heal
+            41378, -- Greater Heal
+            42420, -- Flash Heal
+            43431, -- Flash Heal
+            43575, -- Flash Heal
         },
         [4096] = {
             2060, -- Greater Heal(Rank 1)
@@ -2099,8 +2163,11 @@ _addon.spellClassSet = {
             10964, -- Greater Heal(Rank 3)
             10965, -- Greater Heal(Rank 4)
             15068, -- TEST Heal Self
+            25210, -- Greater Heal(Rank 6)
+            25213, -- Greater Heal(Rank 7)
             25314, -- Greater Heal(Rank 5)
             26565, -- Heal Brethren
+            39321, -- Heal Self
         },
         [8192] = {
             8092, -- Mind Blast(Rank 1)
@@ -2112,6 +2179,8 @@ _addon.spellClassSet = {
             10945, -- Mind Blast(Rank 7)
             10946, -- Mind Blast(Rank 8)
             10947, -- Mind Blast(Rank 9)
+            25372, -- Mind Blast(Rank 10)
+            25375, -- Mind Blast(Rank 11)
         },
         [16384] = {
             586, -- Fade(Rank 1)
@@ -2120,6 +2189,7 @@ _addon.spellClassSet = {
             9592, -- Fade(Rank 4)
             10941, -- Fade(Rank 5)
             10942, -- Fade(Rank 6)
+            25429, -- Fade(Rank 7)
         },
         [32768] = {
             589, -- Shadow Word: Pain(Rank 1)
@@ -2130,6 +2200,8 @@ _addon.spellClassSet = {
             10892, -- Shadow Word: Pain(Rank 6)
             10893, -- Shadow Word: Pain(Rank 7)
             10894, -- Shadow Word: Pain(Rank 8)
+            25367, -- Shadow Word: Pain(Rank 9)
+            25368, -- Shadow Word: Pain(Rank 10)
             27605, -- Shadow Word: Pain(Rank 8)
         },
         [65536] = {
@@ -2144,6 +2216,11 @@ _addon.spellClassSet = {
             10911, -- Mind Control(Rank 2)
             10912, -- Mind Control(Rank 3)
             16053, -- Dominion of Soul
+            32974, -- Cinematic - Mind Control(Rank 1)
+            32976, -- Cinematic - Mind Control(Rank 1)
+            34630, -- Scrap Reaver X6000
+            38915, -- Mental Interference(0)
+            39219, -- Death's Door Fel Cannon
         },
         [262144] = {
             2050, -- Lesser Heal(Rank 1)
@@ -2158,6 +2235,7 @@ _addon.spellClassSet = {
             19252, -- Touch of Weakness(Rank 4)
             19253, -- Touch of Weakness(Rank 5)
             19254, -- Touch of Weakness(Rank 6)
+            25460, -- Touch of Weakness(Rank 7)
         },
         [1048576] = {
             14914, -- Holy Fire(Rank 1)
@@ -2174,6 +2252,10 @@ _addon.spellClassSet = {
             18165, -- Holy Fire
             18167, -- Holy Fire
             23860, -- Holy Fire
+            25384, -- Holy Fire(Rank 9)
+            29563, -- Holy Fire
+            36947, -- Holy Fire
+            38585, -- Holy Fire
         },
         [2097152] = {
             10797, -- Starshards(Rank 1)
@@ -2183,6 +2265,7 @@ _addon.spellClassSet = {
             19303, -- Starshards(Rank 5)
             19304, -- Starshards(Rank 6)
             19305, -- Starshards(Rank 7)
+            25446, -- Starshards(Rank 8)
             27636, -- Starshards
         },
         [4194304] = {
@@ -2190,12 +2273,24 @@ _addon.spellClassSet = {
             15430, -- Holy Nova(Rank 2)
             15431, -- Holy Nova(Rank 3)
             20694, -- Holy Nova
-            23458, -- Holy Nova(Rank 2)
             23858, -- Holy Nova
             24022, -- Cleanse Nova
+            25331, -- Holy Nova(Rank 7)
             27799, -- Holy Nova(Rank 4)
             27800, -- Holy Nova(Rank 5)
             27801, -- Holy Nova(Rank 6)
+            29514, -- Holy Nova
+            34222, -- Sunseeker Blessing
+            34944, -- Holy Nova
+            35261, -- Arcane Nova
+            35740, -- Holy Nova
+            36985, -- Holy Nova
+            37669, -- Holy Nova
+            38589, -- Holy Nova
+            38936, -- Arcane Nova
+            40096, -- Holy Nova
+            41380, -- Holy Nova
+            46564, -- Holy Nova
         },
         [8388608] = {
             15407, -- Mind Flay(Rank 1)
@@ -2211,21 +2306,114 @@ _addon.spellClassSet = {
             22313, -- Purple Hands
             22800, -- Entangling Roots
             22802, -- Choking Spores
-            22803, -- Dire Maul Trap - Summon
-            22821, -- Warpwood Spores
             22919, -- Mind Flay
             23642, -- Corruption
             23953, -- Mind Flay
             23979, -- Holy Wrath
-            24152, -- Whipweed Roots
+            25387, -- Mind Flay(Rank 7)
             26044, -- Mind Flay
             26143, -- Mind Flay
             27286, -- Shadow Wrath
             27640, -- Baron Rivendare's Soul Drain
-            28309, -- Copy of Corruption
+            28309, -- Purple Beam
             28310, -- Mind Flay
+            28516, -- Sunwell Torrent
             28883, -- Holy Wrath
             29407, -- Mind Flay
+            29420, -- Wretched Tap
+            29570, -- Mind Flay
+            31806, -- Blue Beam
+            31902, -- Purple Beam
+            32000, -- Mind Sear
+            32024, -- Soul Sear
+            32417, -- Mind Flay
+            32445, -- Holy Wrath
+            32638, -- Divide Spirit
+            32862, -- Drain Soul
+            32930, -- Blue Beam
+            33628, -- Lightning Tether
+            34209, -- Blue Beam
+            34211, -- Blue Beam
+            34212, -- Blue Beam
+            34223, -- Fiery Hands
+            34224, -- Shadowy Hands
+            34225, -- Frosty Hands
+            34226, -- Charged Hands
+            34227, -- Magic Hands
+            34228, -- Holy Hands
+            34303, -- Nether Charge
+            34373, -- Flame Reflection
+            34374, -- Frost Reflection
+            34375, -- Nature Reflection
+            34376, -- Shadow Reflection
+            34380, -- Arcane Reflection
+            34381, -- Holy Reflection
+            34398, -- Flame Energy
+            34399, -- Shadow Energy
+            34401, -- Arcane Energy
+            34402, -- Nature Energy
+            34403, -- Holy Energy
+            34404, -- Frost Energy
+            34430, -- Purple Beam
+            35424, -- Soul Shadows
+            35427, -- Blade's Edge Purple Beam
+            35460, -- Fury of the Dreghood Elders
+            35493, -- Forked Lightning Tether
+            35507, -- Mind Flay
+            35839, -- Drain Soul
+            35919, -- Welding Beam
+            35960, -- Blade's Edge Multi Gold Beam
+            35961, -- Blade's Edge Multi Gold Beam (02)
+            35962, -- Blade's Edge Multi Gold Beam (03)
+            36000, -- Blade's Edge Purple Beam (02)
+            36314, -- The Seer's Presence
+            36384, -- Skartax Purple Beam
+            36414, -- Focused Bursts
+            36415, -- Arcane Glare
+            36416, -- Shadow Glare
+            36417, -- Fiery Glare
+            36447, -- Mind Sear
+            36452, -- Blade's Edge Arakkoa Mind Control Beam
+            36457, -- Random Bursts
+            36458, -- Random Bursts
+            36475, -- Focused Bursts
+            36508, -- Energy Surge
+            36580, -- Warp Storm
+            36692, -- Blade's Edge Arakkoa Mind Control Beam 02
+            36859, -- Mind Rend
+            36924, -- Mind Rend
+            36927, -- Bone Wastes - Tomb Event Purple Beam
+            36929, -- Mind Rend
+            37199, -- Dertrok Mind Control
+            37216, -- Crystal Control
+            37276, -- Mind Flay
+            37330, -- Mind Flay
+            37372, -- Shadow Wrath
+            37621, -- Mind Flay
+            37654, -- Lightning Tether
+            37986, -- Ancient Fire
+            38015, -- Blue Beam
+            38034, -- Blue Beam
+            38243, -- Mind Flay
+            38444, -- Energize Headpiece
+            38482, -- Disrupt Dark Conclave Ritual
+            38632, -- Cosmetic Purple Beam
+            38821, -- Lightning Tether
+            38822, -- Lightning Tether
+            38880, -- Forked Lightning Tether
+            38985, -- Focused Bursts
+            38987, -- Focused Bursts
+            38988, -- Fiery Glare
+            38989, -- Arcane Glare
+            38990, -- Shadow Glare
+            39017, -- Mind Rend
+            39021, -- Mind Rend
+            39538, -- ZapTemp
+            40225, -- Blue Beam
+            40842, -- Mind Flay
+            40954, -- TEST - LAB - Shade of Akama(Rank 7)
+            41264, -- Energy Surge
+            42396, -- Mind Flay
         },
         [16777216] = {
             13908, -- Desperate Prayer(Rank 1)
@@ -2235,6 +2423,7 @@ _addon.spellClassSet = {
             19241, -- Desperate Prayer(Rank 5)
             19242, -- Desperate Prayer(Rank 6)
             19243, -- Desperate Prayer(Rank 7)
+            25437, -- Desperate Prayer(Rank 8)
         },
         [33554432] = {
             2944, -- Devouring Plague(Rank 1)
@@ -2243,23 +2432,20 @@ _addon.spellClassSet = {
             19278, -- Devouring Plague(Rank 4)
             19279, -- Devouring Plague(Rank 5)
             19280, -- Devouring Plague(Rank 6)
+            25467, -- Devouring Plague(Rank 7)
             28377, -- Shadowguard(Rank 1)
             28378, -- Shadowguard(Rank 2)
             28379, -- Shadowguard(Rank 3)
             28380, -- Shadowguard(Rank 4)
             28381, -- Shadowguard(Rank 5)
             28382, -- Shadowguard(Rank 6)
+            28385, -- Shadowguard(Rank 7)
         },
         [67108864] = {
-            453, -- Mind Soothe(Rank 1)
             2096, -- Mind Vision(Rank 1)
             2652, -- Touch of Weakness(Rank 1)
-            8192, -- Mind Soothe(Rank 2)
             9035, -- Hex of Weakness(Rank 1)
             10909, -- Mind Vision(Rank 2)
-            10953, -- Mind Soothe(Rank 3)
-            15258, -- Shadow Vulnerability(Rank 1)
-            15286, -- Vampiric Embrace
             15487, -- Silence
             19261, -- Touch of Weakness(Rank 2)
             19262, -- Touch of Weakness(Rank 3)
@@ -2271,13 +2457,24 @@ _addon.spellClassSet = {
             19283, -- Hex of Weakness(Rank 4)
             19284, -- Hex of Weakness(Rank 5)
             19285, -- Hex of Weakness(Rank 6)
+            25461, -- Touch of Weakness(Rank 7)
+            25470, -- Hex of Weakness(Rank 7)
             25816, -- Hex of Weakness(Rank 6)
+            32926, -- Lurk
+            40789, -- Zoom Out
+            40791, -- Zoom Out
+            40792, -- Zoom In
+            40793, -- Zoom In
+            41233, -- Brute Cologne
+            42129, -- First Person Camera
+            45468, -- Mind Vision
         },
         [134217728] = {
             15007, -- Resurrection Sickness
             23455, -- Holy Nova(Rank 1)
             23458, -- Holy Nova(Rank 2)
             23459, -- Holy Nova(Rank 3)
+            25329, -- Holy Nova(Rank 7)
             27803, -- Holy Nova(Rank 4)
             27804, -- Holy Nova(Rank 5)
             27805, -- Holy Nova(Rank 6)
@@ -2287,6 +2484,21 @@ _addon.spellClassSet = {
             17137, -- Flash Heal
             17138, -- Flash Heal
             17843, -- Flash Heal
+            29564, -- Greater Heal
+            33641, -- Flash of Light
+            34861, -- Circle of Healing(Rank 1)
+            34863, -- Circle of Healing(Rank 2)
+            34864, -- Circle of Healing(Rank 3)
+            34865, -- Circle of Healing(Rank 4)
+            34866, -- Circle of Healing(Rank 5)
+            35096, -- Greater Heal
+            38580, -- Greater Heal
+            38588, -- Flash Heal
+            39321, -- Heal Self
+            41378, -- Greater Heal
+            42420, -- Flash Heal
+            43431, -- Flash Heal
+            43575, -- Flash Heal
         },
         [536870912] = {
             6788, -- Weakened Soul
@@ -2305,31 +2517,32 @@ _addon.spellClassSet = {
             17201, -- Dispel Magic
             20770, -- Resurrection(Rank 5)
             23859, -- Dispel Magic
+            25435, -- Resurrection(Rank 6)
             25808, -- Dispel
             27870, -- Lightwell(Rank 2)
             27871, -- Lightwell(Rank 3)
+            28275, -- Lightwell(Rank 4)
+            30036, -- Steal Magic
+            32841, -- Mass Resurrection
+            34433, -- Shadowfiend(Rank 1)
+            39649, -- Summon Shadowfiends
+            40081, -- Free Friend
+            40135, -- Shackle Undead
+            40751, -- Disrupt Magic
+            40769, -- Shivan Self Cleansing
+            41159, -- Summon Shadowfiends
+            43577, -- Dispel Magic
         },
         [2147483648] = {
-            453, -- Mind Soothe(Rank 1)
-            527, -- Dispel Magic(Rank 1)
-            528, -- Cure Disease
-            552, -- Abolish Disease
-            988, -- Dispel Magic(Rank 2)
             1706, -- Levitate
-            2651, -- Elune's Grace(Rank 1)
+            2651, -- Elune's Grace
             2652, -- Touch of Weakness(Rank 1)
             6346, -- Fear Ward
-            8192, -- Mind Soothe(Rank 2)
             9035, -- Hex of Weakness(Rank 1)
             10060, -- Power Infusion
-            10953, -- Mind Soothe(Rank 3)
             13896, -- Feedback(Rank 1)
-            14752, -- Divine Spirit(Rank 1)
-            14818, -- Divine Spirit(Rank 2)
-            14819, -- Divine Spirit(Rank 3)
             15090, -- Dispel Magic
             15229, -- Crystal Restore
-            15286, -- Vampiric Embrace
             15473, -- Shadowform
             15487, -- Silence
             16329, -- Juju Might
@@ -2353,10 +2566,6 @@ _addon.spellClassSet = {
             19283, -- Hex of Weakness(Rank 4)
             19284, -- Hex of Weakness(Rank 5)
             19285, -- Hex of Weakness(Rank 6)
-            19289, -- Elune's Grace(Rank 2)
-            19291, -- Elune's Grace(Rank 3)
-            19292, -- Elune's Grace(Rank 4)
-            19293, -- Elune's Grace(Rank 5)
             19308, -- Shadowguard(Rank 2)
             19309, -- Shadowguard(Rank 3)
             19310, -- Shadowguard(Rank 4)
@@ -2371,17 +2580,45 @@ _addon.spellClassSet = {
             23859, -- Dispel Magic
             23964, -- Bloodrager's Requiem
             24022, -- Cleanse Nova
+            25441, -- Feedback(Rank 6)
+            25461, -- Touch of Weakness(Rank 7)
+            25470, -- Hex of Weakness(Rank 7)
+            25477, -- Shadowguard(Rank 7)
             25808, -- Dispel
             25816, -- Hex of Weakness(Rank 6)
             27609, -- Dispel Magic(Rank 2)
-            27681, -- Prayer of Spirit(Rank 1)
-            27841, -- Divine Spirit(Rank 4)
+            27985, -- Floating
             27986, -- Levitate
             28133, -- Cure Disease
             28418, -- General's Warcry
             28419, -- General's Warcry
             28420, -- General's Warcry
+            29514, -- Holy Nova
+            30036, -- Steal Magic
             30238, -- Lordaeron's Blessing
+            32548, -- Symbol of Hope
+            33206, -- Pain Suppression
+            34222, -- Sunseeker Blessing
+            34379, -- Bloodgem Infusion
+            34433, -- Shadowfiend(Rank 1)
+            34944, -- Holy Nova
+            35261, -- Arcane Nova
+            35749, -- Starfall
+            36985, -- Holy Nova
+            37669, -- Holy Nova
+            38082, -- Mass Dispel
+            38589, -- Holy Nova
+            38936, -- Arcane Nova
+            39649, -- Summon Shadowfiends
+            40081, -- Free Friend
+            40096, -- Holy Nova
+            40751, -- Disrupt Magic
+            40769, -- Shivan Self Cleansing
+            41159, -- Summon Shadowfiends
+            41380, -- Holy Nova
+            43577, -- Dispel Magic
+            46564, -- Holy Nova
+            52970, -- Levitate
         },
     },
     [2] = {
@@ -2391,6 +2628,123 @@ _addon.spellClassSet = {
             552, -- Abolish Disease
             988, -- Dispel Magic(Rank 2)
             30238, -- Lordaeron's Blessing
+            38082, -- Mass Dispel
+        },
+        [2] = {
+            32379, -- Shadow Word: Death(Rank 1)
+            32409, -- Shadow Word: Death(Rank 1)
+            32996, -- Shadow Word: Death(Rank 2)
+        },
+        [4] = {
+            32546, -- Binding Heal(Rank 1)
+        },
+        [8] = {
+            15258, -- Shadow Vulnerability(Rank 1)
+        },
+        [16] = {
+            44041, -- Chastise(Rank 1)
+            44043, -- Chastise(Rank 2)
+            44044, -- Chastise(Rank 3)
+            44045, -- Chastise(Rank 4)
+            44046, -- Chastise(Rank 5)
+            44047, -- Chastise(Rank 6)
+        },
+        [32] = {
+            33076, -- Prayer of Mending(Rank 1)
+            39623, -- Ron's Test Spell(Rank 1)
+            41635, -- Prayer of Mending(Rank 1)
+            351575, -- Prayer of Mending(Rank 1)
+        },
+        [64] = {
+            453, -- Mind Soothe(Rank 1)
+            8192, -- Mind Soothe(Rank 2)
+            10953, -- Mind Soothe(Rank 3)
+            25596, -- Mind Soothe(Rank 4)
+        },
+        [128] = {
+            32375, -- Mass Dispel
+            32592, -- Mass Dispel
+            39897, -- Mass Dispel
+            353184, -- Mass Dispel
+        },
+        [256] = {
+            34433, -- Shadowfiend(Rank 1)
+            39649, -- Summon Shadowfiends
+            41159, -- Summon Shadowfiends
+        },
+        [512] = {
+            34754, -- Clearcasting
+        },
+        [1024] = {
+            34914, -- Vampiric Touch(Rank 1)
+            34916, -- Vampiric Touch(Rank 2)
+            34917, -- Vampiric Touch(Rank 3)
+        },
+        [2048] = {
+            15473, -- Shadowform
+        },
+        [4096] = {
+            586, -- Fade(Rank 1)
+            1706, -- Levitate
+            2651, -- Elune's Grace
+            2652, -- Touch of Weakness(Rank 1)
+            2944, -- Devouring Plague(Rank 1)
+            6346, -- Fear Ward
+            9035, -- Hex of Weakness(Rank 1)
+            9484, -- Shackle Undead(Rank 1)
+            9485, -- Shackle Undead(Rank 2)
+            9578, -- Fade(Rank 2)
+            9579, -- Fade(Rank 3)
+            9592, -- Fade(Rank 4)
+            10060, -- Power Infusion
+            10941, -- Fade(Rank 5)
+            10942, -- Fade(Rank 6)
+            10955, -- Shackle Undead(Rank 3)
+            14743, -- Focused Casting(Rank 1)
+            14751, -- Inner Focus
+            14893, -- Inspiration(Rank 1)
+            15269, -- Blackout(Rank 1)
+            15271, -- Spirit Tap(Rank 1)
+            15357, -- Inspiration(Rank 2)
+            15359, -- Inspiration(Rank 3)
+            15487, -- Silence
+            18137, -- Shadowguard(Rank 1)
+            19261, -- Touch of Weakness(Rank 2)
+            19262, -- Touch of Weakness(Rank 3)
+            19264, -- Touch of Weakness(Rank 4)
+            19265, -- Touch of Weakness(Rank 5)
+            19266, -- Touch of Weakness(Rank 6)
+            19276, -- Devouring Plague(Rank 2)
+            19277, -- Devouring Plague(Rank 3)
+            19278, -- Devouring Plague(Rank 4)
+            19279, -- Devouring Plague(Rank 5)
+            19280, -- Devouring Plague(Rank 6)
+            19281, -- Hex of Weakness(Rank 2)
+            19282, -- Hex of Weakness(Rank 3)
+            19283, -- Hex of Weakness(Rank 4)
+            19284, -- Hex of Weakness(Rank 5)
+            19285, -- Hex of Weakness(Rank 6)
+            19308, -- Shadowguard(Rank 2)
+            19309, -- Shadowguard(Rank 3)
+            19310, -- Shadowguard(Rank 4)
+            19311, -- Shadowguard(Rank 5)
+            19312, -- Shadowguard(Rank 6)
+            25429, -- Fade(Rank 7)
+            25461, -- Touch of Weakness(Rank 7)
+            25467, -- Devouring Plague(Rank 7)
+            25470, -- Hex of Weakness(Rank 7)
+            25477, -- Shadowguard(Rank 7)
+            27813, -- Blessed Recovery(Rank 1)
+            27817, -- Blessed Recovery(Rank 2)
+            27818, -- Blessed Recovery(Rank 3)
+            27828, -- Focused Casting(Rank 2)
+            32548, -- Symbol of Hope
+            33143, -- Blessed Resilience(Rank 1)
+            33151, -- Surge of Light(Rank 1)
+            33206, -- Pain Suppression
+            45237, -- Focused Will(Rank 1)
+            45241, -- Focused Will(Rank 2)
+            45242, -- Focused Will(Rank 3)
         },
     },
     [3] = {
