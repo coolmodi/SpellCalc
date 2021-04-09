@@ -465,6 +465,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         elseif costType == 3 then -- energy
             -- TODO: energy??
         end
+
+        -- Prevent div by 0 in case the spell has simply no cost at all
+        if calcedSpell.effectiveCost == 0 then
+            calcedSpell.effectiveCost = -1;
+        end
     else
         calcedSpell.baseCost = parentSpellData.baseCost;
         calcedSpell.effectiveCost = parentSpellData.effectiveCost;
