@@ -55,6 +55,7 @@ export const USELESS_AURAS = {
     [AURA_TYPE.SPELL_AURA_MOD_SPEED_FLIGHT]: true,
     [AURA_TYPE.SPELL_AURA_233]: true,
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_HASTE]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN]: true, // As of TBC the API provides regen values including MP5
 }
 export class AuraHandlers
 {

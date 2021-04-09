@@ -31,11 +31,6 @@ _addon.itemSetData[214] = {
     name = "Stormrage Raiment",
     effects = {
         {
-            need = 3,
-            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 20,
-        },
-        {
             need = 8,
             type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {16, 0, 0, 0},
@@ -55,11 +50,6 @@ _addon.setItemData[16902] = 214;
 _addon.itemSetData[479] = {
     name = "Haruspex's Garb",
     effects = {
-        {
-            need = 2,
-            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 4,
-        },
         {
             need = 5,
             type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,

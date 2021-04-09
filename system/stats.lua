@@ -77,8 +77,9 @@ end
 _addon.stats = {
     manaMax = 0, -- Maximum mana
     manaCurrent = 0, -- Current mana if update is active
-    manaRegBase = 0, -- Mana regen based on spirit
-    manaRegCasting = 0, -- Mana regen from spirit while casting
+    manaRegBase = 0, -- Mana regen based on spirit /sec
+    manaRegCasting = 0, -- Mana regen from spirit while casting /sec
+    manaRegAura = 0, -- Mana regen from SPELL_AURA_MOD_POWER_REGEN sources /sec
     spellPower = {
         [_addon.SCHOOL.PHYSICAL] = 0,
         [_addon.SCHOOL.HOLY] = 0,
@@ -199,27 +200,6 @@ function _addon:UpdateDmgDoneMods()
     self:TriggerUpdate();
 end
 
-local queueFrame = CreateFrame("Frame");
-local timePassed = 0;
-local function UpdateFunction(self, passed)
-    timePassed = timePassed + passed;
-    if timePassed < 2 then
-        return;
-    end
-    timePassed = 0;
-    _addon:PrintDebug("Check spirit regen");
-    -- TODO: this includes mp5 in TBC, currently bugged on beta though, wait for fix
-    -- Can calculate regen manually with the known formula, mp5 would be total - that then, can ditch mp5 tracking internally
-    local curRegen = GetManaRegen();
-    if curRegen > 0.5 then
-        _addon:PrintDebug("Spirit regen seems normal again, updating it");
-        _addon.stats.manaRegBase = curRegen;
-        _addon.stats.manaRegCasting = _addon.stats.manaRegBase * (_addon.stats.fsrRegenMult.val/100);
-        queueFrame:SetScript("OnUpdate", nil);
-        _addon:TriggerUpdate();
-    end
-end
-
 --- Update power values.
 ---@param powerType string|nil
 function _addon:UpdatePower(powerType)
@@ -236,24 +216,39 @@ function _addon:UpdatePower(powerType)
     end
 end
 
+do
+    local LEVEL_REGEN_MULT = {
+        0.034965, 0.034191, 0.033465, 0.032526, 0.031661, 0.031076, 0.030523, 0.029994, 0.029307, 0.028661,
+        0.027584, 0.026215, 0.025381, 0.024300, 0.023345, 0.022748, 0.021958, 0.021386, 0.020790, 0.020121,
+        0.019733, 0.019155, 0.018819, 0.018316, 0.017936, 0.017576, 0.017201, 0.016919, 0.016581, 0.016233,
+        0.015994, 0.015707, 0.015464, 0.015204, 0.014956, 0.014744, 0.014495, 0.014302, 0.014094, 0.013895,
+        0.013724, 0.013522, 0.013363, 0.013175, 0.012996, 0.012853, 0.012687, 0.012539, 0.012384, 0.012233,
+        0.012113, 0.011973, 0.011859, 0.011714, 0.011575, 0.011473, 0.011342, 0.011245, 0.011110, 0.010999,
+        0.010700, 0.010522, 0.010290, 0.010119, 0.009968, 0.009808, 0.009651, 0.009553, 0.009445, 0.009327
+    }
+
+    ---Update spirit+int based and MP5 regen values from API
+    -- TODO: once GetManaRegen() is fixed use that instead, can drop fsr stuff entirely then
+    -- Currently the "casting" regen is only mp/s from "mp5" sources (SPELL_AURA_MOD_POWER_REGEN)
+    function _addon:UpdateManaRegen()
+        local _, int = UnitStat("player", 4);
+        local _, spirit = UnitStat("player", 5);
+
+        local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]);
+        local apiRegenBase, apiRegenCasting = GetManaRegen();
+
+        self.stats.manaRegBase = spiritIntRegen;
+        self.stats.manaRegCasting = self.stats.manaRegBase * (self.stats.fsrRegenMult.val/100);
+        self.stats.manaRegAura = apiRegenCasting;
+
+        self:TriggerUpdate();
+    end
+end
+
 --- Update general stats from API
 function _addon:UpdateStats()
     _addon:PrintDebug("Updating stats");
-
     self.stats.manaMax = UnitPowerMax("player", 0);
-
-    -- The function only a value if out of FSR, 
-    -- otherwise always 0.00 something, even with FSR mana regen talents
-    -- Only update if value makes sense, otherwise queue up an update
-    local curRegen = GetManaRegen();
-    if curRegen > 0.5 then
-        self.stats.manaRegBase = curRegen;
-        self.stats.manaRegCasting = self.stats.manaRegBase * (self.stats.fsrRegenMult.val/100);
-    else
-        self:PrintDebug("Have to queue spirit regen update");
-        queueFrame:SetScript("OnUpdate", UpdateFunction);
-    end
-
     self:TriggerUpdate();
 end
 
@@ -347,4 +342,5 @@ function _addon:FullUpdate()
     self:UpdateRangedAttackDmg();
     self:CombatRatingUpdate();
     self:UpdatePower();
+    self:UpdateManaRegen();
 end

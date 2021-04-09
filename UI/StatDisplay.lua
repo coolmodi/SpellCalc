@@ -308,6 +308,7 @@ AddSingleStat("Mana", stats, "mana");
 AddSingleStat("Spirit regen", stats, "manaRegBase", " mana/s");
 AddSingleStat("FSR regen", stats, "manaRegCasting", " mana/s");
 AddUniformStatTable(stats.fsrRegenMult, "FSR regen mult", "%");
+AddSingleStat("Mp5 API", stats, "manaRegAura", " mana/s");
 AddUniformStatTable(stats.mp5, "Mp5 regen", " mana/5s");
 
 AddSchoolTableSingle(stats.spellPower, "Spell power");

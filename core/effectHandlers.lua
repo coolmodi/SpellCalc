@@ -588,7 +588,7 @@ local function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
         calcedEffect.thpsData.secNoCast = secondsNoCast;
 
         if secondsNoCast > 0 then
-            local manaGained = secondsNoCast * (stats.mp5.val/5 + stats.manaRegCasting);
+            local manaGained = secondsNoCast * (stats.mp5.val/5 + stats.manaRegCasting + stats.manaRegAura);
             local secOutOfFSR = secondsNoCast - 5 + effCastTime;
 
             if secOutOfFSR > 0 then

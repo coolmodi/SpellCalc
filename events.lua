@@ -47,6 +47,7 @@ function handlers.UNIT_AURA(unit)
     end
     _addon:UpdatePlayerAuras();
     _addon:UpdateWeaponEnchants();
+    _addon:UpdateManaRegen();
 end
 
 function handlers.UNIT_STATS(unit)
@@ -54,6 +55,7 @@ function handlers.UNIT_STATS(unit)
         return;
     end
     _addon:UpdateStats();
+    _addon:UpdateManaRegen();
 end
 
 function handlers.CHARACTER_POINTS_CHANGED(gain)

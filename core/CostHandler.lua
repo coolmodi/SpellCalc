@@ -34,7 +34,7 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
         return;
     end
 
-    local mps = stats.mp5.val / 5;
+    local mps = stats.mp5.val / 5 + stats.manaRegAura;
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
         local ofsrRegen;
