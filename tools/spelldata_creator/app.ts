@@ -69,6 +69,8 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo) {
  * SPELL_EFFECT_APPLY_AURA and SPELL_EFFECT_PERSISTENT_AREA_AURA
  */
 function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string, baseInfo: BaseInfo) {
+    const saopts = spellData.getSpellAuraOptions(effect.SpellID);
+    
     rankInfo.effects[effectNum] = {
         effectType: effect.Effect,
         auraType: effect.EffectAura,
@@ -79,8 +81,11 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         forceScaleWithHeal: false,
         period: 0,
         charges: 0,
-        weaponCoef: 0 
+        weaponCoef: 0,
     };
+
+    if (saopts && saopts.CumulativeAura > 1) rankInfo.effects[effectNum].auraStacks = saopts.CumulativeAura;
+
     switch (effect.EffectAura) {
         case AURA_TYPE.SPELL_AURA_PERIODIC_HEAL:
             rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
@@ -95,7 +100,6 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL:
         case AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD:
-            const saopts = spellData.getSpellAuraOptions(effect.SpellID);
             rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
             break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
@@ -440,6 +444,7 @@ end
                 str += `\t\t\t\tchains = ${eff.chainInfo.chains},\n`;
                 str += `\t\t\t\tchainMult = ${eff.chainInfo.mult},\n`;
             }
+            if (eff.auraStacks) str += `\t\t\t\tauraStacks = ${eff.auraStacks},\n`;
             str += `\t\t\t},\n`;
         }
 

@@ -234,6 +234,10 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 if red.auraType and red.auraType == AURA_TYPES.SPELL_AURA_DUMMY then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.DUMMY_AURA;
                 end
+
+                if red.auraStacks and red.auraStacks > 1 then
+                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.STACKABLE_AURA;
+                end
             end
         end
 
@@ -547,6 +551,25 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             return;
         else
             effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+        end
+
+        --------------------------
+        -- Aura stacking (Only Lifebloom, incompatible with dmg spells!)
+
+        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
+            local stackCount = effectData.auraStacks;
+            local stackData = calcedEffect.auraStack;
+            stackData.stacks = stackCount;
+            stackData.ticks = calcedEffect.ticks - 1;
+            stackData.min = calcedEffect.min * stackCount;
+            stackData.max = calcedEffect.max * stackCount;
+            stackData.avg = calcedEffect.avg * stackCount;
+            stackData.avgCombined = stackData.avg;
+            stackData.avgAfterMitigation = stackData.ticks * stackData.avgCombined;
+            stackData.perSec = stackData.avgAfterMitigation / effCastTime;
+            stackData.perSecDurOrCD = calcedEffect.perSecDurOrCD * stackCount;
+            stackData.perResource = stackData.avgAfterMitigation / calcedSpell.effectiveCost;
+            stackData.doneToOom = calcedSpell.castingData.castsToOom * stackData.avgAfterMitigation;
         end
     end
 

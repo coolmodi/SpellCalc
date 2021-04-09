@@ -1662,6 +1662,7 @@ _addon.spellRankInfo = {
                 tickPeriod = 1,
                 min = 39,
                 coef = 0.0742,
+                auraStacks = 3,
             },
             [2] = {
                 effectType = 10,

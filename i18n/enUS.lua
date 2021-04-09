@@ -101,6 +101,7 @@ L.SETTINGS_AB_VAL_INFO = "If using "..L.TIME_TO_OOM.." or "..L.SETTINGS_CALC_TOO
 
 L.TT_TITLE_COMB = "Combined:";
 L.TT_TITLE_CHAINS = "With Chaining:";
+L.SUSTAINED_X_STACKS = "Sustained %d Stacks:";
 
 L.DAMAGE = "Damage";
 L.HEAL = "Heal";

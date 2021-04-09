@@ -145,7 +145,8 @@ interface EffectInfo {
     chainInfo?: {
         chains: number, 
         mult: number
-    }
+    },
+    auraStacks?: number,
 }
 
 const enum PowerType {

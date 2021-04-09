@@ -64,6 +64,23 @@ local EffectOffhandData = {
     perSec = 0,
 };
 
+---@class AuraStackData
+---Values for stackable auras when kept at max stacks, only heal compatible for now (Lifebloom)
+local AuraStackData = {
+    stacks = 0,
+    min = 0,
+    max = 0,
+    avg = 0,
+    avgCombined = 0,
+    avgAfterMitigation = 0,
+    perSec = 0,
+    perSecDurOrCD = 0,
+    perResource = 0,
+    ---@type number|nil
+    doneToOom = nil,
+    ticks = 0,
+}
+
 ---@class CalcedEffect
 local CalcedEffect = {
     effectFlags = 0,
@@ -93,7 +110,9 @@ local CalcedEffect = {
     doneToOom = nil,        -- Done until OOM for mana spells
 
     ---@type number|nil
-    ticks = nil,     -- Ticks for duration spells
+    ticks = nil,            -- Ticks for duration spells
+    ---@type AuraStackData|nil
+    auraStack = nil,        -- If aura is stackable this will hold data for sustained max stacks
 
     ---@type number|nil
     charges = nil,
@@ -243,6 +262,10 @@ function _addon.NewCalcedSpell(effectFlags)
 
         if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
             effTable.charges = 0;
+        end
+
+        if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
+            effTable.auraStack = setmetatable({}, AuraStackData);
         end
 
         newInstance[i] = effTable;

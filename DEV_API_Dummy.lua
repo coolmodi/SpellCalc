@@ -382,6 +382,8 @@ local SpellRankEffectData = {
     chains = nil,
     ---@type number|nil
     chainMult = nil,
+    ---@type number|nil
+    auraStacks = nil,
 }
 
 ---@class SpellRankInfo

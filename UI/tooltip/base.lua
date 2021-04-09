@@ -113,11 +113,11 @@ end
 ---@param effectNum number
 ---@param isHeal boolean
 ---@param showToOomTime boolean
-local function AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTime)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+---@param auraStack AuraStackData|nil
+local function AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTime, auraStack)
+    local calcedEffect = auraStack and auraStack or calcedSpell[effectNum];
 
-    if effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and calcedSpell.effectiveCost ~= calcedSpell.baseCost then
+    if not auraStack and effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and calcedSpell.effectiveCost ~= calcedSpell.baseCost then
         SCT:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(calcedSpell.effectiveCost));
     end
 
@@ -264,6 +264,26 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
     end
 
     AppendEfficiency(calcedSpell, effectNum, isHeal, isChannel);
+end
+
+--- Apend effect data for duration damage or heal
+---@param calcedSpell CalcedSpell
+---@param effectNum number
+---@param isHeal boolean
+---@param auraStackData AuraStackData
+local function AppendAuraStackEffect(calcedSpell, effectNum, isHeal, auraStackData)
+    if SpellCalc_settings.ttHit then
+        SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %.1f (%d)"):format(auraStackData.ticks, auraStackData.min, SCT:Round(auraStackData.min * auraStackData.ticks)));
+    end
+
+    if SpellCalc_settings.ttPerSecond then
+        local spersec = isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT;
+        local sperseccast = isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT;
+        local spersecdur = (isHeal and L.HEAL_OVER_TIME_SHORT or L.DMG_OVER_TIME_SHORT) .. " " .. spersec;
+        SCT:DoubleLine(sperseccast, ("%.1f"):format(auraStackData.perSec),  spersecdur, ("%.1f"):format(auraStackData.perSecDurOrCD));
+    end
+
+    AppendEfficiency(calcedSpell, effectNum, isHeal, false, auraStackData);
 end
 
 --- Append data for split spells like Holy Fire
@@ -472,6 +492,12 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal)
         AppendDirectEffect(calcedSpell, effectNum, isHeal);
     else
         return false;
+    end
+
+    if calcedEffect.auraStack then
+        local as = calcedEffect.auraStack;
+        SCT:HeaderLine(L.SUSTAINED_X_STACKS:format(as.stacks));
+        AppendAuraStackEffect(calcedSpell, effectNum, isHeal, as);
     end
 
     if SpellCalc_settings.ttCombined and effectNum == 2 and calcedSpell.combined ~= nil then
