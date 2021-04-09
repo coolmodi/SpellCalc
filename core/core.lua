@@ -80,6 +80,7 @@ local function IsDmgShieldEffect(effectType, auraType)
 end
 
 --- Generate effect modifiers (baseMod, bonusMod)
+-- TODO: TBC seems to have all effects affect both base and bonus, drop distinction?
 ---@param school number
 ---@param isDmg boolean
 ---@param isHeal boolean
@@ -92,13 +93,13 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
     local baseMod = 1;
 
     if stats.spellModPctEffect[spellId] ~= nil then
-        baseMod = baseMod + stats.spellModPctEffect[spellId].val / 100;
+        bonusMod = bonusMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
         calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
     end
 
     if isDmg then
         if stats.spellModPctDamage[spellId] ~= nil then
-            bonusMod = bonusMod + stats.spellModPctDamage[spellId].val / 100;
+            bonusMod = bonusMod * (100 + stats.spellModPctDamage[spellId].val) / 100;
             calcedSpell:AddToBuffList(stats.spellModPctDamage[spellId].buffs);
         end
 
