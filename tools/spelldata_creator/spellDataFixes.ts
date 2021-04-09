@@ -238,12 +238,29 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
 
 function mageFix(se: {[index: number]: SpellEffect}) {
     console.log("Fixing mage coefs and effects");
-    const IB = [11426, 13031, 13032, 13033];
+    const ICE_BARRIER = [11426, 13031, 13032, 13033, 27134, 33405];
+    const MANA_SHIELD = [1463, 8494, 8495, 10191, 10192, 10193, 27131];
 
     for(let effId in se) {
         let eff = se[effId];
-        if (IB.indexOf(eff.SpellID) != -1) {
-            eff.EffectBonusCoefficient = 0.1;
+        if (ICE_BARRIER.indexOf(eff.SpellID) != -1) {
+            eff.EffectBonusCoefficient = 0.3;
+        } else if (MANA_SHIELD.indexOf(eff.SpellID) != -1) {
+            eff.EffectBonusCoefficient = 0.5;
+        }
+    }
+}
+
+function druidFixes(se: {[index: number]: SpellEffect})
+{
+    console.log("Fixing druid coefs and effects");
+    // Lifebloom
+    for(let effId in se) {
+        let eff = se[effId];
+        if (eff.SpellID === 33763 && eff.EffectIndex === 1) {
+            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+            eff.EffectAura = 0;
+            eff.EffectBonusCoefficient = 0.3429; // TODO: Test this!
         }
     }
 }
@@ -252,4 +269,5 @@ export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index:
     paladinFix(se, sc, sm);
     priestFix(se);
     mageFix(se);
+    druidFixes(se);
 }

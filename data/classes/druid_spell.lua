@@ -1663,6 +1663,11 @@ _addon.spellRankInfo = {
                 min = 39,
                 coef = 0.0742,
             },
+            [2] = {
+                effectType = 10,
+                min = 600,
+                coef = 0.3429,
+            },
         }
     },
 };
