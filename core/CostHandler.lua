@@ -28,12 +28,6 @@ end
 ---@param school number
 ---@param spellName string
 function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName)
-    if calcedSpell.baseCost == 0 then
-        calcedSpell.castingData.castsToOom = -1;
-        calcedSpell.castingData.timeToOom = -1;
-        return;
-    end
-
     local mps = stats.mp5.val / 5 + stats.manaRegAura;
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
@@ -68,6 +62,12 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
     if stats.earthfuryReturn.val > 0 and (spellName == HEALING_WAVE or spellName == LESSER_HEALING_WAVE) then
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - spellBaseCost * 0.0875;
         calcedSpell:AddToBuffList(stats.earthfuryReturn.buffs);
+    end
+
+    if calcedSpell.effectiveCost <= 0 then
+        calcedSpell.castingData.castsToOom = -1;
+        calcedSpell.castingData.timeToOom = -1;
+        return;
     end
 
     calcedSpell.castingData.castsToOom = _addon:GetEffectiveManaPool() / calcedSpell.effectiveCost;
