@@ -5,35 +5,6 @@ local SCT = _addon.SCTooltip;
 ---@type SpellEffectFlags
 local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 
---- Append coefficient data
----@param calcedEffect CalcedEffect
-local function AppendCoefData(calcedEffect)
-    if not calcedEffect.effectiveSpCoef or calcedEffect.effectiveSpCoef == 0 then
-        return;
-    end
-
-    if SpellCalc_settings.ttCoef then
-        local coefPct = calcedEffect.effectiveSpCoef * 100;
-        if calcedEffect.ticks then
-            SCT:SingleLine(L.COEFFICIENT, ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedEffect.ticks, calcedEffect.ticks, coefPct));
-        elseif calcedEffect.charges and calcedEffect.charges > 0 then
-            SCT:SingleLine(L.COEFFICIENT, ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedEffect.charges, calcedEffect.charges, coefPct));
-        else
-            SCT:SingleLine(L.COEFFICIENT, ("%.1f%%"):format(coefPct));
-        end
-    end
-
-    if SpellCalc_settings.ttPower then
-        local fullSP = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
-        if calcedEffect.ticks then
-            fullSP = fullSP * calcedEffect.ticks;
-        elseif calcedEffect.charges and calcedEffect.charges > 0 then
-            fullSP = fullSP * calcedEffect.charges;
-        end
-        SCT:SingleLine(L.TT_POWER, ("%d (of %d)"):format(SCT:Round(fullSP), calcedEffect.spellPower));
-    end
-end
-
 --- Append mitigation data
 ---@param calcedSpell CalcedSpell
 local function AppendMitigation(calcedSpell)
@@ -174,14 +145,7 @@ local function AppendChainData(calcedSpell, effectNum, isHeal)
         SCT:SingleLine(L.CRITICAL, chainCrits);
     end
 
-    if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L.COEFFICIENT, ("%.2f%%"):format(calcedEffect.effectiveSpCoef * completeMult * 100));
-    end
-
-    if SpellCalc_settings.ttPower then
-        local fullSP = calcedEffect.spellPower * calcedEffect.effectiveSpCoef * completeMult;
-        SCT:SingleLine(L.TT_POWER, ("%d (of %d)"):format(SCT:Round(fullSP), calcedEffect.spellPower));
-    end
+    SCT:AppendCoefData(calcedEffect, completeMult);
 
     if SpellCalc_settings.ttPerSecond then
         SCT:SingleLine((isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT), ("%.1f"):format(calcedEffect.perSec * completeMult));
@@ -215,7 +179,7 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
         end
     end
 
-    AppendCoefData(calcedEffect);
+    SCT:AppendCoefData(calcedEffect);
 
     if not isHeal then
         AppendMitigation(calcedSpell);
@@ -244,7 +208,7 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
         SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %.1f (%d)"):format(calcedEffect.ticks, calcedEffect.min, SCT:Round(calcedEffect.min * calcedEffect.ticks)));
     end
 
-    AppendCoefData(calcedEffect);
+    SCT:AppendCoefData(calcedEffect);
 
     if not isHeal and effectNum == 1 then
         AppendMitigation(calcedSpell);
@@ -354,7 +318,7 @@ local function AppendPTSA(calcedSpell, effectNum, isHeal)
 
     SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * calcedEffect.avgCombined));
 
-    AppendCoefData(calcedEffect);
+    SCT:AppendCoefData(calcedEffect);
 
     if not isHeal and effectNum == 1 then
         AppendMitigation(calcedSpell);
@@ -391,7 +355,7 @@ local function AppendDmgShieldEffect(calcedSpell, effectNum)
         end
     end
 
-    AppendCoefData(calcedEffect);
+    SCT:AppendCoefData(calcedEffect);
     AppendMitigation(calcedSpell);
 
     if calcedEffect.charges > 0 then
@@ -413,7 +377,7 @@ local function AppendAbsorbEffect(calcedSpell, effectNum)
         SCT:SingleLine(L.ABSORB, SCT:Round(calcedEffect.avg));
     end
 
-    AppendCoefData(calcedEffect);
+    SCT:AppendCoefData(calcedEffect);
 
     if SpellCalc_settings.ttPerSecond then
         SCT:SingleLine(L.HEAL_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
@@ -525,15 +489,7 @@ local function CoA(calcedSpell, effectNum)
         SCT:SingleLine(L.DAMAGE, ("4x %.1f, 4x %.1f, 4x %.1f | %d total"):format(tickStart, calcedEffect.min, tickEnd, total));
     end
 
-    if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L.COEFFICIENT, ("%.1f%%"):format(calcedEffect.effectiveSpCoef * 100 * calcedEffect.ticks));
-    end
-
-    if SpellCalc_settings.ttPower then
-        local fullSP = calcedEffect.spellPower * calcedEffect.effectiveSpCoef * calcedEffect.ticks;
-        SCT:SingleLine(L.TT_POWER, ("%d (of %d)"):format(SCT:Round(fullSP), calcedEffect.spellPower));
-    end
-
+    SCT:AppendCoefData(calcedEffect);
     AppendMitigation(calcedSpell);
 
     if SpellCalc_settings.ttPerSecond then

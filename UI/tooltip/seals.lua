@@ -16,14 +16,7 @@ local function SoR(calcedSpell, effectNum)
         SCT:SingleLine(L.DAMAGE, ("%.1f"):format(calcedEffect.avg));
     end
 
-    if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L.COEFFICIENT, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
-    end
-
-    if SpellCalc_settings.ttPower then
-        local usedSP = SCT:Round(calcedEffect.spellPower * calcedEffect.effectiveSpCoef);
-        SCT:SingleLine(L.TT_POWER, ("%d (of %d)"):format(usedSP, calcedEffect.spellPower));
-    end
+    SCT:AppendCoefData(calcedEffect, nil, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -59,14 +52,7 @@ local function SoC(calcedSpell, effectNum)
         SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
     end
 
-    if SpellCalc_settings.ttCoef then
-        SCT:SingleLine(L.COEFFICIENT, ("%.1f%%"):format(calcedEffect.effectiveSpCoef*100));
-    end
-
-    if SpellCalc_settings.ttPower then
-        local usedSP = SCT:Round(calcedEffect.spellPower * calcedEffect.effectiveSpCoef);
-        SCT:SingleLine(L.TT_POWER, ("%d (of %d)"):format(usedSP, calcedEffect.spellPower));
-    end
+    SCT:AppendCoefData(calcedEffect, nil, true, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;

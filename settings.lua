@@ -18,7 +18,6 @@ local DEFAULTSETTINGS = {
 	["ttHit"] = true,
 	["ttCrit"] = true,
 	["ttAverages"] = true,
-	["ttCoef"] = true,
 	["ttPower"] = true,
 	["ttHitChance"] = true,
 	["ttHitDetail"] = true,
@@ -193,11 +192,6 @@ local SETTINGS_TABLE = {
 					type = "toggle",
 					name = L.SETTINGS_TT_POWER_LABEL,
 					desc = L.SETTINGS_TT_POWER_TT
-				},
-				ttCoef = {
-					order = 11,
-					type = "toggle",
-					name = L.COEFFICIENT
 				},
 
 				ttHitChance = {
