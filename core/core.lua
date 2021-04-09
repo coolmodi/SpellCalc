@@ -265,10 +265,15 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Cast time and GCD
 
     if parentEffCastTime == nil then
+        local _, _, _, probablyGCD = GetSpellInfo(25375); -- Mind Blast cast time is 1.5s
+        local GCDmult = probablyGCD / 1500;
+
         if stats.spellModGCDms[spellId] ~= nil then
             GCD = GCD + stats.spellModGCDms[spellId].val / 1000;
             calcedSpell:AddToBuffList(stats.spellModGCDms[spellId].buffs);
         end
+
+        GCD = GCD * GCDmult;
 
         if spellBaseInfo.isChannel then
             castTime = spellRankInfo.duration;
@@ -555,7 +560,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             _addon:PrintError("Please report this to the addon author.");
             return;
         else
-            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, GCD);
         end
 
         --------------------------

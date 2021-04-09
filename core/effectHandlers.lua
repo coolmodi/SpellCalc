@@ -31,7 +31,8 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function EFFECT_TEMPLATE(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function EFFECT_TEMPLATE(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     -- Example function definition
 end
 
@@ -44,7 +45,8 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function AURA_TEMPLATE(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function AURA_TEMPLATE(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     -- Example function definition
 end
 
@@ -179,7 +181,8 @@ local auraHandler = {}
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -201,9 +204,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
     if spellBaseInfo.isChannel then
-        -- TODO: Fix hardcoded GCD!
-        -- TODO: I have no clue what I was thinking above, can't even see a gcd here...
-        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
+        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / gcd));
     else
         calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
     end
@@ -351,7 +352,8 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -393,9 +395,7 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
         calcedEffect.avgAfterMitigation = total;
     else
         if spellBaseInfo.isChannel then
-            -- TODO: Fix hardcoded GCD!
-            -- TODO: ???????
-            calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
+            calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / gcd));
         else
             calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
         end
@@ -635,7 +635,7 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     if auraType == nil then
         _addon:PrintError("SPELL_EFFECT_APPLY_AURA handler called without auraType for spell "..spellName.." for effect #"..effNum);
         return;
@@ -647,7 +647,7 @@ local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spel
         return;
     end
 
-    auraHandler[auraType](calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+    auraHandler[auraType](calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd);
 end
 
 --- Handle Attack spell that triggers auto attack
