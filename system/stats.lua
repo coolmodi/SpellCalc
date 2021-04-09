@@ -307,24 +307,24 @@ local oldApiHitBonusSpell = 0;
 --- Combat ratings updated (seems to be hit modifier in classic)
 function _addon:CombatRatingUpdate()
     self:PrintDebug("Combat rating update");
-    local meleeFlat = GetHitModifier();
-    local spellFlat = GetSpellHitModifier();
+    local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) + GetHitModifier();
+    local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) + GetSpellHitModifier();
     local changed = false;
 
-    if meleeFlat ~= oldApiHitBonus then
-        self.stats.hitBonus.val = self.stats.hitBonus.val - oldApiHitBonus + meleeFlat;
-        oldApiHitBonus = meleeFlat;
+    if meleeHitBonus ~= oldApiHitBonus then
+        self.stats.hitBonus.val = self.stats.hitBonus.val - oldApiHitBonus + meleeHitBonus;
+        oldApiHitBonus = meleeHitBonus;
         changed = true;
     end
 
-    if spellFlat ~= oldApiHitBonusSpell then
-        self.stats.hitBonusSpell.val = self.stats.hitBonusSpell.val - oldApiHitBonusSpell + spellFlat;
-        oldApiHitBonusSpell = spellFlat;
+    if spellHitBonus ~= oldApiHitBonusSpell then
+        self.stats.hitBonusSpell.val = self.stats.hitBonusSpell.val - oldApiHitBonusSpell + spellHitBonus;
+        oldApiHitBonusSpell = spellHitBonus;
         changed = true;
     end
 
     if changed then
-        self:PrintDebug("Updated hit mods from API. M: " .. meleeFlat .. " - S: " .. spellFlat);
+        self:PrintDebug("Updated hit mods from API. M: " .. meleeHitBonus .. " - S: " .. spellHitBonus);
         self:TriggerUpdate();
     end
 end
