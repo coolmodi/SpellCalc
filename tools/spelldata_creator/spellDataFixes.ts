@@ -19,8 +19,21 @@ function cloneEntry(entry: SpellEffect): SpellEffect {
 
 function priestFix(se: {[index: number]: SpellEffect}) {
     console.log("Fixing priest coefs and effects");
-    const PWS = [600, 3747, 6065, 6066, 10898, 10899, 10900, 10901];
-    const HN: {[index: number]: {perlvl: number, min: number, max: number}} = {
+    const PW_SHIELD: {[spellId: number]: number} = {
+        17: 0.1425,
+        592: 0.21,
+        600: 0.2775, 
+        3747: 0.3, 
+        6065: 0.3, 
+        6066: 0.3, 
+        10898: 0.3, 
+        10899: 0.3, 
+        10900: 0.3, 
+        10901: 0.3, 
+        25217: 0.3, 
+        25218: 0.3
+    };
+    const HOLY_NOVA: {[index: number]: {perlvl: number, min: number, max: number}} = {
         15237: {
             perlvl: 0.3,
             min: 52,
@@ -65,24 +78,16 @@ function priestFix(se: {[index: number]: SpellEffect}) {
 
     for(let effId in se) {
         const eff = se[effId];
-        // PWS
-        if (eff.SpellID == 17) {
-            eff.EffectBonusCoefficient = 0.0475;
-        } else if (eff.SpellID == 592) {
-            eff.EffectBonusCoefficient = 0.07;
-        } else if (eff.SpellID == 600) {
-            eff.EffectBonusCoefficient = 0.0925;
-        } else if (PWS.indexOf(eff.SpellID) > -1) {
-            eff.EffectBonusCoefficient = 0.1;
-        // Holy nova heal effect
-        } else if (HN[eff.SpellID]) {
+        if (PW_SHIELD[eff.SpellID]) {
+            eff.EffectBonusCoefficient = PW_SHIELD[eff.SpellID];
+        } else if (HOLY_NOVA[eff.SpellID]) {
             if (eff.EffectIndex == 0) {
                 let clone = cloneEntry(eff);
                 clone.EffectIndex = 1;
                 clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-                clone.EffectBasePoints = HN[eff.SpellID].min - 1;
-                clone.EffectDieSides = HN[eff.SpellID].max - HN[eff.SpellID].min;
-                clone.EffectRealPointsPerLevel = HN[eff.SpellID].perlvl;
+                clone.EffectBasePoints = HOLY_NOVA[eff.SpellID].min - 1;
+                clone.EffectDieSides = HOLY_NOVA[eff.SpellID].max - HOLY_NOVA[eff.SpellID].min;
+                clone.EffectRealPointsPerLevel = HOLY_NOVA[eff.SpellID].perlvl;
                 se[clone.ID] = clone;
             }
         // Touch of Weakness does not have any usefull data about its proc by default, replace with proc entirely

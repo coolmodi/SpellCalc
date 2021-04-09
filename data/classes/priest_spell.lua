@@ -104,7 +104,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 44,
                 perLevel = 0.8,
-                coef = 0.0475,
+                coef = 0.1425,
             },
         }
     },
@@ -178,7 +178,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 88,
                 perLevel = 1.2,
-                coef = 0.07,
+                coef = 0.21,
             },
         }
     },
@@ -237,7 +237,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 158,
                 perLevel = 1.6,
-                coef = 0.0925,
+                coef = 0.2775,
             },
         }
     },
@@ -468,7 +468,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 234,
                 perLevel = 2,
-                coef = 0.1,
+                coef = 0.3,
             },
         }
     },
@@ -526,7 +526,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 301,
                 perLevel = 2.3,
-                coef = 0.1,
+                coef = 0.3,
             },
         }
     },
@@ -542,7 +542,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 381,
                 perLevel = 2.6,
-                coef = 0.1,
+                coef = 0.3,
             },
         }
     },
@@ -829,7 +829,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 484,
                 perLevel = 3,
-                coef = 0.1,
+                coef = 0.3,
             },
         }
     },
@@ -845,7 +845,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 605,
                 perLevel = 3.4,
-                coef = 0.1,
+                coef = 0.3,
             },
         }
     },
@@ -861,7 +861,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 763,
                 perLevel = 3.9,
-                coef = 0.1,
+                coef = 0.3,
             },
         }
     },
@@ -877,7 +877,7 @@ _addon.spellRankInfo = {
                 forceScaleWithHeal = true,
                 min = 942,
                 perLevel = 4.3,
-                coef = 0.1,
+                coef = 0.3,
             },
         }
     },
