@@ -111,6 +111,7 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 0,
         noCrit = true,
+        forceHeal = true,
     },
     [GetSpellInfo(32379)] = { -- Shadow Word: Death
         school = 6,
@@ -2472,7 +2473,6 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 4,
-                forceScaleWithHeal = true,
                 charges = 5,
                 min = 800,
                 coef = 0.429,

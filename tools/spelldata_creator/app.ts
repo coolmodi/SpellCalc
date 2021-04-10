@@ -51,7 +51,7 @@ const SpellClassSet = {
     SHAMAN: 11,
 }
 
-function handleDummyAura(effect: SpellEffect, ei: EffectInfo) {
+function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     const sealType = isSeal(effect.SpellID);
     if (sealType !== false)
     {
@@ -72,7 +72,7 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo) {
         ei.min = effect.EffectBasePoints;
         ei.coef = effect.EffectBonusCoefficient;
         ei.max = ei.min;
-        ei.forceScaleWithHeal = true;
+        bi.forceHeal = true;
         return;
     }
 
@@ -143,7 +143,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             if (!found) throw new Error("PTSA effect has no handled trigger spell effect! " + effect.SpellID);
             break;
         case AURA_TYPE.SPELL_AURA_DUMMY:
-            handleDummyAura(effect, rankInfo.effects[effectNum]);
+            handleDummyAura(effect, rankInfo.effects[effectNum], baseInfo);
             break;
         default:
             if (effectNum == 1 && effect.EffectMechanic != 0) {
