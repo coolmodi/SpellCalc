@@ -107,6 +107,11 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 1,
     },
+    [GetSpellInfo(33076)] = { -- Prayer of Mending
+        school = 2,
+        defType = 0,
+        noCrit = true,
+    },
     [GetSpellInfo(32379)] = { -- Shadow Word: Death
         school = 6,
         defType = 1,
@@ -2455,6 +2460,21 @@ _addon.spellRankInfo = {
                 effectType = 2,
                 min = 572,
                 max = 665,
+                coef = 0.429,
+            },
+        }
+    },
+    [33076] = { -- Prayer of Mending(Rank 1)
+        spellLevel = 68,
+        maxLevel = 74,
+        baseCost = 390,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                forceScaleWithHeal = true,
+                charges = 5,
+                min = 800,
                 coef = 0.429,
             },
         }

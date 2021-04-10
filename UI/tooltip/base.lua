@@ -79,43 +79,6 @@ local function AppendOffhandMitigation(calcedSpell, effNum)
     end
 end
 
---- Append efficiency stuff
----@param calcedSpell CalcedSpell
----@param effectNum number
----@param isHeal boolean
----@param showToOomTime boolean
----@param auraStack AuraStackData|nil
-local function AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTime, auraStack)
-    local calcedEffect = auraStack and auraStack or calcedSpell[effectNum];
-
-    if not auraStack and effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and calcedSpell.effectiveCost ~= calcedSpell.baseCost then
-        SCT:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(calcedSpell.effectiveCost));
-    end
-
-    if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(calcedEffect.perResource));
-    end
-
-    if SpellCalc_settings.ttToOom and calcedEffect.doneToOom > 0 then
-        local outstr = SCT:Round(calcedEffect.doneToOom);
-        if showToOomTime then
-            outstr = outstr..(" (%.1fs, %.1f casts)"):format(calcedSpell.castingData.timeToOom, calcedSpell.castingData.castsToOom)
-        end
-        SCT:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), outstr);
-    end
-
-    if calcedEffect.thpsData and calcedEffect.thpsData.secNoCast > 0 then
-        local thpsData = calcedEffect.thpsData;
-        SCT:HeaderLine(("%s (%s):"):format(L.TT_THPS, SpellCalc_settings.healTargetHps));
-        SCT:SingleLine(nil, L.TT_THPS_TIMES:format(thpsData.secNoCast, thpsData.secNoFsr));
-        SCT:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(thpsData.effectiveCost));
-        if thpsData.perMana > 0 then
-            SCT:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(thpsData.perMana));
-            SCT:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), ("%d (%.1fs, %.1f casts)"):format(SCT:Round(thpsData.doneToOom), thpsData.timeToOom, thpsData.castsToOom));
-        end
-    end
-end
-
 --- Append data for chaining spells (Chain Lightning, Chain Heal)
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
@@ -189,7 +152,7 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
         SCT:SingleLine((isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT), ("%.1f"):format(calcedEffect.perSec));
     end
 
-    AppendEfficiency(calcedSpell, effectNum, isHeal, true);
+    SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, true);
 
     if calcedEffect.chains and calcedEffect.chains > 1 then
         AppendChainData(calcedSpell, effectNum, isHeal);
@@ -227,7 +190,7 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
         end
     end
 
-    AppendEfficiency(calcedSpell, effectNum, isHeal, isChannel);
+    SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, isChannel);
 end
 
 --- Apend effect data for duration damage or heal
@@ -247,7 +210,7 @@ local function AppendAuraStackEffect(calcedSpell, effectNum, isHeal, auraStackDa
         SCT:DoubleLine(sperseccast, ("%.1f"):format(auraStackData.perSec),  spersecdur, ("%.1f"):format(auraStackData.perSecDurOrCD));
     end
 
-    AppendEfficiency(calcedSpell, effectNum, isHeal, false, auraStackData);
+    SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, false, auraStackData);
 end
 
 --- Append data for split spells like Holy Fire
@@ -337,7 +300,7 @@ local function AppendPTSA(calcedSpell, effectNum, isHeal)
         end
     end
 
-    AppendEfficiency(calcedSpell, effectNum, isHeal, isChannel);
+    SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, isChannel);
 end
 
 --- Apend effect data for dmg shields
@@ -362,7 +325,7 @@ local function AppendDmgShieldEffect(calcedSpell, effectNum)
         if SpellCalc_settings.ttPerSecond then
             SCT:SingleLine(L.DMG_PER_SEC_CAST_SHORT, ("%.1f"):format(calcedEffect.perSec));
         end
-        AppendEfficiency(calcedSpell, effectNum, false);
+        SCT:AppendEfficiency(calcedSpell, effectNum, false);
     end
 end
 
@@ -383,7 +346,7 @@ local function AppendAbsorbEffect(calcedSpell, effectNum)
         SCT:SingleLine(L.HEAL_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
     end
 
-    AppendEfficiency(calcedSpell, effectNum, true, false);
+    SCT:AppendEfficiency(calcedSpell, effectNum, true, false);
 end
 
 --- Apend auto attack effect.
@@ -496,7 +459,7 @@ local function CoA(calcedSpell, effectNum)
         SCT:DoubleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec), L.DMG_OVER_TIME_SHORT.." "..L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSecDurOrCD));
     end
 
-    AppendEfficiency(calcedSpell, effectNum);
+    SCT:AppendEfficiency(calcedSpell, effectNum);
 end
 local CURSE_OF_AGONY = GetSpellInfo(1014);
 SCT:AddDummyHandler(CURSE_OF_AGONY, CoA);

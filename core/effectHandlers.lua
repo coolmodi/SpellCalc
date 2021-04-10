@@ -16,6 +16,7 @@ local function GetLevelBonus(spellRankInfo, effectData)
     return 0;
 end
 
+local HealEffect;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Templates
@@ -162,9 +163,35 @@ local function SealOfTheCrusader(calcedSpell, effNum, spellBaseInfo, spellRankIn
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
 end
 
+---Dummy handler for Prayer of Mending and Earth Shield
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellBaseInfo SpellBaseInfo
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+---@param spellId number
+local function PoM_ES(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+    -- Do normal heal effect
+    HealEffect(nil, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+    -- Multiply by charge count
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    ---@type SpellRankEffectData
+    local effectData = spellRankInfo.effects[effNum];
+    calcedEffect.charges = effectData.charges;
+    calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedEffect.charges;
+    calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
+    calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
+    calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
+    calcedEffect.thpsData = nil;
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(20162)] = SealOfTheCrusader;
+dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler
@@ -538,7 +565,7 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData

@@ -2,7 +2,7 @@ import { SpellEffect, SpellCategory, SpellMisc } from "./SpellData";
 import { isJudgeDummy, SealType, isSeal } from "./paladinCrap";
 
 // This isn't used anywhere, just put something there just in case
-var effCustIndex = 999900;
+let effCustIndex = 999900;
 
 function cloneEntry(entry: SpellEffect): SpellEffect {
     let k = {};
@@ -17,7 +17,7 @@ function cloneEntry(entry: SpellEffect): SpellEffect {
     return k;
 }
 
-function priestFix(se: {[index: number]: SpellEffect}) {
+function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}) {
     console.log("Fixing priest coefs and effects");
     const PW_SHIELD: {[spellId: number]: number} = {
         17: 0.1425,
@@ -92,6 +92,15 @@ function priestFix(se: {[index: number]: SpellEffect}) {
             }
         } else if (BINDING_HEAL[eff.SpellID] && eff.EffectIndex === 1) {
             eff.Effect = 0; // Ignore this effect
+        } 
+        // Prayer of Mending
+        else if (eff.SpellID === 33076 && eff.EffectIndex === 0) 
+        {
+            // Make PoM a dummy aura
+            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
+            eff.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY;
+            eff.EffectBonusCoefficient = 0.429; // Taken from spell 33110, the PoM triggered heal spell
+            sm[eff.SpellID]["Attributes[2]"] |= sm[33110]["Attributes[2]"];
         }
     }
 }
@@ -249,7 +258,7 @@ function druidFixes(se: {[index: number]: SpellEffect})
 
 export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
     paladinFix(se, sc, sm);
-    priestFix(se);
+    priestFix(se, sm);
     mageFix(se);
     druidFixes(se);
 }

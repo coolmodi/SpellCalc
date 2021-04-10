@@ -198,6 +198,15 @@ function UnitRace(unit)
     return "localized", "English";
 end
 
+---Returns info about one of the unit's stats (strength, agility, stamina, intellect, spirit). 
+---@param unit string
+---@param statID number
+---@return number base @The unit's base stat.
+---@return number stat @The unit's current stat.
+---@return number posBuff @Any positive buffs applied to the stat.
+---@return number negBuff @Any negative buffs applied to the stat.
+function UnitStat(unit, statID) end
+
 ---@class SpellPowerEntry
 local SpellPowerEntry = {
     hasRequiredAura = true,

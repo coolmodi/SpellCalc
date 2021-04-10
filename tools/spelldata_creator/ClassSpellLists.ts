@@ -127,8 +127,7 @@ export class ClassSpellLists
                     if (effect.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY)
                     {
                         // pala seals
-                        let stype = isJudgeDummy(effect);
-                        if (stype !== false)
+                        if (isJudgeDummy(effect) !== false)
                         {
                             const jspell = this.spellData.getSpellEffects(effect.EffectBasePoints + 1);
                             if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
@@ -138,8 +137,11 @@ export class ClassSpellLists
                             // don't use this effect
                             continue;
                         }
-                        // only add SoR or SoC attack effect
-                        if (!(effect.EffectIndex == 0 && isSeal(effect.SpellID))) continue;
+                        // only add dummy auras we want
+                        if (
+                            !(effect.EffectIndex == 0 && isSeal(effect.SpellID)) // SoR or SoC attack effect
+                            && effect.SpellID !== 33076 // PoM
+                        ) continue;
                     }
                 }
 

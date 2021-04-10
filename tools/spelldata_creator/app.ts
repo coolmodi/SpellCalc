@@ -53,14 +53,28 @@ const SpellClassSet = {
 
 function handleDummyAura(effect: SpellEffect, ei: EffectInfo) {
     const sealType = isSeal(effect.SpellID);
-    if (sealType == SealType.SOR) {
-        ei.min = effect.EffectBasePoints + 1;
-        ei.max = ei.min;
-        ei.coef = 0.1;
-        return;
+    if (sealType !== false)
+    {
+        if (sealType == SealType.SOR) {
+            ei.min = effect.EffectBasePoints + 1;
+            ei.max = ei.min;
+            ei.coef = 0.1;
+            return;
+        }
+    
+        if (sealType == SealType.SOtC) return;
     }
 
-    if (sealType == SealType.SOtC) return;
+    // Prayer of Mending
+    if (effect.SpellID === 33076)
+    {
+        ei.charges = 5;
+        ei.min = effect.EffectBasePoints;
+        ei.coef = effect.EffectBonusCoefficient;
+        ei.max = ei.min;
+        ei.forceScaleWithHeal = true;
+        return;
+    }
 
     throw new Error("Dummy aura effect not supported!");
 }
@@ -351,7 +365,7 @@ function buildSpellInfo(pclass: string) {
                 defenseType: spellcat.DefenseType,
                 cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
                 usedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
-                noCrit: false,
+                noCrit: (spellMisc["Attributes[2]"] & 0x20000000) === 0x20000000,
                 forceHeal: false
             };
         }

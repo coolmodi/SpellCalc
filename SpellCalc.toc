@@ -86,6 +86,7 @@ core/effecthandlers.lua
 UI/tooltip/SCTooltip.lua
 UI/tooltip/base.lua
 UI/tooltip/seals.lua
+UI/tooltip/dummyAura.lua
 UI/StatDisplay.lua
 UI/actionbar/buttonText.lua
 UI/actionbar/ActionBarValues.lua

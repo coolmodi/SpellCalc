@@ -130,6 +130,43 @@ function SCTooltip:AppendCoefData(calcedEffect, coefMult, noTick, noCharge)
     self:SingleLine(L.TT_POWER, ("%d | %s of %d"):format(self:Round(fullSP), coefPart, calcedEffect.spellPower));
 end
 
+--- Append efficiency stuff
+---@param calcedSpell CalcedSpell
+---@param effectNum number
+---@param isHeal boolean
+---@param showToOomTime boolean
+---@param auraStack AuraStackData|nil
+function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTime, auraStack)
+    local calcedEffect = auraStack and auraStack or calcedSpell[effectNum];
+
+    if not auraStack and effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and calcedSpell.effectiveCost ~= calcedSpell.baseCost then
+        self:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(calcedSpell.effectiveCost));
+    end
+
+    if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
+        self:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(calcedEffect.perResource));
+    end
+
+    if SpellCalc_settings.ttToOom and calcedEffect.doneToOom > 0 then
+        local outstr = self:Round(calcedEffect.doneToOom);
+        if showToOomTime then
+            outstr = outstr..(" (%.1fs, %.1f casts)"):format(calcedSpell.castingData.timeToOom, calcedSpell.castingData.castsToOom)
+        end
+        self:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), outstr);
+    end
+
+    if calcedEffect.thpsData and calcedEffect.thpsData.secNoCast > 0 then
+        local thpsData = calcedEffect.thpsData;
+        self:HeaderLine(("%s (%s):"):format(L.TT_THPS, SpellCalc_settings.healTargetHps));
+        self:SingleLine(nil, L.TT_THPS_TIMES:format(thpsData.secNoCast, thpsData.secNoFsr));
+        self:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(thpsData.effectiveCost));
+        if thpsData.perMana > 0 then
+            self:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(thpsData.perMana));
+            self:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), ("%d (%.1fs, %.1f casts)"):format(self:Round(thpsData.doneToOom), thpsData.timeToOom, thpsData.castsToOom));
+        end
+    end
+end
+
 --- Return a title for effect flags
 ---@param flags number
 local function GetEffectTitle(flags)

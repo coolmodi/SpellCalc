@@ -325,6 +325,10 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);
     end
 
+    if spellBaseInfo.noCrit then
+        calcedSpell.critChance = 0;
+    end
+
     ----------------------------------------------------------------------------------------------------------------------
     -- Mitigation
 
