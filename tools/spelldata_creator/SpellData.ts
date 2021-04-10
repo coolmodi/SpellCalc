@@ -178,7 +178,6 @@ export class SpellData {
         console.log("Creating SpellData");
         
         this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
-        this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
         this.spellNames = readDBCSV<SpellName>("data/dbc/spellname.csv", "ID");
         this.spell = readDBCSV<Spell>("data/dbc/spell.csv", "ID");
         this.spellDuration = readDBCSV<SpellDuration>("data/dbc/spellduration.csv", "ID");
@@ -188,13 +187,18 @@ export class SpellData {
         this.spellClassOptions = readDBCSV<SpellClassOptions>("data/dbc/spellclassoptions.csv", "SpellID");
         this.spellEquippedItems = readDBCSV<SpellEquippedItems>("data/dbc/spellequippeditems.csv", "SpellID");
         this.spellAuraOptions = readDBCSV<SpellAuraOptions>("data/dbc/spellauraoptions.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
         try {
-            this.spellEffects = JSON.parse(fs.readFileSync("cache/spellEffects.json", "utf8"));
+            const cacheData = JSON.parse(fs.readFileSync("cache/spellDataCache.json", "utf8"));
+            this.spellEffects = cacheData.se;
+            this.spellCategories = cacheData.sc;
+            this.spellMiscs = cacheData.sm;
         } catch (error) {
             this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
+            this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+            this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+
             // make sure direct dmg is always the 1st effect on spells that also have a duration effect
             for (let eff1 in this.spellEffects) {
                 if (isSeal(this.spellEffects[eff1].SpellID) 
@@ -212,8 +216,14 @@ export class SpellData {
                     break;
                 }
             }
+
             fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs);
-            fs.writeFileSync("cache/spellEffects.json", JSON.stringify(this.spellEffects, null, 4));
+
+            fs.writeFileSync("cache/spellDataCache.json", JSON.stringify({
+                se: this.spellEffects,
+                sc: this.spellCategories,
+                sm: this.spellMiscs
+            }, null, 4));
         }
 
         console.log("SpellData created!");
