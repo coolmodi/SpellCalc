@@ -89,6 +89,28 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 0,
     },
+    [GetSpellInfo(34861)] = { -- Circle of Healing
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(34914)] = { -- Vampiric Touch
+        school = 6,
+        defType = 1,
+    },
+    [GetSpellInfo(44041)] = { -- Chastise
+        school = 2,
+        isBinary = true,
+        GCD = 0.5,
+        defType = 1,
+    },
+    [GetSpellInfo(32546)] = { -- Binding Heal
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(32379)] = { -- Shadow Word: Death
+        school = 6,
+        defType = 1,
+    },
 };
 
 _addon.spellRankInfo = {
@@ -1866,6 +1888,138 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [25210] = { -- Greater Heal(Rank 6)
+        spellLevel = 63,
+        maxLevel = 67,
+        baseCost = 750,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 2074,
+                max = 2411,
+                perLevel = 8.4,
+                coef = 0.857,
+            },
+        }
+    },
+    [25213] = { -- Greater Heal(Rank 7)
+        spellLevel = 68,
+        maxLevel = 72,
+        baseCost = 825,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 2396,
+                max = 2785,
+                perLevel = 9.3,
+                coef = 0.857,
+            },
+        }
+    },
+    [25217] = { -- Power Word: Shield(Rank 11)
+        spellLevel = 65,
+        maxLevel = 69,
+        duration = 30,
+        baseCost = 540,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 69,
+                forceScaleWithHeal = true,
+                min = 1125,
+                perLevel = 4.7,
+                coef = 0.3,
+            },
+        }
+    },
+    [25218] = { -- Power Word: Shield(Rank 12)
+        spellLevel = 70,
+        maxLevel = 74,
+        duration = 30,
+        baseCost = 600,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 69,
+                forceScaleWithHeal = true,
+                min = 1265,
+                perLevel = 5.1,
+                coef = 0.3,
+            },
+        }
+    },
+    [25221] = { -- Renew(Rank 11)
+        spellLevel = 65,
+        maxLevel = 69,
+        duration = 15,
+        baseCost = 430,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                min = 202,
+                coef = 0.2,
+            },
+        }
+    },
+    [25222] = { -- Renew(Rank 12)
+        spellLevel = 70,
+        maxLevel = 74,
+        duration = 15,
+        baseCost = 450,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                min = 222,
+                coef = 0.2,
+            },
+        }
+    },
+    [25233] = { -- Flash Heal(Rank 8)
+        spellLevel = 61,
+        maxLevel = 65,
+        baseCost = 400,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 913,
+                max = 1060,
+                perLevel = 4.7,
+                coef = 0.429,
+            },
+        }
+    },
+    [25235] = { -- Flash Heal(Rank 9)
+        spellLevel = 67,
+        maxLevel = 71,
+        baseCost = 470,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 1101,
+                max = 1280,
+                perLevel = 5.2,
+                coef = 0.429,
+            },
+        }
+    },
+    [25308] = { -- Prayer of Healing(Rank 6)
+        spellLevel = 68,
+        maxLevel = 75,
+        baseCost = 1255,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 1246,
+                max = 1317,
+                perLevel = 2.8,
+                coef = 0.429,
+            },
+        }
+    },
     [25314] = { -- Greater Heal(Rank 5)
         spellLevel = 60,
         maxLevel = 65,
@@ -1906,6 +2060,215 @@ _addon.spellRankInfo = {
                 max = 1054,
                 perLevel = 2.5,
                 coef = 0.429,
+            },
+        }
+    },
+    [25331] = { -- Holy Nova(Rank 7)
+        spellLevel = 68,
+        maxLevel = 74,
+        baseCost = 875,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 242,
+                max = 281,
+                perLevel = 1.4,
+                coef = 0.161,
+            },
+        }
+    },
+    [25363] = { -- Smite(Rank 9)
+        spellLevel = 61,
+        maxLevel = 66,
+        baseCost = 300,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 405,
+                max = 454,
+                perLevel = 3.4,
+                coef = 0.714,
+            },
+        }
+    },
+    [25364] = { -- Smite(Rank 10)
+        spellLevel = 69,
+        maxLevel = 75,
+        baseCost = 385,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 545,
+                max = 612,
+                perLevel = 4.1,
+                coef = 0.714,
+            },
+        }
+    },
+    [25367] = { -- Shadow Word: Pain(Rank 9)
+        spellLevel = 65,
+        maxLevel = 0,
+        duration = 18,
+        baseCost = 510,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 167,
+                coef = 0.183,
+            },
+        }
+    },
+    [25368] = { -- Shadow Word: Pain(Rank 10)
+        spellLevel = 70,
+        maxLevel = 0,
+        duration = 18,
+        baseCost = 575,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 206,
+                coef = 0.183,
+            },
+        }
+    },
+    [25372] = { -- Mind Blast(Rank 10)
+        spellLevel = 63,
+        maxLevel = 68,
+        baseCost = 380,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 557,
+                max = 588,
+                perLevel = 2.9,
+                coef = 0.429,
+            },
+        }
+    },
+    [25375] = { -- Mind Blast(Rank 11)
+        spellLevel = 69,
+        maxLevel = 74,
+        baseCost = 450,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 708,
+                max = 749,
+                perLevel = 3.2,
+                coef = 0.429,
+            },
+        }
+    },
+    [25384] = { -- Holy Fire(Rank 9)
+        spellLevel = 66,
+        maxLevel = 72,
+        duration = 10,
+        baseCost = 290,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 412,
+                max = 523,
+                perLevel = 3.6,
+                coef = 0.857,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                min = 33,
+                coef = 0.033,
+            },
+        }
+    },
+    [25387] = { -- Mind Flay(Rank 7)
+        spellLevel = 68,
+        maxLevel = 76,
+        duration = 3,
+        baseCost = 230,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                min = 176,
+                coef = 0.19,
+            },
+        }
+    },
+    [25437] = { -- Desperate Prayer(Rank 8)
+        spellLevel = 66,
+        maxLevel = 72,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 1601,
+                max = 1888,
+                perLevel = 9.1,
+                coef = 0.429,
+            },
+        }
+    },
+    [25446] = { -- Starshards(Rank 8)
+        spellLevel = 66,
+        maxLevel = 72,
+        duration = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 157,
+                coef = 0.167,
+            },
+        }
+    },
+    [25461] = { -- Touch of Weakness(Rank 7)
+        spellLevel = 70,
+        maxLevel = 0,
+        duration = 600,
+        baseCost = 235,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 42,
+                charges = 1,
+                min = 0,
+                coef = 0,
+            },
+        }
+    },
+    [25467] = { -- Devouring Plague(Rank 7)
+        spellLevel = 68,
+        maxLevel = 0,
+        duration = 24,
+        baseCost = 1145,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 3,
+                min = 152,
+                coef = 0.1,
+            },
+        }
+    },
+    [25477] = { -- Shadowguard(Rank 7)
+        spellLevel = 68,
+        maxLevel = 0,
+        duration = 600,
+        baseCost = 270,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 42,
+                charges = 3,
+                min = 130,
+                coef = 0.267,
             },
         }
     },
@@ -1972,6 +2335,168 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [32379] = { -- Shadow Word: Death(Rank 1)
+        spellLevel = 62,
+        maxLevel = 69,
+        baseCost = 243,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 450,
+                max = 523,
+                coef = 0.429,
+            },
+        }
+    },
+    [32546] = { -- Binding Heal(Rank 1)
+        spellLevel = 64,
+        maxLevel = 70,
+        baseCost = 705,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 1042,
+                max = 1339,
+                perLevel = 1.9,
+                coef = 0.429,
+            },
+            [2] = {
+                effectType = 10,
+                min = 1042,
+                max = 1339,
+                perLevel = 1.9,
+                coef = 0.429,
+            },
+        }
+    },
+    [32996] = { -- Shadow Word: Death(Rank 2)
+        spellLevel = 70,
+        maxLevel = 77,
+        baseCost = 309,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 572,
+                max = 665,
+                coef = 0.429,
+            },
+        }
+    },
+    [34861] = { -- Circle of Healing(Rank 1)
+        spellLevel = 50,
+        maxLevel = 54,
+        baseCost = 300,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 246,
+                max = 271,
+                perLevel = 1,
+                coef = 0.214,
+            },
+        }
+    },
+    [34863] = { -- Circle of Healing(Rank 2)
+        spellLevel = 56,
+        maxLevel = 60,
+        baseCost = 337,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 288,
+                max = 319,
+                perLevel = 1.2,
+                coef = 0.214,
+            },
+        }
+    },
+    [34864] = { -- Circle of Healing(Rank 3)
+        spellLevel = 60,
+        maxLevel = 64,
+        baseCost = 375,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 327,
+                max = 362,
+                perLevel = 1.4,
+                coef = 0.214,
+            },
+        }
+    },
+    [34865] = { -- Circle of Healing(Rank 4)
+        spellLevel = 65,
+        maxLevel = 69,
+        baseCost = 412,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 370,
+                max = 409,
+                perLevel = 1.6,
+                coef = 0.214,
+            },
+        }
+    },
+    [34866] = { -- Circle of Healing(Rank 5)
+        spellLevel = 70,
+        maxLevel = 74,
+        baseCost = 450,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 409,
+                max = 452,
+                perLevel = 1.8,
+                coef = 0.214,
+            },
+        }
+    },
+    [34914] = { -- Vampiric Touch(Rank 1)
+        spellLevel = 50,
+        maxLevel = 59,
+        duration = 15,
+        baseCost = 325,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 90,
+                coef = 0.2,
+            },
+        }
+    },
+    [34916] = { -- Vampiric Touch(Rank 2)
+        spellLevel = 60,
+        maxLevel = 69,
+        duration = 15,
+        baseCost = 400,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 120,
+                coef = 0.2,
+            },
+        }
+    },
+    [34917] = { -- Vampiric Touch(Rank 3)
+        spellLevel = 70,
+        maxLevel = 79,
+        duration = 15,
+        baseCost = 425,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                min = 130,
+                coef = 0.2,
+            },
+        }
+    },
     [37563] = { -- Renewal(Rank 1)
         spellLevel = 40,
         maxLevel = 0,
@@ -1983,6 +2508,90 @@ _addon.spellRankInfo = {
                 tickPeriod = 3,
                 min = 50,
                 coef = 0,
+            },
+        }
+    },
+    [44041] = { -- Chastise(Rank 1)
+        spellLevel = 20,
+        maxLevel = 29,
+        duration = 2,
+        baseCost = 50,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 47,
+                max = 54,
+                coef = 0.143,
+            },
+        }
+    },
+    [44043] = { -- Chastise(Rank 2)
+        spellLevel = 30,
+        maxLevel = 39,
+        duration = 2,
+        baseCost = 100,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 93,
+                max = 108,
+                coef = 0.143,
+            },
+        }
+    },
+    [44044] = { -- Chastise(Rank 3)
+        spellLevel = 40,
+        maxLevel = 49,
+        duration = 2,
+        baseCost = 135,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 139,
+                max = 162,
+                coef = 0.143,
+            },
+        }
+    },
+    [44045] = { -- Chastise(Rank 4)
+        spellLevel = 50,
+        maxLevel = 59,
+        duration = 2,
+        baseCost = 180,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 209,
+                max = 242,
+                coef = 0,
+            },
+        }
+    },
+    [44046] = { -- Chastise(Rank 5)
+        spellLevel = 60,
+        maxLevel = 69,
+        duration = 2,
+        baseCost = 225,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 278,
+                max = 323,
+                coef = 0.143,
+            },
+        }
+    },
+    [44047] = { -- Chastise(Rank 6)
+        spellLevel = 70,
+        maxLevel = 79,
+        duration = 2,
+        baseCost = 300,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 370,
+                max = 431,
+                coef = 0.143,
             },
         }
     },

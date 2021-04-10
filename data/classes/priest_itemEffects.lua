@@ -7,6 +7,14 @@ if playerClass ~= "PRIEST" then
     return;
 end
 
+_addon.itemEffects[19594] = { -- The All-Seeing Eye of Zuldazar
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {1, 0, 0, 0},
+        value = 35,
+    },
+}
+
 _addon.itemEffects[21351] = { -- Vestments of the Oracle
     {
         type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
