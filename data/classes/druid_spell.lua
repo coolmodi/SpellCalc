@@ -43,10 +43,6 @@ _addon.spellBaseInfo = {
         school = 7,
         defType = 1,
     },
-    [GetSpellInfo(18562)] = { -- Swiftmend
-        school = 4,
-        defType = 1,
-    },
     [GetSpellInfo(740)] = { -- Tranquility
         school = 4,
         isChannel = true,
@@ -1290,17 +1286,6 @@ _addon.spellRankInfo = {
                 min = 134,
                 perLevel = 0.3,
                 coef = 0.129,
-            },
-        }
-    },
-    [18562] = { -- Swiftmend
-        spellLevel = 1,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 10,
-                min = 1,
-                coef = 0,
             },
         }
     },
