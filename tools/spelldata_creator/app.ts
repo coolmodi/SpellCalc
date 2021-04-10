@@ -287,6 +287,21 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             weaponCoef: 0 
         };
     },
+
+    [EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL]: (rankInfo, effect, effectNum, _spellName, _baseInfo) => {
+        rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
+            coef: 0,
+            min: effect.EffectTriggerSpell,
+            max: 0,
+            perLevel: 0,
+            forceScaleWithHeal: false,
+            period: 0,
+            charges: 0,
+            weaponCoef: 0,
+            //triggeredSpell: effect.EffectTriggerSpell
+        };
+    },
 }
 
 /**
@@ -445,6 +460,7 @@ end
                 str += `\t\t\t\tchainMult = ${eff.chainInfo.mult},\n`;
             }
             if (eff.auraStacks) str += `\t\t\t\tauraStacks = ${eff.auraStacks},\n`;
+            //if (eff.triggeredSpell) str += `\t\t\t\ttriggeredSpell = ${eff.triggeredSpell},\n`;
             str += `\t\t\t},\n`;
         }
 

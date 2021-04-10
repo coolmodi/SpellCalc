@@ -238,11 +238,15 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 if red.auraStacks and red.auraStacks > 1 then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.STACKABLE_AURA;
                 end
+
+                if red.effectType == EFFECT_TYPES.SPELL_EFFECT_TRIGGER_SPELL then
+                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.TRIGGERED_SPELL;
+                end
             end
         end
 
         _addon:PrintDebug("Has " .. #spellRankInfo.effects .. " effects with flags (" .. effectFlags[1] .. ", " .. tostring(effectFlags[2]) .. ")");
-        calcedSpell = NewCalcedSpell(effectFlags);
+        calcedSpell = NewCalcedSpell(effectFlags, spellRankInfo.effects);
     end
 
     calcedSpell:ResetBuffList();
@@ -501,12 +505,49 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     end
 
     --------------------------
+    -- Handle add triggered spell effect
+
+    do
+        local triggerFromSpell = spellId;
+        if spellId == _addon.judgementSpell then
+            triggerFromSpell = _addon.JUDGEMENT_ID;
+        end
+
+        if stats.spellModAddTriggerSpell[triggerFromSpell] ~= nil then
+            local triggeredSpellId = stats.spellModAddTriggerSpell[triggerFromSpell].val;
+            if triggeredSpellId > 0 then
+                _addon:PrintDebug("Add triggered spell "..triggeredSpellId.." on spell "..spellId);
+                local triggeredId = _addon:GetHandledSpellID(triggeredSpellId);
+                if not triggeredId then
+                    _addon:PrintError("Spell "..spellId.." has added trigger effect "..triggeredSpellId.." but that spell isn't handled!");
+                else
+                    calcedSpell:SetTriggeredSpell(triggeredId, 2);
+                end
+            elseif calcedSpell[2] and calcedSpell[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+                _addon:PrintDebug("Remove triggered effect from spell "..spellId);
+                calcedSpell:UnsetTriggeredSpell(2);
+            end
+        end
+    end
+
+    --------------------------
     -- Effects
 
-    for i = 1, #spellRankInfo.effects, 1 do
+    for i = 1, #calcedSpell, 1 do
         _addon:PrintDebug("Calculating effect " .. i);
         ---@type CalcedEffect
         local calcedEffect = calcedSpell[i];
+
+        --------------------------
+        -- Trigger spell spell effect
+        -- Update triggered spell data
+        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
+            _addon:PrintDebug("Is trigger spell effect, updating triggered spell!");
+            calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
+            -- TODO: if trigger isn't last effect this will be bad, isn't the case now though, maybe never will
+            break;
+        end
+
         ---@type SpellRankEffectData
         local effectData = spellRankInfo.effects[i];
 
@@ -580,36 +621,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             stackData.perSecDurOrCD = calcedEffect.perSecDurOrCD * stackCount;
             stackData.perResource = stackData.avgAfterMitigation / calcedSpell.effectiveCost;
             stackData.doneToOom = calcedSpell.castingData.castsToOom * stackData.avgAfterMitigation;
-        end
-    end
-
-    --------------------------
-    -- Handle triggered spell effect
-
-    do
-        local triggerFromSpell = spellId;
-        if spellId == _addon.judgementSpell then
-            triggerFromSpell = _addon.JUDGEMENT_ID;
-        end
-
-        if stats.spellModAddTriggerSpell[triggerFromSpell] ~= nil then
-            local triggeredSpellId = stats.spellModAddTriggerSpell[triggerFromSpell].val;
-            if triggeredSpellId > 0 then
-                _addon:PrintDebug("Add triggered spell "..triggeredSpellId.." on spell "..spellId);
-                local triggeredId = _addon:GetHandledSpellID(triggeredSpellId);
-                if not triggeredId then
-                    _addon:PrintError("Spell "..spellId.." has added trigger effect "..triggeredSpellId.." but that spell isn't handled!");
-                else
-                    local triggeredSpell;
-                    if calcedSpell[2] and calcedSpell[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
-                        triggeredSpell = calcedSpell[2].spellData;
-                    end
-                    calcedSpell:SetTriggeredSpell(CalcSpell(triggeredId, triggeredSpell, calcedSpell, effCastTime));
-                end
-            elseif calcedSpell[2] and calcedSpell[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
-                _addon:PrintDebug("Remove triggered effect from spell "..spellId);
-                calcedSpell:UnsetTriggeredSpell();
-            end
         end
     end
 

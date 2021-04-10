@@ -33,38 +33,17 @@ function priestFix(se: {[index: number]: SpellEffect}) {
         25217: 0.3, 
         25218: 0.3
     };
-    const HOLY_NOVA: {[index: number]: {perlvl: number, min: number, max: number}} = {
-        15237: {
-            perlvl: 0.3,
-            min: 52,
-            max: 61
-        }, 
-        15430: {
-            perlvl: 0.4,
-            min: 86,
-            max: 99
-        }, 
-        15431: {
-            perlvl: 0.5,
-            min: 121,
-            max: 140
-        },
-        27799: {
-            perlvl: 0.6,
-            min: 161,
-            max: 188
-        },
-        27800: {
-            perlvl: 0.7,
-            min: 235,
-            max: 272
-        },
-        27801: {
-            perlvl: 0.8,
-            min: 302,
-            max: 351
-        }
-    };
+
+    // Holy Nova spell -> its heal spell
+    const HOLY_NOVA_TRIGGER: {[spellId: number]: number} = {
+        15237: 23455,
+        15430: 23458,
+        15431: 23459,
+        27799: 27803,
+        27800: 27804,
+        27801: 27805,
+        25331: 25329
+    }
 
     // map Touch of Weakness proc spells
     const TOW_MAP: {[spellId: number]: number} = {
@@ -73,23 +52,24 @@ function priestFix(se: {[index: number]: SpellEffect}) {
         19262: 19251,
         19264: 19252,
         19265: 19253,
-        19266: 19254
+        19266: 19254,
+        25461: 25460
     };
+
+    const BINDING_HEAL: {[spellId: number]: boolean} = {
+        32546: true,
+    }
 
     for(let effId in se) {
         const eff = se[effId];
         if (PW_SHIELD[eff.SpellID]) {
             eff.EffectBonusCoefficient = PW_SHIELD[eff.SpellID];
-        } else if (HOLY_NOVA[eff.SpellID]) {
-            if (eff.EffectIndex == 0) {
-                let clone = cloneEntry(eff);
-                clone.EffectIndex = 1;
-                clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-                clone.EffectBasePoints = HOLY_NOVA[eff.SpellID].min - 1;
-                clone.EffectDieSides = HOLY_NOVA[eff.SpellID].max - HOLY_NOVA[eff.SpellID].min;
-                clone.EffectRealPointsPerLevel = HOLY_NOVA[eff.SpellID].perlvl;
-                se[clone.ID] = clone;
-            }
+        } else if (HOLY_NOVA_TRIGGER[eff.SpellID] && eff.EffectIndex == 0) {
+            let clone = cloneEntry(eff);
+            clone.EffectIndex = 1;
+            clone.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
+            clone.EffectTriggerSpell = HOLY_NOVA_TRIGGER[eff.SpellID];
+            se[clone.ID] = clone;
         // Touch of Weakness does not have any usefull data about its proc by default, replace with proc entirely
         } else if (TOW_MAP[eff.SpellID]) {
             const procId = TOW_MAP[eff.SpellID];
@@ -110,6 +90,8 @@ function priestFix(se: {[index: number]: SpellEffect}) {
                 }
                 if (!found) throw "Couldn't replace Touch of Weakness with proc! Spell not found!";
             }
+        } else if (BINDING_HEAL[eff.SpellID] && eff.EffectIndex === 1) {
+            eff.Effect = 0; // Ignore this effect
         }
     }
 }

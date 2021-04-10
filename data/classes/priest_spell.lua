@@ -1178,11 +1178,9 @@ _addon.spellRankInfo = {
                 coef = 0.161,
             },
             [2] = {
-                effectType = 10,
-                min = 52,
-                max = 61,
-                perLevel = 0.3,
-                coef = 0.161,
+                effectType = 64,
+                min = 23455,
+                coef = 0,
             },
         }
     },
@@ -1368,11 +1366,9 @@ _addon.spellRankInfo = {
                 coef = 0.161,
             },
             [2] = {
-                effectType = 10,
-                min = 86,
-                max = 99,
-                perLevel = 0.4,
-                coef = 0.161,
+                effectType = 64,
+                min = 23458,
+                coef = 0,
             },
         }
     },
@@ -1389,11 +1385,9 @@ _addon.spellRankInfo = {
                 coef = 0.161,
             },
             [2] = {
-                effectType = 10,
-                min = 121,
-                max = 140,
-                perLevel = 0.5,
-                coef = 0.161,
+                effectType = 64,
+                min = 23459,
+                coef = 0,
             },
         }
     },
@@ -1888,6 +1882,45 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [23455] = { -- Holy Nova(Rank 1)
+        spellLevel = 20,
+        maxLevel = 26,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 52,
+                max = 61,
+                perLevel = 0.4,
+                coef = 0.161,
+            },
+        }
+    },
+    [23458] = { -- Holy Nova(Rank 2)
+        spellLevel = 28,
+        maxLevel = 34,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 86,
+                max = 99,
+                perLevel = 0.5,
+                coef = 0.161,
+            },
+        }
+    },
+    [23459] = { -- Holy Nova(Rank 3)
+        spellLevel = 36,
+        maxLevel = 42,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 121,
+                max = 140,
+                perLevel = 0.6,
+                coef = 0.161,
+            },
+        }
+    },
     [25210] = { -- Greater Heal(Rank 6)
         spellLevel = 63,
         maxLevel = 67,
@@ -2063,6 +2096,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [25329] = { -- Holy Nova(Rank 7)
+        spellLevel = 68,
+        maxLevel = 74,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 384,
+                max = 447,
+                perLevel = 1,
+                coef = 0.161,
+            },
+        }
+    },
     [25331] = { -- Holy Nova(Rank 7)
         spellLevel = 68,
         maxLevel = 74,
@@ -2074,6 +2120,11 @@ _addon.spellRankInfo = {
                 max = 281,
                 perLevel = 1.4,
                 coef = 0.161,
+            },
+            [2] = {
+                effectType = 64,
+                min = 25329,
+                coef = 0,
             },
         }
     },
@@ -2237,8 +2288,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                min = 0,
-                coef = 0,
+                min = 80,
+                coef = 0.107,
             },
         }
     },
@@ -2285,11 +2336,9 @@ _addon.spellRankInfo = {
                 coef = 0.161,
             },
             [2] = {
-                effectType = 10,
-                min = 161,
-                max = 188,
-                perLevel = 0.6,
-                coef = 0.161,
+                effectType = 64,
+                min = 27803,
+                coef = 0,
             },
         }
     },
@@ -2306,11 +2355,9 @@ _addon.spellRankInfo = {
                 coef = 0.161,
             },
             [2] = {
-                effectType = 10,
-                min = 235,
-                max = 272,
-                perLevel = 0.7,
-                coef = 0.161,
+                effectType = 64,
+                min = 27804,
+                coef = 0,
             },
         }
     },
@@ -2327,10 +2374,47 @@ _addon.spellRankInfo = {
                 coef = 0.161,
             },
             [2] = {
+                effectType = 64,
+                min = 27805,
+                coef = 0,
+            },
+        }
+    },
+    [27803] = { -- Holy Nova(Rank 4)
+        spellLevel = 44,
+        maxLevel = 50,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 161,
+                max = 188,
+                perLevel = 0.7,
+                coef = 0.161,
+            },
+        }
+    },
+    [27804] = { -- Holy Nova(Rank 5)
+        spellLevel = 52,
+        maxLevel = 58,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 235,
+                max = 272,
+                perLevel = 0.8,
+                coef = 0.161,
+            },
+        }
+    },
+    [27805] = { -- Holy Nova(Rank 6)
+        spellLevel = 60,
+        maxLevel = 66,
+        effects = {
+            [1] = {
                 effectType = 10,
                 min = 302,
                 max = 351,
-                perLevel = 0.8,
+                perLevel = 0.9,
                 coef = 0.161,
             },
         }
@@ -2354,13 +2438,6 @@ _addon.spellRankInfo = {
         baseCost = 705,
         effects = {
             [1] = {
-                effectType = 10,
-                min = 1042,
-                max = 1339,
-                perLevel = 1.9,
-                coef = 0.429,
-            },
-            [2] = {
                 effectType = 10,
                 min = 1042,
                 max = 1339,

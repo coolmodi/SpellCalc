@@ -9,7 +9,8 @@ const enum EFFECT_TYPE {
     SPELL_EFFECT_WEAPON_PERCENT_DAMAGE = 31, // if E1 then modify E0!
     SPELL_EFFECT_ATTACK = 78,
     SPELL_EFFECT_WEAPON_DAMAGE = 58,
-    SPELL_EFFECT_APPLY_AREA_AURA_PARTY = 35
+    SPELL_EFFECT_APPLY_AREA_AURA_PARTY = 35,
+    SPELL_EFFECT_TRIGGER_SPELL = 64,
 }
 
 const enum AURA_TYPE {
@@ -147,6 +148,7 @@ interface EffectInfo {
         mult: number
     },
     auraStacks?: number,
+    //triggeredSpell?: number,
 }
 
 const enum PowerType {
