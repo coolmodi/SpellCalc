@@ -93,12 +93,21 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.PCT_HEALING,
-                --affectSpell = {151264832, 52},
                 perPoint = 2
             }
         }
     },
-    -- TODO: Holy Concentration
+    { -- Holy Concentration
+        tree = 2,
+        talent = 17,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_CLEARCAST_CHANCE,
+                affectSpell = {6144, 4},
+                perPoint = 2
+            }
+        }
+    },
     { -- Empowered Healing
         tree = 2,
         talent = 20,

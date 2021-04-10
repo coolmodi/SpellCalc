@@ -148,6 +148,7 @@ _addon.stats = {
     spellModPctCritMult = SpellStatTable(),
     spellModFlatSpellScale = SpellStatTable(),
     spellModPctSpellScale = SpellStatTable(),
+    spellModClearCastChance = SpellStatTable(),
 
     weaponModFlatHitChance = WeaponStatTable(),
 
@@ -160,7 +161,6 @@ _addon.stats = {
     modhealingDone = UniformStat(),
     hitBonus = UniformStat();
     hitBonusSpell = UniformStat();
-    clearCastChance = UniformStat(),
     clearCastChanceDmg = UniformStat(),
     illumination = UniformStat(),
     ignite = UniformStat(),

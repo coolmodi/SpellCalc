@@ -27,7 +27,8 @@ end
 ---@param effCastTime number
 ---@param school number
 ---@param spellName string
-function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName)
+---@param spellId number
+function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName, spellId)
     local mps = stats.mp5.val / 5 + stats.manaRegAura;
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
@@ -41,13 +42,12 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - (effCastTime - 5) * ofsrRegen;
     end
 
-    if stats.clearCastChance.val > 0 or (
-        stats.clearCastChanceDmg.val > 0 
-        and bit.band(calcedSpell[1].effectFlags, SEF.HEAL + SEF.ABSORB) == 0
-    ) then
-        local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
-        calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (ccc.val/100);
-        calcedSpell:AddToBuffList(ccc.buffs);
+    if stats.spellModClearCastChance[spellId] and stats.spellModClearCastChance[spellId].val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.spellModClearCastChance[spellId].val / 100);
+        calcedSpell:AddToBuffList(stats.spellModClearCastChance[spellId].buffs);
+    elseif stats.clearCastChanceDmg.val > 0 and bit.band(calcedSpell[1].effectFlags, SEF.HEAL + SEF.ABSORB) == 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.clearCastChanceDmg.val / 100);
+        calcedSpell:AddToBuffList(stats.clearCastChanceDmg.buffs);
     end
 
     if stats.illumination.val > 0 then

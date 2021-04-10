@@ -472,7 +472,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.effectiveCost = spellCost;
 
         if costType == 0 then -- mana
-            costHandler:Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellBaseInfo.school, spellName);
+            costHandler:Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellBaseInfo.school, spellName, spellId);
         elseif costType == 1 then -- rage
             -- TODO: rage (on next melee, proc on crit etc.)
         elseif costType == 3 then -- energy

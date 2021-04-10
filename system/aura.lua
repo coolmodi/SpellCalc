@@ -71,12 +71,12 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT] = stats.spellModPctCritMult,
     [EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE] = stats.spellModFlatSpellScale,
     [EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE] = stats.spellModPctSpellScale,
+    [EFFECT_TYPE.SPELLMOD_CLEARCAST_CHANCE] = stats.spellModClearCastChance,
 }
 
 local effectSimpleStat = {
     [EFFECT_TYPE.PCT_HEALING]           = stats.modhealingDone,
     [EFFECT_TYPE.MOD_MANA_PER_5]        = stats.mp5,
-    [EFFECT_TYPE.CLEARCAST_CHANCE]      = stats.clearCastChance,
     [EFFECT_TYPE.CLEARCAST_CHANCE_DMG]  = stats.clearCastChanceDmg,
     [EFFECT_TYPE.ILLUMINATION]          = stats.illumination,
     [EFFECT_TYPE.IGNITE]                = stats.ignite,

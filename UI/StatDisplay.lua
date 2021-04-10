@@ -361,7 +361,7 @@ AddSingleStat("Ranged min", stats.attackDmg.ranged, "min");
 AddSingleStat("Ranged max", stats.attackDmg.ranged, "max");
 
 AddTitle("Clearcast");
-AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
+AddSpellTable(stats.spellModClearCastChance, nil, "%");
 AddUniformStatTable(stats.clearCastChanceDmg, "Clearcast chance dmg", "%");
 
 AddTitle("Misc");
