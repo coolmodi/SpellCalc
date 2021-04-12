@@ -11,11 +11,11 @@ const outputdir = __dirname + "/../../../data/classes/";
 const CLASSES = [
     "druid", 
     "priest", 
-    
+    "warlock",
+
     // TODO: other classes
     
     //"mage", 
-    //"warlock", 
     //"paladin", 
     //"shaman",
 
