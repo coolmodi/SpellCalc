@@ -165,7 +165,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
-                affectSpell = {240},
+                affectSpell = {240, 16},
                 perPoint = 2
             }
         }
