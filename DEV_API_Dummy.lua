@@ -482,9 +482,7 @@ local PlayerAura = {
     ---@type nil|UnitAuraEffect[]
     effects = {},
     ---@type nil|number
-    condition = 0,
-    ---@type nil|string
-    ttValue = "",
+    condition = 0
 }
 ---@type table<number, PlayerAuraEffect>
 _addon.aurasPlayer = {};
