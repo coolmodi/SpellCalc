@@ -539,7 +539,7 @@ async function createItemLua() {
     fs.writeFileSync(__dirname + "/../../../data/itemSetData.lua", setLua.GENERAL);
     for (const classname in setLua)
     {
-        if (classname == "GENERAL") continue;
+        if (classname == "GENERAL" || CLASSES.indexOf(classname) === -1) continue;
         fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemSetData.lua", setLua[classname as keyof typeof setLua]);
     }
 
@@ -548,7 +548,7 @@ async function createItemLua() {
     fs.writeFileSync(__dirname + "/../../../data/itemEffects.lua", itemLua.GENERAL);
     for (const classname in itemLua)
     {
-        if (classname == "GENERAL") continue;
+        if (classname == "GENERAL" || CLASSES.indexOf(classname) === -1) continue;
         fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemEffects.lua", itemLua[classname as keyof typeof itemLua]);
     }
 }

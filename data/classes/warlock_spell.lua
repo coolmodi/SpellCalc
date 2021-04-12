@@ -1037,11 +1037,6 @@ _addon.spellRankInfo = {
         baseCost = 105,
         effects = {
             [1] = {
-                effectType = 64,
-                min = 29341,
-                coef = 0,
-            },
-            [2] = {
                 effectType = 2,
                 min = 87,
                 max = 100,
@@ -1197,11 +1192,6 @@ _addon.spellRankInfo = {
         baseCost = 130,
         effects = {
             [1] = {
-                effectType = 64,
-                min = 29341,
-                coef = 0,
-            },
-            [2] = {
                 effectType = 2,
                 min = 115,
                 max = 132,
@@ -1216,11 +1206,6 @@ _addon.spellRankInfo = {
         baseCost = 190,
         effects = {
             [1] = {
-                effectType = 64,
-                min = 29341,
-                coef = 0,
-            },
-            [2] = {
                 effectType = 2,
                 min = 186,
                 max = 211,
@@ -1235,11 +1220,6 @@ _addon.spellRankInfo = {
         baseCost = 245,
         effects = {
             [1] = {
-                effectType = 64,
-                min = 29341,
-                coef = 0,
-            },
-            [2] = {
                 effectType = 2,
                 min = 261,
                 max = 294,
@@ -1254,11 +1234,6 @@ _addon.spellRankInfo = {
         baseCost = 305,
         effects = {
             [1] = {
-                effectType = 64,
-                min = 29341,
-                coef = 0,
-            },
-            [2] = {
                 effectType = 2,
                 min = 350,
                 max = 393,
@@ -1273,11 +1248,6 @@ _addon.spellRankInfo = {
         baseCost = 365,
         effects = {
             [1] = {
-                effectType = 64,
-                min = 29341,
-                coef = 0,
-            },
-            [2] = {
                 effectType = 2,
                 min = 450,
                 max = 503,
@@ -1644,6 +1614,20 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [27263] = { -- Shadowburn(Rank 7)
+        spellLevel = 63,
+        maxLevel = 69,
+        baseCost = 435,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 518,
+                max = 579,
+                perLevel = 3.4,
+                coef = 0.429,
+            },
+        }
+    },
     [27264] = { -- Siphon Life(Rank 5)
         spellLevel = 63,
         maxLevel = 69,
@@ -1816,6 +1800,20 @@ _addon.spellRankInfo = {
                 max = 1258,
                 perLevel = 3.8,
                 coef = 1.15,
+            },
+        }
+    },
+    [30546] = { -- Shadowburn(Rank 8)
+        spellLevel = 70,
+        maxLevel = 76,
+        baseCost = 515,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 597,
+                max = 666,
+                perLevel = 3.8,
+                coef = 0.429,
             },
         }
     },

@@ -251,8 +251,19 @@ function druidFixes(se: {[index: number]: SpellEffect})
         if (eff.SpellID === 33763 && eff.EffectIndex === 1) {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
-            eff.EffectBonusCoefficient = 0.3429; // TODO: Test this!
+            eff.EffectBonusCoefficient = 0.3429;
         }
+    }
+}
+
+function warlockFixes(se: {[index: number]: SpellEffect})
+{
+    console.log("Fixing warlock coefs and effects");
+    const SHADOW_BURN = [17877, 18867, 18868, 18869, 18870, 18871, 27263, 30546];
+    for(let effId in se) {
+        let eff = se[effId];
+        // Ignore trigger effect for shard debuff
+        if (SHADOW_BURN.indexOf(eff.SpellID) != -1 && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL) eff.Effect = 0;
     }
 }
 
@@ -261,4 +272,5 @@ export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index:
     priestFix(se, sm);
     mageFix(se);
     druidFixes(se);
+    warlockFixes(se);
 }
