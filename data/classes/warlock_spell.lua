@@ -1598,6 +1598,11 @@ _addon.spellRankInfo = {
                 min = 174,
                 coef = 0.25,
             },
+            [2] = {
+                effectType = 64,
+                min = 27285,
+                coef = 0,
+            },
         }
     },
     [27259] = { -- Health Funnel(Rank 8)
@@ -1654,6 +1659,18 @@ _addon.spellRankInfo = {
                 max = 639,
                 perLevel = 2.4,
                 coef = 0.429,
+            },
+        }
+    },
+    [27285] = { -- Seed of Corruption(Rank 1)
+        spellLevel = 70,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 1110,
+                max = 1291,
+                coef = 0.214,
             },
         }
     },

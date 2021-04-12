@@ -260,10 +260,18 @@ function warlockFixes(se: {[index: number]: SpellEffect})
 {
     console.log("Fixing warlock coefs and effects");
     const SHADOW_BURN = [17877, 18867, 18868, 18869, 18870, 18871, 27263, 30546];
+    const SEED_OF_CORRUPTION = 27243;
+    const SEED_OF_CORRUPTION_PROC = 27285;
+
     for(let effId in se) {
         let eff = se[effId];
         // Ignore trigger effect for shard debuff
-        if (SHADOW_BURN.indexOf(eff.SpellID) != -1 && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL) eff.Effect = 0;
+        if (SHADOW_BURN.indexOf(eff.SpellID) != -1 && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL) {
+            eff.Effect = 0;
+        } else if (eff.SpellID === SEED_OF_CORRUPTION && eff.EffectIndex === 1) {
+            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
+            eff.EffectTriggerSpell = SEED_OF_CORRUPTION_PROC;
+        }
     }
 }
 
