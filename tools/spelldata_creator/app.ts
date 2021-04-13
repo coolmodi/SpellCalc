@@ -12,10 +12,9 @@ const CLASSES = [
     "druid", 
     "priest", 
     "warlock",
+    "mage", 
 
     // TODO: other classes
-    
-    //"mage", 
     //"paladin", 
     //"shaman",
 
@@ -112,10 +111,18 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         case AURA_TYPE.SPELL_AURA_MANA_SHIELD:
             if (spellName == "Power Word: Shield") rankInfo.effects[effectNum].forceScaleWithHeal = true;
             break;
-        case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL:
         case AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD:
             rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
             break;
+        case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL: 
+            {
+                rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
+                const teff = spellData.getSpellEffects(effect.EffectTriggerSpell)[0];
+                rankInfo.effects[effectNum].coef = teff.EffectBonusCoefficient;
+                rankInfo.effects[effectNum].min = teff.EffectBasePoints + 1;
+                rankInfo.effects[effectNum].max = teff.EffectBasePoints + 1 + ((teff.EffectDieSides > 1) ? teff.EffectDieSides : 0);
+                rankInfo.effects[effectNum].perLevel = teff.EffectRealPointsPerLevel;
+            } break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
             const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
             const tspellCat = spellData.getSpellCategory(effect.EffectTriggerSpell);

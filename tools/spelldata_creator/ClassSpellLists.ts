@@ -31,7 +31,8 @@ const DO_AURAS = [
 const DMG_SHIELD_DATA: {[index: string]: number} = {
     "Shadowguard": 3,
     "Lightning Shield": 3,
-    "Touch of Weakness": 1
+    "Touch of Weakness": 1,
+    "Molten Armor": 123
 }
 
 const TRIGGER_SPELL_IGNORE: {[spellName: string]: boolean} = {

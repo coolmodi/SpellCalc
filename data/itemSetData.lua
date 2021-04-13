@@ -58,6 +58,17 @@ _addon.itemSetData = {
             },
         }
     },
+    [644] = {
+        name = "Oblivion Raiment",
+        effects = {
+            {
+                need = 4,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                affectSpell = {0, 32768, 0, 0},
+                value = 180,
+            },
+        }
+    },
     [647] = {
         name = "Incanter's Regalia",
         effects = {
@@ -87,6 +98,11 @@ _addon.setItemData = {
     [21875] = 554,
     [21874] = 554,
     [21873] = 554,
+    [27537] = 644,
+    [28415] = 644,
+    [28232] = 644,
+    [27778] = 644,
+    [27948] = 644,
     [28278] = 647,
     [27508] = 647,
     [27738] = 647,

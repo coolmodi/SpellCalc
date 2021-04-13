@@ -1,3 +1,4 @@
+---@type AddonEnv
 local _, _addon = ...;
 local _, playerClass = UnitClass("player");
 if playerClass ~= "MAGE" then
@@ -5,6 +6,9 @@ if playerClass ~= "MAGE" then
 end
 
 _addon.talentData = {
+    -----------------------------
+    -- Arcane
+    -----------------------------
     { -- Arcane Subtlety
         tree = 1,
         talent = 1,
@@ -22,7 +26,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
-                affectSpell = {2359296},
+                affectSpell = {-1591717888, 16},
                 perPoint = 2
             }
         }
@@ -37,13 +41,13 @@ _addon.talentData = {
             }
         }
     },
-    { -- Improved Arcane Explosion
+    { -- Arcane Impact
         tree = 1,
         talent = 8,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {4096},
+                affectSpell = {536875008},
                 perPoint = 2
             }
         }
@@ -54,27 +58,47 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                perPoint = 5
+                perPoint = 10
             }
         }
     },
     { -- Arcane Instability
         tree = 1,
-        talent = 15,
+        talent = 17,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {12589815},
-                perPoint = 1
-            },
-            {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {12589815},
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 1
             }
         }
     },
-
+    -- TODO: Arcane Potency
+    { -- Empowered Arcane Missiles
+        tree = 1,
+        talent = 19,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                affectSpell = {2097152},
+                perPoint = 3
+            }
+        }
+    },
+    { -- Spell Power
+        tree = 1,
+        talent = 21,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+                affectSpell = {551686775, 8},
+                perPoint = 25
+            }
+        }
+    },
+    -----------------------------
+    -- Fire
+    -----------------------------
     { -- Ignite
         tree = 2,
         talent = 3,
@@ -117,37 +141,61 @@ _addon.talentData = {
             }
         }
     },
-    { -- Critical Mass
+    { -- Playing with Fire
         tree = 2,
         talent = 13,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {12582935},
-                perPoint = 2
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                perPoint = 1
             }
         }
     },
+    -- { -- Critical Mass TODO: test this and Pyromaniac
+    --     tree = 2,
+    --     talent = 14,
+    --     effects = {
+    --         {
+    --             type = _addon.EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT,
+    --             affectMask = _addon.SCHOOL_MASK.FIRE,
+    --             perPoint = 2
+    --         }
+    --     }
+    -- },
     { -- Fire Power
         tree = 2,
-        talent = 15,
+        talent = 17,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {12582935},
+                affectSpell = {12845079, 8},
                 perPoint = 2
             }
         }
     },
-
+    -- TODO: Molten Fury
+    { -- Empowered Fireball
+        tree = 2,
+        talent = 21,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                affectSpell = {1},
+                perPoint = 3
+            }
+        }
+    },
+    -----------------------------
+    -- Frost
+    -----------------------------
     { -- Elemental Precision
         tree = 3,
         talent = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
-                affectSpell = {12583671},
-                perPoint = 2
+                affectSpell = {13763319, 8},
+                perPoint = 1
             }
         }
     },
@@ -157,7 +205,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
-                affectSpell = {736},
+                affectSpell = {131808},
                 perPoint = 20
             }
         }
@@ -168,14 +216,14 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {736},
+                affectSpell = {131808},
                 perPoint = 2
             }
         }
     },
     { -- Improved Cone of Cold
         tree = 3,
-        talent = 15,
+        talent = 16,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
@@ -185,18 +233,46 @@ _addon.talentData = {
             }
         }
     },
+    { -- Arctic Winds
+        tree = 3,
+        talent = 20,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.SCHOOL_MASK.FROST,
+                perPoint = 1,
+            }
+        }
+    },
+    { -- Empowered Frostbolt
+        tree = 3,
+        talent = 21,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                affectSpell = {32},
+                perPoint = 2,
+            },
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {32},
+                perPoint = 1,
+            }
+        }
+    }
 };
 
 _addon.aurasPlayer[12042] = { -- Arcane Power
     type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-    affectSpell = {12589815},
+    affectSpell = {685904631, 8},
     value = 30,
 };
 
-local MageArmorEffect = {
+local mageArmorEffect = {
     type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
     value = 30,
 };
-_addon.aurasPlayer[6117] = MageArmorEffect;
-_addon.aurasPlayer[22782] = MageArmorEffect;
-_addon.aurasPlayer[22783] = MageArmorEffect;
+_addon.aurasPlayer[6117] = mageArmorEffect;
+_addon.aurasPlayer[22782] = mageArmorEffect;
+_addon.aurasPlayer[22783] = mageArmorEffect;
+_addon.aurasPlayer[27125] = mageArmorEffect;

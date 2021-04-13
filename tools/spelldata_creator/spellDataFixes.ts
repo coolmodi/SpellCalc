@@ -60,6 +60,17 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         32546: true,
     }
 
+    // Shadowguard -> triggerID
+    const SHADOWGUARD_TRIGGER_IDS: {[spellId: number]: number} = {
+        18137: 28377,
+        19308: 28378,
+        19309: 28379,
+        19310: 28380,
+        19311: 28381,
+        19312: 28382,
+        25477: 28385
+    };
+
     for(let effId in se) {
         const eff = se[effId];
         if (PW_SHIELD[eff.SpellID]) {
@@ -72,24 +83,7 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
             se[clone.ID] = clone;
         // Touch of Weakness does not have any usefull data about its proc by default, replace with proc entirely
         } else if (TOW_MAP[eff.SpellID]) {
-            const procId = TOW_MAP[eff.SpellID];
-            let found = false;
-            if (eff.EffectIndex == 0) {
-                for (let effectId2 in se) {
-                    const effect2 = se[effectId2];
-                    if (effect2.SpellID == procId) {
-                        for (let key in effect2) {
-                            if (key == "ID" || key == "SpellID" || key == "Effect" || key == "EffectAura") continue;
-                            eff[key as keyof SpellEffect] =  effect2[key as keyof SpellEffect];
-                        }
-                        eff.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
-                        eff.EffectAura = AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL;
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) throw "Couldn't replace Touch of Weakness with proc! Spell not found!";
-            }
+            eff.EffectTriggerSpell = TOW_MAP[eff.SpellID];
         } else if (BINDING_HEAL[eff.SpellID] && eff.EffectIndex === 1) {
             eff.Effect = 0; // Ignore this effect
         } 
@@ -101,6 +95,11 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
             eff.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY;
             eff.EffectBonusCoefficient = 0.429; // Taken from spell 33110, the PoM triggered heal spell
             sm[eff.SpellID]["Attributes[2]"] |= sm[33110]["Attributes[2]"];
+        }
+        // Shadowguard trigger fix
+        else if (SHADOWGUARD_TRIGGER_IDS[eff.SpellID] && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA && eff.EffectAura === AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL) 
+        {
+            eff.EffectTriggerSpell = SHADOWGUARD_TRIGGER_IDS[eff.SpellID];
         }
     }
 }
@@ -275,10 +274,37 @@ function warlockFixes(se: {[index: number]: SpellEffect})
     }
 }
 
+function shamanFix(se: {[index: number]: SpellEffect}) {
+    console.log("Fixing shaman coefs and effects");
+
+    // Shadowguard -> triggerID
+    const LIGHTNING_SHIELD_TRIGGERS: {[spellId: number]: number} = {
+        324: 26364,
+        325: 26365,
+        905: 26366,
+        945: 26367,
+        8134: 26369,
+        10431: 26370,
+        10432: 26363,
+        25469: 26371,
+        25472: 26372
+    };
+
+    for(let effId in se) {
+        const eff = se[effId];
+        // Shadowguard trigger fix
+        if (LIGHTNING_SHIELD_TRIGGERS[eff.SpellID] && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA && eff.EffectAura === AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL) 
+        {
+            eff.EffectTriggerSpell = LIGHTNING_SHIELD_TRIGGERS[eff.SpellID];
+        }
+    }
+}
+
 export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
     paladinFix(se, sc, sm);
     priestFix(se, sm);
     mageFix(se);
     druidFixes(se);
     warlockFixes(se);
+    shamanFix(se);
 }

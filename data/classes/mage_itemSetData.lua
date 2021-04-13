@@ -14,7 +14,7 @@ _addon.itemSetData[201] = {
             need = 5,
             type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 124,
-            value = 10,
+            value = 38,
         },
     }
 }
@@ -61,4 +61,41 @@ _addon.itemSetData[504] = {
 _addon.setItemData[21414] = 504;
 _addon.setItemData[21413] = 504;
 _addon.setItemData[21415] = 504;
+
+_addon.itemSetData[649] = {
+    name = "Tirisfal Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            affectSpell = {536870912, 0, 0, 0},
+            value = 20,
+        },
+    }
+}
+_addon.setItemData[30206] = 649;
+_addon.setItemData[30205] = 649;
+_addon.setItemData[30207] = 649;
+_addon.setItemData[30210] = 649;
+_addon.setItemData[30196] = 649;
+
+_addon.itemSetData[671] = {
+    name = "Tempest Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            affectSpell = {2097185, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[31056] = 671;
+_addon.setItemData[31055] = 671;
+_addon.setItemData[31058] = 671;
+_addon.setItemData[31059] = 671;
+_addon.setItemData[31057] = 671;
+_addon.setItemData[34574] = 671;
+_addon.setItemData[34447] = 671;
+_addon.setItemData[34557] = 671;
 
