@@ -70,6 +70,26 @@ _addon.aurasPlayer = {
         affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD + _addon.CREATURE_TYPE_MASK.DEMON,
         value = 5
     },
+    [33377] = { -- Blessing of Auchindoun
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.ALL,
+        value = 5
+    },
+    [32071] = { -- Hellfire Superiority A
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.ALL,
+        value = 5
+    },
+    [32049] = { -- Hellfire Superiority H
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.ALL,
+        value = 5
+    },
+    [33795] = { -- Strength of the Halaani
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.ALL,
+        value = 5
+    }
 };
 
 -- Buffs and debuffs the target can have (NYI)
