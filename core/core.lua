@@ -80,7 +80,6 @@ local function IsDmgShieldEffect(effectType, auraType)
 end
 
 --- Generate effect modifiers (baseMod, bonusMod)
--- TODO: TBC seems to have all effects affect both base and bonus, drop distinction?
 ---@param school number
 ---@param isDmg boolean
 ---@param isHeal boolean
@@ -92,12 +91,12 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
     local bonusMod = 1;
     local baseMod = 1;
 
-    if stats.spellModPctEffect[spellId] ~= nil then
-        bonusMod = bonusMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
-        calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
-    end
-
     if isDmg then
+        if stats.spellModPctEffect[spellId] ~= nil then
+            baseMod = baseMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
+            calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
+        end
+
         if stats.spellModPctDamage[spellId] ~= nil then
             bonusMod = bonusMod * (100 + stats.spellModPctDamage[spellId].val) / 100;
             calcedSpell:AddToBuffList(stats.spellModPctDamage[spellId].buffs);
@@ -110,16 +109,23 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
             bonusMod = bonusMod * (100 + stats.versusModPctDamage[_addon.Target.creatureType].val) / 100;
             calcedSpell:AddToBuffList(stats.versusModPctDamage[_addon.Target.creatureType].buffs);
         end
-
-    elseif isHeal then
-        if stats.spellModPctHealing[spellId] ~= nil then
-            -- This is the very same as schoolModPctDamage, just limited to healing internally in this addon
-            bonusMod = bonusMod * (100 + stats.spellModPctHealing[spellId].val) / 100;
-            calcedSpell:AddToBuffList(stats.spellModPctHealing[spellId].buffs);
+    else
+        -- TODO: Improved PW:S increase bonus as well, Aplify Curse doesn't, any other uses of this for scaling spells to check?
+        if stats.spellModPctEffect[spellId] ~= nil then
+            bonusMod = bonusMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
+            calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
         end
 
-        bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;
-        calcedSpell:AddToBuffList(stats.modhealingDone.buffs);
+        if isHeal then
+            if stats.spellModPctHealing[spellId] ~= nil then
+                -- This is the very same as schoolModPctDamage, just limited to healing internally in this addon
+                bonusMod = bonusMod * (100 + stats.spellModPctHealing[spellId].val) / 100;
+                calcedSpell:AddToBuffList(stats.spellModPctHealing[spellId].buffs);
+            end
+
+            bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;
+            calcedSpell:AddToBuffList(stats.modhealingDone.buffs);
+        end
     end
 
     baseMod = baseMod * bonusMod;
