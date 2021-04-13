@@ -62,7 +62,7 @@ local DEFAULTSETTINGS = {
 	calcEffManaPotionTypeNew = "NONE",
 	calcEffManaRune = false,
 
-	["version"] = 1
+	["version"] = 2
 };
 
 local function defaultGet(info)
@@ -559,6 +559,12 @@ local function CheckUpdates()
 		if oldToNew[sv.abSealValue] then sv.abSealValue = oldToNew[sv.abSealValue] end
 
 		sv.version = 1;
+	end
+
+	if oldSettingsVer < 2 then
+		if sv.abDirectValue == "hitAvg" then sv.abDirectValue = "avg" end
+		if sv.abSealValue == "hitAvg" then sv.abSealValue = "avg" end
+		sv.version = 2;
 	end
 end
 
