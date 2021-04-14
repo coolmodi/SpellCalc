@@ -16,6 +16,8 @@ bit = {
     band = function(arg1, arg2) return 0 end,
 }
 
+LE_ITEM_CLASS_WEAPON = 2;
+
 --- mhBase, mhMod, ohBase, ohMod
 function UnitAttackBothHands(unit)
     return 1, 1, 1, 1;

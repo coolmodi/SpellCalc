@@ -79,7 +79,7 @@ end
 ---@param slotId number
 local function EquipItem(itemId, slotId)
     _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
-    local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, _, subclassID  = GetItemInfo(itemId);
+    local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, classID, subclassID  = GetItemInfo(itemId);
     local setId = _addon.setItemData[itemId];
 
     if itemName == nil then
@@ -92,13 +92,24 @@ local function EquipItem(itemId, slotId)
     end
 
     if slotId >= 16 and slotId <= 18 then
-        _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);
-        if slotId == 16 then
-            weaponSubClass.mainHand = subclassID;
-        elseif slotId == 17 then
-            weaponSubClass.offHand = subclassID;
-        elseif slotId == 18 then
-            weaponSubClass.ranged = subclassID;
+        if classID == LE_ITEM_CLASS_WEAPON then
+            _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);
+            if slotId == 16 then
+                weaponSubClass.mainHand = subclassID;
+            elseif slotId == 17 then
+                weaponSubClass.offHand = subclassID;
+            elseif slotId == 18 then
+                weaponSubClass.ranged = subclassID;
+            end
+        else
+            _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is not a weapon, leaving empty");
+            if slotId == 16 then
+                weaponSubClass.mainHand = nil;
+            elseif slotId == 17 then
+                weaponSubClass.offHand = nil;
+            elseif slotId == 18 then
+                weaponSubClass.ranged = nil;
+            end
         end
     end
 
