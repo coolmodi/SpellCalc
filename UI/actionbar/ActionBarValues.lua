@@ -5,6 +5,7 @@ local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20154);
 local SEAL_OF_COMMAND = GetSpellInfo(20375);
 local SEAL_OF_THE_CRUSADER = GetSpellInfo(20162);
+local PRAYER_OF_MENDING = GetSpellInfo(33076);
 
 local ActionBarValues = {};
 local spellsInBar = {};
@@ -30,16 +31,21 @@ end
 ---@param calcedEffect CalcedEffect
 ---@param spellName string
 local function GetDummyValue(calcedEffect, spellName)
-    local k = SpellCalc_settings.abSealValue;
-
     if spellName == SEAL_OF_RIGHTEOUSNESS or spellName == SEAL_OF_COMMAND then
+        local k = SpellCalc_settings.abSealValue;
         if calcedEffect[k] then
             return calcedEffect[k];
         end
     elseif spellName == SEAL_OF_THE_CRUSADER then
+        local k = SpellCalc_settings.abSealValue;
         if k == "avg" then
             return "";
         end
+        if calcedEffect[k] then
+            return calcedEffect[k];
+        end
+    elseif spellName == PRAYER_OF_MENDING then
+        local k = SpellCalc_settings.abDirectValue;
         if calcedEffect[k] then
             return calcedEffect[k];
         end
