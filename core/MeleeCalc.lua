@@ -332,8 +332,13 @@ end
 function MeleeCalc:GetArmorDR()
     local armor = _addon.Target.resistance[SCHOOL_PHYSICAL];
     local pLevel = UnitLevel("player");
-    local mitigation = math.min(armor / (armor + 400 + pLevel * 85), 0.75);
-    return mitigation, armor;
+    local mitigation;
+    if pLevel < 60 then
+        mitigation = armor / (armor + 400 + pLevel * 85);
+    else
+        mitigation = armor / (armor + 400 + 85 * (pLevel + 4.5 * (pLevel - 59)));
+    end
+    return math.min(mitigation, 0.75), armor;
 end
 
 _addon.MeleeCalc = MeleeCalc;

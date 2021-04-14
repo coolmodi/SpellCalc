@@ -173,24 +173,7 @@ function Target:UpdateResistances()
     end
 
     if self.resistance[SCHOOL.PHYSICAL] == 0 then
-        -- Armor seems to have different progression over various level ranges.
-        -- These are all somewhat correct. Nearly the same as some samples taken with beast lore.
-        -- Not all mobs follow these aremor values. Can't be bothered to collect data manually for every level with my lvl 24 hunter...
-        if self.level == 1 then
-            self.resistance[SCHOOL.PHYSICAL] = 20;
-        elseif self.level < 11 then
-            self.resistance[SCHOOL.PHYSICAL] = 5 * (self.level * self.level) + self.level;
-        elseif self.level < 36 then
-            self.resistance[SCHOOL.PHYSICAL] = 510 + 35 * (self.level - 10);
-        elseif self.level < 46 then
-            local step = self.level - 36;
-            self.resistance[SCHOOL.PHYSICAL] = 1494 + step * (107 + step * 3.5);
-        -- TBC: different formula for >59, everything below should stay the same
-        else
-            -- 3731.3 at 63
-            self.resistance[SCHOOL.PHYSICAL] = 2798 + (self.level - 46) * 54.9;
-        end
-
+        self.resistance[SCHOOL.PHYSICAL] = _addon.levelDefaultArmor[self.level];
         if self.class == "PALADIN" then
             -- This is just a rough value. Always seems to be between 0.80-0.83 of "warrior" armor,
             -- with higher levels closer to 0.8, so this should be close enough.
