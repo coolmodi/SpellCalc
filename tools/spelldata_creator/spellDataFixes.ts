@@ -142,50 +142,6 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
             se[clone.ID] = clone;
             sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
         }
-
-        // if (eff.SpellID == 20473) {
-        //     if (eff.EffectIndex == 0) {
-        //         eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
-        //         eff.EffectBasePoints = 204;
-        //         eff.EffectDieSides = 1;
-        //         eff.EffectBonusCoefficient = 0.4285;
-                
-        //         let clone = cloneEntry(eff);
-        //         clone.EffectIndex = 1;
-        //         clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        //         se[clone.ID] = clone;
-
-        //         sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
-        //     }
-        // } else if (eff.SpellID == 20929) {
-        //     if (eff.EffectIndex == 0) {
-        //         eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
-        //         eff.EffectBasePoints = 279;
-        //         eff.EffectDieSides = 1;
-        //         eff.EffectBonusCoefficient = 0.4285;
-                
-        //         let clone = cloneEntry(eff);
-        //         clone.EffectIndex = 1;
-        //         clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        //         se[clone.ID] = clone;
-
-        //         sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
-        //     }
-        // } else if (eff.SpellID == 20930) {
-        //     if (eff.EffectIndex == 0) {
-        //         eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
-        //         eff.EffectBasePoints = 365;
-        //         eff.EffectDieSides = 1;
-        //         eff.EffectBonusCoefficient = 0.4285;
-                
-        //         let clone = cloneEntry(eff);
-        //         clone.EffectIndex = 1;
-        //         clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        //         se[clone.ID] = clone;
-
-        //         sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
-        //     }
-        // } 
         else {
             // replace SoC judgement dummy spell id, it's inside even another spell
             if (isJudgeDummy(eff) == SealType.SOC) {

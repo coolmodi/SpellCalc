@@ -1123,6 +1123,51 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [27155] = { -- Seal of Righteousness(Rank 9)
+        spellLevel = 66,
+        maxLevel = 72,
+        duration = 30,
+        baseCost = 260,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 2112,
+                perLevel = 53,
+                coef = 0.1,
+            },
+        }
+    },
+    [27158] = { -- Seal of the Crusader(Rank 7)
+        spellLevel = 61,
+        maxLevel = 69,
+        duration = 30,
+        baseCost = 210,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 474,
+                perLevel = 2.6,
+                coef = 0,
+            },
+        }
+    },
+    [27170] = { -- Seal of Command(Rank 6)
+        spellLevel = 70,
+        maxLevel = 78,
+        duration = 30,
+        baseCost = 280,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                weaponCoef = 0.7,
+                min = 0,
+                coef = 0.29,
+            },
+        }
+    },
     [27173] = { -- Consecration(Rank 6)
         spellLevel = 70,
         maxLevel = 79,
@@ -1135,6 +1180,23 @@ _addon.spellRankInfo = {
                 tickPeriod = 1,
                 min = 64,
                 coef = 0.119,
+            },
+        }
+    },
+    [27174] = { -- Holy Shock(Rank 4)
+        spellLevel = 64,
+        maxLevel = 0,
+        baseCost = 575,
+        effects = {
+            [1] = {
+                effectType = 64,
+                min = 27175,
+                coef = 0,
+            },
+            [2] = {
+                effectType = 64,
+                min = 27176,
+                coef = 0,
             },
         }
     },
@@ -1221,6 +1283,23 @@ _addon.spellRankInfo = {
                 coef = 0.193,
                 chains = 3,
                 chainMult = 1,
+            },
+        }
+    },
+    [33072] = { -- Holy Shock(Rank 5)
+        spellLevel = 70,
+        maxLevel = 0,
+        baseCost = 650,
+        effects = {
+            [1] = {
+                effectType = 64,
+                min = 33074,
+                coef = 0,
+            },
+            [2] = {
+                effectType = 64,
+                min = 33073,
+                coef = 0,
             },
         }
     },
