@@ -72,9 +72,19 @@ local function SealOfRighteousness(calcedSpell, effNum, spellBaseInfo, spellRank
     local effectData = spellRankInfo.effects[effNum];
 
     local as = stats.attackSpeed.mainhand;
-    local multiplier = _addon:IsTwoHandEquipped() and 1.2 or 0.85;
-    local dmgbase = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) * multiplier * as/100;
+    local rankBase = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) * 1.2 * 1.03 * as / 100;
+    local weaponBase = 0.03 * (stats.attackDmg.mainhand.max + stats.attackDmg.mainhand.min) / 2;
+    local dmgbase;
 
+    if _addon:IsTwoHandEquipped() then
+        dmgbase = 1.2 * rankBase + weaponBase + 1;
+        calcedEffect.effectiveSpCoef = 0.108 * as * effectMod;
+    else
+        dmgbase = 0.85 * rankBase + weaponBase - 1;
+        calcedEffect.effectiveSpCoef = 0.092 * as * effectMod;
+    end
+
+    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
     calcedEffect.min = (dmgbase + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min
     calcedEffect.avgCombined = calcedEffect.avg;
