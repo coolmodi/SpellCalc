@@ -1,7 +1,7 @@
 {
     "seals": {
         "SOR": {
-            "judgeDummyIndex": 2,
+            "judgeDummyIndex": 1,
             "spells": [
                 21084,
                 20154,
@@ -16,7 +16,7 @@
             ]
         },
         "SOC": {
-            "judgeDummyIndex": 2,
+            "judgeDummyIndex": 1,
             "spells": [
                 20375,
                 20915,
@@ -28,7 +28,7 @@
         }
         ,
         "SOtC": {
-            "judgeDummyIndex": 2,
+            "judgeDummyIndex": 1,
             "spells": [
                 21082,
                 20162,
