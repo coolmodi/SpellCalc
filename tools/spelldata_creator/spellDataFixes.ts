@@ -106,30 +106,31 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
 
 function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
     console.log("Fixing pala coefs and effects");
-    const HL_GENERIC = [1026, 1042, 3472, 10328, 10329, 25292];
-    const FOL_GENERIC = [19750, 19939, 19940, 19941, 19942, 19943];
+    //const HL_GENERIC = [1026, 1042, 3472, 10328, 10329, 25292];
+    //const FOL_GENERIC = [19750, 19939, 19940, 19941, 19942, 19943];
 
     for(let effId in se) {
         let eff = se[effId];
-        // HL
-        if (eff.SpellID == 635) {
-            eff.EffectBonusCoefficient = 0.205;
-            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        } else if (eff.SpellID == 639) {
-            eff.EffectBonusCoefficient = 0.339;
-            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        } else if (eff.SpellID == 647) {
-            eff.EffectBonusCoefficient = 0.554;
-            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        } else if (HL_GENERIC.indexOf(eff.SpellID) > -1) {
-            eff.EffectBonusCoefficient = 2.5/3.5;
-            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        // FOL
-        } else if (FOL_GENERIC.indexOf(eff.SpellID) > -1) {
-            eff.EffectBonusCoefficient = 1.5/3.5;
-            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        // HS
-        } else if (eff.SpellID == 20473) {
+        // // HL
+        // if (eff.SpellID == 635) {
+        //     eff.EffectBonusCoefficient = 0.205;
+        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        // } else if (eff.SpellID == 639) {
+        //     eff.EffectBonusCoefficient = 0.339;
+        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        // } else if (eff.SpellID == 647) {
+        //     eff.EffectBonusCoefficient = 0.554;
+        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        // } else if (HL_GENERIC.indexOf(eff.SpellID) > -1) {
+        //     eff.EffectBonusCoefficient = 2.5/3.5;
+        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        // // FOL
+        // } else if (FOL_GENERIC.indexOf(eff.SpellID) > -1) {
+        //     eff.EffectBonusCoefficient = 1.5/3.5;
+        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        // // HS
+        // } else 
+        if (eff.SpellID == 20473) {
             if (eff.EffectIndex == 0) {
                 eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
                 eff.EffectBasePoints = 204;

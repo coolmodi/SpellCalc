@@ -1,3 +1,4 @@
+---@type AddonEnv
 local _, _addon = ...;
 local _, playerClass = UnitClass("player");
 if playerClass ~= "PALADIN" then
@@ -97,3 +98,9 @@ _addon.aurasPlayer[20055] = { -- Vengeance 5
     affectMask = _addon.SCHOOL_MASK.HOLY,
     value = 15
 };
+
+_addon.aurasPlayer[31884] = { -- Avenging Wrath
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    affectMask = _addon.SCHOOL_MASK.ALL,
+    value = 30
+}

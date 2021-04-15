@@ -73,7 +73,6 @@ _addon.talentData = {
             }
         }
     },
-    -- TODO: Arcane Potency
     { -- Empowered Arcane Missiles
         tree = 1,
         talent = 19,

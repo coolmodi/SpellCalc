@@ -13,9 +13,9 @@ const CLASSES = [
     "priest", 
     "warlock",
     "mage", 
+    "paladin",
 
     // TODO: other classes
-    //"paladin", 
     //"shaman",
 
     //"hunter",
