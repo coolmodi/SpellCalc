@@ -180,7 +180,7 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
         weaponCoef: 0 
     };
 
-    if (effect.EffectChainTargets > 1)
+    if (effect.EffectChainTargets > 1 && effect.EffectChainAmplitude < 1)
     {
         rankInfo.effects[effectNum].chainInfo = {
             chains: effect.EffectChainTargets,
