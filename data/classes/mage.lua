@@ -80,7 +80,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
-                affectSpell = {2097152},
+                affectSpell = {2048},
                 perPoint = 3
             }
         }
@@ -151,17 +151,6 @@ _addon.talentData = {
             }
         }
     },
-    -- { -- Critical Mass TODO: test this and Pyromaniac
-    --     tree = 2,
-    --     talent = 14,
-    --     effects = {
-    --         {
-    --             type = _addon.EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT,
-    --             affectMask = _addon.SCHOOL_MASK.FIRE,
-    --             perPoint = 2
-    --         }
-    --     }
-    -- },
     { -- Fire Power
         tree = 2,
         talent = 17,
@@ -173,7 +162,6 @@ _addon.talentData = {
             }
         }
     },
-    -- TODO: Molten Fury
     { -- Empowered Fireball
         tree = 2,
         talent = 21,
