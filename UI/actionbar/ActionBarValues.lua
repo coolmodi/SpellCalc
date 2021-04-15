@@ -127,6 +127,12 @@ do
             if calcedSpell ~= nil then
                 ---@type CalcedEffect
                 local calcedEffect = calcedSpell[1];
+
+                if (bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0) then
+                    calcedSpell = calcedEffect.spellData;
+                    calcedEffect = calcedSpell[1];
+                end
+
                 local isHeal = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL + SPELL_EFFECT_FLAGS.ABSORB) > 0;
                 local showValue;
 
