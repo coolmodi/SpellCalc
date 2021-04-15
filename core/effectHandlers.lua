@@ -120,6 +120,9 @@ local function SealOfCommand(calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     local as = stats.attackSpeed.mainhand;
     local coef = effectData.weaponCoef;
 
+    calcedEffect.effectiveSpCoef = 0.2;
+    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
+
     calcedEffect.min = (coef * stats.attackDmg.mainhand.min + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.max = (coef * stats.attackDmg.mainhand.max + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
