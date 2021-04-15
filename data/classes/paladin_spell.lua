@@ -1091,6 +1091,8 @@ _addon.spellRankInfo = {
                 min = 270,
                 max = 331,
                 coef = 0.193,
+                chains = 3,
+                chainMult = 1,
             },
         }
     },
@@ -1105,6 +1107,8 @@ _addon.spellRankInfo = {
                 min = 370,
                 max = 453,
                 coef = 0.193,
+                chains = 3,
+                chainMult = 1,
             },
         }
     },
@@ -1119,6 +1123,8 @@ _addon.spellRankInfo = {
                 min = 494,
                 max = 603,
                 coef = 0.193,
+                chains = 3,
+                chainMult = 1,
             },
         }
     },
