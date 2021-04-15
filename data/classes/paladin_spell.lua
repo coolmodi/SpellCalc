@@ -704,14 +704,14 @@ _addon.spellRankInfo = {
         baseCost = 335,
         effects = {
             [1] = {
-                effectType = 2,
-                min = 205,
-                coef = 0.4285,
+                effectType = 64,
+                min = 25914,
+                coef = 0,
             },
             [2] = {
-                effectType = 10,
-                min = 205,
-                coef = 0.4285,
+                effectType = 64,
+                min = 25912,
+                coef = 0,
             },
         }
     },
@@ -826,14 +826,14 @@ _addon.spellRankInfo = {
         baseCost = 410,
         effects = {
             [1] = {
-                effectType = 2,
-                min = 280,
-                coef = 0.4285,
+                effectType = 64,
+                min = 25913,
+                coef = 0,
             },
             [2] = {
-                effectType = 10,
-                min = 280,
-                coef = 0.4285,
+                effectType = 64,
+                min = 25911,
+                coef = 0,
             },
         }
     },
@@ -843,14 +843,14 @@ _addon.spellRankInfo = {
         baseCost = 485,
         effects = {
             [1] = {
-                effectType = 2,
-                min = 366,
-                coef = 0.4285,
+                effectType = 64,
+                min = 25903,
+                coef = 0,
             },
             [2] = {
-                effectType = 10,
-                min = 366,
-                coef = 0.4285,
+                effectType = 64,
+                min = 25902,
+                coef = 0,
             },
         }
     },
@@ -949,6 +949,78 @@ _addon.spellRankInfo = {
                 max = 1771,
                 perLevel = 5.8,
                 coef = 0.714,
+            },
+        }
+    },
+    [25902] = { -- Holy Shock(Rank 3)
+        spellLevel = 56,
+        maxLevel = 63,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 496,
+                max = 537,
+                coef = 0.429,
+            },
+        }
+    },
+    [25903] = { -- Holy Shock(Rank 3)
+        spellLevel = 56,
+        maxLevel = 63,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 628,
+                max = 681,
+                coef = 0.429,
+            },
+        }
+    },
+    [25911] = { -- Holy Shock(Rank 2)
+        spellLevel = 48,
+        maxLevel = 55,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 379,
+                max = 410,
+                coef = 0.429,
+            },
+        }
+    },
+    [25912] = { -- Holy Shock(Rank 1)
+        spellLevel = 40,
+        maxLevel = 47,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 277,
+                max = 300,
+                coef = 0.429,
+            },
+        }
+    },
+    [25913] = { -- Holy Shock(Rank 2)
+        spellLevel = 48,
+        maxLevel = 55,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 480,
+                max = 519,
+                coef = 0.429,
+            },
+        }
+    },
+    [25914] = { -- Holy Shock(Rank 1)
+        spellLevel = 40,
+        maxLevel = 47,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 351,
+                max = 380,
+                coef = 0.429,
             },
         }
     },
@@ -1066,6 +1138,30 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [27175] = { -- Holy Shock(Rank 4)
+        spellLevel = 64,
+        maxLevel = 69,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 777,
+                max = 842,
+                coef = 0.429,
+            },
+        }
+    },
+    [27176] = { -- Holy Shock(Rank 4)
+        spellLevel = 64,
+        maxLevel = 69,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 614,
+                max = 665,
+                coef = 0.429,
+            },
+        }
+    },
     [27180] = { -- Hammer of Wrath(Rank 4)
         spellLevel = 68,
         maxLevel = 73,
@@ -1125,6 +1221,30 @@ _addon.spellRankInfo = {
                 coef = 0.193,
                 chains = 3,
                 chainMult = 1,
+            },
+        }
+    },
+    [33073] = { -- Holy Shock(Rank 5)
+        spellLevel = 70,
+        maxLevel = 77,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 721,
+                max = 780,
+                coef = 0.429,
+            },
+        }
+    },
+    [33074] = { -- Holy Shock(Rank 5)
+        spellLevel = 70,
+        maxLevel = 77,
+        effects = {
+            [1] = {
+                effectType = 10,
+                min = 913,
+                max = 988,
+                coef = 0.429,
             },
         }
     },

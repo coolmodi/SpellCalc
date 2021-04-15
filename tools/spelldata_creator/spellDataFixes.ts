@@ -106,73 +106,87 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
 
 function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
     console.log("Fixing pala coefs and effects");
-    //const HL_GENERIC = [1026, 1042, 3472, 10328, 10329, 25292];
-    //const FOL_GENERIC = [19750, 19939, 19940, 19941, 19942, 19943];
+    const HOLY_SHOCK_TRIGGERS: {[spellId: number]: {dmg: number, heal: number}} = {
+        20473: {
+            dmg: 25912,
+            heal: 25914
+        },
+        20929: {
+            dmg: 25911,
+            heal: 25913
+        },
+        20930: {
+            dmg: 25902,
+            heal: 25903
+        },
+        27174: {
+            dmg: 27176,
+            heal: 27175
+        },
+        33072: {
+            dmg: 33073,
+            heal: 33074
+        }
+    }
 
     for(let effId in se) {
         let eff = se[effId];
-        // // HL
-        // if (eff.SpellID == 635) {
-        //     eff.EffectBonusCoefficient = 0.205;
-        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        // } else if (eff.SpellID == 639) {
-        //     eff.EffectBonusCoefficient = 0.339;
-        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        // } else if (eff.SpellID == 647) {
-        //     eff.EffectBonusCoefficient = 0.554;
-        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        // } else if (HL_GENERIC.indexOf(eff.SpellID) > -1) {
-        //     eff.EffectBonusCoefficient = 2.5/3.5;
-        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        // // FOL
-        // } else if (FOL_GENERIC.indexOf(eff.SpellID) > -1) {
-        //     eff.EffectBonusCoefficient = 1.5/3.5;
-        //     eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-        // // HS
-        // } else 
-        if (eff.SpellID == 20473) {
-            if (eff.EffectIndex == 0) {
-                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
-                eff.EffectBasePoints = 204;
-                eff.EffectDieSides = 1;
-                eff.EffectBonusCoefficient = 0.4285;
-                
-                let clone = cloneEntry(eff);
-                clone.EffectIndex = 1;
-                clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-                se[clone.ID] = clone;
 
-                sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
-            }
-        } else if (eff.SpellID == 20929) {
-            if (eff.EffectIndex == 0) {
-                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
-                eff.EffectBasePoints = 279;
-                eff.EffectDieSides = 1;
-                eff.EffectBonusCoefficient = 0.4285;
-                
-                let clone = cloneEntry(eff);
-                clone.EffectIndex = 1;
-                clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-                se[clone.ID] = clone;
+        if (HOLY_SHOCK_TRIGGERS[eff.SpellID] && eff.EffectIndex === 0)
+        {
+            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
+            eff.EffectTriggerSpell = HOLY_SHOCK_TRIGGERS[eff.SpellID].heal;
+            const clone = cloneEntry(eff);
+            clone.EffectIndex = 1;
+            clone.EffectTriggerSpell = HOLY_SHOCK_TRIGGERS[eff.SpellID].dmg;
+            se[clone.ID] = clone;
+            sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
+        }
 
-                sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
-            }
-        } else if (eff.SpellID == 20930) {
-            if (eff.EffectIndex == 0) {
-                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
-                eff.EffectBasePoints = 365;
-                eff.EffectDieSides = 1;
-                eff.EffectBonusCoefficient = 0.4285;
+        // if (eff.SpellID == 20473) {
+        //     if (eff.EffectIndex == 0) {
+        //         eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
+        //         eff.EffectBasePoints = 204;
+        //         eff.EffectDieSides = 1;
+        //         eff.EffectBonusCoefficient = 0.4285;
                 
-                let clone = cloneEntry(eff);
-                clone.EffectIndex = 1;
-                clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
-                se[clone.ID] = clone;
+        //         let clone = cloneEntry(eff);
+        //         clone.EffectIndex = 1;
+        //         clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        //         se[clone.ID] = clone;
 
-                sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
-            }
-        } else {
+        //         sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
+        //     }
+        // } else if (eff.SpellID == 20929) {
+        //     if (eff.EffectIndex == 0) {
+        //         eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
+        //         eff.EffectBasePoints = 279;
+        //         eff.EffectDieSides = 1;
+        //         eff.EffectBonusCoefficient = 0.4285;
+                
+        //         let clone = cloneEntry(eff);
+        //         clone.EffectIndex = 1;
+        //         clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        //         se[clone.ID] = clone;
+
+        //         sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
+        //     }
+        // } else if (eff.SpellID == 20930) {
+        //     if (eff.EffectIndex == 0) {
+        //         eff.Effect = EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE;
+        //         eff.EffectBasePoints = 365;
+        //         eff.EffectDieSides = 1;
+        //         eff.EffectBonusCoefficient = 0.4285;
+                
+        //         let clone = cloneEntry(eff);
+        //         clone.EffectIndex = 1;
+        //         clone.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+        //         se[clone.ID] = clone;
+
+        //         sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
+        //     }
+        // } 
+        else {
             // replace SoC judgement dummy spell id, it's inside even another spell
             if (isJudgeDummy(eff) == SealType.SOC) {
                 console.log("Replace SoC dummy id for " + eff.SpellID);
