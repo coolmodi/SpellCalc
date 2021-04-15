@@ -548,89 +548,85 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         ---@type CalcedEffect
         local calcedEffect = calcedSpell[i];
 
-        --------------------------
-        -- Trigger spell spell effect
-        -- Update triggered spell data
         if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
+            -- Trigger spell spell effect, update triggered spell data
             _addon:PrintDebug("Is trigger spell effect, updating triggered spell!");
             calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
-            -- TODO: if trigger isn't last effect this will be bad, isn't the case now though, maybe never will
-            break;
-        end
-
-        ---@type SpellRankEffectData
-        local effectData = spellRankInfo.effects[i];
-
-        --------------------------
-        -- Effect specific modifier
-
-        local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
-        local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
-        local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellId, calcedSpell);
-
-        --------------------------
-        -- Effect bonus power scaling
-
-        if isHeal or effectData.forceScaleWithHeal then
-            calcedEffect.spellPower = stats.spellHealing;
-        elseif spellBaseInfo.school == SCHOOL.PHYSICAL then
-            -- TODO: scale with AP
         else
-            calcedEffect.spellPower = stats.spellPower[spellBaseInfo.school];
-        end
+            ---@type SpellRankEffectData
+            local effectData = spellRankInfo.effects[i];
 
-        calcedEffect.spellPower = extraSp + calcedEffect.spellPower;
+            --------------------------
+            -- Effect specific modifier
 
-        -- Effective power
-        local coef = effectData.coef and effectData.coef or 0;
+            local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
+            local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
+            local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellId, calcedSpell);
 
-        if stats.spellModFlatSpellScale[spellId] then
-            coef = coef + stats.spellModFlatSpellScale[spellId].val / 100;
-            calcedSpell:AddToBuffList(stats.spellModFlatSpellScale[spellId].buffs);
-        end
+            --------------------------
+            -- Effect bonus power scaling
 
-        if stats.spellModPctSpellScale[spellId] then
-            coef = coef * (100 + stats.spellModPctSpellScale[spellId].val) / 100;
-            calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
-        end
+            if isHeal or effectData.forceScaleWithHeal then
+                calcedEffect.spellPower = stats.spellHealing;
+            elseif spellBaseInfo.school == SCHOOL.PHYSICAL then
+                -- TODO: scale with AP
+            else
+                calcedEffect.spellPower = stats.spellPower[spellBaseInfo.school];
+            end
 
-        -- TODO: Uncomment once downrank penalty is implemented
-        -- TODO: Spells seem to lack maxLevel very often, fix how?
-        -- local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
-        -- if downrank < 1 then coef = coef * downrank;
+            calcedEffect.spellPower = extraSp + calcedEffect.spellPower;
 
-        calcedEffect.effectiveSpCoef = coef * bonusMod;
-        calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
-        calcedEffect.flatMod = flatMod;
+            -- Effective power
+            local coef = effectData.coef and effectData.coef or 0;
 
-        --------------------------
-        -- Effect values
+            if stats.spellModFlatSpellScale[spellId] then
+                coef = coef + stats.spellModFlatSpellScale[spellId].val / 100;
+                calcedSpell:AddToBuffList(stats.spellModFlatSpellScale[spellId].buffs);
+            end
 
-        if effectHandler[effectData.effectType] == nil then
-            _addon:PrintError("No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
-            _addon:PrintError("Please report this to the addon author.");
-            return;
-        else
-            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, GCD);
-        end
+            if stats.spellModPctSpellScale[spellId] then
+                coef = coef * (100 + stats.spellModPctSpellScale[spellId].val) / 100;
+                calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
+            end
 
-        --------------------------
-        -- Aura stacking (Only Lifebloom, incompatible with dmg spells!)
+            -- TODO: Uncomment once downrank penalty is implemented
+            -- TODO: Spells seem to lack maxLevel very often, fix how?
+            -- local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
+            -- if downrank < 1 then coef = coef * downrank;
 
-        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
-            local stackCount = effectData.auraStacks;
-            local stackData = calcedEffect.auraStack;
-            stackData.stacks = stackCount;
-            stackData.ticks = calcedEffect.ticks - 1;
-            stackData.min = calcedEffect.min * stackCount;
-            stackData.max = calcedEffect.max * stackCount;
-            stackData.avg = calcedEffect.avg * stackCount;
-            stackData.avgCombined = stackData.avg;
-            stackData.avgAfterMitigation = stackData.ticks * stackData.avgCombined;
-            stackData.perSec = stackData.avgAfterMitigation / effCastTime;
-            stackData.perSecDurOrCD = calcedEffect.perSecDurOrCD * stackCount;
-            stackData.perResource = stackData.avgAfterMitigation / calcedSpell.effectiveCost;
-            stackData.doneToOom = calcedSpell.castingData.castsToOom * stackData.avgAfterMitigation;
+            calcedEffect.effectiveSpCoef = coef * bonusMod;
+            calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
+            calcedEffect.flatMod = flatMod;
+
+            --------------------------
+            -- Effect values
+
+            if effectHandler[effectData.effectType] == nil then
+                _addon:PrintError("No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
+                _addon:PrintError("Please report this to the addon author.");
+                return;
+            else
+                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, GCD);
+            end
+
+            --------------------------
+            -- Aura stacking (Only Lifebloom, incompatible with dmg spells!)
+
+            if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
+                local stackCount = effectData.auraStacks;
+                local stackData = calcedEffect.auraStack;
+                stackData.stacks = stackCount;
+                stackData.ticks = calcedEffect.ticks - 1;
+                stackData.min = calcedEffect.min * stackCount;
+                stackData.max = calcedEffect.max * stackCount;
+                stackData.avg = calcedEffect.avg * stackCount;
+                stackData.avgCombined = stackData.avg;
+                stackData.avgAfterMitigation = stackData.ticks * stackData.avgCombined;
+                stackData.perSec = stackData.avgAfterMitigation / effCastTime;
+                stackData.perSecDurOrCD = calcedEffect.perSecDurOrCD * stackCount;
+                stackData.perResource = stackData.avgAfterMitigation / calcedSpell.effectiveCost;
+                stackData.doneToOom = calcedSpell.castingData.castsToOom * stackData.avgAfterMitigation;
+            end
         end
     end
 
