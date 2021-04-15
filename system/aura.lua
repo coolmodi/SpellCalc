@@ -25,14 +25,18 @@ end
 ---@param destTable table @The destination table
 ---@param setMasks number[] @The masks of class spell sets to affect
 local function ApplyOrRemoveSpellSet(apply, name, value, destTable, setMasks)
+    local spellIdsDone = {};
     for k, setMask in ipairs(setMasks) do
         for setBit, spellSet in pairs(_addon.spellClassSet[k]) do
             if bit.band(setBit, setMask) > 0 then
                 for _, spellId in ipairs(spellSet) do
-                    if destTable[spellId] == nil then
-                        destTable[spellId] = {val=0, buffs={}};
+                    if not spellIdsDone[spellId] then
+                        spellIdsDone[spellId] = true;
+                        if destTable[spellId] == nil then
+                            destTable[spellId] = {val=0, buffs={}};
+                        end
+                        ApplyOrRemove(apply, value, destTable[spellId], name);
                     end
-                    ApplyOrRemove(apply, value, destTable[spellId], name);
                 end
             end
         end
