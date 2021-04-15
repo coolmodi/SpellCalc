@@ -62,7 +62,7 @@ local function SoC(calcedSpell, effectNum)
 
     if SpellCalc_settings.ttHitChance then
         if SpellCalc_settings.ttHitDetail then
-            SCT:SingleLine(L.HIT_CHANCE, ("%.1f%% (%.1f%% + %d%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
+            SCT:SingleLine(L.HIT_CHANCE, ("%.1f%% (%.1f%% + %.1f%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
         else
             SCT:SingleLine(L.HIT_CHANCE, ("%.1f%%"):format(calcedSpell.hitChance));
         end

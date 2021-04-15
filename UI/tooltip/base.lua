@@ -11,7 +11,7 @@ local function AppendMitigation(calcedSpell)
     if SpellCalc_settings.ttHitChance then
         local outstr = ("%.1f%%"):format(calcedSpell.hitChance);
         if SpellCalc_settings.ttHitDetail then
-            outstr = outstr..(" (%d%% + %d%%)"):format(calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus)
+            outstr = outstr..(" (%d%% + %.1f%%)"):format(calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus)
             if calcedSpell.hitChanceBinaryLoss and calcedSpell.hitChanceBinaryLoss > 0 then
                 outstr = outstr .. (" (-%.1f%% %s)"):format(calcedSpell.hitChanceBinaryLoss, L.TT_BINARYMISS);
             end
