@@ -4,7 +4,9 @@ import { SpellEffect } from "./SpellData";
 export enum SealType {
     SOR = "SOR", 
     SOC = "SOC",
-    SOtC = "SOtC"
+    SOtC = "SOtC",
+    SoB = "SoB",
+    SoV = "SoV"
 }
 
 interface SealInfo {
@@ -34,6 +36,12 @@ export function isSeal(id: number, specific?: SealType) {
     }
     if ((!specific || specific == SealType.SOtC) && SEALDATA.seals.SOtC.spells.indexOf(id) != -1) {
         return SealType.SOtC;
+    }
+    if ((!specific || specific == SealType.SoB) && SEALDATA.seals.SoB.spells.indexOf(id) != -1) {
+        return SealType.SoB;
+    }
+    if ((!specific || specific == SealType.SoV) && SEALDATA.seals.SoV.spells.indexOf(id) != -1) {
+        return SealType.SoV;
     }
     return false;
 }

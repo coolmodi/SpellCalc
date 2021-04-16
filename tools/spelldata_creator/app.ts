@@ -62,6 +62,16 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
         }
     
         if (sealType == SealType.SOtC) return;
+
+        if (sealType == SealType.SoB) {
+            ei.weaponCoef = 0.35;
+            return;
+        }
+
+        if (sealType == SealType.SoV) {
+            ei.min = 30;
+            return;
+        }
     }
 
     // Prayer of Mending

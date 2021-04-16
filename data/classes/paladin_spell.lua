@@ -79,6 +79,27 @@ _addon.spellBaseInfo = {
         GCD = 1,
         defType = 3,
     },
+    [GetSpellInfo(31892)] = { -- Seal of Blood
+        school = 2,
+        defType = 2,
+    },
+    [GetSpellInfo(31898)] = { -- Judgement of Blood
+        school = 2,
+        defType = 2,
+        cantDogeParryBlock = true,
+    },
+    [GetSpellInfo(31801)] = { -- Seal of Vengeance
+        school = 2,
+        defType = 2,
+    },
+    [GetSpellInfo(31804)] = { -- Judgement of Vengeance
+        school = 2,
+        defType = 1,
+    },
+    [GetSpellInfo(348700)] = { -- Seal of the Martyr
+        school = 2,
+        defType = 2,
+    },
 };
 
 _addon.spellRankInfo = {
@@ -1441,6 +1462,59 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [31801] = { -- Seal of Vengeance(Rank 1)
+        spellLevel = 64,
+        maxLevel = 0,
+        duration = 30,
+        baseCost = 250,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 30,
+                coef = 0,
+            },
+        }
+    },
+    [31804] = { -- Judgement of Vengeance(Rank 1)
+        spellLevel = 64,
+        maxLevel = 99,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 120,
+                coef = 0.429,
+            },
+        }
+    },
+    [31892] = { -- Seal of Blood(Rank 1)
+        spellLevel = 64,
+        maxLevel = 0,
+        duration = 30,
+        baseCost = 210,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                weaponCoef = 0.35,
+                min = 40,
+                coef = 0,
+            },
+        }
+    },
+    [31898] = { -- Judgement of Blood(Rank 1)
+        spellLevel = 64,
+        maxLevel = 99,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 295,
+                max = 326,
+                perLevel = 6.1,
+                coef = 0.429,
+            },
+        }
+    },
     [31935] = { -- Avenger's Shield(Rank 1)
         spellLevel = 50,
         maxLevel = 59,
@@ -1524,6 +1598,35 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [348700] = { -- Seal of the Martyr(Rank 1)
+        spellLevel = 70,
+        maxLevel = 0,
+        duration = 30,
+        baseCost = 210,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                weaponCoef = 0.35,
+                min = 40,
+                coef = 0,
+            },
+        }
+    },
+    [348704] = { -- Seal of Vengeance(Rank 1)
+        spellLevel = 70,
+        maxLevel = 0,
+        duration = 30,
+        baseCost = 250,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                min = 30,
+                coef = 0,
+            },
+        }
+    },
 };
 
 _addon.aurasPlayer[21084] = { -- Seal of Righteousness(Rank 1)
@@ -1599,6 +1702,26 @@ _addon.aurasPlayer[27155] = { -- Seal of Righteousness(Rank 9)
 _addon.aurasPlayer[27170] = { -- Seal of Command(Rank 6)
     type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
     value = 27171
+};
+
+_addon.aurasPlayer[31892] = { -- Seal of Blood(Rank 1)
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 31898
+};
+
+_addon.aurasPlayer[31801] = { -- Seal of Vengeance(Rank 1)
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 31804
+};
+
+_addon.aurasPlayer[348700] = { -- Seal of the Martyr(Rank 1)
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 31898
+};
+
+_addon.aurasPlayer[348704] = { -- Seal of Vengeance(Rank 1)
+    type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+    value = 31804
 };
 
 _addon.spellClassSet = {

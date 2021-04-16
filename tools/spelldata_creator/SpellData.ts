@@ -177,7 +177,6 @@ export class SpellData {
     constructor() {
         console.log("Creating SpellData");
         
-        this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
         this.spellNames = readDBCSV<SpellName>("data/dbc/spellname.csv", "ID");
         this.spell = readDBCSV<Spell>("data/dbc/spell.csv", "ID");
         this.spellDuration = readDBCSV<SpellDuration>("data/dbc/spellduration.csv", "ID");
@@ -194,10 +193,12 @@ export class SpellData {
             this.spellEffects = cacheData.se;
             this.spellCategories = cacheData.sc;
             this.spellMiscs = cacheData.sm;
+            this.spellLevels = cacheData.sl;
         } catch (error) {
             this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
             this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
             this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+            this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
 
             // make sure direct dmg is always the 1st effect on spells that also have a duration effect
             for (let eff1 in this.spellEffects) {
@@ -217,12 +218,13 @@ export class SpellData {
                 }
             }
 
-            fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs);
+            fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs, this.spellLevels);
 
             fs.writeFileSync("cache/spellDataCache.json", JSON.stringify({
                 se: this.spellEffects,
                 sc: this.spellCategories,
-                sm: this.spellMiscs
+                sm: this.spellMiscs,
+                sl: this.spellLevels
             }, null, 4));
         }
 

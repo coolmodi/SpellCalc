@@ -1,4 +1,4 @@
-import { SpellEffect, SpellCategory, SpellMisc } from "./SpellData";
+import { SpellEffect, SpellCategory, SpellMisc, SpellLevel } from "./SpellData";
 import { isJudgeDummy, SealType, isSeal } from "./paladinCrap";
 
 // This isn't used anywhere, just put something there just in case
@@ -104,7 +104,7 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
     }
 }
 
-function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
+function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}) {
     console.log("Fixing pala coefs and effects");
     const HOLY_SHOCK_TRIGGERS: {[spellId: number]: {dmg: number, heal: number}} = {
         20473: {
@@ -193,8 +193,17 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 eff.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY;
                 sm[eff.SpellID].SchoolMask = SCHOOL_MASK.PHYSICAL;
             }
+
+            // Fix SoM having bad judgement ID
+            if (eff.SpellID === 348700 && eff.EffectIndex === 1) {
+                eff.EffectBasePoints = 31897;
+            }
         }
     }
+
+    // Give JoB and JoV a max level
+    sl[31898].MaxLevel = 99;
+    sl[31804].MaxLevel = 99;
 }
 
 function mageFix(se: {[index: number]: SpellEffect}) {
@@ -271,8 +280,8 @@ function shamanFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}) {
-    paladinFix(se, sc, sm);
+export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}) {
+    paladinFix(se, sc, sm, sl);
     priestFix(se, sm);
     mageFix(se);
     druidFixes(se);

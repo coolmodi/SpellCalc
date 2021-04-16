@@ -132,8 +132,7 @@ export class ClassSpellLists
                         {
                             const jspell = this.spellData.getSpellEffects(effect.EffectBasePoints + 1);
                             if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-                            if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, []);
-                            list.get(jspell[0].SpellID)!.push(jspell[0]);
+                            if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, [jspell[0]]);
                             this.judgementRemap.set(effect.SpellID, jspell[0].SpellID)
                             // don't use this effect
                             continue;

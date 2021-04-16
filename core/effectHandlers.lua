@@ -201,10 +201,82 @@ local function PoM_ES(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCast
     calcedEffect.thpsData = nil;
 end
 
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellBaseInfo SpellBaseInfo
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function SealOfBloodMartyr(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    ---@type SpellRankEffectData
+    local effectData = spellRankInfo.effects[effNum];
+
+    local as = stats.attackSpeed.mainhand;
+    local coef = effectData.weaponCoef;
+
+    calcedEffect.min = (coef * stats.attackDmg.mainhand.min + calcedEffect.flatMod) * effectMod;
+    calcedEffect.max = (coef * stats.attackDmg.mainhand.max + calcedEffect.flatMod) * effectMod;
+    calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
+
+    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
+
+    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+
+    local mmit = calcedSpell.meleeMitigation;
+    local duration = spellRankInfo.duration;
+    local triggers = duration / as;
+    local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
+    local triggerHits = triggers * effectiveHitChance;
+
+    local avgAfterResist = calcedEffect.avgCombined * (1 - calcedSpell.avgResist);
+    local avgTriggerHits = triggerHits * avgAfterResist * effectiveHitChance; -- SOC hits can again be melee mitigated like a special attack
+
+    calcedEffect.avgAfterMitigation = avgTriggerHits;
+    calcedEffect.ticks = triggerHits;
+    calcedEffect.perSec = avgTriggerHits / duration;
+    calcedEffect.perResource = avgTriggerHits / calcedSpell.effectiveCost;
+end
+
+-- TODO: test this
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellBaseInfo SpellBaseInfo
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function SealOfVengeance(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    ---@type SpellRankEffectData
+    local effectData = spellRankInfo.effects[effNum];
+
+    calcedEffect.effectiveSpCoef = 0.034 * effectMod; -- Per application
+    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
+
+    calcedEffect.min = effectData.min * effectMod + calcedEffect.effectivePower;
+    calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
+    calcedEffect.avgCombined = calcedEffect.avg;
+    calcedEffect.ticks = 5;
+
+    local total = calcedEffect.avgCombined * calcedEffect.ticks;
+    calcedEffect.avgAfterMitigation = total;
+
+    calcedEffect.perSec = total / 15;
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(20162)] = SealOfTheCrusader;
 dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
+dummyAuraHandlers[GetSpellInfo(31892)] = SealOfBloodMartyr; -- Seal of Blood
+dummyAuraHandlers[GetSpellInfo(348700)] = SealOfBloodMartyr; -- Seal of the Martyr
+dummyAuraHandlers[GetSpellInfo(31801)] = SealOfVengeance;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler

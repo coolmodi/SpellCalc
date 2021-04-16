@@ -38,6 +38,20 @@
                 20308,
                 27158
             ]
+        },
+        "SoB": {
+            "judgeDummyIndex": 1,
+            "spells": [
+                31892,
+                348700
+            ]
+        },
+        "SoV": {
+            "judgeDummyIndex": 1,
+            "spells": [
+                31801,
+                348704
+            ]
         }
     }
 }
