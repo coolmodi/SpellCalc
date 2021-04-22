@@ -89,6 +89,11 @@ _addon.aurasPlayer = {
         type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.SCHOOL_MASK.ALL,
         value = 5
+    },
+    [20218] = { -- Sanctity Aura
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.HOLY,
+        value = 10
     }
 };
 
