@@ -303,7 +303,7 @@ local oldApiHitBonusSpell = 0;
 function _addon:CombatRatingUpdate()
     self:PrintDebug("Combat rating update");
     local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) + GetHitModifier();
-    local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) + GetSpellHitModifier();
+    local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
     local changed = false;
 
     if meleeHitBonus ~= oldApiHitBonus then
