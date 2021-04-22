@@ -179,6 +179,15 @@ local function SoV(calcedSpell, effectNum)
     if SpellCalc_settings.ttPerSecond then
         SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
     end
+
+    SCT:HeaderLine(L.SUSTAINED_X_STACKS:format(5));
+    local stackDmg = (calcedEffect.min - calcedEffect.effectivePower) * 5 + calcedEffect.effectivePower;
+    if SpellCalc_settings.ttHit then
+        SCT:SingleLine(L.DAMAGE, ("%dx %.1f (%d)"):format(calcedEffect.ticks, stackDmg, SCT:Round(stackDmg * calcedEffect.ticks)));
+    end
+    if SpellCalc_settings.ttPerSecond then
+        SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(stackDmg * calcedEffect.ticks / 15));
+    end
 end
 
 SCT:AddDummyHandler(GetSpellInfo(20375), SoC);

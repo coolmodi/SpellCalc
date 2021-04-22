@@ -257,7 +257,7 @@ local function SealOfVengeance(calcedSpell, effNum, spellBaseInfo, spellRankInfo
     calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
 
     calcedEffect.min = effectData.min * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
+    calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
     calcedEffect.ticks = 5;
 
