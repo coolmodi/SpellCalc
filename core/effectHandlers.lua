@@ -191,9 +191,6 @@ local function PoM_ES(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCast
     -- Multiply by charge count
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
-    ---@type SpellRankEffectData
-    local effectData = spellRankInfo.effects[effNum];
-    calcedEffect.charges = effectData.charges;
     calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedEffect.charges;
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
@@ -380,7 +377,6 @@ local function DamageShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
     local effectData = spellRankInfo.effects[effNum];
 
     calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.charges = effectData.charges;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
@@ -544,6 +540,7 @@ auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_DAMAGE] = PeriodicDamage;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_LEECH] = PeriodicDamage;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_HEAL] = PeriodicHeal;
 auraHandler[AURA_TYPES.SPELL_AURA_DAMAGE_SHIELD] = DamageShield;
+auraHandler[AURA_TYPES.SPELL_AURA_PROC_TRIGGER_DAMAGE] = DamageShield;
 auraHandler[AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL] = DamageShield;
 auraHandler[AURA_TYPES.SPELL_AURA_MANA_SHIELD] = ManaShield;
 auraHandler[AURA_TYPES.SPELL_AURA_SCHOOL_ABSORB] = AbsorbAura;

@@ -76,6 +76,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE] = stats.spellModFlatSpellScale,
     [EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE] = stats.spellModPctSpellScale,
     [EFFECT_TYPE.SPELLMOD_CLEARCAST_CHANCE] = stats.spellModClearCastChance,
+    [EFFECT_TYPE.SPELLMOD_CHARGES] = stats.spellModCharges,
 }
 
 local effectSimpleStat = {

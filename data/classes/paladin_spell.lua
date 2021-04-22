@@ -69,6 +69,10 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 1,
     },
+    [GetSpellInfo(20927)] = { -- Holy Shield
+        school = 2,
+        defType = 1,
+    },
     [GetSpellInfo(23590)] = { -- Judgement
         school = 2,
         defType = 0,
@@ -966,6 +970,51 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20925] = { -- Holy Shield(Rank 1)
+        spellLevel = 40,
+        maxLevel = 49,
+        duration = 10,
+        baseCost = 135,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 43,
+                charges = 4,
+                min = 59,
+                coef = 0.05,
+            },
+        }
+    },
+    [20927] = { -- Holy Shield(Rank 2)
+        spellLevel = 50,
+        maxLevel = 59,
+        duration = 10,
+        baseCost = 175,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 43,
+                charges = 4,
+                min = 86,
+                coef = 0.05,
+            },
+        }
+    },
+    [20928] = { -- Holy Shield(Rank 3)
+        spellLevel = 60,
+        maxLevel = 69,
+        duration = 10,
+        baseCost = 215,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 43,
+                charges = 4,
+                min = 117,
+                coef = 0.05,
+            },
+        }
+    },
     [20929] = { -- Holy Shock(Rank 2)
         spellLevel = 48,
         maxLevel = 0,
@@ -1445,6 +1494,21 @@ _addon.spellRankInfo = {
                 min = 614,
                 max = 665,
                 coef = 0.429,
+            },
+        }
+    },
+    [27179] = { -- Holy Shield(Rank 4)
+        spellLevel = 70,
+        maxLevel = 79,
+        duration = 10,
+        baseCost = 280,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 43,
+                charges = 4,
+                min = 155,
+                coef = 0.05,
             },
         }
     },

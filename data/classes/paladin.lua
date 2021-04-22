@@ -96,6 +96,11 @@ _addon.talentData = {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
                 affectSpell = {0, 64},
                 perPoint = 10
+            },
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_CHARGES,
+                affectSpell = {0, 64},
+                perPoint = 2
             }
         }
     },

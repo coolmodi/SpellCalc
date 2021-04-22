@@ -79,7 +79,6 @@
   "Plate Mail": 750,
   "Seal of Light (2)": 20347,
   "Seal of Command (3)": 20918,
-  "Blessing of Sanctuary (2)": 20912,
   "Blessing of Might (5)": 19837,
   "Cleanse": 4987,
   "Flash of Light (4)": 19941,
@@ -107,7 +106,6 @@
   "Divine Shield (2)": 1020,
   "Seal of Command (4)": 20919,
   "Seal of Righteousness (7)": 20292,
-  "Blessing of Sanctuary (3)": 20913,
   "Blessing of Light (2)": 19978,
   "Blessing of Might (6)": 19838,
   "Greater Blessing of Might (1)": 25782,
@@ -132,8 +130,6 @@
   "Hammer of Wrath (3)": 24239,
   "Devotion Aura (7)": 10293,
   "Fire Resistance Aura (3)": 19900,
-  "Blessing of Sanctuary (4)": 20914,
-  "Greater Blessing of Sanctuary (1)": 25899,
   "Greater Blessing of Kings": 25898,
   "Exorcism (6)": 10314,
   "Holy Wrath (2)": 10318,
@@ -179,5 +175,8 @@
   "Holy Shock (4) dmg": 27176,
   "Holy Shock (4) heal": 27175,
   "Holy Shock (5) dmg": 33073,
-  "Holy Shock (5) heal": 33074
+  "Holy Shock (5) heal": 33074,
+  "Holy Shield (1)": 20925,
+  "Holy Shield (4)": 27179
+  
 }

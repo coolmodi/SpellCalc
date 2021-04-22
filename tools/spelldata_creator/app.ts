@@ -162,6 +162,9 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         case AURA_TYPE.SPELL_AURA_DUMMY:
             handleDummyAura(effect, rankInfo.effects[effectNum], baseInfo);
             break;
+        case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE:
+            rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
+            break;
         default:
             if (effectNum == 1 && effect.EffectMechanic != 0) {
                 if (baseInfo.school != 1) {

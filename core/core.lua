@@ -72,7 +72,8 @@ end
 local function IsDmgShieldEffect(effectType, auraType)
     if effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA then
         if auraType == AURA_TYPES.SPELL_AURA_DAMAGE_SHIELD 
-        or auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL then
+        or auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL
+        or auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_DAMAGE then
             return true;
         end
     end
@@ -597,6 +598,17 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             calcedEffect.effectiveSpCoef = coef * bonusMod;
             calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
             calcedEffect.flatMod = flatMod;
+
+            --------------------------
+            -- Charges
+
+            if effectData.charges then
+                calcedEffect.charges = effectData.charges;
+                if stats.spellModCharges[spellId] then
+                    calcedEffect.charges = calcedEffect.charges + stats.spellModCharges[spellId].val;
+                    calcedSpell:AddToBuffList(stats.spellModCharges[spellId].buffs);
+                end
+            end
 
             --------------------------
             -- Effect values

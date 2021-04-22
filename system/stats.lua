@@ -149,6 +149,7 @@ _addon.stats = {
     spellModFlatSpellScale = SpellStatTable(),
     spellModPctSpellScale = SpellStatTable(),
     spellModClearCastChance = SpellStatTable(),
+    spellModCharges = SpellStatTable(),
 
     weaponModFlatHitChance = WeaponStatTable(),
 
