@@ -43,6 +43,7 @@ local DEFAULTSETTINGS = {
 	["abDirectValue"] = "avg",
 	["abDurationValue"] = "allTicks",
 	["abSealValue"] = "avg",
+	abDmgShieldValue = "avgCombined",
 	["abPosition"] = 25,
 	["abSize"] = 12,
 	["abFont"] = "Friz Quadrata TT",
@@ -403,8 +404,18 @@ local SETTINGS_TABLE = {
 								perSec = L.DMG_PER_SEC_SHORT
 							}
 						},
-						desc = {
+						abDmgShieldValue = {
 							order = 4,
+							type = "select",
+							name = L.SETTINGS_AB_DURATION_VALUE, -- TODO: strings
+							values = {
+								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
+								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
+								casts = L.SETTINGS_CALC_TOOM_HEAD
+							}
+						},
+						desc = {
+							order = 5,
 							type = "description",
 							name = L.SETTINGS_AB_VAL_INFO
 						},
