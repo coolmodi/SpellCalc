@@ -7,6 +7,10 @@ local SEAL_OF_COMMAND = GetSpellInfo(20375);
 local SEAL_OF_THE_CRUSADER = GetSpellInfo(20162);
 local PRAYER_OF_MENDING = GetSpellInfo(33076);
 
+local SEAL_OF_BLOOD = GetSpellInfo(31892);
+local SEAL_OF_THE_MARTYR = GetSpellInfo(348700);
+local SEAL_OF_VENGEANCE = GetSpellInfo(31801);
+
 local ActionBarValues = {};
 local spellsInBar = {};
 local needsUpdate = {};
@@ -31,7 +35,9 @@ end
 ---@param calcedEffect CalcedEffect
 ---@param spellName string
 local function GetDummyValue(calcedEffect, spellName)
-    if spellName == SEAL_OF_RIGHTEOUSNESS or spellName == SEAL_OF_COMMAND then
+    if spellName == SEAL_OF_RIGHTEOUSNESS
+    or spellName == SEAL_OF_COMMAND
+    or spellName == SEAL_OF_BLOOD or spellName == SEAL_OF_THE_MARTYR then
         local k = SpellCalc_settings.abSealValue;
         if calcedEffect[k] then
             return calcedEffect[k];
@@ -49,9 +55,11 @@ local function GetDummyValue(calcedEffect, spellName)
         if calcedEffect[k] then
             return calcedEffect[k];
         end
+    elseif spellName == SEAL_OF_VENGEANCE then
+        return "";
     end
 
-    return "ERR!";
+    return "DMY!";
 end
 
 --- Get value to show for a direct or duration effect.
@@ -138,7 +146,7 @@ do
 
                 if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
                     local spellName = GetSpellInfo(spellId);
-                    showValue = GetDummyValue(calcedEffect, spellName);
+                    showValue = GetDummyValue(calcedEffect, spellName, calcedSpell);
                 elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDmgShieldValue);
                 elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
