@@ -25,26 +25,29 @@ local function SchoolStatTable()
     return schoolTable;
 end
 
-local function WeaponStatTable()
+---Create stat tables for weapon specific stats.
+---@param subTableFunc function @The function that creates the per weapon type stat table
+---@return table
+local function WeaponStatTable(subTableFunc)
     -- Keys are weapon types found in _addon.WEAPON_SUBCLASS
     local weaponTable = {
-        [_addon.WEAPON_SUBCLASS.AXE_1H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.AXE_2H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.BOW] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.GUN] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.MACE_1H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.MACE_2H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.POLEARM] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.SWORD_1H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.SWORD_2H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.STAFF] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.FIST] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.MISC] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.DAGGER] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.THROWN] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.CROSSBOW] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.WAND] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.FISHING_POLE] = UniformStat()
+        [_addon.WEAPON_SUBCLASS.AXE_1H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.AXE_2H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.BOW] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.GUN] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.MACE_1H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.MACE_2H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.POLEARM] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.SWORD_1H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.SWORD_2H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.STAFF] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.FIST] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.MISC] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.DAGGER] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.THROWN] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.CROSSBOW] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.WAND] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.FISHING_POLE] = subTableFunc()
     }
     return weaponTable;
 end
@@ -151,7 +154,8 @@ _addon.stats = {
     spellModClearCastChance = SpellStatTable(),
     spellModCharges = SpellStatTable(),
 
-    weaponModFlatHitChance = WeaponStatTable(),
+    ---@type table<number, table<number, UniformStat>>
+    weaponModSchoolPctDamage = WeaponStatTable(SchoolStatTable),
 
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),
@@ -303,7 +307,7 @@ local oldApiHitBonusSpell = 0;
 --- Combat ratings updated (seems to be hit modifier in classic)
 function _addon:CombatRatingUpdate()
     self:PrintDebug("Combat rating update");
-    local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) + GetHitModifier();
+    local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) -- + GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
     local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
     local changed = false;
 

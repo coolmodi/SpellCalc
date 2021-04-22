@@ -71,21 +71,27 @@ _addon.talentData = {
         talent = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.WEAPONMOD_FLAT_HIT_CHANCE,
-                affectMask = _addon.WEAPON_TYPES_MASK.MELEE,
+                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                neededWeaponMask = _addon.WEAPON_TYPES_MASK.MELEE,
                 perPoint = 1
             },
             {
                 type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                neededWeaponMask = _addon.WEAPON_TYPES_MASK.MELEE,
                 perPoint = 1
             }
         }
     },
-    { -- One-Handed Weapon Specialization
+    { -- One-Handed Weapon Specialization (only affect magic, physical modifier appears in the API for attack damage)
         tree = 2,
         talent = 17,
         effects = {
-            -- TODO
+            {
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_1H + _addon.WEAPON_TYPES_MASK.MACE_1H + _addon.WEAPON_TYPES_MASK.SWORD_1H,
+                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+                perPoint = 1
+            }
         }
     },
     { -- Improved Holy Shield

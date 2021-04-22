@@ -89,6 +89,7 @@ local effectSimpleStat = {
     [EFFECT_TYPE.EARTHFURY_RETURN]      = stats.earthfuryReturn,
     [EFFECT_TYPE.DRUID_NATURES_GRACE]   = stats.druidNaturesGrace,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL] = stats.hitBonusSpell,
+    [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE] = stats.hitBonus,
 }
 
 local effectAffectMask = {
@@ -98,7 +99,6 @@ local effectAffectMask = {
     [EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE] = stats.versusModPctDamage,
     [EFFECT_TYPE.VERSUSMOD_PCT_CRIT_DAMAGE] = stats.versusModPctCritDamage,
     [EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER] = stats.versusModFlatSpellpower,
-    [EFFECT_TYPE.WEAPONMOD_FLAT_HIT_CHANCE] = stats.weaponModFlatHitChance,
 }
 
 local DelayedUpdateTimer = CreateFrame("Frame");
@@ -203,6 +203,91 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
     _addon:PrintError("Aura "..name.." uses unknown effect "..effectBase.type.." or invalid effect setup! Report this please.");
 end
 
+---@type table<string, WeaponRestrictedAuraInfo>
+local weaponRestrictedAuras = {};
+
+---Update auras that require weapon types equipped to be active.
+function _addon:UpdateWeaponRestrictedAuras()
+    self:PrintDebug("Updating weapon type auras");
+    local changes = false;
+    for _, wrai in pairs(weaponRestrictedAuras) do
+        if wrai.state == 1 then
+            wrai.state = -1;
+        end
+    end
+
+    for k, wrai in pairs(weaponRestrictedAuras) do
+        if not wrai.remove and _addon:IsWeaponTypeMaskEquipped(wrai.effectBase.neededWeaponMask, "mainHand") then
+            if wrai.state == 0 then
+                AuraEffectUpdate(true, k, wrai.effectBase, wrai.value);
+                changes = true;
+            end
+            wrai.state = 1;
+        end
+    end
+
+    for k, wrai in pairs(weaponRestrictedAuras) do
+        if wrai.state == -1 then
+            AuraEffectUpdate(false, k, wrai.effectBase, wrai.value);
+            wrai.state = 0;
+            changes = true;
+        end
+    end
+
+    if changes then
+        self:TriggerUpdate();
+    end
+end
+
+--- Apply or remove an aura effect requiring a weapon type equipped.
+---@param apply boolean @True to apply, false to remove
+---@param name string @The name of the buff
+---@param effectBase AuraEffectBase
+---@param value number @The effect value
+local function WeaponAuraUpdate(apply, name, effectBase, value)
+    -- Only activate aura if weapon condition is met
+    if effectBase.type == EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE
+    or effectBase.type == EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL then
+        if apply then
+            _addon:PrintDebug("Adding weapon aura "..name);
+            if weaponRestrictedAuras[name] == nil then
+                ---@class WeaponRestrictedAuraInfo
+                weaponRestrictedAuras[name] = {
+                    effectBase = effectBase,
+                    value = value,
+                    state = 0,
+                    remove = false
+                }
+            end
+            _addon:UpdateWeaponRestrictedAuras();
+        else
+            _addon:PrintDebug("Removing weapon aura "..name);
+            weaponRestrictedAuras[name].remove = true;
+            _addon:UpdateWeaponRestrictedAuras();
+            weaponRestrictedAuras[name] = nil;
+        end
+        return;
+    end
+
+    if apply == false then
+        value = -value;
+    end
+
+    -- Apply aura to weapon spells when using the correct weapon type
+    if effectBase.type == EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE then
+        local destTable = stats.weaponModSchoolPctDamage;
+        local mask = effectBase.neededWeaponMask;
+        for bitPos in pairs(destTable) do
+            if bit.band(mask, bit.lshift(1, bitPos)) > 0 then
+                ApplyOrRemoveByMask(apply, name, value, destTable[bitPos], effectBase.affectMask);
+            end
+        end
+        return;
+    end
+
+    error("Aura effect " .. name .. " with type " .. effectBase.type .. " with weapon restriction isn't handled!");
+end
+
 ---Get current aura condition mask.
 ---@return integer
 function _addon:GetAuraConditions()
@@ -214,6 +299,10 @@ end
 ---@param effectBase AuraEffectBase
 ---@param value number @The effect value
 function _addon:ApplyAuraEffect(name, effectBase, value)
+    if effectBase.neededWeaponMask then
+        WeaponAuraUpdate(true, name, effectBase, value);
+        return;
+    end
     AuraEffectUpdate(true, name, effectBase, value);
 end
 
@@ -222,5 +311,9 @@ end
 ---@param effectBase AuraEffectBase
 ---@param value number @The effect value
 function _addon:RemoveAuraEffect(name, effectBase, value)
+    if effectBase.neededWeaponMask then
+        WeaponAuraUpdate(false, name, effectBase, value);
+        return;
+    end
     AuraEffectUpdate(false, name, effectBase, value);
 end

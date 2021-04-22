@@ -324,7 +324,6 @@ AddSchoolTableUniform(stats.schoolModSpellPen, "Spell pen", "");
 
 AddUniformStatTable(stats.hitBonusSpell, "Spell +hit", "%");
 AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
-AddWeaponTableUniform(stats.weaponModFlatHitChance, nil, "%");
 AddSpellTable(stats.spellModFlatHitChance, nil, "%");
 
 AddSpellTable(stats.spellModPctHealing, "Spell Pct Healing", "%");

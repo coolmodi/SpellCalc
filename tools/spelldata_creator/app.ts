@@ -384,7 +384,7 @@ function buildSpellInfo(pclass: string) {
                 gcd: spellcd.StartRecoveryTime / 1000,
                 defenseType: spellcat.DefenseType,
                 cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
-                usedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
+                equippedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
                 noCrit: (spellMisc["Attributes[2]"] & 0x20000000) === 0x20000000,
                 forceHeal: false
             };
@@ -457,7 +457,7 @@ end
         if (bi.gcd != 1.5) str += `\t\tGCD = ${bi.gcd},\n`;
         str += `\t\tdefType = ${bi.defenseType},\n`;
         if (bi.cantDogeParryBlock) str += `\t\tcantDogeParryBlock = true,\n`;
-        if (bi.usedWeaponMask != 0) str += `\t\tusedWeaponMask = ${bi.usedWeaponMask},\n`;
+        if (bi.equippedWeaponMask != 0) str += `\t\tequippedWeaponMask = ${bi.equippedWeaponMask},\n`;
         if (bi.noCrit) str += `\t\tnoCrit = ${bi.noCrit},\n`;
         if (bi.forceHeal) str += `\t\tforceHeal = ${bi.forceHeal},\n`;
         str += `\t},\n`;

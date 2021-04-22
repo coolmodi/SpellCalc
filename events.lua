@@ -89,6 +89,7 @@ function handlers.UNIT_INVENTORY_CHANGED(unit)
         return;
     end
     _addon:UpdateItems();
+    _addon:UpdateWeaponRestrictedAuras();
 end
 
 function handlers.PLAYER_TARGET_CHANGED()

@@ -359,7 +359,7 @@ local SpellBaseInfo = {
     ---@type boolean|nil
     cantDogeParryBlock = nil,
     ---@type number|nil
-    usedWeaponMask = nil,
+    equippedWeaponMask = nil,
     ---@type boolean|nil
     noCrit = nil,
     ---@type boolean|nil
@@ -450,6 +450,8 @@ local AuraEffectBase = {
     affectMask = 0,
     ---@type number[]|nil
     affectSpell = {0,0,0,0},
+    ---@type number|nil
+    neededWeaponMask = nil
 }
 
 ---@class UnitAuraEffect : AuraEffectBase

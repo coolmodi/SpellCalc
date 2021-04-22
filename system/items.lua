@@ -226,7 +226,6 @@ end
 ---@param slot string @mainHand, offHand or ranged
 ---@return boolean
 function _addon:IsWeaponTypeMaskEquipped(weaponSubClassMask, slot)
-    print(weaponSubClassMask, slot);
     if slot then
         assert(slot == "mainHand" or slot == "offHand" or slot == "ranged", "Invalid weapon slot!");
         return weaponSubClass[slot] and bit.band(bit.lshift(1, weaponSubClass[slot]), weaponSubClassMask) > 0;
