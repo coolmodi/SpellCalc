@@ -203,22 +203,41 @@ function _addon:IsOneHandEquipped()
     return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
 end
 
---- Return true if a weapon is in the mainhand slot
+--- Return true if a weapon is in the mainHand slot
 function _addon:IsMainHandWeaponEquipped()
     return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
---- Return true if a weapon is in the offhand slot
+--- Return true if a weapon is in the offHand slot
 function _addon:IsOffHandWeaponEquipped()
     return weaponSubClass.offHand and bit.band(bit.lshift(1, weaponSubClass.offHand), self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
 --- Return true if the given weapon class is equipped
 ---@param weaponSubClassId number
----@param slot string @mainhand, offhand or ranged
+---@param slot string @mainHand, offHand or ranged
 function _addon:IsWeaponTypeEquipped(weaponSubClassId, slot)
-    assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
+    assert(slot == "mainHand" or slot == "offHand" or slot == "ranged", "Invalid weapon slot!");
     return weaponSubClass[slot] == weaponSubClassId;
+end
+
+---Check if weapon types are equipped.
+---@param weaponSubClassMask number @The mask of possible weapontypes
+---@param slot string @mainHand, offHand or ranged
+---@return boolean
+function _addon:IsWeaponTypeMaskEquipped(weaponSubClassMask, slot)
+    print(weaponSubClassMask, slot);
+    if slot then
+        assert(slot == "mainHand" or slot == "offHand" or slot == "ranged", "Invalid weapon slot!");
+        return weaponSubClass[slot] and bit.band(bit.lshift(1, weaponSubClass[slot]), weaponSubClassMask) > 0;
+    end
+
+    for _, subClass in pairs(weaponSubClass) do
+        if bit.band(bit.lshift(1, subClass), weaponSubClassMask) > 0 then
+            return true;
+        end
+    end
+    return false;
 end
 
 --- Return true if both weapon slots have a weapon equipped
@@ -227,10 +246,10 @@ function _addon:IsDualWieldEquipped()
 end
 
 --- Return WEAPON_SUBCLASS for weapon in given slot if a weapon is equipped
----@param slot string @mainhand, offhand or ranged
+---@param slot string @mainHand, offHand or ranged
 ---@return number|nil
 function _addon:GetWeaponType(slot)
-    assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
+    assert(slot == "mainHand" or slot == "offHand" or slot == "ranged", "Invalid weapon slot!");
     return weaponSubClass[slot];
 end
 

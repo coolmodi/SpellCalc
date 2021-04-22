@@ -34,13 +34,13 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
     if tData.isPlayer then
         if not isRanged then
             if race == "Orc" then
-                local slot = isOffhand and "offhand" or "mainhand";
+                local slot = isOffhand and "offHand" or "mainHand";
                 local WSC = _addon.WEAPON_SUBCLASS;
                 if _addon:IsWeaponTypeEquipped(WSC.AXE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.AXE_2H, slot) then
                     ratk = ratk + 5;
                 end
             elseif race == "Human" then
-                local slot = isOffhand and "offhand" or "mainhand";
+                local slot = isOffhand and "offHand" or "mainHand";
                 local WSC = _addon.WEAPON_SUBCLASS;
                 if _addon:IsWeaponTypeEquipped(WSC.SWORD_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.SWORD_2H, slot)
                 or _addon:IsWeaponTypeEquipped(WSC.MACE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.MACE_2H, slot) then
@@ -106,27 +106,27 @@ function MeleeCalc:GetCrit()
             if class == "WARRIOR" then
                 local _, _, _, _, curRank = GetTalentInfo(1, 12); -- axe spec
                 if curRank > 0 then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "mainhand") then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "mainHand") then
                         basecrit = basecrit - curRank;
-                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "offhand") then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "offHand") then
                         basecrit = basecrit + curRank;
                     end
                 end
             elseif class == "ROGUE" then
                 local _, _, _, _, curRank = GetTalentInfo(2, 11); -- dagger spec
                 if curRank > 0 then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "mainhand") then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "mainHand") then
                         basecrit = basecrit - curRank;
-                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "offhand") then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "offHand") then
                         basecrit = basecrit + curRank;
                     end
                 end
 
                 _, _, _, _, curRank = GetTalentInfo(2, 16); -- fisting spec
                 if curRank > 0 then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "mainhand") then
+                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "mainHand") then
                         basecrit = basecrit - curRank;
-                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "offhand") then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "offHand") then
                         basecrit = basecrit + curRank;
                     end
                 end
