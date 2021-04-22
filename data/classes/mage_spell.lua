@@ -17,7 +17,6 @@ _addon.spellBaseInfo = {
     },
     [GetSpellInfo(116)] = { -- Frostbolt
         school = 5,
-        isBinary = true,
         defType = 1,
     },
     [GetSpellInfo(2136)] = { -- Fire Blast

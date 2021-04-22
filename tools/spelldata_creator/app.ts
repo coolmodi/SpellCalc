@@ -168,7 +168,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         default:
             if (effectNum == 1 && effect.EffectMechanic != 0) {
                 if (baseInfo.school != 1) {
-                    baseInfo.isBinary = true;
+                    baseInfo.isBinary = (spellName == "Frostbolt") ? false : true;
                 }
                 rankInfo.effects.splice(effectNum);
             } else {
