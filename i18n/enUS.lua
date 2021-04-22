@@ -71,8 +71,6 @@ L.SETTINGS_WL_USE_IMP_SB = "Use Improved Shadow Bolt talent";
 L.SETTINGS_WL_USE_IMP_SB_TT = "Use talent in Shadow Bolt dps calculation, assumes nobody \"steals\" your debuff charges.";
 
 L.SETTINGS_HEAL_HEAD = "Healing";
-L.SETTINGS_HEAL_TARGET_HPS = "Target HPS";
-L.SETTINGS_HEAL_TARGET_HPS_TT = "If not 0 tooltips for direct heals with at least that much HPS will show extra values as if there are breaks between casts to reach this HPS value.";
 L.SETTINGS_HEAL_NO_CRIT = "Disregard crit heals";
 L.SETTINGS_HEAL_NO_CRIT_TT = "Do not consider crits for hps and efficiency calculation.";
 
@@ -143,8 +141,5 @@ L.TT_GLANCECHANCE = "Glancing";
 L.TT_GLANCEDATA = "%.1f%% for %.1f%% damage";
 L.TT_PERSEC_COMBINED_DAMAGE = "Combined DPS";
 L.TT_TOTAL = "Total";
-
-L.TT_THPS = "For target HPS";
-L.TT_THPS_TIMES = "%.1fs between casts, %.1fs outside of FSR";
 
 L.TT_BUFFS = "Considered buffs:";

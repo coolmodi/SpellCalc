@@ -27,17 +27,6 @@ local CastinDataDef = {
     timeToOom = 0
 };
 
----@class TargetHPSDef
-local TargetHPSDef = {
-    secNoCast = 0,
-    secNoFsr = 0,
-    effectiveCost = 0,
-    perMana = 0,
-    castsToOom = 0,
-    timeToOom = 0,
-    doneToOom = 0
-};
-
 ---@class EffectOffhandData
 local EffectOffhandData = {
     critChance = 0,
@@ -119,9 +108,6 @@ local CalcedEffect = {
 
     ---@type IgniteDataDef|nil
     igniteData = nil,
-
-    ---@type TargetHPSDef|nil
-    thpsData = nil,
 
     ---@type EffectOffhandData|nil
     offhandAttack = nil,    -- Data for offhand attack (auto attack with dual wield, maybe more with TBC?)

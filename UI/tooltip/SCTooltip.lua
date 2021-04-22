@@ -154,17 +154,6 @@ function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTim
         end
         self:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), outstr);
     end
-
-    if calcedEffect.thpsData and calcedEffect.thpsData.secNoCast > 0 then
-        local thpsData = calcedEffect.thpsData;
-        self:HeaderLine(("%s (%s):"):format(L.TT_THPS, SpellCalc_settings.healTargetHps));
-        self:SingleLine(nil, L.TT_THPS_TIMES:format(thpsData.secNoCast, thpsData.secNoFsr));
-        self:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(thpsData.effectiveCost));
-        if thpsData.perMana > 0 then
-            self:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(thpsData.perMana));
-            self:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), ("%d (%.1fs, %.1f casts)"):format(self:Round(thpsData.doneToOom), thpsData.timeToOom, thpsData.castsToOom));
-        end
-    end
 end
 
 --- Return a title for effect flags

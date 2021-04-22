@@ -208,7 +208,6 @@ local function PoM_ES(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCast
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
-    calcedEffect.thpsData = nil;
 end
 
 ---@param calcedSpell CalcedSpell
@@ -697,49 +696,6 @@ function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCas
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
-
-    if SpellCalc_settings.healTargetHps > 0 then
-        if calcedEffect.thpsData == nil then
-            ---@type TargetHPSDef
-            calcedEffect.thpsData = {
-                secNoCast = 0,
-                secNoFsr = 0,
-                effectiveCost = 0,
-                perMana = 0,
-                castsToOom = 0,
-                timeToOom = 0,
-                doneToOom = 0
-            };
-        end
-
-        local secondsNoCast = (calcedEffect.perSec / SpellCalc_settings.healTargetHps - 1) * effCastTime;
-        calcedEffect.thpsData.secNoCast = secondsNoCast;
-
-        if secondsNoCast > 0 then
-            local manaGained = secondsNoCast * (stats.mp5.val/5 + stats.manaRegCasting + stats.manaRegAura);
-            local secOutOfFSR = secondsNoCast - 5 + effCastTime;
-
-            if secOutOfFSR > 0 then
-                calcedEffect.thpsData.secNoFsr = secOutOfFSR;
-                -- Also need to remove previously added normal mana regen during secOutOfFSR 
-                -- effectiveCost calculation deducted it for the castTime, so secOutOfFSR is fine to use
-                manaGained = manaGained - secOutOfFSR * stats.manaRegCasting + stats.manaRegBase * secOutOfFSR;
-            else
-                calcedEffect.thpsData.secNoFsr = 0;
-            end
-
-            calcedEffect.thpsData.effectiveCost = calcedSpell.effectiveCost - manaGained;
-            calcedEffect.thpsData.perMana = calcedEffect.avgAfterMitigation / calcedEffect.thpsData.effectiveCost;
-            calcedEffect.thpsData.castsToOom = _addon:GetEffectiveManaPool() / calcedEffect.thpsData.effectiveCost;
-            if SpellCalc_settings.useRealToOom then
-                calcedEffect.thpsData.castsToOom = math.floor(calcedEffect.thpsData.castsToOom);
-            end
-            calcedEffect.thpsData.timeToOom = calcedEffect.thpsData.castsToOom * (effCastTime + secondsNoCast);
-            calcedEffect.thpsData.doneToOom = calcedEffect.thpsData.castsToOom * calcedEffect.avgAfterMitigation;
-        end
-    else
-        calcedEffect.thpsData = nil;
-    end
 
     if effectData.chains and effectData.chains > 1 then
         calcedEffect.chains = effectData.chains;

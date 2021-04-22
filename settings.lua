@@ -51,7 +51,6 @@ local DEFAULTSETTINGS = {
 	["abColorHarm"] = {1, 1, 0.3},
 	["abColorHelp"] = {0.3, 1, 0.3},
 
-	["healTargetHps"] = 0,
 	["healDisregardCrit"] = false,
 
 	["meleeFromFront"] = false,
@@ -513,18 +512,8 @@ local SETTINGS_TABLE = {
 }
 
 local ARGS_HEAL = {
-	healTargetHps = {
-		order = 1,
-		type = "range",
-		name = L.SETTINGS_HEAL_TARGET_HPS,
-		desc = L.SETTINGS_HEAL_TARGET_HPS_TT,
-		min = 0,
-		max = 10000,
-		softMax = 1500,
-		step = 25
-	},
 	healDisregardCrit = {
-		order = 2,
+		order = 1,
 		type = "toggle",
 		name = L.SETTINGS_HEAL_NO_CRIT,
 		desc = L.SETTINGS_HEAL_NO_CRIT_TT
