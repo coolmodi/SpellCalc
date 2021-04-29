@@ -1474,6 +1474,82 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [25533] = { -- Searing Totem(Rank 7)
+        spellLevel = 69,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 205,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2.2,
+                min = 50,
+                max = 67,
+                coef = 0.167,
+            },
+        }
+    },
+    [25546] = { -- Fire Nova Totem(Rank 6)
+        spellLevel = 61,
+        maxLevel = 66,
+        duration = 5,
+        baseCost = 640,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 518,
+                max = 579,
+                perLevel = 3.9,
+                coef = 0.214,
+            },
+        }
+    },
+    [25547] = { -- Fire Nova Totem(Rank 7)
+        spellLevel = 70,
+        maxLevel = 75,
+        duration = 5,
+        baseCost = 765,
+        effects = {
+            [1] = {
+                effectType = 2,
+                min = 654,
+                max = 731,
+                perLevel = 4.5,
+                coef = 0.214,
+            },
+        }
+    },
+    [25552] = { -- Magma Totem(Rank 5)
+        spellLevel = 65,
+        maxLevel = 0,
+        duration = 21,
+        baseCost = 800,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                min = 97,
+                coef = 0.067,
+            },
+        }
+    },
+    [25567] = { -- Healing Stream Totem(Rank 6)
+        spellLevel = 69,
+        maxLevel = 0,
+        duration = 120,
+        baseCost = 95,
+        effects = {
+            [1] = {
+                effectType = 35,
+                auraType = 8,
+                tickPeriod = 2,
+                min = 18,
+                coef = 0.044,
+            },
+        }
+    },
     [29228] = { -- Flame Shock(Rank 6)
         spellLevel = 60,
         maxLevel = 67,
