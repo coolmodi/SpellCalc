@@ -114,26 +114,6 @@ _addon.setItemData[21400] = 502;
 _addon.setItemData[21398] = 502;
 _addon.setItemData[21399] = 502;
 
-_addon.itemSetData[527] = {
-    name = "The Earthshatterer",
-    effects = {
-        {
-            need = 8,
-            type = _addon.EFFECT_TYPE.CONDITION_TRIGGER,
-            value = _addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS,
-        },
-    }
-}
-_addon.setItemData[22468] = 527;
-_addon.setItemData[22470] = 527;
-_addon.setItemData[22469] = 527;
-_addon.setItemData[22466] = 527;
-_addon.setItemData[22465] = 527;
-_addon.setItemData[22467] = 527;
-_addon.setItemData[22464] = 527;
-_addon.setItemData[22471] = 527;
-_addon.setItemData[23065] = 527;
-
 _addon.itemSetData[538] = {
     name = "Champion's Stormcaller",
     effects = {

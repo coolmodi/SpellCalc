@@ -377,11 +377,6 @@ export class AuraHandlers
         {
             switch (effect.EffectTriggerSpell)
             {
-                case 28820:
-                    return {
-                        type: ADDON_EFFECT_TYPE.CONDITION_TRIGGER,
-                        value: "_addon.BUFF_CONDITIONS.EARTHSHATTERER_8PCS"
-                    }
                 case 22009: // Greater Heal (Renew)
                 case 23590: // Judgement (Dmg proc)
                 case 37563: // Incarnate Raiment PoH HoT
@@ -400,6 +395,7 @@ export class AuraHandlers
                 case 43839:
                 case 41043:
                 case 43849:
+                case 28820: // Earthshatter 8pc
                 case 46089:
                 case 41038:
                 case 43848:

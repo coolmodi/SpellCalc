@@ -108,7 +108,7 @@ _addon.MELEE_CLASSES = {
 }
 
 _addon.BUFF_CONDITIONS = {
-    EARTHSHATTERER_8PCS = 0x1
+
 }
 
 _addon.JUDGEMENT_ID = 20271;

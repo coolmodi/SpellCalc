@@ -94,7 +94,11 @@ _addon.aurasPlayer = {
         type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.SCHOOL_MASK.HOLY,
         value = 10
-    }
+    },
+    [30708] = { -- Totem of Wrath
+        type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+        value = 3
+    },
 };
 
 -- Buffs and debuffs the target can have (NYI)
