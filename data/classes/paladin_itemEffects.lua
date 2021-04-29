@@ -143,7 +143,7 @@ _addon.itemEffects[22427] = { -- Redemption Legguards
 _addon.itemEffects[23006] = { -- Libram of Light
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {16, 0, 0, 0},
+        affectSpell = {1073741824, 0, 0, 0},
         value = 83,
     },
 }
@@ -207,7 +207,7 @@ _addon.itemEffects[22431] = { -- Redemption Girdle
 _addon.itemEffects[23201] = { -- Libram of Divinity
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1, 0, 0, 0},
+        affectSpell = {1073741824, 0, 0, 0},
         value = 53,
     },
 }

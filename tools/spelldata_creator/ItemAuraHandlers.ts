@@ -252,7 +252,7 @@ export class AuraHandlers
                 case 28853:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                        affectSpell: this.getAffectSpell(effect),
+                        affectSpell: [1073741824],
                         value: effect.EffectBasePoints + 1,
                     }
                 case 28847: // TODO: Gain up to 25 mana each time you cast Healing Touch.
