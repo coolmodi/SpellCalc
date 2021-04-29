@@ -62,6 +62,23 @@ _addon.setItemData[22508] = 529;
 _addon.setItemData[22507] = 529;
 _addon.setItemData[23063] = 529;
 
+_addon.itemSetData[644] = {
+    name = "Oblivion Raiment",
+    effects = {
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+            affectSpell = {0, 32768, 0, 0},
+            value = 180,
+        },
+    }
+}
+_addon.setItemData[27537] = 644;
+_addon.setItemData[28415] = 644;
+_addon.setItemData[28232] = 644;
+_addon.setItemData[27778] = 644;
+_addon.setItemData[27948] = 644;
+
 _addon.itemSetData[645] = {
     name = "Voidheart Raiment",
     effects = {

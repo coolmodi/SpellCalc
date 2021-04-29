@@ -58,39 +58,6 @@ _addon.itemSetData = {
             },
         }
     },
-    [630] = {
-        name = "Tidefury Raiment",
-        effects = {
-            {
-                need = 2,
-                type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
-                affectSpell = {2, 0, 0, 0},
-                value = 19,
-            },
-        }
-    },
-    [644] = {
-        name = "Oblivion Raiment",
-        effects = {
-            {
-                need = 4,
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
-                affectSpell = {0, 32768, 0, 0},
-                value = 180,
-            },
-        }
-    },
-    [647] = {
-        name = "Incanter's Regalia",
-        effects = {
-            {
-                need = 4,
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                affectSpell = {32768, 0, 0, 0},
-                value = 1,
-            },
-        }
-    },
 }
 
 _addon.setItemData = {
@@ -109,19 +76,4 @@ _addon.setItemData = {
     [21875] = 554,
     [21874] = 554,
     [21873] = 554,
-    [28231] = 630,
-    [27510] = 630,
-    [28349] = 630,
-    [27909] = 630,
-    [27802] = 630,
-    [27537] = 644,
-    [28415] = 644,
-    [28232] = 644,
-    [27778] = 644,
-    [27948] = 644,
-    [28278] = 647,
-    [27508] = 647,
-    [27738] = 647,
-    [28229] = 647,
-    [27838] = 647,
 }

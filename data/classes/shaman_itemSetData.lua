@@ -166,6 +166,23 @@ _addon.setItemData[28848] = 604;
 _addon.setItemData[28849] = 604;
 _addon.setItemData[28850] = 604;
 
+_addon.itemSetData[630] = {
+    name = "Tidefury Raiment",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+            affectSpell = {2, 0, 0, 0},
+            value = 19,
+        },
+    }
+}
+_addon.setItemData[28231] = 630;
+_addon.setItemData[27510] = 630;
+_addon.setItemData[28349] = 630;
+_addon.setItemData[27909] = 630;
+_addon.setItemData[27802] = 630;
+
 _addon.itemSetData[633] = {
     name = "Cyclone Harness",
     effects = {

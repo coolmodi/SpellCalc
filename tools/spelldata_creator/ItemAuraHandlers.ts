@@ -427,11 +427,11 @@ export class AuraHandlers
                 case 28744: // Your initial cast and Regrowth ticks will increase the maximum health of your target by up to 50, stacking up to 7 times.
                 case 37327: // TODO: Increases your Starfire damage against targets afflicted with Moonfire or Insect Swarm by $s1%.
                 case 37447:
+                case 37424:
                     return;
                 case 27859:
                 case 27855:
                 case 27853:
-                case 37424:
                 case 38432:
                 case 28857:
                 case 28856:
