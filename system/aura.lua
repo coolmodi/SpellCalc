@@ -68,6 +68,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_FLAT_DURATION] = stats.spellModFlatDuration,
     [EFFECT_TYPE.SPELLMOD_FLAT_VALUE]   = stats.spellModFlatValue,
     [EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER] = stats.spellModFlatSpellpower,
+    [EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER] = stats.spellModEff1FlatSpellpower,
     [EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST] = stats.spellModChainMult,
     [EFFECT_TYPE.SPELLMOD_GCD_MS]       = stats.spellModGCDms,
     [EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL] = stats.spellModAddTriggerSpell, -- TODO: If a spell is ever affected by more than one of those it will break!

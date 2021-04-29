@@ -598,6 +598,13 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
             calcedEffect.flatMod = flatMod;
 
+            -- TODO: LB idol only uses base coef, if ever used for something else this probably needs to change
+            if i == 1 and stats.spellModEff1FlatSpellpower[spellId] then
+                calcedEffect.spellPower = calcedEffect.spellPower + stats.spellModEff1FlatSpellpower[spellId].val;
+                calcedEffect.effectivePower = calcedEffect.effectivePower + stats.spellModEff1FlatSpellpower[spellId].val * effectData.coef;
+                calcedSpell:AddToBuffList(stats.spellModEff1FlatSpellpower[spellId].buffs);
+            end
+
             --------------------------
             -- Charges
 

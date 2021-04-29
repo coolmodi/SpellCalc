@@ -71,6 +71,14 @@ _addon.itemEffects[27518] = { -- Ivory Idol of the Moongoddess
     },
 }
 
+_addon.itemEffects[27886] = { -- Idol of the Emerald Queen
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER,
+        affectSpell = {0, 16},
+        value = 88,
+    },
+}
+
 _addon.itemEffects[27744] = { -- Idol of Ursoc
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,

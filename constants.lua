@@ -66,6 +66,7 @@ _addon.EFFECT_TYPE = {
     SPELLMOD_CHARGES = 42,
     SPELLMOD_CRIT_MANARESTORE = 43,
     SPELLMOD_MANARESTORE = 44,
+    SPELLMOD_EFFECT1_FLAT_SPELLPOWER = 45
 };
 
 --- Defense type (Decides mitigation types used)

@@ -284,7 +284,9 @@ export class AuraHandlers
                 case 6: // SPELLMOD_RADIUS
                 case 9: // SPELLMOD_NOT_LOSE_CASTING_TIME
                 case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
-                case 15: // TODO: SPELLMOD_CRIT_DAMAGE_BONUS
+                    return;
+                case 15: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
+                    console.log(effect.SpellID);
                     return;
                 default:
                     throw "SPELL_AURA_ADD_FLAT_MODIFIER type not handled!";
@@ -355,7 +357,12 @@ export class AuraHandlers
                         affectSpell: [6291975],
                         value: 6 // 5%
                     }
-                case 34246: // TODO: Increases the periodic healing of your Lifebloom by up to $s1.    
+                case 34246: // Increases the periodic healing of your Lifebloom by up to $s1. 
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER,
+                        affectSpell: [0, 16],
+                        value: 88
+                    }
                 case 37169: // TODO: Your Eviscerate and Envenom abilities cause 40 extra damage per combo point.
                 case 37182: // TODO: Increases the amount healed by your Judgement of Light by $s1.
                 case 34241: // TODO: Increases periodic damage done by Rip by $s1 per combo point.

@@ -141,6 +141,7 @@ _addon.stats = {
     spellModFlatDuration = SpellStatTable(), -- In seconds
     spellModFlatValue = SpellStatTable(),
     spellModFlatSpellpower = SpellStatTable(),
+    spellModEff1FlatSpellpower = SpellStatTable(),
     spellModMageNWR = SpellStatTable(),
     spellModGCDms = SpellStatTable(), -- In ms
     spellModChainMult = SpellStatTable(),
