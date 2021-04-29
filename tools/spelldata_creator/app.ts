@@ -14,9 +14,7 @@ const CLASSES = [
     "warlock",
     "mage", 
     "paladin",
-
-    // TODO: other classes
-    //"shaman",
+    "shaman",
 
     //"hunter",
     //"rogue",
@@ -80,6 +78,17 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
         ei.charges = 5;
         ei.min = effect.EffectBasePoints;
         ei.coef = effect.EffectBonusCoefficient;
+        ei.max = ei.min;
+        bi.forceHeal = true;
+        return;
+    }
+
+    // Earth Shield
+    if ([974, 32593, 32594].indexOf(effect.SpellID) > -1)
+    {
+        ei.charges = 6;
+        ei.min = effect.EffectBasePoints + 1;
+        ei.coef = 0.286;
         ei.max = ei.min;
         bi.forceHeal = true;
         return;

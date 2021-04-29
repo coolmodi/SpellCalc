@@ -289,6 +289,7 @@ dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(20162)] = SealOfTheCrusader;
 dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
+dummyAuraHandlers[GetSpellInfo(974)] = PoM_ES; -- Earth Shield
 dummyAuraHandlers[GetSpellInfo(31892)] = SealOfBloodMartyr; -- Seal of Blood
 dummyAuraHandlers[GetSpellInfo(348700)] = SealOfBloodMartyr; -- Seal of the Martyr
 dummyAuraHandlers[GetSpellInfo(31801)] = SealOfVengeance;

@@ -142,6 +142,7 @@ export class ClassSpellLists
                         if (
                             !(effect.EffectIndex == 0 && isSeal(effect.SpellID)) // SoR or SoC attack effect
                             && effect.SpellID !== 33076 // PoM
+                            && [974, 32593, 32594].indexOf(effect.SpellID) === -1 // Earth Shield
                         ) continue;
                     }
                 }

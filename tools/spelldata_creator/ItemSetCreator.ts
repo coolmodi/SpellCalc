@@ -136,6 +136,12 @@ export class ItemSetCreator
             return;
         }
 
+        if (setAddonData.items.length === 0)
+        {
+            console.log("Item set " + setAddonData.name + " has no items!");
+            return;
+        }
+
         return setAddonData;
     }
 

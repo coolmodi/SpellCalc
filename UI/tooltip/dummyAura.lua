@@ -1,7 +1,6 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
 local L = _addon:GetLocalization();
-local PRAYER_OF_MENDING = GetSpellInfo(33076);
 local SCT = _addon.SCTooltip;
 
 ---Prayer of Mending
@@ -28,4 +27,5 @@ local function PoM(calcedSpell, effectNum)
     SCT:AppendEfficiency(calcedSpell, effectNum, true, false);
 end
 
-SCT:AddDummyHandler(PRAYER_OF_MENDING, PoM);
+SCT:AddDummyHandler(GetSpellInfo(33076), PoM); -- PoM
+SCT:AddDummyHandler(GetSpellInfo(974), PoM); -- Earth Shield

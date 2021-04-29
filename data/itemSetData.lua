@@ -58,6 +58,17 @@ _addon.itemSetData = {
             },
         }
     },
+    [630] = {
+        name = "Tidefury Raiment",
+        effects = {
+            {
+                need = 2,
+                type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+                affectSpell = {2, 0, 0, 0},
+                value = 19,
+            },
+        }
+    },
     [644] = {
         name = "Oblivion Raiment",
         effects = {
@@ -98,6 +109,11 @@ _addon.setItemData = {
     [21875] = 554,
     [21874] = 554,
     [21873] = 554,
+    [28231] = 630,
+    [27510] = 630,
+    [28349] = 630,
+    [27909] = 630,
+    [27802] = 630,
     [27537] = 644,
     [28415] = 644,
     [28232] = 644,
