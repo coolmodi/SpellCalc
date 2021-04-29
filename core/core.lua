@@ -276,18 +276,18 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
     if parentEffCastTime == nil then
         local _, _, _, probablyGCD = GetSpellInfo(25375); -- Mind Blast cast time is 1.5s
-        local GCDmult = probablyGCD / 1500;
+        local hasteMult = probablyGCD / 1500;
 
         if stats.spellModGCDms[spellId] ~= nil then
             GCD = GCD + stats.spellModGCDms[spellId].val / 1000;
             calcedSpell:AddToBuffList(stats.spellModGCDms[spellId].buffs);
         end
 
-        GCD = GCD * GCDmult;
+        GCD = GCD * hasteMult;
 
         if spellBaseInfo.isChannel then
             castTime = spellRankInfo.duration;
-            effCastTime = castTime;
+            effCastTime = castTime * hasteMult;
         else
             castTime = castTime / 1000;
             effCastTime = math.max(GCD, castTime);
