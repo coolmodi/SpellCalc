@@ -155,7 +155,7 @@ _addon.talentData = {
         talent = 17,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {12845079, 8},
                 perPoint = 2
             }
@@ -202,7 +202,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {131808},
                 perPoint = 2
             }
@@ -213,7 +213,7 @@ _addon.talentData = {
         talent = 16,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {512},
                 perPoint = 10,
                 base = 5
@@ -250,7 +250,7 @@ _addon.talentData = {
 };
 
 _addon.aurasPlayer[12042] = { -- Arcane Power
-    type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+    type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
     affectSpell = {685904631, 8},
     value = 30,
 };

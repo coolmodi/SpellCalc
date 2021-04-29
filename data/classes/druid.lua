@@ -30,7 +30,7 @@ _addon.talentData = {
                 perPoint = 5
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {2},
                 perPoint = 5
             }
@@ -46,7 +46,7 @@ _addon.talentData = {
                 perPoint = 25
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {512},
                 perPoint = 25
             }
@@ -78,7 +78,7 @@ _addon.talentData = {
         talent = 15,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {7},
                 perPoint = 2
             },
@@ -118,7 +118,7 @@ _addon.talentData = {
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {8388608},
                 perPoint = 3
             }
@@ -129,7 +129,7 @@ _addon.talentData = {
         talent = 13,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {4096, 1024},
                 perPoint = 10
             }
@@ -153,7 +153,7 @@ _addon.talentData = {
         talent = 10,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {16},
                 perPoint = 5
             }
@@ -164,7 +164,7 @@ _addon.talentData = {
         talent = 12,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {240, 16},
                 perPoint = 2
             }

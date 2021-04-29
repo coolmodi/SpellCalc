@@ -326,12 +326,11 @@ AddUniformStatTable(stats.hitBonusSpell, "Spell +hit", "%");
 AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
 AddSpellTable(stats.spellModFlatHitChance, nil, "%");
 
-AddSpellTable(stats.spellModPctHealing, "Spell Pct Healing", "%");
 AddUniformStatTable(stats.modhealingDone, "Healing done mod (all)", "%");
 
 AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
-AddSpellTable(stats.spellModPctDamage, "Spell Pct Damage", "%");
-AddSchoolTableUniform(stats.spellModPctDamage, "School Pct Damage", "%");
+AddSpellTable(stats.spellModPctDamageHealing, "Spell Pct Damage/Healing", "%");
+AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
 
 AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "s");
 AddSpellTable(stats.spellModFlatValue, "Flat mods", "");

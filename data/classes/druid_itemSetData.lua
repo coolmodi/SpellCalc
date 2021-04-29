@@ -123,13 +123,13 @@ _addon.itemSetData[676] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {8388608, 1048576, 0, 0},
             value = 15,
         },
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {8388608, 0, 0, 0},
             value = 15,
         },
@@ -175,7 +175,7 @@ _addon.itemSetData[678] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {32, 0, 0, 0},
             value = 5,
         },

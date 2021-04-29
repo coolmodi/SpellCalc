@@ -14,7 +14,7 @@ _addon.talentData = {
         talent = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {134217728 + 1024},
                 perPoint = 3
             }
@@ -25,7 +25,7 @@ _addon.talentData = {
         talent = 5,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {-1073741824},
                 perPoint = 4
             }
@@ -99,7 +99,7 @@ _addon.talentData = {
         talent = 18,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {0, 64},
                 perPoint = 10
             },

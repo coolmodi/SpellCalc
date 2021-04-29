@@ -98,9 +98,9 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
             calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
         end
 
-        if stats.spellModPctDamage[spellId] ~= nil then
-            bonusMod = bonusMod * (100 + stats.spellModPctDamage[spellId].val) / 100;
-            calcedSpell:AddToBuffList(stats.spellModPctDamage[spellId].buffs);
+        if stats.spellModPctDamageHealing[spellId] ~= nil then
+            bonusMod = bonusMod * (100 + stats.spellModPctDamageHealing[spellId].val) / 100;
+            calcedSpell:AddToBuffList(stats.spellModPctDamageHealing[spellId].buffs);
         end
 
         bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
@@ -118,10 +118,9 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
         end
 
         if isHeal then
-            if stats.spellModPctHealing[spellId] ~= nil then
-                -- This is the very same as schoolModPctDamage, just limited to healing internally in this addon
-                bonusMod = bonusMod * (100 + stats.spellModPctHealing[spellId].val) / 100;
-                calcedSpell:AddToBuffList(stats.spellModPctHealing[spellId].buffs);
+            if stats.spellModPctDamageHealing[spellId] ~= nil then
+                bonusMod = bonusMod * (100 + stats.spellModPctDamageHealing[spellId].val) / 100;
+                calcedSpell:AddToBuffList(stats.spellModPctDamageHealing[spellId].buffs);
             end
 
             bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;

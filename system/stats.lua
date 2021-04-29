@@ -136,9 +136,8 @@ _addon.stats = {
     schoolModFlatCritChance = SchoolStatTable(),
     schoolModPctCritMult = SchoolStatTable(),
 
-    spellModPctHealing = SpellStatTable(),
     spellModPctEffect = SpellStatTable(),
-    spellModPctDamage = SpellStatTable(),
+    spellModPctDamageHealing = SpellStatTable(),
     spellModFlatDuration = SpellStatTable(), -- In seconds
     spellModFlatValue = SpellStatTable(),
     spellModFlatSpellpower = SpellStatTable(),

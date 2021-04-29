@@ -225,7 +225,7 @@ _addon.itemSetData[683] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {256, 0, 0, 0},
             value = 5,
         },
@@ -245,7 +245,7 @@ _addon.itemSetData[684] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {1, 0, 0, 0},
             value = 5,
         },

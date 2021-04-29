@@ -32,7 +32,7 @@ _addon.itemSetData[625] = {
     effects = {
         {
             need = 2,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 3072, 0, 0},
             value = 10,
         },
@@ -55,7 +55,7 @@ _addon.itemSetData[626] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 512, 0, 0},
             value = 10,
         },
@@ -89,7 +89,7 @@ _addon.itemSetData[679] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {32, 0, 0, 0},
             value = 10,
         },
@@ -109,7 +109,7 @@ _addon.itemSetData[680] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 128, 0, 0},
             value = 10,
         },
@@ -135,7 +135,7 @@ _addon.itemSetData[681] = {
         },
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {1073741824, 0, 0, 0},
             value = 5,
         },
@@ -155,7 +155,7 @@ _addon.itemSetData[690] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 65536, 0, 0},
             value = 30,
         },
@@ -172,7 +172,7 @@ _addon.itemSetData[693] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 65536, 0, 0},
             value = 30,
         },
@@ -189,7 +189,7 @@ _addon.itemSetData[694] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 65536, 0, 0},
             value = 30,
         },

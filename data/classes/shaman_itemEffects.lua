@@ -73,7 +73,7 @@ _addon.itemEffects[25645] = { -- Totem of the Plains
 
 _addon.itemEffects[26000] = { -- Gladiator's Linked Gauntlets
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {1024, 0, 0, 0},
         value = 8,
     },
@@ -113,7 +113,7 @@ _addon.itemEffects[28248] = { -- Totem of the Void
 
 _addon.itemEffects[28842] = { -- High Warlord's Linked Gauntlets
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {1024, 0, 0, 0},
         value = 8,
     },
@@ -121,7 +121,7 @@ _addon.itemEffects[28842] = { -- High Warlord's Linked Gauntlets
 
 _addon.itemEffects[28690] = { -- Grand Marshal's Linked Gauntlets
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {1024, 0, 0, 0},
         value = 8,
     },
@@ -145,7 +145,7 @@ _addon.itemEffects[32330] = { -- Totem of Ancestral Guidance
 
 _addon.itemEffects[32005] = { -- Merciless Gladiator's Linked Gauntlets
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {1024, 0, 0, 0},
         value = 8,
     },
