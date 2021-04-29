@@ -727,7 +727,7 @@ function _addon:GetHandledSpellID(spellID)
         spellID = self.judgementSpell;
     end
 
-    if self.spellBaseInfo[GetSpellInfo(spellID)] == nil then
+    if self.spellBaseInfo[GetSpellInfo(spellID)] == nil or self.spellRankInfo[spellID] == nil then
         return;
     end
 
