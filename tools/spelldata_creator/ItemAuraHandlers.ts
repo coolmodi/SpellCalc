@@ -7,7 +7,7 @@ export const USELESS_AURAS = {
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER]: true,
     [AURA_TYPE.SPELL_AURA_MOD_RESISTANCE]: true,
     [AURA_TYPE.SPELL_AURA_MOD_SKILL]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_CRIT_PERCENT]: true, // TODO: why do I ignore this? Note: Should affect API output (melee crit)
+    [AURA_TYPE.SPELL_AURA_MOD_CRIT_PERCENT]: true,
     [AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE]: true, // spell bonus damage
     [AURA_TYPE.SPELL_AURA_MOD_HEALING_DONE]: true, // spell bonus heal
     [AURA_TYPE.SPELL_AURA_MOD_INCREASE_SPEED]: true,
@@ -123,12 +123,8 @@ export class AuraHandlers
                 case 37515:
                 case 37620:
                 case 37310:
-                // TODO: future
-                case 37238: // Your Lightning Bolt critical strikes have a chance to grant you $37238s1 mana.
-                case 37214: // Your offensive spell critical strikes have a chance to reduce the base mana cost of your next spell by $37214s1.
                 case 28804: // Epiphany priest T3
                 case 28772: // Frostfire dmg taken debuff proc
-                case 28753: // hunter t3 mana restore
                 case 9057: // Damage
                 case 18980: // Dmg
                 case 27775: // proc spelldamage increase
@@ -137,8 +133,31 @@ export class AuraHandlers
                 case 27788: // Energy restore
                 case 28813: // Energy restore
                 case 23580: // Bloodfang dmg proc
-                case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
                     return;
+                case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_MANARESTORE,
+                        affectSpell: [49848464, 1042],
+                        value: 9 // According to comments has a 6% proc chance
+                    }
+                case 37238: // Your Lightning Bolt critical strikes have a chance to grant you $37238s1 mana.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
+                        affectSpell: [1],
+                        value: 40 // Wild guess from reading some comments
+                    }
+                case 37214: // Your offensive spell critical strikes have a chance to reduce the base mana cost of your next spell by $37214s1.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
+                        affectSpell: [-1877999613],
+                        value: 30 // If 11% chance
+                    }
+                case 28753: // hunter t3 mana restore
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
+                        affectSpell: [4096], // TODO: spellset
+                        value: 50
+                    }
                 case 0:
                     if (effect.SpellID === 37558)
                     {
@@ -163,8 +182,12 @@ export class AuraHandlers
                         affectSpell: [33],
                         value: 1
                     }
-                case 26975: // Battlegear of Eternal Justice
-                    return; // TODO: 20% chance to regain 100 mana when you cast a Judgement.
+                case 26975: // Battlegear of Eternal Justice 20% chance to regain 100 mana when you cast a Judgement.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_MANARESTORE,
+                        affectSpell: [8388608],
+                        value: 20
+                    }
                 default:
                     throw "Triggered spell needs some love"
             }
@@ -315,16 +338,27 @@ export class AuraHandlers
                         affectSpell: this.getAffectSpell(effect),
                         value: effect.EffectBasePoints + 1,
                     }
+
+                case 37288: // Your helpful spells have a chance to restore up to 120 mana.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_MANARESTORE,
+                        affectSpell: [240, 16],
+                        value: 6 // 5%
+                    }
+                case 37295: // Your harmful spells have a chance to restore up to 120 mana.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_MANARESTORE,
+                        affectSpell: [6291975],
+                        value: 6 // 5%
+                    }
                 case 37169: // TODO: Your Eviscerate and Envenom abilities cause 40 extra damage per combo point.
-                case 28847: // TODO: Gain up to 25 mana each time you cast Healing Touch.
-                case 28849: // TODO: Regain up to 10 mana each time you cast Lesser Healing Wave.
                 case 37182: // TODO: Increases the amount healed by your Judgement of Light by $s1.
-                case 37288: // TODO: Your helpful spells have a chance to restore up to 120 mana.
-                case 37295: // TODO: Your harmful spells have a chance to restore up to 120 mana.
                 case 34241: // TODO: Increases periodic damage done by Rip by $s1 per combo point.
                 case 34246: // TODO: Increases the periodic healing of your Lifebloom by up to $s1.
                 case 38320: // TODO: Increases the benefit your Flash of Light spell receives from Blessing of Light by ${$m1/2} and Holy Light spell receives from Blessing of Light by $s1.
                 case 39926: // TODO: ToL heal bonus improvement
+                case 28849: // Regain up to 10 mana each time you cast Lesser Healing Wave. (depends on rank...)
+                case 28847: // Gain up to 25 mana each time you cast Healing Touch. (depends on rank...)
                 case 28809: // On Greater Heal critical hits, your target will gain Armor of Faith, absorbing up to 500 damage.
                 case 23582: // Heals the rogue for 500 when Vanish is performed.
                 case 26169: // 20% chance that your heals on others will also heal you 10% of the amount healed.
@@ -400,7 +434,6 @@ export class AuraHandlers
                 case 41038:
                 case 43848:
                 case 37508:
-                // TODO: these
                 case 28788: // Your Cleanse spell also heals the target for 200.
                 case 28815: // Revealed Flaw
                 case 24405: // Your Frostbolt spells have a 6% chance to restore 50 mana when cast.

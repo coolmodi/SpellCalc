@@ -50,6 +50,16 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
         calcedSpell:AddToBuffList(stats.clearCastChanceDmg.buffs);
     end
 
+    if stats.spellModManaRestore[spellId] and stats.spellModManaRestore[spellId].val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - stats.spellModManaRestore[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModManaRestore[spellId].buffs);
+    end
+
+    if stats.spellModCritManaRestore[spellId] and stats.spellModCritManaRestore[spellId].val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - (calcedSpell.critChance / 100) * stats.spellModCritManaRestore[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModCritManaRestore[spellId].buffs);
+    end
+
     if stats.illumination.val > 0 then
         if (class == "PALADIN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) > 0)
         or (class == "MAGE" and (school == _addon.SCHOOL.FIRE or school == _addon.SCHOOL.FROST))

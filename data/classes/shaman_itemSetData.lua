@@ -183,6 +183,23 @@ _addon.setItemData[28349] = 630;
 _addon.setItemData[27909] = 630;
 _addon.setItemData[27802] = 630;
 
+_addon.itemSetData[632] = {
+    name = "Cyclone Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
+            affectSpell = {-1877999613},
+            value = 30,
+        },
+    }
+}
+_addon.setItemData[29033] = 632;
+_addon.setItemData[29035] = 632;
+_addon.setItemData[29034] = 632;
+_addon.setItemData[29036] = 632;
+_addon.setItemData[29037] = 632;
+
 _addon.itemSetData[633] = {
     name = "Cyclone Harness",
     effects = {
@@ -199,6 +216,23 @@ _addon.setItemData[29039] = 633;
 _addon.setItemData[29040] = 633;
 _addon.setItemData[29043] = 633;
 _addon.setItemData[29042] = 633;
+
+_addon.itemSetData[635] = {
+    name = "Cataclysm Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
+            affectSpell = {1},
+            value = 40,
+        },
+    }
+}
+_addon.setItemData[30169] = 635;
+_addon.setItemData[30170] = 635;
+_addon.setItemData[30171] = 635;
+_addon.setItemData[30172] = 635;
+_addon.setItemData[30173] = 635;
 
 _addon.itemSetData[682] = {
     name = "Skyshatter Harness",

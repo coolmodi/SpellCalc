@@ -142,6 +142,23 @@ _addon.setItemData[30151] = 665;
 _addon.setItemData[30154] = 665;
 _addon.setItemData[30150] = 665;
 
+_addon.itemSetData[666] = {
+    name = "Avatar Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_MANARESTORE,
+            affectSpell = {49848464, 1042},
+            value = 9,
+        },
+    }
+}
+_addon.setItemData[30160] = 666;
+_addon.setItemData[30161] = 666;
+_addon.setItemData[30162] = 666;
+_addon.setItemData[30159] = 666;
+_addon.setItemData[30163] = 666;
+
 _addon.itemSetData[674] = {
     name = "Absolution Regalia",
     effects = {

@@ -27,6 +27,21 @@ _addon.setItemData[16954] = 217;
 _addon.setItemData[16957] = 217;
 _addon.setItemData[16953] = 217;
 
+_addon.itemSetData[506] = {
+    name = "Battlegear of Eternal Justice",
+    effects = {
+        {
+            need = 3,
+            type = _addon.EFFECT_TYPE.SPELLMOD_MANARESTORE,
+            affectSpell = {8388608},
+            value = 20,
+        },
+    }
+}
+_addon.setItemData[21397] = 506;
+_addon.setItemData[21395] = 506;
+_addon.setItemData[21396] = 506;
+
 _addon.itemSetData[625] = {
     name = "Justicar Armor",
     effects = {

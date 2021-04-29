@@ -152,6 +152,8 @@ _addon.stats = {
     spellModPctSpellScale = SpellStatTable(),
     spellModClearCastChance = SpellStatTable(),
     spellModCharges = SpellStatTable(),
+    spellModCritManaRestore = SpellStatTable(),
+    spellModManaRestore = SpellStatTable(),
 
     ---@type table<number, table<number, UniformStat>>
     weaponModSchoolPctDamage = WeaponStatTable(SchoolStatTable),

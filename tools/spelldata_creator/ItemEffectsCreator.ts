@@ -7,8 +7,6 @@ import { SpellData } from "./SpellData";
 import { readFileSync, writeFileSync } from "fs";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
-    //[AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN]: true, // TODO: phase out old item system completely
-    //[AURA_TYPE.SPELL_AURA_MOD_TARGET_RESISTANCE]: true, // TODO: phase out old item system completely
     [AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE_PERCENT]: true,
     [AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE]: true,
     [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE]: true,
@@ -18,7 +16,7 @@ const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
     [AURA_TYPE.SPELL_AURA_PERIODIC_HEAL]: true,
     [AURA_TYPE.SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS]: true, // TODO: future
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER_VERSUS]: true, // TODO: future
-    [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL]: true, // TODO: check this?
+    [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL]: true,
 }
 Object.assign(AURA_TYPES_TO_IGNORE, USELESS_AURAS);
 

@@ -84,6 +84,40 @@ _addon.setItemData[22488] = 521;
 _addon.setItemData[22495] = 521;
 _addon.setItemData[23064] = 521;
 
+_addon.itemSetData[638] = {
+    name = "Malorne Raiment",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_MANARESTORE,
+            affectSpell = {240, 16},
+            value = 6,
+        },
+    }
+}
+_addon.setItemData[29087] = 638;
+_addon.setItemData[29086] = 638;
+_addon.setItemData[29090] = 638;
+_addon.setItemData[29088] = 638;
+_addon.setItemData[29089] = 638;
+
+_addon.itemSetData[639] = {
+    name = "Malorne Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_MANARESTORE,
+            affectSpell = {6291975},
+            value = 6,
+        },
+    }
+}
+_addon.setItemData[29093] = 639;
+_addon.setItemData[29094] = 639;
+_addon.setItemData[29091] = 639;
+_addon.setItemData[29092] = 639;
+_addon.setItemData[29095] = 639;
+
 _addon.itemSetData[641] = {
     name = "Nordrassil Harness",
     effects = {
