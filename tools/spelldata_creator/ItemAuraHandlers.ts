@@ -159,9 +159,13 @@ export class AuraHandlers
                         value: 50
                     }
                 case 0:
-                    if (effect.SpellID === 37558)
+                    if (effect.SpellID === 37558) // Your Prayer of Mending heals an additional $s1 health.
                     {
-                        return; // TODO: Your Prayer of Mending heals an additional $s1 health.
+                        return {
+                            type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                            affectSpell: [0, 32],
+                            value: 100
+                        }
                     }
                     throw "Triggered spell needs some love"
                 case 18350: // Dummy trigger
@@ -351,10 +355,10 @@ export class AuraHandlers
                         affectSpell: [6291975],
                         value: 6 // 5%
                     }
+                case 34246: // TODO: Increases the periodic healing of your Lifebloom by up to $s1.    
                 case 37169: // TODO: Your Eviscerate and Envenom abilities cause 40 extra damage per combo point.
                 case 37182: // TODO: Increases the amount healed by your Judgement of Light by $s1.
                 case 34241: // TODO: Increases periodic damage done by Rip by $s1 per combo point.
-                case 34246: // TODO: Increases the periodic healing of your Lifebloom by up to $s1.
                 case 38320: // TODO: Increases the benefit your Flash of Light spell receives from Blessing of Light by ${$m1/2} and Holy Light spell receives from Blessing of Light by $s1.
                 case 39926: // TODO: ToL heal bonus improvement
                 case 28849: // Regain up to 10 mana each time you cast Lesser Healing Wave. (depends on rank...)

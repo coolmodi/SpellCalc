@@ -58,6 +58,17 @@ _addon.itemSetData = {
             },
         }
     },
+    [662] = {
+        name = "Hallowed Raiment",
+        effects = {
+            {
+                need = 4,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                affectSpell = {0, 32},
+                value = 100,
+            },
+        }
+    },
 }
 
 _addon.setItemData = {
@@ -76,4 +87,9 @@ _addon.setItemData = {
     [21875] = 554,
     [21874] = 554,
     [21873] = 554,
+    [28413] = 662,
+    [28230] = 662,
+    [27536] = 662,
+    [27775] = 662,
+    [27875] = 662,
 }
