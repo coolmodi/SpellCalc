@@ -54,6 +54,16 @@ _addon.talentData = {
             }
         }
     },
+    { -- Unrelenting Storm
+        tree = 1,
+        talent = 14,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MANA_PER_5_FROM_INT,
+                perPoint = 2,
+            }
+        }
+    },
     { -- Elemental Precision
         tree = 1,
         talent = 15,

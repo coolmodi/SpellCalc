@@ -94,6 +94,17 @@ _addon.talentData = {
             },
         }
     },
+    { -- Dreamstate
+        tree = 1,
+        talent = 17,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.MANA_PER_5_FROM_INT,
+                perPoint = 3,
+                base = 1
+            }
+        }
+    },
     { -- Wrath of Cenarius
         tree = 1,
         talent = 20,

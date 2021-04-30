@@ -310,6 +310,7 @@ AddSingleStat("While casting", stats, "manaRegCasting", " mana/s");
 AddUniformStatTable(stats.fsrRegenMult, "FSR regen mult", "%");
 AddSingleStat("Mp5 from API", stats, "manaRegAura", " mana/s");
 AddUniformStatTable(stats.mp5, "Mp5 internal", " mana/5s");
+AddUniformStatTable(stats.intToMP5Pct, "Int % mp5", "%");
 
 AddSchoolTableSingle(stats.spellPower, "Spell power");
 AddSingleStat("Healing bonus", stats, "spellHealing");

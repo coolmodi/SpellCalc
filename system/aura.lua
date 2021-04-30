@@ -145,7 +145,11 @@ end
 local effectCustom = {
     [EFFECT_TYPE.FSR_SPIRIT_REGEN] = function(apply, name, value)
         ApplyOrRemove(apply, value, stats.fsrRegenMult, name);
-        stats.manaRegCasting = stats.manaRegBase * (stats.fsrRegenMult.val / 100);
+        _addon:UpdateManaRegen();
+    end,
+    [EFFECT_TYPE.MANA_PER_5_FROM_INT] = function (apply, name, value)
+        ApplyOrRemove(apply, value, stats.intToMP5Pct, name);
+        _addon:UpdateManaRegen();
     end,
     [EFFECT_TYPE.CONDITION_TRIGGER] = function(apply, name, value)
         conditionsActive = conditionsActive + value;

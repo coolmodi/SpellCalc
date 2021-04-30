@@ -164,6 +164,7 @@ _addon.stats = {
     versusModFlatSpellpower = CreatureTypeStatTable(),
 
     mp5 = UniformStat();
+    intToMP5Pct = UniformStat(),
     fsrRegenMult = UniformStat();
     modhealingDone = UniformStat(),
     hitBonus = UniformStat();
@@ -234,16 +235,25 @@ do
         0.010700, 0.010522, 0.010290, 0.010119, 0.009968, 0.009808, 0.009651, 0.009553, 0.009445, 0.009327
     }
 
+    local oldIntPctMP5 = 0;
+
     ---Update spirit+int based and MP5 regen values
     -- TODO: Check back if API output still doesn't contain int% reg talents
     function _addon:UpdateManaRegen()
+        local stats = self.stats;
         local _, int = UnitStat("player", 4);
         local _, spirit = UnitStat("player", 5);
         local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]);
 
-        self.stats.manaRegBase = spiritIntRegen;
-        self.stats.manaRegCasting = self.stats.manaRegBase * (self.stats.fsrRegenMult.val/100);
-        self.stats.manaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
+        stats.manaRegBase = spiritIntRegen;
+        stats.manaRegCasting = stats.manaRegBase * (stats.fsrRegenMult.val/100);
+        stats.manaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
+
+        local regFromIntPct = stats.intToMP5Pct.val * 0.01 * int;
+        if oldIntPctMP5 ~= regFromIntPct then
+            stats.mp5.val = stats.mp5.val - oldIntPctMP5 + regFromIntPct;
+            oldIntPctMP5 = regFromIntPct;
+        end
 
         self:TriggerUpdate();
     end
