@@ -90,3 +90,5 @@ UI/tooltip/dummyAura.lua
 UI/StatDisplay.lua
 UI/actionbar/buttonText.lua
 UI/actionbar/ActionBarValues.lua
+
+UI/test/DMCBD.lua
