@@ -275,6 +275,9 @@ export class AuraHandlers
                 case 20: // SPELLMOD_EFFECT_PAST_FIRST
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST;
                     break;
+                case 15: // SPELLMOD_CRIT_DAMAGE_BONUS
+                    aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT;
+                    break;
                 case 27: // SPELLMOD_MULTIPLE_VALUE
                 case 1: // SPELLMOD_DURATION (shouldn't be used for DoTs and HoTs)
                 case 11: // SPELLMOD_COOLDOWN
@@ -284,9 +287,6 @@ export class AuraHandlers
                 case 6: // SPELLMOD_RADIUS
                 case 9: // SPELLMOD_NOT_LOSE_CASTING_TIME
                 case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
-                    return;
-                case 15: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
-                    console.log(effect.SpellID);
                     return;
                 default:
                     throw "SPELL_AURA_ADD_FLAT_MODIFIER type not handled!";
