@@ -234,19 +234,16 @@ do
         0.010700, 0.010522, 0.010290, 0.010119, 0.009968, 0.009808, 0.009651, 0.009553, 0.009445, 0.009327
     }
 
-    ---Update spirit+int based and MP5 regen values from API
-    -- TODO: once GetManaRegen() is fixed use that instead, can drop fsr stuff entirely then
-    -- Currently the "casting" regen is only mp/s from "mp5" sources (SPELL_AURA_MOD_POWER_REGEN)
+    ---Update spirit+int based and MP5 regen values
+    -- TODO: Check back if API output still doesn't contain int% reg talents
     function _addon:UpdateManaRegen()
         local _, int = UnitStat("player", 4);
         local _, spirit = UnitStat("player", 5);
-
         local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]);
-        local apiRegenBase, apiRegenCasting = GetManaRegen();
 
         self.stats.manaRegBase = spiritIntRegen;
         self.stats.manaRegCasting = self.stats.manaRegBase * (self.stats.fsrRegenMult.val/100);
-        self.stats.manaRegAura = apiRegenCasting;
+        self.stats.manaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
 
         self:TriggerUpdate();
     end

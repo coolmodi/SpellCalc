@@ -305,11 +305,11 @@ end);
 -- Add stats to UI
 
 AddSingleStat("Mana", stats, "mana");
-AddSingleStat("Spirit regen", stats, "manaRegBase", " mana/s");
-AddSingleStat("FSR regen", stats, "manaRegCasting", " mana/s");
+AddSingleStat("Spirit/Int base regen", stats, "manaRegBase", " mana/s");
+AddSingleStat("While casting", stats, "manaRegCasting", " mana/s");
 AddUniformStatTable(stats.fsrRegenMult, "FSR regen mult", "%");
-AddSingleStat("Mp5 API", stats, "manaRegAura", " mana/s");
-AddUniformStatTable(stats.mp5, "Mp5 regen", " mana/5s");
+AddSingleStat("Mp5 from API", stats, "manaRegAura", " mana/s");
+AddUniformStatTable(stats.mp5, "Mp5 internal", " mana/5s");
 
 AddSchoolTableSingle(stats.spellPower, "Spell power");
 AddSingleStat("Healing bonus", stats, "spellHealing");

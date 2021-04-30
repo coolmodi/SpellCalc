@@ -130,8 +130,11 @@ function GetSpellCritChance(schoolNum)
     return 123;
 end
 
+---Gets the player's current mana regeneration rates (in mana per 1 seconds). 
+---@return number base @Full regen while outside the fsr
+---@return number casting @Regen from mp5 and uninterrupted spirit/int regen
 function GetManaRegen()
-    return 123;
+    return;
 end
 
 function UnitPowerMax(unit, powerType)
