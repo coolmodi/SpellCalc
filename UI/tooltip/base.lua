@@ -136,9 +136,9 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
         if calcedEffect.igniteData then
-            SCT:AppendMinMaxAvgLine(L.TT_IGNITE, "2x "..SCT:Round(calcedEffect.igniteData.min/2), calcedEffect.igniteData.max/2, calcedEffect.igniteData.avg/2);
+            SCT:AppendMinMaxAvgLine(L.TT_IGNITE, calcedEffect.igniteData.min/2, calcedEffect.igniteData.max/2, calcedEffect.igniteData.avg/2, 2);
         end
     end
 
@@ -271,12 +271,11 @@ local function AppendPTSA(calcedSpell, effectNum, isHeal)
     local calcedEffect = calcedSpell[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %d"):format(calcedEffect.ticks, SCT:Round(calcedEffect.min)), calcedEffect.max, calcedEffect.avg);
+        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg, calcedEffect.ticks);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, ("%dx %d"):format(calcedEffect.ticks, SCT:Round(calcedEffect.minCrit)), 
-            calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, calcedEffect.ticks, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
     end
 
     SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * calcedEffect.avgCombined));
@@ -363,7 +362,7 @@ local function AppendAutoAttack(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
     end
 
     AppendMitigation(calcedSpell);
@@ -385,7 +384,7 @@ local function AppendAutoAttack(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, ohd.minCrit, ohd.maxCrit, ohd.avgCrit, nil, ("%.2f%% %s"):format(ohd.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, ohd.minCrit, ohd.maxCrit, ohd.avgCrit, nil, nil, ("%.2f%% %s"):format(ohd.critChance, L.CHANCE));
     end
 
     AppendOffhandMitigation(calcedSpell, effectNum);

@@ -111,8 +111,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 25,
-                perLevel = 0.1,
+                valueBase = 25,
+                valueRange = 0,
+                valuePerLevel = 0.1,
                 coef = 0.143,
             },
         }
@@ -125,9 +126,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 18,
-                max = 21,
-                perLevel = 0.5,
+                valueBase = 18,
+                valueRange = 2,
+                valuePerLevel = 0.5,
                 coef = 0.163,
             },
         }
@@ -140,9 +141,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 98,
-                max = 109,
-                perLevel = 0.8,
+                valueBase = 98,
+                valueRange = 10,
+                valuePerLevel = 0.8,
                 coef = 0.193,
             },
         }
@@ -155,9 +156,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 19,
-                max = 22,
-                perLevel = 0.5,
+                valueBase = 19,
+                valueRange = 2,
+                valuePerLevel = 0.5,
                 coef = 0.018,
             },
         }
@@ -170,16 +171,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 14,
-                max = 23,
-                perLevel = 0.6,
+                valueBase = 14,
+                valueRange = 8,
+                valuePerLevel = 0.6,
                 coef = 0.123,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 1,
+                valueBase = 1,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -192,16 +194,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 31,
-                max = 46,
-                perLevel = 0.8,
+                valueBase = 31,
+                valueRange = 14,
+                valuePerLevel = 0.8,
                 coef = 0.271,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 1,
+                valueBase = 1,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -214,16 +217,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 53,
-                max = 74,
-                perLevel = 1,
+                valueBase = 53,
+                valueRange = 20,
+                valuePerLevel = 1,
                 coef = 0.5,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 2,
+                valueBase = 2,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -236,9 +240,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 31,
-                max = 36,
-                perLevel = 0.7,
+                valueBase = 31,
+                valueRange = 4,
+                valuePerLevel = 0.7,
                 coef = 0.269,
             },
         }
@@ -252,7 +256,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 165,
+                valueBase = 165,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -265,9 +270,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 51,
-                max = 58,
-                perLevel = 0.9,
+                valueBase = 51,
+                valueRange = 6,
+                valuePerLevel = 0.9,
                 coef = 0.463,
             },
         }
@@ -280,9 +285,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 33,
-                max = 38,
-                perLevel = 0.5,
+                valueBase = 33,
+                valueRange = 4,
+                valuePerLevel = 0.5,
                 coef = 0.043,
             },
         }
@@ -294,9 +299,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 32,
-                max = 37,
-                perLevel = 0.4,
+                valueBase = 32,
+                valueRange = 4,
+                valuePerLevel = 0.4,
                 coef = 0.166,
             },
         }
@@ -310,7 +315,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 97,
-                min = 120,
+                valueBase = 120,
+                valueRange = 0,
                 coef = 0.5,
             },
         }
@@ -323,16 +329,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 52,
-                max = 69,
-                perLevel = 0.6,
+                valueBase = 52,
+                valueRange = 16,
+                valuePerLevel = 0.6,
                 coef = 0.2,
             },
             [2] = {
                 effectType = 27,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 12,
+                valueBase = 12,
+                valueRange = 0,
                 coef = 0.026,
             },
         }
@@ -345,16 +352,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 96,
-                max = 123,
-                perLevel = 0.8,
+                valueBase = 96,
+                valueRange = 26,
+                valuePerLevel = 0.8,
                 coef = 0.236,
             },
             [2] = {
                 effectType = 27,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 22,
+                valueBase = 22,
+                valueRange = 0,
                 coef = 0.03,
             },
         }
@@ -366,9 +374,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 24,
-                max = 33,
-                perLevel = 0.6,
+                valueBase = 24,
+                valueRange = 8,
+                valuePerLevel = 0.6,
                 coef = 0.204,
             },
         }
@@ -380,9 +388,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 57,
-                max = 72,
-                perLevel = 1,
+                valueBase = 57,
+                valueRange = 14,
+                valuePerLevel = 1,
                 coef = 0.332,
             },
         }
@@ -394,9 +402,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 103,
-                max = 128,
-                perLevel = 1.4,
+                valueBase = 103,
+                valueRange = 24,
+                valuePerLevel = 1.4,
                 coef = 0.429,
             },
         }
@@ -408,9 +416,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 53,
-                max = 66,
-                perLevel = 0.9,
+                valueBase = 53,
+                valueRange = 12,
+                valuePerLevel = 0.9,
                 coef = 0.429,
             },
         }
@@ -423,16 +431,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 84,
-                max = 117,
-                perLevel = 1.3,
+                valueBase = 84,
+                valueRange = 32,
+                valuePerLevel = 1.3,
                 coef = 0.793,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 3,
+                valueBase = 3,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -447,8 +456,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 24,
-                perLevel = 0.3,
+                valueBase = 24,
+                valueRange = 0,
+                valuePerLevel = 0.3,
                 coef = 0.157,
             },
         }
@@ -463,8 +473,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 36,
-                perLevel = 0.4,
+                valueBase = 36,
+                valueRange = 0,
+                valuePerLevel = 0.4,
                 coef = 0.243,
             },
         }
@@ -479,8 +490,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 56,
-                perLevel = 0.5,
+                valueBase = 56,
+                valueRange = 0,
+                valuePerLevel = 0.5,
                 coef = 0.286,
             },
         }
@@ -493,9 +505,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 52,
-                max = 59,
-                perLevel = 0.5,
+                valueBase = 52,
+                valueRange = 6,
+                valuePerLevel = 0.5,
                 coef = 0.043,
             },
         }
@@ -510,8 +522,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 44,
-                perLevel = 0.2,
+                valueBase = 44,
+                valueRange = 0,
+                valuePerLevel = 0.2,
                 coef = 0.143,
             },
         }
@@ -525,7 +538,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 165,
+                valueBase = 165,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -536,7 +550,8 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 78,
-                min = 0,
+                valueBase = 0,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -549,9 +564,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 74,
-                max = 83,
-                perLevel = 1.1,
+                valueBase = 74,
+                valueRange = 8,
+                valuePerLevel = 1.1,
                 coef = 0.706,
             },
         }
@@ -564,16 +579,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 139,
-                max = 188,
-                perLevel = 1.8,
+                valueBase = 139,
+                valueRange = 48,
+                valuePerLevel = 1.8,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 5,
+                valueBase = 5,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -586,16 +602,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 199,
-                max = 266,
-                perLevel = 2.1,
+                valueBase = 199,
+                valueRange = 66,
+                valuePerLevel = 2.1,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 7,
+                valueBase = 7,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -608,16 +625,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 255,
-                max = 336,
-                perLevel = 2.4,
+                valueBase = 255,
+                valueRange = 80,
+                valuePerLevel = 2.4,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 8,
+                valueBase = 8,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -630,9 +648,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 126,
-                max = 139,
-                perLevel = 1.5,
+                valueBase = 126,
+                valueRange = 12,
+                valuePerLevel = 1.5,
                 coef = 0.814,
             },
         }
@@ -645,9 +663,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 174,
-                max = 191,
-                perLevel = 1.7,
+                valueBase = 174,
+                valueRange = 16,
+                valuePerLevel = 1.7,
                 coef = 0.814,
             },
         }
@@ -660,9 +678,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 227,
-                max = 248,
-                perLevel = 2,
+                valueBase = 227,
+                valueRange = 20,
+                valuePerLevel = 2,
                 coef = 0.814,
             },
         }
@@ -674,9 +692,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 168,
-                max = 203,
-                perLevel = 1.8,
+                valueBase = 168,
+                valueRange = 34,
+                valuePerLevel = 1.8,
                 coef = 0.429,
             },
         }
@@ -688,9 +706,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 242,
-                max = 291,
-                perLevel = 2.2,
+                valueBase = 242,
+                valueRange = 48,
+                valuePerLevel = 2.2,
                 coef = 0.429,
             },
         }
@@ -705,8 +723,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 83,
-                perLevel = 0.6,
+                valueBase = 83,
+                valueRange = 0,
+                valuePerLevel = 0.6,
                 coef = 0.286,
             },
         }
@@ -721,8 +740,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 115,
-                perLevel = 0.7,
+                valueBase = 115,
+                valueRange = 0,
+                valuePerLevel = 0.7,
                 coef = 0.286,
             },
         }
@@ -735,16 +755,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 154,
-                max = 193,
-                perLevel = 1,
+                valueBase = 154,
+                valueRange = 38,
+                valuePerLevel = 1,
                 coef = 0.236,
             },
             [2] = {
                 effectType = 27,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 35,
+                valueBase = 35,
+                valueRange = 0,
                 coef = 0.03,
             },
         }
@@ -757,16 +778,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 220,
-                max = 273,
-                perLevel = 1.3,
+                valueBase = 220,
+                valueRange = 52,
+                valuePerLevel = 1.3,
                 coef = 0.236,
             },
             [2] = {
                 effectType = 27,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 49,
+                valueBase = 49,
+                valueRange = 0,
                 coef = 0.03,
             },
         }
@@ -781,8 +803,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 65,
-                perLevel = 0.2,
+                valueBase = 65,
+                valueRange = 0,
+                valuePerLevel = 0.2,
                 coef = 0.143,
             },
         }
@@ -794,9 +817,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 57,
-                max = 64,
-                perLevel = 0.6,
+                valueBase = 57,
+                valueRange = 6,
+                valuePerLevel = 0.6,
                 coef = 0.214,
             },
         }
@@ -808,9 +831,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 97,
-                max = 106,
-                perLevel = 0.9,
+                valueBase = 97,
+                valueRange = 8,
+                valuePerLevel = 0.9,
                 coef = 0.214,
             },
         }
@@ -822,9 +845,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 139,
-                max = 152,
-                perLevel = 0.9,
+                valueBase = 139,
+                valueRange = 12,
+                valuePerLevel = 0.9,
                 coef = 0.214,
             },
         }
@@ -836,9 +859,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 77,
-                max = 94,
-                perLevel = 1.1,
+                valueBase = 77,
+                valueRange = 16,
+                valuePerLevel = 1.1,
                 coef = 0.429,
             },
         }
@@ -850,9 +873,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 100,
-                max = 121,
-                perLevel = 1.3,
+                valueBase = 100,
+                valueRange = 20,
+                valuePerLevel = 1.3,
                 coef = 0.429,
             },
         }
@@ -864,9 +887,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 133,
-                max = 160,
-                perLevel = 1.5,
+                valueBase = 133,
+                valueRange = 26,
+                valuePerLevel = 1.5,
                 coef = 0.429,
             },
         }
@@ -880,7 +903,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 290,
+                valueBase = 290,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -894,7 +918,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 470,
+                valueBase = 470,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -908,7 +933,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 290,
+                valueBase = 290,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -922,7 +948,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 470,
+                valueBase = 470,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -935,9 +962,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 146,
-                max = 161,
-                perLevel = 1,
+                valueBase = 146,
+                valueRange = 14,
+                valuePerLevel = 1,
                 coef = 0.193,
             },
         }
@@ -951,7 +978,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 97,
-                min = 210,
+                valueBase = 210,
+                valueRange = 0,
                 coef = 0.5,
             },
         }
@@ -965,7 +993,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 97,
-                min = 300,
+                valueBase = 300,
+                valueRange = 0,
                 coef = 0.5,
             },
         }
@@ -978,16 +1007,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 318,
-                max = 415,
-                perLevel = 2.7,
+                valueBase = 318,
+                valueRange = 96,
+                valuePerLevel = 2.7,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 10,
+                valueBase = 10,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1000,16 +1030,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 392,
-                max = 507,
-                perLevel = 3,
+                valueBase = 392,
+                valueRange = 114,
+                valuePerLevel = 3,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 13,
+                valueBase = 13,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1022,16 +1053,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 475,
-                max = 610,
-                perLevel = 3.4,
+                valueBase = 475,
+                valueRange = 134,
+                valuePerLevel = 3.4,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 15,
+                valueBase = 15,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1044,16 +1076,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 561,
-                max = 716,
-                perLevel = 3.7,
+                valueBase = 561,
+                valueRange = 154,
+                valuePerLevel = 3.7,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 18,
+                valueBase = 18,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1066,9 +1099,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 203,
-                max = 224,
-                perLevel = 1.2,
+                valueBase = 203,
+                valueRange = 20,
+                valuePerLevel = 1.2,
                 coef = 0.193,
             },
         }
@@ -1081,9 +1114,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 264,
-                max = 291,
-                perLevel = 1.3,
+                valueBase = 264,
+                valueRange = 26,
+                valuePerLevel = 1.3,
                 coef = 0.193,
             },
         }
@@ -1096,9 +1129,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 335,
-                max = 366,
-                perLevel = 1.5,
+                valueBase = 335,
+                valueRange = 30,
+                valuePerLevel = 1.5,
                 coef = 0.193,
             },
         }
@@ -1112,7 +1145,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 675,
+                valueBase = 675,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1125,9 +1159,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 292,
-                max = 317,
-                perLevel = 2.3,
+                valueBase = 292,
+                valueRange = 24,
+                valuePerLevel = 2.3,
                 coef = 0.814,
             },
         }
@@ -1140,9 +1174,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 353,
-                max = 384,
-                perLevel = 2.6,
+                valueBase = 353,
+                valueRange = 30,
+                valuePerLevel = 2.6,
                 coef = 0.814,
             },
         }
@@ -1155,9 +1189,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 429,
-                max = 464,
-                perLevel = 2.9,
+                valueBase = 429,
+                valueRange = 34,
+                valuePerLevel = 2.9,
                 coef = 0.814,
             },
         }
@@ -1172,8 +1206,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 90,
-                perLevel = 0.3,
+                valueBase = 90,
+                valueRange = 0,
+                valuePerLevel = 0.3,
                 coef = 0.143,
             },
         }
@@ -1188,8 +1223,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 117,
-                perLevel = 0.3,
+                valueBase = 117,
+                valueRange = 0,
+                valuePerLevel = 0.3,
                 coef = 0.143,
             },
         }
@@ -1204,8 +1240,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 149,
-                perLevel = 0.4,
+                valueBase = 149,
+                valueRange = 0,
+                valuePerLevel = 0.4,
                 coef = 0.143,
             },
         }
@@ -1219,7 +1256,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 97,
-                min = 390,
+                valueBase = 390,
+                valueRange = 0,
                 coef = 0.5,
             },
         }
@@ -1233,7 +1271,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 97,
-                min = 480,
+                valueBase = 480,
+                valueRange = 0,
                 coef = 0.5,
             },
         }
@@ -1247,7 +1286,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 97,
-                min = 570,
+                valueBase = 570,
+                valueRange = 0,
                 coef = 0.5,
             },
         }
@@ -1259,9 +1299,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 332,
-                max = 395,
-                perLevel = 2.6,
+                valueBase = 332,
+                valueRange = 62,
+                valuePerLevel = 2.6,
                 coef = 0.429,
             },
         }
@@ -1273,9 +1313,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 431,
-                max = 510,
-                perLevel = 3,
+                valueBase = 431,
+                valueRange = 78,
+                valuePerLevel = 3,
                 coef = 0.429,
             },
         }
@@ -1287,9 +1327,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 186,
-                max = 203,
-                perLevel = 1.1,
+                valueBase = 186,
+                valueRange = 16,
+                valuePerLevel = 1.1,
                 coef = 0.214,
             },
         }
@@ -1301,9 +1341,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 243,
-                max = 264,
-                perLevel = 1.3,
+                valueBase = 243,
+                valueRange = 20,
+                valuePerLevel = 1.3,
                 coef = 0.214,
             },
         }
@@ -1315,9 +1355,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 162,
-                max = 193,
-                perLevel = 1.7,
+                valueBase = 162,
+                valueRange = 30,
+                valuePerLevel = 1.7,
                 coef = 0.429,
             },
         }
@@ -1329,9 +1369,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 200,
-                max = 240,
-                perLevel = 1.9,
+                valueBase = 200,
+                valueRange = 39,
+                valuePerLevel = 1.9,
                 coef = 0.429,
             },
         }
@@ -1343,9 +1383,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 233,
-                max = 276,
-                perLevel = 2.1,
+                valueBase = 233,
+                valueRange = 42,
+                valuePerLevel = 2.1,
                 coef = 0.429,
             },
         }
@@ -1360,8 +1400,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 151,
-                perLevel = 0.8,
+                valueBase = 151,
+                valueRange = 0,
+                valuePerLevel = 0.8,
                 coef = 0.286,
             },
         }
@@ -1376,8 +1417,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 192,
-                perLevel = 0.9,
+                valueBase = 192,
+                valueRange = 0,
+                valuePerLevel = 0.9,
                 coef = 0.286,
             },
         }
@@ -1390,16 +1432,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 291,
-                max = 360,
-                perLevel = 1.5,
+                valueBase = 291,
+                valueRange = 68,
+                valuePerLevel = 1.5,
                 coef = 0.236,
             },
             [2] = {
                 effectType = 27,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 66,
+                valueBase = 66,
+                valueRange = 0,
                 coef = 0.03,
             },
         }
@@ -1412,16 +1455,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 375,
-                max = 460,
-                perLevel = 1.7,
+                valueBase = 375,
+                valueRange = 84,
+                valuePerLevel = 1.7,
                 coef = 0.236,
             },
             [2] = {
                 effectType = 27,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 85,
+                valueBase = 85,
+                valueRange = 0,
                 coef = 0.03,
             },
         }
@@ -1435,7 +1479,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 675,
+                valueBase = 675,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1449,7 +1494,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 875,
+                valueBase = 875,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1462,9 +1508,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 71,
-                max = 80,
-                perLevel = 0.5,
+                valueBase = 71,
+                valueRange = 8,
+                valuePerLevel = 0.5,
                 coef = 0.043,
             },
         }
@@ -1477,9 +1523,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 154,
-                max = 187,
-                perLevel = 1,
+                valueBase = 154,
+                valueRange = 32,
+                valuePerLevel = 1,
                 coef = 0.193,
             },
         }
@@ -1492,16 +1538,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 141,
-                max = 188,
-                perLevel = 1.9,
+                valueBase = 141,
+                valueRange = 46,
+                valuePerLevel = 1.9,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 14,
+                valueBase = 14,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1515,8 +1562,9 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 438,
-                perLevel = 2.8,
+                valueBase = 438,
+                valueRange = 0,
+                valuePerLevel = 2.8,
                 coef = 0.3,
             },
         }
@@ -1529,16 +1577,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 180,
-                max = 237,
-                perLevel = 2.2,
+                valueBase = 180,
+                valueRange = 56,
+                valuePerLevel = 2.2,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 18,
+                valueBase = 18,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1551,16 +1600,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 255,
-                max = 328,
-                perLevel = 2.6,
+                valueBase = 255,
+                valueRange = 72,
+                valuePerLevel = 2.6,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 24,
+                valueBase = 24,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1573,16 +1623,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 329,
-                max = 420,
-                perLevel = 3,
+                valueBase = 329,
+                valueRange = 90,
+                valuePerLevel = 3,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 31,
+                valueBase = 31,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1595,16 +1646,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 407,
-                max = 516,
-                perLevel = 3.4,
+                valueBase = 407,
+                valueRange = 108,
+                valuePerLevel = 3.4,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 39,
+                valueBase = 39,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1617,16 +1669,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 503,
-                max = 632,
-                perLevel = 3.8,
+                valueBase = 503,
+                valueRange = 128,
+                valuePerLevel = 3.8,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 47,
+                valueBase = 47,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1639,16 +1692,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 600,
-                max = 751,
-                perLevel = 4.2,
+                valueBase = 600,
+                valueRange = 150,
+                valuePerLevel = 4.2,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 57,
+                valueBase = 57,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1661,9 +1715,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 201,
-                max = 242,
-                perLevel = 1.2,
+                valueBase = 201,
+                valueRange = 40,
+                valuePerLevel = 1.2,
                 coef = 0.193,
             },
         }
@@ -1676,9 +1730,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 277,
-                max = 330,
-                perLevel = 1.4,
+                valueBase = 277,
+                valueRange = 52,
+                valuePerLevel = 1.4,
                 coef = 0.193,
             },
         }
@@ -1691,9 +1745,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 365,
-                max = 434,
-                perLevel = 1.6,
+                valueBase = 365,
+                valueRange = 68,
+                valuePerLevel = 1.6,
                 coef = 0.193,
             },
         }
@@ -1706,9 +1760,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 462,
-                max = 545,
-                perLevel = 1.9,
+                valueBase = 462,
+                valueRange = 82,
+                valuePerLevel = 1.9,
                 coef = 0.193,
             },
         }
@@ -1722,8 +1776,9 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 549,
-                perLevel = 3.2,
+                valueBase = 549,
+                valueRange = 0,
+                valuePerLevel = 3.2,
                 coef = 0.3,
             },
         }
@@ -1737,8 +1792,9 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 678,
-                perLevel = 3.6,
+                valueBase = 678,
+                valueRange = 0,
+                valuePerLevel = 3.6,
                 coef = 0.3,
             },
         }
@@ -1752,8 +1808,9 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 818,
-                perLevel = 4,
+                valueBase = 818,
+                valueRange = 0,
+                valuePerLevel = 4,
                 coef = 0.3,
             },
         }
@@ -1766,16 +1823,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 708,
-                max = 899,
-                perLevel = 4.6,
+                valueBase = 708,
+                valueRange = 190,
+                valuePerLevel = 4.6,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 67,
+                valueBase = 67,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -1788,9 +1846,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 515,
-                max = 556,
-                perLevel = 3.2,
+                valueBase = 515,
+                valueRange = 40,
+                valuePerLevel = 3.2,
                 coef = 0.814,
             },
         }
@@ -1803,16 +1861,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 596,
-                max = 761,
-                perLevel = 3.8,
+                valueBase = 596,
+                valueRange = 164,
+                valuePerLevel = 3.8,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 19,
+                valueBase = 19,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1827,8 +1886,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 230,
-                perLevel = 1,
+                valueBase = 230,
+                valueRange = 0,
+                valuePerLevel = 1,
                 coef = 0.286,
             },
         }
@@ -1841,16 +1901,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 633,
-                max = 806,
-                perLevel = 4,
+                valueBase = 633,
+                valueRange = 172,
+                valuePerLevel = 4,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 21,
+                valueBase = 21,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1863,9 +1924,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 536,
-                max = 579,
-                perLevel = 3.2,
+                valueBase = 536,
+                valueRange = 42,
+                valuePerLevel = 3.2,
                 coef = 0.814,
             },
         }
@@ -1878,9 +1939,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 597,
-                max = 644,
-                perLevel = 3.5,
+                valueBase = 597,
+                valueRange = 46,
+                valuePerLevel = 3.5,
                 coef = 0.814,
             },
         }
@@ -1892,9 +1953,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 269,
-                max = 318,
-                perLevel = 2.3,
+                valueBase = 269,
+                valueRange = 48,
+                valuePerLevel = 2.3,
                 coef = 0.429,
             },
         }
@@ -1906,9 +1967,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 305,
-                max = 362,
-                perLevel = 2.5,
+                valueBase = 305,
+                valueRange = 56,
+                valuePerLevel = 2.5,
                 coef = 0.429,
             },
         }
@@ -1923,8 +1984,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 240,
-                perLevel = 1.1,
+                valueBase = 240,
+                valueRange = 0,
+                valuePerLevel = 1.1,
                 coef = 0.286,
             },
         }
@@ -1936,9 +1998,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 539,
-                max = 638,
-                perLevel = 3.3,
+                valueBase = 539,
+                valueRange = 98,
+                valuePerLevel = 3.3,
                 coef = 0.429,
             },
         }
@@ -1950,9 +2012,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 664,
-                max = 787,
-                perLevel = 3.7,
+                valueBase = 664,
+                valueRange = 122,
+                valuePerLevel = 3.7,
                 coef = 0.429,
             },
         }
@@ -1964,9 +2026,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 306,
-                max = 331,
-                perLevel = 1.5,
+                valueBase = 306,
+                valueRange = 24,
+                valuePerLevel = 1.5,
                 coef = 0.214,
             },
         }
@@ -1978,9 +2040,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 377,
-                max = 408,
-                perLevel = 1.6,
+                valueBase = 377,
+                valueRange = 30,
+                valuePerLevel = 1.6,
                 coef = 0.214,
             },
         }
@@ -1995,8 +2057,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 184,
-                perLevel = 0.4,
+                valueBase = 184,
+                valueRange = 0,
+                valuePerLevel = 0.4,
                 coef = 0.143,
             },
         }
@@ -2009,16 +2072,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 471,
-                max = 576,
-                perLevel = 1.9,
+                valueBase = 471,
+                valueRange = 104,
+                valuePerLevel = 1.9,
                 coef = 0.236,
             },
             [2] = {
                 effectType = 27,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 106,
+                valueBase = 106,
+                valueRange = 0,
                 coef = 0.03,
             },
         }
@@ -2031,9 +2095,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 410,
-                max = 449,
-                perLevel = 1.7,
+                valueBase = 410,
+                valueRange = 38,
+                valuePerLevel = 1.7,
                 coef = 0.193,
             },
         }
@@ -2046,9 +2110,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 99,
-                max = 112,
-                perLevel = 0.5,
+                valueBase = 99,
+                valueRange = 12,
+                valuePerLevel = 0.5,
                 coef = 0.043,
             },
         }
@@ -2062,7 +2126,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 1125,
+                valueBase = 1125,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -2076,7 +2141,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 97,
-                min = 715,
+                valueBase = 715,
+                valueRange = 0,
                 coef = 0.5,
             },
         }
@@ -2089,16 +2155,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 846,
-                max = 1075,
-                perLevel = 5,
+                valueBase = 846,
+                valueRange = 228,
+                valuePerLevel = 5,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 78,
+                valueBase = 78,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -2111,9 +2178,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 533,
-                max = 628,
-                perLevel = 2.1,
+                valueBase = 533,
+                valueRange = 94,
+                valuePerLevel = 2.1,
                 coef = 0.193,
             },
         }
@@ -2127,8 +2194,9 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 925,
-                perLevel = 4.4,
+                valueBase = 925,
+                valueRange = 0,
+                valuePerLevel = 4.4,
                 coef = 0.3,
             },
         }
@@ -2142,7 +2210,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 875,
+                valueBase = 875,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -2154,9 +2223,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 648,
-                max = 753,
-                perLevel = 5,
+                valueBase = 648,
+                valueRange = 104,
+                valuePerLevel = 5,
                 coef = 0.714,
             },
         }
@@ -2168,9 +2237,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 161,
-                max = 188,
-                perLevel = 3.15,
+                valueBase = 161,
+                valueRange = 26,
+                valuePerLevel = 3.15,
                 coef = 0.143,
             },
         }
@@ -2185,7 +2254,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = -1,
-                min = 75,
+                valueBase = 75,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -2198,9 +2268,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 370,
-                max = 431,
-                perLevel = 1.5,
+                valueBase = 370,
+                valueRange = 60,
+                valuePerLevel = 1.5,
                 coef = 0.193,
             },
         }
@@ -2214,7 +2284,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 1125,
+                valueBase = 1125,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -2227,9 +2298,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 454,
-                max = 527,
-                perLevel = 1.6,
+                valueBase = 454,
+                valueRange = 72,
+                valuePerLevel = 1.6,
                 coef = 0.193,
             },
         }
@@ -2242,9 +2313,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 574,
-                max = 667,
-                perLevel = 1.8,
+                valueBase = 574,
+                valueRange = 92,
+                valuePerLevel = 1.8,
                 coef = 0.193,
             },
         }
@@ -2257,9 +2328,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 680,
-                max = 791,
-                perLevel = 2,
+                valueBase = 680,
+                valueRange = 110,
+                valuePerLevel = 2,
                 coef = 0.193,
             },
         }
@@ -2273,8 +2344,9 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 69,
-                min = 1075,
-                perLevel = 4.8,
+                valueBase = 1075,
+                valueRange = 0,
+                valuePerLevel = 4.8,
                 coef = 0.3,
             },
         }
@@ -2287,9 +2359,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 616,
-                max = 725,
-                perLevel = 2.3,
+                valueBase = 616,
+                valueRange = 108,
+                valuePerLevel = 2.3,
                 coef = 0.193,
             },
         }
@@ -2302,16 +2374,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 939,
-                max = 1192,
-                perLevel = 5.4,
+                valueBase = 939,
+                valueRange = 252,
+                valuePerLevel = 5.4,
                 coef = 1.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 89,
+                valueBase = 89,
+                valueRange = 0,
                 coef = 0.05,
             },
         }
@@ -2324,16 +2397,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 717,
-                max = 914,
-                perLevel = 4.2,
+                valueBase = 717,
+                valueRange = 196,
+                valuePerLevel = 4.2,
                 coef = 1,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 21,
+                valueBase = 21,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -2346,9 +2420,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 630,
-                max = 681,
-                perLevel = 3.8,
+                valueBase = 630,
+                valueRange = 50,
+                valuePerLevel = 3.8,
                 coef = 0.814,
             },
         }
@@ -2363,8 +2437,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 260,
-                perLevel = 1.2,
+                valueBase = 260,
+                valueRange = 0,
+                valuePerLevel = 1.2,
                 coef = 0.286,
             },
         }
@@ -2379,8 +2454,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 1,
-                min = 280,
-                perLevel = 1.3,
+                valueBase = 280,
+                valueRange = 0,
+                valuePerLevel = 1.3,
                 coef = 0.286,
             },
         }

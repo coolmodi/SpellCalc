@@ -242,7 +242,7 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
         end
 
         if bit.band(effectFlags[i], SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
-            newInstance:SetTriggeredSpell(spellRankEffects[i].min, i);
+            newInstance:SetTriggeredSpell(spellRankEffects[i].valueBase, i);
         else
             local effTable = {};
             setmetatable(effTable, CalcedEffect);

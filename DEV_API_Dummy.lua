@@ -375,11 +375,11 @@ local SpellRankEffectData = {
     ---@type boolean|nil
     forceScaleWithHeal = nil,
 
-    min = math.random(),
+    valueBase = math.random(),
     ---@type number|nil
-    max = nil,
+    valueRange = nil,
     ---@type number|nil
-    perLevel = nil,
+    valuePerLevel = nil,
 
     coef = math.random(),
     ---@type number|nil

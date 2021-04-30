@@ -135,9 +135,9 @@ interface BaseInfo {
 interface EffectInfo {
     effectType: number,
     auraType?: number
-    min: number,
-    max: number,
-    perLevel: number,
+    valueBase: number,
+    valueRange: number,
+    valuePerLevel: number,
     coef: number,
     forceScaleWithHeal: boolean,
     period: number,

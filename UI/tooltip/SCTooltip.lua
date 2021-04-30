@@ -77,18 +77,24 @@ end
 
 --- Append "label: min[ - max [(avg)]] [lr: ][tr]",
 ---@param label string
----@param min string|number
+---@param min number
 ---@param max number
 ---@param avg number
+---@param ticks number|nil
 ---@param lr string|nil
 ---@param tr string|nil
-function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, lr, tr)
-    local outstr = (type(min) == "number") and self:Round(min) or min;
-    if max > 0 then
+function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, ticks, lr, tr)
+    local outstr = self:Round(min);
+
+    if max > min then
         outstr = outstr.." - "..self:Round(max);
         if SpellCalc_settings.ttAverages then
             outstr = outstr.." ("..self:Round(avg)..")";
         end
+    end
+
+    if ticks and ticks > 1 then
+        outstr = ticks.."x " ..outstr;
     end
 
     if tr then

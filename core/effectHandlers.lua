@@ -10,8 +10,8 @@ local SHADOW_BOLT = GetSpellInfo(686);
 ---@param spellRankInfo SpellRankInfo
 ---@param effectData SpellRankEffectData
 local function GetLevelBonus(spellRankInfo, effectData)
-    if effectData.perLevel and effectData.perLevel > 0 then
-        return (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
+    if effectData.valuePerLevel and effectData.valuePerLevel > 0 then
+        return (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.valuePerLevel;
     end
     return 0;
 end
@@ -72,7 +72,7 @@ local function SealOfRighteousness(calcedSpell, effNum, spellBaseInfo, spellRank
     local effectData = spellRankInfo.effects[effNum];
 
     local as = stats.attackSpeed.mainhand;
-    local rankBase = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) * 1.2 * 1.03 * as / 100;
+    local rankBase = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData)) * 1.2 * 1.03 * as / 100;
     local weaponBase = 0.03 * (stats.attackDmg.mainhand.max + stats.attackDmg.mainhand.min) / 2;
     local dmgbase;
 
@@ -176,7 +176,7 @@ local function SealOfTheCrusader(calcedSpell, effNum, spellBaseInfo, spellRankIn
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    local dpsFromAP = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) / 14;
+    local dpsFromAP = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData)) / 14;
     local mmit = calcedSpell.meleeMitigation;
     local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
     local as = stats.attackSpeed.mainhand;
@@ -274,7 +274,7 @@ local function SealOfVengeance(calcedSpell, effNum, spellBaseInfo, spellRankInfo
     calcedEffect.effectiveSpCoef = 0.034 * effectMod; -- Per application
     calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
 
-    calcedEffect.min = effectData.min * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = effectData.valueBase * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
     calcedEffect.ticks = 5;
@@ -324,7 +324,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
         calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
     calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
@@ -369,7 +369,7 @@ local function PeriodicHeal(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
         calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
     calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
@@ -396,7 +396,7 @@ local function DamageShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
@@ -423,7 +423,7 @@ local function AbsorbAura(calcedSpell, effNum, spellBaseInfo, spellRankInfo, eff
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
@@ -448,7 +448,7 @@ local function ManaShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, eff
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
@@ -495,28 +495,15 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
         calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = calcedEffect.min + effectData.valueRange;
+    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
+    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
+    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+
     calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
-
-    if effectData.max then
-        calcedEffect.max = (effectData.max + baseIncrease) * effectMod + calcedEffect.effectivePower;
-        calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-    end
-
-    if spellBaseInfo.noCrit then
-        calcedEffect.avgCombined = calcedEffect.avg;
-    else
-        calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-        calcedEffect.avgCrit = calcedEffect.minCrit;
-        if effectData.max then
-            calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-            calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
-        end
-
-        calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
-    end
-
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
     if spellBaseInfo.forceHeal then
@@ -589,18 +576,12 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
 
     local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = calcedEffect.min + effectData.valueRange;
+    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.minCrit;
-
-    if effectData.max then
-        calcedEffect.max = (effectData.max + baseIncrease) * effectMod + calcedEffect.effectivePower;
-        calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-        calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-        calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
-    end
-
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
 
     if stats.ignite.val > 0 and spellBaseInfo.school == _addon.SCHOOL.FIRE then
         local igniteMult = stats.ignite.val/100;
@@ -615,13 +596,8 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
         end
 
         calcedEffect.igniteData.min = calcedEffect.minCrit * igniteMult;
-
-        if effectData.max then
-            calcedEffect.igniteData.max =  calcedEffect.maxCrit * igniteMult;
-            calcedEffect.igniteData.avg = (calcedEffect.igniteData.min + calcedEffect.igniteData.max) / 2;
-        else
-            calcedEffect.igniteData.avg = calcedEffect.igniteData.min;
-        end
+        calcedEffect.igniteData.max = calcedEffect.maxCrit * igniteMult;
+        calcedEffect.igniteData.avg = calcedEffect.avgCrit * igniteMult;
 
         calcedSpell:AddToBuffList(stats.ignite.buffs);
         calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit + calcedEffect.igniteData.avg - calcedEffect.avg) * calcedSpell.critChance/100;
@@ -676,17 +652,12 @@ function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCas
 
     local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = calcedEffect.min + effectData.valueRange;
+    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.minCrit;
-
-    if effectData.max then
-        calcedEffect.max = (effectData.max + baseIncrease) * effectMod + calcedEffect.effectivePower;
-        calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-        calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-        calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
-    end
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
 
     if SpellCalc_settings.healDisregardCrit then
         calcedEffect.avgCombined = calcedEffect.avg;

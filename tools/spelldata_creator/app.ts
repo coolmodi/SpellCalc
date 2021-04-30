@@ -53,8 +53,8 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     if (sealType !== false)
     {
         if (sealType == SealType.SOR) {
-            ei.min = effect.EffectBasePoints + 1;
-            ei.max = ei.min;
+            ei.valueBase = effect.EffectBasePoints + 1;
+            ei.valueRange = effect.EffectDieSides - 1;
             ei.coef = 0.1;
             return;
         }
@@ -67,7 +67,7 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
         }
 
         if (sealType == SealType.SoV) {
-            ei.min = 30;
+            ei.valueBase = 30;
             return;
         }
     }
@@ -76,9 +76,9 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     if (effect.SpellID === 33076)
     {
         ei.charges = 5;
-        ei.min = effect.EffectBasePoints;
+        ei.valueBase = effect.EffectBasePoints + 1;
         ei.coef = effect.EffectBonusCoefficient;
-        ei.max = ei.min;
+        ei.valueRange = effect.EffectDieSides - 1;
         bi.forceHeal = true;
         return;
     }
@@ -87,9 +87,9 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     if ([974, 32593, 32594].indexOf(effect.SpellID) > -1)
     {
         ei.charges = 6;
-        ei.min = effect.EffectBasePoints + 1;
+        ei.valueBase = effect.EffectBasePoints + 1;
         ei.coef = 0.286;
-        ei.max = ei.min;
+        ei.valueRange = effect.EffectDieSides - 1;
         bi.forceHeal = true;
         return;
     }
@@ -107,9 +107,9 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         effectType: effect.Effect,
         auraType: effect.EffectAura,
         coef: effect.EffectBonusCoefficient,
-        min: effect.EffectBasePoints + 1, // Idk why
-        max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
-        perLevel: effect.EffectRealPointsPerLevel,
+        valueBase: effect.EffectBasePoints + 1,
+        valueRange: effect.EffectDieSides - 1,
+        valuePerLevel: effect.EffectRealPointsPerLevel,
         forceScaleWithHeal: false,
         period: 0,
         charges: 0,
@@ -138,9 +138,9 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                 rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
                 const teff = spellData.getSpellEffects(effect.EffectTriggerSpell)[0];
                 rankInfo.effects[effectNum].coef = teff.EffectBonusCoefficient;
-                rankInfo.effects[effectNum].min = teff.EffectBasePoints + 1;
-                rankInfo.effects[effectNum].max = teff.EffectBasePoints + 1 + ((teff.EffectDieSides > 1) ? teff.EffectDieSides : 0);
-                rankInfo.effects[effectNum].perLevel = teff.EffectRealPointsPerLevel;
+                rankInfo.effects[effectNum].valueBase = teff.EffectBasePoints + 1;
+                rankInfo.effects[effectNum].valueRange = teff.EffectDieSides - 1;
+                rankInfo.effects[effectNum].valuePerLevel = teff.EffectRealPointsPerLevel;
             } break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
             const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
@@ -156,9 +156,9 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     rankInfo.maxLevel = spellLevel.MaxLevel;
                     rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
                     rankInfo.effects[effectNum].coef = teffect.EffectBonusCoefficient;
-                    rankInfo.effects[effectNum].min = teffect.EffectBasePoints + 1;
-                    rankInfo.effects[effectNum].max = teffect.EffectBasePoints + 1 + ((teffect.EffectDieSides > 1) ? teffect.EffectDieSides : 0),
-                    rankInfo.effects[effectNum].perLevel = teffect.EffectRealPointsPerLevel;
+                    rankInfo.effects[effectNum].valueBase = teffect.EffectBasePoints + 1;
+                    rankInfo.effects[effectNum].valueRange = teffect.EffectDieSides - 1;
+                    rankInfo.effects[effectNum].valuePerLevel = teffect.EffectRealPointsPerLevel;
                     const misc = spellData.getSpellMisc(teffect.SpellID);
                     // 0x20000000 = spell can't crit
                     if ((misc["Attributes[2]"] & 0x20000000) === 0x20000000) baseInfo.noCrit = true;
@@ -193,9 +193,9 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
     rankInfo.effects[effectNum] = {
         effectType: effect.Effect,
         coef: effect.EffectBonusCoefficient,
-        min: effect.EffectBasePoints + 1, // Idk why
-        max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
-        perLevel: effect.EffectRealPointsPerLevel,
+        valueBase: effect.EffectBasePoints + 1,
+        valueRange: effect.EffectDieSides - 1,
+        valuePerLevel: effect.EffectRealPointsPerLevel,
         forceScaleWithHeal: false,
         period: 0,
         charges: 0,
@@ -248,9 +248,9 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
-            min: effect.EffectBasePoints + 1, // Idk why
-            max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
-            perLevel: effect.EffectRealPointsPerLevel,
+            valueBase: effect.EffectBasePoints + 1,
+            valueRange: effect.EffectDieSides - 1,
+            valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
             charges: 0,
@@ -279,9 +279,9 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
-            min: (effect.EffectBasePoints > 0) ? effect.EffectBasePoints + 1 : 0,
-            max: effect.EffectBasePoints + 1 + ((effect.EffectDieSides > 1) ? effect.EffectDieSides : 0),
-            perLevel: effect.EffectRealPointsPerLevel,
+            valueBase: effect.EffectBasePoints + 1,
+            valueRange: effect.EffectDieSides - 1,
+            valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
             charges: 0,
@@ -301,9 +301,9 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
-            min: 0,
-            max: 0,
-            perLevel: effect.EffectRealPointsPerLevel,
+            valueBase: 0,
+            valueRange: 0,
+            valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
             charges: 0,
@@ -321,9 +321,9 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: 0,
-            min: 0,
-            max: 0,
-            perLevel: 0,
+            valueBase: 0,
+            valueRange: 0,
+            valuePerLevel: 0,
             forceScaleWithHeal: false,
             period: 0,
             charges: 0,
@@ -335,14 +335,13 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: 0,
-            min: effect.EffectTriggerSpell,
-            max: 0,
-            perLevel: 0,
+            valueBase: effect.EffectTriggerSpell,
+            valueRange: 0,
+            valuePerLevel: 0,
             forceScaleWithHeal: false,
             period: 0,
             charges: 0,
             weaponCoef: 0,
-            //triggeredSpell: effect.EffectTriggerSpell
         };
     },
 }
@@ -431,7 +430,7 @@ function buildSpellInfo(pclass: string) {
 
             // Make sure maxlevel is defined for spells with level scaling
             if (classInfo.rankInfo[spellId].effects[i] 
-                && classInfo.rankInfo[spellId].effects[i].perLevel != 0 
+                && classInfo.rankInfo[spellId].effects[i].valuePerLevel != 0 
                 && classInfo.rankInfo[spellId].maxLevel == 0) throw "Effect has perlevel scaling but maxlevel of the spell is 0!";
         }
     }
@@ -493,9 +492,9 @@ end
             if (eff.period > 0) str += `\t\t\t\ttickPeriod = ${eff.period},\n`;
             if (eff.charges != 0) str += `\t\t\t\tcharges = ${eff.charges},\n`;
             if (eff.weaponCoef) str += `\t\t\t\tweaponCoef = ${eff.weaponCoef},\n`;
-            str += `\t\t\t\tmin = ${eff.min},\n`;
-            if (eff.min < eff.max) str += `\t\t\t\tmax = ${eff.max},\n`;
-            if (eff.perLevel) str += `\t\t\t\tperLevel = ${eff.perLevel},\n`;
+            str += `\t\t\t\tvalueBase = ${eff.valueBase},\n`;
+            str += `\t\t\t\tvalueRange = ${eff.valueRange},\n`;
+            if (eff.valuePerLevel) str += `\t\t\t\tvaluePerLevel = ${eff.valuePerLevel},\n`;
             str += `\t\t\t\tcoef = ${eff.coef},\n`;
             if (eff.chainInfo) 
             {
