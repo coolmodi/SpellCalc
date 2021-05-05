@@ -589,10 +589,12 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
             end
 
-            -- TODO: Uncomment once downrank penalty is implemented
-            -- TODO: Spells seem to lack maxLevel very often, fix how?
-            -- local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
-            -- if downrank < 1 then coef = coef * downrank;
+            if spellRankInfo.maxLevel > 0 then
+                local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
+                if downrank < 1 then
+                    coef = coef * downrank;
+                end
+            end
 
             calcedEffect.effectiveSpCoef = coef * bonusMod;
             calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
