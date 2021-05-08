@@ -333,7 +333,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
 
     if spellBaseInfo.isChannel then
         duration = effCastTime;
-        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / gcd));
+        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) / (effCastTime / gcd));
     else
         calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
     end
@@ -510,8 +510,7 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
         calcedEffect.avgAfterMitigation = total;
     else
         if spellBaseInfo.isChannel then
-            duration = effCastTime;
-            calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / gcd));
+            calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) / (effCastTime / gcd));
         else
             calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
         end
