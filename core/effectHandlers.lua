@@ -16,6 +16,23 @@ local function GetLevelBonus(spellRankInfo, effectData)
     return 0;
 end
 
+---Sum of probability weighted remaining damage done in channel duration? Or something like that at least.
+-- No clue if this is even remotely right, but looks better than just doing *hitchance like other similar addons did in the past.
+---@param hitChance number @In percent
+---@param gcd number
+---@param duration number
+---@return integer
+local function channelEffDmgNotMissed(hitChance, gcd, duration)
+    local hitc = hitChance / 100;
+    local missc = 1 - hitc;
+    local attemptsInDuration = math.floor(duration/gcd);
+    local avgDone = 0;
+    for i = 0, attemptsInDuration do
+        avgDone = avgDone + hitc * missc^i * (1 - (gcd * i) / duration);
+    end
+    return avgDone;
+end
+
 local HealEffect;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
@@ -333,7 +350,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
 
     if spellBaseInfo.isChannel then
         duration = effCastTime;
-        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) / (effCastTime / gcd));
+        calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
     else
         calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
     end
@@ -510,7 +527,7 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
         calcedEffect.avgAfterMitigation = total;
     else
         if spellBaseInfo.isChannel then
-            calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) / (effCastTime / gcd));
+            calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
         else
             calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
         end
