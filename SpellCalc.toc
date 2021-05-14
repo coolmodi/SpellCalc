@@ -92,3 +92,4 @@ UI/actionbar/buttonText.lua
 UI/actionbar/ActionBarValues.lua
 
 UI/test/DMCBD.lua
+UI/test/manarestore.lua
