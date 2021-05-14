@@ -99,6 +99,12 @@ _addon.aurasPlayer = {
         type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
         value = 3
     },
+    [28488] = { -- Scourgebane Infusion
+        type = _addon.EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
+        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+        value = 15
+    },
+    -- 28486 "Scourgebane Draught" 30 AP vs undead
 };
 
 -- Buffs and debuffs the target can have (NYI)
