@@ -18,7 +18,6 @@ local DEFAULTSETTINGS = {
 	["ttHit"] = true,
 	["ttCrit"] = true,
 	["ttAverages"] = true,
-	["ttCoef"] = true,
 	["ttPower"] = true,
 	["ttHitChance"] = true,
 	["ttHitDetail"] = true,
@@ -44,6 +43,7 @@ local DEFAULTSETTINGS = {
 	["abDirectValue"] = "avg",
 	["abDurationValue"] = "allTicks",
 	["abSealValue"] = "avg",
+	abDmgShieldValue = "avgCombined",
 	["abPosition"] = 25,
 	["abSize"] = 12,
 	["abFont"] = "Friz Quadrata TT",
@@ -51,7 +51,6 @@ local DEFAULTSETTINGS = {
 	["abColorHarm"] = {1, 1, 0.3},
 	["abColorHelp"] = {0.3, 1, 0.3},
 
-	["healTargetHps"] = 0,
 	["healDisregardCrit"] = false,
 
 	["meleeFromFront"] = false,
@@ -193,11 +192,6 @@ local SETTINGS_TABLE = {
 					type = "toggle",
 					name = L.SETTINGS_TT_POWER_LABEL,
 					desc = L.SETTINGS_TT_POWER_TT
-				},
-				ttCoef = {
-					order = 11,
-					type = "toggle",
-					name = L.COEFFICIENT
 				},
 
 				ttHitChance = {
@@ -409,8 +403,18 @@ local SETTINGS_TABLE = {
 								perSec = L.DMG_PER_SEC_SHORT
 							}
 						},
-						desc = {
+						abDmgShieldValue = {
 							order = 4,
+							type = "select",
+							name = L.SETTINGS_AB_DURATION_VALUE,
+							values = {
+								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
+								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
+								casts = L.SETTINGS_CALC_TOOM_HEAD
+							}
+						},
+						desc = {
+							order = 5,
 							type = "description",
 							name = L.SETTINGS_AB_VAL_INFO
 						},
@@ -475,6 +479,7 @@ local SETTINGS_TABLE = {
 							name = L.SETTINGS_CALC_EM_POTION,
 							values = {
 								NONE = L.NONE,
+								SUPER = L.SETTINGS_CALC_EM_POTION_SUPER,
 								MAJOR = L.SETTINGS_CALC_EM_POTION_MAJOR,
 								SUPERIOR = L.SETTINGS_CALC_EM_POTION_SUPERIOR,
 								GREATER = L.SETTINGS_CALC_EM_POTION_GREATER
@@ -507,18 +512,8 @@ local SETTINGS_TABLE = {
 }
 
 local ARGS_HEAL = {
-	healTargetHps = {
-		order = 1,
-		type = "range",
-		name = L.SETTINGS_HEAL_TARGET_HPS,
-		desc = L.SETTINGS_HEAL_TARGET_HPS_TT,
-		min = 0,
-		max = 10000,
-		softMax = 1500,
-		step = 25
-	},
 	healDisregardCrit = {
-		order = 2,
+		order = 1,
 		type = "toggle",
 		name = L.SETTINGS_HEAL_NO_CRIT,
 		desc = L.SETTINGS_HEAL_NO_CRIT_TT

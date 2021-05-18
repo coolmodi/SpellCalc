@@ -1,7 +1,7 @@
 {
     "seals": {
         "SOR": {
-            "judgeDummyIndex": 2,
+            "judgeDummyIndex": 1,
             "spells": [
                 21084,
                 20154,
@@ -11,29 +11,46 @@
                 20290,
                 20291,
                 20292,
-                20293
+                20293,
+                27155
             ]
         },
         "SOC": {
-            "judgeDummyIndex": 2,
+            "judgeDummyIndex": 1,
             "spells": [
                 20375,
                 20915,
                 20918,
                 20919,
-                20920
+                20920,
+                27170
             ]
         }
         ,
         "SOtC": {
-            "judgeDummyIndex": 2,
+            "judgeDummyIndex": 1,
             "spells": [
                 21082,
                 20162,
                 20305,
                 20306,
                 20307,
-                20308
+                20308,
+                27158
+            ]
+        },
+        "SoB": {
+            "judgeDummyIndex": 1,
+            "spells": [
+                31892,
+                348700
+            ]
+        },
+        "SoV": {
+            "judgeDummyIndex": 1,
+            "spells": [
+                31801,
+                348704
             ]
         }
     }

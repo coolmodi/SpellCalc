@@ -10,12 +10,30 @@ local SHADOW_BOLT = GetSpellInfo(686);
 ---@param spellRankInfo SpellRankInfo
 ---@param effectData SpellRankEffectData
 local function GetLevelBonus(spellRankInfo, effectData)
-    if effectData.perLevel and effectData.perLevel > 0 then
-        return (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.perLevel;
+    if effectData.valuePerLevel and effectData.valuePerLevel > 0 then
+        return (math.min(UnitLevel("player"), spellRankInfo.maxLevel) - spellRankInfo.spellLevel) * effectData.valuePerLevel;
     end
     return 0;
 end
 
+---Sum of probability weighted remaining damage done in channel duration? Or something like that at least.
+-- No clue if this is even remotely right, but looks better than just doing *hitchance like other similar addons did in the past.
+---@param hitChance number @In percent
+---@param gcd number
+---@param duration number
+---@return integer
+local function channelEffDmgNotMissed(hitChance, gcd, duration)
+    local hitc = hitChance / 100;
+    local missc = 1 - hitc;
+    local attemptsInDuration = math.floor(duration/gcd);
+    local avgDone = 0;
+    for i = 0, attemptsInDuration do
+        avgDone = avgDone + hitc * missc^i * (1 - (gcd * i) / duration);
+    end
+    return avgDone;
+end
+
+local HealEffect;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Templates
@@ -31,7 +49,8 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function EFFECT_TEMPLATE(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function EFFECT_TEMPLATE(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     -- Example function definition
 end
 
@@ -44,7 +63,8 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function AURA_TEMPLATE(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function AURA_TEMPLATE(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     -- Example function definition
 end
 
@@ -69,9 +89,25 @@ local function SealOfRighteousness(calcedSpell, effNum, spellBaseInfo, spellRank
     local effectData = spellRankInfo.effects[effNum];
 
     local as = stats.attackSpeed.mainhand;
-    local multiplier = _addon:IsTwoHandEquipped() and 1.2 or 0.85;
-    local dmgbase = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) * multiplier * as/100;
+    local rankBase = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData)) * 1.2 * 1.03 * as / 100;
+    local weaponBase = 0.03 * (stats.attackDmg.mainhand.max + stats.attackDmg.mainhand.min) / 2;
+    local dmgbase;
 
+    local wmspctdmg = stats.weaponModSchoolPctDamage[_addon:GetWeaponType("mainHand")];
+    if wmspctdmg and wmspctdmg[_addon.SCHOOL.HOLY] then
+        effectMod = effectMod * (1 + wmspctdmg[_addon.SCHOOL.HOLY].val / 100);
+        calcedSpell:AddToBuffList(wmspctdmg[_addon.SCHOOL.HOLY].buffs);
+    end
+
+    if _addon:IsTwoHandEquipped() then
+        dmgbase = 1.2 * rankBase + weaponBase + 1;
+        calcedEffect.effectiveSpCoef = 0.108 * as * effectMod;
+    else
+        dmgbase = 0.85 * rankBase + weaponBase - 1;
+        calcedEffect.effectiveSpCoef = 0.092 * as * effectMod;
+    end
+
+    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
     calcedEffect.min = (dmgbase + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min
     calcedEffect.avgCombined = calcedEffect.avg;
@@ -106,6 +142,16 @@ local function SealOfCommand(calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
 
     local as = stats.attackSpeed.mainhand;
     local coef = effectData.weaponCoef;
+
+    calcedEffect.effectiveSpCoef = 0.2;
+
+    local wmspctdmg = stats.weaponModSchoolPctDamage[_addon:GetWeaponType("mainHand")];
+    if wmspctdmg and wmspctdmg[_addon.SCHOOL.HOLY] then
+        calcedEffect.effectiveSpCoef = calcedEffect.effectiveSpCoef * (1 + wmspctdmg[_addon.SCHOOL.HOLY].val / 100);
+        calcedSpell:AddToBuffList(wmspctdmg[_addon.SCHOOL.HOLY].buffs);
+    end
+
+    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
 
     calcedEffect.min = (coef * stats.attackDmg.mainhand.min + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.max = (coef * stats.attackDmg.mainhand.max + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
@@ -147,7 +193,7 @@ local function SealOfTheCrusader(calcedSpell, effNum, spellBaseInfo, spellRankIn
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    local dpsFromAP = (effectData.min + GetLevelBonus(spellRankInfo, effectData)) / 14;
+    local dpsFromAP = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData)) / 14;
     local mmit = calcedSpell.meleeMitigation;
     local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
     local as = stats.attackSpeed.mainhand;
@@ -160,9 +206,110 @@ local function SealOfTheCrusader(calcedSpell, effNum, spellBaseInfo, spellRankIn
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
 end
 
+---Dummy handler for Prayer of Mending and Earth Shield
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellBaseInfo SpellBaseInfo
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+---@param spellId number
+local function PoM_ES(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+    -- Do normal heal effect
+    HealEffect(nil, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+    -- Multiply by charge count
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedEffect.charges;
+    calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
+    calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
+    calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
+end
+
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellBaseInfo SpellBaseInfo
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function SealOfBloodMartyr(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    ---@type SpellRankEffectData
+    local effectData = spellRankInfo.effects[effNum];
+
+    local as = stats.attackSpeed.mainhand;
+    local coef = effectData.weaponCoef;
+
+    local wmspctdmg = stats.weaponModSchoolPctDamage[_addon:GetWeaponType("mainHand")];
+    if wmspctdmg and wmspctdmg[_addon.SCHOOL.HOLY] then
+        effectMod = effectMod * (1 + wmspctdmg[_addon.SCHOOL.HOLY].val / 100);
+        calcedSpell:AddToBuffList(wmspctdmg[_addon.SCHOOL.HOLY].buffs);
+    end
+
+    calcedEffect.min = (coef * stats.attackDmg.mainhand.min + calcedEffect.flatMod) * effectMod;
+    calcedEffect.max = (coef * stats.attackDmg.mainhand.max + calcedEffect.flatMod) * effectMod;
+    calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
+
+    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
+
+    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+
+    local mmit = calcedSpell.meleeMitigation;
+    local duration = spellRankInfo.duration;
+    local triggers = duration / as;
+    local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
+    local triggerHits = triggers * effectiveHitChance;
+
+    local avgAfterResist = calcedEffect.avgCombined * (1 - calcedSpell.avgResist);
+    local avgTriggerHits = triggerHits * avgAfterResist * effectiveHitChance; -- SOC hits can again be melee mitigated like a special attack
+
+    calcedEffect.avgAfterMitigation = avgTriggerHits;
+    calcedEffect.ticks = triggerHits;
+    calcedEffect.perSec = avgTriggerHits / duration;
+    calcedEffect.perResource = avgTriggerHits / calcedSpell.effectiveCost;
+end
+
+-- TODO: test this
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellBaseInfo SpellBaseInfo
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function SealOfVengeance(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    ---@type SpellRankEffectData
+    local effectData = spellRankInfo.effects[effNum];
+
+    calcedEffect.effectiveSpCoef = 0.034 * effectMod; -- Per application
+    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
+
+    calcedEffect.min = effectData.valueBase * effectMod + calcedEffect.effectivePower;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.avg;
+    calcedEffect.ticks = 5;
+
+    local total = calcedEffect.avgCombined * calcedEffect.ticks;
+    calcedEffect.avgAfterMitigation = total;
+
+    calcedEffect.perSec = total / 15;
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(20162)] = SealOfTheCrusader;
+dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
+dummyAuraHandlers[GetSpellInfo(974)] = PoM_ES; -- Earth Shield
+dummyAuraHandlers[GetSpellInfo(31892)] = SealOfBloodMartyr; -- Seal of Blood
+dummyAuraHandlers[GetSpellInfo(348700)] = SealOfBloodMartyr; -- Seal of the Martyr
+dummyAuraHandlers[GetSpellInfo(31801)] = SealOfVengeance;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler
@@ -179,7 +326,8 @@ local auraHandler = {}
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -193,7 +341,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
         calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
     calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
@@ -201,9 +349,8 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
     if spellBaseInfo.isChannel then
-        -- TODO: Fix hardcoded GCD!
-        -- TODO: I have no clue what I was thinking above, can't even see a gcd here...
-        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
+        duration = effCastTime;
+        calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
     else
         calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
     end
@@ -239,7 +386,7 @@ local function PeriodicHeal(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
         calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
     calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
@@ -266,8 +413,7 @@ local function DamageShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.charges = effectData.charges;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
@@ -294,7 +440,7 @@ local function AbsorbAura(calcedSpell, effNum, spellBaseInfo, spellRankInfo, eff
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
@@ -319,7 +465,7 @@ local function ManaShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, eff
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.min + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
@@ -342,6 +488,7 @@ end
 
 --- Handler for things like Arcane Missiles or Searing Totem.
 --- That is, periodic spells with ticks that behave much like a direct damage effect.
+--- Can also be used for healing spells (e.g. Tranquility)
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
 ---@param spellBaseInfo SpellBaseInfo
@@ -350,7 +497,8 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+---@param gcd number
+local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -364,33 +512,29 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
         calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = calcedEffect.min + effectData.valueRange;
+    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.minCrit;
-    calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
-
-    if effectData.max then
-        calcedEffect.max = (effectData.max + baseIncrease) * effectMod + calcedEffect.effectivePower;
-        calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-        calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-        calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
-    end
-
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
     calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
 
+    calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    if spellBaseInfo.isChannel then
-        -- TODO: Fix hardcoded GCD!
-        -- TODO: ???????
-        calcedEffect.avgAfterMitigation = total * (1 - (1 - calcedSpell.hitChance / 100) ^ (effCastTime / 1.5));
+    if spellBaseInfo.forceHeal then
+        calcedEffect.avgAfterMitigation = total;
     else
-        calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
-    end
+        if spellBaseInfo.isChannel then
+            calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
+        else
+            calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
+        end
 
-    if calcedSpell.hitChanceBinaryLoss == nil then
-        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
+        if calcedSpell.hitChanceBinaryLoss == nil then
+            calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
+        end
     end
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
@@ -420,6 +564,7 @@ auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_DAMAGE] = PeriodicDamage;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_LEECH] = PeriodicDamage;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_HEAL] = PeriodicHeal;
 auraHandler[AURA_TYPES.SPELL_AURA_DAMAGE_SHIELD] = DamageShield;
+auraHandler[AURA_TYPES.SPELL_AURA_PROC_TRIGGER_DAMAGE] = DamageShield;
 auraHandler[AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL] = DamageShield;
 auraHandler[AURA_TYPES.SPELL_AURA_MANA_SHIELD] = ManaShield;
 auraHandler[AURA_TYPES.SPELL_AURA_SCHOOL_ABSORB] = AbsorbAura;
@@ -447,18 +592,12 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
 
     local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = calcedEffect.min + effectData.valueRange;
+    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.minCrit;
-
-    if effectData.max then
-        calcedEffect.max = (effectData.max + baseIncrease) * effectMod + calcedEffect.effectivePower;
-        calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-        calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-        calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
-    end
-
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
 
     if stats.ignite.val > 0 and spellBaseInfo.school == _addon.SCHOOL.FIRE then
         local igniteMult = stats.ignite.val/100;
@@ -473,13 +612,8 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
         end
 
         calcedEffect.igniteData.min = calcedEffect.minCrit * igniteMult;
-
-        if effectData.max then
-            calcedEffect.igniteData.max =  calcedEffect.maxCrit * igniteMult;
-            calcedEffect.igniteData.avg = (calcedEffect.igniteData.min + calcedEffect.igniteData.max) / 2;
-        else
-            calcedEffect.igniteData.avg = calcedEffect.igniteData.min;
-        end
+        calcedEffect.igniteData.max = calcedEffect.maxCrit * igniteMult;
+        calcedEffect.igniteData.avg = calcedEffect.avgCrit * igniteMult;
 
         calcedSpell:AddToBuffList(stats.ignite.buffs);
         calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit + calcedEffect.igniteData.avg - calcedEffect.avg) * calcedSpell.critChance/100;
@@ -503,6 +637,15 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
         calcedSpell:AddToBuffList(stats.impShadowBolt.buffs);
     end
 
+    if stats.shamanLightningOverload[spellId] and stats.shamanLightningOverload[spellId].val > 0 then
+        local procChance = stats.shamanLightningOverload[spellId].val / 100;
+        -- Procs do 50% of normal spell damage and they can miss.
+        -- avgAfterMitigation already includes misses from the main spell and resistances.
+        local effectiveProcDmg = 0.5 * calcedEffect.avgAfterMitigation * procChance * calcedSpell.hitChance / 100;
+        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation + effectiveProcDmg;
+        calcedSpell:AddToBuffList(stats.shamanLightningOverload[spellId].buffs);
+    end
+
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
@@ -526,7 +669,7 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -534,17 +677,12 @@ local function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
 
     local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
 
-    calcedEffect.min = (effectData.min + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = calcedEffect.min + effectData.valueRange;
+    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.minCrit;
-
-    if effectData.max then
-        calcedEffect.max = (effectData.max + baseIncrease) * effectMod + calcedEffect.effectivePower;
-        calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-        calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-        calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
-    end
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
 
     if SpellCalc_settings.healDisregardCrit then
         calcedEffect.avgCombined = calcedEffect.avg;
@@ -557,49 +695,6 @@ local function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
-
-    if SpellCalc_settings.healTargetHps > 0 then
-        if calcedEffect.thpsData == nil then
-            ---@type TargetHPSDef
-            calcedEffect.thpsData = {
-                secNoCast = 0,
-                secNoFsr = 0,
-                effectiveCost = 0,
-                perMana = 0,
-                castsToOom = 0,
-                timeToOom = 0,
-                doneToOom = 0
-            };
-        end
-
-        local secondsNoCast = (calcedEffect.perSec / SpellCalc_settings.healTargetHps - 1) * effCastTime;
-        calcedEffect.thpsData.secNoCast = secondsNoCast;
-
-        if secondsNoCast > 0 then
-            local manaGained = secondsNoCast * (stats.mp5.val/5 + stats.manaRegCasting);
-            local secOutOfFSR = secondsNoCast - 5 + effCastTime;
-
-            if secOutOfFSR > 0 then
-                calcedEffect.thpsData.secNoFsr = secOutOfFSR;
-                -- Also need to remove previously added normal mana regen during secOutOfFSR 
-                -- effectiveCost calculation deducted it for the castTime, so secOutOfFSR is fine to use
-                manaGained = manaGained - secOutOfFSR * stats.manaRegCasting + stats.manaRegBase * secOutOfFSR;
-            else
-                calcedEffect.thpsData.secNoFsr = 0;
-            end
-
-            calcedEffect.thpsData.effectiveCost = calcedSpell.effectiveCost - manaGained;
-            calcedEffect.thpsData.perMana = calcedEffect.avgAfterMitigation / calcedEffect.thpsData.effectiveCost;
-            calcedEffect.thpsData.castsToOom = _addon:GetEffectiveManaPool() / calcedEffect.thpsData.effectiveCost;
-            if SpellCalc_settings.useRealToOom then
-                calcedEffect.thpsData.castsToOom = math.floor(calcedEffect.thpsData.castsToOom);
-            end
-            calcedEffect.thpsData.timeToOom = calcedEffect.thpsData.castsToOom * (effCastTime + secondsNoCast);
-            calcedEffect.thpsData.doneToOom = calcedEffect.thpsData.castsToOom * calcedEffect.avgAfterMitigation;
-        end
-    else
-        calcedEffect.thpsData = nil;
-    end
 
     if effectData.chains and effectData.chains > 1 then
         calcedEffect.chains = effectData.chains;
@@ -623,7 +718,7 @@ end
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     if auraType == nil then
         _addon:PrintError("SPELL_EFFECT_APPLY_AURA handler called without auraType for spell "..spellName.." for effect #"..effNum);
         return;
@@ -635,7 +730,7 @@ local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spel
         return;
     end
 
-    auraHandler[auraType](calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+    auraHandler[auraType](calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd);
 end
 
 --- Handle Attack spell that triggers auto attack

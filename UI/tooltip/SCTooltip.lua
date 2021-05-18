@@ -77,24 +77,88 @@ end
 
 --- Append "label: min[ - max [(avg)]] [lr: ][tr]",
 ---@param label string
----@param min string|number
+---@param min number
 ---@param max number
 ---@param avg number
+---@param ticks number|nil
 ---@param lr string|nil
 ---@param tr string|nil
-function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, lr, tr)
-    local outstr = (type(min) == "number") and self:Round(min) or min;
-    if max > 0 then
+function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, ticks, lr, tr)
+    local outstr = self:Round(min);
+
+    if max > min then
         outstr = outstr.." - "..self:Round(max);
         if SpellCalc_settings.ttAverages then
             outstr = outstr.." ("..self:Round(avg)..")";
         end
     end
 
+    if ticks and ticks > 1 then
+        outstr = ticks.."x " ..outstr;
+    end
+
     if tr then
         self:DoubleLine(label, outstr, lr, tr);
     else
         self:SingleLine(label, outstr);
+    end
+end
+
+--- Append SP/heal scaling data
+---@param calcedEffect CalcedEffect
+---@param coefMult number|nil @Multiply coef and sp output with this number
+---@param noTick boolean|nil @Ignore ticks and just output raw coef and used bonus
+---@param noCharge boolean|nil @Ignore charges and just output raw coef and used bonus
+function SCTooltip:AppendCoefData(calcedEffect, coefMult, noTick, noCharge)
+    if not SpellCalc_settings.ttPower or not calcedEffect.effectiveSpCoef or calcedEffect.effectiveSpCoef == 0 then
+        return;
+    end
+
+    local coefPct = calcedEffect.effectiveSpCoef * 100;
+    local fullSP = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
+    local coefPart;
+
+    if coefMult then
+        fullSP = fullSP * coefMult;
+        coefPct = coefPct * coefMult;
+    end
+
+    if not noTick and calcedEffect.ticks then
+        fullSP = fullSP * calcedEffect.ticks;
+        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedEffect.ticks, calcedEffect.ticks, coefPct);
+    elseif not noCharge and calcedEffect.charges and calcedEffect.charges > 0 then
+        fullSP = fullSP * calcedEffect.charges;
+        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedEffect.charges, calcedEffect.charges, coefPct)
+    else
+        coefPart = ("%.1f%%"):format(coefPct);
+    end
+
+    self:SingleLine(L.TT_POWER, ("%d | %s of %d"):format(self:Round(fullSP), coefPart, calcedEffect.spellPower));
+end
+
+--- Append efficiency stuff
+---@param calcedSpell CalcedSpell
+---@param effectNum number
+---@param isHeal boolean
+---@param showToOomTime boolean
+---@param auraStack AuraStackData|nil
+function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTime, auraStack)
+    local calcedEffect = auraStack and auraStack or calcedSpell[effectNum];
+
+    if not auraStack and effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and calcedSpell.effectiveCost ~= calcedSpell.baseCost then
+        self:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(calcedSpell.effectiveCost));
+    end
+
+    if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
+        self:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(calcedEffect.perResource));
+    end
+
+    if SpellCalc_settings.ttToOom and calcedEffect.doneToOom > 0 then
+        local outstr = self:Round(calcedEffect.doneToOom);
+        if showToOomTime then
+            outstr = outstr..(" (%.1fs, %.1f casts)"):format(calcedSpell.castingData.timeToOom, calcedSpell.castingData.castsToOom)
+        end
+        self:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), outstr);
     end
 end
 

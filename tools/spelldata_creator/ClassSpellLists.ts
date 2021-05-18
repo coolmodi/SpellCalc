@@ -12,7 +12,8 @@ const DO_EFFECTS = [
     EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE,
     EFFECT_TYPE.SPELL_EFFECT_ATTACK,
     EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE,
-    EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY
+    EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY,
+    EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL
 ];
 
 const DO_AURAS = [
@@ -24,13 +25,15 @@ const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_MANA_SHIELD,
     AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD,
     AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL,
-    AURA_TYPE.SPELL_AURA_DUMMY
+    AURA_TYPE.SPELL_AURA_DUMMY,
+    AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE,
 ];
 
 const DMG_SHIELD_DATA: {[index: string]: number} = {
     "Shadowguard": 3,
     "Lightning Shield": 3,
-    "Touch of Weakness": 1
+    "Touch of Weakness": 1,
+    "Molten Armor": 123
 }
 
 const TRIGGER_SPELL_IGNORE: {[spellName: string]: boolean} = {
@@ -126,19 +129,21 @@ export class ClassSpellLists
                     if (effect.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY)
                     {
                         // pala seals
-                        let stype = isJudgeDummy(effect);
-                        if (stype !== false)
+                        if (isJudgeDummy(effect) !== false)
                         {
                             const jspell = this.spellData.getSpellEffects(effect.EffectBasePoints + 1);
                             if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-                            if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, []);
-                            list.get(jspell[0].SpellID)!.push(jspell[0]);
+                            if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, [jspell[0]]);
                             this.judgementRemap.set(effect.SpellID, jspell[0].SpellID)
                             // don't use this effect
                             continue;
                         }
-                        // only add SoR or SoC attack effect
-                        if (!(effect.EffectIndex == 0 && isSeal(effect.SpellID))) continue;
+                        // only add dummy auras we want
+                        if (
+                            !(effect.EffectIndex == 0 && isSeal(effect.SpellID)) // SoR or SoC attack effect
+                            && effect.SpellID !== 33076 // PoM
+                            && [974, 32593, 32594].indexOf(effect.SpellID) === -1 // Earth Shield
+                        ) continue;
                     }
                 }
 

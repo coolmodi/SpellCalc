@@ -25,26 +25,29 @@ local function SchoolStatTable()
     return schoolTable;
 end
 
-local function WeaponStatTable()
+---Create stat tables for weapon specific stats.
+---@param subTableFunc function @The function that creates the per weapon type stat table
+---@return table
+local function WeaponStatTable(subTableFunc)
     -- Keys are weapon types found in _addon.WEAPON_SUBCLASS
     local weaponTable = {
-        [_addon.WEAPON_SUBCLASS.AXE_1H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.AXE_2H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.BOW] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.GUN] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.MACE_1H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.MACE_2H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.POLEARM] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.SWORD_1H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.SWORD_2H] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.STAFF] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.FIST] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.MISC] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.DAGGER] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.THROWN] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.CROSSBOW] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.WAND] = UniformStat(),
-        [_addon.WEAPON_SUBCLASS.FISHING_POLE] = UniformStat()
+        [_addon.WEAPON_SUBCLASS.AXE_1H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.AXE_2H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.BOW] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.GUN] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.MACE_1H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.MACE_2H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.POLEARM] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.SWORD_1H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.SWORD_2H] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.STAFF] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.FIST] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.MISC] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.DAGGER] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.THROWN] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.CROSSBOW] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.WAND] = subTableFunc(),
+        [_addon.WEAPON_SUBCLASS.FISHING_POLE] = subTableFunc()
     }
     return weaponTable;
 end
@@ -77,8 +80,9 @@ end
 _addon.stats = {
     manaMax = 0, -- Maximum mana
     manaCurrent = 0, -- Current mana if update is active
-    manaRegBase = 0, -- Mana regen based on spirit
-    manaRegCasting = 0, -- Mana regen from spirit while casting
+    manaRegBase = 0, -- Mana regen based on spirit /sec
+    manaRegCasting = 0, -- Mana regen from spirit while casting /sec
+    manaRegAura = 0, -- Mana regen from SPELL_AURA_MOD_POWER_REGEN sources /sec
     spellPower = {
         [_addon.SCHOOL.PHYSICAL] = 0,
         [_addon.SCHOOL.HOLY] = 0,
@@ -132,12 +136,12 @@ _addon.stats = {
     schoolModFlatCritChance = SchoolStatTable(),
     schoolModPctCritMult = SchoolStatTable(),
 
-    spellModPctHealing = SpellStatTable(),
     spellModPctEffect = SpellStatTable(),
-    spellModPctDamage = SpellStatTable(),
+    spellModPctDamageHealing = SpellStatTable(),
     spellModFlatDuration = SpellStatTable(), -- In seconds
     spellModFlatValue = SpellStatTable(),
     spellModFlatSpellpower = SpellStatTable(),
+    spellModEff1FlatSpellpower = SpellStatTable(),
     spellModMageNWR = SpellStatTable(),
     spellModGCDms = SpellStatTable(), -- In ms
     spellModChainMult = SpellStatTable(),
@@ -145,25 +149,33 @@ _addon.stats = {
     spellModFlatHitChance = SpellStatTable(),
     spellModFlatCritChance = SpellStatTable(),
     spellModPctCritMult = SpellStatTable(),
+    spellModFlatSpellScale = SpellStatTable(),
+    spellModPctSpellScale = SpellStatTable(),
+    spellModClearCastChance = SpellStatTable(),
+    spellModCharges = SpellStatTable(),
+    spellModCritManaRestore = SpellStatTable(),
+    spellModManaRestore = SpellStatTable(),
 
-    weaponModFlatHitChance = WeaponStatTable(),
+    ---@type table<number, table<number, UniformStat>>
+    weaponModSchoolPctDamage = WeaponStatTable(SchoolStatTable),
 
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),
     versusModFlatSpellpower = CreatureTypeStatTable(),
 
     mp5 = UniformStat();
+    intToMP5Pct = UniformStat(),
     fsrRegenMult = UniformStat();
     modhealingDone = UniformStat(),
     hitBonus = UniformStat();
     hitBonusSpell = UniformStat();
-    clearCastChance = UniformStat(),
     clearCastChanceDmg = UniformStat(),
     illumination = UniformStat(),
     ignite = UniformStat(),
     impShadowBolt = UniformStat(),
     earthfuryReturn = UniformStat(),
     druidNaturesGrace = UniformStat(),
+    shamanLightningOverload = SpellStatTable(),
 };
 
 --- Update spell power stats from API
@@ -197,25 +209,6 @@ function _addon:UpdateDmgDoneMods()
     self:TriggerUpdate();
 end
 
-local queueFrame = CreateFrame("Frame");
-local timePassed = 0;
-local function UpdateFunction(self, passed)
-    timePassed = timePassed + passed;
-    if timePassed < 2 then
-        return;
-    end
-    timePassed = 0;
-    _addon:PrintDebug("Check spirit regen");
-    local curRegen = GetManaRegen();
-    if curRegen > 0.5 then
-        _addon:PrintDebug("Spirit regen seems normal again, updating it");
-        _addon.stats.manaRegBase = curRegen;
-        _addon.stats.manaRegCasting = _addon.stats.manaRegBase * (_addon.stats.fsrRegenMult.val/100);
-        queueFrame:SetScript("OnUpdate", nil);
-        _addon:TriggerUpdate();
-    end
-end
-
 --- Update power values.
 ---@param powerType string|nil
 function _addon:UpdatePower(powerType)
@@ -232,24 +225,44 @@ function _addon:UpdatePower(powerType)
     end
 end
 
+do
+    local LEVEL_REGEN_MULT = {
+        0.034965, 0.034191, 0.033465, 0.032526, 0.031661, 0.031076, 0.030523, 0.029994, 0.029307, 0.028661,
+        0.027584, 0.026215, 0.025381, 0.024300, 0.023345, 0.022748, 0.021958, 0.021386, 0.020790, 0.020121,
+        0.019733, 0.019155, 0.018819, 0.018316, 0.017936, 0.017576, 0.017201, 0.016919, 0.016581, 0.016233,
+        0.015994, 0.015707, 0.015464, 0.015204, 0.014956, 0.014744, 0.014495, 0.014302, 0.014094, 0.013895,
+        0.013724, 0.013522, 0.013363, 0.013175, 0.012996, 0.012853, 0.012687, 0.012539, 0.012384, 0.012233,
+        0.012113, 0.011973, 0.011859, 0.011714, 0.011575, 0.011473, 0.011342, 0.011245, 0.011110, 0.010999,
+        0.010700, 0.010522, 0.010290, 0.010119, 0.009968, 0.009808, 0.009651, 0.009553, 0.009445, 0.009327
+    }
+
+    local oldIntPctMP5 = 0;
+
+    ---Update spirit+int based and MP5 regen values
+    function _addon:UpdateManaRegen()
+        local stats = self.stats;
+        local _, int = UnitStat("player", 4);
+        local _, spirit = UnitStat("player", 5);
+        local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]);
+
+        stats.manaRegBase = spiritIntRegen;
+        stats.manaRegCasting = stats.manaRegBase * (stats.fsrRegenMult.val/100);
+        stats.manaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
+
+        local regFromIntPct = stats.intToMP5Pct.val * 0.01 * int;
+        if oldIntPctMP5 ~= regFromIntPct then
+            stats.mp5.val = stats.mp5.val - oldIntPctMP5 + regFromIntPct;
+            oldIntPctMP5 = regFromIntPct;
+        end
+
+        self:TriggerUpdate();
+    end
+end
+
 --- Update general stats from API
 function _addon:UpdateStats()
     _addon:PrintDebug("Updating stats");
-
     self.stats.manaMax = UnitPowerMax("player", 0);
-
-    -- The function only a value if out of FSR, 
-    -- otherwise always 0.00 something, even with FSR mana regen talents
-    -- Only update if value makes sense, otherwise queue up an update
-    local curRegen = GetManaRegen();
-    if curRegen > 0.5 then
-        self.stats.manaRegBase = curRegen;
-        self.stats.manaRegCasting = self.stats.manaRegBase * (self.stats.fsrRegenMult.val/100);
-    else
-        self:PrintDebug("Have to queue spirit regen update");
-        queueFrame:SetScript("OnUpdate", UpdateFunction);
-    end
-
     self:TriggerUpdate();
 end
 
@@ -303,24 +316,24 @@ local oldApiHitBonusSpell = 0;
 --- Combat ratings updated (seems to be hit modifier in classic)
 function _addon:CombatRatingUpdate()
     self:PrintDebug("Combat rating update");
-    local meleeFlat = GetHitModifier();
-    local spellFlat = GetSpellHitModifier();
+    local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) -- + GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
+    local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
     local changed = false;
 
-    if meleeFlat ~= oldApiHitBonus then
-        self.stats.hitBonus.val = self.stats.hitBonus.val - oldApiHitBonus + meleeFlat;
-        oldApiHitBonus = meleeFlat;
+    if meleeHitBonus ~= oldApiHitBonus then
+        self.stats.hitBonus.val = self.stats.hitBonus.val - oldApiHitBonus + meleeHitBonus;
+        oldApiHitBonus = meleeHitBonus;
         changed = true;
     end
 
-    if spellFlat ~= oldApiHitBonusSpell then
-        self.stats.hitBonusSpell.val = self.stats.hitBonusSpell.val - oldApiHitBonusSpell + spellFlat;
-        oldApiHitBonusSpell = spellFlat;
+    if spellHitBonus ~= oldApiHitBonusSpell then
+        self.stats.hitBonusSpell.val = self.stats.hitBonusSpell.val - oldApiHitBonusSpell + spellHitBonus;
+        oldApiHitBonusSpell = spellHitBonus;
         changed = true;
     end
 
     if changed then
-        self:PrintDebug("Updated hit mods from API. M: " .. meleeFlat .. " - S: " .. spellFlat);
+        self:PrintDebug("Updated hit mods from API. M: " .. meleeHitBonus .. " - S: " .. spellHitBonus);
         self:TriggerUpdate();
     end
 end
@@ -343,4 +356,5 @@ function _addon:FullUpdate()
     self:UpdateRangedAttackDmg();
     self:CombatRatingUpdate();
     self:UpdatePower();
+    self:UpdateManaRegen();
 end

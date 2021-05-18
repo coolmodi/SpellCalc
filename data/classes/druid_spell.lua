@@ -43,14 +43,12 @@ _addon.spellBaseInfo = {
         school = 7,
         defType = 1,
     },
-    [GetSpellInfo(18562)] = { -- Swiftmend
-        school = 4,
-        defType = 1,
-    },
     [GetSpellInfo(740)] = { -- Tranquility
         school = 4,
         isChannel = true,
         defType = 1,
+        noCrit = true,
+        forceHeal = true,
     },
     [GetSpellInfo(5570)] = { -- Insect Swarm
         school = 4,
@@ -59,6 +57,11 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(16914)] = { -- Hurricane
         school = 4,
         isChannel = true,
+        defType = 1,
+        noCrit = true,
+    },
+    [GetSpellInfo(33763)] = { -- Lifebloom
+        school = 4,
         defType = 1,
     },
 };
@@ -74,8 +77,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 5,
-                coef = 0.033,
+                valueBase = 5,
+                valueRange = 0,
+                coef = 0.055,
             },
         }
     },
@@ -89,7 +93,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 15,
                 charges = -1,
-                min = 3,
+                valueBase = 3,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -97,16 +102,17 @@ _addon.spellRankInfo = {
     [740] = { -- Tranquility(Rank 1)
         spellLevel = 30,
         maxLevel = 36,
-        duration = 10,
-        baseCost = 375,
+        duration = 8,
+        baseCost = 525,
         effects = {
             [1] = {
-                effectType = 35,
-                auraType = 8,
+                effectType = 6,
+                auraType = 23,
                 tickPeriod = 2,
-                min = 94,
-                perLevel = 0.6,
-                coef = 0.067,
+                valueBase = 351,
+                valueRange = 0,
+                valuePerLevel = 2.2,
+                coef = 0.286,
             },
         }
     },
@@ -120,7 +126,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 8,
+                valueBase = 8,
+                valueRange = 0,
                 coef = 0.08,
             },
         }
@@ -135,7 +142,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 15,
                 charges = -1,
-                min = 6,
+                valueBase = 6,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -150,7 +158,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 14,
+                valueBase = 14,
+                valueRange = 0,
                 coef = 0.125,
             },
         }
@@ -165,8 +174,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 10,
-                coef = 0.056,
+                valueBase = 10,
+                valueRange = 0,
+                coef = 0.093,
             },
         }
     },
@@ -180,7 +190,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 15,
                 charges = -1,
-                min = 9,
+                valueBase = 9,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -195,7 +206,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 29,
+                valueBase = 29,
+                valueRange = 0,
                 coef = 0.17,
             },
         }
@@ -210,7 +222,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 45,
+                valueBase = 45,
+                valueRange = 0,
                 coef = 0.2,
             },
         }
@@ -225,7 +238,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 61,
+                valueBase = 61,
+                valueRange = 0,
                 coef = 0.2,
             },
         }
@@ -237,9 +251,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 89,
-                max = 110,
-                perLevel = 1.2,
+                valueBase = 89,
+                valueRange = 20,
+                valuePerLevel = 1.2,
                 coef = 1,
             },
         }
@@ -254,7 +268,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 76,
+                valueBase = 76,
+                valueRange = 0,
                 coef = 0.2,
             },
         }
@@ -266,9 +281,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 12,
-                max = 15,
-                perLevel = 0.4,
+                valueBase = 12,
+                valueRange = 2,
+                valuePerLevel = 0.4,
                 coef = 0.123,
             },
         }
@@ -280,9 +295,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 25,
-                max = 30,
-                perLevel = 0.6,
+                valueBase = 25,
+                valueRange = 4,
+                valuePerLevel = 0.6,
                 coef = 0.231,
             },
         }
@@ -294,9 +309,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 44,
-                max = 53,
-                perLevel = 0.8,
+                valueBase = 44,
+                valueRange = 8,
+                valuePerLevel = 0.8,
                 coef = 0.443,
             },
         }
@@ -308,9 +323,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 63,
-                max = 74,
-                perLevel = 1,
+                valueBase = 63,
+                valueRange = 10,
+                valuePerLevel = 1,
                 coef = 0.571,
             },
         }
@@ -322,9 +337,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 101,
-                max = 116,
-                perLevel = 1.3,
+                valueBase = 101,
+                valueRange = 14,
+                valuePerLevel = 1.3,
                 coef = 0.571,
             },
         }
@@ -336,9 +351,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 37,
-                max = 52,
-                perLevel = 0.8,
+                valueBase = 37,
+                valueRange = 14,
+                valuePerLevel = 0.8,
                 coef = 0.123,
             },
         }
@@ -350,9 +365,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 88,
-                max = 113,
-                perLevel = 1.3,
+                valueBase = 88,
+                valueRange = 24,
+                valuePerLevel = 1.3,
                 coef = 0.314,
             },
         }
@@ -364,9 +379,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 195,
-                max = 244,
-                perLevel = 1.9,
+                valueBase = 195,
+                valueRange = 48,
+                valuePerLevel = 1.9,
                 coef = 0.554,
             },
         }
@@ -378,9 +393,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 363,
-                max = 446,
-                perLevel = 2.7,
+                valueBase = 363,
+                valueRange = 82,
+                valuePerLevel = 2.7,
                 coef = 0.857,
             },
         }
@@ -392,9 +407,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 572,
-                max = 695,
-                perLevel = 3.5,
+                valueBase = 572,
+                valueRange = 122,
+                valuePerLevel = 3.5,
                 coef = 1,
             },
         }
@@ -409,8 +424,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 15,
-                coef = 0.05,
+                valueBase = 15,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -424,23 +440,25 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 20,
-                coef = 0.043,
+                valueBase = 20,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
     [5570] = { -- Insect Swarm(Rank 1)
         spellLevel = 20,
-        maxLevel = 0,
+        maxLevel = 29,
         duration = 12,
-        baseCost = 45,
+        baseCost = 50,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 11,
-                coef = 0.158,
+                valueBase = 18,
+                valueRange = 0,
+                coef = 0.127,
             },
         }
     },
@@ -450,7 +468,8 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 78,
-                min = 0,
+                valueBase = 0,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -462,9 +481,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 742,
-                max = 895,
-                perLevel = 4,
+                valueBase = 742,
+                valueRange = 152,
+                valuePerLevel = 4,
                 coef = 1,
             },
         }
@@ -476,9 +495,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 139,
-                max = 158,
-                perLevel = 1.6,
+                valueBase = 139,
+                valueRange = 18,
+                valuePerLevel = 1.6,
                 coef = 0.571,
             },
         }
@@ -490,9 +509,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 936,
-                max = 1121,
-                perLevel = 4.5,
+                valueBase = 936,
+                valueRange = 184,
+                valuePerLevel = 4.5,
                 coef = 1,
             },
         }
@@ -504,9 +523,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 188,
-                max = 211,
-                perLevel = 1.8,
+                valueBase = 188,
+                valueRange = 22,
+                valuePerLevel = 1.8,
                 coef = 0.571,
             },
         }
@@ -521,7 +540,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 97,
+                valueBase = 97,
+                valueRange = 0,
                 coef = 0.2,
             },
         }
@@ -536,7 +556,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 15,
                 charges = -1,
-                min = 12,
+                valueBase = 12,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -544,16 +565,17 @@ _addon.spellRankInfo = {
     [8918] = { -- Tranquility(Rank 2)
         spellLevel = 40,
         maxLevel = 46,
-        duration = 10,
-        baseCost = 505,
+        duration = 8,
+        baseCost = 705,
         effects = {
             [1] = {
-                effectType = 35,
-                auraType = 8,
+                effectType = 6,
+                auraType = 23,
                 tickPeriod = 2,
-                min = 138,
-                perLevel = 0.7,
-                coef = 0.067,
+                valueBase = 515,
+                valueRange = 0,
+                valuePerLevel = 2.6,
+                coef = 0.286,
             },
         }
     },
@@ -565,16 +587,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 7,
-                max = 10,
-                perLevel = 0.5,
+                valueBase = 7,
+                valueRange = 2,
+                valuePerLevel = 0.5,
                 coef = 0.06,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 4,
+                valueBase = 4,
+                valueRange = 0,
                 coef = 0.052,
             },
         }
@@ -587,16 +610,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 13,
-                max = 18,
-                perLevel = 0.8,
+                valueBase = 13,
+                valueRange = 4,
+                valuePerLevel = 0.8,
                 coef = 0.094,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 8,
+                valueBase = 8,
+                valueRange = 0,
                 coef = 0.081,
             },
         }
@@ -609,16 +633,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 25,
-                max = 32,
-                perLevel = 1.1,
+                valueBase = 25,
+                valueRange = 6,
+                valuePerLevel = 1.1,
                 coef = 0.128,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 13,
+                valueBase = 13,
+                valueRange = 0,
                 coef = 0.111,
             },
         }
@@ -631,16 +656,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 40,
-                max = 49,
-                perLevel = 1.4,
+                valueBase = 40,
+                valueRange = 8,
+                valuePerLevel = 1.4,
                 coef = 0.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 20,
+                valueBase = 20,
+                valueRange = 0,
                 coef = 0.13,
             },
         }
@@ -653,16 +679,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 61,
-                max = 74,
-                perLevel = 1.8,
+                valueBase = 61,
+                valueRange = 12,
+                valuePerLevel = 1.8,
                 coef = 0.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 31,
+                valueBase = 31,
+                valueRange = 0,
                 coef = 0.13,
             },
         }
@@ -675,16 +702,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 81,
-                max = 98,
-                perLevel = 2.1,
+                valueBase = 81,
+                valueRange = 16,
+                valuePerLevel = 2.1,
                 coef = 0.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 41,
+                valueBase = 41,
+                valueRange = 0,
                 coef = 0.13,
             },
         }
@@ -697,16 +725,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 105,
-                max = 126,
-                perLevel = 2.4,
+                valueBase = 105,
+                valueRange = 20,
+                valuePerLevel = 2.4,
                 coef = 0.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 53,
+                valueBase = 53,
+                valueRange = 0,
                 coef = 0.13,
             },
         }
@@ -715,21 +744,22 @@ _addon.spellRankInfo = {
         spellLevel = 12,
         maxLevel = 17,
         duration = 21,
-        baseCost = 120,
+        baseCost = 80,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 84,
-                max = 99,
-                perLevel = 1.8,
+                valueBase = 84,
+                valueRange = 14,
+                valuePerLevel = 1.8,
                 coef = 0.2,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 14,
-                coef = 0.05,
+                valueBase = 14,
+                valueRange = 0,
+                coef = 0.07,
             },
         }
     },
@@ -737,21 +767,22 @@ _addon.spellRankInfo = {
         spellLevel = 18,
         maxLevel = 23,
         duration = 21,
-        baseCost = 205,
+        baseCost = 135,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 164,
-                max = 189,
-                perLevel = 2.5,
+                valueBase = 164,
+                valueRange = 24,
+                valuePerLevel = 2.5,
                 coef = 0.264,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 25,
-                coef = 0.066,
+                valueBase = 25,
+                valueRange = 0,
+                coef = 0.093,
             },
         }
     },
@@ -759,21 +790,22 @@ _addon.spellRankInfo = {
         spellLevel = 24,
         maxLevel = 29,
         duration = 21,
-        baseCost = 280,
+        baseCost = 185,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 240,
-                max = 275,
-                perLevel = 3.1,
+                valueBase = 240,
+                valueRange = 34,
+                valuePerLevel = 3.1,
                 coef = 0.286,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 37,
-                coef = 0.071,
+                valueBase = 37,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -781,21 +813,22 @@ _addon.spellRankInfo = {
         spellLevel = 30,
         maxLevel = 35,
         duration = 21,
-        baseCost = 350,
+        baseCost = 230,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 318,
-                max = 361,
-                perLevel = 3.6,
+                valueBase = 318,
+                valueRange = 42,
+                valuePerLevel = 3.6,
                 coef = 0.286,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 49,
-                coef = 0.071,
+                valueBase = 49,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -803,21 +836,22 @@ _addon.spellRankInfo = {
         spellLevel = 36,
         maxLevel = 41,
         duration = 21,
-        baseCost = 420,
+        baseCost = 275,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 405,
-                max = 458,
-                perLevel = 4.1,
+                valueBase = 405,
+                valueRange = 52,
+                valuePerLevel = 4.1,
                 coef = 0.286,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 61,
-                coef = 0.071,
+                valueBase = 61,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -828,9 +862,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 137,
-                max = 168,
-                perLevel = 1.6,
+                valueBase = 137,
+                valueRange = 30,
+                valuePerLevel = 1.6,
                 coef = 1,
             },
         }
@@ -842,9 +876,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 201,
-                max = 242,
-                perLevel = 1.9,
+                valueBase = 201,
+                valueRange = 40,
+                valuePerLevel = 1.9,
                 coef = 1,
             },
         }
@@ -856,9 +890,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 280,
-                max = 335,
-                perLevel = 2.3,
+                valueBase = 280,
+                valueRange = 54,
+                valuePerLevel = 2.3,
                 coef = 1,
             },
         }
@@ -867,21 +901,22 @@ _addon.spellRankInfo = {
         spellLevel = 42,
         maxLevel = 47,
         duration = 21,
-        baseCost = 510,
+        baseCost = 335,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 511,
-                max = 576,
-                perLevel = 4.7,
+                valueBase = 511,
+                valueRange = 64,
+                valuePerLevel = 4.7,
                 coef = 0.286,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 78,
-                coef = 0.071,
+                valueBase = 78,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -895,7 +930,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 15,
                 charges = -1,
-                min = 15,
+                valueBase = 15,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -907,9 +943,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 1199,
-                max = 1428,
-                perLevel = 5.2,
+                valueBase = 1199,
+                valueRange = 228,
+                valuePerLevel = 5.2,
                 coef = 1,
             },
         }
@@ -922,16 +958,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 130,
-                max = 155,
-                perLevel = 2.7,
+                valueBase = 130,
+                valueRange = 24,
+                valuePerLevel = 2.7,
                 coef = 0.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 66,
+                valueBase = 66,
+                valueRange = 0,
                 coef = 0.13,
             },
         }
@@ -944,16 +981,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 157,
-                max = 186,
-                perLevel = 3,
+                valueBase = 157,
+                valueRange = 28,
+                valuePerLevel = 3,
                 coef = 0.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 80,
+                valueBase = 80,
+                valueRange = 0,
                 coef = 0.13,
             },
         }
@@ -966,16 +1004,17 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 189,
-                max = 222,
-                perLevel = 3.3,
+                valueBase = 189,
+                valueRange = 32,
+                valuePerLevel = 3.3,
                 coef = 0.15,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 96,
+                valueBase = 96,
+                valueRange = 0,
                 coef = 0.13,
             },
         }
@@ -990,7 +1029,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 122,
+                valueBase = 122,
+                valueRange = 0,
                 coef = 0.2,
             },
         }
@@ -1005,7 +1045,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 152,
+                valueBase = 152,
+                valueRange = 0,
                 coef = 0.2,
             },
         }
@@ -1020,7 +1061,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 189,
+                valueBase = 189,
+                valueRange = 0,
                 coef = 0.2,
             },
         }
@@ -1035,8 +1077,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 25,
-                coef = 0.038,
+                valueBase = 25,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -1050,8 +1093,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                min = 30,
-                coef = 0.033,
+                valueBase = 30,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -1059,21 +1103,22 @@ _addon.spellRankInfo = {
         spellLevel = 48,
         maxLevel = 53,
         duration = 21,
-        baseCost = 615,
+        baseCost = 405,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 646,
-                max = 725,
-                perLevel = 5.3,
+                valueBase = 646,
+                valueRange = 78,
+                valuePerLevel = 5.3,
                 coef = 0.286,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 98,
-                coef = 0.071,
+                valueBase = 98,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -1081,21 +1126,22 @@ _addon.spellRankInfo = {
         spellLevel = 54,
         maxLevel = 59,
         duration = 21,
-        baseCost = 740,
+        baseCost = 485,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 809,
-                max = 906,
-                perLevel = 6,
+                valueBase = 809,
+                valueRange = 96,
+                valuePerLevel = 6,
                 coef = 0.286,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 123,
-                coef = 0.071,
+                valueBase = 123,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
@@ -1103,53 +1149,56 @@ _addon.spellRankInfo = {
         spellLevel = 60,
         maxLevel = 65,
         duration = 21,
-        baseCost = 880,
+        baseCost = 575,
         effects = {
             [1] = {
                 effectType = 10,
-                min = 1003,
-                max = 1120,
-                perLevel = 6.8,
+                valueBase = 1003,
+                valueRange = 116,
+                valuePerLevel = 6.8,
                 coef = 0.286,
             },
             [2] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 152,
-                coef = 0.071,
+                valueBase = 152,
+                valueRange = 0,
+                coef = 0.1,
             },
         }
     },
     [9862] = { -- Tranquility(Rank 3)
         spellLevel = 50,
         maxLevel = 56,
-        duration = 10,
-        baseCost = 695,
+        duration = 8,
+        baseCost = 975,
         effects = {
             [1] = {
-                effectType = 35,
-                auraType = 8,
+                effectType = 6,
+                auraType = 23,
                 tickPeriod = 2,
-                min = 205,
-                perLevel = 0.9,
-                coef = 0.067,
+                valueBase = 765,
+                valueRange = 0,
+                valuePerLevel = 3.4,
+                coef = 0.286,
             },
         }
     },
     [9863] = { -- Tranquility(Rank 4)
         spellLevel = 60,
         maxLevel = 66,
-        duration = 10,
-        baseCost = 925,
+        duration = 8,
+        baseCost = 1295,
         effects = {
             [1] = {
-                effectType = 35,
-                auraType = 8,
+                effectType = 6,
+                auraType = 23,
                 tickPeriod = 2,
-                min = 294,
-                perLevel = 1,
-                coef = 0.067,
+                valueBase = 1097,
+                valueRange = 0,
+                valuePerLevel = 3.7,
+                coef = 0.286,
             },
         }
     },
@@ -1160,9 +1209,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 362,
-                max = 429,
-                perLevel = 2.7,
+                valueBase = 362,
+                valueRange = 66,
+                valuePerLevel = 2.7,
                 coef = 1,
             },
         }
@@ -1174,9 +1223,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 445,
-                max = 526,
-                perLevel = 3,
+                valueBase = 445,
+                valueRange = 80,
+                valuePerLevel = 3,
                 coef = 1,
             },
         }
@@ -1188,9 +1237,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 1516,
-                max = 1797,
-                perLevel = 5.9,
+                valueBase = 1516,
+                valueRange = 280,
+                valuePerLevel = 5.9,
                 coef = 1,
             },
         }
@@ -1202,9 +1251,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 1890,
-                max = 2231,
-                perLevel = 6.6,
+                valueBase = 1890,
+                valueRange = 340,
+                valuePerLevel = 6.6,
                 coef = 1,
             },
         }
@@ -1219,7 +1268,8 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 15,
                 charges = -1,
-                min = 18,
+                valueBase = 18,
+                valueRange = 0,
                 coef = 0,
             },
         }
@@ -1231,9 +1281,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 236,
-                max = 265,
-                perLevel = 2.1,
+                valueBase = 236,
+                valueRange = 28,
+                valuePerLevel = 2.1,
                 coef = 0.571,
             },
         }
@@ -1245,12 +1295,13 @@ _addon.spellRankInfo = {
         baseCost = 880,
         effects = {
             [1] = {
-                effectType = 27,
-                auraType = 3,
+                effectType = 6,
+                auraType = 23,
                 tickPeriod = 1,
-                min = 70,
-                perLevel = 0.2,
-                coef = 0.03,
+                valueBase = 70,
+                valueRange = 0,
+                valuePerLevel = 0.2,
+                coef = 0.129,
             },
         }
     },
@@ -1261,12 +1312,13 @@ _addon.spellRankInfo = {
         baseCost = 1180,
         effects = {
             [1] = {
-                effectType = 27,
-                auraType = 3,
+                effectType = 6,
+                auraType = 23,
                 tickPeriod = 1,
-                min = 100,
-                perLevel = 0.2,
-                coef = 0.03,
+                valueBase = 100,
+                valueRange = 0,
+                valuePerLevel = 0.2,
+                coef = 0.129,
             },
         }
     },
@@ -1277,29 +1329,19 @@ _addon.spellRankInfo = {
         baseCost = 1495,
         effects = {
             [1] = {
-                effectType = 27,
-                auraType = 3,
+                effectType = 6,
+                auraType = 23,
                 tickPeriod = 1,
-                min = 134,
-                perLevel = 0.3,
-                coef = 0.03,
-            },
-        }
-    },
-    [18562] = { -- Swiftmend
-        spellLevel = 1,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 10,
-                min = 1,
-                coef = 0,
+                valueBase = 134,
+                valueRange = 0,
+                valuePerLevel = 0.3,
+                coef = 0.129,
             },
         }
     },
     [24974] = { -- Insect Swarm(Rank 2)
         spellLevel = 30,
-        maxLevel = 0,
+        maxLevel = 39,
         duration = 12,
         baseCost = 85,
         effects = {
@@ -1307,53 +1349,57 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 23,
-                coef = 0.158,
+                valueBase = 32,
+                valueRange = 0,
+                coef = 0.127,
             },
         }
     },
     [24975] = { -- Insect Swarm(Rank 3)
         spellLevel = 40,
-        maxLevel = 0,
+        maxLevel = 49,
         duration = 12,
-        baseCost = 100,
+        baseCost = 110,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 29,
-                coef = 0.158,
+                valueBase = 50,
+                valueRange = 0,
+                coef = 0.127,
             },
         }
     },
     [24976] = { -- Insect Swarm(Rank 4)
         spellLevel = 50,
-        maxLevel = 0,
+        maxLevel = 59,
         duration = 12,
-        baseCost = 140,
+        baseCost = 135,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 44,
-                coef = 0.158,
+                valueBase = 72,
+                valueRange = 0,
+                coef = 0.127,
             },
         }
     },
     [24977] = { -- Insect Swarm(Rank 5)
         spellLevel = 60,
-        maxLevel = 0,
+        maxLevel = 69,
         duration = 12,
-        baseCost = 160,
+        baseCost = 155,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 2,
-                min = 54,
-                coef = 0.158,
+                valueBase = 99,
+                valueRange = 0,
+                coef = 0.127,
             },
         }
     },
@@ -1364,9 +1410,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                min = 2267,
-                max = 2678,
-                perLevel = 7.3,
+                valueBase = 2267,
+                valueRange = 410,
+                valuePerLevel = 7.3,
                 coef = 1,
             },
         }
@@ -1378,9 +1424,9 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                min = 496,
-                max = 585,
-                perLevel = 3.1,
+                valueBase = 496,
+                valueRange = 88,
+                valuePerLevel = 3.1,
                 coef = 1,
             },
         }
@@ -1395,8 +1441,285 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                min = 222,
+                valueBase = 222,
+                valueRange = 0,
                 coef = 0.2,
+            },
+        }
+    },
+    [26978] = { -- Healing Touch(Rank 12)
+        spellLevel = 62,
+        maxLevel = 67,
+        baseCost = 820,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 2364,
+                valueRange = 426,
+                valuePerLevel = 7.4,
+                coef = 1,
+            },
+        }
+    },
+    [26979] = { -- Healing Touch(Rank 13)
+        spellLevel = 69,
+        maxLevel = 74,
+        baseCost = 935,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 2707,
+                valueRange = 490,
+                valuePerLevel = 8.2,
+                coef = 1,
+            },
+        }
+    },
+    [26980] = { -- Regrowth(Rank 10)
+        spellLevel = 65,
+        maxLevel = 70,
+        duration = 21,
+        baseCost = 675,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 1215,
+                valueRange = 140,
+                valuePerLevel = 7.7,
+                coef = 0.286,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 182,
+                valueRange = 0,
+                coef = 0.1,
+            },
+        }
+    },
+    [26981] = { -- Rejuvenation(Rank 12)
+        spellLevel = 63,
+        maxLevel = 68,
+        duration = 12,
+        baseCost = 370,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 233,
+                valueRange = 0,
+                coef = 0.2,
+            },
+        }
+    },
+    [26982] = { -- Rejuvenation(Rank 13)
+        spellLevel = 69,
+        maxLevel = 74,
+        duration = 12,
+        baseCost = 415,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 265,
+                valueRange = 0,
+                coef = 0.2,
+            },
+        }
+    },
+    [26983] = { -- Tranquility(Rank 5)
+        spellLevel = 70,
+        maxLevel = 76,
+        duration = 8,
+        baseCost = 1650,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                valueBase = 1518,
+                valueRange = 0,
+                valuePerLevel = 4.5,
+                coef = 0.286,
+            },
+        }
+    },
+    [26984] = { -- Wrath(Rank 9)
+        spellLevel = 61,
+        maxLevel = 67,
+        baseCost = 210,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 278,
+                valueRange = 34,
+                valuePerLevel = 2.4,
+                coef = 0.571,
+            },
+        }
+    },
+    [26985] = { -- Wrath(Rank 10)
+        spellLevel = 69,
+        maxLevel = 75,
+        baseCost = 255,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 381,
+                valueRange = 48,
+                valuePerLevel = 2.7,
+                coef = 0.571,
+            },
+        }
+    },
+    [26986] = { -- Starfire(Rank 8)
+        spellLevel = 67,
+        maxLevel = 73,
+        baseCost = 370,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 540,
+                valueRange = 96,
+                valuePerLevel = 3.4,
+                coef = 1,
+            },
+        }
+    },
+    [26987] = { -- Moonfire(Rank 11)
+        spellLevel = 63,
+        maxLevel = 68,
+        duration = 12,
+        baseCost = 430,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 220,
+                valueRange = 38,
+                valuePerLevel = 3.6,
+                coef = 0.15,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 111,
+                valueRange = 0,
+                coef = 0.13,
+            },
+        }
+    },
+    [26988] = { -- Moonfire(Rank 12)
+        spellLevel = 70,
+        maxLevel = 75,
+        duration = 12,
+        baseCost = 495,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 305,
+                valueRange = 52,
+                valuePerLevel = 3.9,
+                coef = 0.15,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 150,
+                valueRange = 0,
+                coef = 0.13,
+            },
+        }
+    },
+    [26989] = { -- Entangling Roots(Rank 7)
+        spellLevel = 68,
+        maxLevel = 77,
+        duration = 27,
+        baseCost = 160,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 39,
+                valueRange = 0,
+                coef = 0.1,
+            },
+        }
+    },
+    [26992] = { -- Thorns(Rank 7)
+        spellLevel = 64,
+        maxLevel = 0,
+        duration = 600,
+        baseCost = 400,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 15,
+                charges = -1,
+                valueBase = 25,
+                valueRange = 0,
+                coef = 0,
+            },
+        }
+    },
+    [27012] = { -- Hurricane(Rank 4)
+        spellLevel = 70,
+        maxLevel = 76,
+        duration = 10,
+        baseCost = 1905,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 206,
+                valueRange = 0,
+                valuePerLevel = 0.4,
+                coef = 0.129,
+            },
+        }
+    },
+    [27013] = { -- Insect Swarm(Rank 6)
+        spellLevel = 70,
+        maxLevel = 79,
+        duration = 12,
+        baseCost = 175,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 132,
+                valueRange = 0,
+                coef = 0.127,
+            },
+        }
+    },
+    [33763] = { -- Lifebloom(Rank 1)
+        spellLevel = 64,
+        maxLevel = 69,
+        duration = 7,
+        baseCost = 220,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 1,
+                valueBase = 39,
+                valueRange = 0,
+                coef = 0.0742,
+                auraStacks = 3,
+            },
+            [2] = {
+                effectType = 10,
+                valueBase = 600,
+                valueRange = 0,
+                coef = 0.3429,
             },
         }
     },
@@ -1413,6 +1736,8 @@ _addon.spellClassSet = {
             6780, -- Wrath(Rank 6)
             8905, -- Wrath(Rank 7)
             9912, -- Wrath(Rank 8)
+            26984, -- Wrath(Rank 9)
+            26985, -- Wrath(Rank 10)
         },
         [2] = {
             8921, -- Moonfire(Rank 1)
@@ -1427,6 +1752,8 @@ _addon.spellClassSet = {
             9835, -- Moonfire(Rank 10)
             20690, -- Moonfire
             21669, -- Moonfire
+            26987, -- Moonfire(Rank 11)
+            26988, -- Moonfire(Rank 12)
         },
         [4] = {
             2912, -- Starfire(Rank 1)
@@ -1438,6 +1765,14 @@ _addon.spellClassSet = {
             20687, -- Starfall
             21668, -- Starfire
             25298, -- Starfire(Rank 7)
+            26986, -- Starfire(Rank 8)
+            35243, -- Starfire
+            37124, -- Starfall
+            38935, -- Starfire
+            40344, -- Starfire
+            41349, -- L4 Arcane Charge
+            41357, -- L1 Arcane Charge
+            41360, -- L5 Arcane Charge
         },
         [8] = {
             99, -- Demoralizing Roar(Rank 1)
@@ -1445,6 +1780,7 @@ _addon.spellClassSet = {
             9490, -- Demoralizing Roar(Rank 3)
             9747, -- Demoralizing Roar(Rank 4)
             9898, -- Demoralizing Roar(Rank 5)
+            26998, -- Demoralizing Roar(Rank 6)
         },
         [16] = {
             774, -- Rejuvenation(Rank 1)
@@ -1458,9 +1794,8 @@ _addon.spellClassSet = {
             9840, -- Rejuvenation(Rank 9)
             9841, -- Rejuvenation(Rank 10)
             25299, -- Rejuvenation(Rank 11)
-            27813, -- Blessed Recovery(Rank 1)
-            27817, -- Blessed Recovery(Rank 2)
-            27818, -- Blessed Recovery(Rank 3)
+            26981, -- Rejuvenation(Rank 12)
+            26982, -- Rejuvenation(Rank 13)
         },
         [32] = {
             5185, -- Healing Touch(Rank 1)
@@ -1474,6 +1809,8 @@ _addon.spellClassSet = {
             9888, -- Healing Touch(Rank 9)
             9889, -- Healing Touch(Rank 10)
             25297, -- Healing Touch(Rank 11)
+            26978, -- Healing Touch(Rank 12)
+            26979, -- Healing Touch(Rank 13)
         },
         [64] = {
             8936, -- Regrowth(Rank 1)
@@ -1485,6 +1822,7 @@ _addon.spellClassSet = {
             9856, -- Regrowth(Rank 7)
             9857, -- Regrowth(Rank 8)
             9858, -- Regrowth(Rank 9)
+            26980, -- Regrowth(Rank 10)
         },
         [128] = {
             740, -- Tranquility(Rank 1)
@@ -1494,6 +1832,15 @@ _addon.spellClassSet = {
             21791, -- Tranquility
             21793, -- Twisted Tranquility
             25817, -- Tranquility
+            26983, -- Tranquility(Rank 5)
+            34550, -- Tranquility
+            38659, -- Tranquility
+            40128, -- Morthis Tranquility Channel
+            44203, -- Tranquility(Rank 1)
+            44205, -- Tranquility(Rank 1)
+            44206, -- Tranquility(Rank 1)
+            44207, -- Tranquility(Rank 1)
+            44208, -- Tranquility(Rank 1)
         },
         [256] = {
             467, -- Thorns(Rank 1)
@@ -1512,6 +1859,14 @@ _addon.spellClassSet = {
             25640, -- Thorns
             25777, -- Thorns
             26666, -- Dmg Shield2
+            26992, -- Thorns(Rank 7)
+            31271, -- Thorns
+            32740, -- Spikes
+            33907, -- Thorns
+            33908, -- Burning Spikes
+            34343, -- Thorns
+            34663, -- Thorns
+            35361, -- Thorns
         },
         [512] = {
             339, -- Entangling Roots(Rank 1)
@@ -1526,6 +1881,9 @@ _addon.spellClassSet = {
             19973, -- Entangling Roots(Rank 3)
             19974, -- Entangling Roots(Rank 2)
             19975, -- Entangling Roots(Rank 1)
+            26989, -- Entangling Roots(Rank 7)
+            27010, -- Entangling Roots(Rank 7)
+            40363, -- Entangling Roots
         },
         [1024] = {
             770, -- Faerie Fire(Rank 1)
@@ -1536,21 +1894,21 @@ _addon.spellClassSet = {
             17390, -- Faerie Fire (Feral)(Rank 2)
             17391, -- Faerie Fire (Feral)(Rank 3)
             17392, -- Faerie Fire (Feral)(Rank 4)
+            26993, -- Faerie Fire(Rank 5)
+            27011, -- Faerie Fire (Feral)(Rank 5)
         },
         [2048] = {
-            769, -- Swipe(Rank 3)
-            779, -- Swipe(Rank 1)
-            780, -- Swipe(Rank 2)
             6807, -- Maul(Rank 1)
             6808, -- Maul(Rank 2)
             6809, -- Maul(Rank 3)
             8972, -- Maul(Rank 4)
             9745, -- Maul(Rank 5)
-            9754, -- Swipe(Rank 4)
             9880, -- Maul(Rank 6)
             9881, -- Maul(Rank 7)
-            9908, -- Swipe(Rank 5)
+            26996, -- Maul(Rank 8)
             27554, -- Swipe
+            31279, -- Swipe
+            39449, -- Pounce
         },
         [4096] = {
             1082, -- Claw(Rank 1)
@@ -1565,9 +1923,14 @@ _addon.spellClassSet = {
             24187, -- Claw
             24331, -- Rake
             24332, -- Rake
+            27000, -- Claw(Rank 6)
+            27003, -- Rake(Rank 5)
             27555, -- Shred
             27556, -- Rake
             27638, -- Rake
+            31041, -- Mangle
+            31289, -- Claw
+            36332, -- Rake
         },
         [8192] = {
             5211, -- Bash(Rank 1)
@@ -1585,17 +1948,21 @@ _addon.spellClassSet = {
             8992, -- Shred(Rank 3)
             9829, -- Shred(Rank 4)
             9830, -- Shred(Rank 5)
+            27001, -- Shred(Rank 6)
+            27002, -- Shred(Rank 7)
         },
         [65536] = {
             6785, -- Ravage(Rank 1)
             6787, -- Ravage(Rank 2)
             9866, -- Ravage(Rank 3)
             9867, -- Ravage(Rank 4)
+            27005, -- Ravage(Rank 5)
         },
         [131072] = {
             9005, -- Pounce(Rank 1)
             9823, -- Pounce(Rank 2)
             9827, -- Pounce(Rank 3)
+            27006, -- Pounce(Rank 4)
         },
         [262144] = {
             1126, -- Mark of the Wild(Rank 1)
@@ -1609,10 +1976,14 @@ _addon.spellClassSet = {
             21849, -- Gift of the Wild(Rank 1)
             21850, -- Gift of the Wild(Rank 2)
             24752, -- Mark of the Wild(Rank 7)
+            26990, -- Mark of the Wild(Rank 8)
+            26991, -- Gift of the Wild(Rank 3)
+            34906, -- Mark of Bite
+            35336, -- Energizing Spores
+            39233, -- Mark of the Wild(Rank 8)
         },
         [524288] = {
             5229, -- Enrage
-            25503, -- Enrage
         },
         [1048576] = {
             16689, -- Nature's Grasp(Rank 1)
@@ -1621,6 +1992,7 @@ _addon.spellClassSet = {
             16812, -- Nature's Grasp(Rank 4)
             16813, -- Nature's Grasp(Rank 5)
             17329, -- Nature's Grasp(Rank 6)
+            27009, -- Nature's Grasp(Rank 7)
         },
         [2097152] = {
             5570, -- Insect Swarm(Rank 1)
@@ -1628,12 +2000,23 @@ _addon.spellClassSet = {
             24975, -- Insect Swarm(Rank 3)
             24976, -- Insect Swarm(Rank 4)
             24977, -- Insect Swarm(Rank 5)
+            27013, -- Insect Swarm(Rank 6)
         },
         [4194304] = {
             16914, -- Hurricane(Rank 1)
             17401, -- Hurricane(Rank 2)
             17402, -- Hurricane(Rank 3)
+            27012, -- Hurricane(Rank 4)
             27530, -- Hurricane
+            32087, -- Putrid Cloud
+            32134, -- Putrid Cloud
+            32717, -- Hurricane
+            34378, -- Thrall Calls Thunder
+            40090, -- Hurricane
+            42230, -- Hurricane(Rank 4)
+            42231, -- Hurricane(Rank 1)
+            42232, -- Hurricane(Rank 2)
+            42233, -- Hurricane(Rank 3)
         },
         [8388608] = {
             1079, -- Rip(Rank 1)
@@ -1646,6 +2029,8 @@ _addon.spellClassSet = {
             22827, -- Ferocious Bite(Rank 2)
             22828, -- Ferocious Bite(Rank 3)
             22829, -- Ferocious Bite(Rank 4)
+            24248, -- Ferocious Bite(Rank 6)
+            27008, -- Rip(Rank 7)
             27557, -- Ferocious Bite
             31018, -- Ferocious Bite(Rank 5)
         },
@@ -1661,17 +2046,14 @@ _addon.spellClassSet = {
             20742, -- Rebirth(Rank 3)
             20747, -- Rebirth(Rank 4)
             20748, -- Rebirth(Rank 5)
+            26994, -- Rebirth(Rank 6)
+            26995, -- Soothe Animal(Rank 4)
         },
         [33554432] = {
-            775, -- Tree Form(Shapeshift)
             21178, -- Bear Form (Passive2)(Passive)
-        },
-        [67108864] = {
-            9033, -- Shapeshift Form Effect
         },
         [134217728] = {
             3025, -- Cat Form (Passive)(Passive)
-            24868, -- Predatory Strikes
         },
         [268435456] = {
             20484, -- Rebirth(Rank 1)
@@ -1679,11 +2061,10 @@ _addon.spellClassSet = {
             20742, -- Rebirth(Rank 3)
             20747, -- Rebirth(Rank 4)
             20748, -- Rebirth(Rank 5)
+            26994, -- Rebirth(Rank 6)
         },
         [536870912] = {
-            783, -- Travel Form(Shapeshift)
             1066, -- Aquatic Form(Shapeshift)
-            24858, -- Moonkin Form(Shapeshift)
             27546, -- Faerie Dragon Form
         },
         [1073741824] = {
@@ -1702,12 +2083,96 @@ _addon.spellClassSet = {
             18562, -- Swiftmend
         },
         [4] = {
-            2782, -- Remove Curse
             2893, -- Abolish Poison
             8946, -- Cure Poison
+            17122, -- Subtlety(Rank 5)
         },
         [8] = {
             6795, -- Growl
+            39270, -- Growl
+        },
+        [16] = {
+            33763, -- Lifebloom(Rank 1)
+        },
+        [32] = {
+            33786, -- Cyclone
+        },
+        [64] = {
+            33878, -- Mangle (Bear)(Rank 1)
+            33986, -- Mangle (Bear)(Rank 2)
+            33987, -- Mangle (Bear)(Rank 3)
+        },
+        [128] = {
+            22570, -- Maim(Rank 1)
+        },
+        [256] = {
+            33745, -- Lacerate(Rank 1)
+        },
+        [512] = {
+            33831, -- Force of Nature
+        },
+        [1024] = {
+            33876, -- Mangle (Cat)(Rank 1)
+            33982, -- Mangle (Cat)(Rank 2)
+            33983, -- Mangle (Cat)(Rank 3)
+        },
+        [2048] = {
+            24932, -- Leader of the Pack
+        },
+        [4096] = {
+            29166, -- Innervate
+            38549, -- Empowerment
+            38688, -- Nether Infusion
+        },
+        [8192] = {
+            24858, -- Moonkin Form(Shapeshift)
+            24907, -- Moonkin Aura
+        },
+        [16384] = {
+            783, -- Travel Form(Shapeshift)
+        },
+        [32768] = {
+            33943, -- Flight Form(Shapeshift)
+            40120, -- Swift Flight Form(Shapeshift)
+            43343, -- Ragged Flying Carpet(Shapeshift)
+        },
+        [65536] = {
+            33891, -- Tree of Life(Shapeshift)
+        },
+        [131072] = {
+            2637, -- Hibernate(Rank 1)
+            2908, -- Soothe Animal(Rank 1)
+            8955, -- Soothe Animal(Rank 2)
+            9901, -- Soothe Animal(Rank 3)
+            18657, -- Hibernate(Rank 2)
+            18658, -- Hibernate(Rank 3)
+            26995, -- Soothe Animal(Rank 4)
+        },
+        [262144] = {
+            22812, -- Barkskin
+        },
+        [524288] = {
+            17116, -- Nature's Swiftness
+        },
+        [1048576] = {
+            769, -- Swipe(Rank 3)
+            779, -- Swipe(Rank 1)
+            780, -- Swipe(Rank 2)
+            9754, -- Swipe(Rank 4)
+            9908, -- Swipe(Rank 5)
+            26997, -- Swipe(Rank 6)
+        },
+        [2097152] = {
+            16864, -- Omen of Clarity
+            16870, -- Clearcasting
+            16886, -- Nature's Grace
+            45281, -- Natural Perfection(Rank 1)
+            45282, -- Natural Perfection(Rank 2)
+            45283, -- Natural Perfection(Rank 3)
+        },
+        [4194304] = {
+            2782, -- Remove Curse
+            17122, -- Subtlety(Rank 5)
         },
     },
     [3] = {

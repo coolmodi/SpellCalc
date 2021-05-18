@@ -27,8 +27,8 @@ L.SETTINGS_TT_HITVAL_LABEL = "Hit value";
 L.SETTINGS_TT_AVG_LABEL = "Averages";
 L.SETTINGS_TT_PENAL_LABEL = "Level penalty";
 L.SETTINGS_TT_PENAL_TT = "Show penalty for spells below level 20.";
-L.SETTINGS_TT_POWER_LABEL = "Power";
-L.SETTINGS_TT_POWER_TT = "Show spell/attack power used by spell.";
+L.SETTINGS_TT_POWER_LABEL = "Scaling";
+L.SETTINGS_TT_POWER_TT = "Show spell/attack power scaling.";
 L.SETTINGS_TT_HITCHANCE_DETAIL_LABEL = "Detailed hit chance";
 L.SETTINGS_TT_HITCHANCE_DETAIL_TT = "Show base hit and bonus hit, also hit lost for binary spells.";
 L.SETTINGS_TT_RESISTANCE_LABEL = "Resistance";
@@ -71,8 +71,6 @@ L.SETTINGS_WL_USE_IMP_SB = "Use Improved Shadow Bolt talent";
 L.SETTINGS_WL_USE_IMP_SB_TT = "Use talent in Shadow Bolt dps calculation, assumes nobody \"steals\" your debuff charges.";
 
 L.SETTINGS_HEAL_HEAD = "Healing";
-L.SETTINGS_HEAL_TARGET_HPS = "Target HPS";
-L.SETTINGS_HEAL_TARGET_HPS_TT = "If not 0 tooltips for direct heals with at least that much HPS will show extra values as if there are breaks between casts to reach this HPS value.";
 L.SETTINGS_HEAL_NO_CRIT = "Disregard crit heals";
 L.SETTINGS_HEAL_NO_CRIT_TT = "Do not consider crits for hps and efficiency calculation.";
 
@@ -93,6 +91,7 @@ L.SETTINGS_CALC_EM_POTION = "Mana Potion";
 L.SETTINGS_CALC_EM_POTION_MAJOR = "Major Mana Potion";
 L.SETTINGS_CALC_EM_POTION_SUPERIOR = "Superior Mana Potion";
 L.SETTINGS_CALC_EM_POTION_GREATER = "Greater Mana Potion";
+L.SETTINGS_CALC_EM_POTION_SUPER = "Super Mana Potion";
 L.SETTINGS_CALC_EM_RUNE = "Use Rune";
 
 L.TIME_TO_OOM = "Time to OOM";
@@ -100,6 +99,7 @@ L.SETTINGS_AB_VAL_INFO = "If using "..L.TIME_TO_OOM.." or "..L.SETTINGS_CALC_TOO
 
 L.TT_TITLE_COMB = "Combined:";
 L.TT_TITLE_CHAINS = "With Chaining:";
+L.SUSTAINED_X_STACKS = "Sustained %d Stacks:";
 
 L.DAMAGE = "Damage";
 L.HEAL = "Heal";
@@ -107,7 +107,6 @@ L.ABSORB = "Absorb";
 L.CRITICAL = "Critical";
 L.CHANCE = "chance";
 L.TT_LOWLVLPENAL = "Low level penalty";
-L.COEFFICIENT = "Coefficient";
 L.TT_POWER = "Bonus";
 L.HIT_CHANCE = "Hit chance";
 L.TT_BINARYMISS = "binary resist";
@@ -142,8 +141,5 @@ L.TT_GLANCECHANCE = "Glancing";
 L.TT_GLANCEDATA = "%.1f%% for %.1f%% damage";
 L.TT_PERSEC_COMBINED_DAMAGE = "Combined DPS";
 L.TT_TOTAL = "Total";
-
-L.TT_THPS = "For target HPS";
-L.TT_THPS_TIMES = "%.1fs between casts, %.1fs outside of FSR";
 
 L.TT_BUFFS = "Considered buffs:";

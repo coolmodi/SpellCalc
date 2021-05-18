@@ -6,22 +6,6 @@ local activeRelevantBuffs = {};
 ---@type table<string, number>
 local buffValueCache = {};
 
-local scanTt = CreateFrame("GameTooltip", "SpellCalcScanTooltip", nil, "GameTooltipTemplate");
-scanTt:SetOwner( WorldFrame, "ANCHOR_NONE" );
-scanTt:AddFontStrings(
-    scanTt:CreateFontString("$parentTextLeft1", nil, "GameTooltipText"),
-    scanTt:CreateFontString("$parentTextRight1", nil, "GameTooltipText"));
-local buffDesc = _G["SpellCalcScanTooltipTextLeft2"];
-
---- Get buff description if possible.
----@param slot number
----@return string|nil
-local function GetBuffDescription(slot)
-    scanTt:ClearLines();
-    scanTt:SetUnitAura("player", slot, "HELPFUL");
-    return buffDesc:GetText();
-end
-
 --- Apply aura effect using tooltip or hardcoded values.
 ---@param playerAuraEffect PlayerAuraEffect
 ---@param usedKey string
@@ -29,38 +13,11 @@ end
 ---@param buffSlot number|nil
 ---@param effectSlot number|nil
 local function ApplyPlayerAuraEffect(playerAuraEffect, usedKey, name, buffSlot, effectSlot)
-    local value;
-
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
-
-    if playerAuraEffect.ttValue then
-        local desc = GetBuffDescription(buffSlot);
-        if desc then
-            value = tonumber(string.match(desc, playerAuraEffect.ttValue));
-            buffValueCache[usedKey] = value;
-        else
-            -- TODO: for some reason totem buffs just don't work here,
-            -- they are found as buff with correct name but setting tooltip just does nothing
-            -- only if you aren't the shaman yourself
-            -- all other aura like buffs seem to work
-            -- Update: GBOW is aparently also a POS (now?). Hardcode values...
-            _addon:PrintError("Buff " .. name .. " in slot " .. buffSlot .. " has no description!");
-        end
-    end
-
-    if value == nil then
-        if playerAuraEffect.value then
-            value = playerAuraEffect.value;
-        else
-            _addon:PrintError("Can't resolve value for buff " .. name .. " in slot " .. buffSlot .. "! Buff will be ignored!");
-            value = 0;
-        end
-    end
-
-    _addon:ApplyAuraEffect(name, playerAuraEffect, value);
+    _addon:ApplyAuraEffect(name, playerAuraEffect, playerAuraEffect.value);
 end
 
 --- Remove aura effect using cached tooltip or hardcoded values.

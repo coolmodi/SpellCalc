@@ -14,7 +14,7 @@ local spellLists = {};
 -------------------------------------------------------
 -- Setup UI
 
-local frame = CreateFrame("Frame", "SpellCalcStatScreen", UIParent);
+local frame = CreateFrame("Frame", "SpellCalcStatScreen", UIParent, "BackdropTemplate");
 frame:SetPoint("CENTER", 0, 0);
 frame:SetWidth(400);
 frame:SetHeight(500);
@@ -305,10 +305,12 @@ end);
 -- Add stats to UI
 
 AddSingleStat("Mana", stats, "mana");
-AddSingleStat("Spirit regen", stats, "manaRegBase", " mana/s");
-AddSingleStat("FSR regen", stats, "manaRegCasting", " mana/s");
+AddSingleStat("Spirit/Int base regen", stats, "manaRegBase", " mana/s");
+AddSingleStat("While casting", stats, "manaRegCasting", " mana/s");
 AddUniformStatTable(stats.fsrRegenMult, "FSR regen mult", "%");
-AddUniformStatTable(stats.mp5, "Mp5 regen", " mana/5s");
+AddSingleStat("Mp5 from API", stats, "manaRegAura", " mana/s");
+AddUniformStatTable(stats.mp5, "Mp5 internal", " mana/5s");
+AddUniformStatTable(stats.intToMP5Pct, "Int % mp5", "%");
 
 AddSchoolTableSingle(stats.spellPower, "Spell power");
 AddSingleStat("Healing bonus", stats, "spellHealing");
@@ -323,15 +325,13 @@ AddSchoolTableUniform(stats.schoolModSpellPen, "Spell pen", "");
 
 AddUniformStatTable(stats.hitBonusSpell, "Spell +hit", "%");
 AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
-AddWeaponTableUniform(stats.weaponModFlatHitChance, nil, "%");
 AddSpellTable(stats.spellModFlatHitChance, nil, "%");
 
-AddSpellTable(stats.spellModPctHealing, "Spell Pct Healing", "%");
 AddUniformStatTable(stats.modhealingDone, "Healing done mod (all)", "%");
 
 AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
-AddSpellTable(stats.spellModPctDamage, "Spell Pct Damage", "%");
-AddSchoolTableUniform(stats.spellModPctDamage, "School Pct Damage", "%");
+AddSpellTable(stats.spellModPctDamageHealing, "Spell Pct Damage/Healing", "%");
+AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
 
 AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "s");
 AddSpellTable(stats.spellModFlatValue, "Flat mods", "");
@@ -360,7 +360,7 @@ AddSingleStat("Ranged min", stats.attackDmg.ranged, "min");
 AddSingleStat("Ranged max", stats.attackDmg.ranged, "max");
 
 AddTitle("Clearcast");
-AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
+AddSpellTable(stats.spellModClearCastChance, nil, "%");
 AddUniformStatTable(stats.clearCastChanceDmg, "Clearcast chance dmg", "%");
 
 AddTitle("Misc");

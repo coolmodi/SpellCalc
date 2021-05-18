@@ -37,11 +37,6 @@ _addon.itemSetData[211] = {
     name = "Vestments of Transcendence",
     effects = {
         {
-            need = 3,
-            type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-            value = 15,
-        },
-        {
             need = 8,
             type = _addon.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
             affectSpell = {4096, 0, 0, 0},
@@ -89,4 +84,124 @@ _addon.itemSetData[508] = {
 _addon.setItemData[21410] = 508;
 _addon.setItemData[21411] = 508;
 _addon.setItemData[21412] = 508;
+
+_addon.itemSetData[663] = {
+    name = "Incarnate Raiment",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
+            affectSpell = {512, 0, 0, 0},
+            value = 37563,
+        },
+    }
+}
+_addon.setItemData[29055] = 663;
+_addon.setItemData[29049] = 663;
+_addon.setItemData[29054] = 663;
+_addon.setItemData[29050] = 663;
+_addon.setItemData[29053] = 663;
+
+_addon.itemSetData[664] = {
+    name = "Incarnate Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {128, 0, 0, 0},
+            value = 5,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {8388608, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[29057] = 664;
+_addon.setItemData[29059] = 664;
+_addon.setItemData[29056] = 664;
+_addon.setItemData[29058] = 664;
+_addon.setItemData[29060] = 664;
+
+_addon.itemSetData[665] = {
+    name = "Avatar Raiment",
+    effects = {
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {64, 0, 0, 0},
+            value = 3,
+        },
+    }
+}
+_addon.setItemData[30153] = 665;
+_addon.setItemData[30152] = 665;
+_addon.setItemData[30151] = 665;
+_addon.setItemData[30154] = 665;
+_addon.setItemData[30150] = 665;
+
+_addon.itemSetData[666] = {
+    name = "Avatar Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_MANARESTORE,
+            affectSpell = {49848464, 1042},
+            value = 9,
+        },
+    }
+}
+_addon.setItemData[30160] = 666;
+_addon.setItemData[30161] = 666;
+_addon.setItemData[30162] = 666;
+_addon.setItemData[30159] = 666;
+_addon.setItemData[30163] = 666;
+
+_addon.itemSetData[674] = {
+    name = "Absolution Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {32768, 0, 0, 0},
+            value = 3,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {8192, 0, 0, 0},
+            value = 10,
+        },
+    }
+}
+_addon.setItemData[31061] = 674;
+_addon.setItemData[31064] = 674;
+_addon.setItemData[31067] = 674;
+_addon.setItemData[31070] = 674;
+_addon.setItemData[31065] = 674;
+_addon.setItemData[34434] = 674;
+_addon.setItemData[34528] = 674;
+_addon.setItemData[34563] = 674;
+
+_addon.itemSetData[675] = {
+    name = "Vestments of Absolution",
+    effects = {
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {4096, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[31068] = 675;
+_addon.setItemData[31063] = 675;
+_addon.setItemData[31060] = 675;
+_addon.setItemData[31069] = 675;
+_addon.setItemData[31066] = 675;
+_addon.setItemData[34562] = 675;
+_addon.setItemData[34527] = 675;
+_addon.setItemData[34435] = 675;
 

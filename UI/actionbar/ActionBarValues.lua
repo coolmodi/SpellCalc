@@ -5,6 +5,11 @@ local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20154);
 local SEAL_OF_COMMAND = GetSpellInfo(20375);
 local SEAL_OF_THE_CRUSADER = GetSpellInfo(20162);
+local PRAYER_OF_MENDING = GetSpellInfo(33076);
+local EARTH_SHIELD = GetSpellInfo(974);
+local SEAL_OF_BLOOD = GetSpellInfo(31892);
+local SEAL_OF_THE_MARTYR = GetSpellInfo(348700);
+local SEAL_OF_VENGEANCE = GetSpellInfo(31801);
 
 local ActionBarValues = {};
 local spellsInBar = {};
@@ -30,22 +35,31 @@ end
 ---@param calcedEffect CalcedEffect
 ---@param spellName string
 local function GetDummyValue(calcedEffect, spellName)
-    local k = SpellCalc_settings.abSealValue;
-
-    if spellName == SEAL_OF_RIGHTEOUSNESS or spellName == SEAL_OF_COMMAND then
+    if spellName == SEAL_OF_RIGHTEOUSNESS
+    or spellName == SEAL_OF_COMMAND
+    or spellName == SEAL_OF_BLOOD or spellName == SEAL_OF_THE_MARTYR then
+        local k = SpellCalc_settings.abSealValue;
         if calcedEffect[k] then
             return calcedEffect[k];
         end
     elseif spellName == SEAL_OF_THE_CRUSADER then
+        local k = SpellCalc_settings.abSealValue;
         if k == "avg" then
             return "";
         end
         if calcedEffect[k] then
             return calcedEffect[k];
         end
+    elseif spellName == PRAYER_OF_MENDING or spellName == EARTH_SHIELD then
+        local k = SpellCalc_settings.abDirectValue;
+        if calcedEffect[k] then
+            return calcedEffect[k];
+        end
+    elseif spellName == SEAL_OF_VENGEANCE then
+        return "";
     end
 
-    return "ERR!";
+    return "DMY!";
 end
 
 --- Get value to show for a direct or duration effect.
@@ -121,14 +135,21 @@ do
             if calcedSpell ~= nil then
                 ---@type CalcedEffect
                 local calcedEffect = calcedSpell[1];
+
+                if (bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0) then
+                    calcedSpell = calcedEffect.spellData;
+                    calcedEffect = calcedSpell[1];
+                end
+
                 local isHeal = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL + SPELL_EFFECT_FLAGS.ABSORB) > 0;
                 local showValue;
 
                 if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
                     local spellName = GetSpellInfo(spellId);
-                    showValue = GetDummyValue(calcedEffect, spellName);
-                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0
-                or bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+                    showValue = GetDummyValue(calcedEffect, spellName, calcedSpell);
+                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+                    showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDmgShieldValue);
+                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDurationValue);
                 else
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDirectValue);

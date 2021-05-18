@@ -8,6 +8,7 @@ local SEF = _addon.SPELL_EFFECT_FLAGS;
 local HEALING_TOUCH = GetSpellInfo(5186);
 local HEALING_WAVE = GetSpellInfo(332);
 local LESSER_HEALING_WAVE = GetSpellInfo(8004);
+local FLAME_SHOCK = GetSpellInfo(8053);
 
 ---@class CostHandler
 local CostHandler = {};
@@ -27,14 +28,9 @@ end
 ---@param effCastTime number
 ---@param school number
 ---@param spellName string
-function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName)
-    if calcedSpell.baseCost == 0 then
-        calcedSpell.castingData.castsToOom = -1;
-        calcedSpell.castingData.timeToOom = -1;
-        return;
-    end
-
-    local mps = stats.mp5.val / 5;
+---@param spellId number
+function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName, spellId)
+    local mps = stats.mp5.val / 5 + stats.manaRegAura;
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
         local ofsrRegen;
@@ -47,19 +43,29 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - (effCastTime - 5) * ofsrRegen;
     end
 
-    if stats.clearCastChance.val > 0 or (
-        stats.clearCastChanceDmg.val > 0 
-        and bit.band(calcedSpell[1].effectFlags, SEF.HEAL + SEF.ABSORB) == 0
-    ) then
-        local ccc = (stats.clearCastChance.val > 0 ) and stats.clearCastChance or stats.clearCastChanceDmg;
-        calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (ccc.val/100);
-        calcedSpell:AddToBuffList(ccc.buffs);
+    if stats.spellModClearCastChance[spellId] and stats.spellModClearCastChance[spellId].val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.spellModClearCastChance[spellId].val / 100);
+        calcedSpell:AddToBuffList(stats.spellModClearCastChance[spellId].buffs);
+    elseif stats.clearCastChanceDmg.val > 0 and bit.band(calcedSpell[1].effectFlags, SEF.HEAL + SEF.ABSORB) == 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.clearCastChanceDmg.val / 100);
+        calcedSpell:AddToBuffList(stats.clearCastChanceDmg.buffs);
+    end
+
+    if stats.spellModManaRestore[spellId] and stats.spellModManaRestore[spellId].val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - stats.spellModManaRestore[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModManaRestore[spellId].buffs);
+    end
+
+    if stats.spellModCritManaRestore[spellId] and stats.spellModCritManaRestore[spellId].val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - (calcedSpell.critChance / 100) * stats.spellModCritManaRestore[spellId].val;
+        calcedSpell:AddToBuffList(stats.spellModCritManaRestore[spellId].buffs);
     end
 
     if stats.illumination.val > 0 then
         if (class == "PALADIN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) > 0)
         or (class == "MAGE" and (school == _addon.SCHOOL.FIRE or school == _addon.SCHOOL.FROST))
-        or (class == "DRUID" and spellName == HEALING_TOUCH) then
+        or (class == "DRUID" and spellName == HEALING_TOUCH)
+        or (class == "SHAMAN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) == 0 and (school == _addon.SCHOOL.NATURE or school == _addon.SCHOOL.FROST or spellName == FLAME_SHOCK)) then
             calcedSpell.effectiveCost = calcedSpell.effectiveCost - spellBaseCost * (stats.illumination.val/100) * (calcedSpell.critChance/100);
             calcedSpell:AddToBuffList(stats.illumination.buffs);
         end
@@ -68,6 +74,12 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
     if stats.earthfuryReturn.val > 0 and (spellName == HEALING_WAVE or spellName == LESSER_HEALING_WAVE) then
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - spellBaseCost * 0.0875;
         calcedSpell:AddToBuffList(stats.earthfuryReturn.buffs);
+    end
+
+    if calcedSpell.effectiveCost <= 0 then
+        calcedSpell.castingData.castsToOom = -1;
+        calcedSpell.castingData.timeToOom = -1;
+        return;
     end
 
     calcedSpell.castingData.castsToOom = _addon:GetEffectiveManaPool() / calcedSpell.effectiveCost;

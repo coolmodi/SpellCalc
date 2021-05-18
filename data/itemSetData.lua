@@ -4,31 +4,6 @@
 local _addon = select(2, ...);
 
 _addon.itemSetData = {
-    [443] = {
-        name = "Bloodsoul Embrace",
-        effects = {
-            {
-                need = 3,
-                type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-                value = 12,
-            },
-        }
-    },
-    [490] = {
-        name = "Green Dragon Mail",
-        effects = {
-            {
-                need = 2,
-                type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-                value = 3,
-            },
-            {
-                need = 3,
-                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                value = 15,
-            },
-        }
-    },
     [533] = {
         name = "Battlegear of Undead Slaying",
         effects = {
@@ -73,15 +48,30 @@ _addon.itemSetData = {
             },
         }
     },
+    [554] = {
+        name = "Primal Mooncloth",
+        effects = {
+            {
+                need = 3,
+                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                value = 5,
+            },
+        }
+    },
+    [662] = {
+        name = "Hallowed Raiment",
+        effects = {
+            {
+                need = 4,
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                affectSpell = {0, 32},
+                value = 100,
+            },
+        }
+    },
 }
 
 _addon.setItemData = {
-    [19690] = 443,
-    [19691] = 443,
-    [19692] = 443,
-    [15045] = 490,
-    [15046] = 490,
-    [20296] = 490,
     [23090] = 533,
     [23087] = 533,
     [23078] = 533,
@@ -94,4 +84,12 @@ _addon.setItemData = {
     [23091] = 536,
     [23084] = 536,
     [23085] = 536,
+    [21875] = 554,
+    [21874] = 554,
+    [21873] = 554,
+    [28413] = 662,
+    [28230] = 662,
+    [27536] = 662,
+    [27775] = 662,
+    [27875] = 662,
 }

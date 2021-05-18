@@ -16,6 +16,8 @@ bit = {
     band = function(arg1, arg2) return 0 end,
 }
 
+LE_ITEM_CLASS_WEAPON = 2;
+
 --- mhBase, mhMod, ohBase, ohMod
 function UnitAttackBothHands(unit)
     return 1, 1, 1, 1;
@@ -128,8 +130,11 @@ function GetSpellCritChance(schoolNum)
     return 123;
 end
 
+---Gets the player's current mana regeneration rates (in mana per 1 seconds). 
+---@return number base @Full regen while outside the fsr
+---@return number casting @Regen from mp5 and uninterrupted spirit/int regen
 function GetManaRegen()
-    return 123;
+    return;
 end
 
 function UnitPowerMax(unit, powerType)
@@ -197,6 +202,15 @@ end
 function UnitRace(unit)
     return "localized", "English";
 end
+
+---Returns info about one of the unit's stats (strength, agility, stamina, intellect, spirit). 
+---@param unit string
+---@param statID number
+---@return number base @The unit's base stat.
+---@return number stat @The unit's current stat.
+---@return number posBuff @Any positive buffs applied to the stat.
+---@return number negBuff @Any negative buffs applied to the stat.
+function UnitStat(unit, statID) end
 
 ---@class SpellPowerEntry
 local SpellPowerEntry = {
@@ -266,6 +280,42 @@ function GetSpellHitModifier()
     return 1;
 end
 
+CR_WEAPON_SKILL = 1;
+CR_DEFENSE_SKILL = 2;
+CR_DODGE = 3;
+CR_PARRY = 4;
+CR_BLOCK = 5;
+CR_HIT_MELEE = 6;
+CR_HIT_RANGED = 7;
+CR_HIT_SPELL = 8;
+CR_CRIT_MELEE = 9;
+CR_CRIT_RANGED = 10;
+CR_CRIT_SPELL = 11;
+CR_MULTISTRIKE = 12;
+CR_READINESS = 13;
+CR_SPEED = 14;
+COMBAT_RATING_RESILIENCE_CRIT_TAKEN = 15;
+COMBAT_RATING_RESILIENCE_PLAYER_DAMAGE_TAKEN = 16;
+CR_LIFESTEAL = 17;
+CR_HASTE_MELEE = 18;
+CR_HASTE_RANGED = 19;
+CR_HASTE_SPELL = 20;
+CR_AVOIDANCE = 21;
+CR_WEAPON_SKILL_OFFHAND = 22;
+CR_WEAPON_SKILL_RANGED = 23;
+CR_EXPERTISE = 24;
+CR_ARMOR_PENETRATION = 25;
+CR_MASTERY = 26;
+CR_PVP_POWER = 27;
+CR_VERSATILITY_DAMAGE_DONE = 29;
+CR_VERSATILITY_DAMAGE_TAKEN = 31;
+
+---Returns the bonus, in percent (or other converted units, such as skill points), of a specific combat rating for the player.
+---@param combatRatingId number
+---@return number bonusPct
+function GetCombatRatingBonus(combatRatingId)
+end
+
 --- Returns the current power of the specified unit.
 ---@param unitId string
 ---@param powerType number @Type of resource (mana/rage/energy/etc) to query
@@ -312,7 +362,11 @@ local SpellBaseInfo = {
     ---@type boolean|nil
     cantDogeParryBlock = nil,
     ---@type number|nil
-    usedWeaponMask = nil
+    equippedWeaponMask = nil,
+    ---@type boolean|nil
+    noCrit = nil,
+    ---@type boolean|nil
+    forceHeal = nil,
 }
 
 ---@class SpellRankEffectData
@@ -324,11 +378,11 @@ local SpellRankEffectData = {
     ---@type boolean|nil
     forceScaleWithHeal = nil,
 
-    min = math.random(),
+    valueBase = math.random(),
     ---@type number|nil
-    max = nil,
+    valueRange = nil,
     ---@type number|nil
-    perLevel = nil,
+    valuePerLevel = nil,
 
     coef = math.random(),
     ---@type number|nil
@@ -342,6 +396,8 @@ local SpellRankEffectData = {
     chains = nil,
     ---@type number|nil
     chainMult = nil,
+    ---@type number|nil
+    auraStacks = nil,
 }
 
 ---@class SpellRankInfo
@@ -397,6 +453,8 @@ local AuraEffectBase = {
     affectMask = 0,
     ---@type number[]|nil
     affectSpell = {0,0,0,0},
+    ---@type number|nil
+    neededWeaponMask = nil
 }
 
 ---@class UnitAuraEffect : AuraEffectBase
@@ -431,9 +489,7 @@ local PlayerAura = {
     ---@type nil|UnitAuraEffect[]
     effects = {},
     ---@type nil|number
-    condition = 0,
-    ---@type nil|string
-    ttValue = "",
+    condition = 0
 }
 ---@type table<number, PlayerAuraEffect>
 _addon.aurasPlayer = {};

@@ -96,6 +96,7 @@ export interface SpellMisc {
 
 export interface SpellCategory {
     DefenseType: DEFENSE_TYPE,
+    DifficultyID: number
 }
 
 export interface SpellName {
@@ -175,40 +176,58 @@ export class SpellData {
 
     constructor() {
         console.log("Creating SpellData");
-        this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
-        this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
-        this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID");
+        
         this.spellNames = readDBCSV<SpellName>("data/dbc/spellname.csv", "ID");
         this.spell = readDBCSV<Spell>("data/dbc/spell.csv", "ID");
         this.spellDuration = readDBCSV<SpellDuration>("data/dbc/spellduration.csv", "ID");
-        this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID");
-        this.spellCooldowns = readDBCSV<SpellCooldown>("data/dbc/spellcooldowns.csv", "SpellID");
+        this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+        this.spellCooldowns = readDBCSV<SpellCooldown>("data/dbc/spellcooldowns.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
         this.spellPowerCost = readDBCSV<SpellPower>("data/dbc/spellpower.csv", "ID");
         this.spellClassOptions = readDBCSV<SpellClassOptions>("data/dbc/spellclassoptions.csv", "SpellID");
         this.spellEquippedItems = readDBCSV<SpellEquippedItems>("data/dbc/spellequippeditems.csv", "SpellID");
-        this.spellAuraOptions = readDBCSV<SpellAuraOptions>("data/dbc/spellauraoptions.csv", "SpellID");
-
+        this.spellAuraOptions = readDBCSV<SpellAuraOptions>("data/dbc/spellauraoptions.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
         this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
 
-        fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs);
+        try {
+            const cacheData = JSON.parse(fs.readFileSync("cache/spellDataCache.json", "utf8"));
+            this.spellEffects = cacheData.se;
+            this.spellCategories = cacheData.sc;
+            this.spellMiscs = cacheData.sm;
+            this.spellLevels = cacheData.sl;
+        } catch (error) {
+            this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
+            this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+            this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+            this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
 
-        // make sure direct dmg is always the 1st effect on spells that also have a duration effect
-        for (let eff1 in this.spellEffects) {
-            if (isSeal(this.spellEffects[eff1].SpellID) 
-                || this.spellEffects[eff1].EffectIndex != 1 
-                || this.spellEffects[eff1].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-            console.log("Effindex is 1 and SPELL_EFFECT_SCHOOL_DAMAGE on spell " + this.spellEffects[eff1].SpellID);
+            // make sure direct dmg is always the 1st effect on spells that also have a duration effect
+            for (let eff1 in this.spellEffects) {
+                if (isSeal(this.spellEffects[eff1].SpellID) 
+                    || this.spellEffects[eff1].EffectIndex != 1 
+                    || this.spellEffects[eff1].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
+                console.log("Effindex is 1 and SPELL_EFFECT_SCHOOL_DAMAGE on spell " + this.spellEffects[eff1].SpellID);
 
-            for (let eff2 in this.spellEffects) {
-                if (this.spellEffects[eff1].SpellID != this.spellEffects[eff2].SpellID
-                    || this.spellEffects[eff2].EffectIndex != 0
-                    || this.spellEffects[eff2].Effect != EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) continue;
-                console.log("Effindex is 0 and SPELL_EFFECT_APPLY_AURA on spell " + this.spellEffects[eff2].SpellID);
-                this.spellEffects[eff1].EffectIndex = 0;
-                this.spellEffects[eff2].EffectIndex = 1;
-                break;
+                for (let eff2 in this.spellEffects) {
+                    if (this.spellEffects[eff1].SpellID != this.spellEffects[eff2].SpellID
+                        || this.spellEffects[eff2].EffectIndex != 0
+                        || this.spellEffects[eff2].Effect != EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) continue;
+                    console.log("Effindex is 0 and SPELL_EFFECT_APPLY_AURA on spell " + this.spellEffects[eff2].SpellID);
+                    this.spellEffects[eff1].EffectIndex = 0;
+                    this.spellEffects[eff2].EffectIndex = 1;
+                    break;
+                }
             }
+
+            fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs, this.spellLevels);
+
+            fs.writeFileSync("cache/spellDataCache.json", JSON.stringify({
+                se: this.spellEffects,
+                sc: this.spellCategories,
+                sm: this.spellMiscs,
+                sl: this.spellLevels
+            }, null, 4));
         }
+
         console.log("SpellData created!");
     }
 
@@ -280,14 +299,16 @@ export class SpellData {
 
         if (spellId == AUTO_ATTACK_ID) {
             let sc: SpellCategory = {
-                DefenseType: DEFENSE_TYPE.MELEE
+                DefenseType: DEFENSE_TYPE.MELEE,
+                DifficultyID: 0
             }
             return sc;
         }
 
         if (spellId == 23590) {
             let sc: SpellCategory = {
-                DefenseType: DEFENSE_TYPE.NONE
+                DefenseType: DEFENSE_TYPE.NONE,
+                DifficultyID: 0
             }
             return sc;
         }
@@ -335,9 +356,9 @@ export class SpellData {
         return this.spellEquippedItems[spellId];
     }
 
-    getSpellAuraOptions(spellId: number)
+    getSpellAuraOptions(spellId: number): SpellAuraOptions | undefined
     {
-        if (!this.spellAuraOptions[spellId]) throw "SpellAuraOptions not forund for spell " + spellId;
+        //if (!this.spellAuraOptions[spellId]) throw "SpellAuraOptions not forund for spell " + spellId;
         return this.spellAuraOptions[spellId];
     }
 }

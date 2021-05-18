@@ -27,17 +27,6 @@ local CastinDataDef = {
     timeToOom = 0
 };
 
----@class TargetHPSDef
-local TargetHPSDef = {
-    secNoCast = 0,
-    secNoFsr = 0,
-    effectiveCost = 0,
-    perMana = 0,
-    castsToOom = 0,
-    timeToOom = 0,
-    doneToOom = 0
-};
-
 ---@class EffectOffhandData
 local EffectOffhandData = {
     critChance = 0,
@@ -63,6 +52,23 @@ local EffectOffhandData = {
     avgAfterMitigation = 0,
     perSec = 0,
 };
+
+---@class AuraStackData
+---Values for stackable auras when kept at max stacks, only heal compatible for now (Lifebloom)
+local AuraStackData = {
+    stacks = 0,
+    min = 0,
+    max = 0,
+    avg = 0,
+    avgCombined = 0,
+    avgAfterMitigation = 0,
+    perSec = 0,
+    perSecDurOrCD = 0,
+    perResource = 0,
+    ---@type number|nil
+    doneToOom = nil,
+    ticks = 0,
+}
 
 ---@class CalcedEffect
 local CalcedEffect = {
@@ -93,16 +99,15 @@ local CalcedEffect = {
     doneToOom = nil,        -- Done until OOM for mana spells
 
     ---@type number|nil
-    ticks = nil,     -- Ticks for duration spells
+    ticks = nil,            -- Ticks for duration spells
+    ---@type AuraStackData|nil
+    auraStack = nil,        -- If aura is stackable this will hold data for sustained max stacks
 
     ---@type number|nil
     charges = nil,
 
     ---@type IgniteDataDef|nil
     igniteData = nil,
-
-    ---@type TargetHPSDef|nil
-    thpsData = nil,
 
     ---@type EffectOffhandData|nil
     offhandAttack = nil,    -- Data for offhand attack (auto attack with dual wield, maybe more with TBC?)
@@ -168,26 +173,29 @@ function CalcedSpell:ResetBuffList()
     wipe(self.buffs);
 end
 
---- Set 2nd effect to be a triggered spell.
----@param calcedSpell CalcedSpell
-function CalcedSpell:SetTriggeredSpell(calcedSpell)
-    if self[2] ~= nil and self[2].effectFlags ~= SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+--- Set effect to be a triggered spell.
+---@param triggeredSpell number
+---@param effIndex number
+function CalcedSpell:SetTriggeredSpell(triggeredSpell, effIndex)
+    if self[effIndex] ~= nil and self[effIndex].effectFlags ~= SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
         _addon:PrintError("Tried to add triggered spell when 2nd effect is already in use!");
         return;
     end
 
-    if self[2] == nil then
-        self[2] = {
+    if self[effIndex] == nil then
+        self[effIndex] = {
             effectFlags = SPELL_EFFECT_FLAGS.TRIGGERED_SPELL,
-            spellData = calcedSpell
+            triggeredSpell = triggeredSpell,
+            spellData = nil
         }
     end
 end
 
---- Remove 2nd effect if it is a triggered spell.
-function CalcedSpell:UnsetTriggeredSpell()
-    if self[2] ~= nil and self[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
-        self[2] = nil;
+--- Remove effect if it is a triggered spell.
+---@param effIndex number
+function CalcedSpell:UnsetTriggeredSpell(effIndex)
+    if self[effIndex] ~= nil and self[effIndex].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+        self[effIndex] = nil;
     end
 end
 
@@ -216,8 +224,9 @@ end
 
 --- Make a new table to store calculated spell data
 ---@param effectFlags number[]
+---@param spellRankEffects table<number, SpellRankEffectData|nil>
 ---@return CalcedSpell
-function _addon.NewCalcedSpell(effectFlags)
+function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
     local newInstance = {};
     setmetatable(newInstance, CalcedSpell);
 
@@ -232,20 +241,27 @@ function _addon.NewCalcedSpell(effectFlags)
             break;
         end
 
-        local effTable = {};
-        setmetatable(effTable, CalcedEffect);
+        if bit.band(effectFlags[i], SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
+            newInstance:SetTriggeredSpell(spellRankEffects[i].valueBase, i);
+        else
+            local effTable = {};
+            setmetatable(effTable, CalcedEffect);
+            effTable.effectFlags = effectFlags[i];
 
-        effTable.effectFlags = effectFlags[i];
+            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
+                effTable.ticks = 0;
+            end
 
-        if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
-            effTable.ticks = 0;
+            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+                effTable.charges = 0;
+            end
+
+            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
+                effTable.auraStack = setmetatable({}, AuraStackData);
+            end
+
+            newInstance[i] = effTable;
         end
-
-        if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
-            effTable.charges = 0;
-        end
-
-        newInstance[i] = effTable;
     end
 
     -- Is combined spell, e.g. Immolate or Regrowth

@@ -1,3 +1,4 @@
+---@type AddonEnv
 local _, _addon = ...;
 local _, playerClass = UnitClass("player");
 if playerClass ~= "PRIEST" then
@@ -5,17 +6,9 @@ if playerClass ~= "PRIEST" then
 end
 
 _addon.talentData = {
-    -- Meditation
-    {
-        tree = 1,
-        talent = 8,
-        effects = {
-            {
-                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                perPoint = 5
-            }
-        }
-    },
+    -----------------------------
+    -- Discipline
+    -----------------------------
     -- Improved Power Word: Shield
     {
         tree = 1,
@@ -28,45 +21,58 @@ _addon.talentData = {
             }
         }
     },
+    -- Meditation
+    {
+        tree = 1,
+        talent = 9,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                perPoint = 10
+            }
+        }
+    },
+    -- Focused Power
+    {
+        tree = 1,
+        talent = 16,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
+                affectSpell = {8320, 128},
+                perPoint = 2
+            }
+        }
+    },
     -- Force of will
     {
         tree = 1,
-        talent = 14,
+        talent = 17,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {16294032},
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {49848464, 1042},
                 perPoint = 1
             },
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {139993232},
+                affectSpell = {139993232, 18},
                 perPoint = 1
             }
         }
     },
-
+    -----------------------------
+    -- Holy
+    -----------------------------
     -- Improved Renew
     {
         tree = 2,
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {64},
                 perPoint = 5
-            }
-        }
-    },
-    -- Holy Spec
-    {
-        tree = 2,
-        talent = 3,
-        effects = {
-            {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {156507776},
-                perPoint = 1
             }
         }
     },
@@ -75,7 +81,7 @@ _addon.talentData = {
         talent = 11,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {1048704},
                 perPoint = 5
             }
@@ -83,16 +89,44 @@ _addon.talentData = {
     },
     { -- Spiritual Healing
         tree = 2,
-        talent = 15,
+        talent = 16,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_HEALING,
-                affectSpell = {151264832},
+                type = _addon.EFFECT_TYPE.PCT_HEALING,
                 perPoint = 2
             }
         }
     },
-
+    { -- Holy Concentration
+        tree = 2,
+        talent = 17,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_CLEARCAST_CHANCE,
+                affectSpell = {6144, 4},
+                perPoint = 2
+            }
+        }
+    },
+    { -- Empowered Healing
+        tree = 2,
+        talent = 20,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                affectSpell = {4096},
+                perPoint = 4
+            },
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                affectSpell = {2048, 4},
+                perPoint = 2
+            }
+        }
+    },
+    -----------------------------
+    -- Shadow
+    -----------------------------
     -- Improved Shadow Word: Pain
     {
         tree = 3,
@@ -112,7 +146,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
-                affectSpell = {109813760},
+                affectSpell = {109813764, 1098},
                 perPoint = 2
             }
         }
@@ -120,17 +154,24 @@ _addon.talentData = {
     -- Darkness
     {
         tree = 3,
-        talent = 15,
+        talent = 17,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
-                affectSpell = {33562624},
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {42508288, 1026},
                 perPoint = 2
-            },
+            }
+        }
+    },
+    -- Shadow Power
+    {
+        tree = 3,
+        talent = 19,
+        effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE,
-                affectSpell = {8421376 + 524288},
-                perPoint = 2
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {8192, 2},
+                perPoint = 3
             }
         }
     },
@@ -146,12 +187,6 @@ _addon.aurasPlayer[15473] = {
 -- Inner Focus
 _addon.aurasPlayer[14751] = {
     type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-    affectSpell = {-917225840},
+    affectSpell = {-917225840, 54},
     value = 25
-}
-
--- Rapid Healing (ZG trinket)
-_addon.aurasPlayer[24546] = {
-    type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
-    value = 1500
 }

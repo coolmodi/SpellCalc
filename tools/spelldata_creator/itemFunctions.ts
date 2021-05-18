@@ -1,5 +1,6 @@
 import { createConnection } from "mysql";
 
+const PDB_NAME = "tbcmangos";
 const DB_QUERY = "SELECT entry, name, AllowableClass, class, subclass FROM item_template;";
 interface DbRow
 {
@@ -22,7 +23,7 @@ const classMask = {
     druid: 1 << 10
 };
 
-const allClasses = function()
+const allClasses = function ()
 {
     let ac = 0;
     for (const className in classMask) ac |= classMask[className as keyof typeof classMask];
@@ -34,8 +35,9 @@ const LE_ITEM_ARMOR_LIBRAM = 7;
 const LE_ITEM_ARMOR_IDOL = 8;
 const LE_ITEM_ARMOR_TOTEM = 9;
 
-interface ItemDBdata { 
-    [itemId: number]: DbRow 
+interface ItemDBdata
+{
+    [itemId: number]: DbRow
 }
 let dbDataCache: ItemDBdata;
 
@@ -49,22 +51,23 @@ export async function getItemDbData(): Promise<ItemDBdata>
     return new Promise(resolve =>
     {
         const dbcache: ItemDBdata = {};
-        createConnection({
+        const conn = createConnection({
             host: "localhost",
             user: "root",
             password: "",
-            database: "classicmangos"
-        })
-            .query(DB_QUERY, (error, results: DbRow[]) =>
+            database: PDB_NAME
+        });
+        conn.query(DB_QUERY, (error, results: DbRow[]) =>
+        {
+            if (error) throw error;
+            for (const row of results)
             {
-                if (error) throw error;
-                for (const row of results)
-                {
-                    dbcache[row.entry!] = row;
-                }
-                dbDataCache = dbcache;
-                resolve(dbDataCache);
-            });
+                dbcache[row.entry!] = row;
+            }
+            dbDataCache = dbcache;
+            resolve(dbDataCache);
+        });
+        conn.end();
     });
 }
 
@@ -140,7 +143,7 @@ export async function orderItemsByClass<T>(itemMap: Map<number, T>)
  * @param indent 
  * @param eff 
  */
-export function createEffectLua(indent: string, eff: AddonEffectData, additionalMembers?: {[key: string]: any})
+export function createEffectLua(indent: string, eff: AddonEffectData, additionalMembers?: { [key: string]: any })
 {
     let lua = `${indent}{\n`;
     if (additionalMembers)
