@@ -26,7 +26,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {1073741824},
+                affectSpell = {134217728 + 4096 + 16}, -- Nova, Magma, Searing
                 perPoint = 5
             }
         }
@@ -49,7 +49,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
-                affectSpell = {-785383421},
+                affectSpell = {-785383421 + 134217728 + 4096 + 16}, -- Default + Nova, Magma, Searing
                 perPoint = 100
             }
         }

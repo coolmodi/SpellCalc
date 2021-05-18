@@ -254,7 +254,7 @@ function warlockFixes(se: {[index: number]: SpellEffect})
     }
 }
 
-function shamanFix(se: {[index: number]: SpellEffect}) {
+function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}) {
     console.log("Fixing shaman coefs and effects");
 
     // Shadowguard -> triggerID
@@ -270,6 +270,14 @@ function shamanFix(se: {[index: number]: SpellEffect}) {
         25472: 26372
     };
 
+    const MAGMA_TOTEM = [
+        8190,
+        10585,
+        10586,
+        10587,
+        25552,
+    ];
+
     for(let effId in se) {
         const eff = se[effId];
         // Shadowguard trigger fix
@@ -277,6 +285,14 @@ function shamanFix(se: {[index: number]: SpellEffect}) {
         {
             eff.EffectTriggerSpell = LIGHTNING_SHIELD_TRIGGERS[eff.SpellID];
         }
+    }
+
+    // Make Magma Totem 20s duration instead of 21
+    for (const spellId of MAGMA_TOTEM)
+    {
+        const misc = sm[spellId];
+        if (!misc) throw "No SM entry for totem spell!";
+        misc.DurationIndex = 18 // 20000
     }
 }
 
@@ -286,5 +302,5 @@ export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index:
     mageFix(se);
     druidFixes(se);
     warlockFixes(se);
-    shamanFix(se);
+    shamanFix(se, sm);
 }
