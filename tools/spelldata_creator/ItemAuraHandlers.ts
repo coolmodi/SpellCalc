@@ -332,16 +332,26 @@ export class AuraHandlers
                         type: ADDON_EFFECT_TYPE.ILLUMINATION,
                         value: 30
                     }
-                case 28851:
+                case 28851: // Flash of Light Librams
                 case 28853:
                 case 32403:
-                case 34231:
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+                        affectSpell: [1073741824],
+                        value: effect.EffectBasePoints + 1,
+                    }
+                case 34231: // Holy Light Librams
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+                        affectSpell: [2147483648],
+                        value: effect.EffectBasePoints + 1,
+                    }
                 case 34294:
                 case 43743:
                 case 33695:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                        affectSpell: [1073741824],
+                        affectSpell: this.getAffectSpell(effect),
                         value: effect.EffectBasePoints + 1,
                     }
 

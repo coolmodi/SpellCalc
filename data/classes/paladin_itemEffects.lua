@@ -10,7 +10,7 @@ end
 _addon.itemEffects[23006] = { -- Libram of Light
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {16, 0, 0, 0},
+        affectSpell = {1073741824},
         value = 83,
     },
 }
@@ -18,7 +18,7 @@ _addon.itemEffects[23006] = { -- Libram of Light
 _addon.itemEffects[23201] = { -- Libram of Divinity
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1, 0, 0, 0},
+        affectSpell = {1073741824},
         value = 53,
     },
 }
@@ -26,7 +26,7 @@ _addon.itemEffects[23201] = { -- Libram of Divinity
 _addon.itemEffects[25644] = { -- Blessed Book of Nagrand
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1, 0, 0, 0},
+        affectSpell = {1073741824},
         value = 79,
     },
 }
@@ -42,7 +42,7 @@ _addon.itemEffects[27703] = { -- Gladiator's Lamellar Gauntlets
 _addon.itemEffects[28296] = { -- Libram of the Lightbringer
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {16, 0, 0, 0},
+        affectSpell = {2147483648},
         value = 87,
     },
 }
