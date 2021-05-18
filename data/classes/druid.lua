@@ -84,7 +84,7 @@ _addon.talentData = {
             },
         }
     },
-    { -- Balance of Power TODO: check if this is still not reflected in API on release
+    { -- Balance of Power
         tree = 1,
         talent = 16,
         effects = {

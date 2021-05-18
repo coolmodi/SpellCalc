@@ -238,7 +238,6 @@ do
     local oldIntPctMP5 = 0;
 
     ---Update spirit+int based and MP5 regen values
-    -- TODO: Check back if API output still doesn't contain int% reg talents
     function _addon:UpdateManaRegen()
         local stats = self.stats;
         local _, int = UnitStat("player", 4);
