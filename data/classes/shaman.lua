@@ -84,7 +84,17 @@ _addon.talentData = {
             }
         }
     },
-    -- TODO: Lightning Overload
+    { -- Lightning Overload
+        tree = 1,
+        talent = 19,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SHAMAN_LIGHTNING_OVERLOAD,
+                affectSpell = {3},
+                perPoint = 4
+            }
+        }
+    },
     -----------------------------
     -- Enhancement
     -----------------------------

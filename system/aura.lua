@@ -79,6 +79,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_CHARGES] = stats.spellModCharges,
     [EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE] = stats.spellModCritManaRestore,
     [EFFECT_TYPE.SPELLMOD_MANARESTORE] = stats.spellModManaRestore,
+    [EFFECT_TYPE.SHAMAN_LIGHTNING_OVERLOAD] = stats.shamanLightningOverload,
 }
 
 local effectSimpleStat = {

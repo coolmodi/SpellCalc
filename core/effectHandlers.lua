@@ -637,6 +637,15 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
         calcedSpell:AddToBuffList(stats.impShadowBolt.buffs);
     end
 
+    if stats.shamanLightningOverload[spellId] and stats.shamanLightningOverload[spellId].val > 0 then
+        local procChance = stats.shamanLightningOverload[spellId].val / 100;
+        -- Procs do 50% of normal spell damage and they can miss.
+        -- avgAfterMitigation already includes misses from the main spell and resistances.
+        local effectiveProcDmg = 0.5 * calcedEffect.avgAfterMitigation * procChance * calcedSpell.hitChance / 100;
+        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation + effectiveProcDmg;
+        calcedSpell:AddToBuffList(stats.shamanLightningOverload[spellId].buffs);
+    end
+
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
