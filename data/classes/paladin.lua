@@ -31,13 +31,13 @@ _addon.talentData = {
             }
         }
     },
-    { -- Illumination TODO: not 100% anymore
+    { -- Illumination
         tree = 1,
         talent = 9,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.ILLUMINATION,
-                perPoint = 20
+                perPoint = 12 -- Internally Illumination is still 100% return. Adjust to 60% here.
             }
         }
     },
