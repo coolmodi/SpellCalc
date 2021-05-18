@@ -341,7 +341,7 @@ export class AuraHandlers
                 case 33695:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                        affectSpell: this.getAffectSpell(effect),
+                        affectSpell: [1073741824],
                         value: effect.EffectBasePoints + 1,
                     }
 
