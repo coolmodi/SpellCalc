@@ -31,7 +31,16 @@ _addon.talentData = {
             }
         }
     },
-    -- TODO: Elemental Focus
+    { -- Elemental Focus TODO: Can proc on EO. Effective additional reduction equal to EO * 0.04 * critChance?
+        tree = 1,
+        talent = 6,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.ILLUMINATION,
+                perPoint = 80 -- = 40% for 2 spells
+            }
+        }
+    },
     { -- Call of Thunder
         tree = 1,
         talent = 8,

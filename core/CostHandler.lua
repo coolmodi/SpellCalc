@@ -8,6 +8,7 @@ local SEF = _addon.SPELL_EFFECT_FLAGS;
 local HEALING_TOUCH = GetSpellInfo(5186);
 local HEALING_WAVE = GetSpellInfo(332);
 local LESSER_HEALING_WAVE = GetSpellInfo(8004);
+local FLAME_SHOCK = GetSpellInfo(8053);
 
 ---@class CostHandler
 local CostHandler = {};
@@ -63,7 +64,8 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
     if stats.illumination.val > 0 then
         if (class == "PALADIN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) > 0)
         or (class == "MAGE" and (school == _addon.SCHOOL.FIRE or school == _addon.SCHOOL.FROST))
-        or (class == "DRUID" and spellName == HEALING_TOUCH) then
+        or (class == "DRUID" and spellName == HEALING_TOUCH)
+        or (class == "SHAMAN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) == 0 and (school == _addon.SCHOOL.NATURE or school == _addon.SCHOOL.FROST or spellName == FLAME_SHOCK)) then
             calcedSpell.effectiveCost = calcedSpell.effectiveCost - spellBaseCost * (stats.illumination.val/100) * (calcedSpell.critChance/100);
             calcedSpell:AddToBuffList(stats.illumination.buffs);
         end
