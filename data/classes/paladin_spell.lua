@@ -39,10 +39,6 @@ _addon.spellBaseInfo = {
         school = 2,
         defType = 1,
     },
-    [GetSpellInfo(19752)] = { -- Divine Intervention
-        school = 2,
-        defType = 0,
-    },
     [GetSpellInfo(26573)] = { -- Consecration
         school = 2,
         defType = 1,
@@ -429,18 +425,6 @@ _addon.spellRankInfo = {
                 valueRange = 10,
                 valuePerLevel = 1,
                 coef = 0.429,
-            },
-        }
-    },
-    [19752] = { -- Divine Intervention
-        spellLevel = 30,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 64,
-                valueBase = 19753,
-                valueRange = 0,
-                coef = 0,
             },
         }
     },

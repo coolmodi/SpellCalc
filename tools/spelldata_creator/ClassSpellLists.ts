@@ -152,6 +152,9 @@ export class ClassSpellLists
                     if (!this.spellData.getTotemSpell(effect.SpellID)) continue;
                 }
 
+                // Lazy fix for Divine Intervention "for now"
+                if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL && effect.SpellID === 19752) continue;
+
                 if (!list.has(effect.SpellID)) list.set(effect.SpellID, []);
                 list.get(effect.SpellID)!.push(effect);
             }
