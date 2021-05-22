@@ -102,7 +102,7 @@ function MeleeCalc:GetCrit()
 
         -- adjust offhand crit for weapon specific talents (warrior axe spec and rogue dagger and fisting spec)
         -- TODO: this is bullshit lol
-        if _addon:GetWeaponType("mainhand") ~= _addon:GetWeaponType("offhand") then
+        if _addon:GetWeaponType("mainHand") ~= _addon:GetWeaponType("offHand") then
             if class == "WARRIOR" then
                 local _, _, _, _, curRank = GetTalentInfo(1, 12); -- axe spec
                 if curRank > 0 then
