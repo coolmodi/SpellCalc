@@ -105,6 +105,14 @@ _addon.aurasPlayer = {
         value = 15
     },
     -- 28486 "Scourgebane Draught" 30 AP vs undead
+    [6562] = { -- Heroic Presence
+        type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+        value = 1
+    },
+    [28878] = { -- Inspiring Presence
+        type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+        value = 1
+    }
 };
 
 -- Buffs and debuffs the target can have (NYI)
