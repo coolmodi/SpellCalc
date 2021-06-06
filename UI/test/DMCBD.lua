@@ -7,7 +7,11 @@ local TTC_DEFAULT = "|cFFEEEEEE";
 local CPMValues = {10, 20, 30, 40};
 
 local function TooltipHandler(toolTipFrame)
-    local _, link = toolTipFrame:GetItem()
+    local _, link = toolTipFrame:GetItem();
+    if not link then
+        return;
+    end
+
     local id = tonumber(string.match(link, "item:(%d+)"));
     if id and id == 19288 then
         for _, cpm in pairs(CPMValues) do
