@@ -146,6 +146,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 1
             }
         }
