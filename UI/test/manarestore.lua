@@ -14,7 +14,7 @@ GameTooltip:HookScript("OnTooltipSetSpell", function (toolTipFrame)
     end
 
     -- Shadowfiend
-    if spellID == 34433 then
+    --[[if spellID == 34433 then
         local hits = 10;
         local dmgToManaMult = 2.5;
         local coef = 0.065;
@@ -22,5 +22,5 @@ GameTooltip:HookScript("OnTooltipSetSpell", function (toolTipFrame)
         local hitDmg  = base + coef * stats.spellPower[_addon.SCHOOL.SHADOW];
         SCT:SingleLine(L.DAMAGE, ("%dx %d"):format(hits, hitDmg));
         SCT:SingleLine("Regen", ("%dx %d"):format(hits, hitDmg * dmgToManaMult));
-    end
+    end]]
 end)
