@@ -93,12 +93,6 @@ local function SealOfRighteousness(calcedSpell, effNum, spellBaseInfo, spellRank
     local weaponBase = 0.03 * (stats.attackDmg.mainhand.max + stats.attackDmg.mainhand.min) / 2;
     local dmgbase;
 
-    local wmspctdmg = stats.weaponModSchoolPctDamage[_addon:GetWeaponType("mainHand")];
-    if wmspctdmg and wmspctdmg[_addon.SCHOOL.HOLY] then
-        effectMod = effectMod * (1 + wmspctdmg[_addon.SCHOOL.HOLY].val / 100);
-        calcedSpell:AddToBuffList(wmspctdmg[_addon.SCHOOL.HOLY].buffs);
-    end
-
     if _addon:IsTwoHandEquipped() then
         dmgbase = 1.2 * rankBase + weaponBase + 1;
         calcedEffect.effectiveSpCoef = 0.108 * as * effectMod;
@@ -142,14 +136,6 @@ local function SealOfCommand(calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
 
     local as = stats.attackSpeed.mainhand;
     local coef = effectData.weaponCoef;
-
-    calcedEffect.effectiveSpCoef = 0.2;
-
-    local wmspctdmg = stats.weaponModSchoolPctDamage[_addon:GetWeaponType("mainHand")];
-    if wmspctdmg and wmspctdmg[_addon.SCHOOL.HOLY] then
-        calcedEffect.effectiveSpCoef = calcedEffect.effectiveSpCoef * (1 + wmspctdmg[_addon.SCHOOL.HOLY].val / 100);
-        calcedSpell:AddToBuffList(wmspctdmg[_addon.SCHOOL.HOLY].buffs);
-    end
 
     calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
 
@@ -242,12 +228,6 @@ local function SealOfBloodMartyr(calcedSpell, effNum, spellBaseInfo, spellRankIn
 
     local as = stats.attackSpeed.mainhand;
     local coef = effectData.weaponCoef;
-
-    local wmspctdmg = stats.weaponModSchoolPctDamage[_addon:GetWeaponType("mainHand")];
-    if wmspctdmg and wmspctdmg[_addon.SCHOOL.HOLY] then
-        effectMod = effectMod * (1 + wmspctdmg[_addon.SCHOOL.HOLY].val / 100);
-        calcedSpell:AddToBuffList(wmspctdmg[_addon.SCHOOL.HOLY].buffs);
-    end
 
     calcedEffect.min = (coef * stats.attackDmg.mainhand.min + calcedEffect.flatMod) * effectMod;
     calcedEffect.max = (coef * stats.attackDmg.mainhand.max + calcedEffect.flatMod) * effectMod;

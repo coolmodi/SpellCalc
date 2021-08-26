@@ -217,25 +217,22 @@ local weaponRestrictedAuras = {};
 function _addon:UpdateWeaponRestrictedAuras()
     self:PrintDebug("Updating weapon type auras");
     local changes = false;
-    for _, wrai in pairs(weaponRestrictedAuras) do
+
+    for name, wrai in pairs(weaponRestrictedAuras) do
         if wrai.state == 1 then
             wrai.state = -1;
         end
-    end
 
-    for k, wrai in pairs(weaponRestrictedAuras) do
         if not wrai.remove and _addon:IsWeaponTypeMaskEquipped(wrai.effectBase.neededWeaponMask, "mainHand") then
             if wrai.state == 0 then
-                AuraEffectUpdate(true, k, wrai.effectBase, wrai.value);
+                AuraEffectUpdate(true, name, wrai.effectBase, wrai.value);
                 changes = true;
             end
             wrai.state = 1;
         end
-    end
 
-    for k, wrai in pairs(weaponRestrictedAuras) do
         if wrai.state == -1 then
-            AuraEffectUpdate(false, k, wrai.effectBase, wrai.value);
+            AuraEffectUpdate(false, name, wrai.effectBase, wrai.value);
             wrai.state = 0;
             changes = true;
         end
@@ -252,47 +249,24 @@ end
 ---@param effectBase AuraEffectBase
 ---@param value number @The effect value
 local function WeaponAuraUpdate(apply, name, effectBase, value)
-    -- Only activate aura if weapon condition is met
-    if effectBase.type == EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE
-    or effectBase.type == EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL then
-        if apply then
-            _addon:PrintDebug("Adding weapon aura "..name);
-            if weaponRestrictedAuras[name] == nil then
-                ---@class WeaponRestrictedAuraInfo
-                weaponRestrictedAuras[name] = {
-                    effectBase = effectBase,
-                    value = value,
-                    state = 0,
-                    remove = false
-                }
-            end
-            _addon:UpdateWeaponRestrictedAuras();
-        else
-            _addon:PrintDebug("Removing weapon aura "..name);
-            weaponRestrictedAuras[name].remove = true;
-            _addon:UpdateWeaponRestrictedAuras();
-            weaponRestrictedAuras[name] = nil;
+    if apply then
+        _addon:PrintDebug("Adding weapon aura "..name);
+        if weaponRestrictedAuras[name] == nil then
+            ---@class WeaponRestrictedAuraInfo
+            weaponRestrictedAuras[name] = {
+                effectBase = effectBase,
+                value = value,
+                state = 0,
+                remove = false
+            }
         end
-        return;
+        _addon:UpdateWeaponRestrictedAuras();
+    else
+        _addon:PrintDebug("Removing weapon aura "..name);
+        weaponRestrictedAuras[name].remove = true;
+        _addon:UpdateWeaponRestrictedAuras();
+        weaponRestrictedAuras[name] = nil;
     end
-
-    if apply == false then
-        value = -value;
-    end
-
-    -- Apply aura to weapon spells when using the correct weapon type
-    if effectBase.type == EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE then
-        local destTable = stats.weaponModSchoolPctDamage;
-        local mask = effectBase.neededWeaponMask;
-        for bitPos in pairs(destTable) do
-            if bit.band(mask, bit.lshift(1, bitPos)) > 0 then
-                ApplyOrRemoveByMask(apply, name, value, destTable[bitPos], effectBase.affectMask);
-            end
-        end
-        return;
-    end
-
-    error("Aura effect " .. name .. " with type " .. effectBase.type .. " with weapon restriction isn't handled!");
 end
 
 ---Get current aura condition mask.

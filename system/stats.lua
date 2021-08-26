@@ -25,33 +25,6 @@ local function SchoolStatTable()
     return schoolTable;
 end
 
----Create stat tables for weapon specific stats.
----@param subTableFunc function @The function that creates the per weapon type stat table
----@return table
-local function WeaponStatTable(subTableFunc)
-    -- Keys are weapon types found in _addon.WEAPON_SUBCLASS
-    local weaponTable = {
-        [_addon.WEAPON_SUBCLASS.AXE_1H] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.AXE_2H] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.BOW] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.GUN] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.MACE_1H] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.MACE_2H] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.POLEARM] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.SWORD_1H] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.SWORD_2H] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.STAFF] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.FIST] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.MISC] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.DAGGER] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.THROWN] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.CROSSBOW] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.WAND] = subTableFunc(),
-        [_addon.WEAPON_SUBCLASS.FISHING_POLE] = subTableFunc()
-    }
-    return weaponTable;
-end
-
 local function CreatureTypeStatTable()
     -- Keys are creature types found in _addon.CREATURE_TYPE
     local creatureTable = {
@@ -155,9 +128,6 @@ _addon.stats = {
     spellModCharges = SpellStatTable(),
     spellModCritManaRestore = SpellStatTable(),
     spellModManaRestore = SpellStatTable(),
-
-    ---@type table<number, table<number, UniformStat>>
-    weaponModSchoolPctDamage = WeaponStatTable(SchoolStatTable),
 
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),
