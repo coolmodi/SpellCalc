@@ -146,6 +146,8 @@ _addon.stats = {
     earthfuryReturn = UniformStat(),
     druidNaturesGrace = UniformStat(),
     shamanLightningOverload = SpellStatTable(),
+    critBaseMult = UniformStat(),
+    castManaRestoreAvg = UniformStat(),
 };
 
 --- Update spell power stats from API

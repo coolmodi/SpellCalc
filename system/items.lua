@@ -191,6 +191,34 @@ function _addon:UpdateItems()
             end
         end
     end
+
+    -- Handle meta gems.
+    -- 99 is used for meta gem item slot ID internally.
+    if items[1] then
+        local gem1, gem2, gem3 = string.match(GetInventoryItemLink("player", 1), "Hitem:%d+:%d*:(%d*):(%d*):(%d*):");
+        gem1 = tonumber(gem1);
+        gem2 = tonumber(gem2);
+        gem3 = tonumber(gem3);
+        local gemId;
+        -- Only meta gems should ever have item effects defined.
+        if self.itemEffects[gem1] then
+            gemId = gem1;
+        elseif self.itemEffects[gem2] then
+            gemId = gem2;
+        elseif self.itemEffects[gem3] then
+            gemId = gem3;
+        end
+        if items[99] ~= gemId then
+            if items[99] ~= nil then
+                UnequipItem(99);
+            end
+            if gemId then
+                EquipItem(gemId, 99);
+            end
+        end
+    elseif items[99] then
+        UnequipItem(99);
+    end
 end
 
 --- Return true if a two handed weapon is in the main hand slot

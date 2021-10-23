@@ -314,6 +314,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.critChance = 100;
     end
 
+    if stats.critBaseMult.val ~= 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
+        calcedSpell.critMult = calcedSpell.critMult * (1 + stats.critBaseMult.val/100);
+        calcedSpell:AddToBuffList(stats.critBaseMult.buffs);
+    end
+
     local cmbonus = calcedSpell.critMult - 1;
 
     if stats.schoolModPctCritMult[spellBaseInfo.school].val > 0 then
@@ -326,6 +331,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.spellModPctCritMult[spellId].buffs);
     end
 
+    -- TODO: ?????
     if stats.versusModPctCritDamage[_addon.Target.creatureType] then
         calcedSpell.critMult = calcedSpell.critMult + stats.versusModPctCritDamage[_addon.Target.creatureType].val / 100;
         calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);

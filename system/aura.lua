@@ -93,6 +93,8 @@ local effectSimpleStat = {
     [EFFECT_TYPE.DRUID_NATURES_GRACE]   = stats.druidNaturesGrace,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL] = stats.hitBonusSpell,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE] = stats.hitBonus,
+    [EFFECT_TYPE.GLOBAL_PCT_CRIT_BASE_MULT] = stats.critBaseMult,
+    [EFFECT_TYPE.GLOBAL_FLAT_MANARESTORE_AVG] = stats.castManaRestoreAvg,
 }
 
 local effectAffectMask = {

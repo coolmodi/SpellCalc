@@ -56,6 +56,11 @@ function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
         calcedSpell:AddToBuffList(stats.spellModManaRestore[spellId].buffs);
     end
 
+    if stats.castManaRestoreAvg.val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - stats.castManaRestoreAvg.val;
+        calcedSpell:AddToBuffList(stats.castManaRestoreAvg.buffs);
+    end
+
     if stats.spellModCritManaRestore[spellId] and stats.spellModCritManaRestore[spellId].val > 0 then
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - (calcedSpell.critChance / 100) * stats.spellModCritManaRestore[spellId].val;
         calcedSpell:AddToBuffList(stats.spellModCritManaRestore[spellId].buffs);
