@@ -13,7 +13,7 @@ local currentState = 1;
 local stats = _addon.stats;
 local meleeCalc = _addon.MeleeCalc:New();
 local magicCalc = _addon.MagicCalc:New();
-local costHandler = _addon.CostHandler:New();
+local costHandler = _addon.CostHandler;
 
 -- If a seal is currently active this will be the spell that should be used for Judgement.
 ---@type number|nil
@@ -484,7 +484,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.effectiveCost = spellCost;
 
         if costType == 0 then -- mana
-            costHandler:Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellBaseInfo.school, spellName, spellId);
+            costHandler.Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellBaseInfo.school, spellName, spellId);
         elseif costType == 1 then -- rage
             -- TODO: rage (on next melee, proc on crit etc.)
         elseif costType == 3 then -- energy

@@ -10,17 +10,7 @@ local HEALING_WAVE = GetSpellInfo(332);
 local LESSER_HEALING_WAVE = GetSpellInfo(8004);
 local FLAME_SHOCK = GetSpellInfo(8053);
 
----@class CostHandler
 local CostHandler = {};
-CostHandler.__index = CostHandler;
-
---- Get an object used to calculate spell cost stuff
----@return CostHandler
-function CostHandler:New()
-    local ch = {};
-    setmetatable(ch, CostHandler);
-    return ch;
-end
 
 --- Set vars for mana cost.
 ---@param calcedSpell CalcedSpell
@@ -29,7 +19,7 @@ end
 ---@param school number
 ---@param spellName string
 ---@param spellId number
-function CostHandler:Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName, spellId)
+function CostHandler.Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName, spellId)
     local mps = stats.mp5.val / 5 + stats.manaRegAura;
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
