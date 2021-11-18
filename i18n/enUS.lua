@@ -143,3 +143,5 @@ L.TT_PERSEC_COMBINED_DAMAGE = "Combined DPS";
 L.TT_TOTAL = "Total";
 
 L.TT_BUFFS = "Considered buffs:";
+
+L.IF_HEALED_TO_FULL = "If healed to full:";

@@ -184,6 +184,21 @@ local function GetEffectTitle(flags)
     return L.DAMAGE;
 end
 
+---Try to show a tooltip for an effect.
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param isHeal boolean
+---@param spellID number
+---@return boolean @True if effect could be handled.
+function SCTooltip:ShowEffectTooltip(calcedSpell, effNum, isHeal, spellID)
+    for _, func in ipairs(tooltipHandler) do
+        if func(calcedSpell, effNum, isHeal, spellID) then
+            return true;
+        end
+    end
+    return false;
+end
+
 --- Append data to tooltip if spell is known to the addon.
 local function TooltipHandler(toolTipFrame)
     local _, spellID = toolTipFrame:GetSpell();
@@ -237,12 +252,7 @@ local function TooltipHandler(toolTipFrame)
         elseif bit.band(effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
             _addon:PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
         else
-            for _, func in ipairs(tooltipHandler) do
-                if func(calcedSpell, i, isHeal, spellID) then
-                    isHandled = true;
-                    break;
-                end
-            end
+            isHandled = SCTooltip:ShowEffectTooltip(calcedSpell, i, isHeal, spellID);
         end
 
         if not isHandled then

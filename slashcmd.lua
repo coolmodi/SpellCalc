@@ -137,6 +137,25 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
+    if string.find(arg, "dsbf") then
+        local flag = strmatch(arg, "(%d+)");
+        local remove = string.find(arg, "-");
+        if flag then
+            if remove then
+                _addon:RemoveAuraEffect("Debug Flag "..flag, {
+                    type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
+                    value = tonumber(flag),
+                }, tonumber(flag));
+            else
+                _addon:ApplyAuraEffect("Debug Flag "..flag, {
+                    type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
+                    value = tonumber(flag),
+                }, tonumber(flag));
+            end
+        end
+        return;
+    end
+
     InterfaceOptionsFrame_OpenToCategory(_addonName);
     InterfaceOptionsFrame_OpenToCategory(_addonName);
 end

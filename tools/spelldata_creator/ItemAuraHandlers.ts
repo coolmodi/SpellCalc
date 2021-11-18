@@ -176,6 +176,13 @@ export class AuraHandlers
                             value: 1
                         }
                     }
+                    else if (effect.SpellID == 37594) // Greater Heal Refund
+                    {
+                        return {
+                            type: ADDON_EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
+                            value: 0x1
+                        }
+                    }
                     else
                     {
                         return;

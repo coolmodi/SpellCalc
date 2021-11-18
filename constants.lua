@@ -71,7 +71,12 @@ _addon.EFFECT_TYPE = {
     SHAMAN_LIGHTNING_OVERLOAD = 47,
     GLOBAL_PCT_CRIT_BASE_MULT = 48,
     GLOBAL_FLAT_MANARESTORE_AVG = 49,
+    BOOLEAN_BITFLAG_SET = 50,
 };
+
+_addon.BOOLEAN_FLAGS = {
+    PRIEST_T5_2PC = 0x1
+}
 
 --- Defense type (Decides mitigation types used)
 ---@class SpellDefenseType

@@ -3,6 +3,7 @@ local _addon = select(2, ...);
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
 local stats = _addon.stats;
 local conditionsActive = 0;
+local toggledFlags = 0;
 
 --- Apply or remove effect for destination
 ---@param apply boolean
@@ -175,7 +176,16 @@ local effectCustom = {
             end
             DelayedUpdateTimer:Add(value);
         end
-    end
+    end,
+    [EFFECT_TYPE.BOOLEAN_BITFLAG_SET] = function(apply, name, value)
+        value = math.abs(value);
+        if apply then
+            toggledFlags = bit.bor(toggledFlags, value);
+        else
+            toggledFlags = bit.band(toggledFlags, bit.bnot(value));
+        end
+        _addon:TriggerUpdate();
+    end,
 }
 
 --- Apply or remove an aura effect.
@@ -299,4 +309,10 @@ function _addon:RemoveAuraEffect(name, effectBase, value)
         return;
     end
     AuraEffectUpdate(false, name, effectBase, value);
+end
+
+---Check if given flag is currently active.
+---@param flag number
+function _addon:IsBooleanFlagActive(flag)
+    return bit.band(toggledFlags, flag) == flag;
 end

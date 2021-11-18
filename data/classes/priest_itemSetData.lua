@@ -129,6 +129,11 @@ _addon.itemSetData[665] = {
     name = "Avatar Raiment",
     effects = {
         {
+            need = 2,
+            type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
+            value = 1,
+        },
+        {
             need = 4,
             type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {64, 0, 0, 0},
