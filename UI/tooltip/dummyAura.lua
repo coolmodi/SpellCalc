@@ -51,6 +51,7 @@ local function GreaterHeal(calcedSpell)
             calcedSpell.castingData.castsToOom = math.floor(calcedSpell.castingData.castsToOom);
         end
         local _, _, _, castTime = GetSpellInfo(2060);
+        castTime = castTime / 1000;
         calcedSpell.castingData.timeToOom = calcedSpell.castingData.castsToOom * castTime;
         calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
 
