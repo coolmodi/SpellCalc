@@ -1,4 +1,4 @@
-import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown, SpellPower, SpellEquippedItems } from "./SpellData";
+import { SpellData, SpellEffect, SpellMisc, SpellLevel, Spell, SpellCategory, SpellCooldown, SpellPower, SpellEquippedItems, SpellAuraOptions } from "./SpellData";
 import * as fs from "fs";
 import { isSeal, SealType } from "./paladinCrap";
 import { ItemSetCreator } from "./ItemSetCreator";
@@ -75,7 +75,7 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     // Prayer of Mending
     if (effect.SpellID === 33076)
     {
-        ei.charges = 5;
+        bi.charges = 5;
         ei.valueBase = effect.EffectBasePoints + 1;
         ei.coef = effect.EffectBonusCoefficient;
         ei.valueRange = effect.EffectDieSides - 1;
@@ -86,7 +86,7 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     // Earth Shield
     if ([974, 32593, 32594].indexOf(effect.SpellID) > -1)
     {
-        ei.charges = 6;
+        bi.charges = 6;
         ei.valueBase = effect.EffectBasePoints + 1;
         ei.coef = 0.286;
         ei.valueRange = effect.EffectDieSides - 1;
@@ -112,7 +112,6 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         valuePerLevel: effect.EffectRealPointsPerLevel,
         forceScaleWithHeal: false,
         period: 0,
-        charges: 0,
         weaponCoef: 0,
     };
 
@@ -131,16 +130,9 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             if (spellName == "Power Word: Shield") rankInfo.effects[effectNum].forceScaleWithHeal = true;
             break;
         case AURA_TYPE.SPELL_AURA_DAMAGE_SHIELD:
-            rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL: 
             {
-                rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
-                /* const teff = spellData.getSpellEffects(effect.EffectTriggerSpell)[0];
-                rankInfo.effects[effectNum].coef = teff.EffectBonusCoefficient;
-                rankInfo.effects[effectNum].valueBase = teff.EffectBasePoints + 1;
-                rankInfo.effects[effectNum].valueRange = teff.EffectDieSides - 1;
-                rankInfo.effects[effectNum].valuePerLevel = teff.EffectRealPointsPerLevel; */
                 rankInfo.effects[effectNum].valueBase = effect.EffectTriggerSpell;
                 rankInfo.effects[effectNum].coef = 0;
                 rankInfo.effects[effectNum].valueRange = 0;
@@ -175,7 +167,6 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             handleDummyAura(effect, rankInfo.effects[effectNum], baseInfo);
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE:
-            rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
             break;
         default:
             if (effectNum == 1 && effect.EffectMechanic != 0) {
@@ -201,7 +192,6 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
         valuePerLevel: effect.EffectRealPointsPerLevel,
         forceScaleWithHeal: false,
         period: 0,
-        charges: 0,
         weaponCoef: 0 
     };
 
@@ -256,7 +246,6 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            charges: 0,
             weaponCoef: 0 
         };
 
@@ -287,7 +276,6 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            charges: 0,
             weaponCoef: 1
         };
     },
@@ -309,7 +297,6 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            charges: 0,
             weaponCoef: (effect.EffectBasePoints + 1) / 100
         };
 
@@ -329,7 +316,6 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: 0,
             forceScaleWithHeal: false,
             period: 0,
-            charges: 0,
             weaponCoef: 0 
         };
     },
@@ -343,7 +329,6 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: 0,
             forceScaleWithHeal: false,
             period: 0,
-            charges: 0,
             weaponCoef: 0,
         };
     },
@@ -370,6 +355,7 @@ function buildSpellInfo(pclass: string) {
     let spellcd: SpellCooldown;
     let spellCosts: SpellPower[];
     let spellEquippedItems: SpellEquippedItems | undefined;
+    let spellAuraOptions: SpellAuraOptions | undefined;
 
     for (const [spellId, spellEffects] of list) {
         effects = spellEffects;
@@ -381,6 +367,7 @@ function buildSpellInfo(pclass: string) {
         spellcd = spellData.getSpellCooldown(spellId);
         spellCosts = spellData.getSpellPowerCosts(spellId);
         spellEquippedItems = spellData.getSpellEquipeedItems(spellId);
+        spellAuraOptions = spellData.getSpellAuraOptions(spellId);
 
         // Skip physical spells except auto attack and SOtC for now
         if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID, SealType.SOtC)) continue;
@@ -397,7 +384,8 @@ function buildSpellInfo(pclass: string) {
                 cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
                 equippedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
                 noCrit: (spellMisc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT,
-                forceHeal: false
+                forceHeal: false,
+                charges: (spellAuraOptions && spellAuraOptions.ProcCharges > 0) ? spellAuraOptions.ProcCharges : 0
             };
         } else {
             // Shitty fix for how "base info" is handled in the addon atm.
@@ -480,6 +468,7 @@ end
         if (bi.equippedWeaponMask != 0) str += `\t\tequippedWeaponMask = ${bi.equippedWeaponMask},\n`;
         if (bi.noCrit) str += `\t\tnoCrit = ${bi.noCrit},\n`;
         if (bi.forceHeal) str += `\t\tforceHeal = ${bi.forceHeal},\n`;
+        if (bi.charges != 0) str += `\t\tcharges = ${bi.charges},\n`;
         str += `\t},\n`;
     }
     str += "};\n\n";
@@ -502,7 +491,6 @@ end
             if (eff.auraType) str += `\t\t\t\tauraType = ${eff.auraType},\n`;
             if (eff.forceScaleWithHeal) str += `\t\t\t\tforceScaleWithHeal = true,\n`;
             if (eff.period > 0) str += `\t\t\t\ttickPeriod = ${eff.period},\n`;
-            if (eff.charges != 0) str += `\t\t\t\tcharges = ${eff.charges},\n`;
             if (eff.weaponCoef) str += `\t\t\t\tweaponCoef = ${eff.weaponCoef},\n`;
             str += `\t\t\t\tvalueBase = ${eff.valueBase},\n`;
             str += `\t\t\t\tvalueRange = ${eff.valueRange},\n`;

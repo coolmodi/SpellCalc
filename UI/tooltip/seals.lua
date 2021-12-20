@@ -13,7 +13,7 @@ local function SoR(calcedSpell, effectNum)
         SCT:SingleLine(L.DAMAGE, ("%.1f"):format(calcedEffect.avg));
     end
 
-    SCT:AppendCoefData(calcedEffect, nil, true);
+    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -49,7 +49,7 @@ local function SoC(calcedSpell, effectNum)
         SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
     end
 
-    SCT:AppendCoefData(calcedEffect, nil, true, true);
+    SCT:AppendCoefData(calcedSpell, calcedSpell, calcedEffect, nil, true, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -76,7 +76,7 @@ local function SoC(calcedSpell, effectNum)
         end
     end
 
-    SCT:SingleLine(L.TT_PROCCHANCE, ("%.1f%%"):format(calcedEffect.charges * 100));
+    SCT:SingleLine(L.TT_PROCCHANCE, ("%.1f%%"):format(calcedSpell.charges * 100));
 
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
@@ -124,7 +124,7 @@ local function SoB_SoV(calcedSpell, effectNum)
         SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
     end
 
-    SCT:AppendCoefData(calcedEffect, nil, true, true);
+    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, true, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -174,7 +174,7 @@ local function SoV(calcedSpell, effectNum)
         SCT:SingleLine(L.DAMAGE, ("%dx %.1f (%d)"):format(calcedEffect.ticks, calcedEffect.min, SCT:Round(calcedEffect.min * calcedEffect.ticks)));
     end
 
-    SCT:AppendCoefData(calcedEffect, nil);
+    SCT:AppendCoefData(calcedSpell, calcedEffect, nil);
 
     if SpellCalc_settings.ttPerSecond then
         SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));

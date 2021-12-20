@@ -105,11 +105,12 @@ function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, ticks, lr, tr)
 end
 
 --- Append SP/heal scaling data
+---@param calcedSpell CalcedSpell
 ---@param calcedEffect CalcedEffect
 ---@param coefMult number|nil @Multiply coef and sp output with this number
 ---@param noTick boolean|nil @Ignore ticks and just output raw coef and used bonus
 ---@param noCharge boolean|nil @Ignore charges and just output raw coef and used bonus
-function SCTooltip:AppendCoefData(calcedEffect, coefMult, noTick, noCharge)
+function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, noTick, noCharge)
     if not SpellCalc_settings.ttPower or not calcedEffect.effectiveSpCoef or calcedEffect.effectiveSpCoef == 0 then
         return;
     end
@@ -126,9 +127,9 @@ function SCTooltip:AppendCoefData(calcedEffect, coefMult, noTick, noCharge)
     if not noTick and calcedEffect.ticks then
         fullSP = fullSP * calcedEffect.ticks;
         coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedEffect.ticks, calcedEffect.ticks, coefPct);
-    elseif not noCharge and calcedEffect.charges and calcedEffect.charges > 0 then
-        fullSP = fullSP * calcedEffect.charges;
-        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedEffect.charges, calcedEffect.charges, coefPct)
+    elseif not noCharge and calcedSpell.charges and calcedSpell.charges > 0 then
+        fullSP = fullSP * calcedSpell.charges;
+        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedSpell.charges, calcedSpell.charges, coefPct)
     else
         coefPart = ("%.1f%%"):format(coefPct);
     end

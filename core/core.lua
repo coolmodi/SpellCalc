@@ -70,7 +70,8 @@ end
 ---@param effectType number
 ---@param auraType number|nil
 local function IsDmgShieldEffect(effectType, auraType)
-    if effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA then
+    if effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA
+    or effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY then
         if auraType == AURA_TYPES.SPELL_AURA_DAMAGE_SHIELD
         or auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_DAMAGE then
             return true;
@@ -168,9 +169,8 @@ end
 ---@param calcedSpell CalcedSpell|nil
 ---@param parentSpellData CalcedSpell|nil
 ---@param parentEffCastTime number|nil
----@param parentCharges number|nil
 ---@return CalcedSpell
-local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTime, parentCharges)
+local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTime)
     local spellName, _, _, castTime = GetSpellInfo(spellId);
     _addon:PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
     local effCastTime = parentEffCastTime or 0;
@@ -554,18 +554,16 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         _addon:PrintDebug("Calculating effect " .. i);
         ---@type CalcedEffect
         local calcedEffect = calcedSpell[i];
-        ---@type SpellRankEffectData
-        local effectData = spellRankInfo.effects[i];
 
         --------------------------
         -- Charges
 
-        if parentCharges then
-            calcedEffect.charges = parentCharges;
-        elseif effectData.charges then
-            calcedEffect.charges = effectData.charges;
+        if parentSpellData and parentSpellData.charges then
+            calcedSpell.charges = parentSpellData.charges;
+        elseif spellBaseInfo.charges then
+            calcedSpell.charges = spellBaseInfo.charges;
             if stats.spellModCharges[spellId] then
-                calcedEffect.charges = calcedEffect.charges + stats.spellModCharges[spellId].val;
+                calcedSpell.charges = calcedSpell.charges + stats.spellModCharges[spellId].val;
                 calcedSpell:AddToBuffList(stats.spellModCharges[spellId].buffs);
             end
         end
@@ -573,8 +571,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         -- Trigger spell spell effect, update triggered spell data
         if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
             _addon:PrintDebug("Is trigger spell effect, updating triggered spell!");
-            calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime, calcedEffect.charges);
+            calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
         else
+            ---@type SpellRankEffectData
+            local effectData = spellRankInfo.effects[i];
+
             --------------------------
             -- Effect specific modifier
 

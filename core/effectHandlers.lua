@@ -159,7 +159,7 @@ local function SealOfCommand(calcedSpell, effNum, spellBaseInfo, spellRankInfo, 
     local avgAfterResist = calcedEffect.avgCombined * (1 - calcedSpell.avgResist);
     local avgTriggerHits = triggerHits * avgAfterResist * effectiveHitChance; -- SOC hits can again be melee mitigated like a special attack
 
-    calcedEffect.charges = SOC_PPS * as; -- lel
+    calcedSpell.charges = SOC_PPS * as; -- lel
     calcedEffect.avgAfterMitigation = avgTriggerHits;
     calcedEffect.ticks = triggerHits;
     calcedEffect.perSec = avgTriggerHits / duration;
@@ -207,7 +207,7 @@ local function PoM_ES(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCast
     -- Multiply by charge count
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
-    calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedEffect.charges;
+    calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedSpell.charges;
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
@@ -397,7 +397,7 @@ local function DamageShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.avg;
 
-    local total = (calcedEffect.charges > 0) and calcedEffect.charges * calcedEffect.avgCombined or calcedEffect.avgCombined;
+    local total = (calcedSpell.charges and calcedSpell.charges > 0) and calcedSpell.charges * calcedEffect.avgCombined or calcedEffect.avgCombined;
 
     calcedEffect.avgAfterMitigation = total * (calcedSpell.hitChance / 100) * (1 - calcedSpell.avgResist);
 
@@ -626,8 +626,8 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
         calcedSpell:AddToBuffList(stats.shamanLightningOverload[spellId].buffs);
     end
 
-    if calcedEffect.charges and calcedEffect.charges > 1 then
-        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedEffect.charges;
+    if calcedSpell.charges and calcedSpell.charges > 1 then
+        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedSpell.charges;
     end
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;

@@ -367,6 +367,8 @@ local SpellBaseInfo = {
     noCrit = nil,
     ---@type boolean|nil
     forceHeal = nil,
+    ---@type number|nil
+    charges = nil,
 }
 
 ---@class SpellRankEffectData
@@ -389,8 +391,6 @@ local SpellRankEffectData = {
     weaponCoef = nil,
     ---@type number|nil
     tickPeriod = nil,
-    ---@type number|nil
-    charges = nil,
 
     ---@type number|nil
     chains = nil,

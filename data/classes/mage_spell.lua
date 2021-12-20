@@ -85,6 +85,7 @@ _addon.spellBaseInfo = {
         school = 3,
         isBinary = true,
         defType = 1,
+        charges = 1,
     },
     [GetSpellInfo(30482)] = { -- Molten Armor
         school = 3,
@@ -2253,7 +2254,6 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 42,
-                charges = -1,
                 valueBase = 34913,
                 valueRange = 0,
                 coef = 0,

@@ -71,8 +71,8 @@ local function GetBasicValue(calcedSpell, critChance, valueKey)
 
     if valueKey == "allTicks" then
         if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
-            if calcedEffect.charges > 1 then
-                return calcedEffect.avgCombined * calcedEffect.charges;
+            if calcedSpell.charges > 1 then
+                return calcedEffect.avgCombined * calcedSpell.charges;
             end
             return calcedEffect.avgCombined;
         else

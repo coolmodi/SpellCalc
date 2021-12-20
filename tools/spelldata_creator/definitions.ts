@@ -134,6 +134,7 @@ interface BaseInfo {
     equippedWeaponMask: number,
     noCrit: boolean,
     forceHeal: boolean,
+    charges: number,
 }
 
 interface EffectInfo {
@@ -145,14 +146,12 @@ interface EffectInfo {
     coef: number,
     forceScaleWithHeal: boolean,
     period: number,
-    charges: number,
     weaponCoef: number,
     chainInfo?: {
         chains: number, 
         mult: number
     },
     auraStacks?: number,
-    //triggeredSpell?: number,
 }
 
 const enum PowerType {

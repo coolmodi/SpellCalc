@@ -103,9 +103,6 @@ local CalcedEffect = {
     ---@type AuraStackData|nil
     auraStack = nil,        -- If aura is stackable this will hold data for sustained max stacks
 
-    ---@type number|nil
-    charges = nil,
-
     ---@type IgniteDataDef|nil
     igniteData = nil,
 
@@ -147,6 +144,9 @@ local CalcedSpell = {
     -- For mana spells
     ---@type CastinDataDef
     castingData = nil,
+
+    ---@type number|nil
+    charges = nil,
 
     ---@type CalcedEffect|nil @effect 1
     [1] = nil,
@@ -250,10 +250,6 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
 
             if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
                 effTable.ticks = 0;
-            end
-
-            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
-                effTable.charges = 0;
             end
 
             if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then

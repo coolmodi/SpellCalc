@@ -11,14 +11,14 @@ local function PoM(calcedSpell, effectNum)
     local calcedEffect = calcedSpell[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L.HEAL, ("%dx %d | %d total"):format(calcedEffect.charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * calcedEffect.charges)));
+        SCT:SingleLine(L.HEAL, ("%dx %d | %d total"):format(calcedSpell.charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * calcedSpell.charges)));
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
         SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
     end
 
-    SCT:AppendCoefData(calcedEffect);
+    SCT:AppendCoefData(calcedSpell, calcedEffect);
 
     if SpellCalc_settings.ttPerSecond then
         SCT:SingleLine(L.HEAL_PER_SEC_CAST_SHORT, ("%.1f"):format(calcedEffect.perSec));

@@ -31,6 +31,7 @@ _addon.spellBaseInfo = {
         school = 6,
         isChannel = true,
         defType = 1,
+        charges = 1,
     },
     [GetSpellInfo(755)] = { -- Health Funnel
         school = 6,
@@ -98,6 +99,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(29722)] = { -- Incinerate
         school = 3,
         defType = 1,
+        charges = 1,
     },
     [GetSpellInfo(30283)] = { -- Shadowfury
         school = 6,
