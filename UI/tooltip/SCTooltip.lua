@@ -240,7 +240,7 @@ local function TooltipHandler(toolTipFrame)
             end
             calcedEffect.spellData[2] = calcedEffect.spellData[1];
             for _, func in ipairs(tooltipHandler) do
-                if func(calcedEffect.spellData, 2, isHeal, spellID) then
+                if func(calcedEffect.spellData, i, isHeal, spellID) then
                     isHandled = true;
                     break;
                 end

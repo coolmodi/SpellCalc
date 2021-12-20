@@ -2254,7 +2254,7 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = -1,
-                valueBase = 75,
+                valueBase = 34913,
                 valueRange = 0,
                 coef = 0,
             },
@@ -2386,6 +2386,18 @@ _addon.spellRankInfo = {
                 valueBase = 89,
                 valueRange = 0,
                 coef = 0.05,
+            },
+        }
+    },
+    [34913] = { -- Molten Armor(Rank 1)
+        spellLevel = 62,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 75,
+                valueRange = 0,
+                coef = 0,
             },
         }
     },

@@ -108,6 +108,10 @@ const enum SPELL_ATTR1 {
     SPELL_ATTR_EX_CHANNELED_ANY = 0x44,
 }
 
+const enum SPELL_ATTR2 {
+    SPELL_ATTR_EX2_CANT_CRIT = 0x20000000
+}
+
 const enum SCHOOL_MASK {
     NONE	= 0x00,
     PHYSICAL= 0x01,

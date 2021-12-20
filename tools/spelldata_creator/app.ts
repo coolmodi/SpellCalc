@@ -136,11 +136,15 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL: 
             {
                 rankInfo.effects[effectNum].charges = (saopts && saopts.ProcCharges > 0) ? saopts.ProcCharges : -1;
-                const teff = spellData.getSpellEffects(effect.EffectTriggerSpell)[0];
+                /* const teff = spellData.getSpellEffects(effect.EffectTriggerSpell)[0];
                 rankInfo.effects[effectNum].coef = teff.EffectBonusCoefficient;
                 rankInfo.effects[effectNum].valueBase = teff.EffectBasePoints + 1;
                 rankInfo.effects[effectNum].valueRange = teff.EffectDieSides - 1;
-                rankInfo.effects[effectNum].valuePerLevel = teff.EffectRealPointsPerLevel;
+                rankInfo.effects[effectNum].valuePerLevel = teff.EffectRealPointsPerLevel; */
+                rankInfo.effects[effectNum].valueBase = effect.EffectTriggerSpell;
+                rankInfo.effects[effectNum].coef = 0;
+                rankInfo.effects[effectNum].valueRange = 0;
+                rankInfo.effects[effectNum].valuePerLevel = 0;
             } break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
             const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
@@ -160,8 +164,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     rankInfo.effects[effectNum].valueRange = teffect.EffectDieSides - 1;
                     rankInfo.effects[effectNum].valuePerLevel = teffect.EffectRealPointsPerLevel;
                     const misc = spellData.getSpellMisc(teffect.SpellID);
-                    // 0x20000000 = spell can't crit
-                    if ((misc["Attributes[2]"] & 0x20000000) === 0x20000000) baseInfo.noCrit = true;
+                    if ((misc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) baseInfo.noCrit = true;
                     if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) baseInfo.forceHeal = true;
                     break;
                 }
@@ -393,9 +396,18 @@ function buildSpellInfo(pclass: string) {
                 defenseType: spellcat.DefenseType,
                 cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
                 equippedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
-                noCrit: (spellMisc["Attributes[2]"] & 0x20000000) === 0x20000000,
+                noCrit: (spellMisc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT,
                 forceHeal: false
             };
+        } else {
+            // Shitty fix for how "base info" is handled in the addon atm.
+            // Triggered spells can have the same name as the base spell but not be able to crit or have the real def type.
+            if ((spellMisc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) {
+                classInfo.baseInfo[spellName].noCrit = true;
+            }
+            if (classInfo.baseInfo[spellName].defenseType === DEFENSE_TYPE.NONE && spellcat.DefenseType !== DEFENSE_TYPE.NONE) {
+                classInfo.baseInfo[spellName].defenseType = spellcat.DefenseType;
+            }
         }
 
         // Create rank info if needed

@@ -626,6 +626,10 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
         calcedSpell:AddToBuffList(stats.shamanLightningOverload[spellId].buffs);
     end
 
+    if calcedEffect.charges and calcedEffect.charges > 1 then
+        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * calcedEffect.charges;
+    end
+
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;

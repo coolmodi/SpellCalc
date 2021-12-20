@@ -132,7 +132,11 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
     local calcedEffect = calcedSpell[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg);
+        if calcedEffect.charges and calcedEffect.charges > 0 then
+            SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %d | %d total"):format(calcedEffect.charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * calcedEffect.charges)));
+        else
+            SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg);
+        end
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
@@ -148,11 +152,19 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
         AppendMitigation(calcedSpell);
     end
 
-    if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine((isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT), ("%.1f"):format(calcedEffect.perSec));
+    if calcedEffect.charges then
+        if calcedEffect.charges > 0 then
+            if SpellCalc_settings.ttPerSecond then
+                SCT:SingleLine((isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT), ("%.1f"):format(calcedEffect.perSec));
+            end
+            SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, true);
+        end
+    else
+        if SpellCalc_settings.ttPerSecond then
+            SCT:SingleLine((isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT), ("%.1f"):format(calcedEffect.perSec));
+        end
+        SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, true);
     end
-
-    SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, true);
 
     if calcedEffect.chains and calcedEffect.chains > 1 then
         AppendChainData(calcedSpell, effectNum, isHeal);

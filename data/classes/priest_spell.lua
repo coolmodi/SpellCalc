@@ -66,6 +66,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(18137)] = { -- Shadowguard
         school = 6,
         defType = 1,
+        noCrit = true,
     },
     [GetSpellInfo(15237)] = { -- Holy Nova
         school = 2,
@@ -457,9 +458,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                valueBase = 8,
+                valueBase = 2943,
                 valueRange = 0,
-                coef = 0.067,
+                coef = 0,
             },
         }
     },
@@ -476,6 +477,19 @@ _addon.spellRankInfo = {
                 valueBase = 61,
                 valueRange = 0,
                 coef = 0.183,
+            },
+        }
+    },
+    [2943] = { -- Touch of Weakness(Rank 1)
+        spellLevel = 10,
+        maxLevel = 0,
+        duration = 120,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 8,
+                valueRange = 0,
+                coef = 0.067,
             },
         }
     },
@@ -1514,9 +1528,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 20,
+                valueBase = 28377,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1614,6 +1628,71 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [19249] = { -- Touch of Weakness(Rank 2)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 120,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 15,
+                valueRange = 0,
+                coef = 0.107,
+            },
+        }
+    },
+    [19251] = { -- Touch of Weakness(Rank 3)
+        spellLevel = 30,
+        maxLevel = 0,
+        duration = 120,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 24,
+                valueRange = 0,
+                coef = 0.107,
+            },
+        }
+    },
+    [19252] = { -- Touch of Weakness(Rank 4)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 120,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 35,
+                valueRange = 0,
+                coef = 0.107,
+            },
+        }
+    },
+    [19253] = { -- Touch of Weakness(Rank 5)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 120,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 48,
+                valueRange = 0,
+                coef = 0.107,
+            },
+        }
+    },
+    [19254] = { -- Touch of Weakness(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 120,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 64,
+                valueRange = 0,
+                coef = 0.107,
+            },
+        }
+    },
     [19261] = { -- Touch of Weakness(Rank 2)
         spellLevel = 20,
         maxLevel = 0,
@@ -1624,9 +1703,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                valueBase = 15,
+                valueBase = 19249,
                 valueRange = 0,
-                coef = 0.107,
+                coef = 0,
             },
         }
     },
@@ -1640,9 +1719,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                valueBase = 24,
+                valueBase = 19251,
                 valueRange = 0,
-                coef = 0.107,
+                coef = 0,
             },
         }
     },
@@ -1656,9 +1735,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                valueBase = 35,
+                valueBase = 19252,
                 valueRange = 0,
-                coef = 0.107,
+                coef = 0,
             },
         }
     },
@@ -1672,9 +1751,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                valueBase = 48,
+                valueBase = 19253,
                 valueRange = 0,
-                coef = 0.107,
+                coef = 0,
             },
         }
     },
@@ -1688,9 +1767,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                valueBase = 64,
+                valueBase = 19254,
                 valueRange = 0,
-                coef = 0.107,
+                coef = 0,
             },
         }
     },
@@ -1874,9 +1953,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 35,
+                valueBase = 28378,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1890,9 +1969,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 51,
+                valueBase = 28379,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1906,9 +1985,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 70,
+                valueBase = 28380,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1922,9 +2001,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 90,
+                valueBase = 28381,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1938,9 +2017,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 116,
+                valueBase = 28382,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -2366,6 +2445,19 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [25460] = { -- Touch of Weakness(Rank 7)
+        spellLevel = 70,
+        maxLevel = 0,
+        duration = 120,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 80,
+                valueRange = 0,
+                coef = 0.107,
+            },
+        }
+    },
     [25461] = { -- Touch of Weakness(Rank 7)
         spellLevel = 70,
         maxLevel = 0,
@@ -2376,9 +2468,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 1,
-                valueBase = 80,
+                valueBase = 25460,
                 valueRange = 0,
-                coef = 0.107,
+                coef = 0,
             },
         }
     },
@@ -2408,9 +2500,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 130,
+                valueBase = 28385,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -2510,6 +2602,90 @@ _addon.spellRankInfo = {
                 valueRange = 48,
                 valuePerLevel = 0.9,
                 coef = 0.161,
+            },
+        }
+    },
+    [28377] = { -- Shadowguard(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 20,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [28378] = { -- Shadowguard(Rank 2)
+        spellLevel = 28,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 35,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [28379] = { -- Shadowguard(Rank 3)
+        spellLevel = 36,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 51,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [28380] = { -- Shadowguard(Rank 4)
+        spellLevel = 44,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 70,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [28381] = { -- Shadowguard(Rank 5)
+        spellLevel = 52,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 90,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [28382] = { -- Shadowguard(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 116,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [28385] = { -- Shadowguard(Rank 7)
+        spellLevel = 68,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 130,
+                valueRange = 0,
+                coef = 0.267,
             },
         }
     },

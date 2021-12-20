@@ -26,6 +26,7 @@ _addon.spellBaseInfo = {
     [GetSpellInfo(324)] = { -- Lightning Shield
         school = 4,
         defType = 1,
+        noCrit = true,
     },
     [GetSpellInfo(8050)] = { -- Flame Shock
         school = 3,
@@ -86,9 +87,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 13,
+                valueBase = 26364,
                 valueRange = 0,
-                coef = 0.147,
+                coef = 0,
             },
         }
     },
@@ -102,9 +103,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 29,
+                valueBase = 26365,
                 valueRange = 0,
-                coef = 0.227,
+                coef = 0,
             },
         }
     },
@@ -218,9 +219,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 51,
+                valueBase = 26366,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -306,9 +307,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 80,
+                valueBase = 26367,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -752,9 +753,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 114,
+                valueBase = 26369,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -915,9 +916,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 154,
+                valueBase = 26370,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -931,9 +932,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 198,
+                valueBase = 26363,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1484,9 +1485,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 232,
+                valueBase = 26371,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1500,9 +1501,9 @@ _addon.spellRankInfo = {
                 effectType = 6,
                 auraType = 42,
                 charges = 3,
-                valueBase = 287,
+                valueBase = 26372,
                 valueRange = 0,
-                coef = 0.267,
+                coef = 0,
             },
         }
     },
@@ -1581,6 +1582,114 @@ _addon.spellRankInfo = {
                 valueBase = 18,
                 valueRange = 0,
                 coef = 0.044,
+            },
+        }
+    },
+    [26363] = { -- Lightning Shield(Rank 7)
+        spellLevel = 56,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 198,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [26364] = { -- Lightning Shield(Rank 1)
+        spellLevel = 8,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 13,
+                valueRange = 0,
+                coef = 0.147,
+            },
+        }
+    },
+    [26365] = { -- Lightning Shield(Rank 2)
+        spellLevel = 16,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 29,
+                valueRange = 0,
+                coef = 0.227,
+            },
+        }
+    },
+    [26366] = { -- Lightning Shield(Rank 3)
+        spellLevel = 24,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 51,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [26367] = { -- Lightning Shield(Rank 4)
+        spellLevel = 32,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 80,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [26369] = { -- Lightning Shield(Rank 5)
+        spellLevel = 40,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 114,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [26370] = { -- Lightning Shield(Rank 6)
+        spellLevel = 48,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 154,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [26371] = { -- Lightning Shield(Rank 8)
+        spellLevel = 63,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 232,
+                valueRange = 0,
+                coef = 0.267,
+            },
+        }
+    },
+    [26372] = { -- Lightning Shield(Rank 9)
+        spellLevel = 70,
+        maxLevel = 0,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 287,
+                valueRange = 0,
+                coef = 0.267,
             },
         }
     },
