@@ -9,6 +9,7 @@ local HEALING_TOUCH = GetSpellInfo(5186);
 local HEALING_WAVE = GetSpellInfo(332);
 local LESSER_HEALING_WAVE = GetSpellInfo(8004);
 local FLAME_SHOCK = GetSpellInfo(8053);
+local HOLY_SHOCK = GetSpellInfo(33072);
 
 local CostHandler = {};
 
@@ -57,7 +58,7 @@ function CostHandler.Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
     end
 
     if stats.illumination.val > 0 then
-        if (class == "PALADIN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) > 0)
+        if (class == "PALADIN" and (bit.band(calcedSpell[1].effectFlags, SEF.HEAL) > 0 or spellName == HOLY_SHOCK))
         or (class == "MAGE" and (school == _addon.SCHOOL.FIRE or school == _addon.SCHOOL.FROST))
         or (class == "DRUID" and spellName == HEALING_TOUCH)
         or (class == "SHAMAN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) == 0 and (school == _addon.SCHOOL.NATURE or school == _addon.SCHOOL.FROST or spellName == FLAME_SHOCK)) then
