@@ -79,7 +79,9 @@ local function CreateDominosButtonFS()
         else
                 slotId = i+60;
         end
-        buttonFontStrings[slotId] = CreateActionButtonFS(_G["DominosActionButton"..i]);
+        if _G["DominosActionButton"..i] then
+            buttonFontStrings[slotId] = CreateActionButtonFS(_G["DominosActionButton"..i]);
+        end
     end
     CreateStockButtonFS();
 end
