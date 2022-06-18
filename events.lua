@@ -14,6 +14,11 @@ end
 local frame = CreateFrame("Frame");
 local handlers = {};
 
+-- These can fire too early causing problems. Delay until entering world.
+local afterEnterWorld = {
+    ACTIONBAR_SLOT_CHANGED = true,
+}
+
 function handlers.ADDON_LOADED(addonName)
     if addonName ~= _addonName then
         return;
@@ -37,7 +42,12 @@ function handlers.PLAYER_LOGIN()
     end
 end
 
-function handlers.PLAYER_ENTERING_WORLD()
+function handlers.PLAYER_ENTERING_WORLD(isLogin, isReload)
+    if isLogin or isReload then
+        for k, _ in pairs(afterEnterWorld) do
+            frame:RegisterEvent(k);
+        end
+    end
     _addon:FullUpdate();
 end
 
@@ -147,7 +157,9 @@ frame:SetScript( "OnEvent",function(self, event, ...)
 end)
 
 for k,_ in pairs(handlers) do
-    frame:RegisterEvent(k);
+    if not afterEnterWorld[k] then
+        frame:RegisterEvent(k);
+    end
 end
 
 _addon.events = {};

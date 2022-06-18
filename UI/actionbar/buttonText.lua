@@ -79,6 +79,7 @@ local function CreateDominosButtonFS()
         else
                 slotId = i+60;
         end
+        -- TODO: Hook button creation like for BT4? Only relevant when increasing bar size again, not that important.
         if _G["DominosActionButton"..i] then
             buttonFontStrings[slotId] = CreateActionButtonFS(_G["DominosActionButton"..i]);
         end
