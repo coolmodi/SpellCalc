@@ -174,19 +174,22 @@ export class SpellData {
     private spellEquippedItems: {[index: number]: SpellEquippedItems};
     private spellAuraOptions: {[index: number]: SpellAuraOptions};
 
-    constructor() {
+    constructor(expansion: number) {
         console.log("Creating SpellData");
         
-        this.spellNames = readDBCSV<SpellName>("data/dbc/spellname.csv", "ID");
-        this.spell = readDBCSV<Spell>("data/dbc/spell.csv", "ID");
-        this.spellDuration = readDBCSV<SpellDuration>("data/dbc/spellduration.csv", "ID");
-        this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-        this.spellCooldowns = readDBCSV<SpellCooldown>("data/dbc/spellcooldowns.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-        this.spellPowerCost = readDBCSV<SpellPower>("data/dbc/spellpower.csv", "ID");
-        this.spellClassOptions = readDBCSV<SpellClassOptions>("data/dbc/spellclassoptions.csv", "SpellID");
-        this.spellEquippedItems = readDBCSV<SpellEquippedItems>("data/dbc/spellequippeditems.csv", "SpellID");
-        this.spellAuraOptions = readDBCSV<SpellAuraOptions>("data/dbc/spellauraoptions.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-        this.totemSpells = JSON.parse(fs.readFileSync("data/totemSpells.json", "utf8"));
+        let baseDir = "data/";
+        if (expansion === 2) baseDir += "wotlk/";
+
+        this.spellNames = readDBCSV<SpellName>(baseDir + "dbc/spellname.csv", "ID");
+        this.spell = readDBCSV<Spell>(baseDir + "dbc/spell.csv", "ID");
+        this.spellDuration = readDBCSV<SpellDuration>(baseDir + "dbc/spellduration.csv", "ID");
+        this.spellCategories = readDBCSV<SpellCategory>(baseDir + "dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+        this.spellCooldowns = readDBCSV<SpellCooldown>(baseDir + "dbc/spellcooldowns.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+        this.spellPowerCost = readDBCSV<SpellPower>(baseDir + "dbc/spellpower.csv", "ID");
+        this.spellClassOptions = readDBCSV<SpellClassOptions>(baseDir + "dbc/spellclassoptions.csv", "SpellID");
+        this.spellEquippedItems = readDBCSV<SpellEquippedItems>(baseDir + "dbc/spellequippeditems.csv", "SpellID");
+        this.spellAuraOptions = readDBCSV<SpellAuraOptions>(baseDir + "dbc/spellauraoptions.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+        this.totemSpells = JSON.parse(fs.readFileSync(baseDir + "totemSpells.json", "utf8"));
 
         try {
             const cacheData = JSON.parse(fs.readFileSync("cache/spellDataCache.json", "utf8"));
@@ -195,10 +198,10 @@ export class SpellData {
             this.spellMiscs = cacheData.sm;
             this.spellLevels = cacheData.sl;
         } catch (error) {
-            this.spellEffects = readDBCSV<SpellEffect>("data/dbc/spelleffect.csv", "ID");
-            this.spellCategories = readDBCSV<SpellCategory>("data/dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-            this.spellMiscs = readDBCSV<SpellMisc>("data/dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-            this.spellLevels = readDBCSV<SpellLevel>("data/dbc/spelllevels.csv", "SpellID");
+            this.spellEffects = readDBCSV<SpellEffect>(baseDir + "dbc/spelleffect.csv", "ID");
+            this.spellCategories = readDBCSV<SpellCategory>(baseDir + "dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+            this.spellMiscs = readDBCSV<SpellMisc>(baseDir + "dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+            this.spellLevels = readDBCSV<SpellLevel>(baseDir + "dbc/spelllevels.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
 
             // make sure direct dmg is always the 1st effect on spells that also have a duration effect
             for (let eff1 in this.spellEffects) {

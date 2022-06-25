@@ -29,11 +29,11 @@ const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE,
 ];
 
-const DMG_SHIELD_DATA: {[index: string]: number} = {
-    "Shadowguard": 3,
-    "Lightning Shield": 3,
-    "Touch of Weakness": 1,
-    "Molten Armor": 123
+const DMG_SHIELD_DATA: {[index: string]: boolean} = {
+    "Shadowguard": true,
+    "Lightning Shield": true,
+    "Touch of Weakness": true,
+    "Molten Armor": true
 }
 
 const TRIGGER_SPELL_IGNORE: {[spellName: string]: boolean} = {
@@ -44,7 +44,8 @@ const TRIGGER_SPELL_IGNORE: {[spellName: string]: boolean} = {
     "Nature's Grasp": true,
     "Seal of Justice": true,
     "Seal of Light": true, // no scaling, no need to handle
-    "Seal of Wisdom": true
+    "Seal of Wisdom": true,
+    "Barkskin": true,
 }
 
 const PTSA_IGNORES = [
@@ -57,7 +58,7 @@ export class ClassSpellLists
     private readonly validClassSpells: { [className: string]: Map<number, SpellEffect[]> } = {};
     private readonly judgementRemap: Map<number, number> = new Map<number, number>();
 
-    constructor (spellData: SpellData, classesToDo: string[])
+    constructor (spellData: SpellData, classesToDo: string[], expansion: number)
     {
         this.spellData = spellData;
 
@@ -65,7 +66,7 @@ export class ClassSpellLists
 
         for (const className of classesToDo)
         {
-            const list = this.createValidSpellList(className);
+            const list = this.createValidSpellList(className, expansion);
             this.validClassSpells[className] = list;
         }
 
@@ -76,10 +77,14 @@ export class ClassSpellLists
      * Get list of valid/handled spells for a class
      * @param pclass 
      */
-    private createValidSpellList(pclass: string)
+    private createValidSpellList(pclass: string, expansion: number)
     {
         console.log("Building list of spells for class " + pclass);
-        const data: { [index: string]: number } = JSON.parse(fs.readFileSync("data/class_spells/" + pclass + ".json", "utf8"));
+
+        let baseDir = "data/";
+        if (expansion === 2) baseDir += "wotlk/";
+
+        const data: { [index: string]: number } = JSON.parse(fs.readFileSync(baseDir + "class_spells/" + pclass + ".json", "utf8"));
         const list: Map<number, SpellEffect[]> = new Map<number, SpellEffect[]>();
         const binaryCache: Map<number, SpellEffect> = new Map<number, SpellEffect>();
 

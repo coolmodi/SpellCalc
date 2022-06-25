@@ -6,15 +6,16 @@ import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { ItemEffectsCreator } from "./ItemEffectsCreator";
 
+const expansion = 2;
 const outputdir = __dirname + "/../../../data/classes/";
 
 const CLASSES = [
     "druid", 
-    "priest", 
-    "warlock",
-    "mage", 
-    "paladin",
-    "shaman",
+    //"priest", 
+    //"warlock",
+    //"mage", 
+    //"paladin",
+    //"shaman",
 
     //"hunter",
     //"rogue",
@@ -32,8 +33,8 @@ const SCHOOL_MASK_TO_ENUM = {
     [SCHOOL_MASK.ARCANE]: 7,
 }
 
-const spellData = new SpellData();
-const classSpellLists = new ClassSpellLists(spellData, CLASSES);
+const spellData = new SpellData(expansion);
+const classSpellLists = new ClassSpellLists(spellData, CLASSES, expansion);
 const classSpellSets = new ClassSpellSets(spellData);
 
 const SpellClassSet = {

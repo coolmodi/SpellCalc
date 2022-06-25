@@ -15,8 +15,9 @@ export function readDBCSV<T>(path: string, index: string, filter?: {key: keyof T
     let data: {[index: string]: {[index: string]: number | string}} = {};
     for (let i = 1; i < lines.length; i++) {
         if (lines[i].length < 2) continue;
-        let lineData = lines[i].split(",");
-        let thisData: {[index: string]: number | string} = {};
+        const lineData = lines[i].split(/(?<!"[^"]+),(?=(?![^"]+")|(?:.*,))/);
+        if (headers.length != lineData.length) throw new Error(path + " > Line column count doesn't match header count! Line: " + i);
+        const thisData: {[index: string]: number | string} = {};
         for (let j = 0; j < headers.length; j++) {
             if (lineData[j].match(/\d\.\d/)) {
                 thisData[headers[j]] = parseFloat(lineData[j]);
