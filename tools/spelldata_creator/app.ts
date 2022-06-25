@@ -98,6 +98,28 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     throw new Error("Dummy aura effect not supported!");
 }
 
+function handleDummyEffect(effect: SpellEffect, _ei: EffectInfo, _bi: BaseInfo, spellName: string) 
+{
+    // Starfall
+    if (spellName == "Starfall")
+    {
+        switch(effect.SpellID)
+        {
+            case 50286: // Rank 1
+            case 53196: // Rank 2
+            case 53197: // Rank 3
+            case 53198: // Rank 4
+                // TODO: Implement Starfall dummy
+                console.log("TODO: Starfall dummy");
+                return;
+            default:
+                throw new Error("Unknown Starfall rank!");
+        }
+    }
+
+    throw new Error("Dummy effect not handled!");
+}
+
 /**
  * SPELL_EFFECT_APPLY_AURA and SPELL_EFFECT_PERSISTENT_AREA_AURA
  */
@@ -108,6 +130,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         effectType: effect.Effect,
         auraType: effect.EffectAura,
         coef: effect.EffectBonusCoefficient,
+        coefAP: effect.BonusCoefficientFromAP,
         valueBase: effect.EffectBasePoints + 1,
         valueRange: effect.EffectDieSides - 1,
         valuePerLevel: effect.EffectRealPointsPerLevel,
@@ -136,13 +159,14 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             {
                 rankInfo.effects[effectNum].valueBase = effect.EffectTriggerSpell;
                 rankInfo.effects[effectNum].coef = 0;
+                rankInfo.effects[effectNum].coefAP = 0;
                 rankInfo.effects[effectNum].valueRange = 0;
                 rankInfo.effects[effectNum].valuePerLevel = 0;
             } break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
             const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
             const tspellCat = spellData.getSpellCategory(effect.EffectTriggerSpell);
-            baseInfo.defenseType = tspellCat.DefenseType;
+            baseInfo.defenseType = (tspellCat) ? tspellCat.DefenseType : baseInfo.defenseType; // TODO: Is this supposed to be that way or is DBC just buggy atm?
             let found = false;
             for (let i = 0; i < tspell.length; i++) {
                 if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) {
@@ -153,12 +177,17 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     rankInfo.maxLevel = spellLevel.MaxLevel;
                     rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
                     rankInfo.effects[effectNum].coef = teffect.EffectBonusCoefficient;
+                    rankInfo.effects[effectNum].coefAP = teffect.BonusCoefficientFromAP;
                     rankInfo.effects[effectNum].valueBase = teffect.EffectBasePoints + 1;
                     rankInfo.effects[effectNum].valueRange = teffect.EffectDieSides - 1;
                     rankInfo.effects[effectNum].valuePerLevel = teffect.EffectRealPointsPerLevel;
                     const misc = spellData.getSpellMisc(teffect.SpellID);
                     if ((misc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) baseInfo.noCrit = true;
                     if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) baseInfo.forceHeal = true;
+                    break;
+                } else if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_DUMMY) {
+                    handleDummyEffect(tspell[i], rankInfo.effects[effectNum], baseInfo, spellName);
+                    found = true;
                     break;
                 }
             }
@@ -188,6 +217,7 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
     rankInfo.effects[effectNum] = {
         effectType: effect.Effect,
         coef: effect.EffectBonusCoefficient,
+        coefAP: effect.BonusCoefficientFromAP,
         valueBase: effect.EffectBasePoints + 1,
         valueRange: effect.EffectDieSides - 1,
         valuePerLevel: effect.EffectRealPointsPerLevel,
@@ -211,6 +241,8 @@ function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: num
     const totemEffects = spellData.getSpellEffects(totemSpell);
     const totemSpellCat = spellData.getSpellCategory(totemSpell);
     const totemSpellLevel = spellData.getSpellLevel(totemSpell);
+
+    if (!totemSpellCat) throw new Error("Totem spell category not found!");
 
     rankInfo.maxLevel = totemSpellLevel.MaxLevel;
 
@@ -242,6 +274,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
+            coefAP: effect.BonusCoefficientFromAP,
             valueBase: effect.EffectBasePoints + 1,
             valueRange: effect.EffectDieSides - 1,
             valuePerLevel: effect.EffectRealPointsPerLevel,
@@ -272,6 +305,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
+            coefAP: effect.BonusCoefficientFromAP,
             valueBase: effect.EffectBasePoints + 1,
             valueRange: effect.EffectDieSides - 1,
             valuePerLevel: effect.EffectRealPointsPerLevel,
@@ -292,6 +326,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
 
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
+            coefAP: effect.BonusCoefficientFromAP,
             coef: effect.EffectBonusCoefficient,
             valueBase: 0,
             valueRange: 0,
@@ -312,6 +347,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: 0,
+            coefAP: 0,
             valueBase: 0,
             valueRange: 0,
             valuePerLevel: 0,
@@ -325,6 +361,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: 0,
+            coefAP: 0,
             valueBase: effect.EffectTriggerSpell,
             valueRange: 0,
             valuePerLevel: 0,
@@ -352,7 +389,7 @@ function buildSpellInfo(pclass: string) {
     let spellName: string;
     let spellLevel: SpellLevel;
     let spellspell: Spell;
-    let spellcat: SpellCategory;
+    let spellcat: SpellCategory | undefined;
     let spellcd: SpellCooldown;
     let spellCosts: SpellPower[];
     let spellEquippedItems: SpellEquippedItems | undefined;
@@ -369,6 +406,8 @@ function buildSpellInfo(pclass: string) {
         spellCosts = spellData.getSpellPowerCosts(spellId);
         spellEquippedItems = spellData.getSpellEquipeedItems(spellId);
         spellAuraOptions = spellData.getSpellAuraOptions(spellId);
+
+        if (!spellcat) throw new Error("Sspell category not found!");
 
         // Skip physical spells except auto attack and SOtC for now
         if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID, SealType.SOtC)) continue;
@@ -408,17 +447,20 @@ function buildSpellInfo(pclass: string) {
                 maxLevel: spellLevel.MaxLevel,
                 duration: dur,
                 baseCost: 0,
+                baseCostPct: 0,
                 effects: []
             };
 
             if (spellCosts.length === 1) {
                 if (spellCosts[0].PowerType == PowerType.MANA || spellCosts[0].PowerType == PowerType.RAGE || spellCosts[0].PowerType == PowerType.ENERGY) {
                     classInfo.rankInfo[spellId].baseCost = spellCosts[0].ManaCost;
+                    classInfo.rankInfo[spellId].baseCostPct = spellCosts[0].PowerCostPct;
                 }
             } else if (spellCosts.length > 1) {
                 for (let cinfo of spellCosts) {
                     if (cinfo.PowerType == PowerType.MANA || cinfo.PowerType == PowerType.RAGE || cinfo.PowerType == PowerType.ENERGY) {
                         classInfo.rankInfo[spellId].baseCost = cinfo.ManaCost;
+                        classInfo.rankInfo[spellId].baseCostPct = cinfo.PowerCostPct;
                         break;
                     }
                 }
@@ -482,6 +524,7 @@ end
         str += `\t\tmaxLevel = ${ri.maxLevel},\n`;
         if (ri.duration) str += `\t\tduration = ${ri.duration},\n`;
         if (ri.baseCost > 0) str += `\t\tbaseCost = ${ri.baseCost},\n`;
+        if (ri.baseCostPct > 0) str += `\t\tbaseCostPct = ${ri.baseCostPct},\n`;
 
         str += `\t\teffects = {\n`;
 
@@ -497,6 +540,7 @@ end
             str += `\t\t\t\tvalueRange = ${eff.valueRange},\n`;
             if (eff.valuePerLevel) str += `\t\t\t\tvaluePerLevel = ${eff.valuePerLevel},\n`;
             str += `\t\t\t\tcoef = ${eff.coef},\n`;
+            str += `\t\t\t\tcoefAP = ${eff.coefAP},\n`;
             if (eff.chainInfo) 
             {
                 str += `\t\t\t\tchains = ${eff.chainInfo.chains},\n`;

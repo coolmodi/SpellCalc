@@ -57,7 +57,7 @@ export async function getItemDbData(): Promise<ItemDBdata>
             password: "",
             database: PDB_NAME
         });
-        conn.query(DB_QUERY, (error, results: DbRow[]) =>
+        conn.query(DB_QUERY, (error: any, results: DbRow[]) =>
         {
             if (error) throw error;
             for (const row of results)

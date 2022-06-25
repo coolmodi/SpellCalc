@@ -1,4 +1,5 @@
 const enum EFFECT_TYPE {
+    SPELL_EFFECT_DUMMY = 3,
     SPELL_EFFECT_HEAL = 10,
     SPELL_EFFECT_APPLY_AURA = 6,
     SPELL_EFFECT_PERSISTENT_AREA_AURA = 27,
@@ -144,6 +145,7 @@ interface EffectInfo {
     valueRange: number,
     valuePerLevel: number,
     coef: number,
+    coefAP: number,
     forceScaleWithHeal: boolean,
     period: number,
     weaponCoef: number,
@@ -166,6 +168,7 @@ interface RankInfo {
     maxLevel: number,
     duration: number,
     baseCost: number,
+    baseCostPct: number,
     effects: EffectInfo[]
 }
 

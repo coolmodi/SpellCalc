@@ -316,7 +316,8 @@ export class SpellData {
             return sc;
         }
 
-        throw new Error("SpellCategory not found for " + spellId);
+        //throw new Error("SpellCategory not found for " + spellId);
+        return;
     }
 
     getSpellCooldown(spellId: number) {

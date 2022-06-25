@@ -199,6 +199,12 @@ export class AuraHandlers
                         affectSpell: [8388608],
                         value: 20
                     }
+                case 23590: // Judgement (Dmg proc)
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
+                        affectSpell: this.getAffectSpell(effect),
+                        value: effect.EffectTriggerSpell
+                    }
                 default:
                     throw "Triggered spell needs some love"
             }
@@ -429,6 +435,7 @@ export class AuraHandlers
                 case 34244:
                 case 52172:
                 case 50200:
+                case 26127: // Enigma Blizzard Bonus (uninterruptible)
                     return;
                 default:
                     throw "SPELL_AURA_DUMMY spell not handled!";
@@ -539,7 +546,7 @@ export class AuraHandlers
      */
     private getAffectSpell(effect: SpellEffect)
     {
-        if (effect["EffectSpellClassMask[0]"] === 0 && effect["EffectSpellClassMask[1]"] === 0) throw "wtf?"
+        if (effect["EffectSpellClassMask[0]"] === 0 && effect["EffectSpellClassMask[1]"] === 0 && effect["EffectSpellClassMask[2]"] === 0) throw "wtf?"
         return [effect["EffectSpellClassMask[0]"], effect["EffectSpellClassMask[1]"], effect["EffectSpellClassMask[2]"], effect["EffectSpellClassMask[3]"]];
     }
 
