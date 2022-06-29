@@ -98,7 +98,7 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     throw new Error("Dummy aura effect not supported!");
 }
 
-function handleDummyEffect(effect: SpellEffect, _ei: EffectInfo, _bi: BaseInfo, spellName: string) 
+function handleDummyEffect(effect: SpellEffect, ei: EffectInfo, _bi: BaseInfo, spellName: string) 
 {
     // Starfall
     if (spellName == "Starfall")
@@ -109,8 +109,30 @@ function handleDummyEffect(effect: SpellEffect, _ei: EffectInfo, _bi: BaseInfo, 
             case 53196: // Rank 2
             case 53197: // Rank 3
             case 53198: // Rank 4
-                // TODO: Implement Starfall dummy
-                console.log("TODO: Starfall dummy");
+                // Make dummy and handle in addon
+                ei.auraType = AURA_TYPE.SPELL_AURA_DUMMY;
+                // Coefs are same for all ranks
+                ei.coef = 0.3; // Star hit
+                ei.coefAP = 0.127; // AoE effect
+
+                const startTrigger = spellData.getSpellEffects(effect.EffectBasePoints + 1);
+                if (startTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall trigger!");
+                for (const teff2 of startTrigger)
+                {
+                    if (teff2.EffectIndex == 0)
+                    {
+                        // The main hit of a star
+                        ei.valueBase = teff2.EffectBasePoints + 1;
+                        ei.valueRange = teff2.EffectDieSides - 1;
+                    }
+                    else if (teff2.EffectIndex == 1)
+                    {
+                        // Put star AoE base damage in valuePerLevel
+                        const aoeTrigger = spellData.getSpellEffects(teff2.EffectTriggerSpell);
+                        if (aoeTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall AoE trigger!");
+                        ei.valuePerLevel = aoeTrigger[0].EffectBasePoints + 1;
+                    }
+                }
                 return;
             default:
                 throw new Error("Unknown Starfall rank!");

@@ -2210,11 +2210,12 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 6,
-                auraType = 23,
-                valueBase = 0,
-                valueRange = 0,
-                coef = 0.127,
-                coefAP = 0,
+                auraType = 4,
+                valueBase = 145,
+                valueRange = 22,
+                valuePerLevel = 26,
+                coef = 0.3,
+                coefAP = 0.127,
             },
         }
     },
@@ -2255,11 +2256,12 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 6,
-                auraType = 23,
-                valueBase = 0,
-                valueRange = 0,
-                coef = 0.127,
-                coefAP = 0,
+                auraType = 4,
+                valueBase = 325,
+                valueRange = 52,
+                valuePerLevel = 58,
+                coef = 0.3,
+                coefAP = 0.127,
             },
         }
     },
@@ -2271,11 +2273,12 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 6,
-                auraType = 23,
-                valueBase = 0,
-                valueRange = 0,
-                coef = 0.127,
-                coefAP = 0,
+                auraType = 4,
+                valueBase = 475,
+                valueRange = 76,
+                valuePerLevel = 85,
+                coef = 0.3,
+                coefAP = 0.127,
             },
         }
     },
@@ -2287,11 +2290,12 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 6,
-                auraType = 23,
-                valueBase = 0,
-                valueRange = 0,
-                coef = 0.127,
-                coefAP = 0,
+                auraType = 4,
+                valueBase = 563,
+                valueRange = 90,
+                valuePerLevel = 101,
+                coef = 0.3,
+                coefAP = 0.127,
             },
         }
     },
