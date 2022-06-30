@@ -26,9 +26,14 @@ function _addon:UpdateTalents(forceTalents)
             self:PrintDebug("Remove old talent rank " .. name .. activeRelevantTalents[name]);
             local oldIdName = name .. activeRelevantTalents[name];
             for k, effect in ipairs(data.effects) do
-                local value = effect.perPoint * activeRelevantTalents[name];
-                if effect.base ~= nil then
-                    value = value + effect.base;
+                local value;
+                if effect.values then
+                    value = effect.values[activeRelevantTalents[name]];
+                else
+                    value = effect.perPoint * activeRelevantTalents[name];
+                    if effect.base ~= nil then
+                        value = value + effect.base;
+                    end
                 end
                 local useName = (k > 1) and oldIdName.."-"..k or oldIdName;
                 self:RemoveAuraEffect(useName, effect, value);
@@ -41,9 +46,14 @@ function _addon:UpdateTalents(forceTalents)
             self:PrintDebug("Add talent rank " .. name .. curRank);
             local idName = name .. curRank;
             for k, effect in ipairs(data.effects) do
-                local value = effect.perPoint * curRank;
-                if effect.base ~= nil then
-                    value = value + effect.base;
+                local value;
+                if effect.values then
+                    value = effect.values[curRank];
+                else
+                    value = effect.perPoint * curRank;
+                    if effect.base ~= nil then
+                        value = value + effect.base;
+                    end
                 end
                 local useName = (k > 1) and idName.."-"..k or idName;
                 self:ApplyAuraEffect(useName, effect, value);

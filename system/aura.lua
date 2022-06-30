@@ -87,6 +87,7 @@ local effectSimpleStat = {
     [EFFECT_TYPE.PCT_HEALING]           = stats.modhealingDone,
     [EFFECT_TYPE.MOD_MANA_PER_5]        = stats.mp5,
     [EFFECT_TYPE.CLEARCAST_CHANCE_DMG]  = stats.clearCastChanceDmg,
+    [EFFECT_TYPE.CLEARCAST_CHANCE]      = stats.clearCastChance,
     [EFFECT_TYPE.ILLUMINATION]          = stats.illumination,
     [EFFECT_TYPE.IGNITE]                = stats.ignite,
     [EFFECT_TYPE.WL_IMP_SB]             = stats.impShadowBolt,
@@ -94,7 +95,6 @@ local effectSimpleStat = {
     [EFFECT_TYPE.DRUID_NATURES_GRACE]   = stats.druidNaturesGrace,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL] = stats.hitBonusSpell,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE] = stats.hitBonus,
-    [EFFECT_TYPE.GLOBAL_PCT_CRIT_BASE_MULT] = stats.critBaseMult,
     [EFFECT_TYPE.GLOBAL_FLAT_MANARESTORE_AVG] = stats.castManaRestoreAvg,
 }
 
@@ -102,6 +102,7 @@ local effectAffectMask = {
     [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE]  = stats.schoolModPctDamage,
     [EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION] = stats.schoolModSpellPen,
     [EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT]   = stats.schoolModFlatCritChance,
+    [EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT] = stats.schoolCritBaseMult,
     [EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE] = stats.versusModPctDamage,
     [EFFECT_TYPE.VERSUSMOD_PCT_CRIT_DAMAGE] = stats.versusModPctCritDamage,
     [EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER] = stats.versusModFlatSpellpower,

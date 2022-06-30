@@ -315,9 +315,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.critChance = 100;
     end
 
-    if stats.critBaseMult.val ~= 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
-        calcedSpell.critMult = calcedSpell.critMult * (1 + stats.critBaseMult.val/100);
-        calcedSpell:AddToBuffList(stats.critBaseMult.buffs);
+    if stats.schoolCritBaseMult[spellBaseInfo.school].val > 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
+        calcedSpell.critMult = calcedSpell.critMult * (1 + stats.schoolCritBaseMult[spellBaseInfo.school].val/100);
+        calcedSpell:AddToBuffList(stats.schoolCritBaseMult[spellBaseInfo.school].buffs);
     end
 
     local cmbonus = calcedSpell.critMult - 1;

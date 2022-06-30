@@ -108,6 +108,7 @@ _addon.stats = {
     schoolModPctDamage = SchoolStatTable(),
     schoolModFlatCritChance = SchoolStatTable(),
     schoolModPctCritMult = SchoolStatTable(),
+    schoolCritBaseMult = SchoolStatTable(),
 
     spellModPctEffect = SpellStatTable(),
     spellModPctDamageHealing = SpellStatTable(),
@@ -140,13 +141,13 @@ _addon.stats = {
     hitBonus = UniformStat();
     hitBonusSpell = UniformStat();
     clearCastChanceDmg = UniformStat(),
+    clearCastChance = UniformStat(),
     illumination = UniformStat(),
     ignite = UniformStat(),
     impShadowBolt = UniformStat(),
     earthfuryReturn = UniformStat(),
     druidNaturesGrace = UniformStat(),
     shamanLightningOverload = SpellStatTable(),
-    critBaseMult = UniformStat(),
     castManaRestoreAvg = UniformStat(),
 };
 

@@ -40,6 +40,9 @@ function CostHandler.Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
     elseif stats.clearCastChanceDmg.val > 0 and bit.band(calcedSpell[1].effectFlags, SEF.HEAL + SEF.ABSORB) == 0 then
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.clearCastChanceDmg.val / 100);
         calcedSpell:AddToBuffList(stats.clearCastChanceDmg.buffs);
+    elseif stats.clearCastChance.val > 0 then
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.clearCastChance.val / 100);
+        calcedSpell:AddToBuffList(stats.clearCastChance.buffs);
     end
 
     if stats.spellModManaRestore[spellId] and stats.spellModManaRestore[spellId].val > 0 then

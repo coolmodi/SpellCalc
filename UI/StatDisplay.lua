@@ -320,6 +320,7 @@ AddSchoolTableUniform(stats.schoolModFlatCritChance, "Crit mods", "%");
 AddSpellTable(stats.spellModFlatCritChance, nil, "%");
 AddSchoolTableUniform(stats.schoolModPctCritMult, "Crit mult mods", "%");
 AddSpellTable(stats.spellModPctCritMult, nil, "%");
+AddSchoolTableUniform(stats.schoolCritBaseMult, "Base crit mods", "%");
 
 AddSchoolTableUniform(stats.schoolModSpellPen, "Spell pen", "");
 
@@ -362,6 +363,7 @@ AddSingleStat("Ranged max", stats.attackDmg.ranged, "max");
 AddTitle("Clearcast");
 AddSpellTable(stats.spellModClearCastChance, nil, "%");
 AddUniformStatTable(stats.clearCastChanceDmg, "Clearcast chance dmg", "%");
+AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
 
 AddTitle("Misc");
 AddUniformStatTable(stats.illumination, "Illumination", "%");

@@ -3,7 +3,8 @@ local _addon = select(2, ...);
 
 _addon.itemEffects[32409] = { -- Relentless Earthstorm Diamond
     {
-        type = _addon.EFFECT_TYPE.GLOBAL_PCT_CRIT_BASE_MULT,
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT,
+        affectMask = _addon.SCHOOL_MASK.ALL,
         value = 3,
     }
 }

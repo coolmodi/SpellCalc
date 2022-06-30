@@ -506,7 +506,10 @@ _addon.enchantData = {};
 local TalentEffect = {
     ---@type integer|nil
     base = nil,
+    ---@type number|nil
     perPoint = math.random(),
+    ---@type number|nil
+    values = math.random(),
 }
 ---@class TalentDataEntry
 local TalentDataEntry = {
