@@ -3,6 +3,8 @@ local _addon = select(2, ...);
 
 local function UniformStat()
     ---@class UniformStat
+    ---@field val number
+    ---@field buffs string[]
     return {
         ---@type number
         val = 0,
@@ -130,6 +132,7 @@ _addon.stats = {
     spellModCharges = SpellStatTable(),
     spellModCritManaRestore = SpellStatTable(),
     spellModManaRestore = SpellStatTable(),
+    spellModAllowDotCrit = SpellStatTable(),
 
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),

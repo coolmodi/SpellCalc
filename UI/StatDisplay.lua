@@ -341,6 +341,7 @@ AddSpellTable(stats.spellModFlatSpellpower, "Extra SP", "");
 AddSpellTable(stats.spellModMageNWR, "Mage NWR proc", "");
 AddSpellTable(stats.spellModChainMult, "Chain multiplier mods", "%");
 AddSpellTable(stats.spellModGCDms, "GCD modifiers", "ms");
+AddSpellTable(stats.spellModAllowDotCrit, "DoT can crit", "");
 
 AddTitle("Weapon attack speed");
 AddSingleStat("Mainhand", stats.attackSpeed, "mainhand");

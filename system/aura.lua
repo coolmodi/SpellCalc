@@ -82,6 +82,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE] = stats.spellModCritManaRestore,
     [EFFECT_TYPE.SPELLMOD_MANARESTORE] = stats.spellModManaRestore,
     [EFFECT_TYPE.SHAMAN_LIGHTNING_OVERLOAD] = stats.shamanLightningOverload,
+    [EFFECT_TYPE.SPELL_AURA_ABILITY_PERIODIC_CRIT] = stats.spellModAllowDotCrit,
 }
 
 local effectSimpleStat = {

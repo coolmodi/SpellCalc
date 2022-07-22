@@ -231,7 +231,17 @@ _addon.talentData = {
         }
     },
     -- TODO: Rend and Tear (2/28), dmg and crit on bleeding targets
-    -- TODO: Primal Gore (2/29), enable crit on DoT
+    { -- Primal Gore
+        tree = 2,
+        talent = 29,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELL_AURA_ABILITY_PERIODIC_CRIT,
+                affectSpell = {8388608, 256},
+                values = 1
+            }
+        }
+    },
     -----------------------------
     -- Restoration
     -----------------------------
