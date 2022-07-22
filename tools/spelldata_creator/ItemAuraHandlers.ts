@@ -282,8 +282,10 @@ export class AuraHandlers
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_EFFECT;
                     break;
                 case 0: // SPELLMOD_DAMAGE
-                case 22: // SPELLMOD_DOT
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING;
+                    break;
+                case 22: // SPELLMOD_DOT
+                    aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME;
                     break;
                 case 20: // SPELLMOD_EFFECT_PAST_FIRST
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST;

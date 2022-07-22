@@ -332,6 +332,7 @@ AddUniformStatTable(stats.modhealingDone, "Healing done mod (all)", "%");
 
 AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
 AddSpellTable(stats.spellModPctDamageHealing, "Spell Pct Damage/Healing", "%");
+AddSpellTable(stats.spellModPctDoTHoT, "Spell Pct DoT/HoT", "%");
 AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
 
 AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "s");

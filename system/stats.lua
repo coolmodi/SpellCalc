@@ -112,6 +112,7 @@ _addon.stats = {
 
     spellModPctEffect = SpellStatTable(),
     spellModPctDamageHealing = SpellStatTable(),
+    spellModPctDoTHoT = SpellStatTable(),
     spellModFlatDuration = SpellStatTable(), -- In seconds
     spellModFlatValue = SpellStatTable(),
     spellModFlatSpellpower = SpellStatTable(),

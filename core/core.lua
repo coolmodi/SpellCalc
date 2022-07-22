@@ -86,9 +86,10 @@ end
 ---@param isHeal boolean
 ---@param spellId number
 ---@param calcedSpell CalcedSpell
+---@param isDuration boolean
 ---@return number @baseMod affecting the base value of the spell
 ---@return number @bonusMod affecting only the bonus SP/AP of the spell
-local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
+local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration)
     local bonusMod = 1;
     local baseMod = 1;
 
@@ -98,9 +99,16 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
             calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
         end
 
-        if stats.spellModPctDamageHealing[spellId] ~= nil then
-            bonusMod = bonusMod * (100 + stats.spellModPctDamageHealing[spellId].val) / 100;
-            calcedSpell:AddToBuffList(stats.spellModPctDamageHealing[spellId].buffs);
+        if not isDuration then
+            if stats.spellModPctDamageHealing[spellId] ~= nil then
+                bonusMod = bonusMod * (100 + stats.spellModPctDamageHealing[spellId].val) / 100;
+                calcedSpell:AddToBuffList(stats.spellModPctDamageHealing[spellId].buffs);
+            end
+        else
+            if stats.spellModPctDoTHoT[spellId] ~= nil then
+                bonusMod = bonusMod * (100 + stats.spellModPctDoTHoT[spellId].val) / 100;
+                calcedSpell:AddToBuffList(stats.spellModPctDoTHoT[spellId].buffs);
+            end
         end
 
         bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
@@ -118,9 +126,16 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell)
         end
 
         if isHeal then
-            if stats.spellModPctDamageHealing[spellId] ~= nil then
-                bonusMod = bonusMod * (100 + stats.spellModPctDamageHealing[spellId].val) / 100;
-                calcedSpell:AddToBuffList(stats.spellModPctDamageHealing[spellId].buffs);
+            if not isDuration then
+                if stats.spellModPctDamageHealing[spellId] ~= nil then
+                    bonusMod = bonusMod * (100 + stats.spellModPctDamageHealing[spellId].val) / 100;
+                    calcedSpell:AddToBuffList(stats.spellModPctDamageHealing[spellId].buffs);
+                end
+            else
+                if stats.spellModPctDoTHoT[spellId] ~= nil then
+                    bonusMod = bonusMod * (100 + stats.spellModPctDoTHoT[spellId].val) / 100;
+                    calcedSpell:AddToBuffList(stats.spellModPctDoTHoT[spellId].buffs);
+                end
             end
 
             bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;
@@ -580,8 +595,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             -- Effect specific modifier
 
             local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
+            local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
-            local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellId, calcedSpell);
+            local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration);
 
             --------------------------
             -- Effect bonus power scaling

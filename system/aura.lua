@@ -63,6 +63,7 @@ end
 local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_PCT_EFFECT]   = stats.spellModPctEffect,
     [EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING]   = stats.spellModPctDamageHealing,
+    [EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME]   = stats.spellModPctDoTHoT,
     [EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE] = stats.spellModFlatCritChance,
     [EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE] = stats.spellModFlatHitChance,
     [EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC] = stats.spellModMageNWR,

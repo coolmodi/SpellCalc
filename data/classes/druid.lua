@@ -261,7 +261,7 @@ _addon.talentData = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
-                perPoint = 6
+                perPoint = 6 -- TODO: procchance, fix basecost calc
             }
         }
     },
