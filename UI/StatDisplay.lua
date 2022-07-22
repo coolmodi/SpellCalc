@@ -371,7 +371,6 @@ AddUniformStatTable(stats.illumination, "Illumination", "%");
 AddUniformStatTable(stats.ignite, "Ignite", "");
 AddUniformStatTable(stats.impShadowBolt, "Imp Shadow Bolt", "%");
 AddUniformStatTable(stats.earthfuryReturn, "Earthfury return", "");
-AddUniformStatTable(stats.druidNaturesGrace, "Nature's Grace", "");
 
 AddTitle("Target");
 AddSingleStat("Level", _addon.Target, "level", "");

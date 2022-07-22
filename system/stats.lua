@@ -147,7 +147,6 @@ _addon.stats = {
     ignite = UniformStat(),
     impShadowBolt = UniformStat(),
     earthfuryReturn = UniformStat(),
-    druidNaturesGrace = UniformStat(),
     shamanLightningOverload = SpellStatTable(),
     castManaRestoreAvg = UniformStat(),
 };

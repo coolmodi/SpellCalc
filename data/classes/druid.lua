@@ -36,7 +36,7 @@ _addon.talentData = {
             }
         }
     },
-    { -- Improve Moonfire TODO: add DoT only modifier!
+    { -- Improve Moonfire
         tree = 1,
         talent = 5,
         effects = {
@@ -78,16 +78,6 @@ _addon.talentData = {
             }
         }
     },
-    { -- TODO Nature's Grace
-        tree = 1,
-        talent = 7,
-        effects = {
-            {
-                type = _addon.EFFECT_TYPE.DRUID_NATURES_GRACE,
-                values = {33, 66, 100}
-            }
-        }
-    },
     { -- Nature's Splendor
         tree = 1,
         talent = 8,
@@ -121,7 +111,7 @@ _addon.talentData = {
         }
     },
     -- TODO: Celestial Focus (1/11), spell haste effect? Available from API?
-    -- TODO: Improved Insect Swarm (1/14), dmg in aura on target
+    -- TODO: Improved Insect Swarm (1/14), dmg if aura on target
     { -- Dreamstate
         tree = 1,
         talent = 15,
