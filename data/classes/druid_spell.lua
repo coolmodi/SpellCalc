@@ -1502,22 +1502,6 @@ _addon.spellRankInfo = {
             },
         }
     },
-    [18562] = { -- Swiftmend
-        spellLevel = 1,
-        maxLevel = 0,
-        baseCostPct = 16,
-        school = 4,
-        defType = 1,
-        effects = {
-            [1] = {
-                effectType = 10,
-                valueBase = 1,
-                valueRange = 0,
-                coef = 0,
-                coefAP = 0,
-            },
-        }
-    },
     [24974] = { -- Insect Swarm(Rank 2)
         spellLevel = 30,
         maxLevel = 39,
@@ -2361,6 +2345,13 @@ _addon.spellRankInfo = {
                 coefAP = 0,
                 auraStacks = 3,
             },
+            [2] = {
+                effectType = 10,
+                valueBase = 616,
+                valueRange = 0,
+                coef = 0.3429,
+                coefAP = 0,
+            },
         }
     },
     [48451] = { -- Lifebloom(Rank 3)
@@ -2380,6 +2371,13 @@ _addon.spellRankInfo = {
                 coef = 0.0952,
                 coefAP = 0,
                 auraStacks = 3,
+            },
+            [2] = {
+                effectType = 10,
+                valueBase = 776,
+                valueRange = 0,
+                coef = 0.3429,
+                coefAP = 0,
             },
         }
     },
@@ -3624,6 +3622,70 @@ _addon.spellClassSet = {
         },
     },
     [4] = {
+    },
+};
+
+_addon.classGlyphs = {
+    [54813] = { -- Glyph of Mangle
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 1088, 0, 0},
+            value = 10,
+        },
+    },
+    [54818] = { -- Glyph of Rip
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {8388608, 0, 0, 0},
+            value = 4,
+        },
+    },
+    [54825] = { -- Glyph of Healing Touch
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {32, 0, 0, 0},
+            value = -50,
+        },
+    },
+    [54826] = { -- Glyph of Lifebloom
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {0, 16, 0, 0},
+            value = 1,
+        },
+    },
+    [54830] = { -- Glyph of Insect Swarm
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {2097152, 0, 0, 0},
+            value = 30,
+        },
+    },
+    [54831] = { -- Glyph of Hurricane
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {2097152, 0, 0, 0},
+            value = 30,
+        },
+    },
+    [54829] = { -- Glyph of Moonfire
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {2, 0, 0, 0},
+            value = -90,
+        },
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {2, 0, 0, 0},
+            value = 75,
+        },
+    },
+    [62080] = { -- Glyph of Focus
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 8388608, 0, 0},
+            value = 10,
+        },
     },
 };
 

@@ -344,11 +344,13 @@ export class SpellData {
         return costs;
     }
 
-    getSpellClassOption(spellId: number) {
+    getSpellClassOption(spellId: number): SpellClassOptions 
+    getSpellClassOption(spellId: number, noerr: true): SpellClassOptions | undefined
+    getSpellClassOption(spellId: number, noerr = false) {
         for (let scoid in this.spellClassOptions) {
             if (this.spellClassOptions[scoid].SpellID == spellId) return this.spellClassOptions[scoid];
         }
-
+        if (noerr) return;
         throw "No spell class options for spell ID!";
     }
 

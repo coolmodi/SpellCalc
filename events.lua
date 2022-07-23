@@ -152,6 +152,18 @@ function handlers.GET_ITEM_INFO_RECEIVED(itemId)
     _addon:UpdateRecievedItemData(itemId);
 end
 
+function handlers.GLYPH_ADDED(slot)
+    _addon:UpdateGlyphs(slot)
+end
+
+function handlers.GLYPH_REMOVED(slot)
+    _addon:UpdateGlyphs(slot)
+end
+
+function handlers.GLYPH_UPDATED(slot)
+    _addon:UpdateGlyphs(slot)
+end
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)

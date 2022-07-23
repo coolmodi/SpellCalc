@@ -334,4 +334,5 @@ function _addon:FullUpdate()
     self:CombatRatingUpdate();
     self:UpdatePower();
     self:UpdateManaRegen();
+    self:UpdateGlyphs();
 end

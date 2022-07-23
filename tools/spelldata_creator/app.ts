@@ -5,6 +5,7 @@ import { ItemSetCreator } from "./ItemSetCreator";
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { ItemEffectsCreator } from "./ItemEffectsCreator";
+import { getHandledClassGlyphs } from "./Glyphs";
 
 const expansion = 2;
 const outputdir = __dirname + "/../../../data/classes/";
@@ -573,6 +574,8 @@ end
         str += `\t},\n`;
     }
     str += "};\n\n";
+
+    str += getHandledClassGlyphs(spellData, classSetNum, classSpellLists, classSpellSets);
 
     str = str.replace(/\t/gm, "    ");
 

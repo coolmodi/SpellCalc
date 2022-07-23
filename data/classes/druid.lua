@@ -358,7 +358,6 @@ _addon.talentDataRaw = {
         tier = 10,
         column = 3,
         effects = {
-            -- TODO: Haste from API?
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
                 affectSpell = {0, 16},
