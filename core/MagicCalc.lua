@@ -113,8 +113,8 @@ function MagicCalc:GetHitChances(avgResist)
         full = full - binaryLoss;
     end
 
-    if full > 99 then
-        full = 99;
+    if full > 100 then
+        full = 100;
     elseif full < 1 then
         full = 1;
     end
