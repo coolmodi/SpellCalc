@@ -4,7 +4,6 @@ local _addon = select(2, ...);
 local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20154);
 local SEAL_OF_COMMAND = GetSpellInfo(20375);
-local SEAL_OF_THE_CRUSADER = GetSpellInfo(20162);
 local PRAYER_OF_MENDING = GetSpellInfo(33076);
 local EARTH_SHIELD = GetSpellInfo(974);
 local SEAL_OF_BLOOD = GetSpellInfo(31892);
@@ -39,14 +38,6 @@ local function GetDummyValue(calcedEffect, spellName)
     or spellName == SEAL_OF_COMMAND
     or spellName == SEAL_OF_BLOOD or spellName == SEAL_OF_THE_MARTYR then
         local k = SpellCalc_settings.abSealValue;
-        if calcedEffect[k] then
-            return calcedEffect[k];
-        end
-    elseif spellName == SEAL_OF_THE_CRUSADER then
-        local k = SpellCalc_settings.abSealValue;
-        if k == "avg" then
-            return "";
-        end
         if calcedEffect[k] then
             return calcedEffect[k];
         end

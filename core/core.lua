@@ -93,6 +93,8 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
     local bonusMod = 1;
     local baseMod = 1;
 
+    --print("GetBaseModifiers", school, isDmg, isHeal, spellId, calcedSpell, isDuration)
+
     if isDmg then
         if stats.spellModPctEffect[spellId] ~= nil then
             baseMod = baseMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
@@ -590,6 +592,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
             local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
+            --print(spellName)
             local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration);
 
             --------------------------

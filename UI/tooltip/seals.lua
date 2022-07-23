@@ -92,24 +92,6 @@ local function SoC(calcedSpell, effectNum)
     end
 end
 
-local function SotC(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
-
-    if SpellCalc_settings.ttHit then
-        --SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L.DAMAGE_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
-    end
-
-    if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
-    end
-
-    if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine(L.DMG_PER_MANA_SHORT, ("%.2f"):format(calcedEffect.perResource));
-    end
-end
-
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 local function SoB_SoV(calcedSpell, effectNum)
@@ -191,8 +173,7 @@ local function SoV(calcedSpell, effectNum)
 end
 
 SCT:AddDummyHandler(GetSpellInfo(20375), SoC);
-SCT:AddDummyHandler(GetSpellInfo(20288), SoR);
-SCT:AddDummyHandler(GetSpellInfo(20162), SotC);
+SCT:AddDummyHandler(GetSpellInfo(21084), SoR);
 SCT:AddDummyHandler(GetSpellInfo(31892), SoB_SoV);
 SCT:AddDummyHandler(GetSpellInfo(348700), SoB_SoV);
 SCT:AddDummyHandler(GetSpellInfo(31801), SoV);
