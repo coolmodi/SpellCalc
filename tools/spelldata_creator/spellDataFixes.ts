@@ -225,10 +225,10 @@ function druidFixes(se: {[index: number]: SpellEffect})
 {
     console.log("Fixing druid coefs and effects");
     const STARFALL = [48505, 53199, 53200, 53201];
-    // Lifebloom
+    const LB = [33763, 48450, 48451];
     for(let effId in se) {
         let eff = se[effId];
-        if (eff.SpellID === 33763 && eff.EffectIndex === 1) {
+        if (LB.indexOf(eff.SpellID) > -1 && eff.EffectIndex === 1) {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
             eff.EffectBonusCoefficient = 0.3429;
