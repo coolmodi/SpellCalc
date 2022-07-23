@@ -280,6 +280,10 @@ end
 local function AppendPTSA(calcedSpell, effectNum, isHeal)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
+    local triggeredSpell = calcedEffect.spellData;
+    local triggeredEffect = triggeredSpell[1];
+
+    isHeal = isHeal or bit.band(triggeredEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
 
     if SpellCalc_settings.ttHit then
         SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg, calcedEffect.ticks);
@@ -291,10 +295,10 @@ local function AppendPTSA(calcedSpell, effectNum, isHeal)
 
     SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * calcedEffect.avgCombined));
 
-    SCT:AppendCoefData(calcedSpell, calcedEffect);
+    SCT:AppendCoefData(triggeredSpell, triggeredEffect);
 
     if not isHeal and effectNum == 1 then
-        AppendMitigation(calcedSpell);
+        AppendMitigation(triggeredSpell);
     end
 
     local isChannel = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.CHANNEL) > 0;

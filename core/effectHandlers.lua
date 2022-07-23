@@ -343,7 +343,6 @@ local function PeriodicHeal(calcedSpell, effNum, spellRankInfo, effCastTime, eff
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    print(spellName, calcedEffect.avgAfterMitigation, effCastTime)
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.perSecDurOrCD = calcedEffect.avgAfterMitigation / duration;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
@@ -448,10 +447,8 @@ end
 local function PeriodicTriggerSpell(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
-    ---@type SpellRankEffectData
-    local effectData = spellRankInfo.effects[effNum];
-
-    local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
+    local tickPeriod = spellRankInfo.effects[effNum].tickPeriod;
+    local triggeredSpellData = calcedEffect.spellData;
     local duration = spellRankInfo.duration;
 
     if stats.spellModFlatDuration[spellId] ~= nil then
@@ -459,33 +456,17 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellRankInfo, effCastT
         calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
     end
 
-    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.max = calcedEffect.min + effectData.valueRange;
-    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
-    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
-    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
-
-    calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
-    local total = calcedEffect.avgCombined * calcedEffect.ticks;
-
-    if spellRankInfo.forceHeal then
-        calcedEffect.avgAfterMitigation = total;
-    else
-        if spellRankInfo.isChannel then
-            calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
-        else
-            calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
-        end
-
-        if calcedSpell.hitChanceBinaryLoss == nil then
-            calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
-        end
-    end
-
+    calcedEffect.min = triggeredSpellData[1].min;
+    calcedEffect.max = triggeredSpellData[1].max;
+    calcedEffect.avg = triggeredSpellData[1].avg;
+    calcedEffect.minCrit = triggeredSpellData[1].minCrit;
+    calcedEffect.maxCrit = triggeredSpellData[1].maxCrit;
+    calcedEffect.avgCrit = triggeredSpellData[1].avgCrit;
+    calcedEffect.avgCombined = triggeredSpellData[1].avgCombined;
+    calcedEffect.ticks = math.floor(duration / tickPeriod);
+    calcedEffect.avgAfterMitigation = triggeredSpellData[1].avgAfterMitigation * calcedEffect.ticks;
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
-    calcedEffect.perSecDurOrCD = total / duration;
+    calcedEffect.perSecDurOrCD = (calcedEffect.avgCombined * calcedEffect.ticks) / duration;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
 end

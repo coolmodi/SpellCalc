@@ -93,7 +93,7 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
     local bonusMod = 1;
     local baseMod = 1;
 
-    --print("GetBaseModifiers", school, isDmg, isHeal, spellId, calcedSpell, isDuration)
+    print("GetBaseModifiers", school, isDmg, isHeal, spellId, calcedSpell, isDuration)
 
     if isDmg then
         if stats.spellModPctEffect[spellId] ~= nil then
@@ -147,6 +147,7 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
 
     baseMod = baseMod * bonusMod;
 
+    print("GetBaseModifiers", baseMod, bonusMod)
     _addon:PrintDebug("Basemod: "..baseMod..", Bonusmod: "..bonusMod);
     return baseMod, bonusMod;
 end
@@ -578,9 +579,13 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         end
 
         -- Trigger spell spell effect, update triggered spell data
-        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
-            _addon:PrintDebug("Is trigger spell effect, updating triggered spell!");
+        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL + SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+            _addon:PrintDebug("Has trigger spell effect, updating triggered spell!");
             calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
+            if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+                local effectData = spellRankInfo.effects[i];
+                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, 0, spellName, spellId, GCD);
+            end
         else
             ---@type SpellRankEffectData
             local effectData = spellRankInfo.effects[i];
@@ -591,7 +596,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
             local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
-            --print(spellName)
+            print(spellName)
             local effectMod, bonusMod = GetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration);
 
             --------------------------

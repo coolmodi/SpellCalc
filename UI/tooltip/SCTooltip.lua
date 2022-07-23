@@ -261,9 +261,17 @@ local function TooltipHandler(toolTipFrame)
         end
     end
 
-    if SpellCalc_settings.ttShowBuffs and #calcedSpell.buffs > 0 then
+    if SpellCalc_settings.ttShowBuffs then
         toolTipFrame:AddLine(L.TT_BUFFS, 0.5, 1, 0.5);
-        toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell.buffs, ", "));
+        if #calcedSpell.buffs > 0 then
+            toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell.buffs, ", "));
+        end
+        if calcedSpell[1].spellData and #calcedSpell[1].spellData.buffs then
+            toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell[1].spellData.buffs, ", "));
+        end
+        if calcedSpell[2] and calcedSpell[2].spellData and #calcedSpell[2].spellData.buffs then
+            toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell[2].spellData.buffs, ", "));
+        end
     end
 end
 

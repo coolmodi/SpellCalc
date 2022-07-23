@@ -113,6 +113,11 @@ local CalcedEffect = {
     chains = nil,
     ---@type number|nil
     chainMult = nil,
+
+    ---@type number|nil
+    triggeredSpell = nil,
+    ---@type CalcedSpell|nil
+    spellData = nil
 };
 
 CalcedEffect.__index = CalcedEffect;
@@ -254,6 +259,10 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
 
             if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
                 effTable.auraStack = setmetatable({}, AuraStackData);
+            end
+
+            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+                effTable.triggeredSpell = spellRankEffects[i].valueBase;
             end
 
             newInstance[i] = effTable;
