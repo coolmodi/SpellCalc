@@ -2,13 +2,42 @@
 local _addon = select(2, ...);
 
 local activeRelevantTalents = {};
+---@type TalentDataEntry[]
+local talentData = {};
+
+do
+    local talentAPIData = {};
+
+    for tree = 1, 3 do
+        local talentIndex = 1;
+        local name, _, tier, column = GetTalentInfo(tree, talentIndex);
+        while name do
+            talentAPIData[tree] = talentAPIData[tree] or {};
+            talentAPIData[tree][tier] = talentAPIData[tree][tier] or {};
+            talentAPIData[tree][tier][column] = talentIndex;
+            talentIndex = talentIndex + 1;
+            name, _, tier, column = GetTalentInfo(tree, talentIndex);
+        end
+    end
+
+    for _, v in ipairs(_addon.talentDataRaw) do
+        if not talentAPIData[v.tree] or not talentAPIData[v.tree][v.tier] or not talentAPIData[v.tree][v.tier][v.column] then
+            _addon:PrintError("No talent data for "..v.tree.." "..v.tier.." "..v.column);
+        end
+        table.insert(talentData, {
+            tree = v.tree,
+            talent = talentAPIData[v.tree][v.tier][v.column],
+            effects = v.effects,
+        });
+    end
+end
 
 --- Update player talents.
 ---@param forceTalents table
 function _addon:UpdateTalents(forceTalents)
     self:PrintDebug("Updating talents");
 
-    for _, data in ipairs(self.talentData) do
+    for _, data in ipairs(talentData) do
         local name, _, _, _, curRank, maxRank = GetTalentInfo(data.tree, data.talent);
 
         if forceTalents ~= nil then

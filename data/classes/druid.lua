@@ -5,13 +5,14 @@ if playerClass ~= "DRUID" then
     return;
 end
 
-_addon.talentData = {
+_addon.talentDataRaw = {
     -----------------------------
     -- Balance
     -----------------------------
     { -- Genesis
         tree = 1,
-        talent = 2,
+        tier = 1,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
@@ -27,7 +28,8 @@ _addon.talentData = {
     },
     { -- Nature's Majesty
         tree = 1,
-        talent = 4,
+        tier = 2,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -38,7 +40,8 @@ _addon.talentData = {
     },
     { -- Improve Moonfire
         tree = 1,
-        talent = 5,
+        tier = 2,
+        column = 4,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -59,7 +62,8 @@ _addon.talentData = {
     },
     { -- Brambles
         tree = 1,
-        talent = 6,
+        tier = 3,
+        column = 1,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -80,7 +84,8 @@ _addon.talentData = {
     },
     { -- Nature's Splendor
         tree = 1,
-        talent = 8,
+        tier = 3,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
@@ -101,7 +106,8 @@ _addon.talentData = {
     },
     { -- Vengeance
         tree = 1,
-        talent = 10,
+        tier = 4,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
@@ -114,7 +120,8 @@ _addon.talentData = {
     -- TODO: Improved Insect Swarm (1/14), dmg if aura on target
     { -- Dreamstate
         tree = 1,
-        talent = 15,
+        tier = 6,
+        column = 1,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.MANA_PER_5_FROM_INT,
@@ -125,7 +132,8 @@ _addon.talentData = {
     },
     { -- Moonfury
         tree = 1,
-        talent = 16,
+        tier = 6,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -141,7 +149,8 @@ _addon.talentData = {
     },
     { -- Balance of Power
         tree = 1,
-        talent = 17,
+        tier = 6,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
@@ -153,7 +162,8 @@ _addon.talentData = {
     -- TODO: Improved Faerie Fire (1/20), crit if aura on target
     { -- Wrath of Cenarius
         tree = 1,
-        talent = 22,
+        tier = 8,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
@@ -169,7 +179,8 @@ _addon.talentData = {
     },
     { -- Gale Winds
         tree = 1,
-        talent = 26,
+        tier = 9,
+        column = 4,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -180,7 +191,8 @@ _addon.talentData = {
     },
     { -- Earth and Moon
         tree = 1,
-        talent = 27,
+        tier = 10,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -194,7 +206,8 @@ _addon.talentData = {
     -----------------------------
     { -- Feral Aggression
         tree = 2,
-        talent = 2,
+        tier = 1,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -205,7 +218,8 @@ _addon.talentData = {
     },
     { -- Savage Fury
         tree = 2,
-        talent = 4,
+        tier = 2,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -221,7 +235,8 @@ _addon.talentData = {
     },
     { -- Predatory Instincts
         tree = 2,
-        talent = 23,
+        tier = 8,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT,
@@ -233,7 +248,8 @@ _addon.talentData = {
     -- TODO: Rend and Tear (2/28), dmg and crit on bleeding targets
     { -- Primal Gore
         tree = 2,
-        talent = 29,
+        tier = 10,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELL_AURA_ABILITY_PERIODIC_CRIT,
@@ -247,7 +263,8 @@ _addon.talentData = {
     -----------------------------
     { -- Intensity
         tree = 3,
-        talent = 7,
+        tier = 3,
+        column = 1,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
@@ -257,7 +274,8 @@ _addon.talentData = {
     },
     { -- Omen of Clarity
         tree = 3,
-        talent = 8,
+        tier = 3,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
@@ -268,7 +286,8 @@ _addon.talentData = {
     -- TODO: Master Shapeshifter (3/9), bonus in stance
     { -- Improved Rejuvenation
         tree = 3,
-        talent = 11,
+        tier = 4,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
@@ -279,7 +298,8 @@ _addon.talentData = {
     },
     { -- Gift of Nature
         tree = 3,
-        talent = 13,
+        tier = 5,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -295,7 +315,8 @@ _addon.talentData = {
     },
     { -- Empowered Touch
         tree = 3,
-        talent = 15,
+        tier = 6,
+        column = 1,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
@@ -311,7 +332,8 @@ _addon.talentData = {
     },
     { -- Improved Regrowth
         tree = 3,
-        talent = 16,
+        tier = 6,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -322,7 +344,8 @@ _addon.talentData = {
     },
     { -- Natural Perfection
         tree = 3,
-        talent = 19,
+        tier = 7,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT,
@@ -333,7 +356,8 @@ _addon.talentData = {
     },
     { -- Empowered Rejuvenation
         tree = 3,
-        talent = 20,
+        tier = 8,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
@@ -345,7 +369,8 @@ _addon.talentData = {
     -- TODO: Living Seed (3/21)
     { -- Gift of the Earthmother
         tree = 3,
-        talent = 26,
+        tier = 10,
+        column = 3,
         effects = {
             -- TODO: Haste from API?
             {

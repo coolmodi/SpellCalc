@@ -482,5 +482,11 @@ local TalentDataEntry = {
     ---@type TalentEffect[]
     effects = {}
 }
----@type TalentDataEntry[]
-_addon.talentData = {}
+
+---@class TalentDataRawEntry
+---@field tier number
+---@field column number
+---@field effects TalentEffect[]
+
+---@type TalentDataRawEntry[]
+_addon.talentDataRaw = {}
