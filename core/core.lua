@@ -191,9 +191,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     local spellName, _, _, castTime = GetSpellInfo(spellId);
     _addon:PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
     local effCastTime = parentEffCastTime or 0;
-    local spellBaseInfo = _addon.spellBaseInfo[spellName];
     local spellRankInfo = _addon.spellRankInfo[spellId];
-    local GCD = spellBaseInfo.GCD or 1.5;
+    local GCD = spellRankInfo.GCD or 1.5;
     local costs;
     local spellCost = 0;
     local costType;
@@ -226,7 +225,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 local red = spellRankInfo.effects[i];
                 effectFlags[i] = 0;
 
-                if IsHealEffect(red.effectType, red.auraType) or spellBaseInfo.forceHeal then
+                if IsHealEffect(red.effectType, red.auraType) or spellRankInfo.forceHeal then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.HEAL;
                 end
 
@@ -242,7 +241,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.ABSORB;
                 end
 
-                if spellBaseInfo.isChannel then
+                if spellRankInfo.isChannel then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.CHANNEL;
                 end
 
@@ -275,18 +274,18 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
     calcedSpell:ResetBuffList();
 
-    if spellBaseInfo.school == SCHOOL.PHYSICAL or spellBaseInfo.defType ~= DEF_TYPE.MAGIC then
+    if spellRankInfo.school == SCHOOL.PHYSICAL or spellRankInfo.defType ~= DEF_TYPE.MAGIC then
         meleeCalc:Init(
             calcedSpell,
             false,
             bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0,
-            spellBaseInfo.defType == DEF_TYPE.RANGED,
-            spellBaseInfo.cantDogeParryBlock
+            spellRankInfo.defType == DEF_TYPE.RANGED,
+            spellRankInfo.cantDogeParryBlock
         );
     end
 
-    if spellBaseInfo.school ~= SCHOOL.PHYSICAL or spellBaseInfo.defType == DEF_TYPE.MAGIC then
-        magicCalc:Init(calcedSpell, spellBaseInfo, spellId);
+    if spellRankInfo.school ~= SCHOOL.PHYSICAL or spellRankInfo.defType == DEF_TYPE.MAGIC then
+        magicCalc:Init(calcedSpell, spellRankInfo, spellId);
     end
 
     ----------------------------------------------------------------------------------------------------------------------
@@ -303,7 +302,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
         GCD = GCD * hasteMult;
 
-        if spellBaseInfo.isChannel then
+        if spellRankInfo.isChannel then
             castTime = spellRankInfo.duration;
             effCastTime = castTime * hasteMult;
         else
@@ -315,7 +314,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     ----------------------------------------------------------------------------------------------------------------------
     -- Crit
 
-    if spellBaseInfo.defType ~= DEF_TYPE.MAGIC then
+    if spellRankInfo.defType ~= DEF_TYPE.MAGIC then
         calcedSpell.critMult = 2;
         calcedSpell.critChance = meleeCalc:GetCrit();
     else
@@ -332,16 +331,16 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.critChance = 100;
     end
 
-    if stats.schoolCritBaseMult[spellBaseInfo.school].val > 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
-        calcedSpell.critMult = calcedSpell.critMult * (1 + stats.schoolCritBaseMult[spellBaseInfo.school].val/100);
-        calcedSpell:AddToBuffList(stats.schoolCritBaseMult[spellBaseInfo.school].buffs);
+    if stats.schoolCritBaseMult[spellRankInfo.school].val > 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
+        calcedSpell.critMult = calcedSpell.critMult * (1 + stats.schoolCritBaseMult[spellRankInfo.school].val/100);
+        calcedSpell:AddToBuffList(stats.schoolCritBaseMult[spellRankInfo.school].buffs);
     end
 
     local cmbonus = calcedSpell.critMult - 1;
 
-    if stats.schoolModPctCritMult[spellBaseInfo.school].val > 0 then
-        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.schoolModPctCritMult[spellBaseInfo.school].val/100;
-        calcedSpell:AddToBuffList(stats.schoolModPctCritMult[spellBaseInfo.school].buffs);
+    if stats.schoolModPctCritMult[spellRankInfo.school].val > 0 then
+        calcedSpell.critMult = calcedSpell.critMult + cmbonus * stats.schoolModPctCritMult[spellRankInfo.school].val/100;
+        calcedSpell:AddToBuffList(stats.schoolModPctCritMult[spellRankInfo.school].buffs);
     end
 
     if stats.spellModPctCritMult[spellId] ~= nil then
@@ -355,14 +354,14 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);
     end
 
-    if spellBaseInfo.noCrit then
+    if spellRankInfo.noCrit then
         calcedSpell.critChance = 0;
     end
 
     ----------------------------------------------------------------------------------------------------------------------
     -- Mitigation
 
-    if spellBaseInfo.school == SCHOOL.PHYSICAL then
+    if spellRankInfo.school == SCHOOL.PHYSICAL then
         local mitigtation, armor = meleeCalc:GetArmorDR();
         calcedSpell.avgResist = mitigtation;
         calcedSpell.resistance = armor;
@@ -375,7 +374,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     end
 
     if bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
-        if spellBaseInfo.defType == DEF_TYPE.MAGIC then
+        if spellRankInfo.defType == DEF_TYPE.MAGIC then
             local full, base, bonus, binaryLoss = magicCalc:GetHitChances(calcedSpell.avgResist);
             calcedSpell.hitChance = full;
             calcedSpell.hitChanceBase = base;
@@ -383,7 +382,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             if binaryLoss then
                 calcedSpell.hitChanceBinaryLoss = binaryLoss;
             end
-        elseif spellBaseInfo.defType == DEF_TYPE.MELEE then
+        elseif spellRankInfo.defType == DEF_TYPE.MELEE then
             local hit, dodge, parry, glancing, block, hitBonus, glancingDmg = meleeCalc:GetMDPGB();
             calcedSpell.hitChance = math.min(100, hit + hitBonus);
             calcedSpell.hitChanceBase = hit;
@@ -401,7 +400,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 calcedSpell.meleeMitigation.glancing = glancing;
                 calcedSpell.meleeMitigation.glancingDmg = glancingDmg;
             end
-        elseif spellBaseInfo.defType == DEF_TYPE.RANGED then
+        elseif spellRankInfo.defType == DEF_TYPE.RANGED then
             local hit, _, _, _, block, hitBonus = meleeCalc:GetMDPGB();
             calcedSpell.hitChance = math.min(100, hit + hitBonus);
             calcedSpell.hitChanceBase = hit;
@@ -495,7 +494,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.effectiveCost = spellCost;
 
         if costType == 0 then -- mana
-            costHandler.Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellBaseInfo.school, spellName, spellId);
+            costHandler.Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellRankInfo.school, spellName, spellId);
         elseif costType == 1 then -- rage
             -- TODO: rage (on next melee, proc on crit etc.)
         elseif costType == 3 then -- energy
@@ -570,8 +569,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
         if parentSpellData and parentSpellData.charges then
             calcedSpell.charges = parentSpellData.charges;
-        elseif spellBaseInfo.charges then
-            calcedSpell.charges = spellBaseInfo.charges;
+        elseif spellRankInfo.charges then
+            calcedSpell.charges = spellRankInfo.charges;
             if stats.spellModCharges[spellId] then
                 calcedSpell.charges = calcedSpell.charges + stats.spellModCharges[spellId].val;
                 calcedSpell:AddToBuffList(stats.spellModCharges[spellId].buffs);
@@ -593,17 +592,17 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
             --print(spellName)
-            local effectMod, bonusMod = GetBaseModifiers(spellBaseInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration);
+            local effectMod, bonusMod = GetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration);
 
             --------------------------
             -- Effect bonus power scaling
 
             if isHeal or effectData.forceScaleWithHeal then
                 calcedEffect.spellPower = stats.spellHealing;
-            elseif spellBaseInfo.school == SCHOOL.PHYSICAL then
+            elseif spellRankInfo.school == SCHOOL.PHYSICAL then
                 -- TODO: scale with AP
             else
-                calcedEffect.spellPower = stats.spellPower[spellBaseInfo.school];
+                calcedEffect.spellPower = stats.spellPower[spellRankInfo.school];
             end
 
             calcedEffect.spellPower = extraSp + calcedEffect.spellPower;
@@ -647,7 +646,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 _addon:PrintError("Please report this to the addon author.");
                 return;
             else
-                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, GCD);
+                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, effectMod, spellName, spellId, GCD);
             end
 
             --------------------------
@@ -756,7 +755,7 @@ function _addon:GetHandledSpellID(spellID)
         spellID = self.judgementSpell;
     end
 
-    if self.spellBaseInfo[GetSpellInfo(spellID)] == nil or self.spellRankInfo[spellID] == nil then
+    if self.spellRankInfo[spellID] == nil then
         return;
     end
 

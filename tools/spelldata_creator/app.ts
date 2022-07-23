@@ -49,7 +49,7 @@ const SpellClassSet = {
     SHAMAN: 11,
 }
 
-function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
+function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
     const sealType = isSeal(effect.SpellID);
     if (sealType !== false)
     {
@@ -76,67 +76,65 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, bi: BaseInfo) {
     // Prayer of Mending
     if (effect.SpellID === 33076)
     {
-        bi.charges = 5;
+        ri.charges = 5;
         ei.valueBase = effect.EffectBasePoints + 1;
         ei.coef = effect.EffectBonusCoefficient;
         ei.valueRange = effect.EffectDieSides - 1;
-        bi.forceHeal = true;
+        ri.forceHeal = true;
         return;
     }
 
     // Earth Shield
     if ([974, 32593, 32594].indexOf(effect.SpellID) > -1)
     {
-        bi.charges = 6;
+        ri.charges = 6;
         ei.valueBase = effect.EffectBasePoints + 1;
         ei.coef = 0.286;
         ei.valueRange = effect.EffectDieSides - 1;
-        bi.forceHeal = true;
+        ri.forceHeal = true;
         return;
     }
 
     throw new Error("Dummy aura effect not supported!");
 }
 
-function handleDummyEffect(effect: SpellEffect, ei: EffectInfo, _bi: BaseInfo, spellName: string) 
+function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string) 
 {
     // Starfall
     if (spellName == "Starfall")
     {
-        switch(effect.SpellID)
+        // Coefs are same for all ranks
+        rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
+            coef: 0.3, // Star hit
+            coefAP: 0.127, // AoE effect
+            valueBase: effect.EffectTriggerSpell,
+            valueRange: 0,
+            valuePerLevel: 0,
+            forceScaleWithHeal: false,
+            period: 0,
+            weaponCoef: 0,
+        };
+        const triggeredDummy = spellData.getSpellEffects(effect.EffectTriggerSpell);
+        const startTrigger = spellData.getSpellEffects(triggeredDummy[0].EffectBasePoints + 1);
+        if (startTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall trigger!");
+        for (const teff2 of startTrigger)
         {
-            case 50286: // Rank 1
-            case 53196: // Rank 2
-            case 53197: // Rank 3
-            case 53198: // Rank 4
-                // Make dummy and handle in addon
-                ei.auraType = AURA_TYPE.SPELL_AURA_DUMMY;
-                // Coefs are same for all ranks
-                ei.coef = 0.3; // Star hit
-                ei.coefAP = 0.127; // AoE effect
-
-                const startTrigger = spellData.getSpellEffects(effect.EffectBasePoints + 1);
-                if (startTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall trigger!");
-                for (const teff2 of startTrigger)
-                {
-                    if (teff2.EffectIndex == 0)
-                    {
-                        // The main hit of a star
-                        ei.valueBase = teff2.EffectBasePoints + 1;
-                        ei.valueRange = teff2.EffectDieSides - 1;
-                    }
-                    else if (teff2.EffectIndex == 1)
-                    {
-                        // Put star AoE base damage in valuePerLevel
-                        const aoeTrigger = spellData.getSpellEffects(teff2.EffectTriggerSpell);
-                        if (aoeTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall AoE trigger!");
-                        ei.valuePerLevel = aoeTrigger[0].EffectBasePoints + 1;
-                    }
-                }
-                return;
-            default:
-                throw new Error("Unknown Starfall rank!");
+            if (teff2.EffectIndex == 0)
+            {
+                // The main hit of a star
+                rankInfo.effects[effectNum].valueBase = teff2.EffectBasePoints + 1;
+                rankInfo.effects[effectNum].valueRange = teff2.EffectDieSides - 1;
+            }
+            else if (teff2.EffectIndex == 1)
+            {
+                // Put star AoE base damage in valuePerLevel
+                const aoeTrigger = spellData.getSpellEffects(teff2.EffectTriggerSpell);
+                if (aoeTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall AoE trigger!");
+                rankInfo.effects[effectNum].valuePerLevel = aoeTrigger[0].EffectBasePoints + 1;
+            }
         }
+        return;
     }
 
     throw new Error("Dummy effect not handled!");
@@ -145,7 +143,7 @@ function handleDummyEffect(effect: SpellEffect, ei: EffectInfo, _bi: BaseInfo, s
 /**
  * SPELL_EFFECT_APPLY_AURA and SPELL_EFFECT_PERSISTENT_AREA_AURA
  */
-function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string, baseInfo: BaseInfo) {
+function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string) {
     const saopts = spellData.getSpellAuraOptions(effect.SpellID);
     
     rankInfo.effects[effectNum] = {
@@ -186,44 +184,23 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                 rankInfo.effects[effectNum].valuePerLevel = 0;
             } break;
         case AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL:
-            const tspell = spellData.getSpellEffects(effect.EffectTriggerSpell);
-            const tspellCat = spellData.getSpellCategory(effect.EffectTriggerSpell);
-            baseInfo.defenseType = (tspellCat) ? tspellCat.DefenseType : baseInfo.defenseType; // TODO: Is this supposed to be that way or is DBC just buggy atm?
-            let found = false;
-            for (let i = 0; i < tspell.length; i++) {
-                if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) {
-                    const teffect = tspell[i];
-                    const spellLevel = spellData.getSpellLevel(teffect.SpellID);
-                    found = true;
-                    rankInfo.spellLevel = spellLevel.SpellLevel;
-                    rankInfo.maxLevel = spellLevel.MaxLevel;
-                    rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
-                    rankInfo.effects[effectNum].coef = teffect.EffectBonusCoefficient;
-                    rankInfo.effects[effectNum].coefAP = teffect.BonusCoefficientFromAP;
-                    rankInfo.effects[effectNum].valueBase = teffect.EffectBasePoints + 1;
-                    rankInfo.effects[effectNum].valueRange = teffect.EffectDieSides - 1;
-                    rankInfo.effects[effectNum].valuePerLevel = teffect.EffectRealPointsPerLevel;
-                    const misc = spellData.getSpellMisc(teffect.SpellID);
-                    if ((misc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) baseInfo.noCrit = true;
-                    if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL) baseInfo.forceHeal = true;
-                    break;
-                } else if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_DUMMY) {
-                    handleDummyEffect(tspell[i], rankInfo.effects[effectNum], baseInfo, spellName);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) throw new Error("PTSA effect has no handled trigger spell effect! " + effect.SpellID);
-            break;
+            {
+                rankInfo.effects[effectNum].valueBase = effect.EffectTriggerSpell;
+                rankInfo.effects[effectNum].coef = 0;
+                rankInfo.effects[effectNum].coefAP = 0;
+                rankInfo.effects[effectNum].valueRange = 0;
+                rankInfo.effects[effectNum].valuePerLevel = 0;
+                rankInfo.effects[effectNum].period = effect.EffectAuraPeriod / 1000;
+            } break;
         case AURA_TYPE.SPELL_AURA_DUMMY:
-            handleDummyAura(effect, rankInfo.effects[effectNum], baseInfo);
+            handleDummyAura(effect, rankInfo.effects[effectNum], rankInfo);
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE:
             break;
         default:
             if (effectNum == 1 && effect.EffectMechanic != 0) {
-                if (baseInfo.school != 1) {
-                    baseInfo.isBinary = (spellName == "Frostbolt") ? false : true;
+                if (rankInfo.school != 1) {
+                    rankInfo.isBinary = (spellName == "Frostbolt") ? false : true;
                 }
                 rankInfo.effects.splice(effectNum);
             } else {
@@ -257,7 +234,7 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
     }
 }
 
-function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string, baseInfo: BaseInfo) {
+function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string) {
     const totemSpell = spellData.getTotemSpell(effect.SpellID);
     if (!totemSpell) throw new Error("Totem spell not found!");
     const totemEffects = spellData.getSpellEffects(totemSpell);
@@ -272,13 +249,13 @@ function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: num
         case "Searing Totem":
             directDmg(rankInfo, totemEffects[0], effectNum);
             rankInfo.effects[effectNum].period = 2.2;
-            baseInfo.defenseType = totemSpellCat.DefenseType;
+            rankInfo.defenseType = totemSpellCat.DefenseType;
             rankInfo.effects[effectNum].effectType = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
             rankInfo.effects[effectNum].auraType = AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL;
             break;
         case "Magma Totem":
         case "Healing Stream Totem":
-            applyAuraAreaAura(rankInfo, totemEffects[0], effectNum, spellName, baseInfo);
+            applyAuraAreaAura(rankInfo, totemEffects[0], effectNum, spellName);
             break;
         case "Fire Nova Totem":
             directDmg(rankInfo, totemEffects[0], effectNum);
@@ -291,7 +268,7 @@ function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: num
 /**
  * Functions to fill effect info
  */
-const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string, baseInfo: BaseInfo) => void} = {
+const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEffect, effectNum: number, spellName: string) => void} = {
     [EFFECT_TYPE.SPELL_EFFECT_HEAL]: (rankInfo, effect, effectNum) => {
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
@@ -323,7 +300,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
 
     [EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC]: summonTotemSlot,
 
-    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE]: (rankInfo, effect, effectNum, _spellName, _baseInfo) => {
+    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE]: (rankInfo, effect, effectNum, _spellName) => {
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
@@ -337,7 +314,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         };
     },
 
-    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum, spellName, _baseInfo) => {
+    [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum, spellName) => {
         if (effectNum > 0) {
             if (rankInfo.effects[0].weaponCoef == 0) {
                 throw new Error("E1 is SPELL_EFFECT_WEAPON_PERCENT_DAMAGE but E0 doesn't add a weapon coef!");
@@ -365,7 +342,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         }
     },
 
-    [EFFECT_TYPE.SPELL_EFFECT_ATTACK]: (rankInfo, effect, effectNum, _spellName, _baseInfo) => {
+    [EFFECT_TYPE.SPELL_EFFECT_ATTACK]: (rankInfo, effect, effectNum, _spellName) => {
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: 0,
@@ -379,7 +356,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         };
     },
 
-    [EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL]: (rankInfo, effect, effectNum, _spellName, _baseInfo) => {
+    [EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL]: (rankInfo, effect, effectNum, _spellName) => {
         rankInfo.effects[effectNum] = {
             effectType: effect.Effect,
             coef: 0,
@@ -392,6 +369,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             weaponCoef: 0,
         };
     },
+
+    [EFFECT_TYPE.SPELL_EFFECT_DUMMY]: handleDummyEffect
 }
 
 /**
@@ -402,7 +381,6 @@ function buildSpellInfo(pclass: string) {
     console.log("Building spell data for class " + pclass);
     const list = classSpellLists.getListForClass(pclass);
     let classInfo: ClassInfo = {
-        baseInfo: {},
         rankInfo: {},
     };
 
@@ -434,10 +412,10 @@ function buildSpellInfo(pclass: string) {
         // Skip physical spells except auto attack and SOtC for now
         if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID, SealType.SOtC)) continue;
 
-        // Create base info if needed
-        if (!classInfo.baseInfo[spellName]) {
-            classInfo.baseInfo[spellName] = {
-                getspellinfoid: spellId,
+        // Create rank info if needed
+        if (!classInfo.rankInfo[spellId]) {
+            let dur = (spellMisc.DurationIndex) ? spellData.getSpellDuration(spellMisc.DurationIndex).Duration / 1000 : 0;
+            classInfo.rankInfo[spellId] = {
                 school: SCHOOL_MASK_TO_ENUM[spellMisc.SchoolMask],
                 isChannel: ((spellMisc["Attributes[1]"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
                 isBinary: false,
@@ -447,23 +425,7 @@ function buildSpellInfo(pclass: string) {
                 equippedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
                 noCrit: (spellMisc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT,
                 forceHeal: false,
-                charges: (spellAuraOptions && spellAuraOptions.ProcCharges > 0) ? spellAuraOptions.ProcCharges : 0
-            };
-        } else {
-            // Shitty fix for how "base info" is handled in the addon atm.
-            // Triggered spells can have the same name as the base spell but not be able to crit or have the real def type.
-            if ((spellMisc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) {
-                classInfo.baseInfo[spellName].noCrit = true;
-            }
-            if (classInfo.baseInfo[spellName].defenseType === DEFENSE_TYPE.NONE && spellcat.DefenseType !== DEFENSE_TYPE.NONE) {
-                classInfo.baseInfo[spellName].defenseType = spellcat.DefenseType;
-            }
-        }
-
-        // Create rank info if needed
-        if (!classInfo.rankInfo[spellId]) {
-            let dur = (spellMisc.DurationIndex) ? spellData.getSpellDuration(spellMisc.DurationIndex).Duration / 1000 : 0;
-            classInfo.rankInfo[spellId] = {
+                charges: (spellAuraOptions && spellAuraOptions.ProcCharges > 0) ? spellAuraOptions.ProcCharges : 0,
                 spellnamecomment: spellName + ( (spellspell.NameSubtext_lang.length) ? `(${spellspell.NameSubtext_lang})` : "" ),
                 spellLevel: spellLevel.SpellLevel,
                 maxLevel: spellLevel.MaxLevel,
@@ -491,7 +453,7 @@ function buildSpellInfo(pclass: string) {
 
         // Handle effects
         for (let i = 0; i < effects.length; i++) {
-            effectInfoHandler[effects[i].Effect](classInfo.rankInfo[effects[i].SpellID], effects[i], i, spellName, classInfo.baseInfo[spellName]);
+            effectInfoHandler[effects[i].Effect](classInfo.rankInfo[effects[i].SpellID], effects[i], i, spellName);
 
             // Make sure maxlevel is defined for spells with level scaling
             if (classInfo.rankInfo[spellId].effects[i] 
@@ -520,24 +482,6 @@ end
 `;
     let classInfo = buildSpellInfo(pclass);
 
-    str += "_addon.spellBaseInfo = {\n";
-    for (let sname in classInfo.baseInfo) {
-        let bi = classInfo.baseInfo[sname];
-        str += `\t[GetSpellInfo(${bi.getspellinfoid})] = { -- ${sname}\n`;
-        str += `\t\tschool = ${bi.school},\n`;
-        if (bi.isChannel) str += `\t\tisChannel = true,\n`;
-        if (bi.isBinary) str += `\t\tisBinary = true,\n`;
-        if (bi.gcd != 1.5) str += `\t\tGCD = ${bi.gcd},\n`;
-        str += `\t\tdefType = ${bi.defenseType},\n`;
-        if (bi.cantDogeParryBlock) str += `\t\tcantDogeParryBlock = true,\n`;
-        if (bi.equippedWeaponMask != 0) str += `\t\tequippedWeaponMask = ${bi.equippedWeaponMask},\n`;
-        if (bi.noCrit) str += `\t\tnoCrit = ${bi.noCrit},\n`;
-        if (bi.forceHeal) str += `\t\tforceHeal = ${bi.forceHeal},\n`;
-        if (bi.charges != 0) str += `\t\tcharges = ${bi.charges},\n`;
-        str += `\t},\n`;
-    }
-    str += "};\n\n";
-
     str += "_addon.spellRankInfo = {\n";
     for (let sid in classInfo.rankInfo) {
         let ri = classInfo.rankInfo[sid];
@@ -547,6 +491,16 @@ end
         if (ri.duration) str += `\t\tduration = ${ri.duration},\n`;
         if (ri.baseCost > 0) str += `\t\tbaseCost = ${ri.baseCost},\n`;
         if (ri.baseCostPct > 0) str += `\t\tbaseCostPct = ${ri.baseCostPct},\n`;
+        str += `\t\tschool = ${ri.school},\n`;
+        if (ri.isChannel) str += `\t\tisChannel = true,\n`;
+        if (ri.isBinary) str += `\t\tisBinary = true,\n`;
+        if (ri.gcd != 1.5) str += `\t\tGCD = ${ri.gcd},\n`;
+        str += `\t\tdefType = ${ri.defenseType},\n`;
+        if (ri.cantDogeParryBlock) str += `\t\tcantDogeParryBlock = true,\n`;
+        if (ri.equippedWeaponMask != 0) str += `\t\tequippedWeaponMask = ${ri.equippedWeaponMask},\n`;
+        if (ri.noCrit) str += `\t\tnoCrit = ${ri.noCrit},\n`;
+        if (ri.forceHeal) str += `\t\tforceHeal = ${ri.forceHeal},\n`;
+        if (ri.charges != 0) str += `\t\tcharges = ${ri.charges},\n`;
 
         str += `\t\teffects = {\n`;
 

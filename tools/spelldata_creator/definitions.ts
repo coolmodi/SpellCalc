@@ -124,20 +124,6 @@ const enum SCHOOL_MASK {
     ARCANE	= 0x40,
 }
 
-interface BaseInfo {
-    getspellinfoid: number,
-    school: number,
-    isChannel: boolean,
-    isBinary: boolean,
-    gcd: number,
-    defenseType: DEFENSE_TYPE,
-    cantDogeParryBlock: boolean,
-    equippedWeaponMask: number,
-    noCrit: boolean,
-    forceHeal: boolean,
-    charges: number,
-}
-
 interface EffectInfo {
     effectType: number,
     auraType?: number
@@ -163,6 +149,16 @@ const enum PowerType {
 }
 
 interface RankInfo {
+    school: number,
+    isChannel: boolean,
+    isBinary: boolean,
+    gcd: number,
+    defenseType: DEFENSE_TYPE,
+    cantDogeParryBlock: boolean,
+    equippedWeaponMask: number,
+    noCrit: boolean,
+    forceHeal: boolean,
+    charges: number,
     spellnamecomment: string,
     spellLevel: number,
     maxLevel: number,
@@ -173,7 +169,6 @@ interface RankInfo {
 }
 
 interface ClassInfo {
-    baseInfo: {[index: string]: BaseInfo},
     rankInfo: {[index: number]: RankInfo},
 }
 

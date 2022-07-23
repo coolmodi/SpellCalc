@@ -224,6 +224,7 @@ function mageFix(se: {[index: number]: SpellEffect}) {
 function druidFixes(se: {[index: number]: SpellEffect})
 {
     console.log("Fixing druid coefs and effects");
+    const STARFALL = [48505, 53199, 53200, 53201];
     // Lifebloom
     for(let effId in se) {
         let eff = se[effId];
@@ -231,6 +232,10 @@ function druidFixes(se: {[index: number]: SpellEffect})
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
             eff.EffectBonusCoefficient = 0.3429;
+        }
+        else if (STARFALL.indexOf(eff.SpellID) > -1)
+        {
+            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_DUMMY
         }
     }
 }

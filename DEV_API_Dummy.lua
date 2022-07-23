@@ -347,70 +347,37 @@ function ChatConfigFrame_PlayCheckboxSound() end
 function EditBox_ClearFocus() end
 function GameTooltip_Hide() end
 
----@class SpellBaseInfo
-local SpellBaseInfo = {
-    ---@type number
-    school = math.random(),
-    ---@type boolean|nil
-    isChannel = nil,
-    ---@type boolean|nil
-    isBinary = nil,
-    ---@type number|nil
-    GCD = nil,
-    ---@type number
-    defType = math.random(),
-    ---@type boolean|nil
-    cantDogeParryBlock = nil,
-    ---@type number|nil
-    equippedWeaponMask = nil,
-    ---@type boolean|nil
-    noCrit = nil,
-    ---@type boolean|nil
-    forceHeal = nil,
-    ---@type number|nil
-    charges = nil,
-}
-
 ---@class SpellRankEffectData
-local SpellRankEffectData = {
-    effectType = math.random(),
-    ---@type number|nil
-    auraType = nil,
-
-    ---@type boolean|nil
-    forceScaleWithHeal = nil,
-
-    valueBase = math.random(),
-    ---@type number|nil
-    valueRange = nil,
-    ---@type number|nil
-    valuePerLevel = nil,
-
-    coef = math.random(),
-    ---@type number|nil
-    weaponCoef = nil,
-    ---@type number|nil
-    tickPeriod = nil,
-
-    ---@type number|nil
-    chains = nil,
-    ---@type number|nil
-    chainMult = nil,
-    ---@type number|nil
-    auraStacks = nil,
-}
+---@field effectType number
+---@field auraType number|nil
+---@field forceScaleWithHeal boolean|nil
+---@field valueBase number
+---@field valueRange number|nil
+---@field valuePerLevel number|nil
+---@field coef number
+---@field coefAP number
+---@field weaponCoef number|nil
+---@field tickPeriod number|nil
+---@field chains number|nil
+---@field chainMult number|nil
+---@field auraStacks number|nil
 
 ---@class SpellRankInfo
-local SpellRankInfo = {
-    spellLevel = math.random(),
-    maxLevel = math.random(),
-    ---@type number|nil
-    duration = math.random(),
-    ---@type number|nil
-    baseCost = nil,
-    ---@type table<number, SpellRankEffectData|nil>
-    effects = {}
-}
+---@field school number
+---@field isChannel boolean|nil
+---@field isBinary boolean|nil
+---@field GCD number|nil
+---@field defType number
+---@field cantDogeParryBlock boolean|nil
+---@field equippedWeaponMask number|nil
+---@field noCrit boolean|nil
+---@field forceHeal boolean|nil
+---@field charges number|nil
+---@field spellLevel number
+---@field maxLevel number
+---@field duration number|nil
+---@field baseCost number|nil
+---@field effects table<number, SpellRankEffectData|nil>
 
 ---@type SettingsTable
 SpellCalc_settings = SpellCalc_settings;
@@ -428,9 +395,6 @@ local _addon = select(2, ...);
 _addon.ClassSettings = function()
     return {};
 end
-
----@type table<string, SpellBaseInfo>
-_addon.spellBaseInfo = {};
 
 ---@type table<integer, SpellRankInfo>
 _addon.spellRankInfo = {};

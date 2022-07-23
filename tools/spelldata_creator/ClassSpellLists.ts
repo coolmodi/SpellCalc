@@ -13,7 +13,8 @@ const DO_EFFECTS = [
     EFFECT_TYPE.SPELL_EFFECT_ATTACK,
     EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE,
     EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY,
-    EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL
+    EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL,
+    EFFECT_TYPE.SPELL_EFFECT_DUMMY
 ];
 
 const DO_AURAS = [
@@ -29,14 +30,14 @@ const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE,
 ];
 
-const DMG_SHIELD_DATA: {[index: string]: boolean} = {
+const DMG_SHIELD_DATA: { [index: string]: boolean } = {
     "Shadowguard": true,
     "Lightning Shield": true,
     "Touch of Weakness": true,
     "Molten Armor": true
 }
 
-const TRIGGER_SPELL_IGNORE: {[spellName: string]: boolean} = {
+const TRIGGER_SPELL_IGNORE: { [spellName: string]: boolean } = {
     "Feedback": true,
     "Frost Armor": true,
     "Ice Armor": true,
@@ -58,7 +59,7 @@ export class ClassSpellLists
     private readonly validClassSpells: { [className: string]: Map<number, SpellEffect[]> } = {};
     private readonly judgementRemap: Map<number, number> = new Map<number, number>();
 
-    constructor (spellData: SpellData, classesToDo: string[], expansion: number)
+    constructor(spellData: SpellData, classesToDo: string[], expansion: number)
     {
         this.spellData = spellData;
 
@@ -71,6 +72,163 @@ export class ClassSpellLists
         }
 
         console.log("Done!");
+    }
+
+    private addTriggeredSpellIfValid(spellId: number, binaryCache: Map<number, SpellEffect>, list: Map<number, SpellEffect[]>)
+    {
+        const tspell = this.spellData.getSpellEffects(spellId);
+        for (const se of tspell)
+        {
+            if (se.Effect == EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL) throw new Error("Triggered spell triggers spell!");
+            if ((se.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA
+                || se.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY
+                || se.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA)
+                && (se.EffectAura == AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL
+                    || se.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL
+                    || se.EffectAura == AURA_TYPE.SPELL_AURA_ADD_TARGET_TRIGGER)) throw new Error("Triggered spell triggers spell!");
+        }
+        const validEffects = this.getValidEffectsForSpell(spellId, binaryCache, list);
+        if (!validEffects) return false;
+        list.set(spellId, validEffects);
+        return true;
+    }
+
+    private getValidEffectsForSpell(spellId: number, binaryCache: Map<number, SpellEffect>, list: Map<number, SpellEffect[]>)
+    {
+        const validEffects: SpellEffect[] = [];
+        let spellEffects = this.spellData.getSpellEffects(spellId);
+
+        for (let i = 0; i < spellEffects.length; i++)
+        {
+            let effect = spellEffects[i];
+
+            if (DO_EFFECTS.indexOf(effect.Effect) == -1) continue;
+
+            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA
+                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA
+                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY)
+            {
+                if (DO_AURAS.indexOf(effect.EffectAura) == -1)
+                {
+                    if (effect.EffectMechanic != 0 && effect.EffectIndex != 0)
+                    {
+                        binaryCache.set(effect.SpellID, effect);
+                    }
+                    continue;
+                };
+
+                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL)
+                {
+                    let spellName = this.spellData.getSpellName(effect.SpellID).Name_lang;
+                    if (TRIGGER_SPELL_IGNORE[spellName])
+                    {
+                        console.log("Ignoring spell " + spellName);
+                        continue;
+                    }
+                    if (!DMG_SHIELD_DATA[spellName])
+                    {
+                        console.error("Spell " + effect.SpellID + " " + spellName + " not handled correctly!");
+                        throw "SPELL_AURA_PROC_TRIGGER_SPELL not handled!";
+                    }
+                    console.log("have trigger aura " + effect.SpellID + " " + spellName);
+                    if (!this.addTriggeredSpellIfValid(effect.EffectTriggerSpell, binaryCache, list)) throw new Error("Triggered spell has no valid effects!");
+                }
+
+                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL)
+                {
+                    if (PTSA_IGNORES.indexOf(effect.SpellID) != -1 || effect.EffectTriggerSpell == 0) continue;
+                    const tspell = this.spellData.getSpellEffects(effect.EffectTriggerSpell);
+                    //const tspellCat = this.spellData.getSpellCategory(effect.EffectTriggerSpell);
+                    //baseInfo.defenseType = (tspellCat) ? tspellCat.DefenseType : baseInfo.defenseType; // TODO: Is this supposed to be that way or is DBC just buggy atm?
+                    let found = false;
+                    for (let i = 0; i < tspell.length; i++)
+                    {
+                        if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL)
+                        {
+                            found = true;
+                            break;
+                        } else if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_DUMMY)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) throw new Error("PTSA effect has no handled trigger spell effect! " + effect.SpellID);
+                    if (!this.addTriggeredSpellIfValid(effect.EffectTriggerSpell, binaryCache, list)) throw new Error("Triggered spell has no valid effects!");
+                }
+
+                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY)
+                {
+                    // pala seals
+                    if (isJudgeDummy(effect) !== false)
+                    {
+                        const jspell = this.spellData.getSpellEffects(effect.EffectBasePoints + 1);
+                        if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
+                        if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, [jspell[0]]);
+                        this.judgementRemap.set(effect.SpellID, jspell[0].SpellID)
+                        // don't use this effect
+                        continue;
+                    }
+                    // only add dummy auras we want
+                    if (
+                        !(effect.EffectIndex == 0 && isSeal(effect.SpellID)) // SoR or SoC attack effect
+                        && effect.SpellID !== 33076 // PoM
+                        && [974, 32593, 32594].indexOf(effect.SpellID) === -1 // Earth Shield
+                    ) continue;
+                }
+            }
+
+            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC)
+            {
+                if (!this.spellData.getTotemSpell(effect.SpellID)) continue;
+            }
+
+            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL)
+            {
+                switch (effect.SpellID)
+                {
+                    case 19752: // Lazy fix for Divine Intervention "for now"
+                    case 24858: // Moonkin Form aura trigger
+                    case 16979: // Feral Charge
+                    case 49376: // Charge Cat
+                        continue;
+                }
+
+                const tspell = this.spellData.getSpellEffects(effect.EffectTriggerSpell);
+                let found = false;
+                for (let i = 0; i < tspell.length; i++)
+                {
+                    if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA)
+                    {
+                        found = true;
+                        break;
+                    } else if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_DUMMY)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) throw new Error("SPELL_EFFECT_TRIGGER_SPELL has no handled triggered spell effect! " + effect.SpellID);
+                if (!this.addTriggeredSpellIfValid(effect.EffectTriggerSpell, binaryCache, list)) throw new Error("Triggered spell has no valid effects!");
+            }
+
+            if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_DUMMY)
+            {
+                const spellName = this.spellData.getSpellName(effect.SpellID).Name_lang;
+                switch (spellName)
+                {
+                    case "Starfall":
+                        break;
+                    default:
+                        continue;
+                }
+            }
+
+            validEffects.push(effect);
+        }
+
+        if (validEffects.length === 0) return;
+        return validEffects;
     }
 
     /**
@@ -90,79 +248,9 @@ export class ClassSpellLists
 
         for (let nameRank in data)
         {
-            let spellEffects = this.spellData.getSpellEffects(data[nameRank]);
-            for (let i = 0; i < spellEffects.length; i++)
-            {
-                let effect = spellEffects[i];
-
-                if (DO_EFFECTS.indexOf(effect.Effect) == -1) continue;
-
-                if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA
-                    || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA
-                    || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY)
-                {
-                    if (DO_AURAS.indexOf(effect.EffectAura) == -1)
-                    {
-                        if (effect.EffectMechanic != 0 && effect.EffectIndex != 0)
-                        {
-                            binaryCache.set(effect.SpellID, effect);
-                        }
-                        continue;
-                    };
-
-                    if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL)
-                    {
-                        let spellName = this.spellData.getSpellName(effect.SpellID).Name_lang;
-                        if (TRIGGER_SPELL_IGNORE[spellName])
-                        {
-                            console.log("Ignoring spell " + spellName);
-                            continue;
-                        }
-                        if (!DMG_SHIELD_DATA[spellName])
-                        {
-                            console.error("Spell " + effect.SpellID + " " + spellName + " not handled correctly!");
-                            throw "SPELL_AURA_PROC_TRIGGER_SPELL not handled!";
-                        }
-                        console.log("have trigger aura " + effect.SpellID + " " + spellName);
-                    }
-
-                    if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL)
-                    {
-                        if (PTSA_IGNORES.indexOf(effect.SpellID) != -1 || effect.EffectTriggerSpell == 0) continue;
-                    }
-
-                    if (effect.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY)
-                    {
-                        // pala seals
-                        if (isJudgeDummy(effect) !== false)
-                        {
-                            const jspell = this.spellData.getSpellEffects(effect.EffectBasePoints + 1);
-                            if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-                            if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, [jspell[0]]);
-                            this.judgementRemap.set(effect.SpellID, jspell[0].SpellID)
-                            // don't use this effect
-                            continue;
-                        }
-                        // only add dummy auras we want
-                        if (
-                            !(effect.EffectIndex == 0 && isSeal(effect.SpellID)) // SoR or SoC attack effect
-                            && effect.SpellID !== 33076 // PoM
-                            && [974, 32593, 32594].indexOf(effect.SpellID) === -1 // Earth Shield
-                        ) continue;
-                    }
-                }
-
-                if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC)
-                {
-                    if (!this.spellData.getTotemSpell(effect.SpellID)) continue;
-                }
-
-                // Lazy fix for Divine Intervention "for now"
-                if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL && effect.SpellID === 19752) continue;
-
-                if (!list.has(effect.SpellID)) list.set(effect.SpellID, []);
-                list.get(effect.SpellID)!.push(effect);
-            }
+            const spellId = data[nameRank];
+            const validEffs = this.getValidEffectsForSpell(spellId, binaryCache, list);
+            if (validEffs) list.set(spellId, validEffs);
         }
 
         for (const [spellId, effect] of binaryCache)

@@ -43,28 +43,26 @@ local HealEffect;
 ---@param auraType number|nil
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
 ---@param gcd number
-local function EFFECT_TEMPLATE(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
+local function EFFECT_TEMPLATE(auraType, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     -- Example function definition
 end
 
 --- BASE AURA TEMPLATE
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
 ---@param gcd number
-local function AURA_TEMPLATE(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
+local function AURA_TEMPLATE(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     -- Example function definition
 end
 
@@ -77,12 +75,11 @@ local dummyAuraHandlers = {};
 -- TBC: bonus damage dependent on weapon speed?
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function SealOfRighteousness(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function SealOfRighteousness(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -123,12 +120,11 @@ end
 
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function SealOfCommand(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function SealOfCommand(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -169,15 +165,14 @@ end
 ---Dummy handler for Prayer of Mending and Earth Shield
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function PoM_ES(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+local function PoM_ES(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId)
     -- Do normal heal effect
-    HealEffect(nil, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+    HealEffect(nil, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId);
     -- Multiply by charge count
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
@@ -189,12 +184,11 @@ end
 
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function SealOfBloodMartyr(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function SealOfBloodMartyr(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -231,12 +225,11 @@ end
 -- TODO: test this
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function SealOfVengeance(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function SealOfVengeance(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -273,14 +266,13 @@ local auraHandler = {}
 --- Handler for periodic damage auras.
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
 ---@param gcd number
-local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
+local function PeriodicDamage(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -307,7 +299,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellBaseInfo, spellRankInfo,
     calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    if spellBaseInfo.isChannel then
+    if spellRankInfo.isChannel then
         duration = effCastTime;
         calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
     else
@@ -326,13 +318,12 @@ end
 
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function PeriodicHeal(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+local function PeriodicHeal(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -352,6 +343,7 @@ local function PeriodicHeal(calcedSpell, effNum, spellBaseInfo, spellRankInfo, e
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedEffect.ticks;
 
+    print(spellName, calcedEffect.avgAfterMitigation, effCastTime)
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.perSecDurOrCD = calcedEffect.avgAfterMitigation / duration;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
@@ -361,12 +353,11 @@ end
 --- Handler for damage shield like effects
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function DamageShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function DamageShield(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -388,12 +379,11 @@ end
 --- Handler for absorbs
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function AbsorbAura(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function AbsorbAura(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -413,12 +403,11 @@ end
 --- Handler for Mana Shield
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function ManaShield(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function ManaShield(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -450,14 +439,13 @@ end
 --- Can also be used for healing spells (e.g. Tranquility)
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
 ---@param gcd number
-local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
+local function PeriodicTriggerSpell(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -482,10 +470,10 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellBaseInfo, spellRan
     calcedEffect.ticks = math.floor(duration / effectData.tickPeriod);
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    if spellBaseInfo.forceHeal then
+    if spellRankInfo.forceHeal then
         calcedEffect.avgAfterMitigation = total;
     else
-        if spellBaseInfo.isChannel then
+        if spellRankInfo.isChannel then
             calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
         else
             calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
@@ -505,18 +493,17 @@ end
 --- Handler for dummy auras
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function DummyAura(calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+local function DummyAura(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId)
     if dummyAuraHandlers[spellName] == nil then
         _addon:PrintError("No dummy aura handler for effect "..effNum.." on spell "..spellName.."! Please report this to the addon author!");
         return;
     end
-    dummyAuraHandlers[spellName](calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId);
+    dummyAuraHandlers[spellName](calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId);
 end
 
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_DAMAGE] = PeriodicDamage;
@@ -537,13 +524,12 @@ auraHandler[AURA_TYPES.SPELL_AURA_DUMMY] = DummyAura;
 
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+local function SchoolDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -558,7 +544,7 @@ local function SchoolDamage(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo
     calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
     calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
 
-    if stats.ignite.val > 0 and spellBaseInfo.school == _addon.SCHOOL.FIRE then
+    if stats.ignite.val > 0 and spellRankInfo.school == _addon.SCHOOL.FIRE then
         local igniteMult = stats.ignite.val/100;
 
         if calcedEffect.igniteData == nil then
@@ -626,13 +612,12 @@ end
 
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-function HealEffect(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId)
+function HealEffect(_, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     ---@type SpellRankEffectData
@@ -675,13 +660,12 @@ end
 ---@param auraType number|nil
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
 ---@param spellId number
-local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
+local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
     if auraType == nil then
         _addon:PrintError("SPELL_EFFECT_APPLY_AURA handler called without auraType for spell "..spellName.." for effect #"..effNum);
         return;
@@ -693,18 +677,17 @@ local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellBaseInfo, spel
         return;
     end
 
-    auraHandler[auraType](calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd);
+    auraHandler[auraType](calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd);
 end
 
 --- Handle Attack spell that triggers auto attack
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
----@param spellBaseInfo SpellBaseInfo
 ---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
 ---@param effectMod number
 ---@param spellName string
-local function AutoAttack(_, calcedSpell, effNum, spellBaseInfo, spellRankInfo, effCastTime, effectMod, spellName)
+local function AutoAttack(_, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
 
