@@ -116,7 +116,6 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Celestial Focus (1/11), spell haste effect? Available from API?
     -- TODO: Improved Insect Swarm (1/14), dmg if aura on target
     { -- Dreamstate
         tree = 1,
@@ -158,7 +157,6 @@ _addon.talentDataRaw = {
             },
         }
     },
-    -- TODO: Improved Moonkin Form (1/19), haste from API?
     -- TODO: Improved Faerie Fire (1/20), crit if aura on target
     { -- Wrath of Cenarius
         tree = 1,
@@ -339,18 +337,6 @@ _addon.talentDataRaw = {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {64},
                 perPoint = 5
-            }
-        }
-    },
-    { -- Natural Perfection
-        tree = 3,
-        tier = 7,
-        column = 3,
-        effects = {
-            {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT,
-                affectMask = _addon.SCHOOL_MASK.ALL,
-                perPoint = 1
             }
         }
     },

@@ -93,8 +93,6 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
     local bonusMod = 1;
     local baseMod = 1;
 
-    print("GetBaseModifiers", school, isDmg, isHeal, spellId, calcedSpell, isDuration)
-
     if isDmg then
         if stats.spellModPctEffect[spellId] ~= nil then
             baseMod = baseMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
@@ -147,7 +145,6 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
 
     baseMod = baseMod * bonusMod;
 
-    print("GetBaseModifiers", baseMod, bonusMod)
     _addon:PrintDebug("Basemod: "..baseMod..", Bonusmod: "..bonusMod);
     return baseMod, bonusMod;
 end
@@ -293,8 +290,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Cast time and GCD
 
     if parentEffCastTime == nil then
-        local _, _, _, probablyGCD = GetSpellInfo(25375); -- Mind Blast cast time is 1.5s
-        local hasteMult = probablyGCD / 1500;
+        local _, _, _, probablyGCD = GetSpellInfo(31); -- 2000 cast
+        local hasteMult = probablyGCD / 2000;
 
         if stats.spellModGCDms[spellId] ~= nil then
             GCD = GCD + stats.spellModGCDms[spellId].val / 1000;
@@ -596,7 +593,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
             local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
-            print(spellName)
             local effectMod, bonusMod = GetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration);
 
             --------------------------
