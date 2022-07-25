@@ -104,12 +104,15 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
     // Starfall
     if (spellName == "Starfall")
     {
+        if (effectNum > 0) throw new Error("Starfall dummy effect not 0!");
+
         // Coefs are same for all ranks
         rankInfo.effects[effectNum] = {
-            effectType: effect.Effect,
+            effectType: EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA,
+            auraType: AURA_TYPE.SPELL_AURA_DUMMY,
             coef: 0.3, // Star hit
-            coefAP: 0.127, // AoE effect
-            valueBase: effect.EffectTriggerSpell,
+            coefAP: 0,
+            valueBase: 0,
             valueRange: 0,
             valuePerLevel: 0,
             forceScaleWithHeal: false,
@@ -132,7 +135,18 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                 // Put star AoE base damage in valuePerLevel
                 const aoeTrigger = spellData.getSpellEffects(teff2.EffectTriggerSpell);
                 if (aoeTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall AoE trigger!");
-                rankInfo.effects[effectNum].valuePerLevel = aoeTrigger[0].EffectBasePoints + 1;
+                rankInfo.effects[1] = {
+                    effectType: EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA,
+                    auraType: AURA_TYPE.SPELL_AURA_DUMMY,
+                    coef: 0.127, // AoE effect
+                    coefAP: 0,
+                    valueBase: aoeTrigger[0].EffectBasePoints + 1,
+                    valueRange: 0,
+                    valuePerLevel: 0,
+                    forceScaleWithHeal: false,
+                    period: 0,
+                    weaponCoef: 0,
+                };
             }
         }
         return;

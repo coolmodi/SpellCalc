@@ -235,13 +235,13 @@ local function TooltipHandler(toolTipFrame)
             effectFlags = calcedEffect.spellData[1].effectFlags;
         end
 
-        if #calcedSpell > 1 and (i == 2 or calcedSpell.combined == nil) then
-            SCTooltip:HeaderLine(GetEffectTitle(effectFlags)..":");
-        end
-
         local isHeal = bit.band(effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
         local isHandled = false;
         local sname = GetSpellInfo(spellID);
+
+        if not dummyHandler[sname] and #calcedSpell > 1 and (i == 2 or calcedSpell.combined == nil) then
+            SCTooltip:HeaderLine(GetEffectTitle(effectFlags)..":");
+        end
 
         if isTriggerEffect then
             if calcedEffect.spellData[2] ~= nil then

@@ -246,6 +246,34 @@ local function SealOfVengeance(calcedSpell, effNum, spellRankInfo, effCastTime, 
     calcedEffect.perSec = total / 15;
 end
 
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function Starfall(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
+    local stars = 20;
+    local effectData = spellRankInfo.effects[effNum];
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+
+    calcedEffect.min = effectData.valueBase * effectMod + calcedEffect.effectivePower;
+    calcedEffect.max = calcedEffect.min + effectData.valueRange;
+    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
+    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
+
+    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedSpell.hitChance/100 * (1 - calcedSpell.avgResist);
+    calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * stars;
+
+    calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
+    calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
+    calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
@@ -253,6 +281,7 @@ dummyAuraHandlers[GetSpellInfo(974)] = PoM_ES; -- Earth Shield
 dummyAuraHandlers[GetSpellInfo(31892)] = SealOfBloodMartyr; -- Seal of Blood
 dummyAuraHandlers[GetSpellInfo(348700)] = SealOfBloodMartyr; -- Seal of the Martyr
 dummyAuraHandlers[GetSpellInfo(31801)] = SealOfVengeance;
+dummyAuraHandlers[GetSpellInfo(48505)] = Starfall;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler

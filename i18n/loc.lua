@@ -1,5 +1,3 @@
----@type string
-local _addonName = select(1, ...);
 ---@type AddonEnv
 local _addon = select(2, ...);
 local clientlocale = GetLocale();
@@ -17,7 +15,6 @@ function _addon:AddLocalization(locale, default)
 
 	localStrings = setmetatable({}, {__index=function(self, key)
 		rawset(self, key, key);
-		print(_addonName .. ": Missing translation for: " .. key);
 		return key;
 	end});
 
