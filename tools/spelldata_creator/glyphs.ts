@@ -18,10 +18,7 @@ interface GlyphProperties
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
     [AURA_TYPE.SPELL_AURA_DUMMY]: true,
     [AURA_TYPE.SPELL_AURA_OVERRIDE_CLASS_SCRIPTS]: true,
-    [256]: true,
-    [316]: true,
-
-
+    [AURA_TYPE.SPELL_AURA_NO_REAGENT_USE]: true,
 }
 Object.assign(AURA_TYPES_TO_IGNORE, USELESS_AURAS);
 

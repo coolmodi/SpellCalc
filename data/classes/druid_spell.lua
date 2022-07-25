@@ -3699,5 +3699,12 @@ _addon.classGlyphs = {
             value = 10,
         },
     },
+    [71013] = { -- Glyph of Rapid Rejuvenation
+        {
+            type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE,
+            affectSpell = {16, 0, 0, 0},
+            value = 1,
+        },
+    },
 };
 

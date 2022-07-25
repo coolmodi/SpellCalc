@@ -540,6 +540,15 @@ export class AuraHandlers
                 value: effect.EffectBasePoints + 1,
             }
         }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_PERIODIC_HASTE] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE,
+                affectSpell: this.getAffectSpell(effect),
+                value: 1,
+            }
+        }
     }
 
     /**
