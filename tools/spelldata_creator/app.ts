@@ -433,6 +433,7 @@ function buildSpellInfo(pclass: string) {
                 duration: dur,
                 baseCost: 0,
                 baseCostPct: 0,
+                usePeriodicHaste: (spellMisc["Attributes[5]"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
                 effects: []
             };
 
@@ -502,6 +503,7 @@ end
         if (ri.noCrit) str += `\t\tnoCrit = ${ri.noCrit},\n`;
         if (ri.forceHeal) str += `\t\tforceHeal = ${ri.forceHeal},\n`;
         if (ri.charges != 0) str += `\t\tcharges = ${ri.charges},\n`;
+        if (ri.usePeriodicHaste) str += `\t\tusePeriodicHaste = true,\n`;
 
         str += `\t\teffects = {\n`;
 

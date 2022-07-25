@@ -15,7 +15,7 @@ local function PoM(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
 
     SCT:AppendCoefData(calcedSpell, calcedEffect);

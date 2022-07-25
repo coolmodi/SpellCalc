@@ -80,10 +80,10 @@ end
 ---@param min number
 ---@param max number
 ---@param avg number
----@param ticks number|nil
+---@param prefix string|nil
 ---@param lr string|nil
 ---@param tr string|nil
-function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, ticks, lr, tr)
+function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, prefix, lr, tr)
     local outstr = self:Round(min);
 
     if max > min then
@@ -93,8 +93,8 @@ function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, ticks, lr, tr)
         end
     end
 
-    if ticks and ticks > 1 then
-        outstr = ticks.."x " ..outstr;
+    if prefix then
+        outstr = prefix..outstr;
     end
 
     if tr then
@@ -108,9 +108,9 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param calcedEffect CalcedEffect
 ---@param coefMult number|nil @Multiply coef and sp output with this number
----@param noTick boolean|nil @Ignore ticks and just output raw coef and used bonus
+---@param tickOverride number|nil @Use this amount of ticks, ignore default
 ---@param noCharge boolean|nil @Ignore charges and just output raw coef and used bonus
-function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, noTick, noCharge)
+function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverride, noCharge)
     if not SpellCalc_settings.ttPower or not calcedEffect.effectiveSpCoef or calcedEffect.effectiveSpCoef == 0 then
         return;
     end
@@ -124,9 +124,11 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, noTick, n
         coefPct = coefPct * coefMult;
     end
 
-    if not noTick and calcedEffect.ticks then
-        fullSP = fullSP * calcedEffect.ticks;
-        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedEffect.ticks, calcedEffect.ticks, coefPct);
+    local ticks = tickOverride or calcedEffect.ticks
+
+    if ticks and ticks > 0 then
+        fullSP = fullSP * ticks;
+        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * ticks, ticks, coefPct);
     elseif not noCharge and calcedSpell.charges and calcedSpell.charges > 0 then
         fullSP = fullSP * calcedSpell.charges;
         coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedSpell.charges, calcedSpell.charges, coefPct)
@@ -198,6 +200,13 @@ function SCTooltip:ShowEffectTooltip(calcedSpell, effNum, isHeal, spellID)
         end
     end
     return false;
+end
+
+---x.xx% chance
+---@param critChance number
+---@return string
+function SCTooltip:CritStr(critChance)
+    return ("%.2f%% %s"):format(critChance, L.CHANCE);
 end
 
 --- Append data to tooltip if spell is known to the addon.

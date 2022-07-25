@@ -286,13 +286,36 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         magicCalc:Init(calcedSpell, spellRankInfo, spellId);
     end
 
+    local hasteMult;
+    do
+        local _, _, _, cast2000msBase = GetSpellInfo(31);
+        hasteMult = cast2000msBase / 2000;
+    end
+
+    ----------------------------------------------------------------------------------------------------------------------
+    -- Duration
+
+    if spellRankInfo.duration then
+        local baseDuration = spellRankInfo.duration;
+
+        if stats.spellModFlatDuration[spellId] ~= nil then
+            baseDuration = baseDuration + stats.spellModFlatDuration[spellId].val;
+            calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
+        end
+
+        calcedSpell.durationNoHaste = baseDuration;
+        calcedSpell.duration = baseDuration;
+
+        if spellRankInfo.usePeriodicHaste
+        or stats.spellModAllowDotHaste[spellId] and stats.spellModAllowDotHaste[spellId].val > 0 then
+            calcedSpell.duration = calcedSpell.duration * hasteMult;
+        end
+    end
+
     ----------------------------------------------------------------------------------------------------------------------
     -- Cast time and GCD
 
     if parentEffCastTime == nil then
-        local _, _, _, probablyGCD = GetSpellInfo(31); -- 2000 cast
-        local hasteMult = probablyGCD / 2000;
-
         if stats.spellModGCDms[spellId] ~= nil then
             GCD = GCD + stats.spellModGCDms[spellId].val / 1000;
             calcedSpell:AddToBuffList(stats.spellModGCDms[spellId].buffs);
@@ -301,12 +324,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         GCD = GCD * hasteMult;
 
         if spellRankInfo.isChannel then
-            castTime = spellRankInfo.duration;
-            effCastTime = castTime * hasteMult;
+            castTime = calcedSpell.duration;
         else
             castTime = castTime / 1000;
-            effCastTime = math.max(GCD, castTime);
         end
+        effCastTime = math.max(GCD, castTime);
     end
 
     ----------------------------------------------------------------------------------------------------------------------
@@ -352,6 +374,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);
     end
 
+    print(spellName, parentSpellData ~= nil, spellRankInfo.noCrit)
     if spellRankInfo.noCrit then
         calcedSpell.critChance = 0;
     end
@@ -561,6 +584,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         _addon:PrintDebug("Calculating effect " .. i);
         ---@type CalcedEffect
         local calcedEffect = calcedSpell[i];
+        ---@type SpellRankEffectData
+        local effectData = spellRankInfo.effects[i];
 
         --------------------------
         -- Charges
@@ -575,6 +600,14 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             end
         end
 
+        --------------------------
+        -- Ticks
+
+        if effectData.tickPeriod then
+            calcedEffect.ticks = math.floor(calcedSpell.durationNoHaste / effectData.tickPeriod);
+            calcedEffect.tickPeriod = calcedSpell.duration / calcedEffect.ticks;
+        end
+
         -- Trigger spell spell effect, update triggered spell data
         if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL + SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
             _addon:PrintDebug("Has trigger spell effect, updating triggered spell!");
@@ -584,9 +617,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, 0, spellName, spellId, GCD);
             end
         else
-            ---@type SpellRankEffectData
-            local effectData = spellRankInfo.effects[i];
-
             --------------------------
             -- Effect specific modifier
 

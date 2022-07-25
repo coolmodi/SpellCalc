@@ -140,9 +140,9 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
         if calcedEffect.igniteData then
-            SCT:AppendMinMaxAvgLine(L.TT_IGNITE, calcedEffect.igniteData.min/2, calcedEffect.igniteData.max/2, calcedEffect.igniteData.avg/2, 2);
+            SCT:AppendMinMaxAvgLine(L.TT_IGNITE, calcedEffect.igniteData.min/2, calcedEffect.igniteData.max/2, calcedEffect.igniteData.avg/2, "2x ");
         end
     end
 
@@ -179,9 +179,15 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
     local calcedEffect = calcedSpell[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %.1f (%d)"):format(calcedEffect.ticks, calcedEffect.min, SCT:Round(calcedEffect.min * calcedEffect.ticks)));
+        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg, nil,
+            L.TICKS, L.TICKS_TOOLTIP:format(calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration));
     end
 
+    if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
+    end
+
+    SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * calcedEffect.avgCombined));
     SCT:AppendCoefData(calcedSpell, calcedEffect);
 
     if not isHeal and effectNum == 1 then
@@ -286,16 +292,18 @@ local function AppendPTSA(calcedSpell, effectNum, isHeal)
     isHeal = isHeal or bit.band(triggeredEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg, calcedEffect.ticks);
+        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), triggeredEffect.min, triggeredEffect.max, triggeredEffect.avg, nil,
+            L.TICKS, L.TICKS_TOOLTIP:format(calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration));
     end
 
-    if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, calcedEffect.ticks, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+    if SpellCalc_settings.ttCrit and triggeredSpell.critChance > 0 and triggeredEffect.minCrit > 0 then
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, triggeredEffect.minCrit, triggeredEffect.maxCrit, triggeredEffect.avgCrit, nil,
+            nil, SCT:CritStr(triggeredSpell.critChance));
     end
 
-    SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * calcedEffect.avgCombined));
+    SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * triggeredEffect.avgCombined));
 
-    SCT:AppendCoefData(triggeredSpell, triggeredEffect);
+    SCT:AppendCoefData(triggeredSpell, triggeredEffect, nil, calcedEffect.ticks);
 
     if not isHeal and effectNum == 1 then
         AppendMitigation(triggeredSpell);
@@ -378,7 +386,7 @@ local function AppendAutoAttack(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
 
     AppendMitigation(calcedSpell);

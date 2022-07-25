@@ -113,6 +113,10 @@ const enum SPELL_ATTR2 {
     SPELL_ATTR_EX2_CANT_CRIT = 0x20000000
 }
 
+const enum SPELL_ATTR5 {
+    SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC = 0x2000,
+}
+
 const enum SCHOOL_MASK {
     NONE	= 0x00,
     PHYSICAL= 0x01,
@@ -165,6 +169,7 @@ interface RankInfo {
     duration: number,
     baseCost: number,
     baseCostPct: number,
+    usePeriodicHaste: boolean,
     effects: EffectInfo[]
 }
 

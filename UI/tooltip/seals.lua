@@ -13,7 +13,7 @@ local function SoR(calcedSpell, effectNum)
         SCT:SingleLine(L.DAMAGE, ("%.1f"):format(calcedEffect.avg));
     end
 
-    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, true);
+    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, 0);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -46,10 +46,10 @@ local function SoC(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
 
-    SCT:AppendCoefData(calcedSpell, calcedSpell, calcedEffect, nil, true, true);
+    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, 0, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -103,10 +103,10 @@ local function SoB_SoV(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, ("%.2f%% %s"):format(calcedSpell.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
 
-    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, true, true);
+    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, 0, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -156,7 +156,7 @@ local function SoV(calcedSpell, effectNum)
         SCT:SingleLine(L.DAMAGE, ("%dx %.1f (%d)"):format(calcedEffect.ticks, calcedEffect.min, SCT:Round(calcedEffect.min * calcedEffect.ticks)));
     end
 
-    SCT:AppendCoefData(calcedSpell, calcedEffect, nil);
+    SCT:AppendCoefData(calcedSpell, calcedEffect);
 
     if SpellCalc_settings.ttPerSecond then
         SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));

@@ -377,6 +377,7 @@ function GameTooltip_Hide() end
 ---@field maxLevel number
 ---@field duration number|nil
 ---@field baseCost number|nil
+---@field usePeriodicHaste boolean|nil
 ---@field effects table<number, SpellRankEffectData|nil>
 
 ---@type SettingsTable

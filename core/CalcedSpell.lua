@@ -100,6 +100,8 @@ local CalcedEffect = {
 
     ---@type number|nil
     ticks = nil,            -- Ticks for duration spells
+    ---@type number|nil
+    tickPeriod = nil,       -- Tickperiod for duration spells
     ---@type AuraStackData|nil
     auraStack = nil,        -- If aura is stackable this will hold data for sustained max stacks
 
@@ -123,6 +125,8 @@ local CalcedEffect = {
 CalcedEffect.__index = CalcedEffect;
 
 ---@class CalcedSpell @Represents a calculated spell.
+---@field duration number|nil Duration after duration modifiers with haste if used for spell.
+---@field durationNoHaste number|nil Duration after duration modifiers without haste.
 local CalcedSpell = {
     critChance = 0,
     critMult = 0,
@@ -255,6 +259,7 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
 
             if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
                 effTable.ticks = 0;
+                effTable.tickPeriod = 0;
             end
 
             if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then

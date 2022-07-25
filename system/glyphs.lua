@@ -5,4 +5,5 @@ local _addon = select(2, ...);
 ---@param slot number|nil Only update specific slot.
 function _addon:UpdateGlyphs(slot)
     self:PrintDebug("Updating glyphs");
+    -- TODO
 end

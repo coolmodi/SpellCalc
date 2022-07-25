@@ -250,7 +250,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELL_AURA_ABILITY_PERIODIC_CRIT,
+                type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
                 affectSpell = {8388608, 256},
                 values = 1
             }
