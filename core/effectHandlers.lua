@@ -284,9 +284,11 @@ local function PeriodicDamage(calcedSpell, effNum, spellRankInfo, effCastTime, e
         calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
         calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
         calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
+        calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+    else
+        calcedEffect.avgCombined = calcedEffect.avg;
     end
 
-    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
     if spellRankInfo.isChannel then
