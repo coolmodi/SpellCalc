@@ -2,10 +2,11 @@
 local _addon = select(2, ...);
 
 local activeRelevantTalents = {};
----@type TalentDataEntry[]
-local talentData = {};
+---@type TalentDataEntry[]|nil
+local talentData;
 
-do
+local function SetupTalentData()
+    _addon:PrintDebug("Creating talent data.");
     local talentAPIData = {};
 
     for tree = 1, 3 do
@@ -19,6 +20,8 @@ do
             name, _, tier, column = GetTalentInfo(tree, talentIndex);
         end
     end
+
+    talentData = {};
 
     for _, v in ipairs(_addon.talentDataRaw) do
         if not talentAPIData[v.tree] or not talentAPIData[v.tree][v.tier] or not talentAPIData[v.tree][v.tier][v.column] then
@@ -36,6 +39,10 @@ end
 ---@param forceTalents table
 function _addon:UpdateTalents(forceTalents)
     self:PrintDebug("Updating talents");
+
+    if not talentData then
+        SetupTalentData();
+    end
 
     for _, data in ipairs(talentData) do
         local name, _, _, _, curRank, maxRank = GetTalentInfo(data.tree, data.talent);
