@@ -222,18 +222,28 @@ do
         local _, int = UnitStat("player", 4);
         local _, spirit = UnitStat("player", 5);
         local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]);
+        local changed = false;
 
-        stats.manaRegBase = spiritIntRegen;
-        stats.manaRegCasting = stats.manaRegBase * (stats.fsrRegenMult.val/100);
-        stats.manaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
+        local newmanaRegCasting = spiritIntRegen * (stats.fsrRegenMult.val/100);
+        local newmanaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
+
+        if stats.manaRegBase ~= spiritIntRegen
+        or stats.manaRegCasting ~= newmanaRegCasting
+        or stats.manaRegAura ~= newmanaRegAura then
+            stats.manaRegBase = spiritIntRegen;
+            stats.manaRegCasting = newmanaRegCasting;
+            stats.manaRegAura = newmanaRegAura;
+            changed = true;
+        end
 
         local regFromIntPct = stats.intToMP5Pct.val * 0.01 * int;
         if oldIntPctMP5 ~= regFromIntPct then
             stats.mp5.val = stats.mp5.val - oldIntPctMP5 + regFromIntPct;
             oldIntPctMP5 = regFromIntPct;
+            changed = true;
         end
 
-        self:TriggerUpdate();
+        if changed then self:TriggerUpdate() end
     end
 end
 
