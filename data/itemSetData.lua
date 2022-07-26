@@ -69,6 +69,98 @@ _addon.itemSetData = {
             },
         }
     },
+    [781] = {
+        name = "Blessed Regalia of Undead Cleansing",
+        effects = {
+            {
+                need = 2,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 1,
+            },
+            {
+                need = 3,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
+            },
+            {
+                need = 4,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 3,
+            },
+        }
+    },
+    [782] = {
+        name = "Undead Slayer's Blessed Armor",
+        effects = {
+            {
+                need = 2,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 1,
+            },
+            {
+                need = 3,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
+            },
+            {
+                need = 4,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 3,
+            },
+        }
+    },
+    [783] = {
+        name = "Blessed Garb of the Undead Slayer",
+        effects = {
+            {
+                need = 2,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 1,
+            },
+            {
+                need = 3,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
+            },
+            {
+                need = 4,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 3,
+            },
+        }
+    },
+    [784] = {
+        name = "Blessed Battlegear of Undead Slaying",
+        effects = {
+            {
+                need = 2,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 1,
+            },
+            {
+                need = 3,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 2,
+            },
+            {
+                need = 4,
+                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = 32,
+                value = 3,
+            },
+        }
+    },
 }
 
 _addon.setItemData = {
@@ -92,4 +184,20 @@ _addon.setItemData = {
     [27536] = 662,
     [27775] = 662,
     [27875] = 662,
+    [43073] = 781,
+    [43074] = 781,
+    [43075] = 781,
+    [43072] = 781,
+    [43078] = 782,
+    [43077] = 782,
+    [43079] = 782,
+    [43076] = 782,
+    [43082] = 783,
+    [43081] = 783,
+    [43083] = 783,
+    [43080] = 783,
+    [43070] = 784,
+    [43068] = 784,
+    [43071] = 784,
+    [43069] = 784,
 }

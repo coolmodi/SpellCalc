@@ -234,15 +234,19 @@ export class SpellData {
         console.log("SpellData created!");
     }
 
-    getSpellEffects(spellId: number) {
+    getSpellEffects(spellId: number): SpellEffect[] 
+    getSpellEffects(spellId: number, noerr: true): SpellEffect[] | undefined
+    getSpellEffects(spellId: number, noerr = false) {
         let effects = [];
         for (let effect in this.spellEffects) {
             if (this.spellEffects[effect].SpellID == spellId) 
                 effects.push(this.spellEffects[effect]);
         }
 
-        if (effects.length == 0) 
+        if (effects.length == 0) {
+            if (noerr) return;
             throw new Error("Spell effect(s) not found for " + spellId);
+        }
 
         effects.sort((a, b) => {
             return a.EffectIndex - b.EffectIndex;

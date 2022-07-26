@@ -19,19 +19,22 @@ function cloneEntry(entry: SpellEffect): SpellEffect {
 
 function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}) {
     console.log("Fixing priest coefs and effects");
+    const PWS_COEF = 0.8057;
     const PW_SHIELD: {[spellId: number]: number} = {
-        17: 0.1425,
-        592: 0.21,
-        600: 0.2775, 
-        3747: 0.3, 
-        6065: 0.3, 
-        6066: 0.3, 
-        10898: 0.3, 
-        10899: 0.3, 
-        10900: 0.3, 
-        10901: 0.3, 
-        25217: 0.3, 
-        25218: 0.3
+        17: 0.475 * PWS_COEF,
+        592: 0.7 * PWS_COEF,
+        600: 0.025 * PWS_COEF, 
+        3747: PWS_COEF, 
+        6065: PWS_COEF, 
+        6066: PWS_COEF, 
+        10898: PWS_COEF, 
+        10899: PWS_COEF, 
+        10900: PWS_COEF, 
+        10901: PWS_COEF, 
+        25217: PWS_COEF, 
+        25218: PWS_COEF,
+        48065: PWS_COEF,
+        48066: PWS_COEF,
     };
 
     // Holy Nova spell -> its heal spell
@@ -42,7 +45,9 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         27799: 27803,
         27800: 27804,
         27801: 27805,
-        25331: 25329
+        25331: 25329,
+        48077: 48075,
+        48078: 48076
     }
 
     // map Touch of Weakness proc spells
@@ -58,6 +63,8 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
 
     const BINDING_HEAL: {[spellId: number]: boolean} = {
         32546: true,
+        48119: true,
+        48120: true
     }
 
     // Shadowguard -> triggerID
@@ -126,6 +133,15 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
         33072: {
             dmg: 33073,
             heal: 33074
+        },
+
+        48824: {
+            dmg: 48822,
+            heal: 48820
+        },
+        48825: {
+            dmg: 48823,
+            heal: 48821
         }
     }
 
@@ -208,15 +224,15 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
 
 function mageFix(se: {[index: number]: SpellEffect}) {
     console.log("Fixing mage coefs and effects");
-    const ICE_BARRIER = [11426, 13031, 13032, 13033, 27134, 33405];
-    const MANA_SHIELD = [1463, 8494, 8495, 10191, 10192, 10193, 27131];
+    const ICE_BARRIER = [11426, 13031, 13032, 13033, 27134, 33405, 43038, 43039];
+    const MANA_SHIELD = [1463, 8494, 8495, 10191, 10192, 10193, 27131, 43019, 43020];
 
     for(let effId in se) {
         let eff = se[effId];
         if (ICE_BARRIER.indexOf(eff.SpellID) != -1) {
-            eff.EffectBonusCoefficient = 0.3;
+            eff.EffectBonusCoefficient = 0.8053;
         } else if (MANA_SHIELD.indexOf(eff.SpellID) != -1) {
-            eff.EffectBonusCoefficient = 0.5;
+            eff.EffectBonusCoefficient = 0.8053;
         }
     }
 }
@@ -231,7 +247,7 @@ function druidFixes(se: {[index: number]: SpellEffect})
         if (LB.indexOf(eff.SpellID) > -1 && eff.EffectIndex === 1) {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
-            eff.EffectBonusCoefficient = 0.3429;
+            eff.EffectBonusCoefficient = 0.3857; // TODO: check this
         }
         else if (STARFALL.indexOf(eff.SpellID) > -1)
         {
@@ -243,18 +259,20 @@ function druidFixes(se: {[index: number]: SpellEffect})
 function warlockFixes(se: {[index: number]: SpellEffect})
 {
     console.log("Fixing warlock coefs and effects");
-    const SHADOW_BURN = [17877, 18867, 18868, 18869, 18870, 18871, 27263, 30546];
-    const SEED_OF_CORRUPTION = 27243;
-    const SEED_OF_CORRUPTION_PROC = 27285;
+    const SHADOW_BURN = [17877, 18867, 18868, 18869, 18870, 18871, 27263, 30546, 47826, 47827];
+    const SOC: {[sid: number]: number} = {
+        [27243]: 27285,
+        [47835]: 47833,
+    }
 
     for(let effId in se) {
         let eff = se[effId];
         // Ignore trigger effect for shard debuff
         if (SHADOW_BURN.indexOf(eff.SpellID) != -1 && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL) {
             eff.Effect = 0;
-        } else if (eff.SpellID === SEED_OF_CORRUPTION && eff.EffectIndex === 1) {
+        } else if (SOC[eff.SpellID] && eff.EffectIndex === 1) {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
-            eff.EffectTriggerSpell = SEED_OF_CORRUPTION_PROC;
+            eff.EffectTriggerSpell = SOC[eff.SpellID];
         }
     }
 }
@@ -272,7 +290,9 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         10431: 26370,
         10432: 26363,
         25469: 26371,
-        25472: 26372
+        25472: 26372,
+        49280: 49278,
+        49281: 49279
     };
 
     const MAGMA_TOTEM = [
@@ -281,6 +301,8 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         10586,
         10587,
         25552,
+        58731,
+        58734
     ];
 
     for(let effId in se) {

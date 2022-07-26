@@ -53,9 +53,18 @@ export const USELESS_AURAS = {
     [AURA_TYPE.SPELL_AURA_MOD_MELEE_DAMAGE_TAKEN]: true,
     [AURA_TYPE.SPELL_AURA_MOD_SPEED_NOT_STACK]: true,
     [AURA_TYPE.SPELL_AURA_MOD_SPEED_FLIGHT]: true,
-    [AURA_TYPE.SPELL_AURA_233]: true,
+    [AURA_TYPE.SPELL_AURA_CHANGE_MODEL_FOR_ALL_HUMANOIDS]: true,
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_HASTE]: true,
     [AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN]: true, // As of TBC the API provides regen values including MP5
+    [AURA_TYPE.SPELL_AURA_X_RAY]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_KILL_XP_PCT]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_QUEST_XP_PCT]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_TOTAL_STAT_PERCENTAGE]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_ATTACK_POWER_PCT]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER_PCT]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_POWER_COST_SCHOOL]: true,
+    [AURA_TYPE.SPELL_AURA_FAKE_INEBRIATE]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_INVISIBILITY]: true,
 }
 export class AuraHandlers
 {
@@ -133,6 +142,34 @@ export class AuraHandlers
                 case 27788: // Energy restore
                 case 28813: // Energy restore
                 case 23580: // Bloodfang dmg proc
+                case 61571: // Your Bleed periodic effects have a chance to make your next ability cost 5 less rage.
+                case 61040: // Your Obliterate, Scourge Strike, and Death Strike generate an additional 5 Runic Power when used.
+                case 61595:
+                case 61082:
+                case 64883:
+                case 64913:
+                case 16870:
+                case 64823:
+                case 64937:
+                case 64907:
+                case 64911:
+                case 64868:
+                case 64861:
+                case 67210:
+                case 67117:
+                case 70747:
+                case 70840:
+                case 70804:
+                case 70802:
+                case 70728:
+                case 71007:
+                case 70806:
+                case 70829:
+                case 70855:
+                case 70657:
+                case 70654:
+                case 70757:
+                case 70760:
                     return;
                 case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
                     return {
@@ -167,6 +204,7 @@ export class AuraHandlers
                             value: 100
                         }
                     }
+                    if (effect.SpellID === 67151) return;
                     throw "Triggered spell needs some love"
                 case 18350: // Dummy trigger
                     if (effect.SpellID == 23572) // Earhtfury mana restore
@@ -206,7 +244,7 @@ export class AuraHandlers
                         value: effect.EffectTriggerSpell
                     }
                 default:
-                    throw "Triggered spell needs some love"
+                    throw "Triggered spell needs some love: " + effect.EffectTriggerSpell
             }
         }
 
@@ -238,6 +276,7 @@ export class AuraHandlers
                     break;
                 case 8: // SPELLMOD_ALL_EFFECTS
                 case 0: // SPELLMOD_DAMAGE
+                case 22: // SPELLMOD_DOT
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE;
                     break;
                 case 1: // SPELLMOD_DURATION
@@ -258,6 +297,8 @@ export class AuraHandlers
                 case 12: // TODO: SPELLMOD_EFFECT2 (melee stuff mostly?)
                 case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
                 case 23: // TODO: SPELLMOD_EFFECT3 (melee stuff mostly?)
+                case 4: // TODO: SPELLMOD_CHARGES
+                case 19: // TODO: SPELLMOD_ACTIVATION_TIME
                     return;
                 default:
                     throw "SPELL_AURA_ADD_FLAT_MODIFIER type not handled!";
@@ -302,6 +343,8 @@ export class AuraHandlers
                 case 6: // SPELLMOD_RADIUS
                 case 9: // SPELLMOD_NOT_LOSE_CASTING_TIME
                 case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
+                case 12: // TODO: SPELLMOD_EFFECT2
+                case 26: // SPELLMOD_FREQUENCY_OF_SUCCESS
                     return;
                 default:
                     throw "SPELL_AURA_ADD_FLAT_MODIFIER type not handled!";
@@ -352,18 +395,36 @@ export class AuraHandlers
                 case 32403:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                        affectSpell: [1073741824],
+                        affectSpell: [1073741824], // TODO: check set
                         value: effect.EffectBasePoints + 1,
                     }
                 case 34231: // Holy Light Librams
+                case 64956: // Increases spell power of Holy Light by 160.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                        affectSpell: [2147483648],
+                        affectSpell: [2147483648], // TODO: check set
+                        value: effect.EffectBasePoints + 1,
+                    }
+                case 64950: //  Increases the spell power of your Insect Swarm by 374.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+                        affectSpell: [2097152],
+                        value: effect.EffectBasePoints + 1,
+                    }
+                case 64949: // Increases the spell power of your Nourish by 187.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+                        affectSpell: [0, 33554432],
                         value: effect.EffectBasePoints + 1,
                     }
                 case 34294:
                 case 43743:
                 case 33695:
+                case 60659:
+                case 60656: // Increases spell power of Flash of Light by 293.
+                case 60661: // Increases spell power of Flash of Light by 375.
+                case 60662: // Increases spell power of Flash of Light by 436.
+                case 60664: // Increases spell power of Flash of Light by 510.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: this.getAffectSpell(effect),
@@ -382,11 +443,45 @@ export class AuraHandlers
                         affectSpell: [6291975],
                         value: 6 // 5%
                     }
-                case 34246: // Increases the periodic healing of your Lifebloom by up to $s1. 
+                case 34246: // Increases the spell power on the periodic portion of your Lifebloom by 47.
+                case 60779: // Increases the spell power on the periodic portion of your Lifebloom by 125.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER,
-                        affectSpell: [0, 16],
-                        value: 88
+                        affectSpell: [0, 16], // TODO: check set
+                        value: effect.EffectBasePoints + 1
+                    }
+                case 60144: // Your ranged attack speed is increased by 20% while Aspect of the Viper is active. TODO: Hunter
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                        affectSpell: [0, 0],
+                        value: 20
+                    }
+                case 67201:
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                        affectSpell: [0, 32], // TODO: check set
+                        value: 20
+                    }
+                case 70658:
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                        affectSpell: [0, 67108864], // TODO: check set
+                        value: 15 // TODO: Get correct average heal increase. (The healing granted by your Wild Growth spell reduces 30% less over time.)
+                    }
+                case 70650:
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                        affectSpell: [], // TODO: DK spellset Death&Decay
+                        value: 20
+                    }
+                case 64962:
+                    {
+                        if (effect.EffectIndex != 1) return;
+                        return { //  Increases the damage done by your Death Coil ability by 380 and by your Frost Strike ability by 113.
+                            type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                            affectSpell: [], // TODO: DK spellset Deathcoil
+                            value: 380
+                        }
                     }
                 case 37169: // TODO: Your Eviscerate and Envenom abilities cause 40 extra damage per combo point.
                 case 37182: // TODO: Increases the amount healed by your Judgement of Light by $s1.
@@ -438,9 +533,76 @@ export class AuraHandlers
                 case 52172:
                 case 50200:
                 case 26127: // Enigma Blizzard Bonus (uninterruptible)
+                case 48777:
+                case 48776:
+                case 32410:
+                case 44683:
+                case 55000:
+                case 55005:
+                case 61257:
+                case 58933:
+                case 62181:
+                case 64890:
+                case 64895:
+                case 64928: // Your critical strikes from Lightning Bolt cause the target to take nature damage equal to 8% of the Lightning Bolt's damage over 4 seconds.
+                case 64760: // Your Rejuvenation spell also provides an instant heal for your target.
+                case 64736: // Increases the bonus damage done per disease by 20% on Blood Strike, Heart Strike, Obliterate, and Scourge Strike.
+                case 64869:
+                case 67202: // Increases the shield from your Divine Aegis and the instant healing from your Empowered Renew by 10%.
+                case 67228: // Your Lava Burst spell causes your target to burn for an additonal 10% of your spell's damage over 6 seconds.
+                case 69755:
+                case 69739:
+                case 70752:
+                case 70770:
+                case 70664:
+                case 70718:
+                case 70723:
+                case 70808:
+                case 70811:
+                case 70817:
+                case 70832:
+                case 70847:
+                case 70755: // TODO: T10 While your Divine Illumination talent is active, your healing spells are 35% stronger.
+                case 70765:
+                case 60244:
+                case 60792:
+                case 60774: // TODO:  Increases periodic damage done by Rip by 21 per combo point.
+                case 60764: // TODO:  Increases the attack power bonus on Windfury Weapon attacks by 212.
+                case 59906:
+                case 59915:
+                case 62853:
+                case 62972:
+                case 71892:
+                case 71947:
+                case 71406:
+                case 71562:
+                case 71880:
+                case 71519:
+                case 66303:
+                case 71545:
+                case 66304:
+                case 67556:
+                case 74267:
+                case 74491:
+                case 71903:
+                case 72968:
+                case 43827:
+                case 63751:
+                case 58783:
+                case 57819:
+                case 70313:
+                case 57818:
+                case 57822:
+                case 57821:
+                case 57818:
+                case 57820:
+                case 57818:
+                case 61980:
+                case 73077:
+                case 57818:
                     return;
                 default:
-                    throw "SPELL_AURA_DUMMY spell not handled!";
+                    throw "SPELL_AURA_DUMMY spell not handled! " + effect.SpellID;
             }
         }
 
@@ -474,9 +636,19 @@ export class AuraHandlers
                 case 28788: // Your Cleanse spell also heals the target for 200.
                 case 28815: // Revealed Flaw
                 case 24405: // Your Frostbolt spells have a 6% chance to restore 50 mana when cast.
+                case 64934:
+                case 64748:
+                case 60766:
+                case 60795:
+                case 60544:
+                case 60547:
+                case 60549:
+                case 60555:
+                case 60551:
+                case 60553:
                     return;
                 default:
-                    throw "SPELL_AURA_ADD_TARGET_TRIGGER spell not handled!";
+                    throw "SPELL_AURA_ADD_TARGET_TRIGGER spell not handled! " + effect.EffectTriggerSpell;
             }
         }
 
@@ -498,6 +670,8 @@ export class AuraHandlers
                 case 37327: // TODO: Increases your Starfire damage against targets afflicted with Moonfire or Insect Swarm by $s1%.
                 case 37447:
                 case 37424:
+                case 60137: // TODO: Your Nourish heals an additional 5% for each of your heal over time effects present on the target.
+                case 61062:
                     return;
                 case 27859:
                 case 27855:
@@ -513,13 +687,22 @@ export class AuraHandlers
                 case 41040:
                 case 34230:
                 case 34252:
+                case 60775:
+                case 60797:
+                case 60772:
+                case 60556:
+                case 60557:
+                case 60558:
+                case 60562:
+                case 60559:
+                case 60560:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: this.getAffectSpell(effect),
                         value: effect.EffectBasePoints + 1,
                     }
                 default:
-                    throw "SPELL_AURA_OVERRIDE_CLASS_SCRIPTS spell not handled!";
+                    throw "SPELL_AURA_OVERRIDE_CLASS_SCRIPTS spell not handled! " + effect.SpellID;
             }
         }
 
@@ -545,6 +728,15 @@ export class AuraHandlers
         {
             return {
                 type: ADDON_EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE,
+                affectSpell: this.getAffectSpell(effect),
+                value: 1,
+            }
+        }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_ABILITY_PERIODIC_CRIT] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
                 affectSpell: this.getAffectSpell(effect),
                 value: 1,
             }

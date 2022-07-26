@@ -79,10 +79,11 @@ export class ItemSetCreator
 
         for (let spellEffect of spellEffects)
         {
-            if (spellId === 24746) continue;
+            if (spellId === 24746 || spellId === 67191 || spellId === 70847 || spellId === 70844
+                || spellId ===  70656) continue;
             if (spellEffect.Effect !== EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) throw "Item bonus effect doesn't apply an aura?!" + spellId;
             if (AURA_TYPES_TO_IGNORE[spellEffect.EffectAura]) continue;
-            if (!this.auraHandlers.handlers[spellEffect.EffectAura]) throw "Aura type isn't ignore but also not handled!";
+            if (!this.auraHandlers.handlers[spellEffect.EffectAura]) throw "Aura type isn't ignored but also not handled!";
             const aed = this.auraHandlers.handlers[spellEffect.EffectAura](spellEffect);
             if (aed) aedarr.push(aed);
         }
@@ -151,7 +152,7 @@ export class ItemSetCreator
     private getSpellsByItemSet()
     {
         console.log("Mapping set spells...");
-        const itemSetSpellData = readDBCSVtoMap<ItemSetSpell>("data/dbc/itemsetspell.csv", "ID");
+        const itemSetSpellData = readDBCSVtoMap<ItemSetSpell>("data/wotlk/dbc/itemsetspell.csv", "ID");
         const spellsbyItemSet = new Map<number, ItemSetSpell[]>();
 
         for (let spellEntry of itemSetSpellData.values())
@@ -178,7 +179,7 @@ export class ItemSetCreator
     private getProcessedSetData()
     {
         const spellsbyItemSet = this.getSpellsByItemSet();
-        const itemSetData = readDBCSVtoMap<ItemSet>("data/dbc/itemset.csv", "ID");
+        const itemSetData = readDBCSVtoMap<ItemSet>("data/wotlk/dbc/itemset.csv", "ID");
         const setAddonExportData = new Map<number, ItemSetAddonData>();
 
         console.log("Creating data for sets...");

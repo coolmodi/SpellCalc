@@ -60,20 +60,33 @@ export class ItemEffectsCreator
      */
     private processSpell(spellId: number): AddonEffectData[]
     {
-        const spellEffects = this.spellData.getSpellEffects(spellId);
+        const spellEffects = this.spellData.getSpellEffects(spellId, true);
         const aedarr: AddonEffectData[] = [];
+
+        if (!spellEffects) return aedarr;
 
         for (let spellEffect of spellEffects)
         {
             if (spellId === 24746 || spellId === 7363 || spellId === 17816 || spellId === 24748
                 || spellId === 24782 || (spellId === 24392 && spellEffect.EffectIndex === 1)
                 || spellId === 28143 || spellId === 28144 || spellId === 28145 || spellId === 28142
-                || spellId === 28282 || spellId === 24346 || spellId === 50009) continue;
-            if (spellEffect.Effect !== EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) throw "Item bonus effect doesn't apply an aura?!" + spellId;
+                || spellId === 28282 || spellId === 24346 || spellId === 50009 || spellId === 48777 || spellId === 62106) continue;
+            if (spellEffect.Effect !== EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) 
+            {
+                if (spellId === 60837 || spellId === 54809 || spellId === 62107) continue;
+                throw "Item bonus effect doesn't apply an aura?!" + spellId;
+            }
             if (AURA_TYPES_TO_IGNORE[spellEffect.EffectAura]) continue;
             if (!this.auraHandlers.handlers[spellEffect.EffectAura]) throw "Aura type isn't ignore but also not handled!";
-            const aed = this.auraHandlers.handlers[spellEffect.EffectAura](spellEffect);
-            if (aed) aedarr.push(aed);
+            try
+            {
+                const aed = this.auraHandlers.handlers[spellEffect.EffectAura](spellEffect);
+                if (aed) aedarr.push(aed);
+            } 
+            catch (error)
+            {
+                // Do nothing
+            }
         }
 
         return aedarr;
@@ -81,7 +94,7 @@ export class ItemEffectsCreator
 
     private getItemEffectData(dbData: { [itemId: number]: DbRow })
     {
-        const itemEffects = readDBCSVtoMap<ItemEffect>("data/dbc/itemeffect.csv", "ID");
+        const itemEffects = readDBCSVtoMap<ItemEffect>("data/wotlk/dbc/itemeffect.csv", "ID");
         const filteredItems = new Map<number, AddonEffectData[]>();
         let doneEffectIds: { [id: number]: true | { item: number, effs: AddonEffectData[] } };
         try
@@ -110,7 +123,7 @@ export class ItemEffectsCreator
         for (const ie of itemEffects.values())
         {
             if (++done % 20 === 0) console.log("Doing item " + done + " of " + itemEffects.size);
-            
+
             if (doneEffectIds[ie.ID]) continue;
             doneEffectIds[ie.ID] = true;
 

@@ -1,6 +1,6 @@
 import { createConnection } from "mysql";
 
-const PDB_NAME = "tbcmangos";
+const PDB_NAME = "lkitems";
 const DB_QUERY = "SELECT entry, name, AllowableClass, class, subclass FROM item_template;";
 interface DbRow
 {

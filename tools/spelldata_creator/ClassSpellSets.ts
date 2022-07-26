@@ -18,7 +18,7 @@ export class ClassSpellSets
             const scopt = scopts[spellId];
             
             // player classes are 3-11
-            if (scopt.SpellClassSet < 3 || scopt.SpellClassSet > 11) continue;
+            if (scopt.SpellClassSet < 3 || scopt.SpellClassSet > 15) continue;
             if (!this.spellSets[scopt.SpellClassSet]) this.spellSets[scopt.SpellClassSet] = [{},{},{},{}];
             const thisClassSet = this.spellSets[scopt.SpellClassSet];
     

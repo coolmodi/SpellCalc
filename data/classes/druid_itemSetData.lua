@@ -16,6 +16,18 @@ _addon.itemSetData[205] = {
             affectSpell = {256, 0, 0, 0},
             value = 4,
         },
+        {
+            need = 8,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {4194304, 0, 0, 0},
+            value = 15,
+        },
+        {
+            need = 8,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {4194304, 0, 0, 0},
+            value = 15,
+        },
     }
 }
 _addon.setItemData[16828] = 205;
@@ -163,7 +175,7 @@ _addon.itemSetData[676] = {
         },
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
             affectSpell = {8388608, 0, 0, 0},
             value = 15,
         },
@@ -223,4 +235,246 @@ _addon.setItemData[31047] = 678;
 _addon.setItemData[34571] = 678;
 _addon.setItemData[34445] = 678;
 _addon.setItemData[34554] = 678;
+
+_addon.itemSetData[798] = {
+    name = "Dreamwalker Battlegear",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {8388608, 0, 0, 0},
+            value = 4,
+        },
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 256, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[43751] = 798;
+_addon.setItemData[43753] = 798;
+_addon.setItemData[43756] = 798;
+_addon.setItemData[43822] = 798;
+_addon.setItemData[43758] = 798;
+
+_addon.itemSetData[800] = {
+    name = "Dreamwalker Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {2097152, 0, 0, 0},
+            value = 10,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {5, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[43749] = 800;
+_addon.setItemData[43750] = 800;
+_addon.setItemData[43757] = 800;
+_addon.setItemData[43760] = 800;
+_addon.setItemData[43761] = 800;
+
+_addon.itemSetData[851] = {
+    name = "Malfurion's Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {0, 33554432, 0, 0},
+            value = 5,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+            affectSpell = {16, 0, 0, 0},
+            value = 1,
+        },
+    }
+}
+_addon.setItemData[48774] = 851;
+_addon.setItemData[48775] = 851;
+_addon.setItemData[48776] = 851;
+_addon.setItemData[48777] = 851;
+_addon.setItemData[48778] = 851;
+
+_addon.itemSetData[852] = {
+    name = "Runetotem's Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {0, 33554432, 0, 0},
+            value = 5,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+            affectSpell = {16, 0, 0, 0},
+            value = 1,
+        },
+    }
+}
+_addon.setItemData[48769] = 852;
+_addon.setItemData[48770] = 852;
+_addon.setItemData[48771] = 852;
+_addon.setItemData[48772] = 852;
+_addon.setItemData[48773] = 852;
+
+_addon.itemSetData[853] = {
+    name = "Malfurion's Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+            affectSpell = {2, 0, 0, 0},
+            value = 1,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {5, 0, 0, 0},
+            value = 4,
+        },
+    }
+}
+_addon.setItemData[48786] = 853;
+_addon.setItemData[48787] = 853;
+_addon.setItemData[48788] = 853;
+_addon.setItemData[48789] = 853;
+_addon.setItemData[48790] = 853;
+
+_addon.itemSetData[854] = {
+    name = "Runetotem's Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+            affectSpell = {2, 0, 0, 0},
+            value = 1,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {5, 0, 0, 0},
+            value = 4,
+        },
+    }
+}
+_addon.setItemData[48781] = 854;
+_addon.setItemData[48782] = 854;
+_addon.setItemData[48783] = 854;
+_addon.setItemData[48784] = 854;
+_addon.setItemData[48785] = 854;
+
+_addon.itemSetData[855] = {
+    name = "Malfurion's Battlegear",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {4096, 0, 0, 0},
+            value = 3,
+        },
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {0, 256, 0, 0},
+            value = 5,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {8388608, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48799] = 855;
+_addon.setItemData[48800] = 855;
+_addon.setItemData[48801] = 855;
+_addon.setItemData[48802] = 855;
+_addon.setItemData[48803] = 855;
+
+_addon.itemSetData[856] = {
+    name = "Runetotem's Battlegear",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {4096, 0, 0, 0},
+            value = 3,
+        },
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {0, 256, 0, 0},
+            value = 5,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {8388608, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48794] = 856;
+_addon.setItemData[48795] = 856;
+_addon.setItemData[48796] = 856;
+_addon.setItemData[48797] = 856;
+_addon.setItemData[48798] = 856;
+
+_addon.itemSetData[887] = {
+    name = "Lasherweave Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {0, 67108864},
+            value = 15,
+        },
+    }
+}
+_addon.setItemData[51696] = 887;
+_addon.setItemData[51695] = 887;
+_addon.setItemData[51694] = 887;
+_addon.setItemData[51693] = 887;
+_addon.setItemData[51692] = 887;
+
+_addon.itemSetData[889] = {
+    name = "Lasherweave Battlegear",
+    effects = {
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 1048832, 0, 0},
+            value = 20,
+        },
+        {
+            need = 2,
+            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {0, 256, 0, 0},
+            value = 20,
+        },
+        {
+            need = 4,
+            type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+            affectSpell = {4096, 0, 0, 0},
+            value = 1,
+        },
+    }
+}
+_addon.setItemData[51701] = 889;
+_addon.setItemData[51700] = 889;
+_addon.setItemData[51699] = 889;
+_addon.setItemData[51698] = 889;
+_addon.setItemData[51697] = 889;
 

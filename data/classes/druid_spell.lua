@@ -1963,7 +1963,7 @@ _addon.spellRankInfo = {
                 effectType = 10,
                 valueBase = 480,
                 valueRange = 0,
-                coef = 0.3429,
+                coef = 0.3857,
                 coefAP = 0,
             },
         }
@@ -2360,7 +2360,7 @@ _addon.spellRankInfo = {
                 effectType = 10,
                 valueBase = 616,
                 valueRange = 0,
-                coef = 0.3429,
+                coef = 0.3857,
                 coefAP = 0,
             },
         }
@@ -2387,7 +2387,7 @@ _addon.spellRankInfo = {
                 effectType = 10,
                 valueBase = 776,
                 valueRange = 0,
-                coef = 0.3429,
+                coef = 0.3857,
                 coefAP = 0,
             },
         }

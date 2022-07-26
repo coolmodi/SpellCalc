@@ -75,7 +75,7 @@ _addon.itemEffects[27886] = { -- Idol of the Emerald Queen
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER,
         affectSpell = {0, 16},
-        value = 88,
+        value = 47,
     },
 }
 
@@ -103,59 +103,51 @@ _addon.itemEffects[31025] = { -- Idol of the Avenger
     },
 }
 
-_addon.itemEffects[34444] = { -- Thunderheart Wristguards
+_addon.itemEffects[38366] = { -- Idol of Pure Thoughts
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 91,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {16, 0, 0, 0},
+        value = 33,
     },
 }
 
-_addon.itemEffects[33672] = { -- Vengeful Gladiator's Dragonhide Helm
+_addon.itemEffects[40321] = { -- Idol of the Shooting Star
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {4, 0, 0, 0},
+        value = 165,
     },
 }
 
-_addon.itemEffects[33673] = { -- Vengeful Gladiator's Dragonhide Legguards
+_addon.itemEffects[40711] = { -- Idol of Lush Moss
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER,
+        affectSpell = {0, 16},
+        value = 125,
     },
 }
 
-_addon.itemEffects[33675] = { -- Vengeful Gladiator's Dragonhide Tunic
+_addon.itemEffects[40712] = { -- Idol of Steadfast Renewal
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {1, 0, 0, 0},
+        value = 70,
     },
 }
 
-_addon.itemEffects[34999] = { -- Brutal Gladiator's Dragonhide Helm
+_addon.itemEffects[45270] = { -- Idol of the Crying Wind
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {2097152},
+        value = 374,
     },
 }
 
-_addon.itemEffects[35000] = { -- Brutal Gladiator's Dragonhide Legguards
+_addon.itemEffects[46138] = { -- Idol of the Flourishing Life
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
-    },
-}
-
-_addon.itemEffects[35002] = { -- Brutal Gladiator's Dragonhide Tunic
-    {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {0, 33554432},
+        value = 187,
     },
 }
 
