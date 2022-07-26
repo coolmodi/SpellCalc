@@ -247,7 +247,7 @@ function druidFixes(se: {[index: number]: SpellEffect})
         if (LB.indexOf(eff.SpellID) > -1 && eff.EffectIndex === 1) {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
-            eff.EffectBonusCoefficient = 0.3857; // TODO: check this
+            eff.EffectBonusCoefficient = 0.5161;
         }
         else if (STARFALL.indexOf(eff.SpellID) > -1)
         {
