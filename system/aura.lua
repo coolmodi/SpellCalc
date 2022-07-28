@@ -110,6 +110,8 @@ local effectAffectMask = {
     [EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER] = stats.versusModFlatSpellpower,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT] = stats.targetSchoolModDamageTaken,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT] = stats.targetSchoolModResistancePct,
+    [EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT] = stats.targetSchoolModCritTaken,
+    [EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT] = stats.targetSchoolModHit,
 }
 
 ---@type table<number, table<number, UniformStat>>

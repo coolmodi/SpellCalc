@@ -28,10 +28,16 @@ end
 
 --- Get base spell crit chance for spell school
 function MagicCalc:GetSchoolCritChance()
-    local chance = stats.spellCrit[self.spellRankInfo.school];
+    local school = self.spellRankInfo.school;
+    local chance = stats.spellCrit[school];
 
-    chance = chance + stats.schoolModFlatCritChance[self.spellRankInfo.school].val;
-    self.calcedSpell:AddToBuffList(stats.schoolModFlatCritChance[self.spellRankInfo.school].buffs);
+    chance = chance + stats.schoolModFlatCritChance[school].val;
+    self.calcedSpell:AddToBuffList(stats.schoolModFlatCritChance[school].buffs);
+
+    if stats.targetSchoolModCritTaken[school].val ~= 0 then
+        chance = chance + stats.targetSchoolModCritTaken[school].val;
+        self.calcedSpell:AddToBuffList(stats.targetSchoolModCritTaken[school].buffs);
+    end
 
     return chance;
 end
@@ -90,6 +96,11 @@ local function GetSpellHitBonus(school, calcedSpell, spellId)
     if stats.spellModFlatHitChance[spellId] ~= nil then
         hitChanceBonus = hitChanceBonus + stats.spellModFlatHitChance[spellId].val;
         calcedSpell:AddToBuffList(stats.spellModFlatHitChance[spellId].buffs);
+    end
+
+    if stats.targetSchoolModHit[school].val ~= 0 then
+        hitChanceBonus = hitChanceBonus + stats.targetSchoolModHit[school].val;
+        calcedSpell:AddToBuffList(stats.targetSchoolModHit[school].buffs);
     end
 
     return hitChanceBonus;

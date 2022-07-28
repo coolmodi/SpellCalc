@@ -112,6 +112,16 @@ _addon.aurasPlayer = {
     [28878] = { -- Inspiring Presence
         type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
         value = 1
+    },
+    [49016] = { -- Hysteria
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+        value = 20
+    },
+    [57933] = { -- TotT
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.ALL,
+        value = 15
     }
 };
 
@@ -136,6 +146,9 @@ local minorArmorDebuff = {
 
 -- Buffs and debuffs the target can have.
 _addon.aurasTarget = {
+    -----------------------
+    -- Armor Major
+    -----------------------
     [58567] = { -- Sunder Armor
         {
             type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
@@ -159,6 +172,9 @@ _addon.aurasTarget = {
     [55752] = acidSpit, -- Acid Spit 4
     [55753] = acidSpit, -- Acid Spit 5
     [55754] = acidSpit, -- Acid Spit 6
+    -----------------------
+    -- Armor Minor
+    -----------------------
     [702] = minorArmorDebuff, -- Curse of Weakness 1
     [1108] = minorArmorDebuff, -- Curse of Weakness 2
     [6205] = minorArmorDebuff, -- Curse of Weakness 3
@@ -176,7 +192,9 @@ _addon.aurasTarget = {
     [56629] = minorArmorDebuff, -- Sting 4
     [56630] = minorArmorDebuff, -- Sting 5
     [56631] = minorArmorDebuff, -- Sting 6
-
+    -----------------------
+    -- Spell damage
+    -----------------------
     [60431] = { -- Earth and Moon 1
         {
             type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
@@ -285,7 +303,9 @@ _addon.aurasTarget = {
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
     },
-
+    -----------------------
+    -- Disease
+    -----------------------
     [50508] = { -- Crypt Fever 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
@@ -309,5 +329,231 @@ _addon.aurasTarget = {
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
-    }
+    },
+    -----------------------
+    -- Bleed
+    -----------------------
+    [46856] = { -- Trauma 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 15,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [46857] = { -- Trauma 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    
+    [33876] = { -- Mangle (Cat) 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [33982] = { -- Mangle (Cat) 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [33983] = { -- Mangle (Cat) 3
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [48565] = { -- Mangle (Cat) 4
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [48566] = { -- Mangle (Cat) 5
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+
+    [33878] = { -- Mangle (Bear) 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [33986] = { -- Mangle (Bear) 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [33987] = { -- Mangle (Bear) 3
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [48563] = { -- Mangle (Bear) 4
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    [48564] = { -- Mangle (Bear) 5
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+        }
+    },
+    -----------------------
+    -- Physical dmg taken
+    -----------------------
+    [30069] = { -- Blood Frenzy 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            value = 2,
+            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+        }
+    },
+    [30070] = { -- Blood Frenzy 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            value = 4,
+            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+        }
+    },
+    [58684] = { -- Savage Combat 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            value = 2,
+            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+        }
+    },
+    [58683] = { -- Savage Combat 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            value = 4,
+            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+        }
+    },
+    -----------------------
+    -- Crit all
+    -----------------------
+    [30708] = { -- Totem of Wrath
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 3,
+            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+        }
+    },
+    [21183] = { -- Heart of the Crusader 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 1,
+            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+        }
+    },
+    [54498] = { -- Heart of the Crusader 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 2,
+            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+        }
+    },
+    [54499] = { -- Heart of the Crusader 3
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 3,
+            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+        }
+    },
+    -----------------------
+    -- Crit spell
+    -----------------------
+    [12579] = { -- Winter's Chill
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            hasStacks = true,
+            value = 1,
+            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_SPELL
+        }
+    },
+    [22959] = { -- Improved Scorch
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            value = 5,
+            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_SPELL
+        }
+    },
+    [17800] = { -- Shadow Mastery (Imp. SB)
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            value = 5,
+            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_SPELL
+        }
+    },
+    -----------------------
+    -- Hit spell
+    -----------------------
+    [33196] = { -- Misery 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            value = 1,
+            debuffCategory = _addon.DEBUFF_CATEGORY.HIT_SPELL
+        }
+    },
+    [33197] = { -- Misery 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            value = 2,
+            debuffCategory = _addon.DEBUFF_CATEGORY.HIT_SPELL
+        }
+    },
+    [33198] = { -- Misery 3
+        {
+            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
+            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            value = 3,
+            debuffCategory = _addon.DEBUFF_CATEGORY.HIT_SPELL
+        }
+    },
 };

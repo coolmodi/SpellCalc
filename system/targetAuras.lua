@@ -4,6 +4,10 @@ Implement conditional aura types.
 Add toggles in settings for foreign auras with conditional effects that can't be known?
     "Assume X does Y" e.g. "Assume Devotion Aura increases healing recieved."
     Possibly add whitelist as alternative?
+
+Missing auras
+    Master Poisoner crit, somehow infer from poisons?
+    Improved Faerie Fire hit (see above)
 ]]
 
 ---@type AddonEnv

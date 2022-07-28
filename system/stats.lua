@@ -124,6 +124,8 @@ _addon.stats = {
     schoolCritBaseMult = SchoolStatTable(),
     targetSchoolModDamageTaken = SchoolStatTable(),
     targetSchoolModResistancePct = SchoolStatTable(),
+    targetSchoolModCritTaken = SchoolStatTable(),
+    targetSchoolModHit = SchoolStatTable(),
 
     spellModPctEffect = SpellStatTable(),
     spellModPctDamageHealing = SpellStatTable(),

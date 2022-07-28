@@ -159,6 +159,11 @@ function MeleeCalc:GetCrit()
         crit = crit - 1.8;
     end
 
+    if stats.targetSchoolModCritTaken[SCHOOL_PHYSICAL].val ~= 0 then
+        crit = crit + stats.targetSchoolModCritTaken[SCHOOL_PHYSICAL].val;
+        self.calcedSpell:AddToBuffList(stats.targetSchoolModCritTaken[SCHOOL_PHYSICAL].buffs);
+    end
+
     if crit < 0 then
         crit = 0;
     elseif crit > 100 then
@@ -274,6 +279,11 @@ function MeleeCalc:GetMDPGB()
     if stats.hitBonus.val > 0 then
         hitBonus = hitBonus + stats.hitBonus.val;
         self.calcedSpell:AddToBuffList(stats.hitBonus.buffs);
+    end
+
+    if stats.targetSchoolModHit[SCHOOL_PHYSICAL].val ~= 0 then
+        hitBonus = hitBonus + stats.targetSchoolModHit[SCHOOL_PHYSICAL].val;
+        self.calcedSpell:AddToBuffList(stats.targetSchoolModHit[SCHOOL_PHYSICAL].buffs);
     end
 
     if self.levelDiff > 2 then
