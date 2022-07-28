@@ -182,6 +182,7 @@ interface RankInfo {
     baseCost: number,
     baseCostPct: number,
     usePeriodicHaste: boolean,
+    mechanic: number,
     effects: EffectInfo[]
 }
 
@@ -245,4 +246,10 @@ interface AddonEffectData
     affectMask?: number,
     affectSpell?: number[],
     value?: number | string
+}
+
+const enum SpellMechanic 
+{
+    BLEED = 15,
+    INFECTED = 22
 }

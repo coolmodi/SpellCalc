@@ -96,7 +96,8 @@ export interface SpellMisc {
 
 export interface SpellCategory {
     DefenseType: DEFENSE_TYPE,
-    DifficultyID: number
+    DifficultyID: number,
+    Mechanic: number,
 }
 
 export interface SpellName {
@@ -307,7 +308,8 @@ export class SpellData {
         if (spellId == AUTO_ATTACK_ID) {
             let sc: SpellCategory = {
                 DefenseType: DEFENSE_TYPE.MELEE,
-                DifficultyID: 0
+                DifficultyID: 0,
+                Mechanic: 0,
             }
             return sc;
         }
@@ -315,7 +317,8 @@ export class SpellData {
         if (spellId == 23590) {
             let sc: SpellCategory = {
                 DefenseType: DEFENSE_TYPE.NONE,
-                DifficultyID: 0
+                DifficultyID: 0,
+                Mechanic: 0,
             }
             return sc;
         }

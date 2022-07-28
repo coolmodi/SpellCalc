@@ -28,6 +28,18 @@ function UnitRangedAttack(unit)
     return 1, 1;
 end
 
+---Get the itemLink for the specified item.
+---@param unit string
+---@param slotId number
+---@return string itemLink
+function GetInventoryItemLink(unit, slotId) end
+
+---Get Rank or whatever of spell.
+---@param spellId number
+---@return string subtext
+function GetSpellSubtext(spellId) end
+
+
 -- mhMin, mhMax, ohMin, ohMax
 function UnitDamage(unit)
     return 1, 2, 1, 2;
@@ -400,6 +412,7 @@ function GameTooltip_Hide() end
 ---@field duration number|nil
 ---@field baseCost number|nil
 ---@field usePeriodicHaste boolean|nil
+---@field mechanic number|nil
 ---@field effects table<number, SpellRankEffectData|nil>
 
 ---@type SettingsTable

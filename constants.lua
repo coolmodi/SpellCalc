@@ -78,6 +78,7 @@ _addon.EFFECT_TYPE = {
 
     TARGET_SCHOOLMOD_RESISTANCE_PCT = 100,
     TARGET_SCHOOLMOD_DMG_TAKEN_PCT = 101,
+    TARGET_MECHANICMOD_DMG_TAKEN_PCT = 102,
 };
 
 _addon.BOOLEAN_FLAGS = {
@@ -88,6 +89,7 @@ _addon.DEBUFF_CATEGORY = {
     ARMOR_MAJOR = 1,
     ARMOR_MINOR = 2,
     SPELL_DAMAGE = 3,
+    DISEASE_DAMAGE = 4,
 }
 
 --- Defense type (Decides mitigation types used)
@@ -252,4 +254,9 @@ _addon.CREATURE_TYPE_MASK = {
     MECHANICAL = 0x100,
     NOT_SPECIFIED = 0x200,
     TOTEM = 0x400
+}
+
+_addon.SPELL_MECHANIC = {
+    BLEED = 15,
+    INFECTED = 22,
 }

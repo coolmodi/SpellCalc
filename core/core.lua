@@ -87,9 +87,10 @@ end
 ---@param spellId number
 ---@param calcedSpell CalcedSpell
 ---@param isDuration boolean
+---@param mechanic number|nil
 ---@return number @baseMod affecting the base value of the spell
 ---@return number @bonusMod affecting only the bonus SP/AP of the spell
-local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration)
+local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration, mechanic)
     local bonusMod = 1;
     local baseMod = 1;
 
@@ -122,6 +123,12 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
         if stats.targetSchoolModDamageTaken[school].val ~= 0 then
             bonusMod = bonusMod * (100 + stats.targetSchoolModDamageTaken[school].val) / 100;
             calcedSpell:AddToBuffList(stats.targetSchoolModDamageTaken[school].buffs);
+        end
+
+        if mechanic and stats.targetMechanicModDmgTakenPct[mechanic].val ~= 0 then
+            local t = stats.targetMechanicModDmgTakenPct[mechanic];
+            bonusMod = bonusMod * (1 + t.val / 100);
+            calcedSpell:AddToBuffList(t.buffs);
         end
     else
         -- TODO: Improved PW:S increase bonus as well, Aplify Curse doesn't, any other uses of this for scaling spells to check?

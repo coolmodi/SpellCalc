@@ -249,8 +249,13 @@ _addon.aurasTarget = {
             affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
             value = 4,
             debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+        },
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
-        -- TODO: Disease dmg
     },
     [51734] = { -- Ebon Plague 2
         {
@@ -258,8 +263,13 @@ _addon.aurasTarget = {
             affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
             value = 9,
             debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+        },
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
-        -- TODO: Disease dmg
     },
     [51735] = { -- Ebon Plague 3
         {
@@ -267,7 +277,37 @@ _addon.aurasTarget = {
             affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
             value = 13,
             debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+        },
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
-        -- TODO: Disease dmg
     },
+
+    [50508] = { -- Crypt Fever 1
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            value = 10,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+        }
+    },
+    [50509] = { -- Crypt Fever 2
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            value = 20,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+        }
+    },
+    [50510] = { -- Crypt Fever 3
+        {
+            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            value = 30,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+        }
+    }
 };

@@ -34,6 +34,11 @@ const SCHOOL_MASK_TO_ENUM = {
     [SCHOOL_MASK.ARCANE]: 7,
 }
 
+const USEFUL_SPELL_MECHANICS: {[sm: number]: boolean} = {
+    [SpellMechanic.BLEED]: true,
+    [SpellMechanic.INFECTED]: true
+}
+
 const spellData = new SpellData(expansion);
 const classSpellLists = new ClassSpellLists(spellData, CLASSES, expansion);
 const classSpellSets = new ClassSpellSets(spellData);
@@ -448,6 +453,7 @@ function buildSpellInfo(pclass: string) {
                 baseCost: 0,
                 baseCostPct: 0,
                 usePeriodicHaste: (spellMisc["Attributes[5]"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
+                mechanic: spellcat.Mechanic,
                 effects: []
             };
 
@@ -518,6 +524,7 @@ end
         if (ri.forceHeal) str += `\t\tforceHeal = ${ri.forceHeal},\n`;
         if (ri.charges != 0) str += `\t\tcharges = ${ri.charges},\n`;
         if (ri.usePeriodicHaste) str += `\t\tusePeriodicHaste = true,\n`;
+        if (USEFUL_SPELL_MECHANICS[ri.mechanic]) str += `\t\tmechanic = ${ri.mechanic},\n`;
 
         str += `\t\teffects = {\n`;
 

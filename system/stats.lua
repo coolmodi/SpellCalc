@@ -52,6 +52,16 @@ local function SpellStatTable()
     return spellTable;
 end
 
+local function MechanicStatTable()
+    -- Keys are mechanic types found in _addon.SPELL_MECHANIC
+    ---@type table<number, UniformStat>
+    local mt = {}
+    for _, mechanicId in pairs(_addon.SPELL_MECHANIC) do
+        mt[mechanicId] = UniformStat();
+    end
+    return mt;
+end
+
 ---@class InternalStats
 _addon.stats = {
     manaMax = 0, -- Maximum mana
@@ -141,6 +151,8 @@ _addon.stats = {
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),
     versusModFlatSpellpower = CreatureTypeStatTable(),
+
+    targetMechanicModDmgTakenPct = MechanicStatTable(),
 
     mp5 = UniformStat();
     intToMP5Pct = UniformStat(),

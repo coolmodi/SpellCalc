@@ -112,6 +112,11 @@ local effectAffectMask = {
     [EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT] = stats.targetSchoolModResistancePct,
 }
 
+---@type table<number, table<number, UniformStat>>
+local effectAffectKey = {
+    [EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT] = stats.targetMechanicModDmgTakenPct,
+}
+
 local DelayedUpdateTimer = CreateFrame("Frame");
 DelayedUpdateTimer.timerDiff = 0;
 ---@type number[]
@@ -223,6 +228,11 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
 
     if effectCustom[effectBase.type] then
         effectCustom[effectBase.type](apply, name, value);
+        return;
+    end
+
+    if effectAffectKey[effectBase.type] then
+        ApplyOrRemove(apply, value, effectAffectKey[effectBase.type][effectBase.affectSpell], name);
         return;
     end
 
