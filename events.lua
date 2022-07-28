@@ -75,6 +75,10 @@ function handlers.CHARACTER_POINTS_CHANGED(gain)
     _addon:UpdateTalents();
 end
 
+function handlers.ACTIVE_TALENT_GROUP_CHANGED()
+    _addon:UpdateTalents();
+end
+
 function handlers.SPELL_POWER_CHANGED()
     _addon:UpdateSpellPower();
 end
