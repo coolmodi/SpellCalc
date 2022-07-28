@@ -108,6 +108,8 @@ local effectAffectMask = {
     [EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE] = stats.versusModPctDamage,
     [EFFECT_TYPE.VERSUSMOD_PCT_CRIT_DAMAGE] = stats.versusModPctCritDamage,
     [EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER] = stats.versusModFlatSpellpower,
+    [EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT] = stats.targetSchoolModDamageTaken,
+    [EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT] = stats.targetSchoolModResistancePct,
 }
 
 local DelayedUpdateTimer = CreateFrame("Frame");
@@ -212,9 +214,11 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
         return;
     end
 
-    if effectBase.affectMask and effectAffectMask[effectBase.type] then
-        ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effectBase.type], effectBase.affectMask);
-        return;
+    if effectBase.affectMask then
+        if effectAffectMask[effectBase.type] then
+            ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effectBase.type], effectBase.affectMask);
+            return;
+        end
     end
 
     if effectCustom[effectBase.type] then

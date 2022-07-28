@@ -44,7 +44,7 @@ end
 function MagicCalc:GetAvgResist()
     local tData = _addon.Target;
     local pLevel = UnitLevel("player");
-    local baseRes = tData.resistance[self.spellRankInfo.school];
+    local baseRes = tData:GetEffectiveResistance(self.spellRankInfo.school);
     local resistanceFromLevel = math.max(tData.levelDiff * 8, 0);
     local penetration = stats.schoolModSpellPen[self.spellRankInfo.school].val;
     local effectiveRes = baseRes + resistanceFromLevel - math.min(baseRes, penetration);

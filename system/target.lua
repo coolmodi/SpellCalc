@@ -115,15 +115,16 @@ local CREATURE_TYPE_LOC_TO_ID = {
     ["圖騰"] = 11,
 }
 
+---@class Target
+---@field class string|nil
+---@field creatureType number|nil
+---@field resistanceBase table<number, number>
 local Target = {
     level = 0,
     levelDiff = 0,
     isPlayer = false,
     npcId = -1,
-    ---@type string|nil
-    class = nil,
-    creatureType = nil,
-    resistance = {
+    resistanceBase = {
         [SCHOOL.PHYSICAL] = 0,
         [SCHOOL.HOLY] = 0,
         [SCHOOL.FIRE] = 0,
@@ -136,53 +137,63 @@ local Target = {
 
 --- Update resistance values for current target.
 -- Use override values or known values for some NPCs.
-function Target:UpdateResistances()
+local function UpdateResistances()
     for _, schoolNum in pairs(SCHOOL) do
-        self.resistance[schoolNum] = 0;
+        Target.resistanceBase[schoolNum] = 0;
     end
 
     if SpellCalc_settings.resOverrideFire > 0 then
-        self.resistance[SCHOOL.FIRE] = SpellCalc_settings.resOverrideFire;
+        Target.resistanceBase[SCHOOL.FIRE] = SpellCalc_settings.resOverrideFire;
     end
     if SpellCalc_settings.resOverrideFrost > 0 then
-        self.resistance[SCHOOL.FROST] = SpellCalc_settings.resOverrideFrost;
+        Target.resistanceBase[SCHOOL.FROST] = SpellCalc_settings.resOverrideFrost;
     end
     if SpellCalc_settings.resOverrideNature > 0 then
-        self.resistance[SCHOOL.NATURE] = SpellCalc_settings.resOverrideNature;
+        Target.resistanceBase[SCHOOL.NATURE] = SpellCalc_settings.resOverrideNature;
     end
     if SpellCalc_settings.resOverrideShadow > 0 then
-        self.resistance[SCHOOL.SHADOW] = SpellCalc_settings.resOverrideShadow;
+        Target.resistanceBase[SCHOOL.SHADOW] = SpellCalc_settings.resOverrideShadow;
     end
     if SpellCalc_settings.resOverrideArcane > 0 then
-        self.resistance[SCHOOL.ARCANE] = SpellCalc_settings.resOverrideArcane;
+        Target.resistanceBase[SCHOOL.ARCANE] = SpellCalc_settings.resOverrideArcane;
     end
     if SpellCalc_settings.resOverrideArmor > 0 then
-        self.resistance[SCHOOL.PHYSICAL] = SpellCalc_settings.resOverrideArmor;
+        Target.resistanceBase[SCHOOL.PHYSICAL] = SpellCalc_settings.resOverrideArmor;
     end
 
-    if self.isPlayer then
+    if Target.isPlayer then
         return;
     end
 
-    if npcResistances[self.npcId] then
+    if npcResistances[Target.npcId] then
         for _, schoolNum in pairs(SCHOOL) do
-            if self.resistance[schoolNum] == 0 and npcResistances[self.npcId][schoolNum] then
-                self.resistance[schoolNum] = npcResistances[self.npcId][schoolNum];
+            if Target.resistanceBase[schoolNum] == 0 and npcResistances[Target.npcId][schoolNum] then
+                Target.resistanceBase[schoolNum] = npcResistances[Target.npcId][schoolNum];
             end
         end
     end
 
-    if self.resistance[SCHOOL.PHYSICAL] == 0 then
-        self.resistance[SCHOOL.PHYSICAL] = _addon.levelDefaultArmor[self.level];
-        if self.class == "PALADIN" then
+    if Target.resistanceBase[SCHOOL.PHYSICAL] == 0 then
+        Target.resistanceBase[SCHOOL.PHYSICAL] = _addon.levelDefaultArmor[Target.level];
+        if Target.class == "PALADIN" then
             -- This is just a rough value. Always seems to be between 0.80-0.83 of "warrior" armor,
             -- with higher levels closer to 0.8, so this should be close enough.
-            self.resistance[SCHOOL.PHYSICAL] = self.resistance[SCHOOL.PHYSICAL] * 0.81;
-        elseif self.class == "MAGE" then
-            -- TODO: More swipe/hamstring/wing clip testing, there's no beast mage in the whole game, can't check with beast lore :(
-            self.resistance[SCHOOL.PHYSICAL] = self.resistance[SCHOOL.PHYSICAL] * 0.5;
+            Target.resistanceBase[SCHOOL.PHYSICAL] = Target.resistanceBase[SCHOOL.PHYSICAL] * 0.81;
+        elseif Target.class == "MAGE" then
+            Target.resistanceBase[SCHOOL.PHYSICAL] = Target.resistanceBase[SCHOOL.PHYSICAL] * 0.5;
         end
     end
+end
+
+---Return resistance for school after reductions on target.
+---@param school number
+---@return number
+function Target:GetEffectiveResistance(school)
+    local r = self.resistanceBase[school];
+    if _addon.stats.targetSchoolModResistancePct[school].val ~= 0 then
+        r = r * (1 + _addon.stats.targetSchoolModResistancePct[school].val/100);
+    end
+    return r;
 end
 
 --- Update currently selected target.
@@ -223,11 +234,12 @@ function Target:Update()
         self.creatureType = nil;
     end
 
-    self:UpdateResistances()
+    UpdateResistances();
+    self:UpdateAuras();
 
     _addon:PrintDebug(("New target: %d (%d), Player: %s, ID: %d"):format(self.level, self.levelDiff, tostring(self.isPlayer), self.npcId));
-    _addon:PrintDebug(("P: %d, H: %d, Fi: %d, N: %d, Fr: %d, S: %d, A: %d"):format(self.resistance[SCHOOL.PHYSICAL], self.resistance[SCHOOL.HOLY], self.resistance[SCHOOL.FIRE],
-        self.resistance[SCHOOL.NATURE], self.resistance[SCHOOL.FROST], self.resistance[SCHOOL.SHADOW], self.resistance[SCHOOL.ARCANE]));
+    _addon:PrintDebug(("P: %d, H: %d, Fi: %d, N: %d, Fr: %d, S: %d, A: %d"):format(self.resistanceBase[SCHOOL.PHYSICAL], self.resistanceBase[SCHOOL.HOLY], self.resistanceBase[SCHOOL.FIRE],
+        self.resistanceBase[SCHOOL.NATURE], self.resistanceBase[SCHOOL.FROST], self.resistanceBase[SCHOOL.SHADOW], self.resistanceBase[SCHOOL.ARCANE]));
 
     _addon:TriggerUpdate();
 end

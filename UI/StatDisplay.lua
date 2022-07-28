@@ -64,6 +64,7 @@ end
 -- @param key The key of the value
 -- @param unit The unit of the value, if any
 local function AddSingleStat(label, inTable, key, unit)
+    if type(inTable) ~= "table" then error("inTable not a table!") end
     local row = CreateStatRow();
     local text = row:CreateFontString(nil, "OVERLAY", "GameFontHighlight");
     text:SetPoint("TOPLEFT", 0, 0);
@@ -85,11 +86,12 @@ local function CreateUniformStatStrings(parent)
     text:SetPoint("TOPLEFT", 0, 0);
     text:SetText("-");
     local affectedBy = parent:CreateFontString(nil, "OVERLAY", "GameFontWhiteTiny");
-    affectedBy:SetPoint("TOPLEFT", text, "BOTTOMLEFT", 9, 0);
+    affectedBy:SetPoint("TOPLEFT", text, "BOTTOMLEFT", 4, 0);
     affectedBy:SetText("-");
     affectedBy:SetWidth(375);
+    affectedBy:SetJustifyH("LEFT");
     affectedBy:SetWordWrap(true);
-    parent:SetHeight(text:GetHeight() + affectedBy:GetHeight());
+    parent:SetHeight(text:GetHeight() + affectedBy:GetHeight() + 2);
     return text, affectedBy;
 end
 
@@ -273,7 +275,17 @@ local function UpdateDisplay(self, passed)
             else
                 spellList.listFrames[pos]:Show()
             end
-            local label = type(spellIdOrName) == "number" and GetSpellInfo(spellIdOrName) or spellIdOrName;
+            local label;
+            if type(spellIdOrName) == "number" then
+                local name = GetSpellInfo(spellIdOrName);
+                local subTextOrRank = GetSpellSubtext(spellIdOrName);
+                label = name;
+                if subTextOrRank then
+                    label = label.." |cFFaaaaaa"..subTextOrRank.."|r";
+                end
+            else
+                label = spellIdOrName;
+            end
             local ostr = KEY_COLOR .. label .. ": " .. VALUE_COLOR .. math.floor(uniformStat.val*100 + 0.5)/100;
             if spellList.unit then
                 ostr = ostr .. UNIT_COLOR .. spellList.unit;
@@ -381,8 +393,11 @@ AddSingleStat("Player", _addon.Target, "isPlayer", "");
 AddSingleStat("Class", _addon.Target, "class", "");
 AddSingleStat("Type", _addon.Target, "creatureType", "");
 for key, schoolNum in pairs(_addon.SCHOOL) do
-    AddSingleStat(key, _addon.Target.resistance, schoolNum, "");
+    AddSingleStat(key, _addon.Target.resistanceBase, schoolNum, "");
 end
+AddSchoolTableUniform(stats.targetSchoolModResistancePct, "School Pct Mod Resistance", "%");
+AddSchoolTableUniform(stats.targetSchoolModDamageTaken, "School Pct Damage Taken", "%");
+
 
 AddVersusTypeTableUniform(stats.versusModFlatSpellpower, "Creature Type Flat SP", "%");
 AddVersusTypeTableUniform(stats.versusModPctDamage, "Creature Type Mult", "%");

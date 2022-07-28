@@ -15,6 +15,7 @@ end
 
 local function SchoolStatTable()
     -- Keys are school types found in _addon.SCHOOL
+    ---@type table<number, UniformStat>
     local schoolTable = {
         [_addon.SCHOOL.PHYSICAL] = UniformStat(),
         [_addon.SCHOOL.HOLY] = UniformStat(),
@@ -111,6 +112,8 @@ _addon.stats = {
     schoolModFlatCritChance = SchoolStatTable(),
     schoolModPctCritMult = SchoolStatTable(),
     schoolCritBaseMult = SchoolStatTable(),
+    targetSchoolModDamageTaken = SchoolStatTable(),
+    targetSchoolModResistancePct = SchoolStatTable(),
 
     spellModPctEffect = SpellStatTable(),
     spellModPctDamageHealing = SpellStatTable(),

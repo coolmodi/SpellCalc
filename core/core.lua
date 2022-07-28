@@ -118,6 +118,11 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
             bonusMod = bonusMod * (100 + stats.versusModPctDamage[_addon.Target.creatureType].val) / 100;
             calcedSpell:AddToBuffList(stats.versusModPctDamage[_addon.Target.creatureType].buffs);
         end
+
+        if stats.targetSchoolModDamageTaken[school].val ~= 0 then
+            bonusMod = bonusMod * (100 + stats.targetSchoolModDamageTaken[school].val) / 100;
+            calcedSpell:AddToBuffList(stats.targetSchoolModDamageTaken[school].buffs);
+        end
     else
         -- TODO: Improved PW:S increase bonus as well, Aplify Curse doesn't, any other uses of this for scaling spells to check?
         if stats.spellModPctEffect[spellId] ~= nil then

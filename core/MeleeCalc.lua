@@ -324,7 +324,7 @@ end
 ---@return number mitigation
 ---@return number armor
 function MeleeCalc:GetArmorDR()
-    local armor = _addon.Target.resistance[SCHOOL_PHYSICAL];
+    local armor = _addon.Target:GetEffectiveResistance(SCHOOL_PHYSICAL);
     local pLevel = UnitLevel("player");
     local mitigation;
     if pLevel < 60 then

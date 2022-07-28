@@ -75,10 +75,19 @@ _addon.EFFECT_TYPE = {
     CLEARCAST_CHANCE = 51,
     SPELLMOD_PCT_OVER_TIME = 52,
     SPELLMOD_ALLOW_PERIODIC_HASTE = 53,
+
+    TARGET_SCHOOLMOD_RESISTANCE_PCT = 100,
+    TARGET_SCHOOLMOD_DMG_TAKEN_PCT = 101,
 };
 
 _addon.BOOLEAN_FLAGS = {
     PRIEST_T5_2PC = 0x1
+}
+
+_addon.DEBUFF_CATEGORY = {
+    ARMOR_MAJOR = 1,
+    ARMOR_MINOR = 2,
+    SPELL_DAMAGE = 3,
 }
 
 --- Defense type (Decides mitigation types used)

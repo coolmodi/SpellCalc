@@ -186,6 +186,28 @@ end
 function GetTalentInfo(tree, talent)
     return "name", "_", "_", "_", 1, 2;
 end
+
+---Returns the buffs/debuffs for the unit.
+---@param unit string
+---@param index number
+---@param filter string|nil What auras to iterate (HELPFUL, HARMFUL), defaults to HELPFUL.
+---@return string name The localized name of the aura, otherwise nil if there is no aura for the index.
+---@return number icon FileID - The icon texture.
+---@return number count The amount of stacks, otherwise 0.
+---@return string|nil dispelType The locale-independent magic type of the aura: Curse, Disease, Magic, Poison, otherwise nil.
+---@return number duration The full duration of the aura in seconds.
+---@return number expirationTime Time the aura expires compared to GetTime(), e.g. to get the remaining duration: expirationtime - GetTime()
+---@return string source The unit that applied the aura.
+---@return boolean isStealable If the aura may be stolen.
+---@return boolean nameplateShowPersonal If the aura should be shown on the player/pet/vehicle nameplate.
+---@return number spellId The spell ID for e.g. GetSpellInfo()
+---@return boolean canApplyAura If the player can apply the aura.
+---@return boolean isBossDebuff If the aura was cast by a boss.
+---@return boolean castByPlayer If the aura was applied by a player.
+---@return boolean nameplateShowAll If the aura should be shown on nameplates.
+---@return number timeMod The scaling factor used for displaying time left.
+function UnitAura(unit, index, filter) end
+
 --- name, _, count, _, _, _, _, _, _, spellId
 function UnitBuff(unit, i)
     return "name", "_", 1, "_", "_", "_", "_", "_", "_", 123;
@@ -412,35 +434,20 @@ _addon.spellClassSet = {
 };
 
 ---@class AuraEffectBase
-local AuraEffectBase = {
-    type = 0,
-    ---@type number|nil
-    affectMask = 0,
-    ---@type number[]|nil
-    affectSpell = {0,0,0,0},
-    ---@type number|nil
-    neededWeaponMask = nil
-}
+---@field type number
+---@field affectMask number|nil
+---@field affectSpell number[]|nil
+---@field neededWeaponMask number|nil
 
 ---@class UnitAuraEffect : AuraEffectBase
-local UnitAuraEffect = {
-    ---@type number
-    value = 0,
-}
+---@field value number
 
 ---@class SetBonusAuraEffect : UnitAuraEffect
-local SetBonusAuraEffect = {
-    ---@type number
-    need = 0
-}
+---@field need number The number of set items needed for the effect to be active.
 
 ---@class ItemSetData
-local ItemSetData = {
-    ---@type string
-    name = "Bloodsoul Embrace",
-    ---@type SetBonusAuraEffect[]
-    effects = {}
-}
+---@field name string
+---@field effects SetBonusAuraEffect[]
 
 ---@type table<number, ItemSetData>
 _addon.itemSetData = {}
@@ -450,39 +457,34 @@ _addon.itemEffects = {};
 
 -- TODO: fix this stupid structure
 ---@class PlayerAuraEffect : UnitAuraEffect
-local PlayerAura = {
-    ---@type nil|UnitAuraEffect[]
-    effects = {},
-    ---@type nil|number
-    condition = 0
-}
+---@field effects nil|UnitAuraEffect[]
+---@field condition nil|number
+
 ---@type table<number, PlayerAuraEffect>
 _addon.aurasPlayer = {};
 
 ---@class EnchantData : UnitAuraEffect
-local EnchantData = {
-    ---@type string
-    name = "",
-}
+---@field name string
+
 ---@type table<number, EnchantData>
 _addon.enchantData = {};
 
+---@class TargetAuraEffect : UnitAuraEffect
+---@field hasStacks boolean|nil Does the debuff have stacks (e.g. Sunder Armor).
+---@field debuffCategory number Debuffs effects from same category don't stack with eacho ther.
+
+---@type table<number, TargetAuraEffect[]>
+_addon.aurasTarget = {};
+
 ---@class TalentEffect : AuraEffectBase
-local TalentEffect = {
-    ---@type integer|nil
-    base = nil,
-    ---@type number|nil
-    perPoint = math.random(),
-    ---@type number|nil
-    values = math.random(),
-}
+---@field base integer|nil
+---@field perPoint number|nil
+---@field values number[]|nil
+
 ---@class TalentDataEntry
-local TalentDataEntry = {
-    tree = math.random(),
-    talent = math.random(),
-    ---@type TalentEffect[]
-    effects = {}
-}
+---@field tree number
+---@field talent number
+---@field effects TalentEffect[]
 
 ---@class TalentDataRawEntry
 ---@field tier number

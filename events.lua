@@ -52,12 +52,13 @@ function handlers.PLAYER_ENTERING_WORLD(isLogin, isReload)
 end
 
 function handlers.UNIT_AURA(unit)
-    if unit ~= "player" then
-        return;
+    if unit == "player" then
+        _addon:UpdatePlayerAuras();
+        _addon:UpdateWeaponEnchants();
+        _addon:UpdateManaRegen();
+    elseif unit == "target" then
+        _addon.Target:UpdateAuras();
     end
-    _addon:UpdatePlayerAuras();
-    _addon:UpdateWeaponEnchants();
-    _addon:UpdateManaRegen();
 end
 
 function handlers.UNIT_STATS(unit)
