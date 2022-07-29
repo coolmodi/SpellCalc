@@ -218,7 +218,7 @@ end
 ---@param auraName string The aura name.
 ---@param personalOnly boolean|nil Only return true if aura source is self.
 ---@return boolean
-function _addon.Target:HasAuraName(auraName, personalOnly)
+function _addon.Target.HasAuraName(auraName, personalOnly)
     if personalOnly then return aurasByNamePersonal[auraName] end
     return aurasByName[auraName];
 end

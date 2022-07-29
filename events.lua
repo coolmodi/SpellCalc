@@ -34,12 +34,7 @@ end
 
 function handlers.PLAYER_LOGIN()
     _addon.ActionBarValues:Setup();
-
-    -- Beast Slaying (Troll Racial)
-    local _, raceEn = UnitRace("player");
-    if raceEn == "Troll" then
-        _addon:ApplyAuraEffect(GetSpellInfo(20557), { type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE, affectMask = _addon.CREATURE_TYPE_MASK.BEAST }, 5);
-    end
+    _addon:ApplyPassives();
 end
 
 function handlers.PLAYER_ENTERING_WORLD(isLogin, isReload)

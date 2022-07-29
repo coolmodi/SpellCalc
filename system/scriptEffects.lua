@@ -6,9 +6,9 @@ local scriptValueCache = {};
 ---spellId -> effectType -> scriptKey -> func
 ---@type table<number, table<number, table<string, EffectScript>>>
 local spellScripts = {};
----@type table<string,boolean|nil>
+---@type table<string, number|nil>
 local targetUpdateOnAuraPersonal = {};
----@type table<string,boolean|nil>
+---@type table<string, number|nil>
 local targetUpdateOnAura = {};
 
 ---Apply or remove script affecting a SpellClassSet.
@@ -51,12 +51,30 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     end
 
     if type == EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL then
-        targetUpdateOnAuraPersonal[scriptKey] = apply or nil;
+        if apply then
+            targetUpdateOnAuraPersonal[scriptKey] = targetUpdateOnAuraPersonal[scriptKey] or 0;
+            targetUpdateOnAuraPersonal[scriptKey] = targetUpdateOnAuraPersonal[scriptKey] + 1;
+        else
+            if not targetUpdateOnAuraPersonal[scriptKey] then return end
+            targetUpdateOnAuraPersonal[scriptKey] = targetUpdateOnAuraPersonal[scriptKey] - 1;
+            if targetUpdateOnAuraPersonal[scriptKey] == 0 then
+                targetUpdateOnAuraPersonal[scriptKey] = nil;
+            end
+        end
         return;
     end
 
     if type == EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA then
-        targetUpdateOnAura[scriptKey] = apply or nil;
+        if apply then
+            targetUpdateOnAura[scriptKey] = targetUpdateOnAura[scriptKey] or 0;
+            targetUpdateOnAura[scriptKey] = targetUpdateOnAura[scriptKey] + 1;
+        else
+            if not targetUpdateOnAura[scriptKey] then return end
+            targetUpdateOnAura[scriptKey] = targetUpdateOnAura[scriptKey] - 1;
+            if targetUpdateOnAura[scriptKey] == 0 then
+                targetUpdateOnAura[scriptKey] = nil;
+            end
+        end
         return;
     end
 
@@ -73,7 +91,7 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     end
 
     if (type == EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE
-    or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DAMAGE_PCT)
+    or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT)
     and effectBase.affectSpell then
         print("Effect handler reached", effectBase.scriptKey)
         scriptValueCache[scriptKey] = apply and value or nil;

@@ -8,6 +8,10 @@ end
 local INSECT_SWARM = GetSpellInfo(5570);
 local FF = GetSpellInfo(770);
 local FF_FERAL = GetSpellInfo(16857);
+local REGROWTH = GetSpellInfo(48443);
+local REJUVENATION = GetSpellInfo(48441);
+local LIFEBLOOM = GetSpellInfo(48451);
+local WILD_GROWTH = GetSpellInfo(53251);
 
 _addon.talentDataRaw = {
     -----------------------------
@@ -126,14 +130,13 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DAMAGE_PCT,
+                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
                 affectSpell = {1},
                 perPoint = 1,
                 scriptKey = "Imp_IS_Wrath_Damage",
                 ---@param val number
-                ---@return number|nil
                 script = function(val)
-                    if _addon.Target:HasAuraName(INSECT_SWARM, true) then
+                    if _addon.Target.HasAuraName(INSECT_SWARM, true) then
                         return val;
                     end
                     return 0;
@@ -150,9 +153,8 @@ _addon.talentDataRaw = {
                 perPoint = 1,
                 scriptKey = "Imp_IS_SF_Crit",
                 ---@param val number
-                ---@return number|nil
                 script = function(val)
-                    if _addon.Target:HasAuraName(INSECT_SWARM, true) then
+                    if _addon.Target.HasAuraName(INSECT_SWARM, true) then
                         return val;
                     end
                     return 0;
@@ -216,10 +218,9 @@ _addon.talentDataRaw = {
                 perPoint = 1,
                 scriptKey = "Imp_FF_Crit",
                 ---@param val number
-                ---@return number|nil
                 script = function(val)
-                    if _addon.Target:HasAuraName(FF)
-                    or _addon.Target:HasAuraName(FF_FERAL) then
+                    if _addon.Target.HasAuraName(FF)
+                    or _addon.Target.HasAuraName(FF_FERAL) then
                         return val;
                     end
                     return 0;
@@ -418,14 +419,14 @@ _addon.talentDataRaw = {
             }
         }
     },
-    { -- Improved Regrowth
+    { -- Nature's Bounty
         tree = 3,
         tier = 6,
         column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {64},
+                affectSpell = {64, 33554432},
                 perPoint = 5
             }
         }
@@ -495,3 +496,58 @@ _addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
     affectMask = _addon.SCHOOL_MASK.ARCANE + _addon.SCHOOL_MASK.NATURE,
     scriptValue = "Master_Shapeshifter_Value"
 };
+
+_addon.classGlyphs[54743] = { -- Glyph of Regrowth
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        affectSpell = {64},
+        value = 20,
+        scriptKey = "Glyph_of_Regrowth",
+        ---@param val number
+        script = function(val)
+            return _addon.Target.HasAuraName(REGROWTH, true) and val or 0;
+        end
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        scriptKey = REGROWTH,
+        value = 0
+    },
+}
+
+_addon.classPassives = {
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        affectSpell = {0, 33554432},
+        value = 20,
+        scriptKey = "Nourish_Script",
+        script = function()
+            local hasAura = _addon.Target.HasAuraName;
+            if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
+            or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
+                return 20;
+            end
+            return 0;
+        end
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        scriptKey = REJUVENATION,
+        value = 0
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        scriptKey = REGROWTH,
+        value = 0
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        scriptKey = LIFEBLOOM,
+        value = 0
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        scriptKey = WILD_GROWTH,
+        value = 0
+    },
+}

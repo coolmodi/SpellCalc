@@ -341,3 +341,19 @@ end
 function _addon:IsBooleanFlagActive(flag)
     return bit.band(toggledFlags, flag) == flag;
 end
+
+function _addon:ApplyPassives()
+    -- Beast Slaying (Troll Racial)
+    local _, raceEn = UnitRace("player");
+    if raceEn == "Troll" then
+        _addon:ApplyAuraEffect(GetSpellInfo(20557), { type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE, affectMask = _addon.CREATURE_TYPE_MASK.BEAST }, 5);
+    end
+
+    -- Class passives
+    if _addon.classPassives then
+        for k, v in ipairs(_addon.classPassives) do
+            local name = v.scriptKey or ("ClassPassive"..k);
+            _addon:ApplyAuraEffect(name, v, v.value);
+        end
+    end
+end

@@ -515,6 +515,9 @@ _addon.talentDataRaw = {}
 ---@type table<number, UnitAuraEffect[]>
 _addon.classGlyphs = {}
 
+---@type UnitAuraEffect[]
+_addon.classPassives = {};
+
 ---Returns information on a glyph socket. 
 ---@param socketID number glyph [Glyph SocketID|socket index]] (1 to GetNumGlyphSockets() )
 ---@param talentGroup number|nil (dual) specialization index (1 to GetNumTalentGroups(...)).

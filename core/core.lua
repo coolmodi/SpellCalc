@@ -133,9 +133,6 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
             bonusMod = bonusMod * (1 + t.val / 100);
             calcedSpell:AddToBuffList(t.buffs);
         end
-
-        local smod = scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DAMAGE_PCT, calcedSpell, spellId, ri, effNum);
-        bonusMod = bonusMod * (1 + smod / 100);
     else
         -- TODO: Improved PW:S increase bonus as well, Aplify Curse doesn't, any other uses of this for scaling spells to check?
         if stats.spellModPctEffect[spellId] ~= nil then
@@ -165,6 +162,9 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
             end
         end
     end
+
+    local smod = scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, spellId, ri, effNum);
+    bonusMod = bonusMod * (1 + smod / 100);
 
     baseMod = baseMod * bonusMod;
 
