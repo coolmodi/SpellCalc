@@ -168,7 +168,7 @@ export class SpellData {
     private spell: {[index: number]: Spell};
     private spellDuration: {[index: number]: SpellDuration};
     private totemSpells: {[index: number]: number};
-    private spellCategories: {[index: number]: SpellCategory};
+    readonly spellCategories: {[index: number]: SpellCategory};
     private spellCooldowns: {[index: number]: SpellCooldown};
     private spellPowerCost: {[index: number]: SpellPower};
     private spellClassOptions: {[index: number]: SpellClassOptions};

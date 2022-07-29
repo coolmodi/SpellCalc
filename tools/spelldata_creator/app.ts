@@ -6,6 +6,7 @@ import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { ItemEffectsCreator } from "./ItemEffectsCreator";
 import { getHandledClassGlyphs } from "./Glyphs";
+import { createMechanicLists } from "./mechanicList";
 
 const expansion = 2;
 const outputdir = __dirname + "/../../../data/classes/";
@@ -632,4 +633,5 @@ for (let i = 0; i < CLASSES.length; i++) {
     createLua(CLASSES[i]);
 }
 
+createMechanicLists([SpellMechanic.BLEED], spellData);
 createItemLua();
