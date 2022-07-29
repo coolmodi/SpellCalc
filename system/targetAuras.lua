@@ -1,6 +1,5 @@
 --[[
 TODO
-Implement conditional aura types.
 Add toggles in settings for foreign auras with conditional effects that can't be known?
     "Assume X does Y" e.g. "Assume Devotion Aura increases healing recieved."
     Possibly add whitelist as alternative?

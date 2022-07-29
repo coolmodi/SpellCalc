@@ -98,6 +98,7 @@ local effectSimpleStat = {
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL] = stats.hitBonusSpell,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE] = stats.hitBonus,
     [EFFECT_TYPE.GLOBAL_FLAT_MANARESTORE_AVG] = stats.castManaRestoreAvg,
+    [EFFECT_TYPE.TARGET_HEALING_RECIEVED] = stats.targetHealingRecieved,
 }
 
 local effectAffectMask = {

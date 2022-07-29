@@ -158,6 +158,11 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
 
             bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;
             calcedSpell:AddToBuffList(stats.modhealingDone.buffs);
+
+            if stats.targetHealingRecieved.val ~= 0 then
+                bonusMod = bonusMod * (1 + stats.targetHealingRecieved.val / 100);
+                calcedSpell:AddToBuffList(stats.targetHealingRecieved.buffs);
+            end
         end
     end
 

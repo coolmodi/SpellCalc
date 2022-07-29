@@ -556,4 +556,14 @@ _addon.aurasTarget = {
             debuffCategory = _addon.DEBUFF_CATEGORY.HIT_SPELL
         }
     },
+    -----------------------
+    -- Healing Recieved
+    -----------------------
+    [34123] = { -- Tree of Life
+        {
+            type = _addon.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            value = 6,
+            debuffCategory = _addon.DEBUFF_CATEGORY.HEALING_RECIEVED_POSITIVE
+        }
+    },
 };

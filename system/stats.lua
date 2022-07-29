@@ -126,6 +126,7 @@ _addon.stats = {
     targetSchoolModResistancePct = SchoolStatTable(),
     targetSchoolModCritTaken = SchoolStatTable(),
     targetSchoolModHit = SchoolStatTable(),
+    targetHealingRecieved = UniformStat(),
 
     spellModPctEffect = SpellStatTable(),
     spellModPctDamageHealing = SpellStatTable(),
@@ -350,9 +351,9 @@ function _addon:FullUpdate()
     self:UpdateStats();
     self:UpdateSpellPower();
     self:UpdateDmgDoneMods();
+    self:UpdateTalents();
     self:UpdatePlayerAuras();
     self:UpdateWeaponEnchants();
-    self:UpdateTalents();
     self:UpdateItems();
     self.Target:Update();
     self:UpdateAttackSpeeds();
