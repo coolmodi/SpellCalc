@@ -63,23 +63,16 @@ function _addon:UpdatePlayerAuras(clearOnly)
             if self.aurasPlayer[spellId] ~= nil then
                 local pAuraData = self.aurasPlayer[spellId];
 
-                if pAuraData.condition == nil or pAuraData.condition == 0
-                or bit.band(pAuraData.condition, auraConditions) == pAuraData.condition then
-                    if activeRelevantBuffs[spellId] == nil then
-                        self:PrintDebug("Add aura " .. name .. " (" .. spellId .. ") slot " .. i);
+                if activeRelevantBuffs[spellId] == nil then
+                    self:PrintDebug("Add aura " .. name .. " (" .. spellId .. ") slot " .. i);
 
-                        if pAuraData.effects == nil then
-                            ApplyPlayerAuraEffect(pAuraData, spellId, name, i);
-                        else
-                            for k, effect in ipairs(pAuraData.effects) do
-                                ApplyPlayerAuraEffect(effect, spellId, name, i, k);
-                            end
-                        end
-
-                        aurasChanged = true;
+                    for k, effect in ipairs(pAuraData) do
+                        ApplyPlayerAuraEffect(effect, spellId, name, i, k);
                     end
-                    activeRelevantBuffs[spellId] = true;
+
+                    aurasChanged = true;
                 end
+                activeRelevantBuffs[spellId] = true;
             end
         end
     end
@@ -90,12 +83,8 @@ function _addon:UpdatePlayerAuras(clearOnly)
             local pAuraData = self.aurasPlayer[spellId];
             local name = GetSpellInfo(spellId);
 
-            if pAuraData.effects == nil then
-                RemovePlayerAuraEffect(pAuraData, spellId, name);
-            else
-                for k, effect in ipairs(pAuraData.effects) do
-                    RemovePlayerAuraEffect(effect, spellId, name, k)
-                end
+            for k, effect in ipairs(pAuraData) do
+                RemovePlayerAuraEffect(effect, spellId, name, k)
             end
 
             activeRelevantBuffs[spellId] = nil;
@@ -122,12 +111,8 @@ function _addon:DebugApplyBuff(spellId)
 
     self:PrintWarn("Add buff " .. name .. " (" .. spellId .. ") in slot " .. usedSlot);
 
-    if buffdata.effects == nil then
-        ApplyPlayerAuraEffect(buffdata, spellId, name, usedSlot);
-    else
-        for k, effect in ipairs(buffdata.effects) do
-            ApplyPlayerAuraEffect(effect, spellId, name, usedSlot, k);
-        end
+    for k, effect in ipairs(buffdata) do
+        ApplyPlayerAuraEffect(effect, spellId, name, usedSlot, k);
     end
 
     self:TriggerUpdate();

@@ -173,12 +173,12 @@ _addon.talentData = {
 };
 
 _addon.aurasPlayer[16166] = { -- Elemental Mastery
-    type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+    {type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
     affectSpell = {-1877999613},
-    value = 100,
+    value = 100,}
 };
 
 _addon.aurasPlayer[16188] = { -- Nature's Swiftness dummy
-    type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
-    value = 1500
+    {type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+    value = 1500}
 };

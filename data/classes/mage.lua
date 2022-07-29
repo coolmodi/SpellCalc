@@ -251,14 +251,18 @@ _addon.talentData = {
 };
 
 _addon.aurasPlayer[12042] = { -- Arcane Power
-    type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-    affectSpell = {685904631, 8},
-    value = 30,
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {685904631, 8},
+        value = 30,
+    }
 };
 
 local mageArmorEffect = {
-    type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-    value = 30,
+    {
+        type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+        value = 30,
+    }
 };
 _addon.aurasPlayer[6117] = mageArmorEffect;
 _addon.aurasPlayer[22782] = mageArmorEffect;

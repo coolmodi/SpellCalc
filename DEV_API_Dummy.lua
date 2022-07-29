@@ -472,12 +472,10 @@ _addon.itemSetData = {}
 ---@type table<number, UnitAuraEffect[]>
 _addon.itemEffects = {};
 
--- TODO: fix this stupid structure
 ---@class PlayerAuraEffect : UnitAuraEffect
----@field effects nil|UnitAuraEffect[]
 ---@field condition nil|number
 
----@type table<number, PlayerAuraEffect>
+---@type table<number, PlayerAuraEffect[]>
 _addon.aurasPlayer = {};
 
 ---@class EnchantData : UnitAuraEffect

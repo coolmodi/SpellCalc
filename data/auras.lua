@@ -4,124 +4,168 @@ local _addon = select(2, ...);
 -- Buffs the player can have
 _addon.aurasPlayer = {
     [5677] = { -- Mana Spring 1
-        type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 15, -- 6/2s
+        {
+            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 15 -- 6/2s
+        }
     },
     [10491] = { -- Mana Spring 2
-        type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 22, -- 9/2s
+        {
+            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 22 -- 9/2s
+        }
     },
     [10493] = { -- Mana Spring 3
-        type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 32, -- 13/2s
+        {
+            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 32 -- 13/2s
+        }
     },
     [10494] = { -- Mana Spring 4
-        type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 42, -- 17/2s
+        {
+            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 42 -- 17/2s
+        }
     },
     [25569] = { -- Mana Spring 5
-        type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
-        value = 50, -- 20/2s
+        {
+            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 50 -- 20/2s
+        }
     },
     [26166] = { -- Obsidian Insight
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST + _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW + _addon.SCHOOL_MASK.ARCANE,
-        value = 100,
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST +
+                _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW +
+                _addon.SCHOOL_MASK.ARCANE,
+            value = 100
+        }
     },
 
     [30880] = { -- Echoes of Lordaeron H 1
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 1
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 1
+        }
     },
     [30683] = { -- Echoes of Lordaeron H 2
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 2
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 2
+        }
     },
     [30682] = { -- Echoes of Lordaeron H 3
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 3
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 3
+        }
     },
     [29520] = { -- Echoes of Lordaeron H 4
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 5
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 5
+        }
     },
 
     [11413] = { -- Echoes of Lordaeron A 1
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 1
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 1
+        }
     },
     [11414] = { -- Echoes of Lordaeron A 2
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 2
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 2
+        }
     },
     [11415] = { -- Echoes of Lordaeron A 3
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 3
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 3
+        }
     },
     [1386] = { -- Echoes of Lordaeron A 4
-        type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD + _addon.CREATURE_TYPE_MASK.DEMON,
-        value = 5
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD +
+                _addon.CREATURE_TYPE_MASK.DEMON,
+            value = 5
+        }
     },
     [33377] = { -- Blessing of Auchindoun
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.ALL,
-        value = 5
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 5
+        }
     },
     [32071] = { -- Hellfire Superiority A
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.ALL,
-        value = 5
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 5
+        }
     },
     [32049] = { -- Hellfire Superiority H
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.ALL,
-        value = 5
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 5
+        }
     },
     [33795] = { -- Strength of the Halaani
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.ALL,
-        value = 5
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 5
+        }
     },
     [20218] = { -- Sanctity Aura
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.HOLY,
-        value = 10
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.HOLY,
+            value = 10
+        }
     },
     [30708] = { -- Totem of Wrath
-        type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
-        value = 3
+        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 3}
     },
     [28488] = { -- Scourgebane Infusion
-        type = _addon.EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
-        affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
-        value = 15
+        {
+            type = _addon.EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
+            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            value = 15
+        }
     },
     -- 28486 "Scourgebane Draught" 30 AP vs undead
     [6562] = { -- Heroic Presence
-        type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
-        value = 1
+        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1}
     },
     [28878] = { -- Inspiring Presence
-        type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
-        value = 1
+        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1}
     },
     [49016] = { -- Hysteria
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.PHYSICAL,
-        value = 20
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            value = 20
+        }
     },
     [57933] = { -- TotT
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.ALL,
-        value = 15
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 15
+        }
     }
 };
 
@@ -270,7 +314,7 @@ _addon.aurasTarget = {
         },
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -284,7 +328,7 @@ _addon.aurasTarget = {
         },
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -298,7 +342,7 @@ _addon.aurasTarget = {
         },
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -309,7 +353,7 @@ _addon.aurasTarget = {
     [50508] = { -- Crypt Fever 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
             value = 10,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -317,7 +361,7 @@ _addon.aurasTarget = {
     [50509] = { -- Crypt Fever 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
             value = 20,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -325,7 +369,7 @@ _addon.aurasTarget = {
     [50510] = { -- Crypt Fever 3
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.INFECTED,
+            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -336,7 +380,7 @@ _addon.aurasTarget = {
     [46856] = { -- Trauma 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 15,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -344,16 +388,16 @@ _addon.aurasTarget = {
     [46857] = { -- Trauma 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
-    
+
     [33876] = { -- Mangle (Cat) 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -361,7 +405,7 @@ _addon.aurasTarget = {
     [33982] = { -- Mangle (Cat) 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -369,7 +413,7 @@ _addon.aurasTarget = {
     [33983] = { -- Mangle (Cat) 3
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -377,7 +421,7 @@ _addon.aurasTarget = {
     [48565] = { -- Mangle (Cat) 4
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -385,7 +429,7 @@ _addon.aurasTarget = {
     [48566] = { -- Mangle (Cat) 5
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -394,7 +438,7 @@ _addon.aurasTarget = {
     [33878] = { -- Mangle (Bear) 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -402,7 +446,7 @@ _addon.aurasTarget = {
     [33986] = { -- Mangle (Bear) 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -410,7 +454,7 @@ _addon.aurasTarget = {
     [33987] = { -- Mangle (Bear) 3
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -418,7 +462,7 @@ _addon.aurasTarget = {
     [48563] = { -- Mangle (Bear) 4
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -426,7 +470,7 @@ _addon.aurasTarget = {
     [48564] = { -- Mangle (Bear) 5
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell  = _addon.SPELL_MECHANIC.BLEED,
+            affectSpell = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }

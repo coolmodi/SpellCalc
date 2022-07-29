@@ -445,42 +445,56 @@ _addon.talentDataRaw = {
 };
 
 _addon.aurasPlayer[17116] = { -- Nature's Swiftness dummy
-    type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
-    value = 1500
+    {
+        type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 1500
+    }
 };
 
 _addon.aurasPlayer[16886] = { -- Nature's Grace
-    type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
-    value = 1500
+    {
+        type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 1500
+    }
 };
 
 _addon.aurasPlayer[48518] = { -- Eclipse (Lunar)
-    type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-    affectSpell = {4},
-    value = 40
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {4},
+        value = 40
+    }
 };
 
 _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
-    type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-    affectSpell = {1},
-    value = 40
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {1},
+        value = 40
+    }
 };
 
 _addon.aurasPlayer[48418] = { -- Master Shapeshifter Bear
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.PHYSICAL,
-    scriptValue = "Master_Shapeshifter_Value"
+    {
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+        scriptValue = "Master_Shapeshifter_Value"
+    }
 };
 
 _addon.aurasPlayer[48422] = { -- Master Shapeshifter Tree
-    type = _addon.EFFECT_TYPE.PCT_HEALING,
-    scriptValue = "Master_Shapeshifter_Value"
+    {
+        type = _addon.EFFECT_TYPE.PCT_HEALING,
+        scriptValue = "Master_Shapeshifter_Value"
+    }
 };
 
 _addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.ARCANE + _addon.SCHOOL_MASK.NATURE,
-    scriptValue = "Master_Shapeshifter_Value"
+    {
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.ARCANE + _addon.SCHOOL_MASK.NATURE,
+        scriptValue = "Master_Shapeshifter_Value"
+    }
 };
 
 _addon.classGlyphs[54743] = { -- Glyph of Regrowth

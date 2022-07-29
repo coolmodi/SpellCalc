@@ -179,14 +179,14 @@ _addon.talentData = {
 
 -- Shadowform
 _addon.aurasPlayer[15473] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.SHADOW,
-    value = 15,
+    value = 15,}
 }
 
 -- Inner Focus
 _addon.aurasPlayer[14751] = {
-    type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+    {type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
     affectSpell = {-917225840, 54},
-    value = 25
+    value = 25}
 }

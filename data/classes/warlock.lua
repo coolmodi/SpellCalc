@@ -164,83 +164,83 @@ _addon.talentData = {
 
 -- Amplify Curse TODO
 _addon.aurasPlayer[18288] = {
-    type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+    {type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
     affectSpell = {1024},
-    value = 50,
+    value = 50,}
 };
 
 -- Demonic Sacrifice Succubus
 _addon.aurasPlayer[18791] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.SHADOW,
-    value = 15,
+    value = 15,}
 };
 
 -- Demonic Sacrifice Imp
 _addon.aurasPlayer[18789] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.FIRE,
-    value = 15,
+    value = 15,}
 };
 
 -- Master Demonologist Succubus
 _addon.aurasPlayer[23761] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 2,
+    value = 2,}
 };
 _addon.aurasPlayer[23833] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 4,
+    value = 4,}
 };
 _addon.aurasPlayer[23834] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 6,
+    value = 6,}
 };
 _addon.aurasPlayer[23835] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 8,
+    value = 8,}
 };
 _addon.aurasPlayer[23836] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 10,
+    value = 10,}
 };
 -- Master Demonologist Felguard
 _addon.aurasPlayer[35702] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 1,
+    value = 1,}
 };
 _addon.aurasPlayer[35703] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 2,
+    value = 2,}
 };
 _addon.aurasPlayer[35704] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 3,
+    value = 3,}
 };
 _addon.aurasPlayer[35705] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 4,
+    value = 4,}
 };
 _addon.aurasPlayer[35706] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 5,
+    value = 5,}
 };
 
 -- Soul Link
 _addon.aurasPlayer[25228] = {
-    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 3,
+    value = 3,}
 };
 
 -- Add class settings page
