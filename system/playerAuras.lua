@@ -3,8 +3,6 @@ local _addon = select(2, ...);
 
 ---@type table<number, boolean>
 local activeRelevantBuffs = {};
----@type table<string, number>
-local buffValueCache = {};
 
 --- Apply aura effect using tooltip or hardcoded values.
 ---@param playerAuraEffect PlayerAuraEffect
@@ -17,7 +15,12 @@ local function ApplyPlayerAuraEffect(playerAuraEffect, usedKey, name, buffSlot, 
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
-    _addon:ApplyAuraEffect(name, playerAuraEffect, playerAuraEffect.value);
+    if not playerAuraEffect.value and not playerAuraEffect.scriptValue then
+        _addon:PrintError("Player aura effect "..name.." has no value or scriptValue defined!");
+        return;
+    end
+    local value = playerAuraEffect.value or _addon.ScriptEffects.GetValue(playerAuraEffect.scriptValue);
+    _addon:ApplyAuraEffect(name, playerAuraEffect, value);
 end
 
 --- Remove aura effect using cached tooltip or hardcoded values.
@@ -26,20 +29,15 @@ end
 ---@param name string
 ---@param effectSlot number|nil
 local function RemovePlayerAuraEffect(playerAuraEffect, usedKey, name, effectSlot)
-    local value;
-
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
-
-    if buffValueCache[usedKey] then
-        value = buffValueCache[usedKey];
-        buffValueCache[usedKey] = nil;
-    else
-        value = playerAuraEffect.value;
+    if not playerAuraEffect.value and not playerAuraEffect.scriptValue then
+        _addon:PrintError("Player aura effect "..name.." has no value or scriptValue defined!");
+        return;
     end
-
+    local value = playerAuraEffect.value or _addon.ScriptEffects.GetValue(playerAuraEffect.scriptValue);
     _addon:RemoveAuraEffect(name, playerAuraEffect, value);
 end
 

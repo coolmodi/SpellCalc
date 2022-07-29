@@ -156,6 +156,15 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
+    if string.find(arg, "sval") then
+        local key = string.sub(arg, 6);
+        print(key);
+        if key then
+            print("Value for ", key, "is", _addon.ScriptEffects.GetValue(key));
+        end
+        return;
+    end
+
     InterfaceOptionsFrame_OpenToCategory(_addonName);
     InterfaceOptionsFrame_OpenToCategory(_addonName);
 end

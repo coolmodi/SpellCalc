@@ -457,7 +457,8 @@ _addon.spellClassSet = {
 ---@field script EffectScript Function used by the various SCRIPT_ effect types.
 
 ---@class UnitAuraEffect : AuraEffectBase
----@field value number
+---@field value number|nil
+---@field scriptValue string|nil Get value from scriptKey.
 
 ---@class SetBonusAuraEffect : UnitAuraEffect
 ---@field need number The number of set items needed for the effect to be active.

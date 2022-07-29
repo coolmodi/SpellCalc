@@ -30,6 +30,7 @@ local SHAPESHIFTS = {
 	[1066] = "aquatic",
 	[783] = "travel",
 	[24858] = "moonkin",
+    [33891] = "tree",
 	[2457] = "battle",
 	[71] = "defensive",
 	[2458] = "berserker"

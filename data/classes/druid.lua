@@ -360,7 +360,18 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Master Shapeshifter (3/9), bonus in stance
+    { -- Master Shapeshifter
+        tree = 3,
+        tier = 3,
+        column = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_SET_VALUE,
+                scriptKey = "Master_Shapeshifter_Value",
+                perPoint = 2
+            }
+        }
+    },
     { -- Improved Rejuvenation
         tree = 3,
         tier = 4,
@@ -466,4 +477,21 @@ _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
     type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
     affectSpell = {1},
     value = 40
+};
+
+_addon.aurasPlayer[48418] = { -- Master Shapeshifter Bear
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+    scriptValue = "Master_Shapeshifter_Value"
+};
+
+_addon.aurasPlayer[48422] = { -- Master Shapeshifter Tree
+    type = _addon.EFFECT_TYPE.PCT_HEALING,
+    scriptValue = "Master_Shapeshifter_Value"
+};
+
+_addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
+    type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    affectMask = _addon.SCHOOL_MASK.ARCANE + _addon.SCHOOL_MASK.NATURE,
+    scriptValue = "Master_Shapeshifter_Value"
 };

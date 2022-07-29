@@ -60,6 +60,13 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
         return;
     end
 
+    if type == EFFECT_TYPE.SCRIPT_SET_VALUE then
+        _addon:UpdatePlayerAuras(true);
+        scriptValueCache[scriptKey] = apply and value or nil;
+        _addon:UpdatePlayerAuras();
+        return;
+    end
+
     if not effectBase.script then
         _addon:PrintError("Aura "..name.." uses SCRIPT_ effect without script attached! Report this please.");
         return;
@@ -68,23 +75,22 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     if (type == EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE
     or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DAMAGE_PCT)
     and effectBase.affectSpell then
-
         print("Effect handler reached", effectBase.scriptKey)
-
-        if apply then
-            scriptValueCache[scriptKey] = scriptValueCache[scriptKey] or 0;
-            scriptValueCache[scriptKey] = scriptValueCache[scriptKey] + value;
-        else
-            scriptValueCache[scriptKey] = nil;
-        end
+        scriptValueCache[scriptKey] = apply and value or nil;
         ApplyOrRemoveSpellSet(apply, effectBase);
         return;
     end
-
     _addon:PrintError("Aura "..name.." uses unknown script effect "..type.." or an incorrect effect definition! Report this please.");
 end
 
----Get sum of all SCRIPT_ effect type scripts registered for this spell.
+---Get a value for a scriptKey.
+---@param scriptKey string
+---@return number|nil
+function _addon.ScriptEffects.GetValue(scriptKey)
+    return scriptValueCache[scriptKey];
+end
+
+---Get sum of all SCRIPT_ effect type scripts applicable for this spell.
 ---@param type number The SCRIPT_ effect type.
 ---@param cs CalcedSpell
 ---@param spellId number
@@ -93,17 +99,18 @@ end
 ---@return number|nil
 function _addon.ScriptEffects.DoSpell(type, cs, spellId, ri, eff)
     print("Doing spell scripts", type, spellId)
+    local rv = 0;
+
     if spellScripts[spellId]
     and spellScripts[spellId][type] then
-        print("Have scripts", type, spellId)
-        local rv = 0;
+        print("Have spell scripts", type, spellId)
         for scriptKey, func in pairs(spellScripts[spellId][type]) do
             rv = rv + func(scriptValueCache[scriptKey], cs, spellId, ri, eff);
         end
-        print("Result of scripts: ", rv, type, spellId)
-        return rv;
+        print("Result after spell scripts: ", rv, type, spellId)
     end
-    return 0;
+
+    return rv;
 end
 
 ---Triggers update if needed.
