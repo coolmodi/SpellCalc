@@ -13,6 +13,7 @@ Missing auras
 ---@type AddonEnv
 local _addon = select(2, ...);
 local aurasTarget = _addon.aurasTarget;
+local SETargetAuraChanged = _addon.ScriptEffects.TargetAuraChanged;
 
 ---@type table<number, ActiveCategoryData>
 local activeCategory = {};
@@ -30,6 +31,10 @@ end
 local activeAuraIds = {};
 ---@type table<number, number>
 local activeAuraStacks = {};
+---@type table<string, boolean|nil>
+local aurasByName = {};
+---@type table<string, boolean|nil>
+local aurasByNamePersonal = {};
 
 ---Apply target aura effect.
 ---@param spellId number
@@ -122,9 +127,16 @@ end
 local function UpdateAuratype(filter)
     local aurasChanged = false;
     local i = 1;
-    local name, _, count, _, _, _, _, _, _, spellId = UnitAura("target", i, filter);
+    local name, _, count, _, _, _, source, _, _, spellId = UnitAura("target", i, filter);
 
     while name do
+        if aurasByName[name] == nil then SETargetAuraChanged(name) end
+        aurasByName[name] = true;
+        if source == "player" then 
+            if aurasByNamePersonal[name] == nil then SETargetAuraChanged(name, true) end
+            aurasByNamePersonal[name] = true;
+        end
+
         if aurasTarget[spellId] then
             local auraEffects = aurasTarget[spellId];
 
@@ -163,6 +175,12 @@ function _addon.Target:UpdateAuras()
     for spellId in pairs(activeAuraIds) do
         activeAuraIds[spellId] = false;
     end
+    for auraName in pairs(aurasByName) do
+        aurasByName[auraName] = false;
+    end
+    for auraName in pairs(aurasByNamePersonal) do
+        aurasByNamePersonal[auraName] = false;
+    end
 
     aurasChanged = UpdateAuratype("HELPFUL") or aurasChanged;
     aurasChanged = UpdateAuratype("HARMFUL") or aurasChanged;
@@ -181,5 +199,27 @@ function _addon.Target:UpdateAuras()
         end
     end
 
+    for auraName, isActive in pairs(aurasByName) do
+        if not isActive then
+            aurasByName[auraName] = nil;
+            SETargetAuraChanged(auraName);
+        end
+    end
+    for auraName, isActive in pairs(aurasByNamePersonal) do
+        if not isActive then
+            aurasByNamePersonal[auraName] = nil;
+            SETargetAuraChanged(auraName, true);
+        end
+    end
+
     if aurasChanged then _addon:TriggerUpdate() end
+end
+
+---Check if target has aura with name.
+---@param auraName string The aura name.
+---@param personalOnly boolean|nil Only return true if aura source is self.
+---@return boolean
+function _addon.Target:HasAuraName(auraName, personalOnly)
+    if personalOnly then return aurasByNamePersonal[auraName] end
+    return aurasByName[auraName];
 end

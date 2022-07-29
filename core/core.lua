@@ -5,7 +5,8 @@ local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 local NewCalcedSpell = _addon.NewCalcedSpell;
 local SCHOOL = _addon.SCHOOL;
 local DEF_TYPE = _addon.DEF_TYPE;
-local EFFECT_TYPES = _addon.SPELL_EFFECT_TYPES;
+local SPELL_EFFECT_TYPES = _addon.SPELL_EFFECT_TYPES;
+local EFFECT_TYPE = _addon.EFFECT_TYPE;
 local AURA_TYPES = _addon.SPELL_AURA_TYPES;
 ---@type table<number, CalcedSpell>
 local calcedSpells = {};
@@ -14,6 +15,7 @@ local stats = _addon.stats;
 local meleeCalc = _addon.MeleeCalc:New();
 local magicCalc = _addon.MagicCalc:New();
 local costHandler = _addon.CostHandler;
+local scriptEffects = _addon.ScriptEffects;
 
 -- If a seal is currently active this will be the spell that should be used for Judgement.
 ---@type number|nil
@@ -28,9 +30,9 @@ _addon.effectHandler = effectHandler;
 ---@param effectType number
 ---@param auraType number|nil
 local function IsHealEffect(effectType, auraType)
-    if (effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA and auraType == AURA_TYPES.SPELL_AURA_PERIODIC_HEAL)
-    or (effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY and auraType == AURA_TYPES.SPELL_AURA_PERIODIC_HEAL)
-    or effectType == EFFECT_TYPES.SPELL_EFFECT_HEAL then
+    if (effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA and auraType == AURA_TYPES.SPELL_AURA_PERIODIC_HEAL)
+    or (effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY and auraType == AURA_TYPES.SPELL_AURA_PERIODIC_HEAL)
+    or effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_HEAL then
         return true;
     end
     return false;
@@ -40,7 +42,7 @@ end
 ---@param effectType number
 ---@param auraType number|nil
 local function IsAbsorbEffect(effectType, auraType)
-    if effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA then
+    if effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA then
         if auraType == AURA_TYPES.SPELL_AURA_MANA_SHIELD
         or auraType == AURA_TYPES.SPELL_AURA_SCHOOL_ABSORB then
             return true;
@@ -53,9 +55,9 @@ end
 ---@param effectType number
 ---@param auraType number|nil
 local function IsDurationEffect(effectType, auraType)
-    if effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA
-    or effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY
-    or effectType == EFFECT_TYPES.SPELL_EFFECT_PERSISTENT_AREA_AURA then
+    if effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA
+    or effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY
+    or effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_PERSISTENT_AREA_AURA then
         if auraType == AURA_TYPES.SPELL_AURA_PERIODIC_DAMAGE 
         or auraType == AURA_TYPES.SPELL_AURA_PERIODIC_HEAL 
         or auraType == AURA_TYPES.SPELL_AURA_PERIODIC_LEECH 
@@ -70,8 +72,8 @@ end
 ---@param effectType number
 ---@param auraType number|nil
 local function IsDmgShieldEffect(effectType, auraType)
-    if effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA
-    or effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY then
+    if effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA
+    or effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY then
         if auraType == AURA_TYPES.SPELL_AURA_DAMAGE_SHIELD
         or auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_DAMAGE then
             return true;
@@ -87,10 +89,11 @@ end
 ---@param spellId number
 ---@param calcedSpell CalcedSpell
 ---@param isDuration boolean
----@param mechanic number|nil
+---@param ri SpellRankInfo
+---@param effNum number
 ---@return number @baseMod affecting the base value of the spell
 ---@return number @bonusMod affecting only the bonus SP/AP of the spell
-local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration, mechanic)
+local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration, ri, effNum)
     local bonusMod = 1;
     local baseMod = 1;
 
@@ -125,11 +128,14 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
             calcedSpell:AddToBuffList(stats.targetSchoolModDamageTaken[school].buffs);
         end
 
-        if mechanic and stats.targetMechanicModDmgTakenPct[mechanic].val ~= 0 then
-            local t = stats.targetMechanicModDmgTakenPct[mechanic];
+        if ri.mechanic and stats.targetMechanicModDmgTakenPct[ri.mechanic].val ~= 0 then
+            local t = stats.targetMechanicModDmgTakenPct[ri.mechanic];
             bonusMod = bonusMod * (1 + t.val / 100);
             calcedSpell:AddToBuffList(t.buffs);
         end
+
+        local smod = scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DAMAGE_PCT, calcedSpell, spellId, ri, effNum);
+        bonusMod = bonusMod * (1 + smod / 100);
     else
         -- TODO: Improved PW:S increase bonus as well, Aplify Curse doesn't, any other uses of this for scaling spells to check?
         if stats.spellModPctEffect[spellId] ~= nil then
@@ -259,7 +265,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA;
                 end
 
-                if red.effectType == EFFECT_TYPES.SPELL_EFFECT_ATTACK then
+                if red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_ATTACK then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.AUTO_ATTACK;
                 end
 
@@ -271,8 +277,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.STACKABLE_AURA;
                 end
 
-                if red.effectType == EFFECT_TYPES.SPELL_EFFECT_TRIGGER_SPELL
-                or (red.effectType == EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA and red.auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL) then
+                if red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_TRIGGER_SPELL
+                or (red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA and red.auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL) then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.TRIGGERED_SPELL;
                 end
             end
@@ -357,6 +363,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     if calcedSpell.critChance > 0 and stats.spellModFlatCritChance[spellId] ~= nil then
         calcedSpell.critChance = calcedSpell.critChance + stats.spellModFlatCritChance[spellId].val;
         calcedSpell:AddToBuffList(stats.spellModFlatCritChance[spellId].buffs);
+    end
+
+    do
+        local scrit = scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE, calcedSpell, spellId, spellRankInfo);
+        calcedSpell.critChance = calcedSpell.critChance + scrit;
     end
 
     if calcedSpell.critChance > 100 then
@@ -634,7 +645,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
             local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
-            local effectMod, bonusMod = GetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration);
+            local effectMod, bonusMod = GetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellRankInfo, i);
 
             --------------------------
             -- Effect bonus power scaling

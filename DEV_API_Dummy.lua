@@ -446,11 +446,15 @@ _addon.spellClassSet = {
     [4] = {},
 };
 
+---@alias EffectScript fun(val:number, cs:CalcedSpell, spellId:number, ri:SpellRankInfo, eff:number):number
+
 ---@class AuraEffectBase
 ---@field type number
 ---@field affectMask number|nil
 ---@field affectSpell number[]|nil
 ---@field neededWeaponMask number|nil
+---@field scriptKey string|nil Key for script effect. Must be unique!
+---@field script EffectScript Function used by the various SCRIPT_ effect types.
 
 ---@class UnitAuraEffect : AuraEffectBase
 ---@field value number

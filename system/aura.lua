@@ -233,6 +233,11 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
         return;
     end
 
+    if effectBase.type > EFFECT_TYPE.SCRIPT_EFFECT_MIN_ID then
+        _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase);
+        return;
+    end
+
     if effectAffectKey[effectBase.type] then
         ApplyOrRemove(apply, value, effectAffectKey[effectBase.type][effectBase.affectSpell], name);
         return;

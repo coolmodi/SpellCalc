@@ -5,6 +5,10 @@ if playerClass ~= "DRUID" then
     return;
 end
 
+local INSECT_SWARM = GetSpellInfo(5570);
+local FF = GetSpellInfo(770);
+local FF_FERAL = GetSpellInfo(16857);
+
 _addon.talentDataRaw = {
     -----------------------------
     -- Balance
@@ -116,7 +120,51 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Improved Insect Swarm (1/14), dmg if aura on target
+    { -- Improved Insect Swarm
+        tree = 1,
+        tier = 5,
+        column = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DAMAGE_PCT,
+                affectSpell = {1},
+                perPoint = 1,
+                scriptKey = "Imp_IS_Wrath_Damage",
+                ---@param val number
+                ---@return number|nil
+                script = function(val)
+                    if _addon.Target:HasAuraName(INSECT_SWARM, true) then
+                        return val;
+                    end
+                    return 0;
+                end
+            },
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+                scriptKey = INSECT_SWARM,
+                perPoint = 0
+            },
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
+                affectSpell = {4},
+                perPoint = 1,
+                scriptKey = "Imp_IS_SF_Crit",
+                ---@param val number
+                ---@return number|nil
+                script = function(val)
+                    if _addon.Target:HasAuraName(INSECT_SWARM, true) then
+                        return val;
+                    end
+                    return 0;
+                end
+            },
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+                scriptKey = INSECT_SWARM,
+                perPoint = 0
+            }
+        }
+    },
     { -- Dreamstate
         tree = 1,
         tier = 6,
@@ -157,7 +205,38 @@ _addon.talentDataRaw = {
             },
         }
     },
-    -- TODO: Improved Faerie Fire (1/20), crit if aura on target
+    { -- Improved Faerie Fire
+        tree = 1,
+        tier = 7,
+        column = 4,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
+                affectSpell = {4194311, 25165824},
+                perPoint = 1,
+                scriptKey = "Imp_FF_Crit",
+                ---@param val number
+                ---@return number|nil
+                script = function(val)
+                    if _addon.Target:HasAuraName(FF)
+                    or _addon.Target:HasAuraName(FF_FERAL) then
+                        return val;
+                    end
+                    return 0;
+                end
+            },
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+                scriptKey = FF,
+                perPoint = 0
+            },
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+                scriptKey = FF_FERAL,
+                perPoint = 0
+            }
+        }
+    },
     { -- Wrath of Cenarius
         tree = 1,
         tier = 8,

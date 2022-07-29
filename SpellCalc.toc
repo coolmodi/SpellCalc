@@ -70,6 +70,7 @@ slashcmd.lua
 events.lua
 
 system/stats.lua
+system/scriptEffects.lua
 system/aura.lua
 system/weaponEnchants.lua
 system/talents.lua
