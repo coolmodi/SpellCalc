@@ -189,11 +189,10 @@ local function GetParryChance(calc)
         return 0;
     end
 
-    -- TODO: this is probably not correct at all
-    if calc.levelDiff < 2 then
-        return math.max(0, 5 + calc.levelDiff);
+    if calc.ldef - calc.ratk > 10 then
+        return 5 + (calc.ldef - calc.ratk) * 0.6;
     else
-        return 14;
+        return math.max(0, 5 + (calc.ldef - calc.ratk) * 0.1);
     end
 end
 
@@ -284,10 +283,6 @@ function MeleeCalc:GetMDPGB()
     if stats.targetSchoolModHit[SCHOOL_PHYSICAL].val ~= 0 then
         hitBonus = hitBonus + stats.targetSchoolModHit[SCHOOL_PHYSICAL].val;
         self.calcedSpell:AddToBuffList(stats.targetSchoolModHit[SCHOOL_PHYSICAL].buffs);
-    end
-
-    if self.levelDiff > 2 then
-        hitBonus = math.max(0, hitBonus - 1);
     end
 
     local total = 100;

@@ -430,11 +430,10 @@ local function ManaShield(calcedSpell, effNum, spellRankInfo, effCastTime, effec
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 
-    -- TODO: change?
-    local drain = 2;
-    local name, _, _, _, curRank = GetTalentInfo(1, 10);
+    local drain = 1.5;
+    local name, _, _, _, curRank = GetTalentInfo(1, 11); -- TODO: This will currently fail
     if curRank > 0 then
-        drain = drain * (1 - 0.1 * curRank);
+        drain = drain * (1 - 0.165 * curRank);
         calcedSpell:AddToBuffList({name..curRank});
     end
     calcedSpell.effectiveCost = calcedSpell.effectiveCost + drain * calcedEffect.avgAfterMitigation;
