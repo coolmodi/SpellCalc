@@ -454,7 +454,6 @@ _addon.spellClassSet = {
 ---@field affectSpell number[]|nil
 ---@field neededWeaponMask number|nil
 ---@field scriptKey string|nil Key for script effect. Must be unique!
----@field script EffectScript Function used by the various SCRIPT_ effect types.
 
 ---@class UnitAuraEffect : AuraEffectBase
 ---@field value number|nil

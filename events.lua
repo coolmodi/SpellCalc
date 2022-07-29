@@ -34,6 +34,7 @@ end
 
 function handlers.PLAYER_LOGIN()
     _addon.ActionBarValues:Setup();
+    _addon.ScriptEffects.LoadScripts();
     _addon:ApplyPassives();
 end
 

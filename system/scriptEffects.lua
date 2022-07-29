@@ -1,6 +1,8 @@
 ---@type AddonEnv
 local _addon = select(2, ...);
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
+---@type table<string, EffectScript>
+local scripts = {};
 ---@type table<string,number|nil>
 local scriptValueCache = {};
 ---spellId -> effectType -> scriptKey -> func
@@ -14,7 +16,8 @@ local targetUpdateOnAura = {};
 ---Apply or remove script affecting a SpellClassSet.
 ---@param apply boolean
 ---@param effectBase AuraEffectBase
-local function ApplyOrRemoveSpellSet(apply, effectBase)
+---@param scriptFunc EffectScript
+local function ApplyOrRemoveSpellSet(apply, effectBase, scriptFunc)
     local spellIdsDone = {};
     for k, setMask in ipairs(effectBase.affectSpell) do
         for setBit, spellSet in pairs(_addon.spellClassSet[k]) do
@@ -24,7 +27,7 @@ local function ApplyOrRemoveSpellSet(apply, effectBase)
                         spellIdsDone[spellId] = true;
                         spellScripts[spellId] = spellScripts[spellId] or {};
                         spellScripts[spellId][effectBase.type] = spellScripts[spellId][effectBase.type] or {};
-                        spellScripts[spellId][effectBase.type][effectBase.scriptKey] = apply and effectBase.script or nil;
+                        spellScripts[spellId][effectBase.type][effectBase.scriptKey] = apply and scriptFunc or nil;
                     end
                 end
             end
@@ -33,6 +36,26 @@ local function ApplyOrRemoveSpellSet(apply, effectBase)
 end
 
 _addon.ScriptEffects = {};
+
+---Add script function.
+---@param scriptKey string
+---@param func EffectScript
+function _addon.ScriptEffects.RegisterScript(scriptKey, func)
+    if scripts[scriptKey] then
+        _addon:PrintError("Script already defined! "..scriptKey);
+        return;
+    end
+    scripts[scriptKey] = func;
+end
+
+---Load scripts.
+function _addon.ScriptEffects.LoadScripts()
+    if _addon.classScripts then
+        for scriptKey, func in pairs(_addon.classScripts) do
+            _addon.ScriptEffects.RegisterScript(scriptKey, func);
+        end
+    end
+end
 
 ---Handle SCRIPT_ effect types.
 ---@param apply boolean
@@ -85,8 +108,9 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
         return;
     end
 
-    if not effectBase.script then
-        _addon:PrintError("Aura "..name.." uses SCRIPT_ effect without script attached! Report this please.");
+    local script = scripts[scriptKey];
+    if not script then
+        _addon:PrintError("Aura "..name.." uses SCRIPT_ effect with undefined script "..scriptKey.."! Report this please.");
         return;
     end
 
@@ -95,7 +119,7 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     and effectBase.affectSpell then
         print("Effect handler reached", effectBase.scriptKey)
         scriptValueCache[scriptKey] = apply and value or nil;
-        ApplyOrRemoveSpellSet(apply, effectBase);
+        ApplyOrRemoveSpellSet(apply, effectBase, script);
         return;
     end
     _addon:PrintError("Aura "..name.." uses unknown script effect "..type.." or an incorrect effect definition! Report this please.");

@@ -133,14 +133,7 @@ _addon.talentDataRaw = {
                 type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
                 affectSpell = {1},
                 perPoint = 1,
-                scriptKey = "Imp_IS_Wrath_Damage",
-                ---@param val number
-                script = function(val)
-                    if _addon.Target.HasAuraName(INSECT_SWARM, true) then
-                        return val;
-                    end
-                    return 0;
-                end
+                scriptKey = "Imp_IS_Target_Aura_Check",
             },
             {
                 type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
@@ -151,14 +144,7 @@ _addon.talentDataRaw = {
                 type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
                 affectSpell = {4},
                 perPoint = 1,
-                scriptKey = "Imp_IS_SF_Crit",
-                ---@param val number
-                script = function(val)
-                    if _addon.Target.HasAuraName(INSECT_SWARM, true) then
-                        return val;
-                    end
-                    return 0;
-                end
+                scriptKey = "Imp_IS_Target_Aura_Check",
             },
             {
                 type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
@@ -503,10 +489,6 @@ _addon.classGlyphs[54743] = { -- Glyph of Regrowth
         affectSpell = {64},
         value = 20,
         scriptKey = "Glyph_of_Regrowth",
-        ---@param val number
-        script = function(val)
-            return _addon.Target.HasAuraName(REGROWTH, true) and val or 0;
-        end
     },
     {
         type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
@@ -521,14 +503,6 @@ _addon.classPassives = {
         affectSpell = {0, 33554432},
         value = 20,
         scriptKey = "Nourish_Script",
-        script = function()
-            local hasAura = _addon.Target.HasAuraName;
-            if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
-            or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
-                return 20;
-            end
-            return 0;
-        end
     },
     {
         type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
@@ -550,4 +524,28 @@ _addon.classPassives = {
         scriptKey = WILD_GROWTH,
         value = 0
     },
+}
+
+_addon.classScripts = {
+    ---@param val number
+    Imp_IS_Target_Aura_Check = function(val)
+        if _addon.Target.HasAuraName(INSECT_SWARM, true) then
+            return val;
+        end
+        return 0;
+    end,
+
+    ---@param val number
+    Glyph_of_Regrowth = function(val)
+        return _addon.Target.HasAuraName(REGROWTH, true) and val or 0;
+    end,
+
+    Nourish_Script = function()
+        local hasAura = _addon.Target.HasAuraName;
+        if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
+        or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
+            return 20;
+        end
+        return 0;
+    end
 }
