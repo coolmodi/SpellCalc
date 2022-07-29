@@ -5,40 +5,40 @@ local _addon = select(2, ...);
 local activeRelevantBuffs = {};
 
 --- Apply aura effect using tooltip or hardcoded values.
----@param playerAuraEffect PlayerAuraEffect
+---@param auraEffect UnitAuraEffect
 ---@param usedKey string
 ---@param name string
 ---@param buffSlot number|nil
 ---@param effectSlot number|nil
-local function ApplyPlayerAuraEffect(playerAuraEffect, usedKey, name, buffSlot, effectSlot)
+local function ApplyPlayerAuraEffect(auraEffect, usedKey, name, buffSlot, effectSlot)
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
-    if not playerAuraEffect.value and not playerAuraEffect.scriptValue then
+    if not auraEffect.value and not auraEffect.scriptValue then
         _addon:PrintError("Player aura effect "..name.." has no value or scriptValue defined!");
         return;
     end
-    local value = playerAuraEffect.value or _addon.ScriptEffects.GetValue(playerAuraEffect.scriptValue);
-    _addon:ApplyAuraEffect(name, playerAuraEffect, value);
+    local value = auraEffect.value or _addon.ScriptEffects.GetValue(auraEffect.scriptValue);
+    _addon:ApplyAuraEffect(name, auraEffect, value);
 end
 
 --- Remove aura effect using cached tooltip or hardcoded values.
----@param playerAuraEffect PlayerAuraEffect
+---@param auraEffect UnitAuraEffect
 ---@param usedKey string
 ---@param name string
 ---@param effectSlot number|nil
-local function RemovePlayerAuraEffect(playerAuraEffect, usedKey, name, effectSlot)
+local function RemovePlayerAuraEffect(auraEffect, usedKey, name, effectSlot)
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
-    if not playerAuraEffect.value and not playerAuraEffect.scriptValue then
+    if not auraEffect.value and not auraEffect.scriptValue then
         _addon:PrintError("Player aura effect "..name.." has no value or scriptValue defined!");
         return;
     end
-    local value = playerAuraEffect.value or _addon.ScriptEffects.GetValue(playerAuraEffect.scriptValue);
-    _addon:RemoveAuraEffect(name, playerAuraEffect, value);
+    local value = auraEffect.value or _addon.ScriptEffects.GetValue(auraEffect.scriptValue);
+    _addon:RemoveAuraEffect(name, auraEffect, value);
 end
 
 --- Update player auras
@@ -51,7 +51,6 @@ function _addon:UpdatePlayerAuras(clearOnly)
     end
 
     local aurasChanged = false;
-    local auraConditions = self:GetAuraConditions();
 
     if not clearOnly then
         for i = 1, 40 do

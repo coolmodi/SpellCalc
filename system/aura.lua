@@ -2,7 +2,6 @@
 local _addon = select(2, ...);
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
 local stats = _addon.stats;
-local conditionsActive = 0;
 local toggledFlags = 0;
 
 --- Apply or remove effect for destination
@@ -168,11 +167,6 @@ local effectCustom = {
         ApplyOrRemove(apply, value, stats.intToMP5Pct, name);
         _addon:UpdateManaRegen();
     end,
-    [EFFECT_TYPE.CONDITION_TRIGGER] = function(apply, name, value)
-        conditionsActive = conditionsActive + value;
-        _addon:PrintDebug("Condition change!");
-        _addon:UpdatePlayerAuras();
-    end,
     [EFFECT_TYPE.JUDGEMENT_SPELL] = function(apply, name, value)
         if value > 0 then
             _addon.judgementSpell = value;
@@ -304,12 +298,6 @@ local function WeaponAuraUpdate(apply, name, effectBase, value)
         _addon:UpdateWeaponRestrictedAuras();
         weaponRestrictedAuras[name] = nil;
     end
-end
-
----Get current aura condition mask.
----@return integer
-function _addon:GetAuraConditions()
-    return conditionsActive;
 end
 
 --- Apply an aura effect.

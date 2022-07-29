@@ -472,10 +472,7 @@ _addon.itemSetData = {}
 ---@type table<number, UnitAuraEffect[]>
 _addon.itemEffects = {};
 
----@class PlayerAuraEffect : UnitAuraEffect
----@field condition nil|number
-
----@type table<number, PlayerAuraEffect[]>
+---@type table<number, UnitAuraEffect[]>
 _addon.aurasPlayer = {};
 
 ---@class EnchantData : UnitAuraEffect
