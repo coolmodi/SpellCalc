@@ -9,9 +9,9 @@ local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
 ---@param calcedSpell CalcedSpell
 local function AppendMitigation(calcedSpell)
     if SpellCalc_settings.ttHitChance then
-        local outstr = ("%.1f%%"):format(calcedSpell.hitChance);
+        local outstr = SCT:FormatNoTrailing0("%.2f%%", calcedSpell.hitChance);
         if SpellCalc_settings.ttHitDetail then
-            outstr = outstr..(" (%d%% + %.1f%%)"):format(calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus)
+            outstr = outstr..SCT:FormatNoTrailing0(" (%.2f%% + %.2f%%)", calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus);
             if calcedSpell.hitChanceBinaryLoss and calcedSpell.hitChanceBinaryLoss > 0 then
                 outstr = outstr .. (" (-%.1f%% %s)"):format(calcedSpell.hitChanceBinaryLoss, L.TT_BINARYMISS);
             end
@@ -208,7 +208,7 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
 
     if SpellCalc_settings.ttHit then
         SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), min, max, avg, nil,
-            L.TICKS, L.TICKS_TOOLTIP:format(calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
+            L.TICKS, SCT:FormatNoTrailing0(L.TICKS_TOOLTIP, calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
     end
 
     if SpellCalc_settings.ttCrit and critChance > 0 and minCrit > 0 then

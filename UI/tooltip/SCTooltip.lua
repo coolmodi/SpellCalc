@@ -35,6 +35,14 @@ function SCTooltip:Round(f)
     return math.floor(f + 0.5);
 end
 
+---Format string and remove trailing zeros.
+---@param str string
+---@return string
+function SCTooltip:FormatNoTrailing0(str, ...)
+    local r = str:format(...):gsub("%.0+",""):gsub("(%.%d*)0+","%1");
+    return r;
+end
+
 --- Add heading to tooltip
 ---@param text string @The heading text
 function SCTooltip:HeaderLine(text)
@@ -143,7 +151,7 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
     if completeBonus > 0 then
         if coefPct > 0 and coefAPPct > 0 then 
             -- SP and AP
-            self:SingleLine(L.TT_POWER, ("%s%.0f | %.1f%% * %d SP + %.1f%% * %d AP"):format(
+            self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP + %.1f%% * %d AP",
                 tickPart,
                 calcedEffect.effectivePower,
                 --completeBonus,
@@ -153,7 +161,7 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
                 calcedEffect.attackPower));
         elseif coefPct > 0 then 
             -- SP only
-            self:SingleLine(L.TT_POWER, ("%s%.0f | %.1f%% * %d SP"):format(
+            self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP",
                 tickPart,
                 calcedEffect.effectivePower,
                 --completeBonus,
@@ -161,7 +169,7 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
                 calcedEffect.spellPower));
         else 
             -- AP only
-            self:SingleLine(L.TT_POWER, ("%s%.0f | %.1f%% * %d AP"):format(
+            self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d AP",
                 tickPart,
                 calcedEffect.effectivePower,
                 --completeBonus,
@@ -238,7 +246,7 @@ end
 ---@param critChance number
 ---@return string
 function SCTooltip:CritStr(critChance)
-    return ("%.2f%% %s"):format(critChance, L.CHANCE);
+    return self:FormatNoTrailing0("%.2f%% %s", critChance, L.CHANCE);
 end
 
 --- Append data to tooltip if spell is known to the addon.

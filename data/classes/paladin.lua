@@ -270,6 +270,14 @@ _addon.aurasPlayer[54149] = { -- Infusion of Light 2
     }
 };
 
+_addon.aurasPlayer[54428] = { -- Divine Plea
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {-1073741824, 65536},
+        value = -50
+    }
+};
+
 _addon.aurasTarget[58597] = { -- Sacred Shield
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
