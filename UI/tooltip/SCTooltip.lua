@@ -83,13 +83,21 @@ end
 ---@param prefix string|nil
 ---@param lr string|nil
 ---@param tr string|nil
-function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, prefix, lr, tr)
-    local outstr = self:Round(min);
+---@param showMinDecimal boolean|nil Show decimal if only min value exist.
+function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, prefix, lr, tr, showMinDecimal)
+    local outstr;
 
     if max > min then
-        outstr = outstr.." - "..self:Round(max);
         if SpellCalc_settings.ttAverages then
-            outstr = outstr.." ("..self:Round(avg)..")";
+            outstr = ("%.0f - %.0f (%.0f)"):format(min, max, avg);
+        else
+            outstr = ("%.0f - %.0f"):format(min, max);
+        end
+    else
+        if showMinDecimal then
+            outstr = ("%.1f"):format(min);
+        else
+            outstr = ("%.0f"):format(min);
         end
     end
 
@@ -115,28 +123,52 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
         return;
     end
 
+    local completeBonus = calcedEffect.effectivePower;
     local coefPct = calcedEffect.effectiveSpCoef * 100;
-    local fullSP = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
-    local coefPart;
+    local coefAPPct = calcedEffect.effectiveApCoef * 100;
+    local ticks = tickOverride or calcedEffect.ticks or (not noCharge and calcedSpell.charges);
 
     if coefMult then
-        fullSP = fullSP * coefMult;
+        completeBonus = completeBonus * coefMult;
         coefPct = coefPct * coefMult;
+        coefAPPct = coefAPPct * coefMult;
     end
 
-    local ticks = tickOverride or calcedEffect.ticks
-
+    local tickPart = "";
     if ticks and ticks > 0 then
-        fullSP = fullSP * ticks;
-        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * ticks, ticks, coefPct);
-    elseif not noCharge and calcedSpell.charges and calcedSpell.charges > 0 then
-        fullSP = fullSP * calcedSpell.charges;
-        coefPart = ("%.1f%% (%dx %.1f%%)"):format(coefPct * calcedSpell.charges, calcedSpell.charges, coefPct)
-    else
-        coefPart = ("%.1f%%"):format(coefPct);
+        completeBonus = completeBonus * ticks;
+        tickPart = ticks.."x ";
     end
 
-    self:SingleLine(L.TT_POWER, ("%d | %s of %d"):format(self:Round(fullSP), coefPart, calcedEffect.spellPower));
+    if completeBonus > 0 then
+        if coefPct > 0 and coefAPPct > 0 then 
+            -- SP and AP
+            self:SingleLine(L.TT_POWER, ("%s%.0f | %.1f%% * %d SP + %.1f%% * %d AP"):format(
+                tickPart,
+                calcedEffect.effectivePower,
+                --completeBonus,
+                coefPct,
+                calcedEffect.spellPower,
+                coefAPPct,
+                calcedEffect.attackPower));
+        elseif coefPct > 0 then 
+            -- SP only
+            self:SingleLine(L.TT_POWER, ("%s%.0f | %.1f%% * %d SP"):format(
+                tickPart,
+                calcedEffect.effectivePower,
+                --completeBonus,
+                coefPct,
+                calcedEffect.spellPower));
+        else 
+            -- AP only
+            self:SingleLine(L.TT_POWER, ("%s%.0f | %.1f%% * %d AP"):format(
+                tickPart,
+                calcedEffect.effectivePower,
+                --completeBonus,
+                coefAPPct,
+                calcedEffect.attackPower));
+        end
+    end
 end
 
 --- Append efficiency stuff

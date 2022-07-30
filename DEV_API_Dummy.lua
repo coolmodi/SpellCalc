@@ -142,6 +142,20 @@ function GetSpellCritChance(schoolNum)
     return 123;
 end
 
+---Get attack power.
+---@param unit string
+---@return number base The unit's base attack power
+---@return number posBuff The total effect of positive buffs to attack power.
+---@return number negBuff The total effect of negative buffs to the attack power (a negative number)
+function UnitAttackPower(unit) end
+
+---Get ranged attack power.
+---@param unit string
+---@return number base The unit's base ranged attack power (seems to give a positive number even if no ranged weapon equipped)
+---@return number posBuff The total effect of positive buffs to ranged attack power.
+---@return number negBuff The total effect of negative buffs to the ranged attack power (a negative number)
+function UnitRangedAttackPower(unit) end
+
 ---Gets the player's current mana regeneration rates (in mana per 1 seconds). 
 ---@return number base @Full regen while outside the fsr
 ---@return number casting @Regen from mp5 and uninterrupted spirit/int regen

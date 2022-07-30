@@ -177,21 +177,49 @@ end
 local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
+    local triggeredSpell = calcedEffect.spellData;
+    local coefEffect = calcedEffect;
+    local coefMitSpell = calcedSpell;
+    local min, max, avg, minCrit, maxCrit, avgCrit, critChance, avgCombined;
+
+    if triggeredSpell then
+        local triggeredEffect = triggeredSpell[1];
+        isHeal = isHeal or bit.band(triggeredEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
+        min = triggeredEffect.min;
+        max = triggeredEffect.max;
+        avg = triggeredEffect.avg;
+        minCrit = triggeredEffect.minCrit;
+        maxCrit = triggeredEffect.maxCrit;
+        avgCrit = triggeredEffect.avgCrit;
+        critChance = triggeredSpell.critChance;
+        avgCombined = triggeredEffect.avgCombined;
+        coefEffect = triggeredEffect;
+        coefMitSpell = triggeredSpell;
+    else
+        min = calcedEffect.min;
+        max = calcedEffect.max;
+        avg = calcedEffect.avg;
+        minCrit = calcedEffect.minCrit;
+        maxCrit = calcedEffect.maxCrit;
+        avgCrit = calcedEffect.avgCrit;
+        critChance = calcedSpell.critChance;
+        avgCombined = calcedEffect.avgCombined;
+    end
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg, nil,
-            L.TICKS, L.TICKS_TOOLTIP:format(calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration));
+        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), min, max, avg, nil,
+            L.TICKS, L.TICKS_TOOLTIP:format(calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
     end
 
-    if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
+    if SpellCalc_settings.ttCrit and critChance > 0 and minCrit > 0 then
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, minCrit, maxCrit, avgCrit, nil, nil, SCT:CritStr(critChance), true);
     end
 
-    SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * calcedEffect.avgCombined));
-    SCT:AppendCoefData(calcedSpell, calcedEffect);
+    SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * avgCombined));
+    SCT:AppendCoefData(coefMitSpell, coefEffect, nil, calcedEffect.ticks);
 
     if not isHeal and effectNum == 1 then
-        AppendMitigation(calcedSpell);
+        AppendMitigation(coefMitSpell);
     end
 
     local isChannel = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.CHANNEL) > 0;
@@ -277,52 +305,6 @@ local function AppendCombinedEffect(calcedSpellss)
     if combSpam.ticksUsed > 0 and SpellCalc_settings.ttPerMana then
         SCT:DoubleLine(nil, nil, (isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT)..L.SPAM_SUFFIX, SCT:Round(combSpam.doneToOom));
     end
-end
-
---- Apend effect data for periodic trigger spells
----@param calcedSpell CalcedSpell
----@param effectNum number
----@param isHeal boolean
-local function AppendPTSA(calcedSpell, effectNum, isHeal)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
-    local triggeredSpell = calcedEffect.spellData;
-    local triggeredEffect = triggeredSpell[1];
-
-    isHeal = isHeal or bit.band(triggeredEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
-
-    if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), triggeredEffect.min, triggeredEffect.max, triggeredEffect.avg, nil,
-            L.TICKS, L.TICKS_TOOLTIP:format(calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration));
-    end
-
-    if SpellCalc_settings.ttCrit and triggeredSpell.critChance > 0 and triggeredEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, triggeredEffect.minCrit, triggeredEffect.maxCrit, triggeredEffect.avgCrit, nil,
-            nil, SCT:CritStr(triggeredSpell.critChance));
-    end
-
-    SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * triggeredEffect.avgCombined));
-
-    SCT:AppendCoefData(triggeredSpell, triggeredEffect, nil, calcedEffect.ticks);
-
-    if not isHeal and effectNum == 1 then
-        AppendMitigation(triggeredSpell);
-    end
-
-    local isChannel = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.CHANNEL) > 0;
-
-    if SpellCalc_settings.ttPerSecond then
-        local spersec = isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT;
-        if not isChannel then
-            local sperseccast = isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT;
-            local spersecdur = (isHeal and L.HEAL_OVER_TIME_SHORT or L.DMG_OVER_TIME_SHORT) .. " " .. spersec;
-            SCT:DoubleLine(sperseccast, ("%.1f"):format(calcedEffect.perSec), spersecdur, ("%.1f"):format(calcedEffect.perSecDurOrCD));
-        else
-            SCT:SingleLine(spersec, ("%.1f"):format(calcedEffect.perSec));
-        end
-    end
-
-    SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, isChannel);
 end
 
 --- Apend effect data for dmg shields
@@ -429,11 +411,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal)
     if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
         AppendDmgShieldEffect(calcedSpell, effectNum);
     elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
-        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
-            AppendPTSA(calcedSpell, effectNum, isHeal);
-        else
-            AppendDurationEffect(calcedSpell, effectNum, isHeal);
-        end
+        AppendDurationEffect(calcedSpell, effectNum, isHeal);
     elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.ABSORB) > 0 then
         AppendAbsorbEffect(calcedSpell, effectNum);
     elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0 then

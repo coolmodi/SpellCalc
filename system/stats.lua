@@ -88,6 +88,8 @@ _addon.stats = {
         [_addon.SCHOOL.SHADOW] = 0,
         [_addon.SCHOOL.ARCANE] = 0
     },
+    attackPower = 0,
+    attackPowerRanged = 0,
     attackSpeed = {
         mainhand = 0,
         offhand = 0,
@@ -171,6 +173,7 @@ _addon.stats = {
     earthfuryReturn = UniformStat(),
     shamanLightningOverload = SpellStatTable(),
     castManaRestoreAvg = UniformStat(),
+    modCriticalHealing = UniformStat(),
 };
 
 --- Update spell power stats from API
@@ -181,6 +184,19 @@ function _addon:UpdateSpellPower()
         _addon.stats.spellPower[i] = GetSpellBonusDamage(i);
     end
 
+    self:TriggerUpdate();
+end
+
+---Update attack power.
+---@param ranged boolean|nil
+function _addon:UpdateAttackPower(ranged)
+    if ranged then
+        local base, posBuff, negBuff = UnitRangedAttackPower("player");
+        self.stats.attackPowerRanged = base + posBuff + negBuff;
+    else
+        local base, posBuff, negBuff = UnitAttackPower("player");
+        self.stats.attackPower = base + posBuff + negBuff;
+    end
     self:TriggerUpdate();
 end
 
@@ -364,4 +380,6 @@ function _addon:FullUpdate()
     self:UpdatePower();
     self:UpdateManaRegen();
     self:UpdateGlyphs();
+    self:UpdateAttackPower();
+    self:UpdateAttackPower(true);
 end

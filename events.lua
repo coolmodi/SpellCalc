@@ -165,6 +165,16 @@ function handlers.GLYPH_UPDATED(slot)
     _addon:UpdateGlyphs(slot)
 end
 
+function handlers.UNIT_ATTACK_POWER(unit)
+    if unit ~= "player" then return end
+    _addon:UpdateAttackPower();
+end
+
+function handlers.UNIT_RANGED_ATTACK_POWER(unit)
+    if unit ~= "player" then return end
+    _addon:UpdateAttackPower(true);
+end
+
 frame:SetScript( "OnEvent",function(self, event, ...) 
 	handlers[event](...);
 end)

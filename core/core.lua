@@ -660,46 +660,52 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             --------------------------
             -- Effect bonus power scaling
 
-            if isHeal or effectData.forceScaleWithHeal then
-                calcedEffect.spellPower = stats.spellHealing;
-            elseif spellRankInfo.school == SCHOOL.PHYSICAL then
-                -- TODO: scale with AP
-            else
-                calcedEffect.spellPower = stats.spellPower[spellRankInfo.school];
-            end
+            -- Spell power
+            if effectData.coef > 0 then
+                calcedEffect.spellPower = (isHeal or effectData.forceScaleWithHeal) and stats.spellHealing or stats.spellPower[spellRankInfo.school];
+                calcedEffect.spellPower = calcedEffect.spellPower + extraSp;
+                local coef = effectData.coef;
 
-            calcedEffect.spellPower = extraSp + calcedEffect.spellPower;
+                if stats.spellModFlatSpellScale[spellId] then
+                    coef = coef + stats.spellModFlatSpellScale[spellId].val / 100;
+                    calcedSpell:AddToBuffList(stats.spellModFlatSpellScale[spellId].buffs);
+                end
 
-            -- Effective power
-            local coef = effectData.coef and effectData.coef or 0;
+                if stats.spellModPctSpellScale[spellId] then
+                    coef = coef * (100 + stats.spellModPctSpellScale[spellId].val) / 100;
+                    calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
+                end
 
-            if stats.spellModFlatSpellScale[spellId] then
-                coef = coef + stats.spellModFlatSpellScale[spellId].val / 100;
-                calcedSpell:AddToBuffList(stats.spellModFlatSpellScale[spellId].buffs);
-            end
+                if spellRankInfo.maxLevel > 0 then
+                    local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
+                    if downrank < 1 then
+                        coef = coef * downrank;
+                    end
+                end
 
-            if stats.spellModPctSpellScale[spellId] then
-                coef = coef * (100 + stats.spellModPctSpellScale[spellId].val) / 100;
-                calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
-            end
+                calcedEffect.effectiveSpCoef = coef * bonusMod;
+                calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
 
-            if spellRankInfo.maxLevel > 0 then
-                local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
-                if downrank < 1 then
-                    coef = coef * downrank;
+                -- TODO: LB idol only uses base coef, if ever used for something else this probably needs to change
+                if i == 1 and stats.spellModEff1FlatSpellpower[spellId] then
+                    calcedEffect.spellPower = calcedEffect.spellPower + stats.spellModEff1FlatSpellpower[spellId].val;
+                    calcedEffect.effectivePower = calcedEffect.effectivePower + stats.spellModEff1FlatSpellpower[spellId].val * effectData.coef;
+                    calcedSpell:AddToBuffList(stats.spellModEff1FlatSpellpower[spellId].buffs);
                 end
             end
 
-            calcedEffect.effectiveSpCoef = coef * bonusMod;
-            calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
-            calcedEffect.flatMod = flatMod;
-
-            -- TODO: LB idol only uses base coef, if ever used for something else this probably needs to change
-            if i == 1 and stats.spellModEff1FlatSpellpower[spellId] then
-                calcedEffect.spellPower = calcedEffect.spellPower + stats.spellModEff1FlatSpellpower[spellId].val;
-                calcedEffect.effectivePower = calcedEffect.effectivePower + stats.spellModEff1FlatSpellpower[spellId].val * effectData.coef;
-                calcedSpell:AddToBuffList(stats.spellModEff1FlatSpellpower[spellId].buffs);
+            -- Attack power
+            if effectData.coefAP > 0 then
+                
+                calcedEffect.attackPower = spellRankInfo.defType == DEF_TYPE.RANGED and stats.attackPowerRanged or stats.attackPower;
+                calcedEffect.effectiveApCoef = effectData.coefAP * bonusMod;
+                calcedEffect.effectivePower = calcedEffect.effectivePower + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
             end
+            print(spellName, effectData.coef, effectData.coefAP)
+            print(spellName, calcedEffect.effectiveSpCoef, calcedEffect.effectiveApCoef)
+            print(spellName, calcedEffect.spellPower, calcedEffect.attackPower)
+
+            calcedEffect.flatMod = flatMod;
 
             --------------------------
             -- Effect values
