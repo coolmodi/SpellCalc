@@ -111,7 +111,7 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
     }
 }
 
-function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}) {
+function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, _sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}) {
     console.log("Fixing pala coefs and effects");
     const HOLY_SHOCK_TRIGGERS: {[spellId: number]: {dmg: number, heal: number}} = {
         20473: {
@@ -162,22 +162,11 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
             // replace SoC judgement dummy spell id, it's inside even another spell
             if (isJudgeDummy(eff) == SealType.SOC) {
                 console.log("Replace SoC dummy id for " + eff.SpellID);
-                let jdId = eff.EffectBasePoints + 1;
+                let jdId = eff.EffectBasePoints + eff.EffectDieSides;
                 for (let jeffId in se) {
                     let jeff = se[jeffId];
                     if (jeff.SpellID == jdId) {
                         eff.EffectBasePoints = jeff.EffectBasePoints;
-                        jdId = jeff.EffectBasePoints + 1;
-                        break;
-                    }
-                }
-                // also /2 dmg, normal dmg should be that on a non-stunned target
-                for (let jeffId in se) {
-                    let jeff = se[jeffId];
-                    if (jeff.SpellID == jdId) {
-                        jeff.EffectBasePoints = Math.round(jeff.EffectBasePoints/2);
-                        jeff.EffectRealPointsPerLevel = jeff.EffectRealPointsPerLevel/2;
-                        jeff.EffectDieSides = Math.round(jeff.EffectDieSides/2);
                         break;
                     }
                 }
@@ -203,16 +192,17 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MELEE;
             }
 
-            // Make SOtC a dummy effect
-            if (isSeal(eff.SpellID, SealType.SOtC) && eff.EffectIndex == 0) {
-                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
-                eff.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY;
-                sm[eff.SpellID].SchoolMask = SCHOOL_MASK.PHYSICAL;
-            }
-
-            // Fix SoM having bad judgement ID
-            if (eff.SpellID === 348700 && eff.EffectIndex === 1) {
-                eff.EffectBasePoints = 31897;
+            // Fix SoW and SoL not having judgement ID
+            if (isSeal(eff.SpellID, SealType.SoW) && eff.EffectIndex == 0
+            || isSeal(eff.SpellID, SealType.SoL) && eff.EffectIndex == 0) {
+                const ce = cloneEntry(eff);
+                ce.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA,
+                ce.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY,
+                ce.EffectBasePoints = 54158;
+                ce.EffectTriggerSpell = 0;
+                ce.EffectDieSides = 0;
+                ce.EffectIndex = 2;
+                se[ce.ID] = ce;
             }
         }
     }

@@ -4,9 +4,10 @@ import { SpellEffect } from "./SpellData";
 export enum SealType {
     SOR = "SOR", 
     SOC = "SOC",
-    SOtC = "SOtC",
-    SoB = "SoB",
-    SoV = "SoV"
+    SoCor = "SoCor",
+    SoV = "SoV",
+    SoW = "SoW",
+    SoL = "SoL"
 }
 
 interface SealInfo {
@@ -20,7 +21,7 @@ interface SealData {
     }
 }
 
-const SEALDATA: SealData = JSON.parse(fs.readFileSync("data/sealData.json", "utf8"));
+const SEALDATA: SealData = JSON.parse(fs.readFileSync("data/wotlk/sealData.json", "utf8"));
 
 /**
  * Is spell a seal
@@ -34,14 +35,17 @@ export function isSeal(id: number, specific?: SealType) {
     if ((!specific || specific == SealType.SOC) && SEALDATA.seals.SOC.spells.indexOf(id) != -1) {
         return SealType.SOC;
     }
-    if ((!specific || specific == SealType.SOtC) && SEALDATA.seals.SOtC.spells.indexOf(id) != -1) {
-        return SealType.SOtC;
-    }
-    if ((!specific || specific == SealType.SoB) && SEALDATA.seals.SoB.spells.indexOf(id) != -1) {
-        return SealType.SoB;
+    if ((!specific || specific == SealType.SoCor) && SEALDATA.seals.SoCor.spells.indexOf(id) != -1) {
+        return SealType.SoCor;
     }
     if ((!specific || specific == SealType.SoV) && SEALDATA.seals.SoV.spells.indexOf(id) != -1) {
         return SealType.SoV;
+    }
+    if ((!specific || specific == SealType.SoW) && SEALDATA.seals.SoW.spells.indexOf(id) != -1) {
+        return SealType.SoW;
+    }
+    if ((!specific || specific == SealType.SoL) && SEALDATA.seals.SoL.spells.indexOf(id) != -1) {
+        return SealType.SoL;
     }
     return false;
 }

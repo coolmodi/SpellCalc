@@ -402,6 +402,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);
     end
 
+    if bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0 and stats.modCriticalHealing.val ~= 0 then
+        calcedSpell.critMult = calcedSpell.critMult * (1 + stats.modCriticalHealing.val / 100);
+        calcedSpell:AddToBuffList(stats.modCriticalHealing.buffs);
+    end
+
     if spellRankInfo.noCrit then
         calcedSpell.critChance = 0;
     end

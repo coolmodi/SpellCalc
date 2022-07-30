@@ -341,6 +341,7 @@ AddUniformStatTable(stats.hitBonus, "Melle/Ranged +hit", "%");
 AddSpellTable(stats.spellModFlatHitChance, nil, "%");
 
 AddUniformStatTable(stats.modhealingDone, "Healing done mod (all)", "%");
+AddUniformStatTable(stats.modCriticalHealing, "Crit. Healing done mod (all)", "%");
 
 AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
 AddSpellTable(stats.spellModPctDamageHealing, "Spell Pct Damage/Healing", "%");

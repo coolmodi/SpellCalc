@@ -66,7 +66,7 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     local scriptKey = effectBase.scriptKey;
     local type = effectBase.type;
 
-    print("Handling script effect", effectBase.scriptKey, apply)
+    --print("Handling script effect", effectBase.scriptKey, apply)
 
     if not scriptKey then
         _addon:PrintError("Aura "..name.." uses SCRIPT_ effect without scriptKey! Report this please.");
@@ -117,7 +117,7 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     if (type == EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE
     or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT)
     and effectBase.affectSpell then
-        print("Effect handler reached", effectBase.scriptKey)
+        --print("Effect handler reached", effectBase.scriptKey)
         scriptValueCache[scriptKey] = apply and value or nil;
         ApplyOrRemoveSpellSet(apply, effectBase, script);
         return;
@@ -140,16 +140,16 @@ end
 ---@param eff number
 ---@return number|nil
 function _addon.ScriptEffects.DoSpell(type, cs, spellId, ri, eff)
-    print("Doing spell scripts", type, spellId)
+    --print("Doing spell scripts", type, spellId)
     local rv = 0;
 
     if spellScripts[spellId]
     and spellScripts[spellId][type] then
-        print("Have spell scripts", type, spellId)
+        --print("Have spell scripts", type, spellId)
         for scriptKey, func in pairs(spellScripts[spellId][type]) do
             rv = rv + func(scriptValueCache[scriptKey], cs, spellId, ri, eff);
         end
-        print("Result after spell scripts: ", rv, type, spellId)
+        --print("Result after spell scripts: ", rv, type, spellId)
     end
 
     return rv;

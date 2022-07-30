@@ -1,191 +1,315 @@
 ---@type AddonEnv
 local _, _addon = ...;
 local _, playerClass = UnitClass("player");
-if playerClass ~= "PALADIN" then
-    return;
-end
+if playerClass ~= "PALADIN" then return end
 
-_addon.talentData = {
+_addon.talentDataRaw = {
     -----------------------------
     -- Holy
     -----------------------------
-    { -- Improved Seal of Righteousness
+    { -- Seals of the Pure
         tree = 1,
-        talent = 4,
+        tier = 1,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {134217728 + 1024},
+                affectSpell = {1024, 4196352}, -- TODO: SoR not included, intentional?
+                perPoint = 3
+            },
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {0, 2048},
                 perPoint = 3
             }
         }
     },
     { -- Healing Light
         tree = 1,
-        talent = 5,
+        tier = 2,
+        column = 1,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {-1073741824},
+                affectSpell = {-1071644672}, -- TODO: test
                 perPoint = 4
             }
         }
     },
     { -- Illumination
         tree = 1,
-        talent = 9,
+        tier = 3,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.ILLUMINATION,
-                perPoint = 12 -- Internally Illumination is still 100% return. Adjust to 60% here.
+                perPoint = 6 -- Internally Illumination is still 100% return. Adjust to 30% here.
             }
         }
     },
     { -- Sanctified Light
         tree = 1,
-        talent = 13,
+        tier = 5,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {-2147483648},
+                affectSpell = {-2145386496, 65536},
                 perPoint = 2
             }
         }
     },
-    { -- Purifying Power
+    { -- Judgements of the Pure
         tree = 1,
-        talent = 14,
+        tier = 9,
+        column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {0, 2},
-                perPoint = 10
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {33555456, 541068800, 24},
+                perPoint = 5
+            },
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {41943040, 536873984, 8},
+                perPoint = 5
             }
+        }
+    },
+    { -- Enlightened Judgements
+        tree = 1,
+        tier = 10,
+        column = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                perPoint = 2
+            },
+            {
+                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                perPoint = 2
+            },
         }
     },
     -----------------------------
     -- Protection
     -----------------------------
-    { -- Precision
+    { -- Divinity
         tree = 2,
-        talent = 3,
+        tier = 1,
+        column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
-                neededWeaponMask = _addon.WEAPON_TYPES_MASK.MELEE,
-                perPoint = 1
-            },
-            {
-                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
-                neededWeaponMask = _addon.WEAPON_TYPES_MASK.MELEE,
+                type = _addon.EFFECT_TYPE.PCT_HEALING,
                 perPoint = 1
             }
         }
     },
-    { -- One-Handed Weapon Specialization (only affect magic, physical modifier appears in the API for attack damage)
+    { -- Divine Guardian
         tree = 2,
-        talent = 17,
+        tier = 3,
+        column = 1,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                affectSpell = {0, 524288},
+                perPoint = 10
+            },
+        }
+    },
+    { -- One-Handed Weapon Specialization
+        tree = 2,
+        tier = 6,
+        column = 3,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_1H + _addon.WEAPON_TYPES_MASK.MACE_1H + _addon.WEAPON_TYPES_MASK.SWORD_1H,
-                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
-                perPoint = 1
+                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_1H +
+                    _addon.WEAPON_TYPES_MASK.MACE_1H +
+                    _addon.WEAPON_TYPES_MASK.SWORD_1H,
+                affectMask = _addon.SCHOOL_MASK.ALL,
+                values = {4, 7, 10}
             }
         }
     },
-    { -- Improved Holy Shield
+    { -- Touched by the Light
         tree = 2,
-        talent = 18,
+        tier = 9,
+        column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {0, 64},
-                perPoint = 10
-            },
-            {
-                type = _addon.EFFECT_TYPE.SPELLMOD_CHARGES,
-                affectSpell = {0, 64},
-                perPoint = 2
+                type = _addon.EFFECT_TYPE.GLOBAL_MOD_CRITICAL_HEALING,
+                values = 10
             }
         }
     },
     -----------------------------
     -- Retribution
     -----------------------------
-    { -- Improved Retribution Aura
+    { -- Sanctity of Battle
         tree = 3,
-        talent = 11,
+        tier = 4,
+        column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
-                affectSpell = {8},
-                perPoint = 25
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {0, 32770},
+                perPoint = 5
             }
         }
     },
     { -- Crusade
         tree = 3,
-        talent = 12,
+        tier = 4,
+        column = 4,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-                affectMask = _addon.CREATURE_TYPE_MASK.HUMANOID + _addon.CREATURE_TYPE_MASK.DEMON + _addon.CREATURE_TYPE_MASK.UNDEAD + _addon.CREATURE_TYPE_MASK.ELEMENTAL,
+                affectMask = _addon.CREATURE_TYPE_MASK.HUMANOID +
+                    _addon.CREATURE_TYPE_MASK.DEMON +
+                    _addon.CREATURE_TYPE_MASK.UNDEAD +
+                    _addon.CREATURE_TYPE_MASK.ELEMENTAL,
                 perPoint = 1
+            },
+            {
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.SCHOOL_MASK.ALL,
+                perPoint = 1
+            }
+        }
+    },
+    { -- Two-Handed Weapon Specialization
+        tree = 3,
+        tier = 5,
+        column = 1,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_2H +
+                    _addon.WEAPON_TYPES_MASK.MACE_2H +
+                    _addon.WEAPON_TYPES_MASK.SWORD_2H +
+                    _addon.WEAPON_TYPES_MASK.POLEARM,
+                affectMask = _addon.SCHOOL_MASK.ALL,
+                perPoint = 2
+            }
+        }
+    },
+    { -- Sanctified Retribution
+        tree = 3,
+        tier = 5,
+        column = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {8},
+                perPoint = 50
+            }
+        }
+    },
+    { -- The Art of War
+        tree = 3,
+        tier = 7,
+        column = 1,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {8388608, 163840},
+                perPoint = 5
             }
         }
     },
     { -- Fanaticism
         tree = 3,
-        talent = 21,
+        tier = 8,
+        column = 2,
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {1024, 8},
-                perPoint = 3
+                affectSpell = {8388608, 0, 8},
+                perPoint = 6
             }
         }
     },
+    { -- Sanctified Wrath
+        tree = 3,
+        tier = 8,
+        column = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {0, 128, 0},
+                perPoint = 25
+            }
+        }
+    },
+    -- TODO: Sheath of Light
+    -- TODO: Righteous Vengeance
 };
 
 _addon.aurasPlayer[20216] = { -- Divine Favor
-    {type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-    affectSpell = {2147483648 + 1073741824 + 2097152},
-    value = 100,}
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {-1071644672, 65536},
+        value = 100
+    }
 };
 
+_addon.aurasPlayer[53672] = { -- Infusion of Light 1
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {-2147483648},
+        value = 10
+    }
+};
+
+_addon.aurasPlayer[54149] = { -- Infusion of Light 2
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {-2147483648},
+        value = 20
+    }
+};
+
+_addon.aurasTarget[58597] = { -- Sacred Shield
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {1073741824},
+        value = 50
+    }
+}
+
 _addon.aurasPlayer[20050] = { -- Vengeance 1
-    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.HOLY,
-    value = 1}
+    {
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.HOLY + _addon.SCHOOL_MASK.PHYSICAL,
+        value = 1
+    }
 };
 
 _addon.aurasPlayer[20052] = { -- Vengeance 2
-    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.HOLY,
-    value = 2}
+    {
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.HOLY + _addon.SCHOOL_MASK.PHYSICAL,
+        value = 2
+    }
 };
 
 _addon.aurasPlayer[20053] = { -- Vengeance 3
-    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.HOLY,
-    value = 3}
-};
-
-_addon.aurasPlayer[20054] = { -- Vengeance 4
-    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.HOLY,
-    value = 4}
-};
-
-_addon.aurasPlayer[20055] = { -- Vengeance 5
-    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.HOLY,
-    value = 5}
+    {
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.HOLY + _addon.SCHOOL_MASK.PHYSICAL,
+        value = 3
+    }
 };
 
 _addon.aurasPlayer[31884] = { -- Avenging Wrath
-    {type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.SCHOOL_MASK.ALL,
-    value = 30}
+    {
+        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.SCHOOL_MASK.ALL,
+        value = 20
+    },
+    {
+        type = _addon.EFFECT_TYPE.PCT_HEALING,
+        value = 20
+    }
 }

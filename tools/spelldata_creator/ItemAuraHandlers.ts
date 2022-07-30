@@ -170,6 +170,7 @@ export class AuraHandlers
                 case 70654:
                 case 70757:
                 case 70760:
+                case 68082:
                     return;
                 case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
                     return {
@@ -341,6 +342,7 @@ export class AuraHandlers
                 case 14: // SPELLMOD_COST
                 case 2: // SPELLMOD_THREAT
                 case 6: // SPELLMOD_RADIUS
+                case 10: // SPELLMOD_CASTING_TIME
                 case 9: // SPELLMOD_NOT_LOSE_CASTING_TIME
                 case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
                 case 12: // TODO: SPELLMOD_EFFECT2

@@ -7,6 +7,9 @@ Add toggles in settings for foreign auras with conditional effects that can't be
 Missing auras
     Master Poisoner crit, somehow infer from poisons?
     Improved Faerie Fire hit (see above)
+    Improved Devotion Aura
+    Divinity?
+    Blessing of Sanctuary?
 ]]
 
 ---@type AddonEnv

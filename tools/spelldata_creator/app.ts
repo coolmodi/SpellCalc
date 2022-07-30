@@ -16,7 +16,7 @@ const CLASSES = [
     //"priest", 
     //"warlock",
     //"mage", 
-    //"paladin",
+    "paladin",
     //"shaman",
 
     //"hunter",
@@ -66,10 +66,8 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
             ei.coef = 0.1;
             return;
         }
-    
-        if (sealType == SealType.SOtC) return;
 
-        if (sealType == SealType.SoB) {
+        if (sealType == SealType.SoCor) {
             ei.weaponCoef = 0.35;
             return;
         }
@@ -431,7 +429,7 @@ function buildSpellInfo(pclass: string) {
         if (!spellcat) throw new Error("Sspell category not found!");
 
         // Skip physical spells except auto attack and SOtC for now
-        if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID, SealType.SOtC)) continue;
+        if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID)) continue;
 
         // Create rank info if needed
         if (!classInfo.rankInfo[spellId]) {
