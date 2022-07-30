@@ -222,8 +222,6 @@ export class SpellData {
                 }
             }
 
-            fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs, this.spellLevels);
-
             fs.writeFileSync("cache/spellDataCache.json", JSON.stringify({
                 se: this.spellEffects,
                 sc: this.spellCategories,
@@ -232,6 +230,7 @@ export class SpellData {
             }, null, 4));
         }
 
+        fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs, this.spellLevels, this.spellNames);
         console.log("SpellData created!");
     }
 

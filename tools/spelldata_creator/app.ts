@@ -56,14 +56,30 @@ const SpellClassSet = {
     SHAMAN: 11,
 }
 
+function getCorectBase(effect: SpellEffect)
+{
+    if (effect.EffectDieSides == 0 || effect.EffectBasePoints == 0 && effect.EffectDieSides <= 1) return effect.EffectBasePoints;
+    return effect.EffectBasePoints + 1;
+}
+
+function fillBaseAndRange(ei: EffectInfo, effect: SpellEffect)
+{
+    if (effect.EffectDieSides == 0 || effect.EffectBasePoints == 0 && effect.EffectDieSides <= 1)
+    {
+        ei.valueBase = effect.EffectBasePoints;
+        ei.valueRange = 0;
+        return;
+    }
+    ei.valueBase = effect.EffectBasePoints + 1;
+    ei.valueRange = effect.EffectDieSides - 1;
+}
+
 function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
     const sealType = isSeal(effect.SpellID);
     if (sealType !== false)
     {
         if (sealType == SealType.SOR) {
-            ei.valueBase = effect.EffectBasePoints + 1;
-            ei.valueRange = effect.EffectDieSides - 1;
-            ei.coef = 0.1;
+            fillBaseAndRange(ei, effect);
             return;
         }
 
@@ -82,9 +98,8 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
     if (effect.SpellID === 33076)
     {
         ri.charges = 5;
-        ei.valueBase = effect.EffectBasePoints + 1;
+        fillBaseAndRange(ei, effect);
         ei.coef = effect.EffectBonusCoefficient;
-        ei.valueRange = effect.EffectDieSides - 1;
         ri.forceHeal = true;
         return;
     }
@@ -93,9 +108,8 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
     if ([974, 32593, 32594].indexOf(effect.SpellID) > -1)
     {
         ri.charges = 6;
-        ei.valueBase = effect.EffectBasePoints + 1;
+        fillBaseAndRange(ei, effect);
         ei.coef = 0.286;
-        ei.valueRange = effect.EffectDieSides - 1;
         ri.forceHeal = true;
         return;
     }
@@ -124,15 +138,14 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             weaponCoef: 0,
         };
         const triggeredDummy = spellData.getSpellEffects(effect.EffectTriggerSpell);
-        const startTrigger = spellData.getSpellEffects(triggeredDummy[0].EffectBasePoints + 1);
+        const startTrigger = spellData.getSpellEffects(getCorectBase(triggeredDummy[0]));
         if (startTrigger.length == 0) throw new Error("Failed to get spell effects for Starfall trigger!");
         for (const teff2 of startTrigger)
         {
             if (teff2.EffectIndex == 0)
             {
                 // The main hit of a star
-                rankInfo.effects[effectNum].valueBase = teff2.EffectBasePoints + 1;
-                rankInfo.effects[effectNum].valueRange = teff2.EffectDieSides - 1;
+                fillBaseAndRange(rankInfo.effects[effectNum], teff2);
             }
             else if (teff2.EffectIndex == 1)
             {
@@ -170,13 +183,14 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         auraType: effect.EffectAura,
         coef: effect.EffectBonusCoefficient,
         coefAP: effect.BonusCoefficientFromAP,
-        valueBase: effect.EffectBasePoints + 1,
-        valueRange: effect.EffectDieSides - 1,
+        valueBase: 0,
+        valueRange: 0,
         valuePerLevel: effect.EffectRealPointsPerLevel,
         forceScaleWithHeal: false,
         period: 0,
         weaponCoef: 0,
     };
+    fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
     if (saopts && saopts.CumulativeAura > 1) rankInfo.effects[effectNum].auraStacks = saopts.CumulativeAura;
 
@@ -236,13 +250,14 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
         effectType: effect.Effect,
         coef: effect.EffectBonusCoefficient,
         coefAP: effect.BonusCoefficientFromAP,
-        valueBase: effect.EffectBasePoints + 1,
-        valueRange: effect.EffectDieSides - 1,
+        valueBase: 0,
+        valueRange: 0,
         valuePerLevel: effect.EffectRealPointsPerLevel,
         forceScaleWithHeal: false,
         period: 0,
         weaponCoef: 0 
     };
+    fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
     if (effect.EffectChainTargets > 1 && effect.EffectChainAmplitude < 1)
     {
@@ -293,13 +308,14 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
             coefAP: effect.BonusCoefficientFromAP,
-            valueBase: effect.EffectBasePoints + 1,
-            valueRange: effect.EffectDieSides - 1,
+            valueBase: 0,
+            valueRange: 0,
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
             weaponCoef: 0 
         };
+        fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
         if (effect.EffectChainTargets > 1 && effect.EffectChainAmplitude < 1)
         {
@@ -324,13 +340,14 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             effectType: effect.Effect,
             coef: effect.EffectBonusCoefficient,
             coefAP: effect.BonusCoefficientFromAP,
-            valueBase: effect.EffectBasePoints + 1,
-            valueRange: effect.EffectDieSides - 1,
+            valueBase: 0,
+            valueRange: 0,
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
             weaponCoef: 1
         };
+        fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
 
     [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum, spellName) => {
@@ -338,7 +355,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             if (rankInfo.effects[0].weaponCoef == 0) {
                 throw new Error("E1 is SPELL_EFFECT_WEAPON_PERCENT_DAMAGE but E0 doesn't add a weapon coef!");
             }
-            rankInfo.effects[0].weaponCoef *= (effect.EffectBasePoints + 1) / 100;
+            rankInfo.effects[0].weaponCoef *= getCorectBase(effect) / 100;
             return;
         }
 
@@ -351,7 +368,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: (effect.EffectBasePoints + 1) / 100
+            weaponCoef: getCorectBase(effect) / 100
         };
 
         // SoC "fix"

@@ -676,7 +676,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
                 end
 
-                if spellRankInfo.maxLevel > 0 then
+                if spellRankInfo.maxLevel > 0 and bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) == 0 then
                     local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
                     if downrank < 1 then
                         coef = coef * downrank;

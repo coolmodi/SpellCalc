@@ -21,17 +21,8 @@ local function SoR(calcedSpell, effectNum)
         SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 
-    if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L.TT_HITS_OVER_DURATION, ("%.1f"):format(calcedEffect.ticks));
-        SCT:SingleLine(L.DAMAGE_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
-    end
-
     if SpellCalc_settings.ttPerSecond then
         SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
-    end
-
-    if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine(L.DMG_PER_MANA_SHORT, ("%.2f"):format(calcedEffect.perResource));
     end
 end
 

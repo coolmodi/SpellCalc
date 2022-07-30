@@ -9,6 +9,8 @@ _addon.itemEffects[32409] = { -- Relentless Earthstorm Diamond
     }
 }
 _addon.itemEffects[34220] = _addon.itemEffects[32409]; -- Chaotic Skyfire Diamond
+_addon.itemEffects[41398] = _addon.itemEffects[32409]; -- Relentless Earthsiege Diamond
+_addon.itemEffects[41285] = _addon.itemEffects[32409]; -- Chaotic Skyflare Diamond
 
 _addon.itemEffects[25901] = { -- Insightful Earthstorm Diamond
     {

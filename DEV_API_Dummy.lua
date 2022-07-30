@@ -156,6 +156,14 @@ function UnitAttackPower(unit) end
 ---@return number negBuff The total effect of negative buffs to the ranged attack power (a negative number)
 function UnitRangedAttackPower(unit) end
 
+---Get melee haste.
+---@return number haste in percent.
+function GetHaste() end
+
+---Get ranged haste.
+---@return number haste in percent.
+function GetRangedHaste() end
+
 ---Gets the player's current mana regeneration rates (in mana per 1 seconds). 
 ---@return number base @Full regen while outside the fsr
 ---@return number casting @Regen from mp5 and uninterrupted spirit/int regen

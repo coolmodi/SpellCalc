@@ -72,7 +72,6 @@ end
 
 local dummyAuraHandlers = {};
 
--- TBC: bonus damage dependent on weapon speed?
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
 ---@param spellRankInfo SpellRankInfo
@@ -85,36 +84,25 @@ local function SealOfRighteousness(calcedSpell, effNum, spellRankInfo, effCastTi
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    local as = stats.attackSpeed.mainhand;
-    local rankBase = (effectData.valueBase + GetLevelBonus(spellRankInfo, effectData)) * 1.2 * 1.03 * as / 100;
-    local weaponBase = 0.03 * (stats.attackDmg.mainhand.max + stats.attackDmg.mainhand.min) / 2;
-    local dmgbase;
+    -- Formula is: Base_MH_Atk_Speed * (coef * SP + coefAP * AP)
 
-    if _addon:IsTwoHandEquipped() then
-        dmgbase = 1.2 * rankBase + weaponBase + 1;
-        calcedEffect.effectiveSpCoef = 0.108 * as * effectMod;
-    else
-        dmgbase = 0.85 * rankBase + weaponBase - 1;
-        calcedEffect.effectiveSpCoef = 0.092 * as * effectMod;
-    end
+    local atkSpeed = stats.attackSpeed.mainhand;
+    local baseAtkSpeed = atkSpeed / (1 - GetHaste()/100);
 
-    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
-    calcedEffect.min = (dmgbase + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
+    calcedEffect.effectiveSpCoef = calcedEffect.effectiveSpCoef * baseAtkSpeed;
+    calcedEffect.effectiveApCoef = calcedEffect.effectiveApCoef * baseAtkSpeed;
+    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
+
+    calcedEffect.min = calcedEffect.effectivePower;
     calcedEffect.avg = calcedEffect.min
     calcedEffect.avgCombined = calcedEffect.avg;
 
     local mmit = calcedSpell.meleeMitigation;
-    local triggers = math.floor(calcedSpell.duration / as);
     local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
-    local triggerHits = triggers * effectiveHitChance;
+    local avgAfterResist = calcedEffect.avg * (1 - calcedSpell.avgResist) * effectiveHitChance;
 
-    local avgAfterResist = calcedEffect.avg * (1 - calcedSpell.avgResist);
-    local avgTriggerHits = triggerHits * avgAfterResist;
-
-    calcedEffect.avgAfterMitigation = avgTriggerHits;
-    calcedEffect.ticks = triggerHits;
-    calcedEffect.perSec = avgTriggerHits / calcedSpell.duration;
-    calcedEffect.perResource = avgTriggerHits / calcedSpell.effectiveCost;
+    calcedEffect.avgAfterMitigation = avgAfterResist;
+    calcedEffect.perSec = avgAfterResist / atkSpeed;
 end
 
 ---@param calcedSpell CalcedSpell

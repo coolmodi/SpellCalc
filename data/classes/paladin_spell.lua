@@ -413,10 +413,10 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 1,
+                valueBase = 0,
                 valueRange = 0,
                 coef = 0.32,
-                coefAP = 0,
+                coefAP = 0.2,
             },
         }
     },
@@ -635,8 +635,8 @@ _addon.spellRankInfo = {
                 auraType = 4,
                 valueBase = 0,
                 valueRange = 0,
-                coef = 0.1,
-                coefAP = 0,
+                coef = 0.044,
+                coefAP = 0.022,
             },
         }
     },
@@ -794,21 +794,6 @@ _addon.spellRankInfo = {
                 valueBase = 481,
                 valueRange = 38,
                 coef = 0.807,
-                coefAP = 0,
-            },
-        }
-    },
-    [25997] = { -- Eye for an Eye(Rank 1)
-        spellLevel = 1,
-        maxLevel = 0,
-        school = 2,
-        defType = 1,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 1,
-                valueRange = 0,
-                coef = 0,
                 coefAP = 0,
             },
         }
@@ -1073,7 +1058,7 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 1,
+                valueBase = 0,
                 valueRange = 0,
                 coef = 0.22,
                 coefAP = 0.14,
@@ -1589,7 +1574,7 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 1,
+                valueBase = 0,
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
@@ -1621,7 +1606,7 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 1,
+                valueBase = 0,
                 valueRange = 0,
                 coef = 0.22,
                 coefAP = 0.14,
@@ -1675,7 +1660,7 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 1,
+                valueBase = 0,
                 valueRange = 0,
                 coef = 0.25,
                 coefAP = 0.16,

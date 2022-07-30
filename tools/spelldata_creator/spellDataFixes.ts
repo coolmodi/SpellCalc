@@ -1,5 +1,6 @@
-import { SpellEffect, SpellCategory, SpellMisc, SpellLevel } from "./SpellData";
+import { SpellEffect, SpellCategory, SpellMisc, SpellLevel, SpellName } from "./SpellData";
 import { isJudgeDummy, SealType, isSeal } from "./paladinCrap";
+import * as fs from "fs";
 
 // This isn't used anywhere, just put something there just in case
 let effCustIndex = 999900;
@@ -313,11 +314,41 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
     }
 }
 
-export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}) {
+function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: SpellName})
+{
+    console.log("Fixing coefs");
+    const data: {
+        names: { [spellName: string]: { index: number, ap?: number, sp?: number } },
+        ids: { [spellId: number]: { index: number, ap?: number, sp?: number } },
+    } = JSON.parse(fs.readFileSync("data/wotlk/missingCoef.json", "utf8"));
+
+    for (const effId in se)
+    {
+        const eff = se[effId];
+        if (data.ids[eff.SpellID] && eff.EffectIndex == data.ids[eff.SpellID].index)
+        {
+            const thisData = data.ids[eff.SpellID];
+            if (thisData.ap) eff.BonusCoefficientFromAP = thisData.ap;
+            if (thisData.sp) eff.EffectBonusCoefficient = thisData.sp;
+            continue;
+        }
+
+        const sname = sn[eff.SpellID]?.Name_lang;
+        if (sname && data.names[sname] && eff.EffectIndex == data.names[sname].index)
+        {
+            const thisData = data.names[sname];
+            if (thisData.ap) eff.BonusCoefficientFromAP = thisData.ap;
+            if (thisData.sp) eff.EffectBonusCoefficient = thisData.sp;
+        }
+    }
+}
+
+export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}, sn: {[spellId: number]: SpellName}) {
     paladinFix(se, sc, sm, sl);
     priestFix(se, sm);
     mageFix(se);
     druidFixes(se);
     warlockFixes(se);
     shamanFix(se, sm);
+    coefFixes(se, sn);
 }
