@@ -189,7 +189,7 @@ _addon.talentDataRaw = {
                     _addon.WEAPON_TYPES_MASK.MACE_2H +
                     _addon.WEAPON_TYPES_MASK.SWORD_2H +
                     _addon.WEAPON_TYPES_MASK.POLEARM,
-                affectMask = _addon.SCHOOL_MASK.ALL,
+                affectMask = _addon.SCHOOL_MASK.PHYSICAL,
                 perPoint = 2
             }
         }
