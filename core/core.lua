@@ -832,7 +832,7 @@ end
 ---@param spellID number
 ---@return number|nil
 function _addon:GetHandledSpellID(spellID)
-    if spellID == self.JUDGEMENT_ID then
+    if self.JUDGEMENT_IDS[spellID] then
         if not self.judgementSpell then
             return;
         end

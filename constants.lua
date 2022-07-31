@@ -153,6 +153,11 @@ _addon.MELEE_CLASSES = {
 }
 
 _addon.JUDGEMENT_ID = 20271;
+_addon.JUDGEMENT_IDS = {
+    [_addon.JUDGEMENT_ID] = true,
+    [53407] = true,
+    [53408] = true,
+}
 
 _addon.WEAPON_SUBCLASS = {
     AXE_1H = 0,

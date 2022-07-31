@@ -172,7 +172,7 @@ local function SetSlotSpell(slot, spellId)
         return;
     end
 
-    if spellId == nil or (spellId ~= _addon.JUDGEMENT_ID and not _addon:GetHandledSpellID(spellId)) then
+    if spellId == nil or (not _addon.JUDGEMENT_IDS[spellId] and not _addon:GetHandledSpellID(spellId)) then
         _addon:PrintDebug("Set slot "..slot.." nil because spell "..tostring(spellId).." is nil or not handled");
         spellsInBar[slot] = nil;
         needsUpdate[slot] = nil;
