@@ -148,9 +148,11 @@ _addon.aurasPlayer = {
     },
     -- 28486 "Scourgebane Draught" 30 AP vs undead
     [6562] = { -- Heroic Presence
-        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1}
+        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1},
+        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1}
     },
     [28878] = { -- Inspiring Presence
+        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1},
         {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1}
     },
     [49016] = { -- Hysteria

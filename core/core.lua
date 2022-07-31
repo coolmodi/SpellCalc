@@ -712,7 +712,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
             -- Attack power
             if effectData.coefAP > 0 then
-                calcedEffect.attackPower = spellRankInfo.defType == DEF_TYPE.RANGED and stats.attackPowerRanged or stats.attackPower;
+                if spellRankInfo.defType == DEF_TYPE.RANGED and stats.attackDmg.ranged.min > 0 then
+                    calcedEffect.attackPower = stats.attackPowerRanged;
+                else
+                    calcedEffect.attackPower = stats.attackPower;
+                end
                 calcedEffect.effectiveApCoef = effectData.coefAP * bonusMod;
                 calcedEffect.effectivePower = calcedEffect.effectivePower + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
             end

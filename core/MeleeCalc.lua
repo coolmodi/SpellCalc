@@ -30,38 +30,10 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
     local ldef = tData.level * 5; -- Level based def value
     local latk = 5 * UnitLevel("player"); -- Level based attack value
     local ratk = latk; -- Real attack value
+    self.isPvP = tData.isPlayer;
 
-    if tData.isPlayer then
-        if not isRanged then
-            if race == "Orc" then
-                local slot = isOffhand and "offHand" or "mainHand";
-                local WSC = _addon.WEAPON_SUBCLASS;
-                if _addon:IsWeaponTypeEquipped(WSC.AXE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.AXE_2H, slot) then
-                    ratk = ratk + 5;
-                end
-            elseif race == "Human" then
-                local slot = isOffhand and "offHand" or "mainHand";
-                local WSC = _addon.WEAPON_SUBCLASS;
-                if _addon:IsWeaponTypeEquipped(WSC.SWORD_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.SWORD_2H, slot)
-                or _addon:IsWeaponTypeEquipped(WSC.MACE_1H, slot) or _addon:IsWeaponTypeEquipped(WSC.MACE_2H, slot) then
-                    ratk = ratk + 5;
-                end
-            end
-        else
-            if race == "Troll" then
-                if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.BOW, "ranged") then
-                    ratk = ratk + 5;
-                end
-            elseif race == "Dwarf" then
-                if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.GUN, "ranged") then
-                    ratk = ratk + 5;
-                end
-            end
-        end
-
-        self.isPvP = true;
-    else
-        if isRanged then
+    if not self.isPvP then
+        if isRanged and stats.attackDmg.ranged.min > 0 then
             ratk = stats.attack.ranged;
         else
             ratk = isOffhand and stats.attack.offhand or stats.attack.mainhand;
@@ -154,7 +126,7 @@ function MeleeCalc:GetCrit()
         crit = crit + adDiff * 0.04;
     end
 
-    -- TODO: get auracrit so we know we have some, or just take it as granted?
+    -- NOTE: Maybe get auracrit so we know we have some, or just take it as granted?
     if self.levelDiff > 2 then
         crit = crit - 1.8;
     end
