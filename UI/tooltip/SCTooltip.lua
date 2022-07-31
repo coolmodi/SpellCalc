@@ -39,7 +39,7 @@ end
 ---@param str string
 ---@return string
 function SCTooltip:FormatNoTrailing0(str, ...)
-    local r = str:format(...):gsub("%.0+",""):gsub("(%.%d*)0+","%1");
+    local r = str:format(...):gsub("%.0+(%D)","%1"):gsub("(%.%d*)0+","%1");
     return r;
 end
 
