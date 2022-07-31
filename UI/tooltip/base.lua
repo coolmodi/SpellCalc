@@ -401,6 +401,46 @@ local function AppendAutoAttack(calcedSpell, effectNum)
     end
 end
 
+--- Apend effect data for duration damage or heal
+---@param calcedSpell CalcedSpell
+---@param effectNum number
+local function ManaRestoreEffect(calcedSpell, effectNum)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effectNum];
+    local triggeredSpell = calcedEffect.spellData;
+    local min, max, avg, avgCombined;
+
+    if triggeredSpell then
+        local triggeredEffect = triggeredSpell[1];
+        min = triggeredEffect.min;
+        max = triggeredEffect.max;
+        avg = triggeredEffect.avg;
+        avgCombined = triggeredEffect.avgCombined;
+    else
+        min = calcedEffect.min;
+        max = calcedEffect.max;
+        avg = calcedEffect.avg;
+        avgCombined = calcedEffect.avgCombined;
+    end
+
+    if SpellCalc_settings.ttHit then
+        if calcedSpell.duration and calcedSpell.duration > 0 then
+            SCT:AppendMinMaxAvgLine(L["Mana"], min, max, avg, nil,
+                L.TICKS, SCT:FormatNoTrailing0(L.TICKS_TOOLTIP, calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
+        else
+            SCT:AppendMinMaxAvgLine(L["Mana"], min, max, avg);
+        end
+    end
+
+    if calcedSpell.duration and calcedSpell.duration > 0 then
+        SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * avgCombined));
+    end
+
+    if calcedEffect.perSec and calcedEffect.perSec > 0 then
+        SCT:SingleLine(L.TT_PROCCHANCE, SCT:FormatNoTrailing0("%.2f%%", calcedEffect.perSec * 100));
+    end
+end
+
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 ---@param isHeal boolean
@@ -418,6 +458,8 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal)
         AppendAutoAttack(calcedSpell, effectNum);
     elseif calcedEffect.effectFlags == 0 or calcedEffect.effectFlags == SPELL_EFFECT_FLAGS.HEAL then
         AppendDirectEffect(calcedSpell, effectNum, isHeal);
+    elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0 then
+        ManaRestoreEffect(calcedSpell, effectNum, isHeal);
     else
         return false;
     end

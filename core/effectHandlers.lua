@@ -81,8 +81,6 @@ local dummyAuraHandlers = {};
 local function SealOfRighteousness(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
-    ---@type SpellRankEffectData
-    local effectData = spellRankInfo.effects[effNum];
 
     -- Formula is: Base_MH_Atk_Speed * (coef * SP + coefAP * AP)
 
@@ -262,6 +260,73 @@ local function Starfall(calcedSpell, effNum, spellRankInfo, effCastTime, effectM
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
 end
 
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function DivinePlea(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    calcedEffect.min = stats.manaMax * 0.05;
+    calcedEffect.max = calcedEffect.min;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.min;
+    calcedEffect.ticks = 5;
+    calcedEffect.tickPeriod = 3;
+    calcedSpell.duration = 15;
+    calcedEffect.avgAfterMitigation = calcedEffect.avg * calcedEffect.ticks;
+end
+
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function Innervate(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    --TODO: Glyph of Innervate.
+    calcedEffect.min = stats.baseMana * 2.25 / 10;
+    calcedEffect.max = calcedEffect.min;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.min;
+    calcedEffect.ticks = 10;
+    calcedEffect.tickPeriod = 1;
+    calcedSpell.duration = 10;
+    calcedEffect.avgAfterMitigation = calcedEffect.avg * calcedEffect.ticks;
+end
+
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function ArcaneTorrent(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    calcedEffect.min = stats.manaMax * spellRankInfo.effects[effNum].valueBase/100;
+    calcedEffect.max = calcedEffect.min;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.min;
+    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
+end
+
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+local function SealOfWisdomMelee(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
+    ArcaneTorrent(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName);
+    local baseAtkSpeed = stats.attackSpeed.mainhand / (1 - GetHaste()/100);
+    calcedSpell[effNum].perSec = 15/60 * baseAtkSpeed; -- 15 PPM, this should be the proc chance
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
@@ -270,6 +335,10 @@ dummyAuraHandlers[GetSpellInfo(31892)] = SealOfBloodMartyr; -- Seal of Blood
 dummyAuraHandlers[GetSpellInfo(348700)] = SealOfBloodMartyr; -- Seal of the Martyr
 dummyAuraHandlers[GetSpellInfo(31801)] = SealOfVengeance;
 dummyAuraHandlers[GetSpellInfo(48505)] = Starfall;
+dummyAuraHandlers[GetSpellInfo(54428)] = DivinePlea;
+dummyAuraHandlers[GetSpellInfo(29166)] = Innervate;
+dummyAuraHandlers[GetSpellInfo(20166)] = SealOfWisdomMelee;
+dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler
@@ -487,7 +556,8 @@ auraHandler[AURA_TYPES.SPELL_AURA_MANA_SHIELD] = ManaShield;
 auraHandler[AURA_TYPES.SPELL_AURA_SCHOOL_ABSORB] = AbsorbAura;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL] = PeriodicTriggerSpell;
 auraHandler[AURA_TYPES.SPELL_AURA_DUMMY] = DummyAura;
-
+auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_ENERGIZE] = DummyAura;
+auraHandler[AURA_TYPES.SPELL_AURA_OBS_MOD_MANA] = DummyAura;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Effect Hanlder
@@ -721,6 +791,17 @@ local function AutoAttack(_, calcedSpell, effNum, spellRankInfo, effCastTime, ef
     ohd.perSec = ohd.avgAfterMitigation / stats.attackSpeed.offhand;
 end
 
+--- Handle SPELL_EFFECT_ENERGIZE_PCT
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+---@param spellId number
+local function EnergizePct(_, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
+    auraHandler[AURA_TYPES.SPELL_AURA_DUMMY](calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd);
+end
 
 effHandler[EFFECT_TYPES.SPELL_EFFECT_SCHOOL_DAMAGE] = SchoolDamage;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_HEALTH_LEECH] = SchoolDamage;
@@ -729,3 +810,4 @@ effHandler[EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_PERSISTENT_AREA_AURA] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_ATTACK] = AutoAttack;
+effHandler[EFFECT_TYPES.SPELL_EFFECT_ENERGIZE_PCT] = EnergizePct;

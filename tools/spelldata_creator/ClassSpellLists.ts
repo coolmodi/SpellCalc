@@ -14,7 +14,8 @@ const DO_EFFECTS = [
     EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE,
     EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY,
     EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL,
-    EFFECT_TYPE.SPELL_EFFECT_DUMMY
+    EFFECT_TYPE.SPELL_EFFECT_DUMMY,
+    EFFECT_TYPE.SPELL_EFFECT_ENERGIZE_PCT,
 ];
 
 const DO_AURAS = [
@@ -28,6 +29,8 @@ const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL,
     AURA_TYPE.SPELL_AURA_DUMMY,
     AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE,
+    AURA_TYPE.SPELL_AURA_OBS_MOD_MANA,
+    AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE
 ];
 
 const DMG_SHIELD_DATA: { [index: string]: boolean } = {
@@ -45,7 +48,7 @@ const TRIGGER_SPELL_IGNORE: { [spellName: string]: boolean } = {
     "Nature's Grasp": true,
     "Seal of Justice": true,
     "Seal of Light": true, // no scaling, no need to handle
-    "Seal of Wisdom": true,
+    //"Seal of Wisdom": true,
     "Barkskin": true,
 }
 
@@ -97,6 +100,7 @@ export class ClassSpellLists
     {
         const validEffects: SpellEffect[] = [];
         let spellEffects = this.spellData.getSpellEffects(spellId);
+        const spellName = this.spellData.getSpellName(spellId).Name_lang;
 
         for (let i = 0; i < spellEffects.length; i++)
         {
@@ -119,17 +123,16 @@ export class ClassSpellLists
 
                 if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL)
                 {
-                    let spellName = this.spellData.getSpellName(effect.SpellID).Name_lang;
                     if (TRIGGER_SPELL_IGNORE[spellName])
                     {
                         console.log("Ignoring spell " + spellName);
                         continue;
                     }
-                    if (!DMG_SHIELD_DATA[spellName])
+                    /* if (!DMG_SHIELD_DATA[spellName])
                     {
                         console.error("Spell " + effect.SpellID + " " + spellName + " not handled correctly!");
                         throw "SPELL_AURA_PROC_TRIGGER_SPELL not handled!";
-                    }
+                    } */
                     console.log("have trigger aura " + effect.SpellID + " " + spellName);
                     if (!this.addTriggeredSpellIfValid(effect.EffectTriggerSpell, binaryCache, list)) throw new Error("Triggered spell has no valid effects!");
                 }
@@ -172,8 +175,9 @@ export class ClassSpellLists
                     // only add dummy auras we want
                     if (
                         !(effect.EffectIndex == 0 && isSeal(effect.SpellID)) // SoR or SoC attack effect
-                        && effect.SpellID !== 33076 // PoM
-                        && [974, 32593, 32594].indexOf(effect.SpellID) === -1 // Earth Shield
+                        && spellName != "Prayer of Mending"
+                        && spellName != "Earth Shield"
+                        && !(spellName == "Sacred Shield" && effect.EffectIndex == 0)
                     ) continue;
                 }
             }

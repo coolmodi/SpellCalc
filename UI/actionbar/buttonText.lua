@@ -7,6 +7,7 @@ local buttonFontStrings = {};
 local isSetup = nil;
 local colorHarm = {1, 1, 0.3};
 local colorHelp = {0.3, 1, 0.3};
+local colorMana = {0.1, 0.7, 1};
 
 ------------------------------------------------------------------------
 -- Button Fontstring
@@ -36,13 +37,17 @@ end
 --- Set text color to dmg or heal.
 ---@param self table
 ---@param isHeal boolean
-local function SetIsHeal(self, isHeal)
+---@param isMana boolean|nil
+local function SetIsHeal(self, isHeal, isMana)
     if isHeal then
         self:SetTextColor(colorHelp[1], colorHelp[2], colorHelp[3]);
+    elseif isMana then
+        self:SetTextColor(colorMana[1], colorMana[2], colorMana[3]);
     else
         self:SetTextColor(colorHarm[1], colorHarm[2], colorHarm[3]);
     end
     self.isHeal = isHeal;
+    self.isMana = isMana;
 end
 
 --- Add string to the given button frame.
@@ -146,9 +151,10 @@ function _addon:SetupActionButtonText()
         local font = LSM:Fetch("font", SpellCalc_settings.abFont);
         colorHarm = SpellCalc_settings.abColorHarm;
         colorHelp = SpellCalc_settings.abColorHelp;
+        colorMana = SpellCalc_settings.abColorMana;
         for _, v in pairs(buttonFontStrings) do
             v:SetFont(font, SpellCalc_settings.abSize, SpellCalc_settings.abFontFlags);
-            v:SetIsHeal(v.isHeal);
+            v:SetIsHeal(v.isHeal, v.isMana);
         end
     end;
 
@@ -169,12 +175,13 @@ function _addon:SetupActionButtonText()
     ---@param slot number
     ---@param text string
     ---@param isHeal boolean|nil
-    buttonText.SetButtonText = function(slot, text, isHeal)
+    ---@param isMana boolean|nil
+    buttonText.SetButtonText = function(slot, text, isHeal, isMana)
         if buttonFontStrings[slot] == nil then
             return;
         end
         buttonFontStrings[slot]:SetText(text);
-        buttonFontStrings[slot]:SetIsHeal(isHeal);
+        buttonFontStrings[slot]:SetIsHeal(isHeal, isMana);
     end
 
     if _G["DominosActionButton1"] ~= nil then

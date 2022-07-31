@@ -44,12 +44,14 @@ local DEFAULTSETTINGS = {
 	["abDurationValue"] = "allTicks",
 	["abSealValue"] = "avg",
 	abDmgShieldValue = "avgCombined",
+    abManaRestoreValue = "allTicks",
 	["abPosition"] = 25,
 	["abSize"] = 12,
 	["abFont"] = "Friz Quadrata TT",
 	["abFontFlags"] = "OUTLINE",
 	["abColorHarm"] = {1, 1, 0.3},
 	["abColorHelp"] = {0.3, 1, 0.3},
+    abColorMana = {0.1, 0.7, 1},
 
 	["healDisregardCrit"] = false,
 
@@ -356,6 +358,21 @@ local SETTINGS_TABLE = {
 								SpellCalc_settings.abColorHelp[3] = b;
 								_addon.ActionBarValues:UpdateStyle();
 							end
+						},
+						abColorMana = {
+							order = 3,
+							type = "color",
+							name = L["Mana Color"],
+							hasAlpha = false,
+							get = function()
+								return unpack(SpellCalc_settings.abColorMana);
+							end,
+							set = function(info, r, g, b, a)
+								SpellCalc_settings.abColorMana[1] = r;
+								SpellCalc_settings.abColorMana[2] = g;
+								SpellCalc_settings.abColorMana[3] = b;
+								_addon.ActionBarValues:UpdateStyle();
+							end
 						}
 					}
 				},
@@ -406,15 +423,24 @@ local SETTINGS_TABLE = {
 						abDmgShieldValue = {
 							order = 4,
 							type = "select",
-							name = L.SETTINGS_AB_DURATION_VALUE,
+							name = L["Damage Shields"],
 							values = {
 								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
 								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
 								casts = L.SETTINGS_CALC_TOOM_HEAD
 							}
 						},
-						desc = {
+						abManaRestoreValue = {
 							order = 5,
+							type = "select",
+							name = L["Mana Restore"],
+							values = {
+								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
+								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
+							}
+						},
+						desc = {
+							order = 6,
 							type = "description",
 							name = L.SETTINGS_AB_VAL_INFO
 						},

@@ -404,6 +404,40 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20166] = { -- Seal of Wisdom
+        spellLevel = 38,
+        maxLevel = 0,
+        duration = 1800,
+        baseCostPct = 14,
+        school = 2,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 42,
+                valueBase = 20168,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [20168] = { -- Seal of Wisdom
+        spellLevel = 38,
+        maxLevel = 0,
+        school = 2,
+        defType = 0,
+        noCrit = true,
+        effects = {
+            [1] = {
+                effectType = 137,
+                valueBase = 4,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
     [20187] = { -- Judgement of Righteousness(Rank 1)
         spellLevel = 1,
         maxLevel = 0,
@@ -1597,6 +1631,23 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [53601] = { -- Sacred Shield(Rank 1)
+        spellLevel = 80,
+        maxLevel = 0,
+        duration = 30,
+        baseCostPct = 12,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 64,
+                valueBase = 58597,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
     [53733] = { -- Judgement of Corruption(Rank 1)
         spellLevel = 66,
         maxLevel = 0,
@@ -1664,6 +1715,40 @@ _addon.spellRankInfo = {
                 valueRange = 0,
                 coef = 0.25,
                 coefAP = 0.16,
+            },
+        }
+    },
+    [54428] = { -- Divine Plea
+        spellLevel = 71,
+        maxLevel = 0,
+        duration = 15,
+        school = 2,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 21,
+                valueBase = 5,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [58597] = { -- Sacred Shield(Rank 1)
+        spellLevel = 80,
+        maxLevel = 90,
+        duration = 6,
+        school = 2,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 69,
+                valueBase = 500,
+                valueRange = 0,
+                coef = 0.429,
+                coefAP = 0,
             },
         }
     },

@@ -282,6 +282,14 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.STACKABLE_AURA;
                 end
 
+                if red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_ENERGIZE_PCT
+                or red.auraType and (
+                    red.auraType == AURA_TYPES.SPELL_AURA_OBS_MOD_MANA
+                    or red.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_ENERGIZE
+                ) then
+                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.MANA_RESTORE;
+                end
+
                 if red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_TRIGGER_SPELL
                 or (red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA and red.auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL) then
                     effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.TRIGGERED_SPELL;
@@ -379,7 +387,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.critChance = 100;
     end
 
-    if stats.schoolCritBaseMult[spellRankInfo.school].val > 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
+    if stats.schoolCritBaseMult[spellRankInfo.school].val > 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL + SPELL_EFFECT_FLAGS.ABSORB) == 0 then
         calcedSpell.critMult = calcedSpell.critMult * (1 + stats.schoolCritBaseMult[spellRankInfo.school].val/100);
         calcedSpell:AddToBuffList(stats.schoolCritBaseMult[spellRankInfo.school].buffs);
     end

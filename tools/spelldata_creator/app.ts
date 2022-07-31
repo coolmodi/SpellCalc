@@ -94,8 +94,10 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
         }
     }
 
+    const spellName = spellData.getSpellName(effect.SpellID).Name_lang;
+
     // Prayer of Mending
-    if (effect.SpellID === 33076)
+    if (spellName == "Prayer of Mending")
     {
         ri.charges = 5;
         fillBaseAndRange(ei, effect);
@@ -105,12 +107,22 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
     }
 
     // Earth Shield
-    if ([974, 32593, 32594].indexOf(effect.SpellID) > -1)
+    if (spellName == "Earth Shield")
     {
         ri.charges = 6;
         fillBaseAndRange(ei, effect);
         ei.coef = 0.286;
         ri.forceHeal = true;
+        return;
+    }
+
+    // Sacred Shield
+    if (spellName == "Sacred Shield")
+    {
+        ei.effectType = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
+        ei.auraType = 0;
+        ei.valueBase = effect.EffectTriggerSpell;
+        ei.valueRange = 0;
         return;
     }
 
@@ -229,6 +241,8 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             handleDummyAura(effect, rankInfo.effects[effectNum], rankInfo);
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE:
+        case AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE:
+        case AURA_TYPE.SPELL_AURA_OBS_MOD_MANA:
             break;
         default:
             if (effectNum == 1 && effect.EffectMechanic != 0) {
@@ -406,7 +420,22 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         };
     },
 
-    [EFFECT_TYPE.SPELL_EFFECT_DUMMY]: handleDummyEffect
+    [EFFECT_TYPE.SPELL_EFFECT_DUMMY]: handleDummyEffect,
+
+    [EFFECT_TYPE.SPELL_EFFECT_ENERGIZE_PCT]: (rankInfo, effect, effectNum, _spellName) => {
+        rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
+            coefAP: effect.BonusCoefficientFromAP,
+            coef: effect.EffectBonusCoefficient,
+            valueBase: 0,
+            valueRange: 0,
+            valuePerLevel: effect.EffectRealPointsPerLevel,
+            forceScaleWithHeal: false,
+            period: 0,
+            weaponCoef: 0,
+        };
+        fillBaseAndRange(rankInfo.effects[effectNum], effect);
+    },
 }
 
 /**

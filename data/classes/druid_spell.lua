@@ -1941,6 +1941,23 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [29166] = { -- Innervate
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 10,
+        school = 4,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 24,
+                valueBase = 225,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
     [33763] = { -- Lifebloom(Rank 1)
         spellLevel = 64,
         maxLevel = 71,

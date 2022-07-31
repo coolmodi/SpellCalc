@@ -67,7 +67,7 @@ local function GetBasicValue(calcedSpell, critChance, valueKey)
             end
             return calcedEffect.avgCombined;
         else
-            return calcedEffect.avgCombined * calcedEffect.ticks;
+            return calcedEffect.avgCombined * (calcedEffect.ticks or 1);
         end
     end
 
@@ -133,6 +133,7 @@ do
                 end
 
                 local isHeal = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL + SPELL_EFFECT_FLAGS.ABSORB) > 0;
+                local isMana = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0;
                 local showValue;
 
                 if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
@@ -142,6 +143,8 @@ do
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDmgShieldValue);
                 elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDurationValue);
+                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0 then
+                    showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abManaRestoreValue);
                 else
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDirectValue);
                 end
@@ -150,7 +153,7 @@ do
                     showValue = math.floor(showValue + 0.5);
                 end
 
-                buttonText.SetButtonText(slot, showValue, isHeal);
+                buttonText.SetButtonText(slot, showValue, isHeal, isMana);
             else
                 buttonText.SetButtonText(slot, "");
             end

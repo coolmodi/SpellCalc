@@ -66,6 +66,7 @@ end
 _addon.stats = {
     manaMax = 0, -- Maximum mana
     manaCurrent = 0, -- Current mana if update is active
+    baseMana = 0,
     manaRegBase = 0, -- Mana regen based on spirit /sec
     manaRegCasting = 0, -- Mana regen from spirit while casting /sec
     manaRegAura = 0, -- Mana regen from SPELL_AURA_MOD_POWER_REGEN sources /sec
@@ -175,6 +176,23 @@ _addon.stats = {
     castManaRestoreAvg = UniformStat(),
     modCriticalHealing = UniformStat(),
 };
+
+do
+    -- Hardcoded base mana for level 80.
+    local bm = {
+        DRUID   = 3496,
+        HUNTER  = 3383,
+        MAGE    = 3268,
+        PALADIN = 4394,
+        Priest  = 3863,
+        SHAMAN  = 4396,
+        WARLOCK = 3856
+    }
+    local _, eclass = UnitClass("player");
+    if bm[eclass] then
+        _addon.stats.baseMana = bm[eclass];
+    end
+end
 
 --- Update spell power stats from API
 function _addon:UpdateSpellPower()

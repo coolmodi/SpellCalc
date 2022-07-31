@@ -313,7 +313,7 @@ export class SpellData {
             return sc;
         }
 
-        if (spellId == 23590) {
+        if (spellId == 23590 ||spellId == 20168) {
             let sc: SpellCategory = {
                 DefenseType: DEFENSE_TYPE.NONE,
                 DifficultyID: 0,
