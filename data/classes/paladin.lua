@@ -321,3 +321,27 @@ _addon.aurasPlayer[31884] = { -- Avenging Wrath
         value = 20
     }
 }
+
+_addon.classPassives = {
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
+        affectSpell = {0, 1048576},
+        scriptKey = "Shield_of_Righteousness_BV_Scale",
+        value = 0
+    }
+}
+
+_addon.classScripts = {
+    ---Scale Shield of Righteousness with block value.
+    ---@param val number
+    ---@param cs CalcedSpell
+    ---@param spellId number
+    ---@param ri SpellRankInfo
+    ---@param eff number
+    Shield_of_Righteousness_BV_Scale = function(val, cs, spellId, ri, eff)
+        ---@type CalcedEffect
+        local calcedEffect = cs[eff];
+        calcedEffect.effectivePower = GetShieldBlock() * calcedEffect.modBonus;
+        return 0;
+    end
+}

@@ -164,6 +164,10 @@ function GetHaste() end
 ---@return number haste in percent.
 function GetRangedHaste() end
 
+---Get blovk value.
+---@return number
+function GetShieldBlock() end
+
 ---Gets the player's current mana regeneration rates (in mana per 1 seconds). 
 ---@return number base @Full regen while outside the fsr
 ---@return number casting @Regen from mp5 and uninterrupted spirit/int regen

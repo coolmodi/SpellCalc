@@ -664,6 +664,14 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
             local effectMod, bonusMod = GetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellRankInfo, i);
+            calcedEffect.modBase = effectMod;
+            calcedEffect.modBonus = bonusMod;
+
+            --TODO: Remove this
+            -- Lets find a case and check if this is still needed.
+            if effectMod ~= bonusMod then
+                _addon:PrintError("Effect mod is not bonus mod! "..spellName);
+            end
 
             --------------------------
             -- Effect bonus power scaling
@@ -713,6 +721,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
             --------------------------
             -- Effect values
+
+            -- Pre process script hook
+            scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE, calcedSpell, spellId, spellRankInfo, i);
 
             if effectHandler[effectData.effectType] == nil then
                 _addon:PrintError("No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);

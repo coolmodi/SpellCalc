@@ -73,7 +73,8 @@ local AuraStackData = {
 ---@class CalcedEffect
 local CalcedEffect = {
     effectFlags = 0,
-
+    modBase = 0,            -- Modifier affecting the base value of the spell.
+    modBonus = 0,           -- Modifier affecting the bonus scaling values of the spell.
     spellPower = 0,         -- Spell power this effect uses
     attackPower = 0,        -- Atack power used, don't think this and spellPower is ever used together until after TBC
     effectiveSpCoef = 0,    -- After low level penalty. Taken from client DB files

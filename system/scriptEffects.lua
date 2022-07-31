@@ -115,7 +115,8 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     end
 
     if (type == EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE
-    or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT)
+    or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT
+    or type == EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE)
     and effectBase.affectSpell then
         --print("Effect handler reached", effectBase.scriptKey)
         scriptValueCache[scriptKey] = apply and value or nil;
