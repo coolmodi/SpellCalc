@@ -144,7 +144,7 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
 
     local tickPart = "";
     if ticks and ticks > 0 then
-        completeBonus = completeBonus * ticks;
+        -- completeBonus = completeBonus * ticks;
         tickPart = ticks.."x ";
     end
 
@@ -153,8 +153,7 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
             -- SP and AP
             self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP + %.1f%% * %d AP",
                 tickPart,
-                calcedEffect.effectivePower,
-                --completeBonus,
+                completeBonus,
                 coefPct,
                 calcedEffect.spellPower,
                 coefAPPct,
@@ -163,16 +162,14 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
             -- SP only
             self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP",
                 tickPart,
-                calcedEffect.effectivePower,
-                --completeBonus,
+                completeBonus,
                 coefPct,
                 calcedEffect.spellPower));
         else 
             -- AP only
             self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d AP",
                 tickPart,
-                calcedEffect.effectivePower,
-                --completeBonus,
+                completeBonus,
                 coefAPPct,
                 calcedEffect.attackPower));
         end

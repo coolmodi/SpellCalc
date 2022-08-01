@@ -42,7 +42,7 @@ local DEFAULTSETTINGS = {
 	["abShow"] = true,
 	["abDirectValue"] = "avg",
 	["abDurationValue"] = "allTicks",
-	["abSealValue"] = "avg",
+	--["abSealValue"] = "avg",
 	abDmgShieldValue = "avgCombined",
     abManaRestoreValue = "allTicks",
 	["abPosition"] = 25,
@@ -409,17 +409,15 @@ local SETTINGS_TABLE = {
 								castsTime = L.TIME_TO_OOM
 							}
 						},
-						abSealValue = {
+						--[[ abSealValue = {
 							order = 3,
 							type = "select",
 							name = L.SETTINGS_AB_SEAL_VALUE,
 							values = {
 								avg = L.SETTINGS_AB_SEAL_VALUE_HIT,
-								avgCrit = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
-								avgAfterMitigation = L.DAMAGE_OVER_DURATION,
-								perSec = L.DMG_PER_SEC_SHORT
+								avgCrit = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG
 							}
-						},
+						}, ]]
 						abDmgShieldValue = {
 							order = 4,
 							type = "select",

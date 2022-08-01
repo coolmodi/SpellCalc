@@ -3,6 +3,8 @@ local _, _addon = ...;
 local _, playerClass = UnitClass("player");
 if playerClass ~= "PALADIN" then return end
 
+local HOLY_VENGEANCE = GetSpellInfo(31803);
+
 _addon.talentDataRaw = {
     -----------------------------
     -- Holy
@@ -278,14 +280,6 @@ _addon.aurasPlayer[54428] = { -- Divine Plea
     }
 };
 
-_addon.aurasTarget[58597] = { -- Sacred Shield
-    {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-        affectSpell = {1073741824},
-        value = 50
-    }
-}
-
 _addon.aurasPlayer[20050] = { -- Vengeance 1
     {
         type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -322,11 +316,30 @@ _addon.aurasPlayer[31884] = { -- Avenging Wrath
     }
 }
 
+_addon.aurasTarget[58597] = { -- Sacred Shield
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {1073741824},
+        value = 50
+    }
+}
+
 _addon.classPassives = {
     {
         type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
         affectSpell = {0, 1048576},
         scriptKey = "Shield_of_Righteousness_BV_Scale",
+        value = 0
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        affectSpell = {0, 4194304},
+        scriptKey = "Holy_Vengeance_Judgement_Mod",
+        value = 10
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        scriptKey = HOLY_VENGEANCE,
         value = 0
     }
 }
@@ -342,6 +355,14 @@ _addon.classScripts = {
         ---@type CalcedEffect
         local calcedEffect = cs[eff];
         calcedEffect.effectivePower = GetShieldBlock() * calcedEffect.modBonus;
+        return 0;
+    end,
+
+    ---Increase Judgement of Vengeance/Corruption damage if target has seal debuff stacks.
+    ---@param val number
+    Holy_Vengeance_Judgement_Mod = function(val)
+        local stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
+        if stacks then return stacks * val end
         return 0;
     end
 }

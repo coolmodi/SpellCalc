@@ -58,13 +58,13 @@ const SpellClassSet = {
 
 function getCorectBase(effect: SpellEffect)
 {
-    if (effect.EffectDieSides == 0 || effect.EffectBasePoints == 0 && effect.EffectDieSides <= 1) return effect.EffectBasePoints;
+    if (effect.EffectDieSides == 0) return effect.EffectBasePoints;
     return effect.EffectBasePoints + 1;
 }
 
 function fillBaseAndRange(ei: EffectInfo, effect: SpellEffect)
 {
-    if (effect.EffectDieSides == 0 || effect.EffectBasePoints == 0 && effect.EffectDieSides <= 1)
+    if (effect.EffectDieSides == 0)
     {
         ei.valueBase = effect.EffectBasePoints;
         ei.valueRange = 0;
@@ -83,13 +83,8 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
             return;
         }
 
-        if (sealType == SealType.SoCor) {
-            ei.weaponCoef = 0.35;
-            return;
-        }
-
-        if (sealType == SealType.SoV) {
-            ei.valueBase = 30;
+        if (sealType == SealType.SoCor || sealType == SealType.SoV) {
+            ei.weaponCoef = 0.33;
             return;
         }
     }

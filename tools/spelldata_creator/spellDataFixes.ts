@@ -205,6 +205,20 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 ce.EffectIndex = 2;
                 se[ce.ID] = ce;
             }
+
+            // fix SoCorr judgement id (wotlk uses "new" seal)
+            if (isJudgeDummy(eff, SealType.SoCor))
+            {
+                eff.EffectBasePoints = 31804;
+                eff.EffectDieSides = 0;
+            }
+
+            // fix JoR base value, should be 0
+            if (eff.SpellID == 20187)
+            {
+                eff.EffectBasePoints = 0;
+                eff.EffectDieSides = 0;
+            }
         }
     }
 

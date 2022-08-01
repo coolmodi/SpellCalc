@@ -71,56 +71,56 @@ local AuraStackData = {
 }
 
 ---@class CalcedEffect
+---@field effectFlags number
+---@field modBase number Modifier affecting the base value of the spell.
+---@field modBonus number Modifier affecting the bonus scaling values of the spell.
+---@field spellPower number Spell power this effect scales with.
+---@field attackPower number Attack power this effect scales with.
+---@field effectiveSpCoef number The effective SP coef after modifiers.
+---@field effectiveApCoef number The effective AP coef after modifiers.
+---@field effectivePower number The combined power bonus used.
+---@field flatMod number Flat value bonus for this effect.
+---@field min number Minimum value. Is also tick value for duration effects.
+---@field max number Maximum value.
+---@field avg number Average value.
+---@field minCrit number Minimum critical value. 0 if effect doesn't crit.
+---@field maxCrit number Maximum critical value. 0 if effect doesn't crit.
+---@field avgCrit number Average critical value. 0 if effect doesn't crit.
+---@field avgCombined number Average combined value.
+---@field avgAfterMitigation number Combined average done after all mitigation sources.
+---@field perSec number Done per second. DPSC for non-channel duration spells.
+---@field perSecDurOrCD number|nil Done per sec over duration or DPS(CD).
+---@field perResource number Done per resource spent using the effective cost.
+---@field doneToOom number|nil Done until OOM for mana spells.
+---@field ticks number|nil Ticks for duration spells.
+---@field tickPeriod number|nil Tickperiod for duration spells.
+---@field auraStack AuraStackData|nil If aura is stackable this will hold data for sustained max stacks.
+---@field igniteData IgniteDataDef|nil
+---@field offhandAttack EffectOffhandData|nil Data for offhand attack (auto attack with dual wield, maybe more with TBC?).
+---@field chains number|nil How often the effect chains, if any.
+---@field chainMult number|nil Multiplier for each chain, if any.
+---@field triggeredSpell number|nil Id of triggered spell if this effect triggers one.
+---@field spellData CalcedSpell|nil Data for triggered spell if this effect triggers one.
 local CalcedEffect = {
     effectFlags = 0,
-    modBase = 0,            -- Modifier affecting the base value of the spell.
-    modBonus = 0,           -- Modifier affecting the bonus scaling values of the spell.
-    spellPower = 0,         -- Spell power this effect uses
-    attackPower = 0,        -- Atack power used, don't think this and spellPower is ever used together until after TBC
-    effectiveSpCoef = 0,    -- After low level penalty. Taken from client DB files
+    modBase = 0,
+    modBonus = 0,
+    spellPower = 0,
+    attackPower = 0,
+    effectiveSpCoef = 0,
     effectiveApCoef = 0,
-    effectivePower = 0,     -- The combined power bonus used
-    flatMod = 0,            -- Flat increase, e.g. Cenarion Raiment Thorn damage
-
-    -- Base vars for all effects
-    min = 0,                -- Is also tick damage for duration spells
-    max = 0,                -- All these other values may also exists for special spells like Searing Totem or Arcane Missiles
+    effectivePower = 0,
+    flatMod = 0,
+    min = 0,
+    max = 0,
     avg = 0,
     minCrit = 0,
     maxCrit = 0,
     avgCrit = 0,
     avgCombined = 0,
-
-    avgAfterMitigation = 0, -- Combined average done after all mitigation sources
-    perSec = 0,             -- DPSC for non-channel duration spells
-    ---@type number|nil
-    perSecDurOrCD = nil,    -- DPS over duration or DPS(CD)
-    perResource = 0,        -- Done per resource spent using the effective cost
-    ---@type number|nil
-    doneToOom = nil,        -- Done until OOM for mana spells
-
-    ---@type number|nil
-    ticks = nil,            -- Ticks for duration spells
-    ---@type number|nil
-    tickPeriod = nil,       -- Tickperiod for duration spells
-    ---@type AuraStackData|nil
-    auraStack = nil,        -- If aura is stackable this will hold data for sustained max stacks
-
-    ---@type IgniteDataDef|nil
-    igniteData = nil,
-
-    ---@type EffectOffhandData|nil
-    offhandAttack = nil,    -- Data for offhand attack (auto attack with dual wield, maybe more with TBC?)
-
-    ---@type number|nil
-    chains = nil,
-    ---@type number|nil
-    chainMult = nil,
-
-    ---@type number|nil
-    triggeredSpell = nil,
-    ---@type CalcedSpell|nil
-    spellData = nil
+    avgAfterMitigation = 0,
+    perSec = 0,
+    perResource = 0,
 };
 
 CalcedEffect.__index = CalcedEffect;
@@ -128,6 +128,8 @@ CalcedEffect.__index = CalcedEffect;
 ---@class CalcedSpell @Represents a calculated spell.
 ---@field duration number|nil Duration after duration modifiers with haste if used for spell.
 ---@field durationNoHaste number|nil Duration after duration modifiers without haste.
+---@field [1] CalcedEffect|nil Effect 1
+---@field [2] CalcedEffect|nil Effect 2
 local CalcedSpell = {
     critChance = 0,
     critMult = 0,
@@ -157,11 +159,6 @@ local CalcedSpell = {
 
     ---@type number|nil
     charges = nil,
-
-    ---@type CalcedEffect|nil @effect 1
-    [1] = nil,
-    ---@type CalcedEffect|nil @effect 2
-    [2] = nil,
 
     ---@type CombinedData|nil
     combined = nil,         -- Exists if spell has a direct and duration component, e.g. Immolate or Regrowth

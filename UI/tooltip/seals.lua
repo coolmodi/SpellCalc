@@ -20,10 +20,6 @@ local function SoR(calcedSpell, effectNum)
         local strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
         SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
-
-    if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
-    end
 end
 
 ---@param calcedSpell CalcedSpell
@@ -83,21 +79,25 @@ local function SoC(calcedSpell, effectNum)
     end
 end
 
+---Seal of Vengeance and Seal of Corruption
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
-local function SoB_SoV(calcedSpell, effectNum)
+local function SoV_SoCor(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
+    local dotSpell = calcedEffect.spellData;
+    local dotEffect = calcedEffect.spellData[1];
+
+    SCT:HeaderLine(L["Hit at 5 stacks:"]);
 
     if SpellCalc_settings.ttHit then
         SCT:AppendMinMaxAvgLine(L.DAMAGE, calcedEffect.min, calcedEffect.max, calcedEffect.avg);
     end
 
-    if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
+    if SpellCalc_settings.ttCrit then
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil,
+            nil, SCT:CritStr(calcedSpell.critChance));
     end
-
-    SCT:AppendCoefData(calcedSpell, calcedEffect, nil, 0, true);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
@@ -105,66 +105,33 @@ local function SoB_SoV(calcedSpell, effectNum)
         SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 
-    if SpellCalc_settings.ttHitChance then
-        if SpellCalc_settings.ttHitDetail then
-            SCT:SingleLine(L.HIT_CHANCE, ("%.1f%% (%.1f%% + %.1f%%)"):format(calcedSpell.hitChance, calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus));
-        else
-            SCT:SingleLine(L.HIT_CHANCE, ("%.1f%%"):format(calcedSpell.hitChance));
-        end
+    SCT:HeaderLine(L["DoT at 5 stacks:"]);
 
-        local mmit = calcedSpell.meleeMitigation;
-        if mmit.dodge > 0 then
-            SCT:SingleLine(L.TT_DODGECHANCE, ("%.1f%%"):format(mmit.dodge));
-        end
-        if mmit.parry > 0 then
-            SCT:SingleLine(L.TT_PARRYCHANCE, ("%.1f%%"):format(mmit.parry));
-        end
-        if mmit.block > 0 then
-            SCT:SingleLine(L.TT_BLOCKCHANCE, ("%.1f%%"):format(mmit.block));
-        end
-    end
+    local min = dotEffect.min * 5;
+    local max = dotEffect.max * 5;
+    local avg = dotEffect.avg * 5;
+    local perSecDurOrCD = dotEffect.perSecDurOrCD * 5;
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L.DAMAGE_OVER_DURATION, ("%.1f"):format(calcedEffect.avgAfterMitigation));
+        SCT:AppendMinMaxAvgLine(L.DAMAGE, min, max, avg, nil,
+            L.TICKS, SCT:FormatNoTrailing0(L.TICKS_TOOLTIP, dotEffect.ticks, dotEffect.tickPeriod, dotSpell.duration), true);
+    end
+
+    SCT:SingleLine(L.TT_TOTAL, SCT:Round(dotEffect.ticks * avg));
+    SCT:AppendCoefData(dotSpell, dotEffect, 5);
+
+    if SpellCalc_settings.ttResist and dotSpell.avgResist > 0 then
+        local effRes = math.max(0, dotSpell.resistance - dotSpell.resistancePen) + dotSpell.resistanceFromLevel;
+        local strUsed = dotSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
+        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(dotSpell.avgResist * 100, effRes, dotSpell.resistanceFromLevel));
     end
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
-    end
-
-    if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine(L.DMG_PER_MANA_SHORT, ("%.2f"):format(calcedEffect.perResource));
-    end
-end
-
----@param calcedSpell CalcedSpell
----@param effectNum number
-local function SoV(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
-
-    if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L.DAMAGE, ("%dx %.1f (%d)"):format(calcedEffect.ticks, calcedEffect.min, SCT:Round(calcedEffect.min * calcedEffect.ticks)));
-    end
-
-    SCT:AppendCoefData(calcedSpell, calcedEffect);
-
-    if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
-    end
-
-    SCT:HeaderLine(L.SUSTAINED_X_STACKS:format(5));
-    local stackDmg = (calcedEffect.min - calcedEffect.effectivePower) * 5 + calcedEffect.effectivePower;
-    if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L.DAMAGE, ("%dx %.1f (%d)"):format(calcedEffect.ticks, stackDmg, SCT:Round(stackDmg * calcedEffect.ticks)));
-    end
-    if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(stackDmg * calcedEffect.ticks / 15));
+        SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(perSecDurOrCD));
     end
 end
 
 SCT:AddDummyHandler(GetSpellInfo(20375), SoC);
 SCT:AddDummyHandler(GetSpellInfo(21084), SoR);
-SCT:AddDummyHandler(GetSpellInfo(31892), SoB_SoV);
-SCT:AddDummyHandler(GetSpellInfo(348700), SoB_SoV);
-SCT:AddDummyHandler(GetSpellInfo(31801), SoV);
+SCT:AddDummyHandler(GetSpellInfo(31801), SoV_SoCor);
+SCT:AddDummyHandler(GetSpellInfo(348704), SoV_SoCor);

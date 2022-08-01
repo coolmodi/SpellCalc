@@ -1057,7 +1057,8 @@ _addon.spellRankInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 4,
-                valueBase = 30,
+                weaponCoef = 0.33,
+                valueBase = 0,
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
@@ -1092,7 +1093,7 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 0,
+                valueBase = 1,
                 valueRange = 0,
                 coef = 0.22,
                 coefAP = 0.14,
@@ -1608,7 +1609,7 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 0,
+                valueBase = 1,
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
@@ -1648,41 +1649,6 @@ _addon.spellRankInfo = {
             },
         }
     },
-    [53733] = { -- Judgement of Corruption(Rank 1)
-        spellLevel = 66,
-        maxLevel = 0,
-        school = 2,
-        defType = 2,
-        cantDogeParryBlock = true,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 0,
-                valueRange = 0,
-                coef = 0.22,
-                coefAP = 0.14,
-            },
-        }
-    },
-    [53736] = { -- Seal of Corruption
-        spellLevel = 64,
-        maxLevel = 68,
-        duration = 1800,
-        baseCostPct = 14,
-        school = 2,
-        defType = 2,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 4,
-                weaponCoef = 0.35,
-                valueBase = 0,
-                valueRange = 0,
-                coef = 0,
-                coefAP = 0,
-            },
-        }
-    },
     [53742] = { -- Blood Corruption
         spellLevel = 64,
         maxLevel = 0,
@@ -1711,7 +1677,7 @@ _addon.spellRankInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 0,
+                valueBase = 1,
                 valueRange = 0,
                 coef = 0.25,
                 coefAP = 0.16,
@@ -1768,6 +1734,25 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [348704] = { -- Seal of Corruption
+        spellLevel = 64,
+        maxLevel = 0,
+        duration = 1800,
+        baseCostPct = 14,
+        school = 2,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                weaponCoef = 0.33,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 _addon.aurasPlayer[20165] = { -- Seal of Light
@@ -1791,10 +1776,10 @@ _addon.aurasPlayer[20166] = { -- Seal of Wisdom
     }
 };
 
-_addon.aurasPlayer[53736] = { -- Seal of Corruption
+_addon.aurasPlayer[348704] = { -- Seal of Corruption
     {
         type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
-        value = 53733
+        value = 31804
     }
 };
 

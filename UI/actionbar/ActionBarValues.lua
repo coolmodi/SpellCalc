@@ -6,9 +6,8 @@ local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20154);
 local SEAL_OF_COMMAND = GetSpellInfo(20375);
 local PRAYER_OF_MENDING = GetSpellInfo(33076);
 local EARTH_SHIELD = GetSpellInfo(974);
-local SEAL_OF_BLOOD = GetSpellInfo(31892);
-local SEAL_OF_THE_MARTYR = GetSpellInfo(348700);
 local SEAL_OF_VENGEANCE = GetSpellInfo(31801);
+local SEAL_OF_CORRUPTION = GetSpellInfo(348704);
 
 local ActionBarValues = {};
 local spellsInBar = {};
@@ -36,8 +35,8 @@ end
 local function GetDummyValue(calcedEffect, spellName)
     if spellName == SEAL_OF_RIGHTEOUSNESS
     or spellName == SEAL_OF_COMMAND
-    or spellName == SEAL_OF_BLOOD or spellName == SEAL_OF_THE_MARTYR then
-        local k = SpellCalc_settings.abSealValue;
+    or spellName == SEAL_OF_VENGEANCE or spellName == SEAL_OF_CORRUPTION then
+        local k = "avg" -- SpellCalc_settings.abSealValue;
         if calcedEffect[k] then
             return calcedEffect[k];
         end
@@ -46,8 +45,6 @@ local function GetDummyValue(calcedEffect, spellName)
         if calcedEffect[k] then
             return calcedEffect[k];
         end
-    elseif spellName == SEAL_OF_VENGEANCE then
-        return "";
     end
 
     return "DMY!";

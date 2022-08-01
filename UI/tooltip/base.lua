@@ -135,12 +135,12 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
         if calcedSpell.charges and calcedSpell.charges > 1 then
             SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %d | %d total"):format(calcedSpell.charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * calcedSpell.charges)));
         else
-            SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg);
+            SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg, nil, nil, nil, true);
         end
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
+        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance), true);
         if calcedEffect.igniteData then
             SCT:AppendMinMaxAvgLine(L.TT_IGNITE, calcedEffect.igniteData.min/2, calcedEffect.igniteData.max/2, calcedEffect.igniteData.avg/2, "2x ");
         end

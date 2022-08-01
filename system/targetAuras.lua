@@ -37,6 +37,8 @@ local activeAuraStacks = {};
 local aurasByName = {};
 ---@type table<string, boolean|nil>
 local aurasByNamePersonal = {};
+---@type table<string, number|nil>
+local aurasByNamePersonalStacks = {};
 
 ---Apply target aura effect.
 ---@param spellId number
@@ -135,8 +137,10 @@ local function UpdateAuratype(filter)
         if aurasByName[name] == nil then SETargetAuraChanged(name) end
         aurasByName[name] = true;
         if source == "player" then 
-            if aurasByNamePersonal[name] == nil then SETargetAuraChanged(name, true) end
+            if aurasByNamePersonal[name] == nil
+            or aurasByNamePersonalStacks[name] ~= count then SETargetAuraChanged(name, true) end
             aurasByNamePersonal[name] = true;
+            aurasByNamePersonalStacks[name] = count;
         end
 
         if aurasTarget[spellId] then
@@ -163,7 +167,7 @@ local function UpdateAuratype(filter)
         end
 
         i = i + 1;
-        name, _, count, _, _, _, _, _, _, spellId = UnitAura("target", i, filter);
+        name, _, count, _, _, _, source, _, _, spellId = UnitAura("target", i, filter);
     end
 
     return aurasChanged;
@@ -210,6 +214,7 @@ function _addon.Target:UpdateAuras()
     for auraName, isActive in pairs(aurasByNamePersonal) do
         if not isActive then
             aurasByNamePersonal[auraName] = nil;
+            aurasByNamePersonalStacks[auraName] = nil;
             SETargetAuraChanged(auraName, true);
         end
     end
@@ -224,4 +229,26 @@ end
 function _addon.Target.HasAuraName(auraName, personalOnly)
     if personalOnly then return aurasByNamePersonal[auraName] end
     return aurasByName[auraName];
+end
+
+---Get amount of aura applications on target, if any.
+---@param auraName string The aura name.
+---@param personalOnly boolean|nil Only return true if aura source is self.
+---@param debuff boolean|nil Look for debuff instead of buff.
+---@return number|nil
+function _addon.Target.GetAuraApplications(auraName, personalOnly, debuff)
+    if personalOnly then
+        return aurasByNamePersonalStacks[auraName];
+    end
+
+    local filter = debuff and "HARMFUL" or "HELPFUL";
+    local i = 1;
+    local name, _, count = UnitAura("target", i, filter);
+    while name do
+        if name == auraName then
+            return count > 0 and count or 1;
+        end
+        i = i + 1;
+        name, _, count = UnitAura("target", i, filter);
+    end
 end

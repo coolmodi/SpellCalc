@@ -33,12 +33,12 @@ const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE
 ];
 
-const DMG_SHIELD_DATA: { [index: string]: boolean } = {
+/* const DMG_SHIELD_DATA: { [index: string]: boolean } = {
     "Shadowguard": true,
     "Lightning Shield": true,
     "Touch of Weakness": true,
     "Molten Armor": true
-}
+} */
 
 const TRIGGER_SPELL_IGNORE: { [spellName: string]: boolean } = {
     "Feedback": true,
