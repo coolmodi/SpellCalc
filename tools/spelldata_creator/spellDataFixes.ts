@@ -219,6 +219,13 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 eff.EffectBasePoints = 0;
                 eff.EffectDieSides = 0;
             }
+
+            // Fix JoC weapon pct scaling
+            if (eff.SpellID == 20467 && eff.Effect == EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE)
+            {
+                eff.EffectBasePoints = 19;
+                eff.EffectDieSides = 0;
+            }
         }
     }
 

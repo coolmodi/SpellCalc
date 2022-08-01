@@ -473,6 +473,23 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [20467] = { -- Judgement of Command(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        school = 2,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 0.19,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 0.13,
+                coefAP = 0.08,
+            },
+        }
+    },
     [20473] = { -- Holy Shock(Rank 1)
         spellLevel = 40,
         maxLevel = 0,
@@ -1773,6 +1790,13 @@ _addon.aurasPlayer[20166] = { -- Seal of Wisdom
     {
         type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
         value = 54158
+    }
+};
+
+_addon.aurasPlayer[20375] = { -- Seal of Command
+    {
+        type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+        value = 20467
     }
 };
 

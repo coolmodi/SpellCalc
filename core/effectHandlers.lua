@@ -109,35 +109,13 @@ local function SealOfCommand(calcedSpell, effNum, spellRankInfo, effCastTime, ef
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    local as = stats.attackSpeed.mainhand;
-    local coef = effectData.weaponCoef;
-
-    calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
-
-    calcedEffect.min = (coef * stats.attackDmg.mainhand.min + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.max = (coef * stats.attackDmg.mainhand.max + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = (calcedEffect.min + calcedEffect.max) / 2;
-
+    local weaponCoef = effectData.weaponCoef;
+    calcedEffect.min = weaponCoef * stats.attackDmg.mainhand.min;
+    calcedEffect.max = weaponCoef * stats.attackDmg.mainhand.max;
+    calcedEffect.avg = 0.5 * (calcedEffect.min + calcedEffect.max);
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
     calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
     calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
-
-    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
-
-    local mmit = calcedSpell.meleeMitigation;
-    local SOC_PPS = 7/60; -- procs per second
-    local triggers = SOC_PPS * calcedSpell.duration;
-    local effectiveHitChance = (calcedSpell.hitChance - mmit.dodge - mmit.parry) / 100;
-    local triggerHits = triggers * effectiveHitChance;
-
-    local avgAfterResist = calcedEffect.avgCombined * (1 - calcedSpell.avgResist);
-    local avgTriggerHits = triggerHits * avgAfterResist * effectiveHitChance; -- SOC hits can again be melee mitigated like a special attack
-
-    calcedSpell.charges = SOC_PPS * as; -- lel
-    calcedEffect.avgAfterMitigation = avgTriggerHits;
-    calcedEffect.ticks = triggerHits;
-    calcedEffect.perSec = avgTriggerHits / calcedSpell.duration;
-    calcedEffect.perResource = avgTriggerHits / calcedSpell.effectiveCost;
 end
 
 ---Dummy handler for Prayer of Mending and Earth Shield
@@ -764,6 +742,52 @@ local function EnergizePct(_, calcedSpell, effNum, spellRankInfo, effCastTime, e
     auraHandler[AURA_TYPES.SPELL_AURA_DUMMY](calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd);
 end
 
+---Handles SPELL_EFFECT_WEAPON_DAMAGE
+---@param calcedSpell CalcedSpell
+---@param effNum number
+---@param spellRankInfo SpellRankInfo
+---@param effCastTime number
+---@param effectMod number
+---@param spellName string
+---@param spellId number
+---@param gcd number
+local function WeaponDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
+    ---@type CalcedEffect
+    local calcedEffect = calcedSpell[effNum];
+    local effectData = spellRankInfo.effects[effNum];
+
+    local weaponCoef = effectData.weaponCoef * effectMod;
+    local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
+    local baseDamage = (effectData.valueBase + baseIncrease);
+
+    calcedEffect.min = (baseDamage + stats.attackDmg.mainhand.min) * weaponCoef + calcedEffect.effectivePower;
+    calcedEffect.max = (baseDamage + effectData.valueRange + stats.attackDmg.mainhand.max) * weaponCoef + calcedEffect.effectivePower;
+    calcedEffect.avg = 0.5 * (calcedEffect.min + calcedEffect.max);
+    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
+    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+
+    local mmit = calcedSpell.meleeMitigation;
+    local realHit = math.max(calcedSpell.hitChance - mmit.dodge - mmit.parry, 0);
+    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * realHit/100;
+
+    calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
+    calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
+    calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
+
+    if effectData.chains and effectData.chains > 1 then
+        calcedEffect.chains = effectData.chains;
+        local mult = effectData.chainMult;
+        if stats.spellModChainMult[spellId] then
+            mult = mult * (1 + stats.spellModChainMult[spellId].val / 100);
+            calcedSpell:AddToBuffList(stats.spellModChainMult[spellId].buffs);
+        end
+        calcedEffect.chainMult = mult;
+    end
+end
+
+
 effHandler[EFFECT_TYPES.SPELL_EFFECT_SCHOOL_DAMAGE] = SchoolDamage;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_HEALTH_LEECH] = SchoolDamage;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_HEAL] = HealEffect;
@@ -772,3 +796,4 @@ effHandler[EFFECT_TYPES.SPELL_EFFECT_PERSISTENT_AREA_AURA] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_ATTACK] = AutoAttack;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_ENERGIZE_PCT] = EnergizePct;
+effHandler[EFFECT_TYPES.SPELL_EFFECT_WEAPON_DAMAGE] = WeaponDamage;

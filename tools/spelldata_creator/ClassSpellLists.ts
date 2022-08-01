@@ -166,8 +166,9 @@ export class ClassSpellLists
                     if (isJudgeDummy(effect) !== false)
                     {
                         const jspell = this.spellData.getSpellEffects(effect.EffectBasePoints + effect.EffectDieSides);
-                        if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-                        if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, [jspell[0]]);
+                        if (jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE
+                            && jspell[0].Effect != EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE) continue;
+                        if (!list.has(jspell[0].SpellID)) list.set(jspell[0].SpellID, jspell);
                         this.judgementRemap.set(effect.SpellID, jspell[0].SpellID)
                         // don't use this effect
                         continue;

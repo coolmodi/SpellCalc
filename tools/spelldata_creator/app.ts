@@ -354,17 +354,19 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: 1
+            weaponCoef: 0
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
 
     [EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE]: (rankInfo, effect, effectNum, spellName) => {
+        const weaponCoef = getCorectBase(effect) / 100;
+
         if (effectNum > 0) {
-            if (rankInfo.effects[0].weaponCoef == 0) {
-                throw new Error("E1 is SPELL_EFFECT_WEAPON_PERCENT_DAMAGE but E0 doesn't add a weapon coef!");
+            if (rankInfo.effects[0].effectType != EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE) {
+                throw new Error("E1/2 is SPELL_EFFECT_WEAPON_PERCENT_DAMAGE but E0 isn't SPELL_EFFECT_WEAPON_DAMAGE!");
             }
-            rankInfo.effects[0].weaponCoef *= getCorectBase(effect) / 100;
+            rankInfo.effects[0].weaponCoef = weaponCoef;
             return;
         }
 
@@ -377,7 +379,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: getCorectBase(effect) / 100
+            weaponCoef: weaponCoef
         };
 
         // SoC "fix"
@@ -521,6 +523,15 @@ function buildSpellInfo(pclass: string) {
             if (classInfo.rankInfo[spellId].effects[i] 
                 && classInfo.rankInfo[spellId].effects[i].valuePerLevel != 0 
                 && classInfo.rankInfo[spellId].maxLevel == 0) throw "Effect has perlevel scaling but maxlevel of the spell is 0!";
+        }
+    }
+
+    for (const spellId in classInfo.rankInfo)
+    {
+        for (const effect of classInfo.rankInfo[spellId].effects)
+        {
+            if (effect.effectType === EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE
+                && effect.weaponCoef === 0) throw new Error("Effect is SPELL_EFFECT_WEAPON_DAMAGE but no weapon coef is defined! " + spellId)
         }
     }
 
