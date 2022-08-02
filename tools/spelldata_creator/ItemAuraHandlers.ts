@@ -419,10 +419,25 @@ export class AuraHandlers
                         affectSpell: [0, 33554432],
                         value: effect.EffectBasePoints + 1,
                     }
+                case 43743: // Libram of Divine Purpose
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+                        affectSpell: [134217728],
+                        value: effect.EffectBasePoints + 1,
+                    }
                 case 34294:
-                case 43743:
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+                        affectSpell: [64],
+                        value: effect.EffectBasePoints + 1,
+                    }
                 case 33695:
-                case 60659:
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+                        affectSpell: [0, 2 + 2097152],
+                        value: effect.EffectBasePoints + 1,
+                    }
+                case 60659: // Increases spell power of Flash of Light by 331.
                 case 60656: // Increases spell power of Flash of Light by 293.
                 case 60661: // Increases spell power of Flash of Light by 375.
                 case 60662: // Increases spell power of Flash of Light by 436.
