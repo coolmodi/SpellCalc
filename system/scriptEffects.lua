@@ -130,7 +130,7 @@ end
 ---@param scriptKey string
 ---@return number|nil
 function _addon.ScriptEffects.GetValue(scriptKey)
-    return scriptValueCache[scriptKey];
+    return scriptValueCache[scriptKey] or 0;
 end
 
 ---Get sum of all SCRIPT_ effect type scripts applicable for this spell.

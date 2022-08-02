@@ -230,7 +230,7 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
         return;
     end
 
-    if effectBase.type > EFFECT_TYPE.SCRIPT_EFFECT_MIN_ID then
+    if effectBase.type > EFFECT_TYPE.SCRIPT_MIN_ID_DO_NOT_USE then
         _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase);
         return;
     end

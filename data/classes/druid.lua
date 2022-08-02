@@ -455,6 +455,10 @@ _addon.talentDataRaw = {
     },
 };
 
+--------------------------------------------------------------------------
+-- Player auras
+--------------------------------------------------------------------------
+
 _addon.aurasPlayer[17116] = { -- Nature's Swiftness dummy
     {
         type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
@@ -508,6 +512,10 @@ _addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
     }
 };
 
+--------------------------------------------------------------------------
+-- Additional Glyphs (generated effects are in <class>_spell.lua)
+--------------------------------------------------------------------------
+
 _addon.classGlyphs[54743] = { -- Glyph of Regrowth
     {
         type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
@@ -521,6 +529,10 @@ _addon.classGlyphs[54743] = { -- Glyph of Regrowth
         value = 0
     },
 }
+
+--------------------------------------------------------------------------
+-- Passives
+--------------------------------------------------------------------------
 
 _addon.classPassives = {
     {
@@ -550,6 +562,10 @@ _addon.classPassives = {
         value = 0
     },
 }
+
+--------------------------------------------------------------------------
+-- Scripts
+--------------------------------------------------------------------------
 
 _addon.classScripts = {
     ---@param val number

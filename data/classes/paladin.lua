@@ -280,6 +280,10 @@ _addon.talentDataRaw = {
     },
 };
 
+--------------------------------------------------------------------------
+-- Player auras
+--------------------------------------------------------------------------
+
 _addon.aurasPlayer[20216] = { -- Divine Favor
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -348,6 +352,18 @@ _addon.aurasPlayer[31884] = { -- Avenging Wrath
     }
 }
 
+_addon.aurasPlayer[20165] = { -- Seal of Light
+    {
+        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {-1073741824, 16842752},
+        scriptValue = "Glyph_of_Seal_of_Light"
+    }
+}
+
+--------------------------------------------------------------------------
+-- Target auras
+--------------------------------------------------------------------------
+
 _addon.aurasTarget[58597] = { -- Sacred Shield
     {
         type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -355,6 +371,23 @@ _addon.aurasTarget[58597] = { -- Sacred Shield
         value = 50
     }
 }
+
+--------------------------------------------------------------------------
+-- Additional Glyphs (generated effects are in <class>_spell.lua)
+--------------------------------------------------------------------------
+
+-- Glyph of Seal of Light
+_addon.classGlyphs[54943] = {
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        scriptKey = "Glyph_of_Seal_of_Light",
+        value = 5
+    }
+}
+
+--------------------------------------------------------------------------
+-- Passives
+--------------------------------------------------------------------------
 
 _addon.classPassives = {
     {
@@ -381,6 +414,10 @@ _addon.classPassives = {
         value = 0
     },
 }
+
+--------------------------------------------------------------------------
+-- Scripts
+--------------------------------------------------------------------------
 
 _addon.classScripts = {
     ---Scale Shield of Righteousness with block value.
