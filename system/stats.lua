@@ -112,16 +112,16 @@ _addon.stats = {
     },
     attackDmg = {
         mainhand = {
-            min = 0,
-            max = 0
+            min = 0, -- Base damage!
+            max = 0  -- Base damage!
         },
         offhand = {
-            min = 0,
-            max = 0
+            min = 0, -- Base damage!
+            max = 0  -- Base damage!
         },
         ranged = {
-            min = 0,
-            max = 0
+            min = 0, -- Base damage!
+            max = 0  -- Base damage!
         }
     },
 
@@ -342,16 +342,20 @@ end
 --- Update melee attack damage
 function _addon:UpdateAttackDmg()
     _addon:PrintDebug("Updated melee dmg");
-    self.stats.attackDmg.mainhand.min, self.stats.attackDmg.mainhand.max, self.stats.attackDmg.offhand.min, self.stats.attackDmg.offhand.max = UnitDamage("player");
+    local low, high, offLow, offHigh, _, _, pctMod = UnitDamage("player");
+    self.stats.attackDmg.mainhand.min = low / pctMod;
+    self.stats.attackDmg.mainhand.max = high / pctMod;
+    self.stats.attackDmg.offhand.min = offLow / pctMod;
+    self.stats.attackDmg.offhand.max = offHigh / pctMod;
     self:TriggerUpdate();
 end
 
 --- Update ranged attack damage
 function _addon:UpdateRangedAttackDmg()
     _addon:PrintDebug("Updated ranged dmg");
-    local _, lowDmg, hiDmg = UnitRangedDamage("player");
-    self.stats.attackDmg.ranged.min = lowDmg;
-    self.stats.attackDmg.ranged.max = hiDmg;
+    local _, lowDmg, hiDmg, _, _, pctMod = UnitRangedDamage("player");
+    self.stats.attackDmg.ranged.min = lowDmg / pctMod;
+    self.stats.attackDmg.ranged.max = hiDmg / pctMod;
     self:TriggerUpdate();
 end
 

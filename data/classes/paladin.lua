@@ -387,6 +387,7 @@ _addon.classScripts = {
         if baseAtkSpd > 0 then
             local avgDmg = 0.5 * (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max);
             calcedEffect.effectivePower = 4 * avgDmg * (1 / stats.baseAttackSpeed.mainhand) - 1;
+            calcedEffect.effectivePower = calcedEffect.effectivePower * calcedEffect.modBonus;
         end
         return 0;
     end,

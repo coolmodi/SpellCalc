@@ -40,10 +40,26 @@ function GetInventoryItemLink(unit, slotId) end
 function GetSpellSubtext(spellId) end
 
 
--- mhMin, mhMax, ohMin, ohMax
-function UnitDamage(unit)
-    return 1, 2, 1, 2;
-end
+---Unit damage returns information about your current damage stats.
+---@param unit string
+---@return number lowDmg
+---@return number hiDmg
+---@return number offlowDmg
+---@return number offhiDmg
+---@return number posBuff
+---@return number negBuff
+---@return number percentmod
+function UnitDamage(unit) end
+
+---Returns the unit's ranged damage and speed. 
+---@param unit string
+---@return number speed
+---@return number lowDmg
+---@return number hiDmg
+---@return number posBuff
+---@return number negBuff
+---@return number percentmod
+function UnitRangedDamage(unit) end
 
 --- as percent
 function GetCritChance()
@@ -182,11 +198,6 @@ end
 --- mainHand, offHand
 function UnitAttackSpeed(unit)
     return 1.5, 1.2;
-end
-
---- speed, lowDmg, hiDmg, posBuff, negBuff, percent
-function UnitRangedDamage(unit)
-    return 1.5, 0, 0, 0, 0, 0;
 end
 
 --- Returns information about an item. 

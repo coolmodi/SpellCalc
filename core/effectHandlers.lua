@@ -109,7 +109,7 @@ local function SealOfCommand(calcedSpell, effNum, spellRankInfo, effCastTime, ef
     ---@type SpellRankEffectData
     local effectData = spellRankInfo.effects[effNum];
 
-    local weaponCoef = effectData.weaponCoef;
+    local weaponCoef = effectData.weaponCoef * effectMod;
     calcedEffect.min = weaponCoef * stats.attackDmg.mainhand.min;
     calcedEffect.max = weaponCoef * stats.attackDmg.mainhand.max;
     calcedEffect.avg = 0.5 * (calcedEffect.min + calcedEffect.max);
@@ -155,11 +155,6 @@ local function SealOfVengeance(calcedSpell, effNum, spellRankInfo, effCastTime, 
         error("SoV: Blood Corruption spell not handled?");
         return;
     end
-    local dotEffect = dotSpell[1];
-    local dotTicks = dotEffect.ticks;
-    local dotPeriod = dotEffect.tickPeriod;
-    local dotDur = dotSpell.duration;
-    local dotAt5Stack = dotEffect.avg * dotTicks;
     calcedEffect.spellData = dotSpell;
 
     local weaponCoef = effectData.weaponCoef * effectMod;
