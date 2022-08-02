@@ -484,7 +484,7 @@ _addon.spellClassSet = {
     [4] = {},
 };
 
----@alias EffectScript fun(val:number, cs:CalcedSpell, spellId:number, ri:SpellRankInfo, eff:number):number
+---@alias EffectScript fun(val:number, cs:CalcedSpell, ce:CalcedEffect|nil, spellId:number, ri:SpellRankInfo, scriptType: number)
 
 ---@class AuraEffectBase
 ---@field type number

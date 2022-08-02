@@ -93,7 +93,7 @@ end
 ---@param effNum number
 ---@return number @baseMod affecting the base value of the spell
 ---@return number @bonusMod affecting only the bonus SP/AP of the spell
-local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration, ri, effNum)
+local function SetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration, ri, effNum)
     local bonusMod = 1;
     local baseMod = 1;
 
@@ -163,13 +163,13 @@ local function GetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
         end
     end
 
-    local smod = scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, spellId, ri, effNum);
-    bonusMod = bonusMod * (1 + smod / 100);
+    local ce = calcedSpell[effNum];
+    ce.modBase = baseMod;
+    ce.modBonus = bonusMod;
+    scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, ce, spellId, ri);
+    ce.modBase = ce.modBase * ce.modBonus;
 
-    baseMod = baseMod * bonusMod;
-
-    _addon:PrintDebug("Basemod: "..baseMod..", Bonusmod: "..bonusMod);
-    return baseMod, bonusMod;
+    _addon:PrintDebug("Basemod: "..ce.modBase..", Bonusmod: "..ce.modBonus);
 end
 
 --- Get effective mana pool
@@ -378,10 +378,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.spellModFlatCritChance[spellId].buffs);
     end
 
-    do
-        local scrit = scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE, calcedSpell, spellId, spellRankInfo);
-        calcedSpell.critChance = calcedSpell.critChance + scrit;
-    end
+    scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE, calcedSpell, nil, spellId, spellRankInfo);
 
     if calcedSpell.critChance > 100 then
         calcedSpell.critChance = 100;
@@ -663,14 +660,13 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
             local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
-            local effectMod, bonusMod = GetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellRankInfo, i);
-            calcedEffect.modBase = effectMod;
-            calcedEffect.modBonus = bonusMod;
+            SetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellRankInfo, i);
 
             --TODO: Remove this
             -- Lets find a case and check if this is still needed.
-            if effectMod ~= bonusMod then
+            if calcedEffect.modBase ~= calcedEffect.modBonus then
                 _addon:PrintError("Effect mod is not bonus mod! "..spellName);
+                print(calcedEffect.modBase, calcedEffect.modBonus);
             end
 
             --------------------------
@@ -699,7 +695,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     end
                 end
 
-                calcedEffect.effectiveSpCoef = coef * bonusMod;
+                calcedEffect.effectiveSpCoef = coef * calcedEffect.modBonus;
                 calcedEffect.effectivePower = calcedEffect.spellPower * calcedEffect.effectiveSpCoef;
 
                 -- TODO: LB idol only uses base coef, if ever used for something else this probably needs to change
@@ -717,7 +713,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 else
                     calcedEffect.attackPower = stats.attackPower;
                 end
-                calcedEffect.effectiveApCoef = effectData.coefAP * bonusMod;
+                calcedEffect.effectiveApCoef = effectData.coefAP * calcedEffect.modBonus;
                 calcedEffect.effectivePower = calcedEffect.effectivePower + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
             end
 
@@ -727,14 +723,14 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             -- Effect values
 
             -- Pre process script hook
-            scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE, calcedSpell, spellId, spellRankInfo, i);
+            scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE, calcedSpell, calcedEffect, spellId, spellRankInfo);
 
             if effectHandler[effectData.effectType] == nil then
                 _addon:PrintError("No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
                 _addon:PrintError("Please report this to the addon author.");
                 return;
             else
-                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, effectMod, spellName, spellId, GCD);
+                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, calcedEffect.modBase, spellName, spellId, GCD);
             end
 
             --------------------------

@@ -136,24 +136,16 @@ end
 ---Get sum of all SCRIPT_ effect type scripts applicable for this spell.
 ---@param type number The SCRIPT_ effect type.
 ---@param cs CalcedSpell
+---@param ce CalcedEffect
 ---@param spellId number
 ---@param ri SpellRankInfo
----@param eff number
----@return number|nil
-function _addon.ScriptEffects.DoSpell(type, cs, spellId, ri, eff)
-    --print("Doing spell scripts", type, spellId)
-    local rv = 0;
-
+function _addon.ScriptEffects.DoSpell(type, cs, ce, spellId, ri)
     if spellScripts[spellId]
     and spellScripts[spellId][type] then
-        --print("Have spell scripts", type, spellId)
         for scriptKey, func in pairs(spellScripts[spellId][type]) do
-            rv = rv + func(scriptValueCache[scriptKey], cs, spellId, ri, eff);
+           func(scriptValueCache[scriptKey], cs, ce, spellId, ri, type);
         end
-        --print("Result after spell scripts: ", rv, type, spellId)
     end
-
-    return rv;
 end
 
 ---Triggers update if needed.

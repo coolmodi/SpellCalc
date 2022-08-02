@@ -542,24 +542,39 @@ _addon.classPassives = {
 
 _addon.classScripts = {
     ---@param val number
-    Imp_IS_Target_Aura_Check = function(val)
+    ---@param cs CalcedSpell
+    ---@param ce CalcedEffect|nil
+    ---@param spellId number
+    ---@param ri SpellRankInfo
+    ---@param scriptType number
+    Imp_IS_Target_Aura_Check = function(val, cs, ce, spellId, ri, scriptType)
         if _addon.Target.HasAuraName(INSECT_SWARM, true) then
-            return val;
+            if scriptType == _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE then
+                cs.critChance = cs.critChance + val;
+                return
+            end
+            ce.modBonus = ce.modBonus * (1 + val/100);
         end
-        return 0;
     end,
 
     ---@param val number
-    Glyph_of_Regrowth = function(val)
+    ---@param cs CalcedSpell
+    ---@param ce CalcedEffect|nil
+    Glyph_of_Regrowth = function(val, cs, ce)
+        if _addon.Target.HasAuraName(REGROWTH, true) then
+            ce.modBonus = ce.modBonus * (1 + val/100);
+        end
         return _addon.Target.HasAuraName(REGROWTH, true) and val or 0;
     end,
 
-    Nourish_Script = function()
+    ---@param val number
+    ---@param cs CalcedSpell
+    ---@param ce CalcedEffect|nil
+    Nourish_Script = function(val, cs, ce)
         local hasAura = _addon.Target.HasAuraName;
         if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
         or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
-            return 20;
+            ce.modBonus = ce.modBonus * 1.2;
         end
-        return 0;
     end
 }

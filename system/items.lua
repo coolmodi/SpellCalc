@@ -120,7 +120,7 @@ local function EquipItem(itemId, slotId)
         end
         return;
     end
-    print("eq item", slotId)
+
     if slotId >= 16 and slotId <= 18 then
         if classID == LE_ITEM_CLASS_WEAPON then
             _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);

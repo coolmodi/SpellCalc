@@ -193,6 +193,16 @@ _addon.talentDataRaw = {
                     _addon.WEAPON_TYPES_MASK.POLEARM,
                 affectMask = _addon.SCHOOL_MASK.PHYSICAL,
                 perPoint = 2
+            },
+            {
+                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_2H +
+                    _addon.WEAPON_TYPES_MASK.MACE_2H +
+                    _addon.WEAPON_TYPES_MASK.SWORD_2H +
+                    _addon.WEAPON_TYPES_MASK.POLEARM,
+                affectSpell = {1024 + 134217728, 4194304 + 512, 8},
+                perPoint = 2,
+                scriptKey = "Two_Hand_Weapon_Spec_Hackfixffs"
             }
         }
     },
@@ -216,7 +226,7 @@ _addon.talentDataRaw = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {8388608, 163840},
-                perPoint = 5
+                perPoint = 10 -- TODO: This currently gives 10% per point on beta. Bug?
             }
         }
     },
@@ -354,45 +364,48 @@ _addon.classScripts = {
     ---Scale Shield of Righteousness with block value.
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param spellId number
-    ---@param ri SpellRankInfo
-    ---@param eff number
-    Shield_of_Righteousness_BV_Scale = function(val, cs, spellId, ri, eff)
-        ---@type CalcedEffect
-        local calcedEffect = cs[eff];
-        calcedEffect.effectivePower = GetShieldBlock() * calcedEffect.modBonus;
-        return 0;
+    ---@param ce CalcedEffect|nil
+    Shield_of_Righteousness_BV_Scale = function(val, cs, ce)
+        ce.effectivePower = GetShieldBlock() * ce.modBonus;
     end,
 
     ---Increase Judgement of Vengeance/Corruption damage if target has seal debuff stacks.
     ---@param val number
-    Holy_Vengeance_Judgement_Mod = function(val)
+    ---@param cs CalcedSpell
+    ---@param ce CalcedEffect|nil
+    Holy_Vengeance_Judgement_Mod = function(val, cs, ce)
         local stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
-        if stacks then return stacks * val end
-        return 0;
+        if stacks then
+            ce.modBonus = ce.modBonus * (1 + stacks * val/100);
+        end
     end,
 
     ---Set Hammer of the Righteous damage.
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param spellId number
-    ---@param ri SpellRankInfo
-    ---@param eff number
-    Hammer_of_the_Righteous_MH_DPS = function(val, cs, spellId, ri, eff)
-        ---@type CalcedEffect
-        local calcedEffect = cs[eff];
+    ---@param ce CalcedEffect|nil
+    Hammer_of_the_Righteous_MH_DPS = function(val, cs, ce)
         -- Does 4 times the weapon dps WITHOUT HASTE!
         local stats = _addon.stats;
         local baseAtkSpd = stats.baseAttackSpeed.mainhand;
         if baseAtkSpd > 0 then
             local avgDmg = 0.5 * (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max);
-            calcedEffect.effectivePower = 4 * avgDmg * (1 / stats.baseAttackSpeed.mainhand) - 1;
-            calcedEffect.effectivePower = calcedEffect.effectivePower * calcedEffect.modBonus;
+            ce.effectivePower = 4 * avgDmg * (1 / stats.baseAttackSpeed.mainhand) - 1;
+            ce.effectivePower = ce.effectivePower * ce.modBonus;
         end
-        return 0;
     end,
-}
 
--- TODO
--- Glyph of Seal of Light
--- Ret talents
+    ---Shitty hackfix I guess. Some Seals/Judgements are affected by 2H weapon spec.
+    -- Affected: JoR, SoR, JoC, JoW, JoL
+    -- Not affected: SoV, JoV, SoC
+    -- TODO: Find out how the fuck this works. Other spells affected? Is this intended?
+    -- See talent def.
+    ---@param val number
+    ---@param cs CalcedSpell
+    ---@param ce CalcedEffect|nil
+    ---@param spellId number
+    ---@param ri SpellRankInfo
+    Two_Hand_Weapon_Spec_Hackfixffs = function (val, cs, ce, spellId, ri)
+        ce.modBonus = ce.modBonus * (1 + val/100);
+    end
+}
