@@ -8,6 +8,7 @@ const enum EFFECT_TYPE {
     SPELL_EFFECT_HEALTH_LEECH = 9,
     SPELL_EFFECT_SUMMON_TOTEM_SLOT_CLASSIC = 28, // Seems like all totems share this now
     SPELL_EFFECT_WEAPON_PERCENT_DAMAGE = 31, // if E1 then modify E0!
+    SPELL_EFFECT_HEALTH_FUNNEL = 65, // Something like apply aura??
     SPELL_EFFECT_ATTACK = 78,
     SPELL_EFFECT_WEAPON_DAMAGE = 58,
     SPELL_EFFECT_APPLY_AREA_AURA_PARTY = 35,

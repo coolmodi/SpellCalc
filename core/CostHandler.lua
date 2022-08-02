@@ -15,12 +15,11 @@ local CostHandler = {};
 
 --- Set vars for mana cost.
 ---@param calcedSpell CalcedSpell
----@param spellBaseCost number
+---@param spellRankInfo SpellRankInfo
 ---@param effCastTime number
----@param school number
 ---@param spellName string
 ---@param spellId number
-function CostHandler.Mana(calcedSpell, spellBaseCost, effCastTime, school, spellName, spellId)
+function CostHandler.Mana(calcedSpell, spellRankInfo, effCastTime, spellName, spellId)
     local mps = stats.mp5.val / 5 + stats.manaRegAura;
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
@@ -60,18 +59,26 @@ function CostHandler.Mana(calcedSpell, spellBaseCost, effCastTime, school, spell
         calcedSpell:AddToBuffList(stats.spellModCritManaRestore[spellId].buffs);
     end
 
+    local baseCost = 0;
+
+    if spellRankInfo.baseCost then
+        baseCost = spellRankInfo.baseCost;
+    elseif spellRankInfo.baseCostPct then
+        baseCost = stats.baseMana * spellRankInfo.baseCostPct/100;
+    end
+
     if stats.illumination.val > 0 then
         if (class == "PALADIN" and (bit.band(calcedSpell[1].effectFlags, SEF.HEAL) > 0 or spellName == HOLY_SHOCK))
-        or (class == "MAGE" and (school == _addon.SCHOOL.FIRE or school == _addon.SCHOOL.FROST))
+        or (class == "MAGE" and (spellRankInfo.school == _addon.SCHOOL.FIRE or spellRankInfo.school == _addon.SCHOOL.FROST))
         or (class == "DRUID" and spellName == HEALING_TOUCH)
-        or (class == "SHAMAN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) == 0 and (school == _addon.SCHOOL.NATURE or school == _addon.SCHOOL.FROST or spellName == FLAME_SHOCK)) then
-            calcedSpell.effectiveCost = calcedSpell.effectiveCost - spellBaseCost * (stats.illumination.val/100) * (calcedSpell.critChance/100);
+        or (class == "SHAMAN" and bit.band(calcedSpell[1].effectFlags, SEF.HEAL) == 0 and (spellRankInfo.school == _addon.SCHOOL.NATURE or spellRankInfo.school == _addon.SCHOOL.FROST or spellName == FLAME_SHOCK)) then
+            calcedSpell.effectiveCost = calcedSpell.effectiveCost - baseCost * (stats.illumination.val/100) * (calcedSpell.critChance/100);
             calcedSpell:AddToBuffList(stats.illumination.buffs);
         end
     end
 
     if stats.earthfuryReturn.val > 0 and (spellName == HEALING_WAVE or spellName == LESSER_HEALING_WAVE) then
-        calcedSpell.effectiveCost = calcedSpell.effectiveCost - spellBaseCost * 0.0875;
+        calcedSpell.effectiveCost = calcedSpell.effectiveCost - baseCost * 0.0875;
         calcedSpell:AddToBuffList(stats.earthfuryReturn.buffs);
     end
 

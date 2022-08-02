@@ -1,6 +1,6 @@
 {
     "names": {
-
+        "Avenger's Shield": {"index": 0, "ap": 0.07, "sp": 0.07}
     },
     "ids": {
         "20187": {"index": 0, "ap": 0.2},

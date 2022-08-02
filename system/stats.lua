@@ -96,6 +96,11 @@ _addon.stats = {
         offhand = 0,
         ranged = 0
     },
+    baseAttackSpeed = {
+        mainhand = 0,
+        offhand = 0,
+        ranged = 0
+    },
     attack = {
         mainhand = 0,
         offhand = 0,

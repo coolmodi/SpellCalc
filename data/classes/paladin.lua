@@ -16,7 +16,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {1024, 4196352}, -- TODO: SoR not included, intentional?
+                affectSpell = {1024, 4196352 + 536870912},
                 perPoint = 3
             },
             {
@@ -33,7 +33,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {-1071644672}, -- TODO: test
+                affectSpell = {-1071644672, 65536},
                 perPoint = 4
             }
         }
@@ -109,7 +109,7 @@ _addon.talentDataRaw = {
     },
     { -- Divine Guardian
         tree = 2,
-        tier = 3,
+        tier = 4,
         column = 1,
         effects = {
             {
@@ -141,7 +141,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.EFFECT_TYPE.GLOBAL_MOD_CRITICAL_HEALING,
-                values = 10
+                perPoint = 10
             }
         }
     },
@@ -341,7 +341,13 @@ _addon.classPassives = {
         type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
         scriptKey = HOLY_VENGEANCE,
         value = 0
-    }
+    },
+    {
+        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
+        affectSpell = {0, 262144},
+        scriptKey = "Hammer_of_the_Righteous_MH_DPS",
+        value = 0
+    },
 }
 
 _addon.classScripts = {
@@ -364,5 +370,28 @@ _addon.classScripts = {
         local stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
         if stacks then return stacks * val end
         return 0;
-    end
+    end,
+
+    ---Set Hammer of the Righteous damage.
+    ---@param val number
+    ---@param cs CalcedSpell
+    ---@param spellId number
+    ---@param ri SpellRankInfo
+    ---@param eff number
+    Hammer_of_the_Righteous_MH_DPS = function(val, cs, spellId, ri, eff)
+        ---@type CalcedEffect
+        local calcedEffect = cs[eff];
+        -- Does 4 times the weapon dps WITHOUT HASTE!
+        local stats = _addon.stats;
+        local baseAtkSpd = stats.baseAttackSpeed.mainhand;
+        if baseAtkSpd > 0 then
+            local avgDmg = 0.5 * (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max);
+            calcedEffect.effectivePower = 4 * avgDmg * (1 / stats.baseAttackSpeed.mainhand) - 1;
+        end
+        return 0;
+    end,
 }
+
+-- TODO
+-- Glyph of Seal of Light
+-- Ret talents

@@ -30,6 +30,36 @@ local weaponSubClass = {
     ranged = nil
 };
 
+local GetWeaponBaseSpeed;
+do
+    local scanTT = CreateFrame( "GameTooltip", "SpellCalcItemsScanTT", nil, "GameTooltipTemplate" );
+    scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
+    scanTT:AddFontStrings(
+    scanTT:CreateFontString( "$parentTextLeft1", nil, "GameTooltipText" ),
+    scanTT:CreateFontString( "$parentTextRight1", nil, "GameTooltipText" ) );
+
+    ---Get weapon attack speed from tooltip.
+    ---@param itemId number
+    function GetWeaponBaseSpeed(itemId)
+        local spdNum = 0;
+        scanTT:ClearLines();
+        scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
+        scanTT:SetHyperlink("item:"..itemId..":0:0:0:0:0:0:0");
+        for i = 1, scanTT:NumLines() do
+            local fstring = _G["SpellCalcItemsScanTTTextRight"..i];
+            if fstring then
+                local text = fstring:GetText();
+                if text then
+                    spdNum = tonumber(strmatch(text, " (%d%.%d%d)"));
+                    if spdNum then break end
+                end
+            end
+        end
+        scanTT:Hide();
+        return spdNum;
+    end
+end
+
 --- Update set item count and add/remove buffs as needed
 ---@param setId number
 ---@param change number
@@ -90,25 +120,31 @@ local function EquipItem(itemId, slotId)
         end
         return;
     end
-
+    print("eq item", slotId)
     if slotId >= 16 and slotId <= 18 then
         if classID == LE_ITEM_CLASS_WEAPON then
             _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);
             if slotId == 16 then
                 weaponSubClass.mainHand = subclassID;
+                _addon.stats.baseAttackSpeed.mainhand = GetWeaponBaseSpeed(itemId);
             elseif slotId == 17 then
                 weaponSubClass.offHand = subclassID;
+                _addon.stats.baseAttackSpeed.offhand = GetWeaponBaseSpeed(itemId);
             elseif slotId == 18 then
                 weaponSubClass.ranged = subclassID;
+                _addon.stats.baseAttackSpeed.ranged = GetWeaponBaseSpeed(itemId);
             end
         else
             _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is not a weapon, leaving empty");
             if slotId == 16 then
                 weaponSubClass.mainHand = nil;
+                _addon.stats.baseAttackSpeed.mainhand = 0;
             elseif slotId == 17 then
                 weaponSubClass.offHand = nil;
+                _addon.stats.baseAttackSpeed.offHand = 0;
             elseif slotId == 18 then
                 weaponSubClass.ranged = nil;
+                _addon.stats.baseAttackSpeed.ranged = 0;
             end
         end
     end
@@ -152,10 +188,13 @@ local function UnequipItem(slotId)
         _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now unarmed");
         if slotId == 16 then
             weaponSubClass.mainHand = nil;
+            _addon.stats.baseAttackSpeed.mainhand = 0;
         elseif slotId == 17 then
             weaponSubClass.offHand = nil;
+            _addon.stats.baseAttackSpeed.offHand = 0;
         elseif slotId == 18 then
             weaponSubClass.ranged = nil;
+            _addon.stats.baseAttackSpeed.ranged = 0;
         end
     end
 

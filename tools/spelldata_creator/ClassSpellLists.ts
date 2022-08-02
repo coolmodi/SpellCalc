@@ -16,6 +16,7 @@ const DO_EFFECTS = [
     EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL,
     EFFECT_TYPE.SPELL_EFFECT_DUMMY,
     EFFECT_TYPE.SPELL_EFFECT_ENERGIZE_PCT,
+    EFFECT_TYPE.SPELL_EFFECT_HEALTH_FUNNEL,
 ];
 
 const DO_AURAS = [
@@ -110,7 +111,8 @@ export class ClassSpellLists
 
             if (effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA
                 || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA
-                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY)
+                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AREA_AURA_PARTY
+                || effect.Effect == EFFECT_TYPE.SPELL_EFFECT_HEALTH_FUNNEL)
             {
                 if (DO_AURAS.indexOf(effect.EffectAura) == -1)
                 {

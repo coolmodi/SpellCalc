@@ -179,6 +179,91 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [7294] = { -- Retribution Aura(Rank 1)
+        spellLevel = 16,
+        maxLevel = 0,
+        duration = -0.001,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 65,
+                auraType = 15,
+                valueBase = 10,
+                valueRange = 0,
+                coef = 0.033,
+                coefAP = 0,
+            },
+        }
+    },
+    [10298] = { -- Retribution Aura(Rank 2)
+        spellLevel = 26,
+        maxLevel = 0,
+        duration = -0.001,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 65,
+                auraType = 15,
+                valueBase = 18,
+                valueRange = 0,
+                coef = 0.033,
+                coefAP = 0,
+            },
+        }
+    },
+    [10299] = { -- Retribution Aura(Rank 3)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = -0.001,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 65,
+                auraType = 15,
+                valueBase = 27,
+                valueRange = 0,
+                coef = 0.033,
+                coefAP = 0,
+            },
+        }
+    },
+    [10300] = { -- Retribution Aura(Rank 4)
+        spellLevel = 46,
+        maxLevel = 0,
+        duration = -0.001,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 65,
+                auraType = 15,
+                valueBase = 37,
+                valueRange = 0,
+                coef = 0.033,
+                coefAP = 0,
+            },
+        }
+    },
+    [10301] = { -- Retribution Aura(Rank 5)
+        spellLevel = 56,
+        maxLevel = 0,
+        duration = -0.001,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 65,
+                auraType = 15,
+                valueBase = 48,
+                valueRange = 0,
+                coef = 0.033,
+                coefAP = 0,
+            },
+        }
+    },
     [10312] = { -- Exorcism(Rank 4)
         spellLevel = 44,
         maxLevel = 49,
@@ -955,6 +1040,23 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [27150] = { -- Retribution Aura(Rank 6)
+        spellLevel = 66,
+        maxLevel = 0,
+        duration = -0.001,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 65,
+                auraType = 15,
+                valueBase = 62,
+                valueRange = 0,
+                coef = 0.033,
+                coefAP = 0,
+            },
+        }
+    },
     [27173] = { -- Consecration(Rank 6)
         spellLevel = 70,
         maxLevel = 74,
@@ -1130,8 +1232,8 @@ _addon.spellRankInfo = {
                 effectType = 2,
                 valueBase = 440,
                 valueRange = 96,
-                coef = 0.091,
-                coefAP = 0.091,
+                coef = 0.07,
+                coefAP = 0.07,
             },
         }
     },
@@ -1148,8 +1250,8 @@ _addon.spellRankInfo = {
                 effectType = 2,
                 valueBase = 601,
                 valueRange = 132,
-                coef = 0.091,
-                coefAP = 0.091,
+                coef = 0.07,
+                coefAP = 0.07,
             },
         }
     },
@@ -1166,8 +1268,8 @@ _addon.spellRankInfo = {
                 effectType = 2,
                 valueBase = 796,
                 valueRange = 176,
-                coef = 0.091,
-                coefAP = 0.091,
+                coef = 0.07,
+                coefAP = 0.07,
             },
         }
     },
@@ -1555,8 +1657,8 @@ _addon.spellRankInfo = {
                 effectType = 2,
                 valueBase = 913,
                 valueRange = 202,
-                coef = 0.091,
-                coefAP = 0.091,
+                coef = 0.07,
+                coefAP = 0.07,
             },
         }
     },
@@ -1573,8 +1675,8 @@ _addon.spellRankInfo = {
                 effectType = 2,
                 valueBase = 1100,
                 valueRange = 244,
-                coef = 0.091,
-                coefAP = 0.091,
+                coef = 0.07,
+                coefAP = 0.07,
             },
         }
     },
@@ -1682,6 +1784,23 @@ _addon.spellRankInfo = {
                 coef = 0.013,
                 coefAP = 0.025,
                 auraStacks = 5,
+            },
+        }
+    },
+    [54043] = { -- Retribution Aura(Rank 7)
+        spellLevel = 76,
+        maxLevel = 0,
+        duration = -0.001,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 65,
+                auraType = 15,
+                valueBase = 112,
+                valueRange = 0,
+                coef = 0.033,
+                coefAP = 0,
             },
         }
     },

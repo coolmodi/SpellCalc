@@ -263,8 +263,7 @@ end
 ---@param spellName string
 local function SealOfWisdomMelee(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName)
     ArcaneTorrent(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName);
-    local baseAtkSpeed = stats.attackSpeed.mainhand / (1 - GetHaste()/100);
-    calcedSpell[effNum].perSec = 15/60 * baseAtkSpeed; -- 15 PPM, this should be the proc chance
+    calcedSpell[effNum].perSec = 15/60 * stats.baseAttackSpeed.mainhand; -- 15 PPM, this should be the proc chance
 end
 
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
@@ -792,6 +791,7 @@ effHandler[EFFECT_TYPES.SPELL_EFFECT_SCHOOL_DAMAGE] = SchoolDamage;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_HEALTH_LEECH] = SchoolDamage;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_HEAL] = HealEffect;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA] = AuraOrAreaAura;
+effHandler[EFFECT_TYPES.SPELL_EFFECT_HEALTH_FUNNEL] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_PERSISTENT_AREA_AURA] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_ATTACK] = AutoAttack;

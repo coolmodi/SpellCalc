@@ -411,7 +411,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     end
 
     if bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0 and stats.modCriticalHealing.val ~= 0 then
-        calcedSpell.critMult = calcedSpell.critMult * (1 + stats.modCriticalHealing.val / 100);
+        calcedSpell.critMult = calcedSpell.critMult + stats.modCriticalHealing.val / 100;
         calcedSpell:AddToBuffList(stats.modCriticalHealing.buffs);
     end
 
@@ -555,7 +555,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.effectiveCost = spellCost;
 
         if costType == 0 then -- mana
-            costHandler.Mana(calcedSpell, spellRankInfo.baseCost, effCastTime, spellRankInfo.school, spellName, spellId);
+            costHandler.Mana(calcedSpell, spellRankInfo, effCastTime, spellName, spellId);
         elseif costType == 1 then -- rage
             -- TODO: rage (on next melee, proc on crit etc.)
         elseif costType == 3 then -- energy
