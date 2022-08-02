@@ -219,16 +219,21 @@ function Target:Update()
         self.isPlayer = UnitIsPlayer("target");
     end
 
-    if not self.isPlayer and tName then
-        local unitType, _, _, _, _, npcID = strsplit("-", UnitGUID("target"));
-        local idnum = tonumber(npcID);
-        if idnum then
-            self.npcId = idnum;
+    if tName then
+        if not self.isPlayer then
+            local unitType, _, _, _, _, npcID = strsplit("-", UnitGUID("target"));
+            local idnum = tonumber(npcID);
+            if idnum then
+                self.npcId = idnum;
+            else
+                self.npcId = -1;
+            end
+
+            self.creatureType = CREATURE_TYPE_LOC_TO_ID[UnitCreatureType("target")];
         else
             self.npcId = -1;
+            self.creatureType = 7;
         end
-
-        self.creatureType = CREATURE_TYPE_LOC_TO_ID[UnitCreatureType("target")];
     else
         self.npcId = -1;
         self.creatureType = nil;
