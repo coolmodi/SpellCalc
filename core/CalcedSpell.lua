@@ -126,11 +126,13 @@ local CalcedEffect = {
 CalcedEffect.__index = CalcedEffect;
 
 ---@class CalcedSpell @Represents a calculated spell.
+---@field school number The spell school.
 ---@field duration number|nil Duration after duration modifiers with haste if used for spell.
 ---@field durationNoHaste number|nil Duration after duration modifiers without haste.
 ---@field [1] CalcedEffect|nil Effect 1
 ---@field [2] CalcedEffect|nil Effect 2
 local CalcedSpell = {
+    school = 0,
     critChance = 0,
     critMult = 0,
     ---@type string[]

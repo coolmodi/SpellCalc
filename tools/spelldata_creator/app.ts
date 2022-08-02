@@ -355,7 +355,22 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: 0
+            weaponCoef: 1
+        };
+        fillBaseAndRange(rankInfo.effects[effectNum], effect);
+    },
+
+    [EFFECT_TYPE.SPELL_EFFECT_NORMALIZED_WEAPON_DMG]: (rankInfo, effect, effectNum, _spellName) => {
+        rankInfo.effects[effectNum] = {
+            effectType: effect.Effect,
+            coef: effect.EffectBonusCoefficient,
+            coefAP: effect.BonusCoefficientFromAP,
+            valueBase: 0,
+            valueRange: 0,
+            valuePerLevel: effect.EffectRealPointsPerLevel,
+            forceScaleWithHeal: false,
+            period: 0,
+            weaponCoef: 1
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
@@ -364,7 +379,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
         const weaponCoef = getCorectBase(effect) / 100;
 
         if (effectNum > 0) {
-            if (rankInfo.effects[0].effectType != EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE) {
+            if (rankInfo.effects[0].effectType != EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE
+                && rankInfo.effects[0].effectType != EFFECT_TYPE.SPELL_EFFECT_NORMALIZED_WEAPON_DMG) {
                 throw new Error("E1/2 is SPELL_EFFECT_WEAPON_PERCENT_DAMAGE but E0 isn't SPELL_EFFECT_WEAPON_DAMAGE!");
             }
             rankInfo.effects[0].weaponCoef = weaponCoef;
@@ -473,7 +489,7 @@ function buildSpellInfo(pclass: string) {
         if (!spellcat) throw new Error("Sspell category not found!");
 
         // Skip physical spells except auto attack and SOtC for now
-        if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID)) continue;
+        if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID) && spellId != 35395 && spellId != 53385) continue;
 
         // Create rank info if needed
         if (!classInfo.rankInfo[spellId]) {

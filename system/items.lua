@@ -25,12 +25,12 @@ local missingItems = { _count = 0 };
 local items = {};
 local sets = {};
 local weaponSubClass = {
-    mainHand = nil,
-    offHand = nil,
+    mainhand = nil,
+    offhand = nil,
     ranged = nil
 };
 
-local GetWeaponBaseSpeed;
+local SetWeaponBaseDmgAndSpeed;
 do
     local scanTT = CreateFrame( "GameTooltip", "SpellCalcItemsScanTT", nil, "GameTooltipTemplate" );
     scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
@@ -38,25 +38,44 @@ do
     scanTT:CreateFontString( "$parentTextLeft1", nil, "GameTooltipText" ),
     scanTT:CreateFontString( "$parentTextRight1", nil, "GameTooltipText" ) );
 
-    ---Get weapon attack speed from tooltip.
-    ---@param itemId number
-    function GetWeaponBaseSpeed(itemId)
-        local spdNum = 0;
-        scanTT:ClearLines();
-        scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
-        scanTT:SetHyperlink("item:"..itemId..":0:0:0:0:0:0:0");
-        for i = 1, scanTT:NumLines() do
-            local fstring = _G["SpellCalcItemsScanTTTextRight"..i];
-            if fstring then
-                local text = fstring:GetText();
-                if text then
-                    spdNum = tonumber(strmatch(text, " (%d%.%d%d)"));
-                    if spdNum then break end
+    ---Set weapon attack speed and base damage from tooltip.
+    ---@param itemId number|nil
+    ---@param key string mainhand, offhand or ranged
+    function SetWeaponBaseDmgAndSpeed(itemId, key)
+        local speed = 2;
+        local dmgLow = 1;
+        local dmgHigh = 1;
+
+        if itemId then
+            scanTT:ClearLines();
+            scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
+            scanTT:SetHyperlink("item:"..itemId..":0:0:0:0:0:0:0");
+            for i = 1, scanTT:NumLines() do
+                local fstringl = _G["SpellCalcItemsScanTTTextLeft"..i];
+                local fstringr = _G["SpellCalcItemsScanTTTextRight"..i];
+                if fstringl and fstringr then
+                    local textl = fstringl:GetText();
+                    local textr = fstringr:GetText();
+                    if textl and textr then
+                        local dls, dhs = strmatch(textl, "(%d+) %- (%d+)");
+                        local dl = tonumber(dls);
+                        local dh = tonumber(dhs);
+                        local s = tonumber(strmatch(textr, " (%d%.%d%d)"));
+                        if dl and dh and s then
+                            speed = s;
+                            dmgLow = dl;
+                            dmgHigh = dh;
+                            break;
+                        end
+                    end
                 end
             end
+            scanTT:Hide();
         end
-        scanTT:Hide();
-        return spdNum;
+        local s = _addon.stats;
+        s.baseAttackSpeed[key] = speed;
+        s.weaponBaseDamage[key].min = dmgLow;
+        s.weaponBaseDamage[key].max = dmgHigh;
     end
 end
 
@@ -125,26 +144,26 @@ local function EquipItem(itemId, slotId)
         if classID == LE_ITEM_CLASS_WEAPON then
             _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);
             if slotId == 16 then
-                weaponSubClass.mainHand = subclassID;
-                _addon.stats.baseAttackSpeed.mainhand = GetWeaponBaseSpeed(itemId);
+                weaponSubClass.mainhand = subclassID;
+                SetWeaponBaseDmgAndSpeed(itemId, "mainhand");
             elseif slotId == 17 then
-                weaponSubClass.offHand = subclassID;
-                _addon.stats.baseAttackSpeed.offhand = GetWeaponBaseSpeed(itemId);
+                weaponSubClass.offhand = subclassID;
+                SetWeaponBaseDmgAndSpeed(itemId, "offhand");
             elseif slotId == 18 then
                 weaponSubClass.ranged = subclassID;
-                _addon.stats.baseAttackSpeed.ranged = GetWeaponBaseSpeed(itemId);
+                SetWeaponBaseDmgAndSpeed(itemId, "ranged");
             end
         else
             _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is not a weapon, leaving empty");
             if slotId == 16 then
-                weaponSubClass.mainHand = nil;
-                _addon.stats.baseAttackSpeed.mainhand = 0;
+                weaponSubClass.mainhand = nil;
+                SetWeaponBaseDmgAndSpeed(nil, "mainhand");
             elseif slotId == 17 then
-                weaponSubClass.offHand = nil;
-                _addon.stats.baseAttackSpeed.offHand = 0;
+                weaponSubClass.offhand = nil;
+                SetWeaponBaseDmgAndSpeed(nil, "offhand");
             elseif slotId == 18 then
                 weaponSubClass.ranged = nil;
-                _addon.stats.baseAttackSpeed.ranged = 0;
+                SetWeaponBaseDmgAndSpeed(nil, "ranged");
             end
         end
     end
@@ -187,14 +206,14 @@ local function UnequipItem(slotId)
     if slotId >= 16 and slotId <= 18 then
         _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now unarmed");
         if slotId == 16 then
-            weaponSubClass.mainHand = nil;
-            _addon.stats.baseAttackSpeed.mainhand = 0;
+            weaponSubClass.mainhand = nil;
+            SetWeaponBaseDmgAndSpeed(nil, "mainhand");
         elseif slotId == 17 then
-            weaponSubClass.offHand = nil;
-            _addon.stats.baseAttackSpeed.offHand = 0;
+            weaponSubClass.offhand = nil;
+            SetWeaponBaseDmgAndSpeed(nil, "offhand");
         elseif slotId == 18 then
             weaponSubClass.ranged = nil;
-            _addon.stats.baseAttackSpeed.ranged = 0;
+            SetWeaponBaseDmgAndSpeed(nil, "ranged");
         end
     end
 
@@ -262,39 +281,39 @@ end
 
 --- Return true if a two handed weapon is in the main hand slot
 function _addon:IsTwoHandEquipped()
-    return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
+    return weaponSubClass.mainhand and bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
 end
 
 --- Return true if a one handed weapon is in the main hand slot
 function _addon:IsOneHandEquipped()
-    return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
+    return weaponSubClass.mainhand and bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
 end
 
---- Return true if a weapon is in the mainHand slot
+--- Return true if a weapon is in the mainhand slot
 function _addon:IsMainHandWeaponEquipped()
-    return weaponSubClass.mainHand and bit.band(bit.lshift(1, weaponSubClass.mainHand), self.WEAPON_TYPES_MASK.MELEE) > 0;
+    return weaponSubClass.mainhand and bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
---- Return true if a weapon is in the offHand slot
+--- Return true if a weapon is in the offhand slot
 function _addon:IsOffHandWeaponEquipped()
-    return weaponSubClass.offHand and bit.band(bit.lshift(1, weaponSubClass.offHand), self.WEAPON_TYPES_MASK.MELEE) > 0;
+    return weaponSubClass.offhand and bit.band(bit.lshift(1, weaponSubClass.offhand), self.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
 --- Return true if the given weapon class is equipped
 ---@param weaponSubClassId number
----@param slot string @mainHand, offHand or ranged
+---@param slot string @mainhand, offhand or ranged
 function _addon:IsWeaponTypeEquipped(weaponSubClassId, slot)
-    assert(slot == "mainHand" or slot == "offHand" or slot == "ranged", "Invalid weapon slot!");
+    assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
     return weaponSubClass[slot] == weaponSubClassId;
 end
 
 ---Check if weapon types are equipped.
 ---@param weaponSubClassMask number @The mask of possible weapontypes
----@param slot string @mainHand, offHand or ranged
+---@param slot string @mainhand, offhand or ranged
 ---@return boolean
 function _addon:IsWeaponTypeMaskEquipped(weaponSubClassMask, slot)
     if slot then
-        assert(slot == "mainHand" or slot == "offHand" or slot == "ranged", "Invalid weapon slot!");
+        assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
         return weaponSubClass[slot] and bit.band(bit.lshift(1, weaponSubClass[slot]), weaponSubClassMask) > 0;
     end
 
@@ -312,11 +331,20 @@ function _addon:IsDualWieldEquipped()
 end
 
 --- Return WEAPON_SUBCLASS for weapon in given slot if a weapon is equipped
----@param slot string @mainHand, offHand or ranged
+---@param slot string @mainhand, offhand or ranged
 ---@return number|nil
 function _addon:GetWeaponType(slot)
-    assert(slot == "mainHand" or slot == "offHand" or slot == "ranged", "Invalid weapon slot!");
+    assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
     return weaponSubClass[slot];
+end
+
+--- Return WEAPON_TYPES_MASK for weapon in given slot if a weapon is equipped
+---@param slot string @mainhand, offhand or ranged
+---@return number|nil
+function _addon:GetWeaponTypeMask(slot)
+    assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
+    if not weaponSubClass[slot] then return end
+    return bit.lshift(1, weaponSubClass[slot]);
 end
 
 --- (DEBUG) Equip item to test effects. It will just overwrite the slot!

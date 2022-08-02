@@ -1326,6 +1326,25 @@ _addon.spellRankInfo = {
             },
         }
     },
+    [35395] = { -- Crusader Strike
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 0.001,
+        baseCostPct = 5,
+        school = 1,
+        defType = 2,
+        equippedWeaponMask = 173555,
+        effects = {
+            [1] = {
+                effectType = 121,
+                weaponCoef = 0.75,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
     [48781] = { -- Holy Light(Rank 12)
         spellLevel = 75,
         maxLevel = 79,
@@ -1715,6 +1734,24 @@ _addon.spellRankInfo = {
                 valueRange = 0,
                 coef = 0.117,
                 coefAP = 0.0732,
+            },
+        }
+    },
+    [53385] = { -- Divine Storm
+        spellLevel = 60,
+        maxLevel = 0,
+        baseCostPct = 12,
+        school = 1,
+        defType = 2,
+        equippedWeaponMask = 173555,
+        effects = {
+            [1] = {
+                effectType = 31,
+                weaponCoef = 1.1,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
             },
         }
     },

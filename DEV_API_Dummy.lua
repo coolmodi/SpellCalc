@@ -195,7 +195,7 @@ function UnitPowerMax(unit, powerType)
     return 123;
 end
 
---- mainHand, offHand
+--- mainhand, offhand
 function UnitAttackSpeed(unit)
     return 1.5, 1.2;
 end
@@ -423,7 +423,7 @@ function GameTooltip_Hide() end
 ---@field auraType number|nil
 ---@field forceScaleWithHeal boolean|nil
 ---@field valueBase number
----@field valueRange number|nil
+---@field valueRange number
 ---@field valuePerLevel number|nil
 ---@field coef number
 ---@field coefAP number

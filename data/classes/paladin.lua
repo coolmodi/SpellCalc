@@ -226,8 +226,8 @@ _addon.talentDataRaw = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {8388608, 163840},
-                perPoint = 10 -- TODO: This currently gives 10% per point on beta. Bug?
-            }
+                perPoint = 5 -- This is 10 for "Judgement" (Wisdown, Light Seals), bug?
+            },
         }
     },
     { -- Fanaticism

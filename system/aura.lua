@@ -255,7 +255,7 @@ function _addon:UpdateWeaponRestrictedAuras()
             wrai.state = -1;
         end
 
-        if not wrai.remove and _addon:IsWeaponTypeMaskEquipped(wrai.effectBase.neededWeaponMask, "mainHand") then
+        if not wrai.remove and _addon:IsWeaponTypeMaskEquipped(wrai.effectBase.neededWeaponMask, "mainhand") then
             if wrai.state == 0 then
                 AuraEffectUpdate(true, name, wrai.effectBase, wrai.value);
                 changes = true;

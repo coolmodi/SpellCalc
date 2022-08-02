@@ -33,6 +33,41 @@ local function channelEffDmgNotMissed(hitChance, gcd, duration)
     return avgDone;
 end
 
+---Get normalized weapon damage based on equipped weapon and given AP value.
+---@param slot string mainhand, offhand or ranged
+---@param ap number The attack power used.
+---@return number low
+---@return number high
+local function GetNormalizedWeaponDamage(slot, ap)
+    local A = _addon;
+    local low = stats.weaponBaseDamage[slot].min;
+    local high = stats.weaponBaseDamage[slot].max;
+    local weaponBit = A:GetWeaponTypeMask(slot);
+    local dpsFromAP = ap / 14;
+    local dmgFromAP;
+
+    if weaponBit then
+        if bit.band(weaponBit, A.WEAPON_TYPES_MASK.DAGGER) > 0 then
+            dmgFromAP = 1.7 * dpsFromAP;
+        elseif bit.band(weaponBit, A.WEAPON_TYPES_MASK.ONE_HAND) > 0 then
+            dmgFromAP = 2.4 * dpsFromAP;
+        elseif bit.band(weaponBit, A.WEAPON_TYPES_MASK.TWO_HAND) > 0 then
+            dmgFromAP = 3.3 * dpsFromAP;
+        elseif bit.band(weaponBit, A.WEAPON_TYPES_MASK.RANGED) > 0 then
+            dmgFromAP = 2.8 * dpsFromAP;
+        end
+    end
+
+    if not dmgFromAP then
+        dmgFromAP = 2 * dpsFromAP; -- Unarmed fallback.
+    end
+
+    low = low + dmgFromAP;
+    high = high + dmgFromAP;
+
+    return low, high;
+end
+
 local HealEffect;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
@@ -84,8 +119,7 @@ local function SealOfRighteousness(calcedSpell, effNum, spellRankInfo, effCastTi
 
     -- Formula is: Base_MH_Atk_Speed * (coef * SP + coefAP * AP)
 
-    local atkSpeed = stats.attackSpeed.mainhand;
-    local baseAtkSpeed = atkSpeed / (1 - GetHaste()/100);
+    local baseAtkSpeed = stats.baseAttackSpeed.mainhand;
 
     calcedEffect.effectiveSpCoef = calcedEffect.effectiveSpCoef * baseAtkSpeed;
     calcedEffect.effectiveApCoef = calcedEffect.effectiveApCoef * baseAtkSpeed;
@@ -750,12 +784,26 @@ local function WeaponDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, 
     local calcedEffect = calcedSpell[effNum];
     local effectData = spellRankInfo.effects[effNum];
 
+    --print(spellName, "weapon damage");
+    local weaponLow, weaponHigh;
+    if spellRankInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_NORMALIZED_WEAPON_DMG
+    --[[ TODO: bug or intended? > or spellRankInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE ]] then
+        --print("normalized", calcedEffect.attackPower)
+        weaponLow, weaponHigh = GetNormalizedWeaponDamage("mainhand", calcedEffect.attackPower);
+    else
+        weaponLow = stats.attackDmg.mainhand.min;
+        weaponHigh = stats.attackDmg.mainhand.max;
+    end
+    --print(weaponLow, "-", weaponHigh);
+
     local weaponCoef = effectData.weaponCoef * effectMod;
     local baseIncrease = GetLevelBonus(spellRankInfo, effectData) + calcedEffect.flatMod;
-    local baseDamage = (effectData.valueBase + baseIncrease);
+    local baseValue = (effectData.valueBase + baseIncrease);
 
-    calcedEffect.min = (baseDamage + stats.attackDmg.mainhand.min) * weaponCoef + calcedEffect.effectivePower;
-    calcedEffect.max = (baseDamage + effectData.valueRange + stats.attackDmg.mainhand.max) * weaponCoef + calcedEffect.effectivePower;
+    --print("coef", weaponCoef, "bv", baseValue, "bi", baseIncrease, "(fm)", calcedEffect.flatMod);
+
+    calcedEffect.min = (baseValue + weaponLow) * weaponCoef + calcedEffect.effectivePower;
+    calcedEffect.max = (baseValue + weaponHigh) * weaponCoef + calcedEffect.effectivePower + effectData.valueRange;
     calcedEffect.avg = 0.5 * (calcedEffect.min + calcedEffect.max);
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
     calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
@@ -792,3 +840,5 @@ effHandler[EFFECT_TYPES.SPELL_EFFECT_APPLY_AREA_AURA_PARTY] = AuraOrAreaAura;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_ATTACK] = AutoAttack;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_ENERGIZE_PCT] = EnergizePct;
 effHandler[EFFECT_TYPES.SPELL_EFFECT_WEAPON_DAMAGE] = WeaponDamage;
+effHandler[EFFECT_TYPES.SPELL_EFFECT_NORMALIZED_WEAPON_DMG] = WeaponDamage;
+effHandler[EFFECT_TYPES.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE] = WeaponDamage;

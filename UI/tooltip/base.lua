@@ -38,7 +38,12 @@ local function AppendMitigation(calcedSpell)
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 
     and (calcedSpell.hitChanceBinaryLoss == nil or calcedSpell.hitChanceBinaryLoss == 0) then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
-        local strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
+        local strUsed;
+        if calcedSpell.school == _addon.SCHOOL.PHYSICAL then
+            strUsed = L["%.1f%% (Armor: %d)"];
+        else
+            strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
+        end
         SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 end
@@ -459,7 +464,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal)
     elseif calcedEffect.effectFlags == 0 or calcedEffect.effectFlags == SPELL_EFFECT_FLAGS.HEAL then
         AppendDirectEffect(calcedSpell, effectNum, isHeal);
     elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0 then
-        ManaRestoreEffect(calcedSpell, effectNum, isHeal);
+        ManaRestoreEffect(calcedSpell, effectNum);
     else
         return false;
     end

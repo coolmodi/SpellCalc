@@ -124,6 +124,20 @@ _addon.stats = {
             max = 0  -- Base damage!
         }
     },
+    weaponBaseDamage = {
+        mainhand = {
+            min = 0,
+            max = 0
+        },
+        offhand = {
+            min = 0,
+            max = 0
+        },
+        ranged = {
+            min = 0,
+            max = 0
+        }
+    },
 
     schoolModSpellPen = SchoolStatTable(),
     schoolModPctDamage = SchoolStatTable(),

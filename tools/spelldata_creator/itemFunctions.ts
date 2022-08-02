@@ -66,8 +66,8 @@ export async function getItemDbData(): Promise<ItemDBdata>
             }
             dbDataCache = dbcache;
             resolve(dbDataCache);
+            conn.end();
         });
-        conn.end();
     });
 }
 

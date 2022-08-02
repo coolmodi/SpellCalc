@@ -299,6 +299,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
         _addon:PrintDebug("Has " .. #spellRankInfo.effects .. " effects with flags (" .. effectFlags[1] .. ", " .. tostring(effectFlags[2]) .. ")");
         calcedSpell = NewCalcedSpell(effectFlags, spellRankInfo.effects);
+        calcedSpell.school = spellRankInfo.school;
     end
 
     calcedSpell:ResetBuffList();
@@ -673,9 +674,10 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             -- Effect bonus power scaling
 
             -- Spell power
+            calcedEffect.spellPower = (isHeal or effectData.forceScaleWithHeal) and stats.spellHealing or stats.spellPower[spellRankInfo.school];
+            calcedEffect.spellPower = calcedEffect.spellPower + extraSp;
+
             if effectData.coef > 0 then
-                calcedEffect.spellPower = (isHeal or effectData.forceScaleWithHeal) and stats.spellHealing or stats.spellPower[spellRankInfo.school];
-                calcedEffect.spellPower = calcedEffect.spellPower + extraSp;
                 local coef = effectData.coef;
 
                 if stats.spellModFlatSpellScale[spellId] then
@@ -707,12 +709,13 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             end
 
             -- Attack power
+            if spellRankInfo.defType == DEF_TYPE.RANGED then
+                calcedEffect.attackPower = stats.attackPowerRanged;
+            else
+                calcedEffect.attackPower = stats.attackPower;
+            end
+
             if effectData.coefAP > 0 then
-                if spellRankInfo.defType == DEF_TYPE.RANGED and stats.attackDmg.ranged.min > 0 then
-                    calcedEffect.attackPower = stats.attackPowerRanged;
-                else
-                    calcedEffect.attackPower = stats.attackPower;
-                end
                 calcedEffect.effectiveApCoef = effectData.coefAP * calcedEffect.modBonus;
                 calcedEffect.effectivePower = calcedEffect.effectivePower + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
             end
