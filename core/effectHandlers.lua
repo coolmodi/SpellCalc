@@ -552,6 +552,14 @@ local function SchoolDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, 
     calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
     calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
 
+    if stats.spellModExtraOnCrit[spellId] and stats.spellModExtraOnCrit[spellId].val ~= 0 then
+        calcedEffect.critExtraAvg = calcedEffect.avgCrit * stats.spellModExtraOnCrit[spellId].val / 100;
+        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.critExtraAvg * calcedSpell.critChance/100;
+        calcedSpell:AddToBuffList(stats.spellModExtraOnCrit[spellId].buffs);
+    else
+        calcedEffect.critExtraAvg = nil;
+    end
+
     if stats.ignite.val > 0 and spellRankInfo.school == _addon.SCHOOL.FIRE then
         local igniteMult = stats.ignite.val/100;
 
@@ -809,6 +817,14 @@ local function WeaponDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, 
     calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
     calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
     calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+
+    if stats.spellModExtraOnCrit[spellId] and stats.spellModExtraOnCrit[spellId].val ~= 0 then
+        calcedEffect.critExtraAvg = calcedEffect.avgCrit * stats.spellModExtraOnCrit[spellId].val / 100;
+        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.critExtraAvg * calcedSpell.critChance/100;
+        calcedSpell:AddToBuffList(stats.spellModExtraOnCrit[spellId].buffs);
+    else
+        calcedEffect.critExtraAvg = nil;
+    end
 
     local mmit = calcedSpell.meleeMitigation;
     local realHit = math.max(calcedSpell.hitChance - mmit.dodge - mmit.parry, 0);

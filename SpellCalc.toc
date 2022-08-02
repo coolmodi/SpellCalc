@@ -90,6 +90,7 @@ core/core.lua
 core/effecthandlers.lua
 
 UI/tooltip/SCTooltip.lua
+UI/tooltip/custom.lua
 UI/tooltip/base.lua
 UI/tooltip/seals.lua
 UI/tooltip/dummyAura.lua

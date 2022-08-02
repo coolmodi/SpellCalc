@@ -132,7 +132,8 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 ---@param isHeal boolean
-local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
+---@param spellId number
+local function AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
 
@@ -149,6 +150,10 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal)
         if calcedEffect.igniteData then
             SCT:AppendMinMaxAvgLine(L.TT_IGNITE, calcedEffect.igniteData.min/2, calcedEffect.igniteData.max/2, calcedEffect.igniteData.avg/2, "2x ");
         end
+    end
+
+    if calcedEffect.critExtraAvg then
+        SCT:AppendCritExtra(spellId, calcedEffect);
     end
 
     SCT:AppendCoefData(calcedSpell, calcedEffect);
@@ -449,7 +454,8 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 ---@param isHeal boolean
-local function BaseTooltips(calcedSpell, effectNum, isHeal)
+---@param spellId number
+local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
 
@@ -462,7 +468,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal)
     elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0 then
         AppendAutoAttack(calcedSpell, effectNum);
     elseif calcedEffect.effectFlags == 0 or calcedEffect.effectFlags == SPELL_EFFECT_FLAGS.HEAL then
-        AppendDirectEffect(calcedSpell, effectNum, isHeal);
+        AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId);
     elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0 then
         ManaRestoreEffect(calcedSpell, effectNum);
     else

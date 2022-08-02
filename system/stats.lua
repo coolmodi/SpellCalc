@@ -172,6 +172,7 @@ _addon.stats = {
     spellModManaRestore = SpellStatTable(),
     spellModAllowDotCrit = SpellStatTable(),
     spellModAllowDotHaste = SpellStatTable(),
+    spellModExtraOnCrit = SpellStatTable(),
 
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),

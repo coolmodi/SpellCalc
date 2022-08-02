@@ -254,8 +254,30 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Sheath of Light
-    -- TODO: Righteous Vengeance
+    { -- Sheath of Light
+        tree = 3,
+        tier = 9,
+        column = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                affectSpell = {-1073741824},
+                perPoint = 20
+            }
+        }
+    },
+    { -- Righteous Vengeance
+        tree = 3,
+        tier = 10,
+        column = 2,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                affectSpell = {8388608, 131072 + 32768},
+                perPoint = 10
+            }
+        }
+    },
 };
 
 _addon.aurasPlayer[20216] = { -- Divine Favor

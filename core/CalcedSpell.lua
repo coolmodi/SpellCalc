@@ -86,6 +86,7 @@ local AuraStackData = {
 ---@field minCrit number Minimum critical value. 0 if effect doesn't crit.
 ---@field maxCrit number Maximum critical value. 0 if effect doesn't crit.
 ---@field avgCrit number Average critical value. 0 if effect doesn't crit.
+---@field critExtraAvg number|nil If effect has added extra value on crit then this is the avg. done extra.
 ---@field avgCombined number Average combined value.
 ---@field avgAfterMitigation number Combined average done after all mitigation sources.
 ---@field perSec number Done per second. DPSC for non-channel duration spells.

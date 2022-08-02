@@ -429,7 +429,18 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Living Seed (3/21)
+    { -- Living Seed
+        tree = 3,
+        tier = 8,
+        column = 3,
+        effects = {
+            {
+                type = _addon.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                affectSpell = {32 + 64, 2 + 33554432},
+                perPoint = 10
+            }
+        }
+    },
     { -- Gift of the Earthmother
         tree = 3,
         tier = 10,

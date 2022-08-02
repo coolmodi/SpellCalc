@@ -83,6 +83,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SHAMAN_LIGHTNING_OVERLOAD] = stats.shamanLightningOverload,
     [EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT] = stats.spellModAllowDotCrit,
     [EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE] = stats.spellModAllowDotHaste,
+    [EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT] = stats.spellModExtraOnCrit,
 }
 
 local effectSimpleStat = {
