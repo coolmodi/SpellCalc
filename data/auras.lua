@@ -612,4 +612,55 @@ _addon.aurasTarget = {
             debuffCategory = _addon.DEBUFF_CATEGORY.HEALING_RECIEVED_POSITIVE
         }
     },
+    -----------------------
+    -- Pct Damage Done
+    -----------------------
+    [31579] = { -- Arcane Empowerment 1
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 1,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [31582] = { -- Arcane Empowerment 2
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 2,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [31583] = { -- Arcane Empowerment 3
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 3,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [75593] = { -- Ferocious Inspiration 1
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 1,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [75446] = { -- Ferocious Inspiration 2
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 2,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [75447] = { -- Ferocious Inspiration 3
+        {
+            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = _addon.SCHOOL_MASK.ALL,
+            value = 3,
+            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
 };

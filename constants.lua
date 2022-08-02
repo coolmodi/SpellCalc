@@ -109,6 +109,7 @@ _addon.DEBUFF_CATEGORY = {
     HIT_SPELL = 9,
     HEALING_RECIEVED_POSITIVE = 10,
     HEALING_RECIEVED_NEGATIVE = 11,
+    DAMAGE_DONE_ALL = 12,
 }
 
 --- Defense type (Decides mitigation types used)
