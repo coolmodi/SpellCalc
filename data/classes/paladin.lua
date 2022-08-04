@@ -462,9 +462,7 @@ _addon.classScripts = {
     ---@param val number
     ---@param cs CalcedSpell
     ---@param ce CalcedEffect
-    ---@param spellId number
-    ---@param ri SpellRankInfo
-    Two_Hand_Weapon_Spec_Hackfixffs = function (val, cs, ce, spellId, ri)
+    Two_Hand_Weapon_Spec_Hackfixffs = function (val, cs, ce)
         ce.modBonus = ce.modBonus * (1 + val/100);
     end
 }

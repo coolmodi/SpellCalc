@@ -130,12 +130,12 @@ end
 ---@param cs CalcedSpell
 ---@param ce CalcedEffect
 ---@param spellId number
----@param ri SpellRankInfo
-function _addon.ScriptEffects.DoSpell(type, cs, ce, spellId, ri)
+---@param si SpellInfo
+function _addon.ScriptEffects.DoSpell(type, cs, ce, spellId, si)
     if spellScripts[spellId]
         and spellScripts[spellId][type] then
         for scriptKey, func in pairs(spellScripts[spellId][type]) do
-            func(scriptValueCache[scriptKey], cs, ce, spellId, ri, type);
+            func(scriptValueCache[scriptKey], cs, ce, spellId, si, type);
         end
     end
 end

@@ -123,7 +123,7 @@ _addon.spellBaseInfo = {
     },
 };
 
-_addon.spellRankInfo = {
+_addon.spellInfo = {
     [17] = { -- Power Word: Shield(Rank 1)
         spellLevel = 6,
         maxLevel = 11,

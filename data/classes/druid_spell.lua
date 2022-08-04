@@ -6,7 +6,7 @@ if playerClass ~= "DRUID" then
     return;
 end
 
-_addon.spellRankInfo = {
+_addon.spellInfo = {
     [339] = { -- Entangling Roots(Rank 1)
         spellLevel = 8,
         maxLevel = 0,

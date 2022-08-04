@@ -607,7 +607,7 @@ function _addon:SetupSettings()
 			order = 10,
 			type = "group",
 			name = classLoc,
-			args = self:ClassSettings()
+			args = self.ClassSettings()
 		}
 	end
 

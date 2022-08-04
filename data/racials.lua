@@ -4,7 +4,7 @@ local _, raceEn = UnitRace("player");
 
 if raceEn == "BloodElf" then
     -- Arcane Torrent
-    _addon.spellRankInfo[28730] = {
+    _addon.spellInfo[28730] = {
         spellLevel = 1,
         maxLevel = 100,
         school = 2,

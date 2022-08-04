@@ -244,7 +244,7 @@ _addon.aurasPlayer[25228] = {
 };
 
 -- Add class settings page
-function _addon:ClassSettings()
+function _addon.ClassSettings()
     if SpellCalc_settings.useImpSB == nil then
         SpellCalc_settings.useImpSB = false;
     end

@@ -572,7 +572,7 @@ end
 `;
     let classInfo = buildSpellInfo(pclass);
 
-    str += "_addon.spellRankInfo = {\n";
+    str += "_addon.spellInfo = {\n";
     for (let sid in classInfo.rankInfo) {
         let ri = classInfo.rankInfo[sid];
         str += `\t[${sid}] = { -- ${ri.spellnamecomment}\n`;

@@ -109,7 +109,7 @@ _addon.spellBaseInfo = {
     },
 };
 
-_addon.spellRankInfo = {
+_addon.spellInfo = {
     [172] = { -- Corruption(Rank 1)
         spellLevel = 4,
         maxLevel = 9,

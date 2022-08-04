@@ -78,7 +78,7 @@ _addon.spellBaseInfo = {
     },
 };
 
-_addon.spellRankInfo = {
+_addon.spellInfo = {
     [324] = { -- Lightning Shield(Rank 1)
         spellLevel = 8,
         maxLevel = 0,

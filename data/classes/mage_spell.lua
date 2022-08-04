@@ -101,7 +101,7 @@ _addon.spellBaseInfo = {
     },
 };
 
-_addon.spellRankInfo = {
+_addon.spellInfo = {
     [10] = { -- Blizzard(Rank 1)
         spellLevel = 20,
         maxLevel = 25,

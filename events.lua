@@ -27,7 +27,7 @@ function handlers.ADDON_LOADED(addonName)
     _A:SetupSettings();
     _A.events.SetPowerUpdateActive(SpellCalc_settings.useCurrentPowerLevel);
 
-    if _A.spellRankInfo == nil or _A.talentDataRaw == nil then
+    if _A.spellInfo == nil or _A.talentDataRaw == nil then
         _A.util.PrintError(_addonName .. ": No data for this class (yet)! Addon won't work!");
     end
 end

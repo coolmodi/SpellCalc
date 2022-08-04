@@ -17,18 +17,18 @@ end
 
 --- Initialize for new spell
 ---@param calcedSpell CalcedSpell
----@param spellRankInfo SpellRankInfo
+---@param spellInfo SpellInfo
 ---@param spellId number
-function MagicCalc:Init(calcedSpell, spellRankInfo, spellId)
+function MagicCalc:Init(calcedSpell, spellInfo, spellId)
     _addon.util.PrintDebug("Init MagicCalc");
-    self.spellRankInfo = spellRankInfo;
+    self.spellInfo = spellInfo;
     self.calcedSpell = calcedSpell;
     self.spellId = spellId;
 end
 
 --- Get base spell crit chance for spell school
 function MagicCalc:GetSchoolCritChance()
-    local school = self.spellRankInfo.school;
+    local school = self.spellInfo.school;
     local chance = stats.spellCrit[school];
 
     chance = chance + stats.schoolModFlatCritChance[school].val;
@@ -50,9 +50,9 @@ end
 function MagicCalc:GetAvgResist()
     local tData = _addon.Target;
     local pLevel = UnitLevel("player");
-    local baseRes = tData:GetEffectiveResistance(self.spellRankInfo.school);
+    local baseRes = tData:GetEffectiveResistance(self.spellInfo.school);
     local resistanceFromLevel = math.max(tData.levelDiff * 8, 0);
-    local penetration = stats.schoolModSpellPen[self.spellRankInfo.school].val;
+    local penetration = stats.schoolModSpellPen[self.spellInfo.school].val;
     local effectiveRes = baseRes + resistanceFromLevel - math.min(baseRes, penetration);
     local avgResisted = math.min(0.75 * (effectiveRes / math.max(pLevel * 5, 100)), 0.75);
     return avgResisted, baseRes, penetration, resistanceFromLevel;
@@ -114,12 +114,12 @@ end
 ---@return number @binary loss if binary spell
 function MagicCalc:GetHitChances(avgResist)
     local base = GetSpellHitChance();
-    local bonus = GetSpellHitBonus(self.spellRankInfo.school, self.calcedSpell, self.spellId);
+    local bonus = GetSpellHitBonus(self.spellInfo.school, self.calcedSpell, self.spellId);
     local binaryLoss;
 
     local full = base + bonus;
 
-    if self.spellRankInfo.isBinary then
+    if self.spellInfo.isBinary then
         binaryLoss = full - (full * (1 - avgResist));
         full = full - binaryLoss;
     end

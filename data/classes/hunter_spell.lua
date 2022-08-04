@@ -8,6 +8,6 @@ end
 
 _addon.spellBaseInfo = {};
 
-_addon.spellRankInfo = {};
+_addon.spellInfo = {};
 
 _addon.spellClassSet = {};

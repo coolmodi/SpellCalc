@@ -6,7 +6,7 @@ if playerClass ~= "PALADIN" then
     return;
 end
 
-_addon.spellRankInfo = {
+_addon.spellInfo = {
     [635] = { -- Holy Light(Rank 1)
         spellLevel = 1,
         maxLevel = 5,

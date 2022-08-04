@@ -565,9 +565,9 @@ _addon.classScripts = {
     ---@param cs CalcedSpell
     ---@param ce CalcedEffect
     ---@param spellId number
-    ---@param ri SpellRankInfo
+    ---@param si SpellInfo
     ---@param scriptType number
-    Imp_IS_Target_Aura_Check = function(val, cs, ce, spellId, ri, scriptType)
+    Imp_IS_Target_Aura_Check = function(val, cs, ce, spellId, si, scriptType)
         if scriptType == _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT then
             -- Wrath
             if _addon.Target.HasAuraName(INSECT_SWARM, true) then
