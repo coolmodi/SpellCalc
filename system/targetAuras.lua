@@ -12,7 +12,7 @@ Missing auras
     Blessing of Sanctuary?
 ]]
 
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local aurasTarget = _addon.aurasTarget;
 local SETargetAuraChanged = _addon.ScriptEffects.TargetAuraChanged;
@@ -21,36 +21,39 @@ local SETargetAuraChanged = _addon.ScriptEffects.TargetAuraChanged;
 local activeCategory = {};
 for _, v in pairs(_addon.DEBUFF_CATEGORY) do
     ---@class ActiveCategoryData
-    ---@field activeSpellId number|nil The aura currently used.
-    ---@field auras table<number, number|nil> Value of active auras in this category.
+    ---@field activeSpellId integer|nil The aura currently used.
+    ---@field auras table<integer, integer> Value of active auras in this category.
     activeCategory[v] = {
         auras = {}
     }
 end
 
 ---True => active, false => should be removed, nil => not active
----@type table<number, boolean>
+---@type table<integer, boolean>
 local activeAuraIds = {};
----@type table<number, number>
+---@type table<integer, integer>
 local activeAuraStacks = {};
 ---@type table<string, boolean|nil>
 local aurasByName = {};
 ---@type table<string, boolean|nil>
 local aurasByNamePersonal = {};
----@type table<string, number|nil>
+---@type table<string, integer|nil>
 local aurasByNamePersonalStacks = {};
 
 ---Apply target aura effect.
----@param spellId number
+---@param spellId integer
 ---@param targetAuraEffect TargetAuraEffect
 ---@param name string
----@param stacks number
----@param effectSlot number|nil
+---@param stacks integer
+---@param effectSlot integer|nil
 local function ApplyTargetAuraEffect(spellId, targetAuraEffect, name, stacks, effectSlot)
     if effectSlot then
-        name = name.."-"..effectSlot;
+        name = name .. "-" .. effectSlot;
     end
+
     local value = targetAuraEffect.value;
+    assert(value, "Target aura has no value defined!");
+
     if stacks > 1 and targetAuraEffect.hasStacks then
         value = value * stacks;
     end
@@ -82,16 +85,19 @@ local function ApplyTargetAuraEffect(spellId, targetAuraEffect, name, stacks, ef
 end
 
 --- Remove target aura effect.
----@param spellId number
+---@param spellId integer
 ---@param targetAuraEffect TargetAuraEffect
 ---@param name string
----@param stacks number
+---@param stacks integer
 ---@param effectSlot number|nil
 local function RemoveTargetAuraEffect(spellId, targetAuraEffect, name, stacks, effectSlot)
     if effectSlot then
-        name = name.."-"..effectSlot;
+        name = name .. "-" .. effectSlot;
     end
+
     local value = targetAuraEffect.value;
+    assert(value, "Target aura has no value defined!");
+
     if stacks > 1 and targetAuraEffect.hasStacks then
         value = value * stacks;
     end
@@ -130,15 +136,16 @@ end
 
 local function UpdateAuratype(filter)
     local aurasChanged = false;
-    local i = 1;
-    local name, _, count, _, _, _, source, _, _, spellId = UnitAura("target", i, filter);
 
-    while name do
+    for i = 1, 40 do
+        local name, _, count, _, _, _, source, _, _, spellId = UnitAura("target", i, filter);
+        if not name then break end
+
         if aurasByName[name] == nil then SETargetAuraChanged(name) end
         aurasByName[name] = true;
-        if source == "player" then 
+        if source == "player" then
             if aurasByNamePersonal[name] == nil
-            or aurasByNamePersonalStacks[name] ~= count then SETargetAuraChanged(name, true) end
+                or aurasByNamePersonalStacks[name] ~= count then SETargetAuraChanged(name, true) end
             aurasByNamePersonal[name] = true;
             aurasByNamePersonalStacks[name] = count;
         end
@@ -149,9 +156,11 @@ local function UpdateAuratype(filter)
             if activeAuraStacks[spellId] ~= count then
                 -- Remove old effects if stacks changed.
                 if activeAuraStacks[spellId] ~= nil then
-                    _addon:PrintDebug("Remove target aura " .. name .. " (" .. spellId .. ") slot " .. i.." because stacks changed.");
+                    _addon:PrintDebug("Remove target aura " ..
+                        name .. " (" .. spellId .. ") slot " .. i .. " because stacks changed.");
                     for k, effect in ipairs(auraEffects) do
-                        aurasChanged = RemoveTargetAuraEffect(spellId, effect, name, activeAuraStacks[spellId], k) or aurasChanged;
+                        aurasChanged = RemoveTargetAuraEffect(spellId, effect, name, activeAuraStacks[spellId], k) or
+                            aurasChanged;
                     end
                 end
                 -- Add new effects.
@@ -165,16 +174,16 @@ local function UpdateAuratype(filter)
 
             activeAuraIds[spellId] = true;
         end
-
-        i = i + 1;
-        name, _, count, _, _, _, source, _, _, spellId = UnitAura("target", i, filter);
     end
 
     return aurasChanged;
 end
 
+---@class Target
+local Target = _addon.Target;
+
 ---Update target auras.
-function _addon.Target:UpdateAuras()
+function Target:UpdateAuras()
     _addon:PrintDebug("Updating target auras");
     local aurasChanged = false;
 
@@ -196,9 +205,10 @@ function _addon.Target:UpdateAuras()
         if isActive == false then
             local auraEffects = aurasTarget[spellId];
             local name = GetSpellInfo(spellId);
-            _addon:PrintDebug("Remove target aura " .. name .. " "..spellId);
+            _addon:PrintDebug("Remove target aura " .. name .. " " .. spellId);
             for k, effect in ipairs(auraEffects) do
-                aurasChanged = RemoveTargetAuraEffect(spellId, effect, name, activeAuraStacks[spellId], k) or aurasChanged;
+                aurasChanged = RemoveTargetAuraEffect(spellId, effect, name, activeAuraStacks[spellId], k) or
+                    aurasChanged;
             end
             activeAuraIds[spellId] = nil;
             activeAuraStacks[spellId] = nil;
@@ -226,7 +236,7 @@ end
 ---@param auraName string The aura name.
 ---@param personalOnly boolean|nil Only return true if aura source is self.
 ---@return boolean
-function _addon.Target.HasAuraName(auraName, personalOnly)
+function Target.HasAuraName(auraName, personalOnly)
     if personalOnly then return aurasByNamePersonal[auraName] end
     return aurasByName[auraName];
 end
@@ -236,7 +246,7 @@ end
 ---@param personalOnly boolean|nil Only return true if aura source is self.
 ---@param debuff boolean|nil Look for debuff instead of buff.
 ---@return number|nil
-function _addon.Target.GetAuraApplications(auraName, personalOnly, debuff)
+function Target.GetAuraApplications(auraName, personalOnly, debuff)
     if personalOnly then
         return aurasByNamePersonalStacks[auraName];
     end

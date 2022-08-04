@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 local activeRelevantTalents = {};
@@ -24,19 +24,19 @@ local function SetupTalentData()
     talentData = {};
 
     for _, v in ipairs(_addon.talentDataRaw) do
-        if not talentAPIData[v.tree] or not talentAPIData[v.tree][v.tier] or not talentAPIData[v.tree][v.tier][v.column] then
-            _addon:PrintError("No talent data for "..v.tree.." "..v.tier.." "..v.column);
-        end
+        assert(talentAPIData[v.tree] and talentAPIData[v.tree][v.tier] and talentAPIData[v.tree][v.tier][v.column],
+            "No talent data for " .. v.tree .. " " .. v.tier .. " " .. v.column);
         table.insert(talentData, {
             tree = v.tree,
             talent = talentAPIData[v.tree][v.tier][v.column],
             effects = v.effects,
         });
     end
+
 end
 
 --- Update player talents.
----@param forceTalents table
+---@param forceTalents nil|table
 function _addon:UpdateTalents(forceTalents)
     self:PrintDebug("Updating talents");
 
@@ -71,7 +71,7 @@ function _addon:UpdateTalents(forceTalents)
                         value = value + effect.base;
                     end
                 end
-                local useName = (k > 1) and oldIdName.."-"..k or oldIdName;
+                local useName = (k > 1) and oldIdName .. "-" .. k or oldIdName;
                 self:RemoveAuraEffect(useName, effect, value);
             end
             activeRelevantTalents[name] = nil;
@@ -91,12 +91,12 @@ function _addon:UpdateTalents(forceTalents)
                         value = value + effect.base;
                     end
                 end
-                local useName = (k > 1) and idName.."-"..k or idName;
+                local useName = (k > 1) and idName .. "-" .. k or idName;
                 self:ApplyAuraEffect(useName, effect, value);
             end
             activeRelevantTalents[name] = curRank;
         end
-	end
+    end
 
     self:TriggerUpdate();
 end

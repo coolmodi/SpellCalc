@@ -1,6 +1,7 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local L = _addon:GetLocalization();
+---@class SCTooltip
 local SCT = _addon.SCTooltip;
 
 local Righteous_Vengeance_Spells = {

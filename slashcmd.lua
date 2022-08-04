@@ -1,6 +1,6 @@
 ---@type string
 local _addonName = select(1, ...);
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 SLASH_SPELLCALC1 = "/sc";
@@ -67,7 +67,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
             return;
         end
 
-        local calcedSpell = _addon:GetCurrentSpellData(tonumber(spellId));
+        local calcedSpell = _addon:GetCurrentSpellData(tonumber(spellId) or 0);
         if calcedSpell == nil then
             _addon:PrintWarn("No current data for spell with ID "..spellId);
             return;
@@ -87,7 +87,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
             return;
         end
 
-        local calcedSpell = _addon:GetCalcedSpell(tonumber(spellId));
+        local calcedSpell = _addon:GetCalcedSpell(tonumber(spellId)--[[@as integer]]);
         if calcedSpell == nil then
             _addon:PrintWarn("No data for spell with ID "..spellId);
             return;
@@ -113,7 +113,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         local iid, slotid = strmatch(arg, "(%d+) (%d+)");
         if iid and slotid then
             _addon:PrintWarn("Debug equip item "..iid.." into slot "..slotid.."!");
-            _addon:DebugEquipItem(tonumber(iid), tonumber(slotid));
+            _addon:DebugEquipItem(tonumber(iid)--[[@as integer]], tonumber(slotid)--[[@as integer]]);
         end
         return;
     end
@@ -124,7 +124,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         if itemLink and slotid then
             local _, _, Color, Ltype, Id, Enchant, Gem1, Gem2, Gem3, Gem4, Suffix, Unique, LinkLvl, reforging, Name = string.find(itemLink, "|?c?f?f?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
             _addon:PrintWarn("Debug equip item "..Id.." into slot "..slotid.."!");
-            _addon:DebugEquipItem(tonumber(Id), tonumber(slotid));
+            _addon:DebugEquipItem(tonumber(Id)--[[@as integer]], tonumber(slotid)--[[@as integer]]);
         end
         return;
     end
@@ -132,25 +132,26 @@ SlashCmdList["SPELLCALC"] = function(arg)
     if string.find(arg, "dab") then
         local spellId = strmatch(arg, "(%d+)");
         if spellId then
-            _addon:DebugApplyBuff(tonumber(spellId));
+            _addon:DebugApplyBuff(tonumber(spellId) or 0);
         end
         return;
     end
 
     if string.find(arg, "dsbf") then
-        local flag = strmatch(arg, "(%d+)");
+        local flags = strmatch(arg, "(%d+)");
         local remove = string.find(arg, "-");
+        local flag = tonumber(flags)--[[@as integer]];
         if flag then
             if remove then
                 _addon:RemoveAuraEffect("Debug Flag "..flag, {
                     type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
-                    value = tonumber(flag),
-                }, tonumber(flag));
+                    value = flag,
+                }, flag);
             else
                 _addon:ApplyAuraEffect("Debug Flag "..flag, {
                     type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
-                    value = tonumber(flag),
-                }, tonumber(flag));
+                    value = flag,
+                }, flag);
             end
         end
         return;

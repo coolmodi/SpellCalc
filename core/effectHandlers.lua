@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local effHandler = _addon.effectHandler;
 local stats = _addon.stats;
@@ -21,7 +21,7 @@ end
 ---@param hitChance number @In percent
 ---@param gcd number
 ---@param duration number
----@return integer
+---@return number
 local function channelEffDmgNotMissed(hitChance, gcd, duration)
     local hitc = hitChance / 100;
     local missc = 1 - hitc;
@@ -74,7 +74,10 @@ local HealEffect;
 -- Templates
 ----------------------------------------------------------------------------------------------------------------------------------------
 
+---@alias EffectHandler fun(auraType: number|nil, calcedSpell: CalcedSpell, effNum: number, spellRankInfo: SpellRankInfo, effCastTime: number, effectMod: number, spellName: string, spellId: number, gcd: number):nil
+
 --- BASE TEMPLATE
+---@class sdgsdgdsfhsfdh
 ---@param auraType number|nil
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
@@ -183,6 +186,7 @@ local function SealOfVengeance(calcedSpell, effNum, spellRankInfo, effCastTime, 
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     local effectData = spellRankInfo.effects[effNum];
+    assert(effectData, "Effect data in SoV handler missing!");
 
     local dotSpell = _addon:GetCalcedSpell(53742);
     if not dotSpell then
@@ -212,6 +216,8 @@ local function Starfall(calcedSpell, effNum, spellRankInfo, effCastTime, effectM
     local effectData = spellRankInfo.effects[effNum];
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
+
+    assert(effectData, "Effect data in Starfall handler missing!");
 
     calcedEffect.min = effectData.valueBase * effectMod + calcedEffect.effectivePower;
     calcedEffect.max = calcedEffect.min + effectData.valueRange;
@@ -483,6 +489,7 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellRankInfo, effCastT
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     local triggeredSpellData = calcedEffect.spellData;
+    assert(triggeredSpellData, "triggeredSpellData for ptsa in spell "..spellName.." missing!");
     calcedEffect.min = triggeredSpellData[1].min;
     calcedEffect.max = triggeredSpellData[1].max;
     calcedEffect.avg = triggeredSpellData[1].avg;
@@ -506,10 +513,7 @@ end
 ---@param spellName string
 ---@param spellId number
 local function DummyAura(calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId)
-    if dummyAuraHandlers[spellName] == nil then
-        _addon:PrintError("No dummy aura handler for effect "..effNum.." on spell "..spellName.."! Please report this to the addon author!");
-        return;
-    end
+    assert(dummyAuraHandlers[spellName], "No dummy aura handler for effect "..effNum.." on spell "..spellName.."!");
     dummyAuraHandlers[spellName](calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId);
 end
 
@@ -682,17 +686,8 @@ end
 ---@param spellName string
 ---@param spellId number
 local function AuraOrAreaAura(auraType, calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd)
-    if auraType == nil then
-        _addon:PrintError("SPELL_EFFECT_APPLY_AURA handler called without auraType for spell "..spellName.." for effect #"..effNum);
-        return;
-    end
-
-    if auraHandler[auraType] == nil then
-        _addon:PrintError("Auratype "..auraType.." not implemented! Used by spell "..spellName.." for effect #"..effNum);
-        _addon:PrintError("Please report this to the addon author.");
-        return;
-    end
-
+    assert(auraType, "SPELL_EFFECT_APPLY_AURA handler called without auraType for spell "..spellName.." for effect #"..effNum);
+    assert(auraHandler[auraType], "Auratype "..auraType.." not implemented! Used by spell "..spellName.." for effect #"..effNum);
     auraHandler[auraType](calcedSpell, effNum, spellRankInfo, effCastTime, effectMod, spellName, spellId, gcd);
 end
 
@@ -718,6 +713,7 @@ local function AutoAttack(_, calcedSpell, effNum, spellRankInfo, effCastTime, ef
     calcedEffect.avgCrit = (calcedEffect.minCrit + calcedEffect.maxCrit) / 2;
 
     local meleeMit = calcedSpell.meleeMitigation;
+    assert(meleeMit, "Melee mitigation table missing in AA handler!");
 
     local glancePart = meleeMit.glancing / 100;
     local critChanceRemainder = math.min(calcedSpell.critChance, calcedSpell.hitChance - meleeMit.dodge - meleeMit.parry - meleeMit.glancing - meleeMit.block);
@@ -742,6 +738,7 @@ local function AutoAttack(_, calcedSpell, effNum, spellRankInfo, effCastTime, ef
     -- OFF HAND
 
     local ohd = calcedEffect.offhandAttack;
+    assert(ohd, "Offhand table missing in AA handler!");
     local ohdMit = ohd.meleeMitigation;
 
     ohd.min = stats.attackDmg.offhand.min * effectMod;
@@ -791,6 +788,7 @@ local function WeaponDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, 
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     local effectData = spellRankInfo.effects[effNum];
+    assert(effectData, "effectData missing in SPELL_EFFECT_WEAPON_DAMAGE handler for spell "..spellName);
 
     --print(spellName, "weapon damage");
     local weaponLow, weaponHigh;
@@ -827,6 +825,7 @@ local function WeaponDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, 
     end
 
     local mmit = calcedSpell.meleeMitigation;
+    assert(mmit, "meleeMitigation taböe missing in SPELL_EFFECT_WEAPON_DAMAGE handler for spell "..spellName);
     local realHit = math.max(calcedSpell.hitChance - mmit.dodge - mmit.parry, 0);
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * realHit/100;
 

@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
@@ -34,8 +34,8 @@ end
 ---@param spellName string
 local function GetDummyValue(calcedEffect, spellName)
     if spellName == SEAL_OF_RIGHTEOUSNESS
-    or spellName == SEAL_OF_COMMAND
-    or spellName == SEAL_OF_VENGEANCE or spellName == SEAL_OF_CORRUPTION then
+        or spellName == SEAL_OF_COMMAND
+        or spellName == SEAL_OF_VENGEANCE or spellName == SEAL_OF_CORRUPTION then
         local k = "avg" -- SpellCalc_settings.abSealValue;
         if calcedEffect[k] then
             return calcedEffect[k];
@@ -56,6 +56,7 @@ end
 ---@param valueKey string
 local function GetBasicValue(calcedSpell, critChance, valueKey)
     local calcedEffect = calcedSpell[1];
+    assert(calcedEffect, "Spell has no effect attached?");
 
     if valueKey == "allTicks" then
         if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
@@ -123,9 +124,11 @@ do
             if calcedSpell ~= nil then
                 ---@type CalcedEffect
                 local calcedEffect = calcedSpell[1];
+                assert(calcedEffect, "Spell has no effect attached?");
 
                 if (bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0) then
                     calcedSpell = calcedEffect.spellData;
+                    assert(calcedSpell and calcedSpell[1] ~= nil, "Triggere effect is missing spell or effect data!");
                     calcedEffect = calcedSpell[1];
                 end
 
@@ -135,7 +138,7 @@ do
 
                 if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
                     local spellName = GetSpellInfo(spellId);
-                    showValue = GetDummyValue(calcedEffect, spellName, calcedSpell);
+                    showValue = GetDummyValue(calcedEffect, spellName);
                 elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDmgShieldValue);
                 elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
@@ -150,7 +153,7 @@ do
                     showValue = math.floor(showValue + 0.5);
                 end
 
-                buttonText.SetButtonText(slot, showValue, isHeal, isMana);
+                buttonText.SetButtonText(slot, tostring(showValue), isHeal, isMana);
             else
                 buttonText.SetButtonText(slot, "");
             end
@@ -163,14 +166,14 @@ end
 
 --- Set spell ID for given action slot
 ---@param slot number
----@param spellId number|nil
+---@param spellId integer|nil
 local function SetSlotSpell(slot, spellId)
     if spellsInBar[slot] == spellId or not buttonText.HasButtonText(slot) then
         return;
     end
 
     if spellId == nil or (not _addon.JUDGEMENT_IDS[spellId] and not _addon:GetHandledSpellID(spellId)) then
-        _addon:PrintDebug("Set slot "..slot.." nil because spell "..tostring(spellId).." is nil or not handled");
+        _addon:PrintDebug("Set slot " .. slot .. " nil because spell " .. tostring(spellId) .. " is nil or not handled");
         spellsInBar[slot] = nil;
         needsUpdate[slot] = nil;
         buttonText.SetButtonText(slot, "");
@@ -272,21 +275,21 @@ do
         elseif actionbarSupport == "ELVUI" then
             pageAttribute = "state-page";
             for i = 1, 10 do
-                AddPagingBar("ElvUI_Bar"..i, i);
+                AddPagingBar("ElvUI_Bar" .. i, i);
             end
             return true;
         elseif actionbarSupport == "DOMINOS" then
             pageAttribute = "state-page";
             for i = 1, 10 do
-                AddPagingBar("DominosFrame"..i, i);
+                AddPagingBar("DominosFrame" .. i, i);
             end
             return true;
         elseif actionbarSupport == "BT4" then
             pageAttribute = "state-page";
             -- BT4 creates bars on-demand only
             for i = 1, 10 do
-                if _G["BT4Bar"..i] then
-                    AddPagingBar("BT4Bar"..i, i);
+                if _G["BT4Bar" .. i] then
+                    AddPagingBar("BT4Bar" .. i, i);
                 end
             end
             hooksecurefunc(Bartender4.Bar, "Create", function(_, id)
@@ -330,7 +333,7 @@ function ActionBarValues:Setup()
     buttonText = _addon:SetupActionButtonText();
     actionbarSupport = buttonText.detectedBars;
 
-    if actionbarSupport == "NONTE DETECTED" then
+    if actionbarSupport == "NONE DETECTED" then
         _addon:PrintError("Actionbar addon is not supported!");
         return;
     end
@@ -338,7 +341,7 @@ function ActionBarValues:Setup()
     self:UpdateStyle();
 
     if not SetupPagingSupport() then
-        _addon:PrintError("Paging support missing for used actionbar addon ("..actionbarSupport..")!");
+        _addon:PrintError("Paging support missing for used actionbar addon (" .. actionbarSupport .. ")!");
     end
 
     local delayedButtonUpdate = 3;

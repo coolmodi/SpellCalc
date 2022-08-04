@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 ---@type SpellEffectFlags
@@ -71,7 +71,7 @@ local AuraStackData = {
 }
 
 ---@class CalcedEffect
----@field effectFlags number
+---@field effectFlags integer
 ---@field modBase number Modifier affecting the base value of the spell.
 ---@field modBonus number Modifier affecting the bonus scaling values of the spell.
 ---@field spellPower number Spell power this effect scales with.
@@ -233,7 +233,7 @@ local function AddCombinedData(so)
 end
 
 --- Make a new table to store calculated spell data
----@param effectFlags number[]
+---@param effectFlags integer[]
 ---@param spellRankEffects table<number, SpellRankEffectData|nil>
 ---@return CalcedSpell
 function _addon.NewCalcedSpell(effectFlags, spellRankEffects)

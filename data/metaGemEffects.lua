@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 _addon.itemEffects[32409] = { -- Relentless Earthstorm Diamond

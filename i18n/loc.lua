@@ -1,23 +1,20 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local clientlocale = GetLocale();
----@type table<string, string>|nil
-local localStrings = nil;
+---@type LocaleTable
+local localStrings = setmetatable({}, {__index=function(self, key)
+    rawset(self, key, key);
+    return key;
+end});
 
 --- Add localization
 ---@param locale string
 ---@param default boolean
----@return table<string, string>
+---@return LocaleTable|nil
 function _addon:AddLocalization(locale, default)
 	if locale ~= clientlocale and (localStrings ~= nil or not default) then
 		return;
 	end
-
-	localStrings = setmetatable({}, {__index=function(self, key)
-		rawset(self, key, key);
-		return key;
-	end});
-
 	return localStrings;
 end
 

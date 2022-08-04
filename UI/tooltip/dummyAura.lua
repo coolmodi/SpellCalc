@@ -1,11 +1,11 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local L = _addon:GetLocalization();
 local SCT = _addon.SCTooltip;
 
 ---Prayer of Mending
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 local function PoM(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
@@ -33,11 +33,14 @@ SCT:AddDummyHandler(GetSpellInfo(974), PoM); -- Earth Shield
 
 ---Display extended information if T5 2PC is used.
 ---@param calcedSpell CalcedSpell
-local function GreaterHeal(calcedSpell)
-    SCT:ShowEffectTooltip(calcedSpell, 1, true);
+---@param effectNum integer
+---@param spellId integer
+local function GreaterHeal(calcedSpell, effectNum, spellId)
+    SCT:ShowEffectTooltip(calcedSpell, 1, true, spellId);
 
     if _addon:IsBooleanFlagActive(_addon.BOOLEAN_FLAGS.PRIEST_T5_2PC) then
         local calcedEffect = calcedSpell[1];
+        assert(calcedEffect, "Priest T5 bonus set but triggered effect missing!");
 
         local origPerResource = calcedEffect.perResource;
         local origCastsToOom = calcedSpell.castingData.castsToOom;
@@ -76,6 +79,7 @@ local function StarFall(calcedSpell, effNum)
 
     -- Main Stars
     local mainEff = calcedSpell[1];
+    assert(mainEff, "Starfall triggered effect missing!");
 
     SCT:HeaderLine(L["Main Stars"]);
     if SpellCalc_settings.ttHit then
@@ -113,6 +117,7 @@ local function StarFall(calcedSpell, effNum)
 
     -- Splash Effect
     local splashEff = calcedSpell[2];
+    assert(splashEff, "Starfall splash effect missing!");
 
     SCT:HeaderLine(L["Splash Effect"]);
     if SpellCalc_settings.ttHit then

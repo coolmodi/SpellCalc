@@ -1,6 +1,6 @@
 -- GENERATED! DO NOT EDIT!
 
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 _addon.itemSetData = {

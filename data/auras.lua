@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 -- Buffs the player can have
@@ -316,7 +316,7 @@ _addon.aurasTarget = {
         },
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
+            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -330,7 +330,7 @@ _addon.aurasTarget = {
         },
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
+            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -344,7 +344,7 @@ _addon.aurasTarget = {
         },
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
+            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -355,7 +355,7 @@ _addon.aurasTarget = {
     [50508] = { -- Crypt Fever 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
+            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
             value = 10,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -363,7 +363,7 @@ _addon.aurasTarget = {
     [50509] = { -- Crypt Fever 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
+            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
             value = 20,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -371,7 +371,7 @@ _addon.aurasTarget = {
     [50510] = { -- Crypt Fever 3
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.INFECTED,
+            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
@@ -382,7 +382,7 @@ _addon.aurasTarget = {
     [46856] = { -- Trauma 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 15,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -390,7 +390,7 @@ _addon.aurasTarget = {
     [46857] = { -- Trauma 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -399,7 +399,7 @@ _addon.aurasTarget = {
     [33876] = { -- Mangle (Cat) 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -407,7 +407,7 @@ _addon.aurasTarget = {
     [33982] = { -- Mangle (Cat) 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -415,7 +415,7 @@ _addon.aurasTarget = {
     [33983] = { -- Mangle (Cat) 3
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -423,7 +423,7 @@ _addon.aurasTarget = {
     [48565] = { -- Mangle (Cat) 4
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -431,7 +431,7 @@ _addon.aurasTarget = {
     [48566] = { -- Mangle (Cat) 5
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -440,7 +440,7 @@ _addon.aurasTarget = {
     [33878] = { -- Mangle (Bear) 1
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -448,7 +448,7 @@ _addon.aurasTarget = {
     [33986] = { -- Mangle (Bear) 2
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -456,7 +456,7 @@ _addon.aurasTarget = {
     [33987] = { -- Mangle (Bear) 3
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -464,7 +464,7 @@ _addon.aurasTarget = {
     [48563] = { -- Mangle (Bear) 4
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
@@ -472,7 +472,7 @@ _addon.aurasTarget = {
     [48564] = { -- Mangle (Bear) 5
         {
             type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectSpell = _addon.SPELL_MECHANIC.BLEED,
+            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
             value = 30,
             debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
         }

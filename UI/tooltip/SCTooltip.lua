@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local L = _addon:GetLocalization();
 
@@ -52,7 +52,7 @@ end
 
 --- Add single line to tooltip
 ---@param label string|nil
----@param text string
+---@param text string|integer
 function SCTooltip:SingleLine(label, text)
     local t1 = text and TTC_DEFAULT..text;
     if label then
@@ -64,9 +64,9 @@ end
 
 --- Add double line to tooltip
 ---@param label string|nil
----@param text string
+---@param text string|integer|nil
 ---@param labelr string|nil
----@param textr string
+---@param textr string|integer|nil
 function SCTooltip:DoubleLine(label, text, labelr, textr)
     local t1 = text and TTC_DEFAULT..text or "";
     if label then
@@ -179,9 +179,9 @@ end
 
 --- Append efficiency stuff
 ---@param calcedSpell CalcedSpell
----@param effectNum number
----@param isHeal boolean
----@param showToOomTime boolean
+---@param effectNum integer
+---@param isHeal boolean|nil
+---@param showToOomTime boolean|nil
 ---@param auraStack AuraStackData|nil
 function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTime, auraStack)
     local calcedEffect = auraStack and auraStack or calcedSpell[effectNum];
@@ -195,7 +195,7 @@ function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTim
     end
 
     if SpellCalc_settings.ttToOom and calcedEffect.doneToOom > 0 then
-        local outstr = self:Round(calcedEffect.doneToOom);
+        local outstr = tostring(self:Round(calcedEffect.doneToOom));
         if showToOomTime then
             outstr = outstr..(" (%.1fs, %.1f casts)"):format(calcedSpell.castingData.timeToOom, calcedSpell.castingData.castsToOom)
         end
@@ -204,7 +204,7 @@ function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTim
 end
 
 --- Return a title for effect flags
----@param flags number
+---@param flags integer
 local function GetEffectTitle(flags)
     if bit.band(flags, SPELL_EFFECT_FLAGS.HEAL) > 0 then
         if bit.band(flags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
@@ -295,7 +295,7 @@ local function TooltipHandler(toolTipFrame)
             end
             calcedEffect.spellData[2] = nil;
         elseif dummyHandler[sname] ~= nil then
-            dummyHandler[sname](calcedSpell, i);
+            dummyHandler[sname](calcedSpell, i, spellID);
             isHandled = true;
         elseif bit.band(effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
             _addon:PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");

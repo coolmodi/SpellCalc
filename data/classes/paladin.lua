@@ -1,5 +1,5 @@
----@type AddonEnv
-local _, _addon = ...;
+---@class AddonEnv
+local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "PALADIN" then return end
 
@@ -423,7 +423,7 @@ _addon.classScripts = {
     ---Scale Shield of Righteousness with block value.
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param ce CalcedEffect|nil
+    ---@param ce CalcedEffect
     Shield_of_Righteousness_BV_Scale = function(val, cs, ce)
         ce.effectivePower = GetShieldBlock() * ce.modBonus;
     end,
@@ -431,7 +431,7 @@ _addon.classScripts = {
     ---Increase Judgement of Vengeance/Corruption damage if target has seal debuff stacks.
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param ce CalcedEffect|nil
+    ---@param ce CalcedEffect
     Holy_Vengeance_Judgement_Mod = function(val, cs, ce)
         local stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
         if stacks then
@@ -442,7 +442,7 @@ _addon.classScripts = {
     ---Set Hammer of the Righteous damage.
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param ce CalcedEffect|nil
+    ---@param ce CalcedEffect
     Hammer_of_the_Righteous_MH_DPS = function(val, cs, ce)
         -- Does 4 times the weapon dps WITHOUT HASTE!
         local stats = _addon.stats;
@@ -461,7 +461,7 @@ _addon.classScripts = {
     -- See talent def.
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param ce CalcedEffect|nil
+    ---@param ce CalcedEffect
     ---@param spellId number
     ---@param ri SpellRankInfo
     Two_Hand_Weapon_Spec_Hackfixffs = function (val, cs, ce, spellId, ri)

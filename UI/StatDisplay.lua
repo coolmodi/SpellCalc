@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 local VALUE_COLOR = "|cFFAAFFAA";

@@ -172,7 +172,7 @@ export function createFileHead(classNameRestriction?: string)
     {
         return `-- GENERATED! DO NOT EDIT!
 
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "${classNameRestriction.toUpperCase()}" then
@@ -184,7 +184,7 @@ end
 
     return `-- GENERATED! DO NOT EDIT!
 
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 `;

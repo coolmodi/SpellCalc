@@ -1,6 +1,6 @@
 ---@type string
 local _addonName = select(1, ...);
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 --- Helper to remove a single table entry
@@ -37,7 +37,7 @@ local SHAPESHIFTS = {
 }
 
 --- Return a string naming the shapeshift currently in, nil if no shapeshift
----@return string
+---@return string|nil
 function _addon:GetShapeshiftName()
 	local index = GetShapeshiftForm();
 	if index > 0 then
@@ -68,7 +68,7 @@ end
 
 --- Helper for printing tables
 ---@param t table
----@param depth number
+---@param depth integer|nil
 function _addon:PrintTable(t, depth)
 	if not depth then
 		depth = 1;

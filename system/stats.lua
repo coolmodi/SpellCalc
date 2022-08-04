@@ -1,9 +1,9 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 local function UniformStat()
     ---@class UniformStat
-    ---@field val number
+    ---@field val integer
     ---@field buffs string[]
     return {
         ---@type number

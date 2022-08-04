@@ -18,11 +18,11 @@ local costHandler = _addon.CostHandler;
 local scriptEffects = _addon.ScriptEffects;
 
 -- If a seal is currently active this will be the spell that should be used for Judgement.
----@type number|nil
+---@type integer|nil
 _addon.judgementSpell = nil;
 
 -- Not to self: This annotation doesn't really work for this purpose anyways, see function call for parameters...
----@type table<number, fun():nil>
+---@type table<number, EffectHandler>
 local effectHandler = {};
 _addon.effectHandler = effectHandler;
 
@@ -91,8 +91,6 @@ end
 ---@param isDuration boolean
 ---@param ri SpellRankInfo
 ---@param effNum number
----@return number @baseMod affecting the base value of the spell
----@return number @bonusMod affecting only the bonus SP/AP of the spell
 local function SetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration, ri, effNum)
     local bonusMod = 1;
     local baseMod = 1;
@@ -505,6 +503,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         end
 
         local ohd = calcedSpell[1].offhandAttack;
+        assert(ohd, spellName + " is dual wield but offhand table is missing!");
 
         meleeCalc:Init(calcedSpell, true, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0, false, false);
         local hit, dodge, parry, glancing, block, hitBonus, glancingDmg = meleeCalc:GetMDPGB();
@@ -728,13 +727,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             -- Pre process script hook
             scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE, calcedSpell, calcedEffect, spellId, spellRankInfo);
 
-            if effectHandler[effectData.effectType] == nil then
-                _addon:PrintError("No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
-                _addon:PrintError("Please report this to the addon author.");
-                return;
-            else
-                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, calcedEffect.modBase, spellName, spellId, GCD);
-            end
+            assert(effectHandler[effectData.effectType] ~= nil, "No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
+
+            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, calcedEffect.modBase, spellName, spellId, GCD);
 
             --------------------------
             -- Aura stacking (Only Lifebloom, incompatible with dmg spells!)
@@ -742,6 +737,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
                 local stackCount = effectData.auraStacks;
                 local stackData = calcedEffect.auraStack;
+                assert(stackCount and stackData, "stackCount or stackData mising for aura stack handler!");
                 stackData.stacks = stackCount;
                 stackData.ticks = calcedEffect.ticks - 1;
                 stackData.min = calcedEffect.min * stackCount;
@@ -832,8 +828,8 @@ do
 end
 
 --- Return the handled spell ID (if different) or nil if spell is not handled by the addon
----@param spellID number
----@return number|nil
+---@param spellID integer
+---@return integer|nil
 function _addon:GetHandledSpellID(spellID)
     if self.JUDGEMENT_IDS[spellID] then
         if not self.judgementSpell then
@@ -850,20 +846,20 @@ function _addon:GetHandledSpellID(spellID)
 end
 
 --- Get calculated spell if it is handled by the addon, updates or creates spell data if needed
----@param spellID number
+---@param spellID integer
 ---@return CalcedSpell|nil
 function _addon:GetCalcedSpell(spellID)
-    spellID = self:GetHandledSpellID(spellID)
+    local handledSpellId = self:GetHandledSpellID(spellID);
 
-    if not spellID then
+    if not handledSpellId then
         return;
     end
 
-    if calcedSpells[spellID] == nil or calcedSpells[spellID].updated < currentState then
-        calcedSpells[spellID] = CalcSpell(spellID, calcedSpells[spellID]);
+    if calcedSpells[handledSpellId] == nil or calcedSpells[handledSpellId].updated < currentState then
+        calcedSpells[handledSpellId] = CalcSpell(handledSpellId, calcedSpells[handledSpellId]);
     end
 
-    return calcedSpells[spellID];
+    return calcedSpells[handledSpellId];
 end
 
 --- Return current calculated spell data if there is any

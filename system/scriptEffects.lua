@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
 ---@type table<string, EffectScript>
@@ -18,6 +18,7 @@ local targetUpdateOnAura = {};
 ---@param effectBase AuraEffectBase
 ---@param scriptFunc EffectScript
 local function ApplyOrRemoveSpellSet(apply, effectBase, scriptFunc)
+    if effectBase.affectSpell == nil then return end
     local spellIdsDone = {};
     for k, setMask in ipairs(effectBase.affectSpell) do
         for setBit, spellSet in pairs(_addon.spellClassSet[k]) do
@@ -41,10 +42,7 @@ _addon.ScriptEffects = {};
 ---@param scriptKey string
 ---@param func EffectScript
 function _addon.ScriptEffects.RegisterScript(scriptKey, func)
-    if scripts[scriptKey] then
-        _addon:PrintError("Script already defined! "..scriptKey);
-        return;
-    end
+    assert(not scripts[scriptKey], "Script already defined! " .. scriptKey);
     scripts[scriptKey] = func;
 end
 
@@ -66,12 +64,7 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     local scriptKey = effectBase.scriptKey;
     local type = effectBase.type;
 
-    --print("Handling script effect", effectBase.scriptKey, apply)
-
-    if not scriptKey then
-        _addon:PrintError("Aura "..name.." uses SCRIPT_ effect without scriptKey! Report this please.");
-        return;
-    end
+    assert(scriptKey, "Aura " .. name .. " uses SCRIPT_ effect without scriptKey!");
 
     if type == EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL then
         if apply then
@@ -109,21 +102,20 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
     end
 
     local script = scripts[scriptKey];
-    if not script then
-        _addon:PrintError("Aura "..name.." uses SCRIPT_ effect with undefined script "..scriptKey.."! Report this please.");
-        return;
-    end
+    assert(script,
+        "Aura " .. name .. " uses SCRIPT_ effect with undefined script " .. scriptKey .. "!");
 
     if (type == EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE
-    or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT
-    or type == EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE)
-    and effectBase.affectSpell then
-        --print("Effect handler reached", effectBase.scriptKey)
+        or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT
+        or type == EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE)
+        and effectBase.affectSpell then
         scriptValueCache[scriptKey] = apply and value or nil;
         ApplyOrRemoveSpellSet(apply, effectBase, script);
         return;
     end
-    _addon:PrintError("Aura "..name.." uses unknown script effect "..type.." or an incorrect effect definition! Report this please.");
+
+    error("Aura " ..
+        name .. " uses unhandled script effect " .. type .. " or an incorrect effect definition!");
 end
 
 ---Get a value for a scriptKey.
@@ -141,9 +133,9 @@ end
 ---@param ri SpellRankInfo
 function _addon.ScriptEffects.DoSpell(type, cs, ce, spellId, ri)
     if spellScripts[spellId]
-    and spellScripts[spellId][type] then
+        and spellScripts[spellId][type] then
         for scriptKey, func in pairs(spellScripts[spellId][type]) do
-           func(scriptValueCache[scriptKey], cs, ce, spellId, ri, type);
+            func(scriptValueCache[scriptKey], cs, ce, spellId, ri, type);
         end
     end
 end

@@ -12,6 +12,8 @@ GameTooltip = {
     SetScript = SetScript,
 }
 
+AceGUIWidgetLSMlists = {};
+
 bit = {
     band = function(arg1, arg2) return 0 end,
 }
@@ -187,9 +189,7 @@ function GetShieldBlock() end
 ---Gets the player's current mana regeneration rates (in mana per 1 seconds). 
 ---@return number base @Full regen while outside the fsr
 ---@return number casting @Regen from mp5 and uninterrupted spirit/int regen
-function GetManaRegen()
-    return;
-end
+function GetManaRegen() end
 
 function UnitPowerMax(unit, powerType)
     return 123;
@@ -204,7 +204,7 @@ end
 ---@param itemID_itemString_itemName_itemLink string|number @ItemLink, Name or ID
 ---@return string itemName
 ---@return string itemLink
----@return number itemQuality
+---@return integer itemQuality
 ---@return number itemLevel
 ---@return number itemMinLevel
 ---@return string itemType
@@ -213,15 +213,13 @@ end
 ---@return string itemEquipLoc
 ---@return number itemTexture
 ---@return number sellPrice
----@return number classID
----@return number subclassID
----@return number bindType
----@return number expacID
----@return number setID
+---@return integer classID
+---@return integer subclassID
+---@return integer bindType
+---@return integer expacID
+---@return integer setID
 ---@return boolean isCraftingReagent
-function GetItemInfo(itemID_itemString_itemName_itemLink)
-    return;
-end
+function GetItemInfo(itemID_itemString_itemName_itemLink) end
 
 function GetInventoryItemID(unit, slot)
     return 123;
@@ -241,15 +239,15 @@ end
 ---@param index number
 ---@param filter string|nil What auras to iterate (HELPFUL, HARMFUL), defaults to HELPFUL.
 ---@return string name The localized name of the aura, otherwise nil if there is no aura for the index.
----@return number icon FileID - The icon texture.
----@return number count The amount of stacks, otherwise 0.
+---@return integer icon FileID - The icon texture.
+---@return integer count The amount of stacks, otherwise 0.
 ---@return string|nil dispelType The locale-independent magic type of the aura: Curse, Disease, Magic, Poison, otherwise nil.
 ---@return number duration The full duration of the aura in seconds.
 ---@return number expirationTime Time the aura expires compared to GetTime(), e.g. to get the remaining duration: expirationtime - GetTime()
 ---@return string source The unit that applied the aura.
 ---@return boolean isStealable If the aura may be stolen.
 ---@return boolean nameplateShowPersonal If the aura should be shown on the player/pet/vehicle nameplate.
----@return number spellId The spell ID for e.g. GetSpellInfo()
+---@return integer spellId The spell ID for e.g. GetSpellInfo()
 ---@return boolean canApplyAura If the player can apply the aura.
 ---@return boolean isBossDebuff If the aura was cast by a boss.
 ---@return boolean castByPlayer If the aura was applied by a player.
@@ -296,9 +294,7 @@ local SpellPowerEntry = {
 }
 
 ---@return table<number,SpellPowerEntry>
-function GetSpellPowerCost(spellName_spellID)
-
-end
+function GetSpellPowerCost(spellName_spellID) end
 
 function GetShapeshiftForm()
     return 0;
@@ -309,10 +305,8 @@ function GetRealmName()
 end
 
 ---@param libName string
----@return table|nil
-function LibStub(libName)
-    return {};
-end
+---@return table
+function LibStub(libName) end
 
 Bartender4 = {}
 
@@ -390,7 +384,7 @@ end
 --- Returns the current power of the specified unit.
 ---@param unitId string
 ---@param powerType number @Type of resource (mana/rage/energy/etc) to query
----@param unmodified boolean @Return the higher precision internal value (for graphical use only)
+---@param unmodified boolean|nil @Return the higher precision internal value (for graphical use only)
 ---@return number
 function UnitPower(unitId, powerType, unmodified)
     return 1;
@@ -431,7 +425,7 @@ function GameTooltip_Hide() end
 ---@field tickPeriod number|nil
 ---@field chains number|nil
 ---@field chainMult number|nil
----@field auraStacks number|nil
+---@field auraStacks integer|nil
 
 ---@class SpellRankInfo
 ---@field school number
@@ -462,7 +456,7 @@ end
 
 SpellCalcStatScreen = {}
 
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 ---@return table<string,table>
@@ -474,31 +468,32 @@ end
 _addon.spellRankInfo = {};
 
 _addon.spellClassSet = {
-    ---@type table<number, number[]>
+    ---@type table<integer, integer[]>
     [1] = {},
-    ---@type table<number, number[]>
+    ---@type table<integer, integer[]>
     [2] = {},
-    ---@type table<number, number[]>
+    ---@type table<integer, integer[]>
     [3] = {},
-    ---@type table<number, number[]>
+    ---@type table<integer, integer[]>
     [4] = {},
 };
 
 ---@alias EffectScript fun(val:number, cs:CalcedSpell, ce:CalcedEffect|nil, spellId:number, ri:SpellRankInfo, scriptType: number)
 
 ---@class AuraEffectBase
----@field type number
----@field affectMask number|nil
----@field affectSpell number[]|nil
----@field neededWeaponMask number|nil
+---@field type integer
+---@field affectMask integer|nil
+---@field affectSpell integer[]|nil
+---@field affectMechanic integer|nil
+---@field neededWeaponMask integer|nil
 ---@field scriptKey string|nil Key for script effect. Must be unique!
 
 ---@class UnitAuraEffect : AuraEffectBase
----@field value number|nil
+---@field value integer|nil
 ---@field scriptValue string|nil Get value from scriptKey.
 
 ---@class SetBonusAuraEffect : UnitAuraEffect
----@field need number The number of set items needed for the effect to be active.
+---@field need integer The number of set items needed for the effect to be active.
 
 ---@class ItemSetData
 ---@field name string
@@ -528,17 +523,18 @@ _addon.aurasTarget = {};
 
 ---@class TalentEffect : AuraEffectBase
 ---@field base integer|nil
----@field perPoint number|nil
----@field values number[]|nil
+---@field perPoint integer|nil
+---@field values integer[]|nil
 
 ---@class TalentDataEntry
----@field tree number
----@field talent number
+---@field tree integer
+---@field talent integer
 ---@field effects TalentEffect[]
 
 ---@class TalentDataRawEntry
----@field tier number
----@field column number
+---@field tree integer
+---@field tier integer
+---@field column integer
 ---@field effects TalentEffect[]
 
 ---@type TalentDataRawEntry[]

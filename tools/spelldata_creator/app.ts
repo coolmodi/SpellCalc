@@ -563,7 +563,7 @@ function createLua(pclass: string) {
     console.log("Creating Lua for " + pclass);
     let str = `-- GENERATED
 
-local _, _addon = ...;
+local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "${pclass.toUpperCase()}" then
     return;

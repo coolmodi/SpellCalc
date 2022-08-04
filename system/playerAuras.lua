@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 ---@type table<number, boolean>
@@ -8,17 +8,13 @@ local activeRelevantBuffs = {};
 ---@param auraEffect UnitAuraEffect
 ---@param usedKey string
 ---@param name string
----@param buffSlot number|nil
 ---@param effectSlot number|nil
-local function ApplyPlayerAuraEffect(auraEffect, usedKey, name, buffSlot, effectSlot)
+local function ApplyPlayerAuraEffect(auraEffect, usedKey, name, effectSlot)
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
-    if not auraEffect.value and not auraEffect.scriptValue then
-        _addon:PrintError("Player aura effect "..name.." has no value or scriptValue defined!");
-        return;
-    end
+    assert(auraEffect.value or auraEffect.scriptValue, "Player aura effect "..name.." has no value or scriptValue defined!");
     local value = auraEffect.value or _addon.ScriptEffects.GetValue(auraEffect.scriptValue);
     _addon:ApplyAuraEffect(name, auraEffect, value);
 end
@@ -33,16 +29,13 @@ local function RemovePlayerAuraEffect(auraEffect, usedKey, name, effectSlot)
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
-    if not auraEffect.value and not auraEffect.scriptValue then
-        _addon:PrintError("Player aura effect "..name.." has no value or scriptValue defined!");
-        return;
-    end
+    assert(auraEffect.value or auraEffect.scriptValue, "Player aura effect "..name.." has no value or scriptValue defined!");
     local value = auraEffect.value or _addon.ScriptEffects.GetValue(auraEffect.scriptValue);
     _addon:RemoveAuraEffect(name, auraEffect, value);
 end
 
 --- Update player auras
----@param clearOnly boolean
+---@param clearOnly boolean|nil
 function _addon:UpdatePlayerAuras(clearOnly)
     self:PrintDebug("Updating buffs");
 
@@ -66,7 +59,7 @@ function _addon:UpdatePlayerAuras(clearOnly)
                     self:PrintDebug("Add aura " .. name .. " (" .. spellId .. ") slot " .. i);
 
                     for k, effect in ipairs(pAuraData) do
-                        ApplyPlayerAuraEffect(effect, spellId, name, i, k);
+                        ApplyPlayerAuraEffect(effect, tostring(spellId), name, k);
                     end
 
                     aurasChanged = true;
@@ -83,7 +76,7 @@ function _addon:UpdatePlayerAuras(clearOnly)
             local name = GetSpellInfo(spellId);
 
             for k, effect in ipairs(pAuraData) do
-                RemovePlayerAuraEffect(effect, spellId, name, k)
+                RemovePlayerAuraEffect(effect, tostring(spellId), name, k)
             end
 
             activeRelevantBuffs[spellId] = nil;
@@ -101,17 +94,16 @@ end
 function _addon:DebugApplyBuff(spellId)
     local buffdata = self.aurasPlayer[spellId];
     local name = GetSpellInfo(spellId);
-    local usedSlot = 32;
 
     if buffdata == nil then
         self:PrintError("No data for ID "..spellId);
         return;
     end
 
-    self:PrintWarn("Add buff " .. name .. " (" .. spellId .. ") in slot " .. usedSlot);
+    self:PrintWarn("Add buff " .. name .. " (" .. spellId .. ")");
 
     for k, effect in ipairs(buffdata) do
-        ApplyPlayerAuraEffect(effect, spellId, name, usedSlot, k);
+        ApplyPlayerAuraEffect(effect, tostring(spellId), name, k);
     end
 
     self:TriggerUpdate();

@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local EFFECT_TYPE = _addon.EFFECT_TYPE;
 local stats = _addon.stats;
@@ -6,9 +6,9 @@ local toggledFlags = 0;
 
 --- Apply or remove effect for destination
 ---@param apply boolean
----@param value number @The effect value, negative to remove buff
----@param dest table @The destination table
----@param name string @The name of the buff
+---@param value integer The effect value, negative to remove buff
+---@param dest table The destination table
+---@param name string The name of the buff
 local function ApplyOrRemove(apply, value, dest, name)
     dest.val = dest.val + value;
     if apply then
@@ -20,10 +20,10 @@ end
 
 --- Apply or remove effect affecting a SpellClassSet
 ---@param apply boolean
----@param name string @The name of the buff
----@param value number @The effect value, negative to remove buff
----@param destTable table @The destination table
----@param setMasks number[] @The masks of class spell sets to affect
+---@param name string The name of the buff
+---@param value integer The effect value, negative to remove buff
+---@param destTable table The destination table
+---@param setMasks integer[] The masks of class spell sets to affect
 local function ApplyOrRemoveSpellSet(apply, name, value, destTable, setMasks)
     local spellIdsDone = {};
     for k, setMask in ipairs(setMasks) do
@@ -45,10 +45,10 @@ end
 
 --- Apply or remove effect by mask for table with bit position as keys.
 ---@param apply boolean
----@param name string @The name of the buff
----@param value number @The effect value, negative to remove buff
----@param destTable table @The destination table
----@param mask number @The mask of keys to affect
+---@param name string The name of the buff
+---@param value integer The effect value, negative to remove buff
+---@param destTable table The destination table
+---@param mask integer The mask of keys to affect
 local function ApplyOrRemoveByMask(apply, name, value, destTable, mask)
     -- Weapons start at 0, other stuff at 1, should always be compatible with everything this way
     local offset = destTable[0] == nil and 1 or 0;
@@ -160,15 +160,25 @@ do
     end
 end
 
+---@type table<integer, fun(apply:boolean, name:string, value:integer):nil>
 local effectCustom = {
+    ---@param apply boolean
+    ---@param name string
+    ---@param value integer
     [EFFECT_TYPE.FSR_SPIRIT_REGEN] = function(apply, name, value)
         ApplyOrRemove(apply, value, stats.fsrRegenMult, name);
         _addon:UpdateManaRegen();
     end,
+    ---@param apply boolean
+    ---@param name string
+    ---@param value integer
     [EFFECT_TYPE.MANA_PER_5_FROM_INT] = function (apply, name, value)
         ApplyOrRemove(apply, value, stats.intToMP5Pct, name);
         _addon:UpdateManaRegen();
     end,
+    ---@param apply boolean
+    ---@param name string
+    ---@param value integer
     [EFFECT_TYPE.JUDGEMENT_SPELL] = function(apply, name, value)
         if value > 0 then
             _addon.judgementSpell = value;
@@ -177,6 +187,9 @@ local effectCustom = {
         end
         _addon:PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
     end,
+    ---@param apply boolean
+    ---@param name string
+    ---@param value integer
     [EFFECT_TYPE.TRIGGER_UPDATE] = function(apply, name, value)
         _addon:TriggerUpdate();
         if value ~= 0 then
@@ -186,8 +199,11 @@ local effectCustom = {
             DelayedUpdateTimer:Add(value);
         end
     end,
+    ---@param apply boolean
+    ---@param name string
+    ---@param value integer
     [EFFECT_TYPE.BOOLEAN_BITFLAG_SET] = function(apply, name, value)
-        value = math.abs(value);
+        value = math.floor(math.abs(value));
         if apply then
             toggledFlags = bit.bor(toggledFlags, value);
         else
@@ -198,10 +214,10 @@ local effectCustom = {
 }
 
 --- Apply or remove an aura effect.
----@param apply boolean @True to apply, false to remove
----@param name string @The name of the buff
+---@param apply boolean True to apply, false to remove
+---@param name string The name of the buff
 ---@param effectBase AuraEffectBase
----@param value number @The effect value
+---@param value integer The effect value
 local function AuraEffectUpdate(apply, name, effectBase, value)
     if apply == false then
         value = -value;
@@ -236,11 +252,11 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
     end
 
     if effectAffectKey[effectBase.type] then
-        ApplyOrRemove(apply, value, effectAffectKey[effectBase.type][effectBase.affectSpell], name);
+        ApplyOrRemove(apply, value, effectAffectKey[effectBase.type][effectBase.affectMechanic], name);
         return;
     end
 
-    _addon:PrintError("Aura "..name.." uses unknown effect "..effectBase.type.." or invalid effect setup! Report this please.");
+    error("Aura "..name.." uses unknown effect "..effectBase.type.." or invalid effect setup!");
 end
 
 ---@type table<string, WeaponRestrictedAuraInfo>
@@ -280,7 +296,7 @@ end
 ---@param apply boolean @True to apply, false to remove
 ---@param name string @The name of the buff
 ---@param effectBase AuraEffectBase
----@param value number @The effect value
+---@param value integer The effect value
 local function WeaponAuraUpdate(apply, name, effectBase, value)
     if apply then
         _addon:PrintDebug("Adding weapon aura "..name);
@@ -303,9 +319,9 @@ local function WeaponAuraUpdate(apply, name, effectBase, value)
 end
 
 --- Apply an aura effect.
----@param name string @The name of the buff
+---@param name string The name of the buff
 ---@param effectBase AuraEffectBase
----@param value number @The effect value
+---@param value integer The effect value
 function _addon:ApplyAuraEffect(name, effectBase, value)
     if effectBase.neededWeaponMask then
         WeaponAuraUpdate(true, name, effectBase, value);
@@ -317,7 +333,7 @@ end
 --- Remove a previously applied aura effect.
 ---@param name string @The name of the buff
 ---@param effectBase AuraEffectBase
----@param value number @The effect value
+---@param value integer The effect value
 function _addon:RemoveAuraEffect(name, effectBase, value)
     if effectBase.neededWeaponMask then
         WeaponAuraUpdate(false, name, effectBase, value);
@@ -327,7 +343,7 @@ function _addon:RemoveAuraEffect(name, effectBase, value)
 end
 
 ---Check if given flag is currently active.
----@param flag number
+---@param flag integer
 function _addon:IsBooleanFlagActive(flag)
     return bit.band(toggledFlags, flag) == flag;
 end

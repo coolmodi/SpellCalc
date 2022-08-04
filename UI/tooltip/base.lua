@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 local L = _addon:GetLocalization();
 local SCT = _addon.SCTooltip;
@@ -19,8 +19,8 @@ local function AppendMitigation(calcedSpell)
         SCT:SingleLine(L.HIT_CHANCE, outstr);
     end
 
-    if calcedSpell.meleeMitigation ~= nil then
-        local mmit = calcedSpell.meleeMitigation;
+    local mmit = calcedSpell.meleeMitigation;
+    if mmit then
         if mmit.dodge > 0 then
             SCT:SingleLine(L.TT_DODGECHANCE, ("%.1f%%"):format(mmit.dodge));
         end
@@ -55,6 +55,7 @@ local function AppendOffhandMitigation(calcedSpell, effNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effNum];
     local ohd = calcedEffect.offhandAttack;
+    assert(ohd, "Offhand data missing for tooltip handler!");
 
     if SpellCalc_settings.ttHitChance and calcedSpell.hitChance ~= ohd.hitChance then
         local outstr = ("%.1f%%"):format(calcedSpell.hitChance);
@@ -69,18 +70,19 @@ local function AppendOffhandMitigation(calcedSpell, effNum)
 
     local mmit = calcedSpell.meleeMitigation;
     local ohmit = ohd.meleeMitigation;
-
-    if ohmit.dodge > 0 and ohmit.dodge ~= mmit.dodge then
-        SCT:SingleLine(L.TT_DODGECHANCE, ("%.1f%%"):format(ohmit.dodge));
-    end
-    if ohmit.parry > 0 and ohmit.parry ~= mmit.parry then
-        SCT:SingleLine(L.TT_PARRYCHANCE, ("%.1f%%"):format(ohmit.parry));
-    end
-    if ohmit.glancing > 0 and ohmit.glancing ~= mmit.glancing then
-        SCT:SingleLine(L.TT_GLANCECHANCE, L.TT_GLANCEDATA:format(ohmit.glancing, ohmit.glancingDmg * 100));
-    end
-    if ohmit.block > 0 and ohmit.block ~= mmit.block then
-        SCT:SingleLine(L.TT_BLOCKCHANCE, ("%.1f%%"):format(ohmit.block));
+    if mmit and ohmit then
+        if ohmit.dodge > 0 and ohmit.dodge ~= mmit.dodge then
+            SCT:SingleLine(L.TT_DODGECHANCE, ("%.1f%%"):format(ohmit.dodge));
+        end
+        if ohmit.parry > 0 and ohmit.parry ~= mmit.parry then
+            SCT:SingleLine(L.TT_PARRYCHANCE, ("%.1f%%"):format(ohmit.parry));
+        end
+        if ohmit.glancing > 0 and ohmit.glancing ~= mmit.glancing then
+            SCT:SingleLine(L.TT_GLANCECHANCE, L.TT_GLANCEDATA:format(ohmit.glancing, ohmit.glancingDmg * 100));
+        end
+        if ohmit.block > 0 and ohmit.block ~= mmit.block then
+            SCT:SingleLine(L.TT_BLOCKCHANCE, ("%.1f%%"):format(ohmit.block));
+        end
     end
 end
 
@@ -93,8 +95,8 @@ local function AppendChainData(calcedSpell, effectNum, isHeal)
     local calcedEffect = calcedSpell[effectNum];
 
     local completeMult = 1;
-    local chainHits = SCT:Round(calcedEffect.avg);
-    local chainCrits = SCT:Round(calcedEffect.avgCrit);
+    local chainHits = tostring(SCT:Round(calcedEffect.avg));
+    local chainCrits = tostring(SCT:Round(calcedEffect.avgCrit));
 
     for i = 1, calcedEffect.chains - 1, 1 do
         local thisMult = calcedEffect.chainMult ^ i;
@@ -130,9 +132,9 @@ end
 
 --- Apend simple direct effect values.
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 ---@param isHeal boolean
----@param spellId number
+---@param spellId integer
 local function AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
@@ -182,7 +184,7 @@ end
 
 --- Apend effect data for duration damage or heal
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 ---@param isHeal boolean
 local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
     ---@type CalcedEffect
@@ -194,6 +196,7 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
 
     if triggeredSpell then
         local triggeredEffect = triggeredSpell[1];
+        assert(triggeredEffect, "Triggered duration effect has no effect!");
         isHeal = isHeal or bit.band(triggeredEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
         min = triggeredEffect.min;
         max = triggeredEffect.max;
@@ -250,7 +253,7 @@ end
 
 --- Apend effect data for duration damage or heal
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 ---@param isHeal boolean
 ---@param auraStackData AuraStackData
 local function AppendAuraStackEffect(calcedSpell, effectNum, isHeal, auraStackData)
@@ -319,7 +322,7 @@ end
 
 --- Apend effect data for dmg shields
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 local function AppendDmgShieldEffect(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
@@ -346,7 +349,7 @@ end
 
 --- Apend absorb effect values.
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 local function AppendAbsorbEffect(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
@@ -366,7 +369,7 @@ end
 
 --- Apend auto attack effect.
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 local function AppendAutoAttack(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
@@ -392,7 +395,7 @@ local function AppendAutoAttack(calcedSpell, effectNum)
     if calcedEffect.offhandAttack == nil or calcedEffect.offhandAttack.min == 0 then
         return;
     end
-
+    ---@type EffectOffhandData
     local ohd = calcedEffect.offhandAttack;
 
     if SpellCalc_settings.ttHit then
@@ -422,6 +425,7 @@ local function ManaRestoreEffect(calcedSpell, effectNum)
 
     if triggeredSpell then
         local triggeredEffect = triggeredSpell[1];
+        assert(triggeredEffect, "Triggered mana restore spell has no effect!");
         min = triggeredEffect.min;
         max = triggeredEffect.max;
         avg = triggeredEffect.avg;
@@ -452,9 +456,9 @@ local function ManaRestoreEffect(calcedSpell, effectNum)
 end
 
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 ---@param isHeal boolean
----@param spellId number
+---@param spellId integer
 local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
@@ -477,6 +481,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
 
     if calcedEffect.auraStack then
         local as = calcedEffect.auraStack;
+        assert(as, "AurastackData not defined! Something went wrong. " .. spellId);
         SCT:HeaderLine(L.SUSTAINED_X_STACKS:format(as.stacks));
         AppendAuraStackEffect(calcedSpell, effectNum, isHeal, as);
     end
@@ -493,7 +498,7 @@ SCT:AddHandler(BaseTooltips);
 
 --- Special tooltip for Curse of Agony
 ---@param calcedSpell CalcedSpell
----@param effectNum number
+---@param effectNum integer
 local function CoA(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];

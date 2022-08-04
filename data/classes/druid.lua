@@ -1,5 +1,5 @@
----@type AddonEnv
-local _, _addon = ...;
+---@class AddonEnv
+local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "DRUID" then
     return;
@@ -12,6 +12,7 @@ local REGROWTH = GetSpellInfo(48443);
 local REJUVENATION = GetSpellInfo(48441);
 local LIFEBLOOM = GetSpellInfo(48451);
 local WILD_GROWTH = GetSpellInfo(53251);
+local MOONFIRE = GetSpellInfo(48463);
 
 _addon.talentDataRaw = {
     -----------------------------
@@ -141,14 +142,14 @@ _addon.talentDataRaw = {
                 perPoint = 0
             },
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
+                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
                 affectSpell = {4},
                 perPoint = 1,
                 scriptKey = "Imp_IS_Target_Aura_Check",
             },
             {
                 type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
-                scriptKey = INSECT_SWARM,
+                scriptKey = MOONFIRE,
                 perPoint = 0
             }
         }
@@ -202,15 +203,7 @@ _addon.talentDataRaw = {
                 type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
                 affectSpell = {4194311, 25165824},
                 perPoint = 1,
-                scriptKey = "Imp_FF_Crit",
-                ---@param val number
-                script = function(val)
-                    if _addon.Target.HasAuraName(FF)
-                    or _addon.Target.HasAuraName(FF_FERAL) then
-                        return val;
-                    end
-                    return 0;
-                end
+                scriptKey = "Imp_FF_Crit"
             },
             {
                 type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
@@ -570,23 +563,27 @@ _addon.classPassives = {
 _addon.classScripts = {
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param ce CalcedEffect|nil
+    ---@param ce CalcedEffect
     ---@param spellId number
     ---@param ri SpellRankInfo
     ---@param scriptType number
     Imp_IS_Target_Aura_Check = function(val, cs, ce, spellId, ri, scriptType)
-        if _addon.Target.HasAuraName(INSECT_SWARM, true) then
-            if scriptType == _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE then
-                cs.critChance = cs.critChance + val;
-                return
+        if scriptType == _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT then
+            -- Wrath
+            if _addon.Target.HasAuraName(INSECT_SWARM, true) then
+                ce.modBonus = ce.modBonus * (1 + val/100);
             end
-            ce.modBonus = ce.modBonus * (1 + val/100);
+        else
+            -- Starfire
+            if _addon.Target.HasAuraName(MOONFIRE, true) then
+                cs.critChance = cs.critChance + val;
+            end
         end
     end,
 
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param ce CalcedEffect|nil
+    ---@param ce CalcedEffect
     Glyph_of_Regrowth = function(val, cs, ce)
         if _addon.Target.HasAuraName(REGROWTH, true) then
             ce.modBonus = ce.modBonus * (1 + val/100);
@@ -596,12 +593,22 @@ _addon.classScripts = {
 
     ---@param val number
     ---@param cs CalcedSpell
-    ---@param ce CalcedEffect|nil
+    ---@param ce CalcedEffect
     Nourish_Script = function(val, cs, ce)
         local hasAura = _addon.Target.HasAuraName;
         if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
         or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
             ce.modBonus = ce.modBonus * 1.2;
         end
-    end
+    end,
+
+    ---@param val number
+    ---@param cs CalcedSpell
+    ---@param ce CalcedEffect
+    Imp_FF_Crit = function(val, cs, ce)
+        if _addon.Target.HasAuraName(FF)
+        or _addon.Target.HasAuraName(FF_FERAL) then
+            cs.critChance = cs.critChance + val;
+        end
+    end,
 }

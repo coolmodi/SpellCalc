@@ -1,4 +1,4 @@
----@type AddonEnv
+---@class AddonEnv
 local _addon = select(2, ...);
 
 local ITEM_SLOTS = {
@@ -11,8 +11,8 @@ local ITEM_SLOTS = {
     [8] = "feet",
     [9] = "wrist",
     [10] = "hands",
-    [11] = "finger 1", 
-    [12] = "finger 2", 
+    [11] = "finger 1",
+    [12] = "finger 2",
     [13] = "trinket 1",
     [14] = "trinket 2",
     [15] = "back",
@@ -25,18 +25,21 @@ local missingItems = { _count = 0 };
 local items = {};
 local sets = {};
 local weaponSubClass = {
+    ---@type integer|nil
     mainhand = nil,
+    ---@type integer|nil
     offhand = nil,
+    ---@type integer|nil
     ranged = nil
 };
 
 local SetWeaponBaseDmgAndSpeed;
 do
-    local scanTT = CreateFrame( "GameTooltip", "SpellCalcItemsScanTT", nil, "GameTooltipTemplate" );
+    local scanTT = CreateFrame("GameTooltip", "SpellCalcItemsScanTT", nil, "GameTooltipTemplate");
     scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
     scanTT:AddFontStrings(
-    scanTT:CreateFontString( "$parentTextLeft1", nil, "GameTooltipText" ),
-    scanTT:CreateFontString( "$parentTextRight1", nil, "GameTooltipText" ) );
+        scanTT:CreateFontString("$parentTextLeft1", nil, "GameTooltipText"),
+        scanTT:CreateFontString("$parentTextRight1", nil, "GameTooltipText"));
 
     ---Set weapon attack speed and base damage from tooltip.
     ---@param itemId number|nil
@@ -49,10 +52,10 @@ do
         if itemId then
             scanTT:ClearLines();
             scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
-            scanTT:SetHyperlink("item:"..itemId..":0:0:0:0:0:0:0");
+            scanTT:SetHyperlink("item:" .. itemId .. ":0:0:0:0:0:0:0");
             for i = 1, scanTT:NumLines() do
-                local fstringl = _G["SpellCalcItemsScanTTTextLeft"..i];
-                local fstringr = _G["SpellCalcItemsScanTTTextRight"..i];
+                local fstringl = _G["SpellCalcItemsScanTTTextLeft" .. i];
+                local fstringr = _G["SpellCalcItemsScanTTTextRight" .. i];
                 if fstringl and fstringr then
                     local textl = fstringl:GetText();
                     local textr = fstringr:GetText();
@@ -89,7 +92,7 @@ local function UpdateSet(setId, change)
         sets[setId] = sets[setId] + change;
     end
 
-    local newCount, oldCount = sets[setId], sets[setId]-change;
+    local newCount, oldCount = sets[setId], sets[setId] - change;
     local setData = _addon.itemSetData[setId];
 
     _addon:PrintDebug(("Updating set: %s (%d -> %d)"):format(setData.name, oldCount, newCount));
@@ -108,6 +111,7 @@ local function UpdateSet(setId, change)
             end
         end
     end
+
 end
 
 ---Handle item update after recieved item data.
@@ -128,8 +132,8 @@ end
 ---@param slotId number
 local function EquipItem(itemId, slotId)
     _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
-    local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, classID, subclassID  = GetItemInfo(itemId);
-    local setId = _addon.setItemData[itemId];
+    local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, classID, subclassID = GetItemInfo(itemId);
+    local setId                                                                     = _addon.setItemData[itemId];
 
     if itemName == nil then
         if not missingItems[itemId] then
@@ -227,24 +231,24 @@ function _addon:UpdateItems()
         local itemId = GetInventoryItemID("player", slot);
         if itemId ~= nil then
             local durability = GetInventoryItemDurability(slot);
-            if items[slot] ~= itemId  then
+            if items[slot] ~= itemId then
                 if items[slot] ~= nil then
-                    self:PrintDebug("Unequip old item from slot "..slotName);
+                    self:PrintDebug("Unequip old item from slot " .. slotName);
                     UnequipItem(slot);
                 end
                 if durability == nil or durability > 0 then
-                    self:PrintDebug("Equip new item " .. itemId .. " in slot "..slotName);
+                    self:PrintDebug("Equip new item " .. itemId .. " in slot " .. slotName);
                     EquipItem(itemId, slot);
                 end
             else
                 if durability ~= nil and durability == 0 then
-                    self:PrintDebug("Unequip item " .. itemId .. " in slot "..slotName.." because it is broken");
+                    self:PrintDebug("Unequip item " .. itemId .. " in slot " .. slotName .. " because it is broken");
                     UnequipItem(slot);
                 end
             end
         else
             if items[slot] ~= nil then
-                self:PrintDebug("Unequip old item from slot "..slotName);
+                self:PrintDebug("Unequip old item from slot " .. slotName);
                 UnequipItem(slot);
             end
         end
@@ -281,12 +285,14 @@ end
 
 --- Return true if a two handed weapon is in the main hand slot
 function _addon:IsTwoHandEquipped()
-    return weaponSubClass.mainhand and bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
+    return weaponSubClass.mainhand and
+        bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
 end
 
 --- Return true if a one handed weapon is in the main hand slot
 function _addon:IsOneHandEquipped()
-    return weaponSubClass.mainhand and bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
+    return weaponSubClass.mainhand and
+        bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
 end
 
 --- Return true if a weapon is in the mainhand slot
@@ -300,21 +306,21 @@ function _addon:IsOffHandWeaponEquipped()
 end
 
 --- Return true if the given weapon class is equipped
----@param weaponSubClassId number
----@param slot string @mainhand, offhand or ranged
+---@param weaponSubClassId integer
+---@param slot string mainhand, offhand or ranged
 function _addon:IsWeaponTypeEquipped(weaponSubClassId, slot)
     assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
     return weaponSubClass[slot] == weaponSubClassId;
 end
 
 ---Check if weapon types are equipped.
----@param weaponSubClassMask number @The mask of possible weapontypes
----@param slot string @mainhand, offhand or ranged
+---@param weaponSubClassMask integer The mask of possible weapontypes
+---@param slot string mainhand, offhand or ranged
 ---@return boolean
 function _addon:IsWeaponTypeMaskEquipped(weaponSubClassMask, slot)
     if slot then
         assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
-        return weaponSubClass[slot] and bit.band(bit.lshift(1, weaponSubClass[slot]), weaponSubClassMask) > 0;
+        return weaponSubClass[slot] ~= nil and bit.band(bit.lshift(1, weaponSubClass[slot]), weaponSubClassMask) > 0;
     end
 
     for _, subClass in pairs(weaponSubClass) do
@@ -332,7 +338,7 @@ end
 
 --- Return WEAPON_SUBCLASS for weapon in given slot if a weapon is equipped
 ---@param slot string @mainhand, offhand or ranged
----@return number|nil
+---@return integer|nil
 function _addon:GetWeaponType(slot)
     assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
     return weaponSubClass[slot];
@@ -340,7 +346,7 @@ end
 
 --- Return WEAPON_TYPES_MASK for weapon in given slot if a weapon is equipped
 ---@param slot string @mainhand, offhand or ranged
----@return number|nil
+---@return integer|nil
 function _addon:GetWeaponTypeMask(slot)
     assert(slot == "mainhand" or slot == "offhand" or slot == "ranged", "Invalid weapon slot!");
     if not weaponSubClass[slot] then return end
@@ -348,8 +354,8 @@ function _addon:GetWeaponTypeMask(slot)
 end
 
 --- (DEBUG) Equip item to test effects. It will just overwrite the slot!
----@param itemId number
----@param slotId number
+---@param itemId integer
+---@param slotId integer
 function _addon:DebugEquipItem(itemId, slotId)
     EquipItem(itemId, slotId)
 end
