@@ -1,9 +1,12 @@
 ---@class AddonEnv
-local _addon = select(2, ...)
+local _A = select(2, ...)
 
---- As used by the API
----@class SpellSchools
-_addon.SCHOOL = {
+-- Holds addon and API constants.
+local CONST = {};
+
+-- As used by the API
+---@enum SpellSchool
+CONST.SCHOOL = {
     PHYSICAL = 1,
     HOLY = 2,
     FIRE = 3,
@@ -13,8 +16,8 @@ _addon.SCHOOL = {
     ARCANE = 7
 };
 
---- Internal use for buffs only
-_addon.SCHOOL_MASK = {
+-- Internal use for buffs only
+CONST.SCHOOL_MASK = {
     PHYSICAL = 0x1,
     HOLY = 0x2,
     FIRE = 0x4,
@@ -26,8 +29,8 @@ _addon.SCHOOL_MASK = {
     ALL_SPELL = 0xFE,
 };
 
---- Buff/Aura effects
-_addon.EFFECT_TYPE = {
+---@enum AddonEffectType
+CONST.EFFECT_TYPE = {
     SPELLMOD_FLAT_HIT_CHANCE = 3,
     FSR_SPIRIT_REGEN = 4,
     SPELLMOD_FLAT_CRIT_CHANCE = 5,
@@ -94,11 +97,13 @@ _addon.EFFECT_TYPE = {
     SCRIPT_SPELLMOD_EFFECT_PRE = 1006,
 };
 
-_addon.BOOLEAN_FLAGS = {
+CONST.BOOLEAN_FLAGS = {
     PRIEST_T5_2PC = 0x1
 }
 
-_addon.DEBUFF_CATEGORY = {
+-- Mutually exclusive debuff categories.
+---@enum DebuffCategory
+CONST.DEBUFF_CATEGORY = {
     ARMOR_MAJOR = 1,
     ARMOR_MINOR = 2,
     SPELL_DAMAGE = 3,
@@ -113,18 +118,17 @@ _addon.DEBUFF_CATEGORY = {
     DAMAGE_DONE_ALL = 12,
 }
 
---- Defense type (Decides mitigation types used)
----@class SpellDefenseType
-_addon.DEF_TYPE = {
+-- Defense type (Decides mitigation types used)
+---@enum SpellDefenseType
+CONST.DEF_TYPE = {
     NONE = 0,
     MAGIC = 1,
     MELEE = 2,
     RANGED = 3
 }
 
---- Spell effect flags
----@class SpellEffectFlags
-_addon.SPELL_EFFECT_FLAGS = {
+-- Effect flags used in addon.
+CONST.ADDON_EFFECT_FLAGS = {
     DURATION = 0x1,
     HEAL = 0x2,
     DMG_SHIELD = 0x4,
@@ -138,30 +142,34 @@ _addon.SPELL_EFFECT_FLAGS = {
     MANA_RESTORE = 0x400,
 };
 
-_addon.HEALING_CLASSES = {
+CONST.HEALING_CLASSES = {
     PRIEST = true,
     SHAMAN = true,
     DRUID = true,
     PALADIN = true
 }
 
-_addon.MELEE_CLASSES = {
+CONST.MELEE_CLASSES = {
     WARRIOR = true,
     ROGUE = true,
     HUNTER = true,
     SHAMAN = true,
     DRUID = true,
-    PALADIN = true
+    PALADIN = true,
+    DEATHKNIGHT = true
 }
 
-_addon.JUDGEMENT_ID = 20271;
-_addon.JUDGEMENT_IDS = {
-    [_addon.JUDGEMENT_ID] = true,
+-- Judgement of Light.
+CONST.JUDGEMENT_ID = 20271;
+-- All 3 Judgements.
+CONST.JUDGEMENT_IDS = {
+    [20271] = true,
     [53407] = true,
     [53408] = true,
 }
 
-_addon.WEAPON_SUBCLASS = {
+---@enum WeaponSubclass
+CONST.WEAPON_SUBCLASS = {
     AXE_1H = 0,
     AXE_2H = 1,
     BOW = 2,
@@ -185,49 +193,52 @@ _addon.WEAPON_SUBCLASS = {
     FISHING_POLE = 20,
 }
 
-_addon.WEAPON_TYPES_MASK = {
+-- Weapon mask. Equals 1 << WeaponSubclass.
+local WEAPON_TYPES_MASK = {
     -- these are as used in DBC for spells (equipped sub classes)
-    AXE_1H      = 0x1,
-    AXE_2H      = 0x2,
-    BOW         = 0x4,
-    GUN         = 0x8,
-    MACE_1H     = 0x10,
-    MACE_2H     = 0x20,
-    POLEARM     = 0x40,
-    SWORD_1H    = 0x80,
-    SWORD_2H    = 0x100,
-    STAVE       = 0x400,
-    FIST        = 0x2000,
-    MISC        = 0x4000,
-    DAGGER      = 0x8000,
-    THROWN      = 0x10000,
-    CROSSBOW    = 0x40000,
-    WAND        = 0x80000,
+    AXE_1H       = 0x1,
+    AXE_2H       = 0x2,
+    BOW          = 0x4,
+    GUN          = 0x8,
+    MACE_1H      = 0x10,
+    MACE_2H      = 0x20,
+    POLEARM      = 0x40,
+    SWORD_1H     = 0x80,
+    SWORD_2H     = 0x100,
+    STAVE        = 0x400,
+    FIST         = 0x2000,
+    MISC         = 0x4000,
+    DAGGER       = 0x8000,
+    THROWN       = 0x10000,
+    CROSSBOW     = 0x40000,
+    WAND         = 0x80000,
     FISHING_POLE = 0x100000,
 }
--- family masks
-_addon.WEAPON_TYPES_MASK.ONE_HAND = (
-    _addon.WEAPON_TYPES_MASK.AXE_1H
-    + _addon.WEAPON_TYPES_MASK.MACE_1H
-    + _addon.WEAPON_TYPES_MASK.SWORD_1H
-    + _addon.WEAPON_TYPES_MASK.DAGGER
-    + _addon.WEAPON_TYPES_MASK.FIST
-);
-_addon.WEAPON_TYPES_MASK.TWO_HAND = (
-    _addon.WEAPON_TYPES_MASK.AXE_2H
-    + _addon.WEAPON_TYPES_MASK.MACE_2H
-    + _addon.WEAPON_TYPES_MASK.SWORD_2H
-    + _addon.WEAPON_TYPES_MASK.POLEARM
-    + _addon.WEAPON_TYPES_MASK.STAVE
-);
-_addon.WEAPON_TYPES_MASK.MELEE = _addon.WEAPON_TYPES_MASK.ONE_HAND + _addon.WEAPON_TYPES_MASK.TWO_HAND;
-_addon.WEAPON_TYPES_MASK.RANGED = (
-    _addon.WEAPON_TYPES_MASK.BOW
-    + _addon.WEAPON_TYPES_MASK.GUN
-    + _addon.WEAPON_TYPES_MASK.CROSSBOW
-);
+WEAPON_TYPES_MASK.ONE_HAND = (
+    WEAPON_TYPES_MASK.AXE_1H
+        + WEAPON_TYPES_MASK.MACE_1H
+        + WEAPON_TYPES_MASK.SWORD_1H
+        + WEAPON_TYPES_MASK.DAGGER
+        + WEAPON_TYPES_MASK.FIST
+    );
+WEAPON_TYPES_MASK.TWO_HAND = (
+    WEAPON_TYPES_MASK.AXE_2H
+        + WEAPON_TYPES_MASK.MACE_2H
+        + WEAPON_TYPES_MASK.SWORD_2H
+        + WEAPON_TYPES_MASK.POLEARM
+        + WEAPON_TYPES_MASK.STAVE
+    );
+WEAPON_TYPES_MASK.MELEE = WEAPON_TYPES_MASK.ONE_HAND + WEAPON_TYPES_MASK.TWO_HAND;
+WEAPON_TYPES_MASK.RANGED = (
+    WEAPON_TYPES_MASK.BOW
+        + WEAPON_TYPES_MASK.GUN
+        + WEAPON_TYPES_MASK.CROSSBOW
+    );
+CONST.WEAPON_TYPES_MASK = WEAPON_TYPES_MASK;
 
-_addon.SPELL_EFFECT_TYPES = {
+-- Spell effect types as used by the game.
+---@enum SpellEffectType
+CONST.SPELL_EFFECT_TYPES = {
     SPELL_EFFECT_SCHOOL_DAMAGE = 2,
     SPELL_EFFECT_APPLY_AURA = 6,
     SPELL_EFFECT_HEALTH_LEECH = 9,
@@ -243,7 +254,9 @@ _addon.SPELL_EFFECT_TYPES = {
     SPELL_EFFECT_ENERGIZE_PCT = 137,
 }
 
-_addon.SPELL_AURA_TYPES = {
+-- Aura types used by the game.
+---@enum SpellAuraType
+CONST.SPELL_AURA_TYPES = {
     SPELL_AURA_PERIODIC_DAMAGE = 3,
     SPELL_AURA_DUMMY = 4,
     SPELL_AURA_PERIODIC_HEAL = 8,
@@ -258,7 +271,9 @@ _addon.SPELL_AURA_TYPES = {
     SPELL_AURA_MANA_SHIELD = 97,
 }
 
-_addon.CREATURE_TYPE = {
+-- API creature types.
+---@enum CreatureType
+CONST.CREATURE_TYPE = {
     BEAST = 1,
     DRAGONKIN = 2,
     DEMON = 3,
@@ -272,7 +287,8 @@ _addon.CREATURE_TYPE = {
     TOTEM = 11,
 }
 
-_addon.CREATURE_TYPE_MASK = {
+-- Creature type mask.
+CONST.CREATURE_TYPE_MASK = {
     BEAST = 0x1,
     DRAGONKIN = 0x2,
     DEMON = 0x4,
@@ -286,7 +302,11 @@ _addon.CREATURE_TYPE_MASK = {
     TOTEM = 0x400
 }
 
-_addon.SPELL_MECHANIC = {
+-- Spell mechanic IDs as used by the game.
+---@enum SpellMechanic
+CONST.SPELL_MECHANIC = {
     BLEED = 15,
     INFECTED = 22,
 }
+
+_A.CONST = CONST;

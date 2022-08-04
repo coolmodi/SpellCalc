@@ -286,23 +286,23 @@ end
 --- Return true if a two handed weapon is in the main hand slot
 function _addon:IsTwoHandEquipped()
     return weaponSubClass.mainhand and
-        bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.TWO_HAND) > 0;
+        bit.band(bit.lshift(1, weaponSubClass.mainhand), self.CONST.WEAPON_TYPES_MASK.TWO_HAND) > 0;
 end
 
 --- Return true if a one handed weapon is in the main hand slot
 function _addon:IsOneHandEquipped()
     return weaponSubClass.mainhand and
-        bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.ONE_HAND) > 0;
+        bit.band(bit.lshift(1, weaponSubClass.mainhand), self.CONST.WEAPON_TYPES_MASK.ONE_HAND) > 0;
 end
 
 --- Return true if a weapon is in the mainhand slot
 function _addon:IsMainHandWeaponEquipped()
-    return weaponSubClass.mainhand and bit.band(bit.lshift(1, weaponSubClass.mainhand), self.WEAPON_TYPES_MASK.MELEE) > 0;
+    return weaponSubClass.mainhand and bit.band(bit.lshift(1, weaponSubClass.mainhand), self.CONST.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
 --- Return true if a weapon is in the offhand slot
 function _addon:IsOffHandWeaponEquipped()
-    return weaponSubClass.offhand and bit.band(bit.lshift(1, weaponSubClass.offhand), self.WEAPON_TYPES_MASK.MELEE) > 0;
+    return weaponSubClass.offhand and bit.band(bit.lshift(1, weaponSubClass.offhand), self.CONST.WEAPON_TYPES_MASK.MELEE) > 0;
 end
 
 --- Return true if the given weapon class is equipped

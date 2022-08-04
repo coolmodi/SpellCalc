@@ -15,12 +15,12 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {1024, 4196352 + 536870912},
                 perPoint = 3
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {0, 2048},
                 perPoint = 3
             }
@@ -32,7 +32,7 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {-1071644672, 65536},
                 perPoint = 4
             }
@@ -44,7 +44,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.ILLUMINATION,
+                type = _addon.CONST.EFFECT_TYPE.ILLUMINATION,
                 perPoint = 6 -- Internally Illumination is still 100% return. Adjust to 30% here.
             }
         }
@@ -55,7 +55,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {-2145386496, 65536},
                 perPoint = 2
             }
@@ -67,12 +67,12 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {33555456, 541068800, 24},
                 perPoint = 5
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {41943040, 536873984, 8},
                 perPoint = 5
             }
@@ -84,11 +84,11 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
                 perPoint = 2
             },
             {
-                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
                 perPoint = 2
             },
         }
@@ -102,7 +102,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.PCT_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
                 perPoint = 1
             }
         }
@@ -113,7 +113,7 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
                 affectSpell = {0, 524288},
                 perPoint = 10
             },
@@ -125,11 +125,11 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_1H +
-                    _addon.WEAPON_TYPES_MASK.MACE_1H +
-                    _addon.WEAPON_TYPES_MASK.SWORD_1H,
-                affectMask = _addon.SCHOOL_MASK.ALL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                neededWeaponMask = _addon.CONST.WEAPON_TYPES_MASK.AXE_1H +
+                    _addon.CONST.WEAPON_TYPES_MASK.MACE_1H +
+                    _addon.CONST.WEAPON_TYPES_MASK.SWORD_1H,
+                affectMask = _addon.CONST.SCHOOL_MASK.ALL,
                 values = {4, 7, 10}
             }
         }
@@ -140,7 +140,7 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.GLOBAL_MOD_CRITICAL_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_MOD_CRITICAL_HEALING,
                 perPoint = 10
             }
         }
@@ -154,7 +154,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {0, 32770},
                 perPoint = 5
             }
@@ -166,16 +166,16 @@ _addon.talentDataRaw = {
         column = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-                affectMask = _addon.CREATURE_TYPE_MASK.HUMANOID +
-                    _addon.CREATURE_TYPE_MASK.DEMON +
-                    _addon.CREATURE_TYPE_MASK.UNDEAD +
-                    _addon.CREATURE_TYPE_MASK.ELEMENTAL,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.CREATURE_TYPE_MASK.HUMANOID +
+                    _addon.CONST.CREATURE_TYPE_MASK.DEMON +
+                    _addon.CONST.CREATURE_TYPE_MASK.UNDEAD +
+                    _addon.CONST.CREATURE_TYPE_MASK.ELEMENTAL,
                 perPoint = 1
             },
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.SCHOOL_MASK.ALL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.ALL,
                 perPoint = 1
             }
         }
@@ -186,20 +186,20 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_2H +
-                    _addon.WEAPON_TYPES_MASK.MACE_2H +
-                    _addon.WEAPON_TYPES_MASK.SWORD_2H +
-                    _addon.WEAPON_TYPES_MASK.POLEARM,
-                affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                neededWeaponMask = _addon.CONST.WEAPON_TYPES_MASK.AXE_2H +
+                    _addon.CONST.WEAPON_TYPES_MASK.MACE_2H +
+                    _addon.CONST.WEAPON_TYPES_MASK.SWORD_2H +
+                    _addon.CONST.WEAPON_TYPES_MASK.POLEARM,
+                affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
                 perPoint = 2
             },
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
-                neededWeaponMask = _addon.WEAPON_TYPES_MASK.AXE_2H +
-                    _addon.WEAPON_TYPES_MASK.MACE_2H +
-                    _addon.WEAPON_TYPES_MASK.SWORD_2H +
-                    _addon.WEAPON_TYPES_MASK.POLEARM,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+                neededWeaponMask = _addon.CONST.WEAPON_TYPES_MASK.AXE_2H +
+                    _addon.CONST.WEAPON_TYPES_MASK.MACE_2H +
+                    _addon.CONST.WEAPON_TYPES_MASK.SWORD_2H +
+                    _addon.CONST.WEAPON_TYPES_MASK.POLEARM,
                 affectSpell = {1024 + 134217728, 4194304 + 512, 8},
                 perPoint = 2,
                 scriptKey = "Two_Hand_Weapon_Spec_Hackfixffs"
@@ -212,7 +212,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {8},
                 perPoint = 50
             }
@@ -224,7 +224,7 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {8388608, 163840},
                 perPoint = 5 -- This is 10 for "Judgement" (Wisdown, Light Seals), bug?
             },
@@ -236,7 +236,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {8388608, 0, 8},
                 perPoint = 6
             }
@@ -248,7 +248,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {0, 128, 0},
                 perPoint = 25
             }
@@ -260,7 +260,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
                 affectSpell = {-1073741824},
                 perPoint = 20
             }
@@ -272,7 +272,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
                 affectSpell = {8388608, 131072 + 32768},
                 perPoint = 10
             }
@@ -286,7 +286,7 @@ _addon.talentDataRaw = {
 
 _addon.aurasPlayer[20216] = { -- Divine Favor
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
         affectSpell = {-1071644672, 65536},
         value = 100
     }
@@ -294,7 +294,7 @@ _addon.aurasPlayer[20216] = { -- Divine Favor
 
 _addon.aurasPlayer[53672] = { -- Infusion of Light 1
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
         affectSpell = {-2147483648},
         value = 10
     }
@@ -302,7 +302,7 @@ _addon.aurasPlayer[53672] = { -- Infusion of Light 1
 
 _addon.aurasPlayer[54149] = { -- Infusion of Light 2
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
         affectSpell = {-2147483648},
         value = 20
     }
@@ -310,7 +310,7 @@ _addon.aurasPlayer[54149] = { -- Infusion of Light 2
 
 _addon.aurasPlayer[54428] = { -- Divine Plea
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {-1073741824, 65536},
         value = -50
     }
@@ -318,43 +318,43 @@ _addon.aurasPlayer[54428] = { -- Divine Plea
 
 _addon.aurasPlayer[20050] = { -- Vengeance 1
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.HOLY + _addon.SCHOOL_MASK.PHYSICAL,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.HOLY + _addon.CONST.SCHOOL_MASK.PHYSICAL,
         value = 1
     }
 };
 
 _addon.aurasPlayer[20052] = { -- Vengeance 2
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.HOLY + _addon.SCHOOL_MASK.PHYSICAL,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.HOLY + _addon.CONST.SCHOOL_MASK.PHYSICAL,
         value = 2
     }
 };
 
 _addon.aurasPlayer[20053] = { -- Vengeance 3
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.HOLY + _addon.SCHOOL_MASK.PHYSICAL,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.HOLY + _addon.CONST.SCHOOL_MASK.PHYSICAL,
         value = 3
     }
 };
 
 _addon.aurasPlayer[31884] = { -- Avenging Wrath
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.ALL,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
         value = 20
     },
     {
-        type = _addon.EFFECT_TYPE.PCT_HEALING,
+        type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
         value = 20
     }
 }
 
 _addon.aurasPlayer[20165] = { -- Seal of Light
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {-1073741824, 16842752},
         scriptValue = "Glyph_of_Seal_of_Light"
     }
@@ -366,7 +366,7 @@ _addon.aurasPlayer[20165] = { -- Seal of Light
 
 _addon.aurasTarget[58597] = { -- Sacred Shield
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
         affectSpell = {1073741824},
         value = 50
     }
@@ -379,7 +379,7 @@ _addon.aurasTarget[58597] = { -- Sacred Shield
 -- Glyph of Seal of Light
 _addon.classGlyphs[54943] = {
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
         scriptKey = "Glyph_of_Seal_of_Light",
         value = 5
     }
@@ -391,24 +391,24 @@ _addon.classGlyphs[54943] = {
 
 _addon.classPassives = {
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
         affectSpell = {0, 1048576},
         scriptKey = "Shield_of_Righteousness_BV_Scale",
         value = 0
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
         affectSpell = {0, 4194304},
         scriptKey = "Holy_Vengeance_Judgement_Mod",
         value = 10
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
         scriptKey = HOLY_VENGEANCE,
         value = 0
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
         affectSpell = {0, 262144},
         scriptKey = "Hammer_of_the_Righteous_MH_DPS",
         value = 0

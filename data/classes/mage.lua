@@ -14,8 +14,8 @@ _addon.talentData = {
         talent = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+                affectMask = _addon.CONST.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 5
             }
         }
@@ -25,7 +25,7 @@ _addon.talentData = {
         talent = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
                 affectSpell = {-1591717888, 16},
                 perPoint = 2
             }
@@ -36,7 +36,7 @@ _addon.talentData = {
         talent = 6,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE_DMG,
+                type = _addon.CONST.EFFECT_TYPE.CLEARCAST_CHANCE_DMG,
                 perPoint = 2
             }
         }
@@ -46,7 +46,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {536875008},
                 perPoint = 2
             }
@@ -57,7 +57,7 @@ _addon.talentData = {
         talent = 12,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 perPoint = 10
             }
         }
@@ -67,8 +67,8 @@ _addon.talentData = {
         talent = 17,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 1
             }
         }
@@ -78,7 +78,7 @@ _addon.talentData = {
         talent = 19,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {2048},
                 perPoint = 3
             }
@@ -89,7 +89,7 @@ _addon.talentData = {
         talent = 21,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
                 affectSpell = {551686775, 8},
                 perPoint = 25
             }
@@ -103,7 +103,7 @@ _addon.talentData = {
         talent = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.IGNITE,
+                type = _addon.CONST.EFFECT_TYPE.IGNITE,
                 perPoint = 8
             }
         }
@@ -113,7 +113,7 @@ _addon.talentData = {
         talent = 6,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {18},
                 perPoint = 2
             }
@@ -124,7 +124,7 @@ _addon.talentData = {
         talent = 7,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {4},
                 perPoint = 5
             }
@@ -135,7 +135,7 @@ _addon.talentData = {
         talent = 12,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.ILLUMINATION,
+                type = _addon.CONST.EFFECT_TYPE.ILLUMINATION,
                 perPoint = 10
             }
         }
@@ -145,8 +145,8 @@ _addon.talentData = {
         talent = 13,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 1
             }
         }
@@ -156,7 +156,7 @@ _addon.talentData = {
         talent = 17,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {12845079, 8},
                 perPoint = 2
             }
@@ -167,7 +167,7 @@ _addon.talentData = {
         talent = 21,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {1},
                 perPoint = 3
             }
@@ -181,7 +181,7 @@ _addon.talentData = {
         talent = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
                 affectSpell = {13763319, 8},
                 perPoint = 1
             }
@@ -192,7 +192,7 @@ _addon.talentData = {
         talent = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
                 affectSpell = {131808},
                 perPoint = 20
             }
@@ -203,7 +203,7 @@ _addon.talentData = {
         talent = 8,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {131808},
                 perPoint = 2
             }
@@ -214,7 +214,7 @@ _addon.talentData = {
         talent = 16,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {512},
                 perPoint = 10,
                 base = 5
@@ -226,8 +226,8 @@ _addon.talentData = {
         talent = 20,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.SCHOOL_MASK.FROST,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.FROST,
                 perPoint = 1,
             }
         }
@@ -237,12 +237,12 @@ _addon.talentData = {
         talent = 21,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {32},
                 perPoint = 2,
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {32},
                 perPoint = 1,
             }
@@ -252,7 +252,7 @@ _addon.talentData = {
 
 _addon.aurasPlayer[12042] = { -- Arcane Power
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {685904631, 8},
         value = 30,
     }
@@ -260,7 +260,7 @@ _addon.aurasPlayer[12042] = { -- Arcane Power
 
 local mageArmorEffect = {
     {
-        type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+        type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
         value = 30,
     }
 };

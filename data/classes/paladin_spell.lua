@@ -1930,42 +1930,42 @@ _addon.spellRankInfo = {
 
 _addon.aurasPlayer[20165] = { -- Seal of Light
     {
-        type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+        type = _addon.CONST.EFFECT_TYPE.JUDGEMENT_SPELL,
         value = 54158
     }
 };
 
 _addon.aurasPlayer[21084] = { -- Seal of Righteousness
     {
-        type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+        type = _addon.CONST.EFFECT_TYPE.JUDGEMENT_SPELL,
         value = 20187
     }
 };
 
 _addon.aurasPlayer[20166] = { -- Seal of Wisdom
     {
-        type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+        type = _addon.CONST.EFFECT_TYPE.JUDGEMENT_SPELL,
         value = 54158
     }
 };
 
 _addon.aurasPlayer[20375] = { -- Seal of Command
     {
-        type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+        type = _addon.CONST.EFFECT_TYPE.JUDGEMENT_SPELL,
         value = 20467
     }
 };
 
 _addon.aurasPlayer[348704] = { -- Seal of Corruption
     {
-        type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+        type = _addon.CONST.EFFECT_TYPE.JUDGEMENT_SPELL,
         value = 31804
     }
 };
 
 _addon.aurasPlayer[31801] = { -- Seal of Vengeance
     {
-        type = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,
+        type = _addon.CONST.EFFECT_TYPE.JUDGEMENT_SPELL,
         value = 31804
     }
 };
@@ -2566,42 +2566,42 @@ _addon.spellClassSet = {
 _addon.classGlyphs = {
     [54922] = { -- Glyph of Judgement
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {8388608, 0, 0, 0},
             value = 10,
         },
     },
     [54928] = { -- Glyph of Consecration
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {32, 0, 0, 0},
             value = 2,
         },
     },
     [54930] = { -- Glyph of Avenger's Shield
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {16384, 0, 0, 0},
             value = 100,
         },
     },
     [54934] = { -- Glyph of Exorcism
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 2, 0, 0},
             value = 20,
         },
     },
     [54936] = { -- Glyph of Flash of Light
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {1073741824, 0, 0, 0},
             value = 5,
         },
     },
     [56414] = { -- Glyph of Seal of Righteousness
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 536870912, 0, 0},
             value = 10,
         },

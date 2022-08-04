@@ -191,7 +191,7 @@ local function AddWeaponTableUniform(weaponTable, title, unit)
     end
     for weaponType, _ in pairs(weaponTable) do
         local label = "-";
-        for k, typeVal in pairs(_addon.WEAPON_TYPES_MASK) do
+        for k, typeVal in pairs(_addon.CONST.WEAPON_TYPES_MASK) do
             if typeVal == weaponType then
                 label = k;
                 break;
@@ -215,7 +215,7 @@ local function AddVersusTypeTableUniform(versusTable, title, unit)
     end
     for typeNum, _ in pairs(versusTable) do
         local label;
-        for k, v in pairs(_addon.CREATURE_TYPE) do
+        for k, v in pairs(_addon.CONST.CREATURE_TYPE) do
             if v == typeNum then
                 label = k;
             end
@@ -393,7 +393,7 @@ AddSingleStat("LevelDiff", _addon.Target, "levelDiff", "");
 AddSingleStat("Player", _addon.Target, "isPlayer", "");
 AddSingleStat("Class", _addon.Target, "class", "");
 AddSingleStat("Type", _addon.Target, "creatureType", "");
-for key, schoolNum in pairs(_addon.SCHOOL) do
+for key, schoolNum in pairs(_addon.CONST.SCHOOL) do
     AddSingleStat(key, _addon.Target.resistanceBase, schoolNum, "");
 end
 AddSchoolTableUniform(stats.targetSchoolModResistancePct, "School Pct Mod Resistance", "%");

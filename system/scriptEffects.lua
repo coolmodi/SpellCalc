@@ -1,6 +1,6 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
-local EFFECT_TYPE = _addon.EFFECT_TYPE;
+local EFFECT_TYPE = _addon.CONST.EFFECT_TYPE;
 ---@type table<string, EffectScript>
 local scripts = {};
 ---@type table<string,number|nil>

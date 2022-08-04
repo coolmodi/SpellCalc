@@ -38,7 +38,7 @@ SCT:AddDummyHandler(GetSpellInfo(974), PoM); -- Earth Shield
 local function GreaterHeal(calcedSpell, effectNum, spellId)
     SCT:ShowEffectTooltip(calcedSpell, 1, true, spellId);
 
-    if _addon:IsBooleanFlagActive(_addon.BOOLEAN_FLAGS.PRIEST_T5_2PC) then
+    if _addon:IsBooleanFlagActive(_addon.CONST.BOOLEAN_FLAGS.PRIEST_T5_2PC) then
         local calcedEffect = calcedSpell[1];
         assert(calcedEffect, "Priest T5 bonus set but triggered effect missing!");
 

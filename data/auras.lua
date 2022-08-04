@@ -1,171 +1,172 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
+local CONST = _addon.CONST;
 
 -- Buffs the player can have
 _addon.aurasPlayer = {
     [5677] = { -- Mana Spring 1
         {
-            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 15 -- 6/2s
         }
     },
     [10491] = { -- Mana Spring 2
         {
-            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 22 -- 9/2s
         }
     },
     [10493] = { -- Mana Spring 3
         {
-            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 32 -- 13/2s
         }
     },
     [10494] = { -- Mana Spring 4
         {
-            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 42 -- 17/2s
         }
     },
     [25569] = { -- Mana Spring 5
         {
-            type = _addon.EFFECT_TYPE.MOD_MANA_PER_5,
+            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 50 -- 20/2s
         }
     },
     [26166] = { -- Obsidian Insight
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-            affectMask = _addon.SCHOOL_MASK.FIRE + _addon.SCHOOL_MASK.FROST +
-                _addon.SCHOOL_MASK.NATURE + _addon.SCHOOL_MASK.SHADOW +
-                _addon.SCHOOL_MASK.ARCANE,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = CONST.SCHOOL_MASK.FIRE + CONST.SCHOOL_MASK.FROST +
+                CONST.SCHOOL_MASK.NATURE + CONST.SCHOOL_MASK.SHADOW +
+                CONST.SCHOOL_MASK.ARCANE,
             value = 100
         }
     },
 
     [30880] = { -- Echoes of Lordaeron H 1
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 1
         }
     },
     [30683] = { -- Echoes of Lordaeron H 2
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 2
         }
     },
     [30682] = { -- Echoes of Lordaeron H 3
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 3
         }
     },
     [29520] = { -- Echoes of Lordaeron H 4
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 5
         }
     },
 
     [11413] = { -- Echoes of Lordaeron A 1
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 1
         }
     },
     [11414] = { -- Echoes of Lordaeron A 2
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 2
         }
     },
     [11415] = { -- Echoes of Lordaeron A 3
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 3
         }
     },
     [1386] = { -- Echoes of Lordaeron A 4
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD +
-                _addon.CREATURE_TYPE_MASK.DEMON,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD +
+                CONST.CREATURE_TYPE_MASK.DEMON,
             value = 5
         }
     },
     [33377] = { -- Blessing of Auchindoun
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 5
         }
     },
     [32071] = { -- Hellfire Superiority A
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 5
         }
     },
     [32049] = { -- Hellfire Superiority H
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 5
         }
     },
     [33795] = { -- Strength of the Halaani
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 5
         }
     },
     [20218] = { -- Sanctity Aura
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.HOLY,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.HOLY,
             value = 10
         }
     },
     [30708] = { -- Totem of Wrath
-        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 3}
+        {type = CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 3}
     },
     [28488] = { -- Scourgebane Infusion
         {
-            type = _addon.EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
-            affectMask = _addon.CREATURE_TYPE_MASK.UNDEAD,
+            type = CONST.EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
             value = 15
         }
     },
     -- 28486 "Scourgebane Draught" 30 AP vs undead
     [6562] = { -- Heroic Presence
-        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1},
-        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1}
+        {type = CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1},
+        {type = CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1}
     },
     [28878] = { -- Inspiring Presence
-        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1},
-        {type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1}
+        {type = CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1},
+        {type = CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1}
     },
     [49016] = { -- Hysteria
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.PHYSICAL,
             value = 20
         }
     },
     [57933] = { -- TotT
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 15
         }
     }
@@ -173,20 +174,20 @@ _addon.aurasPlayer = {
 
 local acidSpit = { -- Acid Spit
     {
-        type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
-        affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+        type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
+        affectMask = CONST.SCHOOL_MASK.PHYSICAL,
         value = -10,
         hasStacks = true,
-        debuffCategory = _addon.DEBUFF_CATEGORY.ARMOR_MAJOR
+        debuffCategory = CONST.DEBUFF_CATEGORY.ARMOR_MAJOR
     }
 }
 
 local minorArmorDebuff = {
     {
-        type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
-        affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+        type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
+        affectMask = CONST.SCHOOL_MASK.PHYSICAL,
         value = -5,
-        debuffCategory = _addon.DEBUFF_CATEGORY.ARMOR_MINOR
+        debuffCategory = CONST.DEBUFF_CATEGORY.ARMOR_MINOR
     }
 }
 
@@ -197,19 +198,19 @@ _addon.aurasTarget = {
     -----------------------
     [58567] = { -- Sunder Armor
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
-            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
+            affectMask = CONST.SCHOOL_MASK.PHYSICAL,
             value = -4,
             hasStacks = true,
-            debuffCategory = _addon.DEBUFF_CATEGORY.ARMOR_MAJOR
+            debuffCategory = CONST.DEBUFF_CATEGORY.ARMOR_MAJOR
         }
     },
     [8647] = { -- Expose Armor
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
-            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
+            affectMask = CONST.SCHOOL_MASK.PHYSICAL,
             value = -20,
-            debuffCategory = _addon.DEBUFF_CATEGORY.ARMOR_MAJOR
+            debuffCategory = CONST.DEBUFF_CATEGORY.ARMOR_MAJOR
         }
     },
     [55749] = acidSpit, -- Acid Spit 1
@@ -243,110 +244,110 @@ _addon.aurasTarget = {
     -----------------------
     [60431] = { -- Earth and Moon 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 4,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
     [60432] = { -- Earth and Moon 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 9,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
     [60433] = { -- Earth and Moon 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 13,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
 
     [1490] = { -- Curse of Elements 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 6,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
     [11721] = { -- Curse of Elements 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 8,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
     [11722] = { -- Curse of Elements 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 10,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
     [27228] = { -- Curse of Elements 4
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 11,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
     [47865] = { -- Curse of Elements 5
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 13,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         }
     },
 
     [51726] = { -- Ebon Plague 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 4,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         },
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.INFECTED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
     },
     [51734] = { -- Ebon Plague 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 9,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         },
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.INFECTED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
     },
     [51735] = { -- Ebon Plague 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 13,
-            debuffCategory = _addon.DEBUFF_CATEGORY.SPELL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.SPELL_DAMAGE
         },
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.INFECTED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
     },
     -----------------------
@@ -354,26 +355,26 @@ _addon.aurasTarget = {
     -----------------------
     [50508] = { -- Crypt Fever 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.INFECTED,
             value = 10,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
     },
     [50509] = { -- Crypt Fever 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.INFECTED,
             value = 20,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
     },
     [50510] = { -- Crypt Fever 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.INFECTED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.INFECTED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DISEASE_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.DISEASE_DAMAGE
         }
     },
     -----------------------
@@ -381,100 +382,100 @@ _addon.aurasTarget = {
     -----------------------
     [46856] = { -- Trauma 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 15,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [46857] = { -- Trauma 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
 
     [33876] = { -- Mangle (Cat) 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [33982] = { -- Mangle (Cat) 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [33983] = { -- Mangle (Cat) 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [48565] = { -- Mangle (Cat) 4
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [48566] = { -- Mangle (Cat) 5
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
 
     [33878] = { -- Mangle (Bear) 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [33986] = { -- Mangle (Bear) 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [33987] = { -- Mangle (Bear) 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [48563] = { -- Mangle (Bear) 4
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     [48564] = { -- Mangle (Bear) 5
         {
-            type = _addon.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
-            affectMechanic = _addon.SPELL_MECHANIC.BLEED,
+            type = CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            affectMechanic = CONST.SPELL_MECHANIC.BLEED,
             value = 30,
-            debuffCategory = _addon.DEBUFF_CATEGORY.BLEED_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.BLEED_DAMAGE
         }
     },
     -----------------------
@@ -482,34 +483,34 @@ _addon.aurasTarget = {
     -----------------------
     [30069] = { -- Blood Frenzy 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.PHYSICAL,
             value = 2,
-            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
         }
     },
     [30070] = { -- Blood Frenzy 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.PHYSICAL,
             value = 4,
-            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
         }
     },
     [58684] = { -- Savage Combat 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.PHYSICAL,
             value = 2,
-            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
         }
     },
     [58683] = { -- Savage Combat 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = CONST.SCHOOL_MASK.PHYSICAL,
             value = 4,
-            debuffCategory = _addon.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
+            debuffCategory = CONST.DEBUFF_CATEGORY.PHYSICAL_DAMAGE
         }
     },
     -----------------------
@@ -517,34 +518,34 @@ _addon.aurasTarget = {
     -----------------------
     [30708] = { -- Totem of Wrath
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 3,
-            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.CRIT_ALL
         }
     },
     [21183] = { -- Heart of the Crusader 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 1,
-            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.CRIT_ALL
         }
     },
     [54498] = { -- Heart of the Crusader 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 2,
-            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.CRIT_ALL
         }
     },
     [54499] = { -- Heart of the Crusader 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 3,
-            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.CRIT_ALL
         }
     },
     -----------------------
@@ -552,27 +553,27 @@ _addon.aurasTarget = {
     -----------------------
     [12579] = { -- Winter's Chill
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             hasStacks = true,
             value = 1,
-            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_SPELL
+            debuffCategory = CONST.DEBUFF_CATEGORY.CRIT_SPELL
         }
     },
     [22959] = { -- Improved Scorch
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 5,
-            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_SPELL
+            debuffCategory = CONST.DEBUFF_CATEGORY.CRIT_SPELL
         }
     },
     [17800] = { -- Shadow Mastery (Imp. SB)
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 5,
-            debuffCategory = _addon.DEBUFF_CATEGORY.CRIT_SPELL
+            debuffCategory = CONST.DEBUFF_CATEGORY.CRIT_SPELL
         }
     },
     -----------------------
@@ -580,26 +581,26 @@ _addon.aurasTarget = {
     -----------------------
     [33196] = { -- Misery 1
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 1,
-            debuffCategory = _addon.DEBUFF_CATEGORY.HIT_SPELL
+            debuffCategory = CONST.DEBUFF_CATEGORY.HIT_SPELL
         }
     },
     [33197] = { -- Misery 2
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 2,
-            debuffCategory = _addon.DEBUFF_CATEGORY.HIT_SPELL
+            debuffCategory = CONST.DEBUFF_CATEGORY.HIT_SPELL
         }
     },
     [33198] = { -- Misery 3
         {
-            type = _addon.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
-            affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT,
+            affectMask = CONST.SCHOOL_MASK.ALL_SPELL,
             value = 3,
-            debuffCategory = _addon.DEBUFF_CATEGORY.HIT_SPELL
+            debuffCategory = CONST.DEBUFF_CATEGORY.HIT_SPELL
         }
     },
     -----------------------
@@ -607,9 +608,9 @@ _addon.aurasTarget = {
     -----------------------
     [34123] = { -- Tree of Life
         {
-            type = _addon.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            type = CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
             value = 6,
-            debuffCategory = _addon.DEBUFF_CATEGORY.HEALING_RECIEVED_POSITIVE
+            debuffCategory = CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_POSITIVE
         }
     },
     -----------------------
@@ -617,50 +618,50 @@ _addon.aurasTarget = {
     -----------------------
     [31579] = { -- Arcane Empowerment 1
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 1,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
     [31582] = { -- Arcane Empowerment 2
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 2,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
     [31583] = { -- Arcane Empowerment 3
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 3,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
     [75593] = { -- Ferocious Inspiration 1
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 1,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
     [75446] = { -- Ferocious Inspiration 2
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 2,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
     [75447] = { -- Ferocious Inspiration 3
         {
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = _addon.SCHOOL_MASK.ALL,
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
             value = 3,
-            debuffCategory = _addon.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+            debuffCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
 };

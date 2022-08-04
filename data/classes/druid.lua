@@ -24,12 +24,12 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {2097746, 67108880},
                 perPoint = 1
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {4194432},
                 perPoint = 1
             }
@@ -41,7 +41,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {37, 41943040},
                 perPoint = 2
             }
@@ -53,17 +53,17 @@ _addon.talentDataRaw = {
         column = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {2},
                 perPoint = 5
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {2},
                 perPoint = 5
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {2},
                 perPoint = 5
             }
@@ -75,17 +75,17 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {256},
                 perPoint = 25
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {512},
                 perPoint = 25
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {0, 512},
                 perPoint = 5
             }
@@ -97,17 +97,17 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                 affectSpell = {18},
                 perPoint = 3
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                 affectSpell = {64},
                 perPoint = 6
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                 affectSpell = {2097152, 16},
                 perPoint = 2
             }
@@ -119,7 +119,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
                 affectSpell = {7, 8388608},
                 perPoint = 20
             }
@@ -131,24 +131,24 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
                 affectSpell = {1},
                 perPoint = 1,
                 scriptKey = "Imp_IS_Target_Aura_Check",
             },
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
                 scriptKey = INSECT_SWARM,
                 perPoint = 0
             },
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
                 affectSpell = {4},
                 perPoint = 1,
                 scriptKey = "Imp_IS_Target_Aura_Check",
             },
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
                 scriptKey = MOONFIRE,
                 perPoint = 0
             }
@@ -160,7 +160,7 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.MANA_PER_5_FROM_INT,
+                type = _addon.CONST.EFFECT_TYPE.MANA_PER_5_FROM_INT,
                 perPoint = 3,
                 base = 1
             }
@@ -172,12 +172,12 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {7},
                 values = {3, 6, 10}
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {2},
                 values = {3, 6, 10}
             }
@@ -189,7 +189,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
                 perPoint = 2
             },
         }
@@ -200,18 +200,18 @@ _addon.talentDataRaw = {
         column = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
                 affectSpell = {4194311, 25165824},
                 perPoint = 1,
                 scriptKey = "Imp_FF_Crit"
             },
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
                 scriptKey = FF,
                 perPoint = 0
             },
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
                 scriptKey = FF_FERAL,
                 perPoint = 0
             }
@@ -223,12 +223,12 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {4},
                 perPoint = 4
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {1},
                 perPoint = 2
             }
@@ -240,7 +240,7 @@ _addon.talentDataRaw = {
         column = 4,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {4194304, 16777216},
                 perPoint = 15
             }
@@ -252,8 +252,8 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.SCHOOL_MASK.ALL_SPELL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.ALL_SPELL,
                 perPoint = 2
             }
         }
@@ -267,7 +267,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {8388608},
                 perPoint = 3
             }
@@ -279,12 +279,12 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {6144, 1088, 262144},
                 perPoint = 10
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {4096},
                 perPoint = 10
             }
@@ -296,8 +296,8 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT,
-                affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT,
+                affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
                 values = {3, 7, 10}
             }
         }
@@ -309,7 +309,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
                 affectSpell = {8388608, 256},
                 perPoint = 1
             }
@@ -324,7 +324,7 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 values = {17, 33, 50}
             }
         }
@@ -335,7 +335,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.CLEARCAST_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.CLEARCAST_CHANCE,
                 perPoint = 6 -- TODO: procchance, fix basecost calc
             }
         }
@@ -346,7 +346,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SCRIPT_SET_VALUE,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
                 scriptKey = "Master_Shapeshifter_Value",
                 perPoint = 2
             }
@@ -358,7 +358,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {16},
                 perPoint = 5
             }
@@ -370,12 +370,12 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {224, 33554448},
                 perPoint = 2
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {80, 67108880},
                 perPoint = 2
             }
@@ -387,12 +387,12 @@ _addon.talentDataRaw = {
         column = 1,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {32},
                 perPoint = 20
             },
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {0, 33554432},
                 perPoint = 10
             }
@@ -404,7 +404,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {64, 33554432},
                 perPoint = 5
             }
@@ -416,7 +416,7 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
                 affectSpell = {208, 67108880},
                 perPoint = 4
             }
@@ -428,7 +428,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
                 affectSpell = {32 + 64, 2 + 33554432},
                 perPoint = 10
             }
@@ -440,7 +440,7 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
                 affectSpell = {0, 16},
                 perPoint = -30
             }
@@ -454,21 +454,21 @@ _addon.talentDataRaw = {
 
 _addon.aurasPlayer[17116] = { -- Nature's Swiftness dummy
     {
-        type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+        type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
         value = 1500
     }
 };
 
 _addon.aurasPlayer[16886] = { -- Nature's Grace
     {
-        type = _addon.EFFECT_TYPE.TRIGGER_UPDATE,
+        type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
         value = 1500
     }
 };
 
 _addon.aurasPlayer[48518] = { -- Eclipse (Lunar)
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
         affectSpell = {4},
         value = 40
     }
@@ -476,7 +476,7 @@ _addon.aurasPlayer[48518] = { -- Eclipse (Lunar)
 
 _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
     {
-        type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {1},
         value = 40
     }
@@ -484,23 +484,23 @@ _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
 
 _addon.aurasPlayer[48418] = { -- Master Shapeshifter Bear
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.PHYSICAL,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
         scriptValue = "Master_Shapeshifter_Value"
     }
 };
 
 _addon.aurasPlayer[48422] = { -- Master Shapeshifter Tree
     {
-        type = _addon.EFFECT_TYPE.PCT_HEALING,
+        type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
         scriptValue = "Master_Shapeshifter_Value"
     }
 };
 
 _addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.SCHOOL_MASK.ARCANE + _addon.SCHOOL_MASK.NATURE,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ARCANE + _addon.CONST.SCHOOL_MASK.NATURE,
         scriptValue = "Master_Shapeshifter_Value"
     }
 };
@@ -511,13 +511,13 @@ _addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
 
 _addon.classGlyphs[54743] = { -- Glyph of Regrowth
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
         affectSpell = {64},
         value = 20,
         scriptKey = "Glyph_of_Regrowth",
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
         scriptKey = REGROWTH,
         value = 0
     },
@@ -529,28 +529,28 @@ _addon.classGlyphs[54743] = { -- Glyph of Regrowth
 
 _addon.classPassives = {
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
         affectSpell = {0, 33554432},
         value = 20,
         scriptKey = "Nourish_Script",
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
         scriptKey = REJUVENATION,
         value = 0
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
         scriptKey = REGROWTH,
         value = 0
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
         scriptKey = LIFEBLOOM,
         value = 0
     },
     {
-        type = _addon.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
         scriptKey = WILD_GROWTH,
         value = 0
     },
@@ -568,7 +568,7 @@ _addon.classScripts = {
     ---@param ri SpellRankInfo
     ---@param scriptType number
     Imp_IS_Target_Aura_Check = function(val, cs, ce, spellId, ri, scriptType)
-        if scriptType == _addon.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT then
+        if scriptType == _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT then
             -- Wrath
             if _addon.Target.HasAuraName(INSECT_SWARM, true) then
                 ce.modBonus = ce.modBonus * (1 + val/100);

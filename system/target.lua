@@ -1,7 +1,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 local npcResistances = _addon.npcResistances;
-local SCHOOL = _addon.SCHOOL;
+local SCHOOL = _addon.CONST.SCHOOL;
 
 local CREATURE_TYPE_LOC_TO_ID = {
     ["Beast"] = 1,

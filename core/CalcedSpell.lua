@@ -1,8 +1,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
----@type SpellEffectFlags
-local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
+local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 
 
 ---@class IgniteDataDef
@@ -187,14 +186,14 @@ end
 ---@param triggeredSpell number
 ---@param effIndex number
 function CalcedSpell:SetTriggeredSpell(triggeredSpell, effIndex)
-    if self[effIndex] ~= nil and self[effIndex].effectFlags ~= SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+    if self[effIndex] ~= nil and self[effIndex].effectFlags ~= ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
         _addon.util.PrintError("Tried to add triggered spell when 2nd effect is already in use!");
         return;
     end
 
     if self[effIndex] == nil then
         self[effIndex] = {
-            effectFlags = SPELL_EFFECT_FLAGS.TRIGGERED_SPELL,
+            effectFlags = ADDON_EFFECT_FLAGS.TRIGGERED_SPELL,
             triggeredSpell = triggeredSpell,
             spellData = nil
         }
@@ -204,7 +203,7 @@ end
 --- Remove effect if it is a triggered spell.
 ---@param effIndex number
 function CalcedSpell:UnsetTriggeredSpell(effIndex)
-    if self[effIndex] ~= nil and self[effIndex].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+    if self[effIndex] ~= nil and self[effIndex].effectFlags == ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
         self[effIndex] = nil;
     end
 end
@@ -251,23 +250,23 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
             break;
         end
 
-        if bit.band(effectFlags[i], SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
+        if bit.band(effectFlags[i], ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
             newInstance:SetTriggeredSpell(spellRankEffects[i].valueBase, i);
         else
             local effTable = {};
             setmetatable(effTable, CalcedEffect);
             effTable.effectFlags = effectFlags[i];
 
-            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
+            if bit.band(effTable.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
                 effTable.ticks = 0;
                 effTable.tickPeriod = 0;
             end
 
-            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
+            if bit.band(effTable.effectFlags, ADDON_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
                 effTable.auraStack = setmetatable({}, AuraStackData);
             end
 
-            if bit.band(effTable.effectFlags, SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+            if bit.band(effTable.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
                 effTable.triggeredSpell = spellRankEffects[i].valueBase;
             end
 
@@ -277,8 +276,8 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
 
     -- Is combined spell, e.g. Immolate or Regrowth
     if effectFlags[2] ~= nil 
-    and bit.band(effectFlags[1], SPELL_EFFECT_FLAGS.DURATION) == 0
-    and bit.band(effectFlags[2], SPELL_EFFECT_FLAGS.DURATION) > 0 then
+    and bit.band(effectFlags[1], ADDON_EFFECT_FLAGS.DURATION) == 0
+    and bit.band(effectFlags[2], ADDON_EFFECT_FLAGS.DURATION) > 0 then
         AddCombinedData(newInstance);
     end
 

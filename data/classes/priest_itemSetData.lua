@@ -12,13 +12,13 @@ _addon.itemSetData[202] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
             affectSpell = {2048, 0, 0, 0},
             value = -100,
         },
         {
             need = 8,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {512, 0, 0, 0},
             value = 25,
         },
@@ -38,7 +38,7 @@ _addon.itemSetData[211] = {
     effects = {
         {
             need = 8,
-            type = _addon.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
             affectSpell = {4096, 0, 0, 0},
             value = 22009,
         },
@@ -58,7 +58,7 @@ _addon.itemSetData[507] = {
     effects = {
         {
             need = 5,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {64, 0, 0, 0},
             value = 3,
         },
@@ -75,7 +75,7 @@ _addon.itemSetData[508] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
             affectSpell = {32768, 0, 0, 0},
             value = 5,
         },
@@ -90,7 +90,7 @@ _addon.itemSetData[663] = {
     effects = {
         {
             need = 2,
-            type = _addon.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ADD_TRIGGER_SPELL,
             affectSpell = {512, 0, 0, 0},
             value = 37563,
         },
@@ -107,13 +107,13 @@ _addon.itemSetData[664] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {128, 0, 0, 0},
             value = 5,
         },
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {8388608, 0, 0, 0},
             value = 5,
         },
@@ -130,12 +130,12 @@ _addon.itemSetData[665] = {
     effects = {
         {
             need = 2,
-            type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
+            type = _addon.CONST.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
             value = 1,
         },
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {64, 0, 0, 0},
             value = 3,
         },
@@ -152,7 +152,7 @@ _addon.itemSetData[666] = {
     effects = {
         {
             need = 2,
-            type = _addon.EFFECT_TYPE.SPELLMOD_MANARESTORE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_MANARESTORE,
             affectSpell = {49848464, 1042},
             value = 9,
         },
@@ -169,13 +169,13 @@ _addon.itemSetData[674] = {
     effects = {
         {
             need = 2,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {32768, 0, 0, 0},
             value = 3,
         },
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {8192, 0, 0, 0},
             value = 10,
         },
@@ -195,7 +195,7 @@ _addon.itemSetData[675] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {4096, 0, 0, 0},
             value = 5,
         },

@@ -19,7 +19,7 @@ local SETargetAuraChanged = _addon.ScriptEffects.TargetAuraChanged;
 
 ---@type table<number, ActiveCategoryData>
 local activeCategory = {};
-for _, v in pairs(_addon.DEBUFF_CATEGORY) do
+for _, v in pairs(_addon.CONST.DEBUFF_CATEGORY) do
     ---@class ActiveCategoryData
     ---@field activeSpellId integer|nil The aura currently used.
     ---@field auras table<integer, integer> Value of active auras in this category.

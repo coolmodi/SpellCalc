@@ -1,7 +1,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
-local SSM = _addon.SCHOOL;
+local SSM = _addon.CONST.SCHOOL;
 
 _addon.npcResistances = {
     [12118] = { -- Lucifron

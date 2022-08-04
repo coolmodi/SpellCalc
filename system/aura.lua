@@ -1,6 +1,6 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
-local EFFECT_TYPE = _addon.EFFECT_TYPE;
+local EFFECT_TYPE = _addon.CONST.EFFECT_TYPE;
 local stats = _addon.stats;
 local toggledFlags = 0;
 
@@ -352,7 +352,7 @@ function _addon:ApplyPassives()
     -- Beast Slaying (Troll Racial)
     local _, raceEn = UnitRace("player");
     if raceEn == "Troll" then
-        _addon:ApplyAuraEffect(GetSpellInfo(20557), { type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE, affectMask = _addon.CREATURE_TYPE_MASK.BEAST }, 5);
+        _addon:ApplyAuraEffect(GetSpellInfo(20557), { type = EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE, affectMask = _addon.CONST.CREATURE_TYPE_MASK.BEAST }, 5);
     end
 
     -- Class passives

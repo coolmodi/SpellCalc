@@ -471,7 +471,7 @@ local SETTINGS_TABLE = {
 							desc = L.SETTINGS_CALC_REMAINING_DESC,
 							set = function(info, value)
 								SpellCalc_settings.useCurrentPowerLevel = value;
-								_addon.events:TogglePowerUpdate(value);
+								_addon.events.SetPowerUpdateActive(value);
 							end
 						},
 					}
@@ -611,7 +611,7 @@ function _addon:SetupSettings()
 		}
 	end
 
-	if _addon.MELEE_CLASSES[class] then
+	if _addon.CONST.MELEE_CLASSES[class] then
 		SETTINGS_TABLE.args.meleeGroup = {
 			order = 12,
 			type = "group",
@@ -620,7 +620,7 @@ function _addon:SetupSettings()
 		}
 	end
 
-	if _addon.HEALING_CLASSES[class] then
+	if _addon.CONST.HEALING_CLASSES[class] then
 		SETTINGS_TABLE.args.healGroup = {
 			order = 14,
 			type = "group",

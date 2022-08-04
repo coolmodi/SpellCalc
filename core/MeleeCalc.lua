@@ -4,7 +4,7 @@ local _addon = select(2, ...);
 local _, race = UnitRace("player");
 local _, class = UnitClass("player");
 local stats = _addon.stats;
-local SCHOOL_PHYSICAL = _addon.SCHOOL.PHYSICAL;
+local SCHOOL_PHYSICAL = _addon.CONST.SCHOOL.PHYSICAL;
 
 ---@class MeleeCalc
 local MeleeCalc = {};
@@ -78,27 +78,27 @@ function MeleeCalc:GetCrit()
             if class == "WARRIOR" then
                 local _, _, _, _, curRank = GetTalentInfo(1, 12); -- axe spec
                 if curRank > 0 then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "mainhand") then
+                    if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.AXE_1H, "mainhand") then
                         basecrit = basecrit - curRank;
-                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.AXE_1H, "offhand") then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.AXE_1H, "offhand") then
                         basecrit = basecrit + curRank;
                     end
                 end
             elseif class == "ROGUE" then
                 local _, _, _, _, curRank = GetTalentInfo(2, 11); -- dagger spec
                 if curRank > 0 then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "mainhand") then
+                    if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.DAGGER, "mainhand") then
                         basecrit = basecrit - curRank;
-                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.DAGGER, "offhand") then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.DAGGER, "offhand") then
                         basecrit = basecrit + curRank;
                     end
                 end
 
                 _, _, _, _, curRank = GetTalentInfo(2, 16); -- fisting spec
                 if curRank > 0 then
-                    if _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "mainhand") then
+                    if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.FIST, "mainhand") then
                         basecrit = basecrit - curRank;
-                    elseif _addon:IsWeaponTypeEquipped(_addon.WEAPON_SUBCLASS.FIST, "offhand") then
+                    elseif _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.FIST, "offhand") then
                         basecrit = basecrit + curRank;
                     end
                 end

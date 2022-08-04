@@ -1,7 +1,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
-local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
+local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 local SEAL_OF_RIGHTEOUSNESS = GetSpellInfo(20154);
 local SEAL_OF_COMMAND = GetSpellInfo(20375);
 local PRAYER_OF_MENDING = GetSpellInfo(33076);
@@ -59,7 +59,7 @@ local function GetBasicValue(calcedSpell, critChance, valueKey)
     assert(calcedEffect, "Spell has no effect attached?");
 
     if valueKey == "allTicks" then
-        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+        if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DMG_SHIELD) > 0 then
             if calcedSpell.charges > 1 then
                 return calcedEffect.avgCombined * calcedSpell.charges;
             end
@@ -126,24 +126,24 @@ do
                 local calcedEffect = calcedSpell[1];
                 assert(calcedEffect, "Spell has no effect attached?");
 
-                if (bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0) then
+                if (bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0) then
                     calcedSpell = calcedEffect.spellData;
                     assert(calcedSpell and calcedSpell[1] ~= nil, "Triggere effect is missing spell or effect data!");
                     calcedEffect = calcedSpell[1];
                 end
 
-                local isHeal = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL + SPELL_EFFECT_FLAGS.ABSORB) > 0;
-                local isMana = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0;
+                local isHeal = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.HEAL + ADDON_EFFECT_FLAGS.ABSORB) > 0;
+                local isMana = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.MANA_RESTORE) > 0;
                 local showValue;
 
-                if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
+                if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) > 0 then
                     local spellName = GetSpellInfo(spellId);
                     showValue = GetDummyValue(calcedEffect, spellName);
-                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+                elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DMG_SHIELD) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDmgShieldValue);
-                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
+                elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDurationValue);
-                elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0 then
+                elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.MANA_RESTORE) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abManaRestoreValue);
                 else
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDirectValue);
@@ -172,7 +172,7 @@ local function SetSlotSpell(slot, spellId)
         return;
     end
 
-    if spellId == nil or (not _addon.JUDGEMENT_IDS[spellId] and not _addon:GetHandledSpellID(spellId)) then
+    if spellId == nil or (not _addon.CONST.JUDGEMENT_IDS[spellId] and not _addon:GetHandledSpellID(spellId)) then
         _addon.util.PrintDebug("Set slot " .. slot .. " nil because spell " .. tostring(spellId) .. " is nil or not handled");
         spellsInBar[slot] = nil;
         needsUpdate[slot] = nil;

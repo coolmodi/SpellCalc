@@ -144,12 +144,12 @@ SlashCmdList["SPELLCALC"] = function(arg)
         if flag then
             if remove then
                 _addon:RemoveAuraEffect("Debug Flag "..flag, {
-                    type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
+                    type = _addon.CONST.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
                     value = flag,
                 }, flag);
             else
                 _addon:ApplyAuraEffect("Debug Flag "..flag, {
-                    type = _addon.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
+                    type = _addon.CONST.EFFECT_TYPE.BOOLEAN_BITFLAG_SET,
                     value = flag,
                 }, flag);
             end

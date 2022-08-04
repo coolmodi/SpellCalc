@@ -12,7 +12,7 @@ _addon.itemSetData[207] = {
     effects = {
         {
             need = 5,
-            type = _addon.EFFECT_TYPE.EARTHFURY_RETURN,
+            type = _addon.CONST.EFFECT_TYPE.EARTHFURY_RETURN,
             value = 1,
         },
     }
@@ -31,7 +31,7 @@ _addon.itemSetData[216] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
             affectSpell = {256, 0, 0, 0},
             value = 5,
         },
@@ -51,7 +51,7 @@ _addon.itemSetData[301] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },
@@ -69,7 +69,7 @@ _addon.itemSetData[386] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },
@@ -87,7 +87,7 @@ _addon.itemSetData[476] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {-2147483648, 0, 0, 0},
             value = 1,
         },
@@ -104,7 +104,7 @@ _addon.itemSetData[502] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
             affectSpell = {2, 0, 0, 0},
             value = 5,
         },
@@ -119,7 +119,7 @@ _addon.itemSetData[538] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },
@@ -137,7 +137,7 @@ _addon.itemSetData[603] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },
@@ -154,7 +154,7 @@ _addon.itemSetData[604] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },
@@ -171,7 +171,7 @@ _addon.itemSetData[630] = {
     effects = {
         {
             need = 2,
-            type = _addon.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
             affectSpell = {2, 0, 0, 0},
             value = 19,
         },
@@ -188,7 +188,7 @@ _addon.itemSetData[632] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
             affectSpell = {-1877999613},
             value = 30,
         },
@@ -205,7 +205,7 @@ _addon.itemSetData[633] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
             affectSpell = {0, 16, 0, 0},
             value = 30,
         },
@@ -222,7 +222,7 @@ _addon.itemSetData[635] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
             affectSpell = {1},
             value = 40,
         },
@@ -239,7 +239,7 @@ _addon.itemSetData[682] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
             affectSpell = {0, 16, 0, 0},
             value = 100,
         },
@@ -259,7 +259,7 @@ _addon.itemSetData[683] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {256, 0, 0, 0},
             value = 5,
         },
@@ -279,7 +279,7 @@ _addon.itemSetData[684] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {1, 0, 0, 0},
             value = 5,
         },
@@ -299,7 +299,7 @@ _addon.itemSetData[717] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },
@@ -317,7 +317,7 @@ _addon.itemSetData[718] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },
@@ -335,7 +335,7 @@ _addon.itemSetData[746] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {-1877999616, 0, 0, 0},
             value = 2,
         },

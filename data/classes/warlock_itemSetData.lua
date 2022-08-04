@@ -12,7 +12,7 @@ _addon.itemSetData[481] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {2, 0, 0, 0},
             value = 2,
         },
@@ -29,7 +29,7 @@ _addon.itemSetData[499] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
             affectSpell = {4, 0, 0, 0},
             value = 5,
         },
@@ -46,7 +46,7 @@ _addon.itemSetData[529] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {2, 0, 0, 0},
             value = 12,
         },
@@ -67,7 +67,7 @@ _addon.itemSetData[644] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
             affectSpell = {0, 32768, 0, 0},
             value = 180,
         },
@@ -84,7 +84,7 @@ _addon.itemSetData[645] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {6, 0, 0, 0},
             value = 3,
         },
@@ -101,7 +101,7 @@ _addon.itemSetData[670] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {1, 64, 0, 0},
             value = 6,
         },

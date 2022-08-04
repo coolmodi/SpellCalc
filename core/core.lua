@@ -1,13 +1,13 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
-local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
+local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 local NewCalcedSpell = _addon.NewCalcedSpell;
-local SCHOOL = _addon.SCHOOL;
-local DEF_TYPE = _addon.DEF_TYPE;
-local SPELL_EFFECT_TYPES = _addon.SPELL_EFFECT_TYPES;
-local EFFECT_TYPE = _addon.EFFECT_TYPE;
-local AURA_TYPES = _addon.SPELL_AURA_TYPES;
+local SCHOOL = _addon.CONST.SCHOOL;
+local DEF_TYPE = _addon.CONST.DEF_TYPE;
+local SPELL_EFFECT_TYPES = _addon.CONST.SPELL_EFFECT_TYPES;
+local EFFECT_TYPE = _addon.CONST.EFFECT_TYPE;
+local AURA_TYPES = _addon.CONST.SPELL_AURA_TYPES;
 ---@type table<number, CalcedSpell>
 local calcedSpells = {};
 local currentState = 1;
@@ -217,7 +217,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     local costType;
 
     if spellId == _addon.judgementSpell then
-        costs = GetSpellPowerCost(_addon.JUDGEMENT_ID);
+        costs = GetSpellPowerCost(_addon.CONST.JUDGEMENT_ID);
     else
         costs = GetSpellPowerCost(spellId);
     end
@@ -245,39 +245,39 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 effectFlags[i] = 0;
 
                 if IsHealEffect(red.effectType, red.auraType) or spellRankInfo.forceHeal then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.HEAL;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.HEAL;
                 end
 
                 if IsDmgShieldEffect(red.effectType, red.auraType) then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.DMG_SHIELD;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.DMG_SHIELD;
                 end
 
                 if IsDurationEffect(red.effectType, red.auraType) then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.DURATION;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.DURATION;
                 end
 
                 if IsAbsorbEffect(red.effectType, red.auraType) then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.ABSORB;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.ABSORB;
                 end
 
                 if spellRankInfo.isChannel then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.CHANNEL;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.CHANNEL;
                 end
 
                 if red.auraType and red.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA;
                 end
 
                 if red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_ATTACK then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.AUTO_ATTACK;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.AUTO_ATTACK;
                 end
 
                 if red.auraType and red.auraType == AURA_TYPES.SPELL_AURA_DUMMY then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.DUMMY_AURA;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.DUMMY_AURA;
                 end
 
                 if red.auraStacks and red.auraStacks > 1 then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.STACKABLE_AURA;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.STACKABLE_AURA;
                 end
 
                 if red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_ENERGIZE_PCT
@@ -285,12 +285,12 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     red.auraType == AURA_TYPES.SPELL_AURA_OBS_MOD_MANA
                     or red.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_ENERGIZE
                 ) then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.MANA_RESTORE;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.MANA_RESTORE;
                 end
 
                 if red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_TRIGGER_SPELL
                 or (red.effectType == SPELL_EFFECT_TYPES.SPELL_EFFECT_APPLY_AURA and red.auraType == AURA_TYPES.SPELL_AURA_PROC_TRIGGER_SPELL) then
-                    effectFlags[i] = effectFlags[i] + SPELL_EFFECT_FLAGS.TRIGGERED_SPELL;
+                    effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.TRIGGERED_SPELL;
                 end
             end
         end
@@ -306,7 +306,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         meleeCalc:Init(
             calcedSpell,
             false,
-            bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0,
+            bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.AUTO_ATTACK) > 0,
             spellRankInfo.defType == DEF_TYPE.RANGED,
             spellRankInfo.cantDogeParryBlock
         );
@@ -383,7 +383,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.critChance = 100;
     end
 
-    if stats.schoolCritBaseMult[spellRankInfo.school].val > 0 and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL + SPELL_EFFECT_FLAGS.ABSORB) == 0 then
+    if stats.schoolCritBaseMult[spellRankInfo.school].val > 0 and bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL + ADDON_EFFECT_FLAGS.ABSORB) == 0 then
         calcedSpell.critMult = calcedSpell.critMult * (1 + stats.schoolCritBaseMult[spellRankInfo.school].val/100);
         calcedSpell:AddToBuffList(stats.schoolCritBaseMult[spellRankInfo.school].buffs);
     end
@@ -406,7 +406,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);
     end
 
-    if bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0 and stats.modCriticalHealing.val ~= 0 then
+    if bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0 and stats.modCriticalHealing.val ~= 0 then
         calcedSpell.critMult = calcedSpell.critMult + stats.modCriticalHealing.val / 100;
         calcedSpell:AddToBuffList(stats.modCriticalHealing.buffs);
     end
@@ -430,7 +430,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.resistanceFromLevel = levelRes;
     end
 
-    if bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) == 0 then
+    if bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) == 0 then
         if spellRankInfo.defType == DEF_TYPE.MAGIC then
             local full, base, bonus, binaryLoss = magicCalc:GetHitChances(calcedSpell.avgResist);
             calcedSpell.hitChance = full;
@@ -479,7 +479,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     ----------------------------------------------------------------------------------------------------------------------
     -- Offhand part, just hacky auto attack for now
 
-    if bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0
+    if bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.AUTO_ATTACK) > 0
     and _addon:IsDualWieldEquipped() then
 
         if calcedSpell[1].offhandAttack == nil then
@@ -505,7 +505,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         local ohd = calcedSpell[1].offhandAttack;
         assert(ohd, spellName + " is dual wield but offhand table is missing!");
 
-        meleeCalc:Init(calcedSpell, true, bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0, false, false);
+        meleeCalc:Init(calcedSpell, true, bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.AUTO_ATTACK) > 0, false, false);
         local hit, dodge, parry, glancing, block, hitBonus, glancingDmg = meleeCalc:GetMDPGB();
 
         ohd.hitChance = math.min(100, hit + hitBonus);
@@ -594,7 +594,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     do
         local triggerFromSpell = spellId;
         if spellId == _addon.judgementSpell then
-            triggerFromSpell = _addon.JUDGEMENT_ID;
+            triggerFromSpell = _addon.CONST.JUDGEMENT_ID;
         end
 
         if stats.spellModAddTriggerSpell[triggerFromSpell] ~= nil then
@@ -607,7 +607,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 else
                     calcedSpell:SetTriggeredSpell(triggeredId, 2);
                 end
-            elseif calcedSpell[2] and calcedSpell[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
+            elseif calcedSpell[2] and calcedSpell[2].effectFlags == ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
                 _addon.util.PrintDebug("Remove triggered effect from spell "..spellId);
                 calcedSpell:UnsetTriggeredSpell(2);
             end
@@ -646,10 +646,10 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         end
 
         -- Trigger spell spell effect, update triggered spell data
-        if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL + SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+        if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL + ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
             _addon.util.PrintDebug("Has trigger spell effect, updating triggered spell!");
             calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
-            if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+            if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
                 local effectData = spellRankInfo.effects[i];
                 effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellRankInfo, effCastTime, 0, spellName, spellId, GCD);
             end
@@ -657,9 +657,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             --------------------------
             -- Effect specific modifier
 
-            local isHeal = bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
-            local isDuration = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0;
-            local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, SPELL_EFFECT_FLAGS.ABSORB) == 0;
+            local isHeal = bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
+            local isDuration = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0;
+            local isNotHealLike = not isHeal and bit.band(calcedSpell[1].effectFlags, ADDON_EFFECT_FLAGS.ABSORB) == 0;
             SetBaseModifiers(spellRankInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellRankInfo, i);
 
             --TODO: Remove this
@@ -689,7 +689,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                     calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
                 end
 
-                if spellRankInfo.maxLevel > 0 and bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) == 0 then
+                if spellRankInfo.maxLevel > 0 and bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) == 0 then
                     local downrank = (spellRankInfo.maxLevel + 6) / UnitLevel("player");
                     if downrank < 1 then
                         coef = coef * downrank;
@@ -734,7 +734,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             --------------------------
             -- Aura stacking (Only Lifebloom, incompatible with dmg spells!)
 
-            if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
+            if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.STACKABLE_AURA) > 0 then
                 local stackCount = effectData.auraStacks;
                 local stackData = calcedEffect.auraStack;
                 assert(stackCount and stackData, "stackCount or stackData mising for aura stack handler!");
@@ -831,7 +831,7 @@ end
 ---@param spellID integer
 ---@return integer|nil
 function _addon:GetHandledSpellID(spellID)
-    if self.JUDGEMENT_IDS[spellID] then
+    if self.CONST.JUDGEMENT_IDS[spellID] then
         if not self.judgementSpell then
             return;
         end

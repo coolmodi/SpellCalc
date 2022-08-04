@@ -9,7 +9,7 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
@@ -20,7 +20,7 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
@@ -31,7 +31,7 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
@@ -42,7 +42,7 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
@@ -53,7 +53,7 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 value = 5,
             },
         }
@@ -63,7 +63,7 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 4,
-                type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
                 affectSpell = {0, 32},
                 value = 100,
             },
@@ -74,19 +74,19 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 2,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 1,
             },
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
             {
                 need = 4,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 3,
             },
@@ -97,19 +97,19 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 2,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 1,
             },
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
             {
                 need = 4,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 3,
             },
@@ -120,19 +120,19 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 2,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 1,
             },
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
             {
                 need = 4,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 3,
             },
@@ -143,19 +143,19 @@ _addon.itemSetData = {
         effects = {
             {
                 need = 2,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 1,
             },
             {
                 need = 3,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 2,
             },
             {
                 need = 4,
-                type = _addon.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask = 32,
                 value = 3,
             },

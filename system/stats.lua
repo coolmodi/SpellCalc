@@ -14,34 +14,36 @@ local function UniformStat()
 end
 
 local function SchoolStatTable()
-    -- Keys are school types found in _addon.SCHOOL
+    local SCHOOL = _addon.CONST.SCHOOL;
+    -- Keys are school types found in _addon.CONST.SCHOOL
     ---@type table<number, UniformStat>
     local schoolTable = {
-        [_addon.SCHOOL.PHYSICAL] = UniformStat(),
-        [_addon.SCHOOL.HOLY] = UniformStat(),
-        [_addon.SCHOOL.FIRE] = UniformStat(),
-        [_addon.SCHOOL.NATURE] = UniformStat(),
-        [_addon.SCHOOL.FROST] = UniformStat(),
-        [_addon.SCHOOL.SHADOW] = UniformStat(),
-        [_addon.SCHOOL.ARCANE] = UniformStat()
+        [SCHOOL.PHYSICAL] = UniformStat(),
+        [SCHOOL.HOLY] = UniformStat(),
+        [SCHOOL.FIRE] = UniformStat(),
+        [SCHOOL.NATURE] = UniformStat(),
+        [SCHOOL.FROST] = UniformStat(),
+        [SCHOOL.SHADOW] = UniformStat(),
+        [SCHOOL.ARCANE] = UniformStat()
     }
     return schoolTable;
 end
 
 local function CreatureTypeStatTable()
-    -- Keys are creature types found in _addon.CREATURE_TYPE
+    local CREATURE_TYPE = _addon.CONST.CREATURE_TYPE;
+    -- Keys are creature types found in _addon.CONST.CREATURE_TYPE
     local creatureTable = {
-        [_addon.CREATURE_TYPE.BEAST]    = UniformStat(),
-        [_addon.CREATURE_TYPE.DRAGONKIN] = UniformStat(),
-        [_addon.CREATURE_TYPE.DEMON] = UniformStat(),
-        [_addon.CREATURE_TYPE.ELEMENTAL] = UniformStat(),
-        [_addon.CREATURE_TYPE.GIANT] = UniformStat(),
-        [_addon.CREATURE_TYPE.UNDEAD] = UniformStat(),
-        [_addon.CREATURE_TYPE.HUMANOID] = UniformStat(),
-        [_addon.CREATURE_TYPE.CRITTER] = UniformStat(),
-        [_addon.CREATURE_TYPE.MECHANICAL] = UniformStat(),
-        [_addon.CREATURE_TYPE.NOT_SPECIFIED] = UniformStat(),
-        [_addon.CREATURE_TYPE.TOTEM] = UniformStat()
+        [CREATURE_TYPE.BEAST]    = UniformStat(),
+        [CREATURE_TYPE.DRAGONKIN] = UniformStat(),
+        [CREATURE_TYPE.DEMON] = UniformStat(),
+        [CREATURE_TYPE.ELEMENTAL] = UniformStat(),
+        [CREATURE_TYPE.GIANT] = UniformStat(),
+        [CREATURE_TYPE.UNDEAD] = UniformStat(),
+        [CREATURE_TYPE.HUMANOID] = UniformStat(),
+        [CREATURE_TYPE.CRITTER] = UniformStat(),
+        [CREATURE_TYPE.MECHANICAL] = UniformStat(),
+        [CREATURE_TYPE.NOT_SPECIFIED] = UniformStat(),
+        [CREATURE_TYPE.TOTEM] = UniformStat()
     }
     return creatureTable;
 end
@@ -53,10 +55,10 @@ local function SpellStatTable()
 end
 
 local function MechanicStatTable()
-    -- Keys are mechanic types found in _addon.SPELL_MECHANIC
+    -- Keys are mechanic types found in _addon.CONST.SPELL_MECHANIC
     ---@type table<number, UniformStat>
     local mt = {}
-    for _, mechanicId in pairs(_addon.SPELL_MECHANIC) do
+    for _, mechanicId in pairs(_addon.CONST.SPELL_MECHANIC) do
         mt[mechanicId] = UniformStat();
     end
     return mt;
@@ -71,23 +73,23 @@ _addon.stats = {
     manaRegCasting = 0, -- Mana regen from spirit while casting /sec
     manaRegAura = 0, -- Mana regen from SPELL_AURA_MOD_POWER_REGEN sources /sec
     spellPower = {
-        [_addon.SCHOOL.PHYSICAL] = 0,
-        [_addon.SCHOOL.HOLY] = 0,
-        [_addon.SCHOOL.FIRE] = 0,
-        [_addon.SCHOOL.NATURE] = 0,
-        [_addon.SCHOOL.FROST] = 0,
-        [_addon.SCHOOL.SHADOW] = 0,
-        [_addon.SCHOOL.ARCANE] = 0
+        [_addon.CONST.SCHOOL.PHYSICAL] = 0,
+        [_addon.CONST.SCHOOL.HOLY] = 0,
+        [_addon.CONST.SCHOOL.FIRE] = 0,
+        [_addon.CONST.SCHOOL.NATURE] = 0,
+        [_addon.CONST.SCHOOL.FROST] = 0,
+        [_addon.CONST.SCHOOL.SHADOW] = 0,
+        [_addon.CONST.SCHOOL.ARCANE] = 0
     },
     spellHealing = 0,
     spellCrit = {
-        [_addon.SCHOOL.PHYSICAL] = 0,
-        [_addon.SCHOOL.HOLY] = 0,
-        [_addon.SCHOOL.FIRE] = 0,
-        [_addon.SCHOOL.NATURE] = 0,
-        [_addon.SCHOOL.FROST] = 0,
-        [_addon.SCHOOL.SHADOW] = 0,
-        [_addon.SCHOOL.ARCANE] = 0
+        [_addon.CONST.SCHOOL.PHYSICAL] = 0,
+        [_addon.CONST.SCHOOL.HOLY] = 0,
+        [_addon.CONST.SCHOOL.FIRE] = 0,
+        [_addon.CONST.SCHOOL.NATURE] = 0,
+        [_addon.CONST.SCHOOL.FROST] = 0,
+        [_addon.CONST.SCHOOL.SHADOW] = 0,
+        [_addon.CONST.SCHOOL.ARCANE] = 0
     },
     attackPower = 0,
     attackPowerRanged = 0,

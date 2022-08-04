@@ -3689,68 +3689,68 @@ _addon.spellClassSet = {
 _addon.classGlyphs = {
     [54813] = { -- Glyph of Mangle
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 1088, 0, 0},
             value = 10,
         },
     },
     [54818] = { -- Glyph of Rip
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {8388608, 0, 0, 0},
             value = 4,
         },
     },
     [54825] = { -- Glyph of Healing Touch
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {32, 0, 0, 0},
             value = -50,
         },
     },
     [54826] = { -- Glyph of Lifebloom
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {0, 16, 0, 0},
             value = 1,
         },
     },
     [54830] = { -- Glyph of Insect Swarm
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
             affectSpell = {2097152, 0, 0, 0},
             value = 30,
         },
     },
     [54831] = { -- Glyph of Hurricane
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
             affectSpell = {2097152, 0, 0, 0},
             value = 30,
         },
     },
     [54829] = { -- Glyph of Moonfire
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {2, 0, 0, 0},
             value = -90,
         },
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
             affectSpell = {2, 0, 0, 0},
             value = 75,
         },
     },
     [62080] = { -- Glyph of Focus
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 8388608, 0, 0},
             value = 10,
         },
     },
     [71013] = { -- Glyph of Rapid Rejuvenation
         {
-            type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE,
             affectSpell = {16, 0, 0, 0},
             value = 1,
         },

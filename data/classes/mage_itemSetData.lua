@@ -12,7 +12,7 @@ _addon.itemSetData[201] = {
     effects = {
         {
             need = 5,
-            type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 124,
             value = 38,
         },
@@ -32,7 +32,7 @@ _addon.itemSetData[210] = {
     effects = {
         {
             need = 8,
-            type = _addon.EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC,
             affectSpell = {33},
             value = 1,
         },
@@ -52,7 +52,7 @@ _addon.itemSetData[504] = {
     effects = {
         {
             need = 3,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
             affectSpell = {32768, 0, 0, 0},
             value = 15,
         },
@@ -67,7 +67,7 @@ _addon.itemSetData[649] = {
     effects = {
         {
             need = 2,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {536870912, 0, 0, 0},
             value = 20,
         },
@@ -84,7 +84,7 @@ _addon.itemSetData[671] = {
     effects = {
         {
             need = 4,
-            type = _addon.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {2097185, 0, 0, 0},
             value = 5,
         },

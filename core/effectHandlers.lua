@@ -2,8 +2,8 @@
 local _addon = select(2, ...);
 local effHandler = _addon.effectHandler;
 local stats = _addon.stats;
-local EFFECT_TYPES = _addon.SPELL_EFFECT_TYPES;
-local AURA_TYPES = _addon.SPELL_AURA_TYPES;
+local EFFECT_TYPES = _addon.CONST.SPELL_EFFECT_TYPES;
+local AURA_TYPES = _addon.CONST.SPELL_AURA_TYPES;
 local SHADOW_BOLT = GetSpellInfo(686);
 
 --- Get level bonus if spell has one.
@@ -39,21 +39,21 @@ end
 ---@return number low
 ---@return number high
 local function GetNormalizedWeaponDamage(slot, ap)
-    local A = _addon;
+    local CONST = _addon.CONST;
     local low = stats.weaponBaseDamage[slot].min;
     local high = stats.weaponBaseDamage[slot].max;
-    local weaponBit = A:GetWeaponTypeMask(slot);
+    local weaponBit = _addon:GetWeaponTypeMask(slot);
     local dpsFromAP = ap / 14;
     local dmgFromAP;
 
     if weaponBit then
-        if bit.band(weaponBit, A.WEAPON_TYPES_MASK.DAGGER) > 0 then
+        if bit.band(weaponBit, CONST.WEAPON_TYPES_MASK.DAGGER) > 0 then
             dmgFromAP = 1.7 * dpsFromAP;
-        elseif bit.band(weaponBit, A.WEAPON_TYPES_MASK.ONE_HAND) > 0 then
+        elseif bit.band(weaponBit, CONST.WEAPON_TYPES_MASK.ONE_HAND) > 0 then
             dmgFromAP = 2.4 * dpsFromAP;
-        elseif bit.band(weaponBit, A.WEAPON_TYPES_MASK.TWO_HAND) > 0 then
+        elseif bit.band(weaponBit, CONST.WEAPON_TYPES_MASK.TWO_HAND) > 0 then
             dmgFromAP = 3.3 * dpsFromAP;
-        elseif bit.band(weaponBit, A.WEAPON_TYPES_MASK.RANGED) > 0 then
+        elseif bit.band(weaponBit, CONST.WEAPON_TYPES_MASK.RANGED) > 0 then
             dmgFromAP = 2.8 * dpsFromAP;
         end
     end
@@ -564,7 +564,7 @@ local function SchoolDamage(_, calcedSpell, effNum, spellRankInfo, effCastTime, 
         calcedEffect.critExtraAvg = nil;
     end
 
-    if stats.ignite.val > 0 and spellRankInfo.school == _addon.SCHOOL.FIRE then
+    if stats.ignite.val > 0 and spellRankInfo.school == _addon.CONST.SCHOOL.FIRE then
         local igniteMult = stats.ignite.val/100;
 
         if calcedEffect.igniteData == nil then

@@ -9,7 +9,7 @@ end
 
 _addon.itemEffects[21334] = { -- Doomcaller's Robes
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -17,7 +17,7 @@ _addon.itemEffects[21334] = { -- Doomcaller's Robes
 
 _addon.itemEffects[21338] = { -- Doomcaller's Footwraps
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -25,7 +25,7 @@ _addon.itemEffects[21338] = { -- Doomcaller's Footwraps
 
 _addon.itemEffects[21335] = { -- Doomcaller's Mantle
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -33,7 +33,7 @@ _addon.itemEffects[21335] = { -- Doomcaller's Mantle
 
 _addon.itemEffects[21565] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 20,
     },
@@ -41,7 +41,7 @@ _addon.itemEffects[21565] = { -- Rune of Perfection
 
 _addon.itemEffects[21566] = { -- Rune of Perfection
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },
@@ -49,7 +49,7 @@ _addon.itemEffects[21566] = { -- Rune of Perfection
 
 _addon.itemEffects[22505] = { -- Plagueheart Leggings
     {
-        type = _addon.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
         affectMask = 124,
         value = 10,
     },

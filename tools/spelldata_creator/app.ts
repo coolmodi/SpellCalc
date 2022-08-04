@@ -633,7 +633,7 @@ end
             const name = spellName + ( (spellspell.NameSubtext_lang.length) ? `(${spellspell.NameSubtext_lang})` : "" );
             str += `_addon.aurasPlayer[${sealId}] = { -- ${name}\n`;
             str += "\t{\n";
-            str += "\t\ttype = _addon.EFFECT_TYPE.JUDGEMENT_SPELL,\n";
+            str += "\t\ttype = _addon.CONST.EFFECT_TYPE.JUDGEMENT_SPELL,\n";
             str += `\t\tvalue = ${remapId}\n`;
             str += "\t}\n";
             str += "};\n\n";

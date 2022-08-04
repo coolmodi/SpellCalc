@@ -5,8 +5,7 @@ local L = _addon:GetLocalization();
 local TTC_LABEL = "|cFFAAAAFF";
 local TTC_DEFAULT = "|cFFEEEEEE";
 
----@type SpellEffectFlags
-local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
+local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 
 ---@class SCTooltip
 local SCTooltip = {};
@@ -206,19 +205,19 @@ end
 --- Return a title for effect flags
 ---@param flags integer
 local function GetEffectTitle(flags)
-    if bit.band(flags, SPELL_EFFECT_FLAGS.HEAL) > 0 then
-        if bit.band(flags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
+    if bit.band(flags, ADDON_EFFECT_FLAGS.HEAL) > 0 then
+        if bit.band(flags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
             return L.HEAL_OVER_TIME_SHORT;
         end
 
         return L.HEAL;
     end
 
-    if bit.band(flags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
+    if bit.band(flags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
         return L.DMG_OVER_TIME_SHORT;
     end
 
-    if bit.band(flags, SPELL_EFFECT_FLAGS.ABSORB) > 0 then
+    if bit.band(flags, ADDON_EFFECT_FLAGS.ABSORB) > 0 then
         return L.ABSORB;
     end
 
@@ -268,12 +267,12 @@ local function TooltipHandler(toolTipFrame)
         local isTriggerEffect = false;
         local effectFlags = calcedEffect.effectFlags;
 
-        if bit.band(effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
+        if bit.band(effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
             isTriggerEffect = true;
             effectFlags = calcedEffect.spellData[1].effectFlags;
         end
 
-        local isHeal = bit.band(effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
+        local isHeal = bit.band(effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
         local isHandled = false;
         local sname = GetSpellInfo(spellID);
 
@@ -297,7 +296,7 @@ local function TooltipHandler(toolTipFrame)
         elseif dummyHandler[sname] ~= nil then
             dummyHandler[sname](calcedSpell, i, spellID);
             isHandled = true;
-        elseif bit.band(effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
+        elseif bit.band(effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) > 0 then
             _addon.util.PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
         else
             isHandled = SCTooltip:ShowEffectTooltip(calcedSpell, i, isHeal, spellID);

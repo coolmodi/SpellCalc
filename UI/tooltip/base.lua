@@ -2,8 +2,7 @@
 local _addon = select(2, ...);
 local L = _addon:GetLocalization();
 local SCT = _addon.SCTooltip;
----@type SpellEffectFlags
-local SPELL_EFFECT_FLAGS = _addon.SPELL_EFFECT_FLAGS;
+local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 
 --- Append mitigation data
 ---@param calcedSpell CalcedSpell
@@ -39,7 +38,7 @@ local function AppendMitigation(calcedSpell)
     and (calcedSpell.hitChanceBinaryLoss == nil or calcedSpell.hitChanceBinaryLoss == 0) then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
         local strUsed;
-        if calcedSpell.school == _addon.SCHOOL.PHYSICAL then
+        if calcedSpell.school == _addon.CONST.SCHOOL.PHYSICAL then
             strUsed = L["%.1f%% (Armor: %d)"];
         else
             strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
@@ -197,7 +196,7 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
     if triggeredSpell then
         local triggeredEffect = triggeredSpell[1];
         assert(triggeredEffect, "Triggered duration effect has no effect!");
-        isHeal = isHeal or bit.band(triggeredEffect.effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
+        isHeal = isHeal or bit.band(triggeredEffect.effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
         min = triggeredEffect.min;
         max = triggeredEffect.max;
         avg = triggeredEffect.avg;
@@ -235,7 +234,7 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
         AppendMitigation(coefMitSpell);
     end
 
-    local isChannel = bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.CHANNEL) > 0;
+    local isChannel = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.CHANNEL) > 0;
 
     if SpellCalc_settings.ttPerSecond then
         local spersec = isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT;
@@ -276,7 +275,7 @@ end
 local function AppendCombinedEffect(calcedSpellss)
     local combSpam = calcedSpellss.combined.spam;
     local combDur = calcedSpellss.combined.fullDuration;
-    local isHeal = bit.band(calcedSpellss[1].effectFlags, SPELL_EFFECT_FLAGS.HEAL) > 0;
+    local isHeal = bit.band(calcedSpellss[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
 
     if SpellCalc_settings.ttHit then
         local stype = (isHeal and L.HEAL or L.DAMAGE);
@@ -463,17 +462,17 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
 
-    if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DMG_SHIELD) > 0 then
+    if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DMG_SHIELD) > 0 then
         AppendDmgShieldEffect(calcedSpell, effectNum);
-    elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.DURATION) > 0 then
+    elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
         AppendDurationEffect(calcedSpell, effectNum, isHeal);
-    elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.ABSORB) > 0 then
+    elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.ABSORB) > 0 then
         AppendAbsorbEffect(calcedSpell, effectNum);
-    elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.AUTO_ATTACK) > 0 then
+    elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.AUTO_ATTACK) > 0 then
         AppendAutoAttack(calcedSpell, effectNum);
-    elseif calcedEffect.effectFlags == 0 or calcedEffect.effectFlags == SPELL_EFFECT_FLAGS.HEAL then
+    elseif calcedEffect.effectFlags == 0 or calcedEffect.effectFlags == ADDON_EFFECT_FLAGS.HEAL then
         AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId);
-    elseif bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.MANA_RESTORE) > 0 then
+    elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.MANA_RESTORE) > 0 then
         ManaRestoreEffect(calcedSpell, effectNum);
     else
         return false;
