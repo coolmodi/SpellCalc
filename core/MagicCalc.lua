@@ -20,7 +20,7 @@ end
 ---@param spellRankInfo SpellRankInfo
 ---@param spellId number
 function MagicCalc:Init(calcedSpell, spellRankInfo, spellId)
-    _addon:PrintDebug("Init MagicCalc");
+    _addon.util.PrintDebug("Init MagicCalc");
     self.spellRankInfo = spellRankInfo;
     self.calcedSpell = calcedSpell;
     self.spellId = spellId;

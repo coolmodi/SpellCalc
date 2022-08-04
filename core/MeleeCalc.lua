@@ -25,7 +25,7 @@ end
 ---@param isRanged boolean
 ---@param cantDodgeParryBlock boolean
 function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeParryBlock)
-    _addon:PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged));
+    _addon.util.PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged));
     local tData = _addon.Target;
     local ldef = tData.level * 5; -- Level based def value
     local latk = 5 * UnitLevel("player"); -- Level based attack value
@@ -40,7 +40,7 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
         end
 
         if class == "DRUID" then
-            local form = _addon:GetShapeshiftName();
+            local form = _addon.util.GetShapeshiftName();
             if form and (form == "bear" or form == "cat") then
                 ratk = latk;
             end
@@ -49,7 +49,7 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
         self.isPvP = false;
     end
 
-    _addon:PrintDebug("Using ldef: "..ldef.." latk: "..latk.." ratk: "..ratk);
+    _addon.util.PrintDebug("Using ldef: "..ldef.." latk: "..latk.." ratk: "..ratk);
 
     self.ldef = ldef;
     self.latk = latk;
@@ -143,9 +143,9 @@ function MeleeCalc:GetCrit()
     end
 
     if self.isRanged then
-        _addon:PrintDebug("Ranged crit: " .. crit);
+        _addon.util.PrintDebug("Ranged crit: " .. crit);
     else
-        _addon:PrintDebug("Melee crit: " .. crit);
+        _addon.util.PrintDebug("Melee crit: " .. crit);
     end
 
     return crit;

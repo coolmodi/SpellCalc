@@ -14,7 +14,7 @@ local function ApplyOrRemove(apply, value, dest, name)
     if apply then
         table.insert(dest.buffs, name);
     else
-        _addon:RemoveTableEntry(dest.buffs, name);
+        _addon.util.RemoveTableEntry(dest.buffs, name);
     end
 end
 
@@ -134,14 +134,14 @@ do
             for i = self.timerCount, 1, -1 do
                 timers[i] = timers[i] - self.timerDiff;
                 if timers[i] <= 0 then
-                    _addon:PrintDebug("A delayed update timer finished");
+                    _addon.util.PrintDebug("A delayed update timer finished");
                     _addon:TriggerUpdate();
                     table.remove(timers, i);
                     self.timerCount = self.timerCount - 1;
                 end
             end
             if self.timerCount == 0 then
-                _addon:PrintDebug("No more delayed update timers");
+                _addon.util.PrintDebug("No more delayed update timers");
                 self:SetScript("OnUpdate", nil);
             end
             self.timerDiff = 0;
@@ -151,7 +151,7 @@ do
     --- Add delayed update trigger.
     ---@param delay number @Delay in ms
     function DelayedUpdateTimer:Add(delay)
-        _addon:PrintDebug("Trigger delayed update in " .. delay .. "ms");
+        _addon.util.PrintDebug("Trigger delayed update in " .. delay .. "ms");
         table.insert(self.timers, delay/1000);
         self.timerCount = self.timerCount + 1;
         if self.timerCount == 1 then
@@ -185,7 +185,7 @@ local effectCustom = {
         elseif -_addon.judgementSpell == value then
             _addon.judgementSpell = nil;
         end
-        _addon:PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
+        _addon.util.PrintDebug("Set judgement spell to " .. tostring(_addon.judgementSpell));
     end,
     ---@param apply boolean
     ---@param name string
@@ -222,7 +222,7 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
     if apply == false then
         value = -value;
     end
-    _addon:PrintDebug(("Change buff %s effect %d > %f"):format(name, effectBase.type, value));
+    _addon.util.PrintDebug(("Change buff %s effect %d > %f"):format(name, effectBase.type, value));
 
     if effectBase.affectSpell and effectAffectSpellSet[effectBase.type] then
         ApplyOrRemoveSpellSet(apply, name, value, effectAffectSpellSet[effectBase.type], effectBase.affectSpell);
@@ -264,7 +264,7 @@ local weaponRestrictedAuras = {};
 
 ---Update auras that require weapon types equipped to be active.
 function _addon:UpdateWeaponRestrictedAuras()
-    self:PrintDebug("Updating weapon type auras");
+    self.util.PrintDebug("Updating weapon type auras");
     local changes = false;
 
     for name, wrai in pairs(weaponRestrictedAuras) do
@@ -299,7 +299,7 @@ end
 ---@param value integer The effect value
 local function WeaponAuraUpdate(apply, name, effectBase, value)
     if apply then
-        _addon:PrintDebug("Adding weapon aura "..name);
+        _addon.util.PrintDebug("Adding weapon aura "..name);
         if weaponRestrictedAuras[name] == nil then
             ---@class WeaponRestrictedAuraInfo
             weaponRestrictedAuras[name] = {
@@ -311,7 +311,7 @@ local function WeaponAuraUpdate(apply, name, effectBase, value)
         end
         _addon:UpdateWeaponRestrictedAuras();
     else
-        _addon:PrintDebug("Removing weapon aura "..name);
+        _addon.util.PrintDebug("Removing weapon aura "..name);
         weaponRestrictedAuras[name].remove = true;
         _addon:UpdateWeaponRestrictedAuras();
         weaponRestrictedAuras[name] = nil;

@@ -283,7 +283,7 @@ local function TooltipHandler(toolTipFrame)
 
         if isTriggerEffect then
             if calcedEffect.spellData[2] ~= nil then
-                _addon:PrintError("Triggered spell on "..sname.." has 2 effects, this is not supported for tooltips! Please report.");
+                _addon.util.PrintError("Triggered spell on "..sname.." has 2 effects, this is not supported for tooltips! Please report.");
                 return;
             end
             calcedEffect.spellData[2] = calcedEffect.spellData[1];
@@ -298,13 +298,13 @@ local function TooltipHandler(toolTipFrame)
             dummyHandler[sname](calcedSpell, i, spellID);
             isHandled = true;
         elseif bit.band(effectFlags, SPELL_EFFECT_FLAGS.DUMMY_AURA) > 0 then
-            _addon:PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
+            _addon.util.PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
         else
             isHandled = SCTooltip:ShowEffectTooltip(calcedSpell, i, isHeal, spellID);
         end
 
         if not isHandled then
-            _addon:PrintError("No tooltip handler for spell "..sname.."! Please report this to the addon author!");
+            _addon.util.PrintError("No tooltip handler for spell "..sname.."! Please report this to the addon author!");
         end
     end
 

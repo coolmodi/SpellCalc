@@ -8,7 +8,7 @@ local activeGlyphs = {}
 ---Update specific slot
 ---@param slot number
 local function UpdateGlyphSlot(slot)
-    _addon:PrintDebug("Updating glyph "..slot);
+    _addon.util.PrintDebug("Updating glyph "..slot);
     local _, _, glyphSpellID = GetGlyphSocketInfo(slot);
     local oldGlyphId = activeGlyphs[slot];
 

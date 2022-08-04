@@ -311,7 +311,7 @@ _addon.talentDataRaw = {
             {
                 type = _addon.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
                 affectSpell = {8388608, 256},
-                values = 1
+                perPoint = 1
             }
         }
     },

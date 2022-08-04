@@ -9,7 +9,7 @@ SLASH_SPELLCALC2 = "/spellcalc";
 SlashCmdList["SPELLCALC"] = function(arg)
     if arg == "debug" then
         SpellCalc_settings.debug = not SpellCalc_settings.debug;
-        _addon:PrintWarn("Debug "..(SpellCalc_settings.debug and "active" or "disabled"));
+        _addon.util.PrintWarn("Debug "..(SpellCalc_settings.debug and "active" or "disabled"));
         return;
     end
 
@@ -26,7 +26,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
             local tree, talent, rank = string.match(tripel, "(%d) (%d+) (%d)");
 
             if tree == nil or talent == nil or rank == nil then
-                _addon:PrintWarn("tree, talent or rank nil for tripel: "..tripel);
+                _addon.util.PrintWarn("tree, talent or rank nil for tripel: "..tripel);
                 return;
             end
 
@@ -37,7 +37,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
             local name, _, _, _, _, maxRank = GetTalentInfo(treen, talentn);
 
             if rankn > maxRank then
-                _addon:PrintWarn("Rank " .. rankn .." invalid! Max rank = " .. maxRank);
+                _addon.util.PrintWarn("Rank " .. rankn .." invalid! Max rank = " .. maxRank);
                 return;
             end
 
@@ -51,7 +51,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         end
 
         if #talentOverride == 0 then
-            _addon:PrintWarn("No talents specified!");
+            _addon.util.PrintWarn("No talents specified!");
             return;
         end
 
@@ -63,18 +63,18 @@ SlashCmdList["SPELLCALC"] = function(arg)
     if string.find(arg, "ps") then
         local spellId = string.match(arg, "(%d+)");
         if spellId == nil then
-            _addon:PrintWarn("spellId is nil!");
+            _addon.util.PrintWarn("spellId is nil!");
             return;
         end
 
         local calcedSpell = _addon:GetCurrentSpellData(tonumber(spellId) or 0);
         if calcedSpell == nil then
-            _addon:PrintWarn("No current data for spell with ID "..spellId);
+            _addon.util.PrintWarn("No current data for spell with ID "..spellId);
             return;
         end
 
         print("=== Data for spell "..spellId.." ===============");
-        _addon:PrintTable(calcedSpell);
+        _addon.util.PrintTable(calcedSpell);
         print("=========================================");
 
         return;
@@ -83,18 +83,18 @@ SlashCmdList["SPELLCALC"] = function(arg)
     if string.find(arg, "cs") then
         local spellId = string.match(arg, "(%d+)");
         if spellId == nil then
-            _addon:PrintWarn("spellId is nil!");
+            _addon.util.PrintWarn("spellId is nil!");
             return;
         end
 
         local calcedSpell = _addon:GetCalcedSpell(tonumber(spellId)--[[@as integer]]);
         if calcedSpell == nil then
-            _addon:PrintWarn("No data for spell with ID "..spellId);
+            _addon.util.PrintWarn("No data for spell with ID "..spellId);
             return;
         end
 
         print("=== Data for spell "..spellId.." ===============");
-        _addon:PrintTable(calcedSpell);
+        _addon.util.PrintTable(calcedSpell);
         print("=========================================");
 
         return;
@@ -112,7 +112,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
     if string.find(arg, "dii") then
         local iid, slotid = strmatch(arg, "(%d+) (%d+)");
         if iid and slotid then
-            _addon:PrintWarn("Debug equip item "..iid.." into slot "..slotid.."!");
+            _addon.util.PrintWarn("Debug equip item "..iid.." into slot "..slotid.."!");
             _addon:DebugEquipItem(tonumber(iid)--[[@as integer]], tonumber(slotid)--[[@as integer]]);
         end
         return;
@@ -123,7 +123,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         print(slotid, itemLink);
         if itemLink and slotid then
             local _, _, Color, Ltype, Id, Enchant, Gem1, Gem2, Gem3, Gem4, Suffix, Unique, LinkLvl, reforging, Name = string.find(itemLink, "|?c?f?f?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
-            _addon:PrintWarn("Debug equip item "..Id.." into slot "..slotid.."!");
+            _addon.util.PrintWarn("Debug equip item "..Id.." into slot "..slotid.."!");
             _addon:DebugEquipItem(tonumber(Id)--[[@as integer]], tonumber(slotid)--[[@as integer]]);
         end
         return;

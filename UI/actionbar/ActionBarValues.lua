@@ -117,7 +117,7 @@ do
         end
 
         for slot, _ in pairs(needsUpdate) do
-            _addon:PrintDebug("Update button slot " .. slot);
+            _addon.util.PrintDebug("Update button slot " .. slot);
             local spellId = spellsInBar[slot];
             local calcedSpell = _addon:GetCalcedSpell(spellId);
 
@@ -173,14 +173,14 @@ local function SetSlotSpell(slot, spellId)
     end
 
     if spellId == nil or (not _addon.JUDGEMENT_IDS[spellId] and not _addon:GetHandledSpellID(spellId)) then
-        _addon:PrintDebug("Set slot " .. slot .. " nil because spell " .. tostring(spellId) .. " is nil or not handled");
+        _addon.util.PrintDebug("Set slot " .. slot .. " nil because spell " .. tostring(spellId) .. " is nil or not handled");
         spellsInBar[slot] = nil;
         needsUpdate[slot] = nil;
         buttonText.SetButtonText(slot, "");
         return;
     end
 
-    _addon:PrintDebug("Set slot " .. slot .. " to spell " .. spellId);
+    _addon.util.PrintDebug("Set slot " .. slot .. " to spell " .. spellId);
 
     spellsInBar[slot] = spellId;
     needsUpdate[slot] = true;
@@ -189,12 +189,12 @@ end
 --- Update action slot
 ---@param slot number
 function ActionBarValues:SlotUpdate(slot)
-    _addon:PrintDebug("Action slot update " .. slot);
+    _addon.util.PrintDebug("Action slot update " .. slot);
 
     local aType, aId = GetActionInfo(slot);
 
     for mappedSlot, _ in pairs(slotMap[slot]) do
-        _addon:PrintDebug("Slot is mapped to " .. mappedSlot);
+        _addon.util.PrintDebug("Slot is mapped to " .. mappedSlot);
         if aType == "spell" then
             SetSlotSpell(mappedSlot, aId);
         elseif aType == "macro" then
@@ -334,14 +334,14 @@ function ActionBarValues:Setup()
     actionbarSupport = buttonText.detectedBars;
 
     if actionbarSupport == "NONE DETECTED" then
-        _addon:PrintError("Actionbar addon is not supported!");
+        _addon.util.PrintError("Actionbar addon is not supported!");
         return;
     end
 
     self:UpdateStyle();
 
     if not SetupPagingSupport() then
-        _addon:PrintError("Paging support missing for used actionbar addon (" .. actionbarSupport .. ")!");
+        _addon.util.PrintError("Paging support missing for used actionbar addon (" .. actionbarSupport .. ")!");
     end
 
     local delayedButtonUpdate = 3;
@@ -349,7 +349,7 @@ function ActionBarValues:Setup()
     frame:SetScript("OnUpdate", function(self, diff)
         delayedButtonUpdate = delayedButtonUpdate - diff;
         if delayedButtonUpdate <= 0 then
-            _addon:PrintDebug("Doing delayed full actionbar slot update")
+            _addon.util.PrintDebug("Doing delayed full actionbar slot update")
             for i = 1, 120 do
                 ActionBarValues:SlotUpdate(i);
             end
@@ -357,5 +357,5 @@ function ActionBarValues:Setup()
         end
     end);
 
-    _addon:PrintDebug("Action bar setup complete");
+    _addon.util.PrintDebug("Action bar setup complete");
 end

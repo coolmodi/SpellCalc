@@ -188,7 +188,7 @@ end
 ---@param effIndex number
 function CalcedSpell:SetTriggeredSpell(triggeredSpell, effIndex)
     if self[effIndex] ~= nil and self[effIndex].effectFlags ~= SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
-        _addon:PrintError("Tried to add triggered spell when 2nd effect is already in use!");
+        _addon.util.PrintError("Tried to add triggered spell when 2nd effect is already in use!");
         return;
     end
 

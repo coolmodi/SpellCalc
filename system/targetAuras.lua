@@ -156,7 +156,7 @@ local function UpdateAuratype(filter)
             if activeAuraStacks[spellId] ~= count then
                 -- Remove old effects if stacks changed.
                 if activeAuraStacks[spellId] ~= nil then
-                    _addon:PrintDebug("Remove target aura " ..
+                    _addon.util.PrintDebug("Remove target aura " ..
                         name .. " (" .. spellId .. ") slot " .. i .. " because stacks changed.");
                     for k, effect in ipairs(auraEffects) do
                         aurasChanged = RemoveTargetAuraEffect(spellId, effect, name, activeAuraStacks[spellId], k) or
@@ -164,7 +164,7 @@ local function UpdateAuratype(filter)
                     end
                 end
                 -- Add new effects.
-                _addon:PrintDebug("Add target aura " .. name .. " (" .. spellId .. ") slot " .. i);
+                _addon.util.PrintDebug("Add target aura " .. name .. " (" .. spellId .. ") slot " .. i);
                 for k, effect in ipairs(auraEffects) do
                     aurasChanged = ApplyTargetAuraEffect(spellId, effect, name, count, k) or aurasChanged;
                 end
@@ -184,7 +184,7 @@ local Target = _addon.Target;
 
 ---Update target auras.
 function Target:UpdateAuras()
-    _addon:PrintDebug("Updating target auras");
+    _addon.util.PrintDebug("Updating target auras");
     local aurasChanged = false;
 
     for spellId in pairs(activeAuraIds) do
@@ -205,7 +205,7 @@ function Target:UpdateAuras()
         if isActive == false then
             local auraEffects = aurasTarget[spellId];
             local name = GetSpellInfo(spellId);
-            _addon:PrintDebug("Remove target aura " .. name .. " " .. spellId);
+            _addon.util.PrintDebug("Remove target aura " .. name .. " " .. spellId);
             for k, effect in ipairs(auraEffects) do
                 aurasChanged = RemoveTargetAuraEffect(spellId, effect, name, activeAuraStacks[spellId], k) or
                     aurasChanged;

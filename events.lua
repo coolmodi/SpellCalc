@@ -7,7 +7,7 @@ local _addon = select(2, ...);
 -- TODO: Remove when classes are supported
 local _, class = UnitClass("player");
 if class == "WARRIOR" or class == "ROGUE" or class == "HUNTER" then
-    _addon:PrintError("Class not (yet) supported, addon won't work!");
+    _addon.util.PrintError("Class not (yet) supported, addon won't work!");
     return;
 end
 
@@ -28,7 +28,7 @@ function handlers.ADDON_LOADED(addonName)
     _addon.events:TogglePowerUpdate(SpellCalc_settings.useCurrentPowerLevel);
 
     if _addon.spellRankInfo == nil or _addon.talentDataRaw == nil then
-		_addon:PrintError(_addonName .. ": No data for this class (yet)! Addon won't work!");
+		_addon.util.PrintError(_addonName .. ": No data for this class (yet)! Addon won't work!");
 	end
 end
 

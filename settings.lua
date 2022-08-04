@@ -595,7 +595,7 @@ function _addon:SetupSettings()
 
 	for k, v in pairs(DEFAULTSETTINGS) do
 		if SpellCalc_settings[k] == nil then
-			_addon:PrintDebug("Creating missing setting " .. k);
+			_addon.util.PrintDebug("Creating missing setting " .. k);
 			SpellCalc_settings[k] = v;
 		end
 	end

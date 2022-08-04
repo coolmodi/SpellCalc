@@ -216,7 +216,7 @@ end
 
 --- Update spell power stats from API
 function _addon:UpdateSpellPower()
-    _addon:PrintDebug("Updating spell power");
+    _addon.util.PrintDebug("Updating spell power");
 
     for i = 1, 7, 1 do
         _addon.stats.spellPower[i] = GetSpellBonusDamage(i);
@@ -242,11 +242,11 @@ end
 function _addon:UpdateDmgDoneMods()
     local spellHealing = GetSpellBonusHealing();
     if spellHealing ~= self.stats.spellHealing then
-        self:PrintDebug("Updating healing");
+        self.util.PrintDebug("Updating healing");
         self.stats.spellHealing = spellHealing;
     end
 
-    self:PrintDebug("Updating dmg done mods");
+    self.util.PrintDebug("Updating dmg done mods");
     for i = 1, 7, 1 do
         self.stats.spellCrit[i] = GetSpellCritChance(i);
     end
@@ -321,7 +321,7 @@ end
 
 --- Update general stats from API
 function _addon:UpdateStats()
-    _addon:PrintDebug("Updating stats");
+    _addon.util.PrintDebug("Updating stats");
     self.stats.manaMax = UnitPowerMax("player", 0);
     self:TriggerUpdate();
 end
@@ -335,7 +335,7 @@ function _addon:UpdateAttackSpeeds()
     self.stats.attackSpeed.offhand = o and o or 0;
     self.stats.attackSpeed.ranged = r and r or 0;
 
-    _addon:PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mainhand, self.stats.attackSpeed.offhand, self.stats.attackSpeed.ranged));
+    _addon.util.PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mainhand, self.stats.attackSpeed.offhand, self.stats.attackSpeed.ranged));
 
     self:TriggerUpdate();
 end
@@ -349,14 +349,14 @@ function _addon:UpdateWeaponAttack()
     self.stats.attack.offhand = oh + ohMod;
     self.stats.attack.ranged = r + rMod;
 
-    _addon:PrintDebug(("Updated attack: M: %d + %d O: %d + %d R: %d + %d"):format(mh, mhMod, oh, ohMod, r, rMod));
+    _addon.util.PrintDebug(("Updated attack: M: %d + %d O: %d + %d R: %d + %d"):format(mh, mhMod, oh, ohMod, r, rMod));
 
     self:TriggerUpdate();
 end
 
 --- Update melee attack damage
 function _addon:UpdateAttackDmg()
-    _addon:PrintDebug("Updated melee dmg");
+    _addon.util.PrintDebug("Updated melee dmg");
     local low, high, offLow, offHigh, _, _, pctMod = UnitDamage("player");
     self.stats.attackDmg.mainhand.min = low / pctMod;
     self.stats.attackDmg.mainhand.max = high / pctMod;
@@ -367,7 +367,7 @@ end
 
 --- Update ranged attack damage
 function _addon:UpdateRangedAttackDmg()
-    _addon:PrintDebug("Updated ranged dmg");
+    _addon.util.PrintDebug("Updated ranged dmg");
     local _, lowDmg, hiDmg, _, _, pctMod = UnitRangedDamage("player");
     self.stats.attackDmg.ranged.min = lowDmg / pctMod;
     self.stats.attackDmg.ranged.max = hiDmg / pctMod;
@@ -379,7 +379,7 @@ local oldApiHitBonusSpell = 0;
 
 --- Combat ratings updated (seems to be hit modifier in classic)
 function _addon:CombatRatingUpdate()
-    self:PrintDebug("Combat rating update");
+    self.util.PrintDebug("Combat rating update");
     local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) -- + GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
     local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
     local changed = false;
@@ -397,14 +397,14 @@ function _addon:CombatRatingUpdate()
     end
 
     if changed then
-        self:PrintDebug("Updated hit mods from API. M: " .. meleeHitBonus .. " - S: " .. spellHitBonus);
+        self.util.PrintDebug("Updated hit mods from API. M: " .. meleeHitBonus .. " - S: " .. spellHitBonus);
         self:TriggerUpdate();
     end
 end
 
 -- Update everything manually
 function _addon:FullUpdate()
-    self:PrintDebug("Full update");
+    self.util.PrintDebug("Full update");
 
     self:UpdateStats();
     self:UpdateSpellPower();

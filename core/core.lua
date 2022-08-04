@@ -167,7 +167,7 @@ local function SetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
     scriptEffects.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, ce, spellId, ri);
     ce.modBase = ce.modBase * ce.modBonus;
 
-    _addon:PrintDebug("Basemod: "..ce.modBase..", Bonusmod: "..ce.modBonus);
+    _addon.util.PrintDebug("Basemod: "..ce.modBase..", Bonusmod: "..ce.modBonus);
 end
 
 --- Get effective mana pool
@@ -208,7 +208,7 @@ end
 ---@return CalcedSpell
 local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTime)
     local spellName, _, _, castTime = GetSpellInfo(spellId);
-    _addon:PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
+    _addon.util.PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
     local effCastTime = parentEffCastTime or 0;
     local spellRankInfo = _addon.spellRankInfo[spellId];
     local GCD = spellRankInfo.GCD or 1.5;
@@ -295,7 +295,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             end
         end
 
-        _addon:PrintDebug("Has " .. #spellRankInfo.effects .. " effects with flags (" .. effectFlags[1] .. ", " .. tostring(effectFlags[2]) .. ")");
+        _addon.util.PrintDebug("Has " .. #spellRankInfo.effects .. " effects with flags (" .. effectFlags[1] .. ", " .. tostring(effectFlags[2]) .. ")");
         calcedSpell = NewCalcedSpell(effectFlags, spellRankInfo.effects);
         calcedSpell.school = spellRankInfo.school;
     end
@@ -600,15 +600,15 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         if stats.spellModAddTriggerSpell[triggerFromSpell] ~= nil then
             local triggeredSpellId = stats.spellModAddTriggerSpell[triggerFromSpell].val;
             if triggeredSpellId > 0 then
-                _addon:PrintDebug("Add triggered spell "..triggeredSpellId.." on spell "..spellId);
+                _addon.util.PrintDebug("Add triggered spell "..triggeredSpellId.." on spell "..spellId);
                 local triggeredId = _addon:GetHandledSpellID(triggeredSpellId);
                 if not triggeredId then
-                    _addon:PrintError("Spell "..spellId.." has added trigger effect "..triggeredSpellId.." but that spell isn't handled!");
+                    _addon.util.PrintError("Spell "..spellId.." has added trigger effect "..triggeredSpellId.." but that spell isn't handled!");
                 else
                     calcedSpell:SetTriggeredSpell(triggeredId, 2);
                 end
             elseif calcedSpell[2] and calcedSpell[2].effectFlags == SPELL_EFFECT_FLAGS.TRIGGERED_SPELL then
-                _addon:PrintDebug("Remove triggered effect from spell "..spellId);
+                _addon.util.PrintDebug("Remove triggered effect from spell "..spellId);
                 calcedSpell:UnsetTriggeredSpell(2);
             end
         end
@@ -618,7 +618,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Effects
 
     for i = 1, #calcedSpell, 1 do
-        _addon:PrintDebug("Calculating effect " .. i);
+        _addon.util.PrintDebug("Calculating effect " .. i);
         ---@type CalcedEffect
         local calcedEffect = calcedSpell[i];
         ---@type SpellRankEffectData
@@ -647,7 +647,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
         -- Trigger spell spell effect, update triggered spell data
         if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGERED_SPELL + SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
-            _addon:PrintDebug("Has trigger spell effect, updating triggered spell!");
+            _addon.util.PrintDebug("Has trigger spell effect, updating triggered spell!");
             calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
             if bit.band(calcedEffect.effectFlags, SPELL_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
                 local effectData = spellRankInfo.effects[i];
@@ -665,7 +665,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             --TODO: Remove this
             -- Lets find a case and check if this is still needed.
             if calcedEffect.modBase ~= calcedEffect.modBonus then
-                _addon:PrintError("Effect mod is not bonus mod! "..spellName);
+                _addon.util.PrintError("Effect mod is not bonus mod! "..spellName);
                 print(calcedEffect.modBase, calcedEffect.modBonus);
             end
 
@@ -793,9 +793,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
     calcedSpell.updated = currentState;
 
-    -- _addon:PrintDebug("== Updated spell (".. spellId .. ") " .. spellName .. " ==");
-    -- _addon:PrintDebug(calcedSpell);
-    -- _addon:PrintDebug("===========================================");
+    -- _addon.util.PrintDebug("== Updated spell (".. spellId .. ") " .. spellName .. " ==");
+    -- _addon.util.PrintDebug(calcedSpell);
+    -- _addon.util.PrintDebug("===========================================");
 
     return calcedSpell;
 end
@@ -810,7 +810,7 @@ do
         timerDiff = timerDiff + diff;
         if timerDiff > 0.333 then
             currentState = currentState + 1;
-            _addon:PrintDebug("Increment state! " .. currentState);
+            _addon.util.PrintDebug("Increment state! " .. currentState);
             updateStaggerFrame:SetScript("OnUpdate", nil);
             timerDiff = 0;
             waitForUpdate = false;
@@ -822,7 +822,7 @@ do
         if waitForUpdate then
             return;
         end
-        self:PrintDebug("Update triggered!");
+        self.util.PrintDebug("Update triggered!");
         updateStaggerFrame:SetScript("OnUpdate", UpdateUpdate);
     end
 end

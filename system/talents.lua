@@ -6,7 +6,7 @@ local activeRelevantTalents = {};
 local talentData;
 
 local function SetupTalentData()
-    _addon:PrintDebug("Creating talent data.");
+    _addon.util.PrintDebug("Creating talent data.");
     local talentAPIData = {};
 
     for tree = 1, 3 do
@@ -38,7 +38,7 @@ end
 --- Update player talents.
 ---@param forceTalents nil|table
 function _addon:UpdateTalents(forceTalents)
-    self:PrintDebug("Updating talents");
+    self.util.PrintDebug("Updating talents");
 
     if not talentData then
         SetupTalentData();
@@ -55,11 +55,11 @@ function _addon:UpdateTalents(forceTalents)
             end
         end
 
-        self:PrintDebug(("%s %d/%d"):format(name, curRank, maxRank));
+        self.util.PrintDebug(("%s %d/%d"):format(name, curRank, maxRank));
 
         -- remove old rank if we have another rank of the talent active
         if activeRelevantTalents[name] ~= nil and curRank ~= activeRelevantTalents[name] then
-            self:PrintDebug("Remove old talent rank " .. name .. activeRelevantTalents[name]);
+            self.util.PrintDebug("Remove old talent rank " .. name .. activeRelevantTalents[name]);
             local oldIdName = name .. activeRelevantTalents[name];
             for k, effect in ipairs(data.effects) do
                 local value;
@@ -79,7 +79,7 @@ function _addon:UpdateTalents(forceTalents)
 
         -- add new rank if we don't have the talent already
         if curRank > 0 and activeRelevantTalents[name] == nil then
-            self:PrintDebug("Add talent rank " .. name .. curRank);
+            self.util.PrintDebug("Add talent rank " .. name .. curRank);
             local idName = name .. curRank;
             for k, effect in ipairs(data.effects) do
                 local value;

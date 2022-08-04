@@ -50,8 +50,8 @@ end
 local function SoV_SoCor(calcedSpell, effectNum)
     ---@type CalcedEffect
     local calcedEffect = calcedSpell[effectNum];
-    local dotSpell = calcedEffect.spellData;
-    local dotEffect = calcedEffect.spellData[1];
+    local dotSpell = calcedEffect.spellData--[[@as CalcedSpell]];
+    local dotEffect = dotSpell[1]--[[@as CalcedEffect]];
 
     SCT:HeaderLine(L["Hit at 5 stacks:"]);
 

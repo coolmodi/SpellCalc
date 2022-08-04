@@ -95,18 +95,18 @@ local function UpdateSet(setId, change)
     local newCount, oldCount = sets[setId], sets[setId] - change;
     local setData = _addon.itemSetData[setId];
 
-    _addon:PrintDebug(("Updating set: %s (%d -> %d)"):format(setData.name, oldCount, newCount));
+    _addon.util.PrintDebug(("Updating set: %s (%d -> %d)"):format(setData.name, oldCount, newCount));
 
     for k, effectData in ipairs(setData.effects) do
         local bname = string.format("%s%d-%dp", setData.name, k, effectData.need);
         if effectData.need <= newCount then
             if effectData.need > oldCount then
-                _addon:PrintDebug(("Add set bonus %s"):format(bname));
+                _addon.util.PrintDebug(("Add set bonus %s"):format(bname));
                 _addon:ApplyAuraEffect(bname, effectData, effectData.value);
             end
         else
             if effectData.need <= oldCount then
-                _addon:PrintDebug(("Remove set bonus %s"):format(bname));
+                _addon.util.PrintDebug(("Remove set bonus %s"):format(bname));
                 _addon:RemoveAuraEffect(bname, effectData, effectData.value);
             end
         end
@@ -121,7 +121,7 @@ function _addon:UpdateRecievedItemData(itemId)
         missingItems[itemId] = 0;
         missingItems._count = missingItems._count - 1;
         if missingItems._count == 0 then
-            self:PrintDebug("Data for all items recieved, updating items");
+            self.util.PrintDebug("Data for all items recieved, updating items");
             self:UpdateItems();
         end
     end
@@ -131,7 +131,7 @@ end
 ---@param itemId number
 ---@param slotId number
 local function EquipItem(itemId, slotId)
-    _addon:PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
+    _addon.util.PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
     local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, classID, subclassID = GetItemInfo(itemId);
     local setId                                                                     = _addon.setItemData[itemId];
 
@@ -139,14 +139,14 @@ local function EquipItem(itemId, slotId)
         if not missingItems[itemId] then
             missingItems[itemId] = true;
             missingItems._count = missingItems._count + 1;
-            _addon:PrintDebug("Don't have data for item " .. itemId .. " slot " .. slotId .. ", waiting for data");
+            _addon.util.PrintDebug("Don't have data for item " .. itemId .. " slot " .. slotId .. ", waiting for data");
         end
         return;
     end
 
     if slotId >= 16 and slotId <= 18 then
         if classID == LE_ITEM_CLASS_WEAPON then
-            _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);
+            _addon.util.PrintDebug(ITEM_SLOTS[slotId] .. " is now " .. itemSubTypeName);
             if slotId == 16 then
                 weaponSubClass.mainhand = subclassID;
                 SetWeaponBaseDmgAndSpeed(itemId, "mainhand");
@@ -158,7 +158,7 @@ local function EquipItem(itemId, slotId)
                 SetWeaponBaseDmgAndSpeed(itemId, "ranged");
             end
         else
-            _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is not a weapon, leaving empty");
+            _addon.util.PrintDebug(ITEM_SLOTS[slotId] .. " is not a weapon, leaving empty");
             if slotId == 16 then
                 weaponSubClass.mainhand = nil;
                 SetWeaponBaseDmgAndSpeed(nil, "mainhand");
@@ -180,7 +180,7 @@ local function EquipItem(itemId, slotId)
     end
 
     if setId then
-        _addon:PrintDebug("Item is in a set");
+        _addon.util.PrintDebug("Item is in a set");
         UpdateSet(setId, 1);
     end
 
@@ -201,14 +201,14 @@ local function UnequipItem(slotId)
     end
 
     if setId then
-        _addon:PrintDebug("Item was in a set");
+        _addon.util.PrintDebug("Item was in a set");
         UpdateSet(setId, -1);
     end
 
     items[slotId] = nil;
 
     if slotId >= 16 and slotId <= 18 then
-        _addon:PrintDebug(ITEM_SLOTS[slotId] .. " is now unarmed");
+        _addon.util.PrintDebug(ITEM_SLOTS[slotId] .. " is now unarmed");
         if slotId == 16 then
             weaponSubClass.mainhand = nil;
             SetWeaponBaseDmgAndSpeed(nil, "mainhand");
@@ -221,34 +221,34 @@ local function UnequipItem(slotId)
         end
     end
 
-    _addon:PrintDebug("Slot " .. slotId .. " empty");
+    _addon.util.PrintDebug("Slot " .. slotId .. " empty");
 end
 
 --- Update all item slots
 function _addon:UpdateItems()
-    self:PrintDebug("Update items");
+    self.util.PrintDebug("Update items");
     for slot, slotName in pairs(ITEM_SLOTS) do
         local itemId = GetInventoryItemID("player", slot);
         if itemId ~= nil then
             local durability = GetInventoryItemDurability(slot);
             if items[slot] ~= itemId then
                 if items[slot] ~= nil then
-                    self:PrintDebug("Unequip old item from slot " .. slotName);
+                    self.util.PrintDebug("Unequip old item from slot " .. slotName);
                     UnequipItem(slot);
                 end
                 if durability == nil or durability > 0 then
-                    self:PrintDebug("Equip new item " .. itemId .. " in slot " .. slotName);
+                    self.util.PrintDebug("Equip new item " .. itemId .. " in slot " .. slotName);
                     EquipItem(itemId, slot);
                 end
             else
                 if durability ~= nil and durability == 0 then
-                    self:PrintDebug("Unequip item " .. itemId .. " in slot " .. slotName .. " because it is broken");
+                    self.util.PrintDebug("Unequip item " .. itemId .. " in slot " .. slotName .. " because it is broken");
                     UnequipItem(slot);
                 end
             end
         else
             if items[slot] ~= nil then
-                self:PrintDebug("Unequip old item from slot " .. slotName);
+                self.util.PrintDebug("Unequip old item from slot " .. slotName);
                 UnequipItem(slot);
             end
         end

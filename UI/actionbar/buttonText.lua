@@ -115,7 +115,7 @@ local function CreateBT4ButtonFS()
         if LAB10 then
             hooksecurefunc(LAB10, "CreateButton", function(_, slotId, name)
                 if name:find("BT4Button") then
-                    _addon:PrintDebug("Add bartender4 button " .. name);
+                    _addon.util.PrintDebug("Add bartender4 button " .. name);
                     buttonFontStrings[slotId] = CreateActionButtonFS(_G[name]);
                     buttonFontStrings[slotId]:SetFont(LSM:Fetch("font", SpellCalc_settings.abFont), SpellCalc_settings.abSize, SpellCalc_settings.abFontFlags);
                     buttonFontStrings[slotId]:UpdatePosition(SpellCalc_settings.abPosition);

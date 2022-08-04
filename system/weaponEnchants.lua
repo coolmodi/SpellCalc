@@ -28,7 +28,7 @@ local function HandleWeaponTempEnchant(slot, enchantId)
         _addon:RemoveAuraEffect(GetEnchantIdent(ed.name, activeEnchants[slot], slot), ed, ed.value);
         activeEnchants[slot] = 0;
         enchantChanged = true;
-        _addon:PrintDebug("Removed enchant from "..slot);
+        _addon.util.PrintDebug("Removed enchant from "..slot);
     end
 
     -- Apply echant effect if it isn't already active
@@ -38,7 +38,7 @@ local function HandleWeaponTempEnchant(slot, enchantId)
             _addon:ApplyAuraEffect(GetEnchantIdent(ed.name, enchantId, slot), ed, ed.value);
             activeEnchants[slot] = enchantId;
             enchantChanged = true;
-            _addon:PrintDebug("Applied enchant "..ed.name.." to "..slot);
+            _addon.util.PrintDebug("Applied enchant "..ed.name.." to "..slot);
         end
     end
 
@@ -47,7 +47,7 @@ end
 
 --- Update player weapon enchants
 function _addon:UpdateWeaponEnchants()
-    self:PrintDebug("Updating weapon enchants");
+    self.util.PrintDebug("Updating weapon enchants");
     local _, _, _, mhEnchId, _, _, _, ohEnchId = GetWeaponEnchantInfo();
     local mhchanged = HandleWeaponTempEnchant("MH", mhEnchId);
     local ohchanged = HandleWeaponTempEnchant("OH", ohEnchId);

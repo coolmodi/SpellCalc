@@ -37,7 +37,7 @@ end
 --- Update player auras
 ---@param clearOnly boolean|nil
 function _addon:UpdatePlayerAuras(clearOnly)
-    self:PrintDebug("Updating buffs");
+    self.util.PrintDebug("Updating buffs");
 
     for k in pairs(activeRelevantBuffs) do
         activeRelevantBuffs[k] = false;
@@ -56,7 +56,7 @@ function _addon:UpdatePlayerAuras(clearOnly)
                 local pAuraData = self.aurasPlayer[spellId];
 
                 if activeRelevantBuffs[spellId] == nil then
-                    self:PrintDebug("Add aura " .. name .. " (" .. spellId .. ") slot " .. i);
+                    self.util.PrintDebug("Add aura " .. name .. " (" .. spellId .. ") slot " .. i);
 
                     for k, effect in ipairs(pAuraData) do
                         ApplyPlayerAuraEffect(effect, tostring(spellId), name, k);
@@ -71,7 +71,7 @@ function _addon:UpdatePlayerAuras(clearOnly)
 
     for spellId, isActive in pairs(activeRelevantBuffs) do
         if isActive == false then
-            self:PrintDebug("Remove aura " .. spellId);
+            self.util.PrintDebug("Remove aura " .. spellId);
             local pAuraData = self.aurasPlayer[spellId];
             local name = GetSpellInfo(spellId);
 
@@ -96,11 +96,11 @@ function _addon:DebugApplyBuff(spellId)
     local name = GetSpellInfo(spellId);
 
     if buffdata == nil then
-        self:PrintError("No data for ID "..spellId);
+        self.util.PrintError("No data for ID "..spellId);
         return;
     end
 
-    self:PrintWarn("Add buff " .. name .. " (" .. spellId .. ")");
+    self.util.PrintWarn("Add buff " .. name .. " (" .. spellId .. ")");
 
     for k, effect in ipairs(buffdata) do
         ApplyPlayerAuraEffect(effect, tostring(spellId), name, k);

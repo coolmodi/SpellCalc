@@ -242,8 +242,8 @@ function Target:Update()
     UpdateResistances();
     self:UpdateAuras();
 
-    _addon:PrintDebug(("New target: %d (%d), Player: %s, ID: %d"):format(self.level, self.levelDiff, tostring(self.isPlayer), self.npcId));
-    _addon:PrintDebug(("P: %d, H: %d, Fi: %d, N: %d, Fr: %d, S: %d, A: %d"):format(self.resistanceBase[SCHOOL.PHYSICAL], self.resistanceBase[SCHOOL.HOLY], self.resistanceBase[SCHOOL.FIRE],
+    _addon.util.PrintDebug(("New target: %d (%d), Player: %s, ID: %d"):format(self.level, self.levelDiff, tostring(self.isPlayer), self.npcId));
+    _addon.util.PrintDebug(("P: %d, H: %d, Fi: %d, N: %d, Fr: %d, S: %d, A: %d"):format(self.resistanceBase[SCHOOL.PHYSICAL], self.resistanceBase[SCHOOL.HOLY], self.resistanceBase[SCHOOL.FIRE],
         self.resistanceBase[SCHOOL.NATURE], self.resistanceBase[SCHOOL.FROST], self.resistanceBase[SCHOOL.SHADOW], self.resistanceBase[SCHOOL.ARCANE]));
 
     _addon:TriggerUpdate();
