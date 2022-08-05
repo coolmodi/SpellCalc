@@ -96,9 +96,6 @@ _addon.aurasPlayer = {};
 ---@field hasStacks boolean|nil Does the debuff have stacks (e.g. Sunder Armor).
 ---@field debuffCategory DebuffCategory Debuffs effects from same category don't stack with eacho ther.
 
----@type table<integer, TargetAuraEffect[]>
-_addon.aurasTarget = {};
-
 ---@class TalentEffect : AuraEffectBase
 ---@field base integer|nil
 ---@field perPoint integer|nil

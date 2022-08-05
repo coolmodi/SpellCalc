@@ -21,6 +21,7 @@ constants.lua
 helper.lua
 
 data/auras.lua
+data/aurasTarget.lua
 data/enchants.lua
 data/npcResistances.lua
 
