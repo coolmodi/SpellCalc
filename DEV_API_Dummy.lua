@@ -503,3 +503,7 @@ C_Timer = {
     ---@param callback fun():nil
     After = function(delay, callback) end
 }
+
+---@return number expertise
+---@return number offhandExpertise
+function GetExpertise() end
