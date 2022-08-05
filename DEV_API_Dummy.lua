@@ -1,6 +1,6 @@
 SlashCmdList = {}
-UIParent = CreateFrame();
-WorldFrame = CreateFrame();
+UIParent = CreateFrame("");
+WorldFrame = CreateFrame("");
 
 local function SetScript(self, eventName, func) end
 
@@ -12,7 +12,7 @@ GameTooltip = {
     SetScript = SetScript,
 }
 
-AceGUIWidgetLSMlists = {};
+AceGUIWidgetLSMlists = {font={}};
 
 bit = {
     band = function(arg1, arg2) return 0 end,
@@ -100,9 +100,72 @@ function strsplit(delimiter, subject, pieces)
     return "","","","","","","","","","";
 end
 
-function CreateFrame(frameType, frameName, parentFrame, inheritsFrame)
-    return {}
-end
+
+---@param self WoWFrame
+---@param point string
+---@param relativeFrame WoWFrame
+---@param relativePoint string
+---@param ofsx number
+---@param ofsy number
+---@overload fun(self:WoWFrame, point:string, relativeFrame:WoWFrame, relativePoint:string): boolean
+---@overload fun(self:WoWFrame, point:string, ofsx:number, ofsy:number): boolean
+local function SetPointDummy(self, point, relativeFrame, relativePoint, ofsx, ofsy) end
+
+---@class WoWFrame
+---@field GetParent fun(self:WoWFrame):WoWFrame|nil
+---@field SetWidth fun(self:WoWFrame, w:number):nil
+---@field SetHeight fun(self:WoWFrame, h:number):nil
+---@field GetWidth fun(self:WoWFrame):number
+---@field GetHeight fun(self:WoWFrame):number
+---@field SetClampedToScreen fun(self:WoWFrame, enable:boolean):nil
+---@field SetMovable fun(self:WoWFrame, enable:boolean):nil
+---@field EnableMouse fun(self:WoWFrame, enable:boolean):nil
+---@field RegisterForDrag fun(self:WoWFrame, button:string):nil
+---@field SetScript fun(self:WoWFrame, handler:string, callback:nil|fun(frame:WoWFrame, ...)):nil
+---@field Show fun(self:WoWFrame):nil
+---@field Hide fun(self:WoWFrame):nil
+---@field SetBackdrop fun(self:WoWFrame, def:table):nil
+---@field SetBackdropColor fun(self:WoWFrame, red:number, green:number, blue:number, alpha:number):nil
+---@field UnregisterEvent fun(self:WoWFrame, event:string):nil
+---@field RegisterEvent fun(self:WoWFrame, event:string):nil
+---@field StartMoving any
+---@field StopMovingOrSizing any
+---@field SetClipsChildren fun(self:WoWFrame, enable:boolean):nil
+---@field ScrollBar WoWFrame
+---@field SetSize fun(self:WoWFrame, w:number, h:number):nil
+---@field SetScrollChild fun(self:WoWFrame, child:WoWFrame):nil
+---@field ClearAllPoints fun(self:WoWFrame):nil
+---@field CreateFontString fun(self:WoWFrame, name:string|nil, layer:any, inherits: any):FontString
+local WoWFrameDummy = {
+    SetPoint = SetPointDummy
+}
+
+---@class WoWGameTooltip : WoWFrame
+---@field SetOwner fun(self:WoWFrame, owner:WoWFrame, anchor:string):nil
+---@field AddFontStrings fun(self:WoWFrame, ...:FontString):nil
+---@field ClearLines fun(self:WoWFrame):nil
+---@field NumLines fun(self:WoWFrame):integer
+---@field SetHyperlink fun(self:WoWFrame, hl:string):nil
+
+---@class FontString : WoWFrame
+---@field SetText fun(self:WoWFrame, t:string):nil
+---@field GetText fun(self:WoWFrame):string
+---@field SetJustifyH fun(self:WoWFrame, j:string):nil
+---@field SetWordWrap fun(self:WoWFrame, w:boolean):nil
+---@field GetStringHeight fun(self:WoWFrame):number
+---@field SetTextColor fun(self:WoWFrame, r:number, g:number, b:number):nil
+---@field SetFont fun(self:WoWFrame, path:string, height:number, flags:string|nil);
+local FontStringDummy = {
+
+}
+
+---Creates a Frame object. 
+---@param frameType string Type of the frame; e.g. "Frame" or "Button".
+---@param frameName string|nil
+---@param parentFrame WoWFrame|nil
+---@param inheritsFrame string|nil
+---@return WoWFrame
+function CreateFrame(frameType, frameName, parentFrame, inheritsFrame) end
 
 --- name, rank, icon, castTime, minRange, maxRange 
 function GetSpellInfo(spellId_spellName_spellLink)
@@ -229,10 +292,16 @@ function GetInventoryItemDurability(slot)
     return 123;
 end
 
---- name, _, _, _, curRank, maxRank
-function GetTalentInfo(tree, talent)
-    return "name", "_", "_", "_", 1, 2;
-end
+---Returns information about a specified talent in a specified tab. 
+---@param tree any
+---@param talent any
+---@return string name
+---@return string icon
+---@return integer tier
+---@return integer column
+---@return integer currentRank
+---@return integer maxRank
+function GetTalentInfo(tree, talent) end
 
 ---Returns the buffs/debuffs for the unit.
 ---@param unit string
@@ -420,8 +489,8 @@ end
 ---@param socketID number glyph [Glyph SocketID|socket index]] (1 to GetNumGlyphSockets() )
 ---@param talentGroup number|nil (dual) specialization index (1 to GetNumTalentGroups(...)).
 ---@return boolean enabled
----@return number type
----@return number spellId
+---@return integer type
+---@return integer spellId
 ---@return string icon
 function GetGlyphSocketInfo(socketID, talentGroup) end
 

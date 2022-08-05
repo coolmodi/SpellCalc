@@ -1,6 +1,7 @@
 -- GENERATED
 
-local _, _addon = ...;
+---@class AddonEnv
+local _addon = select(2, ...);
 
 _addon.mechanicAuras = {
     --------------------------------

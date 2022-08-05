@@ -6,7 +6,7 @@ local _A = select(2, ...);
 local util = {};
 
 ---Remove a single table entry.
----@param t table The table to remove from.
+---@param t any[] The table to remove from.
 ---@param entry any The entry (value) to remove.
 function util.RemoveTableEntry(t, entry)
     for k, v in ipairs(t) do
@@ -69,10 +69,12 @@ function util.PrintWarn(msg)
 end
 
 ---Helper for printing tables.
----@param t table
+---@param t table<any,any>
 ---@param d integer
-local function PrintTable(t, d)
+---@param maxDepth integer|nil
+local function PrintTable(t, d, maxDepth)
     for k, v in pairs(t) do
+        if maxDepth and d > maxDepth then return end
         print(string.rep("--", d) .. " " .. k .. ": " .. tostring(v));
         if type(v) == "table" then
             PrintTable(v, d + 1);
@@ -82,12 +84,13 @@ end
 
 ---Print tables.
 ---@param t table
-function util.PrintTable(t)
-    PrintTable(t, 1);
+---@param maxDepth integer|nil
+function util.PrintTable(t, maxDepth)
+    PrintTable(t, 0, maxDepth);
 end
 
 ---Print message or table if debug output is on
----@param o string|table|number
+---@param o string|table<any,any>|number
 function util.PrintDebug(o)
     if not SpellCalc_settings.debug then
         return;

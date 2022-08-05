@@ -70,7 +70,7 @@ export function getHandledClassGlyphs(spellData: SpellData, classSet: number, cl
         if (aed.length > 0) glyphs.set(cg.spellId, { name: cg.name, effects: aed });
     }
 
-    let str = "_addon.classGlyphs = {\n";
+    let str = "---@type ClassGlyphs\n_addon.classGlyphs = {\n";
 
     for (const [gid, gdata] of glyphs)
     {

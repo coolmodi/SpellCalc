@@ -7,8 +7,7 @@ local SCT = _addon.SCTooltip;
 ---@param calcedSpell CalcedSpell
 ---@param effectNum integer
 local function PoM(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L.HEAL, ("%dx %d | %d total"):format(calcedSpell.charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * calcedSpell.charges)));
@@ -39,7 +38,7 @@ local function GreaterHeal(calcedSpell, effectNum, spellId)
     SCT:ShowEffectTooltip(calcedSpell, 1, true, spellId);
 
     if _addon:IsBooleanFlagActive(_addon.CONST.BOOLEAN_FLAGS.PRIEST_T5_2PC) then
-        local calcedEffect = calcedSpell[1];
+        local calcedEffect = calcedSpell.effects[1];
         assert(calcedEffect, "Priest T5 bonus set but triggered effect missing!");
 
         local origPerResource = calcedEffect.perResource;
@@ -78,7 +77,7 @@ local function StarFall(calcedSpell, effNum)
     if effNum > 1 then return end
 
     -- Main Stars
-    local mainEff = calcedSpell[1];
+    local mainEff = calcedSpell.effects[1];
     assert(mainEff, "Starfall triggered effect missing!");
 
     SCT:HeaderLine(L["Main Stars"]);
@@ -116,7 +115,7 @@ local function StarFall(calcedSpell, effNum)
     end
 
     -- Splash Effect
-    local splashEff = calcedSpell[2];
+    local splashEff = calcedSpell.effects[2];
     assert(splashEff, "Starfall splash effect missing!");
 
     SCT:HeaderLine(L["Splash Effect"]);

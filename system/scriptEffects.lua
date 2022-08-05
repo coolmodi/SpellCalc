@@ -3,10 +3,10 @@ local _addon = select(2, ...);
 local EFFECT_TYPE = _addon.CONST.EFFECT_TYPE;
 ---@type table<string, EffectScript>
 local scripts = {};
----@type table<string,number|nil>
+---@type table<string,integer|nil>
 local scriptValueCache = {};
 ---spellId -> effectType -> scriptKey -> func
----@type table<number, table<number, table<string, EffectScript>>>
+---@type table<integer, table<AddonEffectType, table<string, EffectScript>>>
 local spellScripts = {};
 ---@type table<string, number|nil>
 local targetUpdateOnAuraPersonal = {};
@@ -15,20 +15,22 @@ local targetUpdateOnAura = {};
 
 ---Apply or remove script affecting a SpellClassSet.
 ---@param apply boolean
----@param effectBase AuraEffectBase
+---@param type AddonEffectType
+---@param affectSpell integer[]
+---@param scriptKey string
 ---@param scriptFunc EffectScript
-local function ApplyOrRemoveSpellSet(apply, effectBase, scriptFunc)
-    if effectBase.affectSpell == nil then return end
+local function ApplyOrRemoveSpellSet(apply, type, affectSpell, scriptKey, scriptFunc)
+    ---@type table<integer, boolean>
     local spellIdsDone = {};
-    for k, setMask in ipairs(effectBase.affectSpell) do
+    for k, setMask in ipairs(affectSpell) do
         for setBit, spellSet in pairs(_addon.spellClassSet[k]) do
             if bit.band(setBit, setMask) > 0 then
                 for _, spellId in ipairs(spellSet) do
                     if not spellIdsDone[spellId] then
                         spellIdsDone[spellId] = true;
                         spellScripts[spellId] = spellScripts[spellId] or {};
-                        spellScripts[spellId][effectBase.type] = spellScripts[spellId][effectBase.type] or {};
-                        spellScripts[spellId][effectBase.type][effectBase.scriptKey] = apply and scriptFunc or nil;
+                        spellScripts[spellId][type] = spellScripts[spellId][type] or {};
+                        spellScripts[spellId][type][scriptKey] = apply and scriptFunc or nil;
                     end
                 end
             end
@@ -36,21 +38,21 @@ local function ApplyOrRemoveSpellSet(apply, effectBase, scriptFunc)
     end
 end
 
-_addon.ScriptEffects = {};
+local scripting = {};
 
 ---Add script function.
 ---@param scriptKey string
 ---@param func EffectScript
-function _addon.ScriptEffects.RegisterScript(scriptKey, func)
+function scripting.RegisterScript(scriptKey, func)
     assert(not scripts[scriptKey], "Script already defined! " .. scriptKey);
     scripts[scriptKey] = func;
 end
 
 ---Load scripts.
-function _addon.ScriptEffects.LoadScripts()
+function scripting.LoadScripts()
     if _addon.classScripts then
         for scriptKey, func in pairs(_addon.classScripts) do
-            _addon.ScriptEffects.RegisterScript(scriptKey, func);
+            scripting.RegisterScript(scriptKey, func);
         end
     end
 end
@@ -58,9 +60,9 @@ end
 ---Handle SCRIPT_ effect types.
 ---@param apply boolean
 ---@param name string
----@param value number
+---@param value integer
 ---@param effectBase AuraEffectBase
-function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
+function scripting.HandleEffect(apply, name, value, effectBase)
     local scriptKey = effectBase.scriptKey;
     local type = effectBase.type;
 
@@ -110,7 +112,7 @@ function _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase)
         or type == EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE)
         and effectBase.affectSpell then
         scriptValueCache[scriptKey] = apply and value or nil;
-        ApplyOrRemoveSpellSet(apply, effectBase, script);
+        ApplyOrRemoveSpellSet(apply, type, effectBase.affectSpell, scriptKey, script);
         return;
     end
 
@@ -120,18 +122,17 @@ end
 
 ---Get a value for a scriptKey.
 ---@param scriptKey string
----@return number|nil
-function _addon.ScriptEffects.GetValue(scriptKey)
+function scripting.GetValue(scriptKey)
     return scriptValueCache[scriptKey] or 0;
 end
 
 ---Get sum of all SCRIPT_ effect type scripts applicable for this spell.
----@param type number The SCRIPT_ effect type.
+---@param type AddonEffectType The SCRIPT_ effect type.
 ---@param cs CalcedSpell
----@param ce CalcedEffect
----@param spellId number
+---@param ce CalcedEffect|nil
+---@param spellId integer
 ---@param si SpellInfo
-function _addon.ScriptEffects.DoSpell(type, cs, ce, spellId, si)
+function scripting.DoSpell(type, cs, ce, spellId, si)
     if spellScripts[spellId]
         and spellScripts[spellId][type] then
         for scriptKey, func in pairs(spellScripts[spellId][type]) do
@@ -142,11 +143,13 @@ end
 
 ---Triggers update if needed.
 ---@param auraName string
----@param personal boolean
-function _addon.ScriptEffects.TargetAuraChanged(auraName, personal)
+---@param personal boolean|nil
+function scripting.TargetAuraChanged(auraName, personal)
     if personal then
         if targetUpdateOnAuraPersonal[auraName] then _addon:TriggerUpdate() end
         return;
     end
     if targetUpdateOnAura[auraName] then _addon:TriggerUpdate() end
 end
+
+_addon.scripting = scripting;

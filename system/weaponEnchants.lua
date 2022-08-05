@@ -8,16 +8,16 @@ local activeEnchants = {
 
 ---Get unique enchant identifier.
 ---@param name string
----@param id number
----@param slot string
+---@param id integer
+---@param slot "MH"|"OH"
 ---@return string
 local function GetEnchantIdent(name, id, slot)
     return name.."-"..id.."-"..slot;
 end
 
 ---Apply, remove or update enchant effect for weapon slot.
----@param slot string
----@param enchantId number|nil
+---@param slot "MH"|"OH"
+---@param enchantId integer|nil
 ---@return boolean enchantChanged
 local function HandleWeaponTempEnchant(slot, enchantId)
     local enchantChanged = false;

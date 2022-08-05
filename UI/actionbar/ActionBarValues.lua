@@ -10,8 +10,11 @@ local SEAL_OF_VENGEANCE = GetSpellInfo(31801);
 local SEAL_OF_CORRUPTION = GetSpellInfo(348704);
 
 local ActionBarValues = {};
+---@type table<integer, integer>
 local spellsInBar = {};
+---@type table<integer, boolean|nil>
 local needsUpdate = {};
+---@type table<integer, table<integer, boolean|nil>>
 local slotMap = {};
 local actionbarSupport = "STOCK";
 ---@type ActionButtonText
@@ -55,7 +58,7 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param valueKey string
 local function GetBasicValue(calcedSpell, critChance, valueKey)
-    local calcedEffect = calcedSpell[1];
+    local calcedEffect = calcedSpell.effects[1];
     assert(calcedEffect, "Spell has no effect attached?");
 
     if valueKey == "allTicks" then
@@ -122,14 +125,14 @@ do
             local calcedSpell = _addon:GetCalcedSpell(spellId);
 
             if calcedSpell ~= nil then
-                ---@type CalcedEffect
-                local calcedEffect = calcedSpell[1];
+                local calcedEffect = calcedSpell.effects[1];
                 assert(calcedEffect, "Spell has no effect attached?");
 
                 if (bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0) then
                     calcedSpell = calcedEffect.spellData;
-                    assert(calcedSpell and calcedSpell[1] ~= nil, "Triggere effect is missing spell or effect data!");
-                    calcedEffect = calcedSpell[1];
+                    assert(calcedSpell and calcedSpell.effects[1] ~= nil, "Triggere effect is missing spell or effect data!");
+                    ---@type CalcedEffect
+                    calcedEffect = calcedSpell.effects[1];
                 end
 
                 local isHeal = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.HEAL + ADDON_EFFECT_FLAGS.ABSORB) > 0;
@@ -165,7 +168,7 @@ do
 end
 
 --- Set spell ID for given action slot
----@param slot number
+---@param slot integer
 ---@param spellId integer|nil
 local function SetSlotSpell(slot, spellId)
     if spellsInBar[slot] == spellId or not buttonText.HasButtonText(slot) then
@@ -187,7 +190,7 @@ local function SetSlotSpell(slot, spellId)
 end
 
 --- Update action slot
----@param slot number
+---@param slot integer
 function ActionBarValues:SlotUpdate(slot)
     _addon.util.PrintDebug("Action slot update " .. slot);
 
@@ -212,39 +215,42 @@ end
 local SetupPagingSupport;
 
 do
+    ---@type table<string, {origOffset:integer, updateOffset:integer}>
     local barPageData = {};
+    ---@type string
     local pageAttribute;
 
     --- Remap action bar for paging.
-    ---@param barPageData table
-    ---@param updateOffset number
-    local function PageActionbar(barPageData, updateOffset)
-        if barPageData.updateOffset == updateOffset then
+    ---@param barData table
+    ---@param updateOffset integer
+    local function PageActionbar(barData, updateOffset)
+        if barData.updateOffset == updateOffset then
             return;
         end
 
-        if barPageData.origOffset ~= updateOffset then
+        if barData.origOffset ~= updateOffset then
             for i = 1, 12, 1 do
-                slotMap[updateOffset + i][barPageData.origOffset + i] = true;
-                slotMap[barPageData.origOffset + i][barPageData.origOffset + i] = nil;
+                slotMap[updateOffset + i][barData.origOffset + i] = true;
+                slotMap[barData.origOffset + i][barData.origOffset + i] = nil;
                 ActionBarValues:SlotUpdate(updateOffset + i);
             end
         else
             for i = 1, 12, 1 do
-                slotMap[barPageData.updateOffset + i][barPageData.origOffset + i] = nil;
-                slotMap[barPageData.origOffset + i][barPageData.origOffset + i] = true;
+                slotMap[barData.updateOffset + i][barData.origOffset + i] = nil;
+                slotMap[barData.origOffset + i][barData.origOffset + i] = true;
                 ActionBarValues:SlotUpdate(updateOffset + i);
             end
         end
 
-        barPageData.updateOffset = updateOffset;
+        barData.updateOffset = updateOffset;
     end
 
     --- Add page data entry to enable paging support.
     ---@param barName string
-    ---@param barNum number
+    ---@param barNum integer
     local function AddPagingBar(barName, barNum)
         local defaultOffset = (barNum - 1) * 12;
+        ---@type integer
         local currentPage = _G[barName]:GetAttribute(pageAttribute);
 
         _G[barName]:HookScript("OnAttributeChanged", function(self, attr, value)
@@ -293,7 +299,7 @@ do
                 end
             end
             hooksecurefunc(Bartender4.Bar, "Create", function(_, id)
-                local barNum = tonumber(id);
+                local barNum = tonumber(id)--[[@as integer]];
                 if barNum then
                     AddPagingBar(("BT4Bar%s"):format(id), barNum);
                 end

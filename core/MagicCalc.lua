@@ -18,7 +18,7 @@ end
 --- Initialize for new spell
 ---@param calcedSpell CalcedSpell
 ---@param spellInfo SpellInfo
----@param spellId number
+---@param spellId integer
 function MagicCalc:Init(calcedSpell, spellInfo, spellId)
     _addon.util.PrintDebug("Init MagicCalc");
     self.spellInfo = spellInfo;
@@ -83,9 +83,9 @@ local function GetSpellHitChance()
 end
 
 --- Get spell hit bonus from gear and talents
----@param school number
+---@param school SpellSchool
 ---@param calcedSpell CalcedSpell
----@param spellId number
+---@param spellId integer
 ---@return number
 local function GetSpellHitBonus(school, calcedSpell, spellId)
     local hitChanceBonus = 0;
@@ -108,10 +108,10 @@ end
 
 --- Calculate mitigation variables for current target
 ---@param avgResist number
----@return number @full hit chance (base + bonus)
----@return number @base hit chance
----@return number @bonus hit chance
----@return number @binary loss if binary spell
+---@return number fullHit full hit chance (base + bonus)
+---@return number baseHit base hit chance
+---@return number bonusHit bonus hit chance
+---@return number|nil binaryLoss binary loss if binary spell
 function MagicCalc:GetHitChances(avgResist)
     local base = GetSpellHitChance();
     local bonus = GetSpellHitBonus(self.spellInfo.school, self.calcedSpell, self.spellId);

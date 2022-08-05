@@ -76,7 +76,7 @@ function MeleeCalc:GetCrit()
         -- TODO: this is bullshit lol
         if _addon:GetWeaponType("mainhand") ~= _addon:GetWeaponType("offhand") then
             if class == "WARRIOR" then
-                local _, _, _, _, curRank = GetTalentInfo(1, 12); -- axe spec
+                local curRank = select(5, GetTalentInfo(1, 12)); -- axe spec
                 if curRank > 0 then
                     if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.AXE_1H, "mainhand") then
                         basecrit = basecrit - curRank;
@@ -85,7 +85,7 @@ function MeleeCalc:GetCrit()
                     end
                 end
             elseif class == "ROGUE" then
-                local _, _, _, _, curRank = GetTalentInfo(2, 11); -- dagger spec
+                local curRank = select(5, GetTalentInfo(2, 11)); -- dagger spec
                 if curRank > 0 then
                     if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.DAGGER, "mainhand") then
                         basecrit = basecrit - curRank;
@@ -94,7 +94,7 @@ function MeleeCalc:GetCrit()
                     end
                 end
 
-                _, _, _, _, curRank = GetTalentInfo(2, 16); -- fisting spec
+                curRank = select(5, GetTalentInfo(2, 16)); -- fisting spec
                 if curRank > 0 then
                     if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.FIST, "mainhand") then
                         basecrit = basecrit - curRank;
@@ -170,7 +170,7 @@ end
 
 --- Get dodge chance against target
 ---@param calc MeleeCalc
----@param skillDiff number @Differenmce between attack skill and defense skill
+---@param skillDiff integer Differenmce between attack skill and defense skill
 local function GetDodgeChance(calc, skillDiff)
     if calc.cantDodgeParryBlock or calc.isRanged then
         return 0;
@@ -185,7 +185,7 @@ end
 
 --- Get miss chance against target
 ---@param calc MeleeCalc
----@param skillDiff number
+---@param skillDiff integer
 local function GetMissChance(calc, skillDiff)
     local miss;
 
@@ -215,9 +215,9 @@ local function GetMissChance(calc, skillDiff)
 end
 
 --- Get glancing chance and average damage reduction
----@param ldef number @Level based def value for target
----@param baseAtk number @Base attack value for level
----@param atk number @Actual attack value for weapon
+---@param ldef integer Level based def value for target
+---@param baseAtk integer Base attack value for level
+---@param atk integer Actual attack value for weapon
 local function GetGlancingChanceAndDamage(ldef, baseAtk, atk)
     local glancing = 10 + (ldef - math.min(baseAtk, atk)) * 2;
     local minReduction = math.max(0, math.min(0.91, 1.3 - 0.05 * (ldef - atk)));
@@ -234,13 +234,13 @@ local function GetBlockChancePH(calc, skillDiff)
 end
 
 --- Get melee attack table against current target
----@return number @hit chance in percent, excluding hitBonus!
----@return number @dodge chance in percent
----@return number @parry chance in percent
----@return number @glancing chance if isWhitehit is true
----@return number @block chance in percent
----@return number @hitBonus after level based penalty
----@return number @glancingDamage if isWhitehit is true
+---@return number hit chance in percent, excluding hitBonus!
+---@return number dodge chance in percent
+---@return number parry chance in percent
+---@return number glancing chance if isWhitehit is true
+---@return number block chance in percent
+---@return number hitBonus after level based penalty
+---@return number glancingDamage if isWhitehit is true
 function MeleeCalc:GetMDPGB()
     local skillDiff = self.ldef - self.ratk;
 

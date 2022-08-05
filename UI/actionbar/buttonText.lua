@@ -3,7 +3,15 @@ local _addon = select(2, ...);
 
 local LSM = LibStub("LibSharedMedia-3.0");
 
+---@class ABFontString : FontString
+---@field UpdatePosition fun(self:ABFontString, offsetpct:number)|nil
+---@field SetIsHeal fun(self:ABFontString, isHeal:boolean|nil, isMana:boolean|nil)|nil
+---@field isHeal boolean|nil
+---@field isMana boolean|nil
+
+---@type ABFontString[]
 local buttonFontStrings = {};
+---@type ActionButtonText|nil
 local isSetup = nil;
 local colorHarm = {1, 1, 0.3};
 local colorHelp = {0.3, 1, 0.3};
@@ -14,7 +22,7 @@ local colorMana = {0.1, 0.7, 1};
 ------------------------------------------------------------------------
 
 --- Get vertical offset based on button frame height.
----@param self table
+---@param self ABFontString
 ---@param offsetpct number
 local function GetVOffset(self, offsetpct)
     local oldString = self:GetText();
@@ -25,7 +33,7 @@ local function GetVOffset(self, offsetpct)
 end
 
 --- Update text positions.
----@param self table
+---@param self ABFontString
 ---@param offsetpct number
 local function UpdatePosition(self, offsetpct)
     self:ClearAllPoints();
@@ -35,7 +43,7 @@ local function UpdatePosition(self, offsetpct)
 end
 
 --- Set text color to dmg or heal.
----@param self table
+---@param self ABFontString
 ---@param isHeal boolean
 ---@param isMana boolean|nil
 local function SetIsHeal(self, isHeal, isMana)
@@ -51,13 +59,14 @@ local function SetIsHeal(self, isHeal, isMana)
 end
 
 --- Add string to the given button frame.
----@param buttonFrame table
+---@param buttonFrame WoWFrame
+---@return ABFontString
 local function CreateActionButtonFS(buttonFrame)
     local fs = buttonFrame:CreateFontString(nil, "ARTWORK");
     fs.SetIsHeal = SetIsHeal;
     fs.UpdatePosition = UpdatePosition;
     fs:Show();
-    return fs;
+    return fs--[[@as ABFontString]];
 end
 
 ------------------------------------------------------------------------
@@ -148,6 +157,7 @@ function _addon:SetupActionButtonText()
 
     --- Update font style based on current settings.
     buttonText.UpdateFonts = function()
+        ---@type any
         local font = LSM:Fetch("font", SpellCalc_settings.abFont);
         colorHarm = SpellCalc_settings.abColorHarm;
         colorHelp = SpellCalc_settings.abColorHelp;

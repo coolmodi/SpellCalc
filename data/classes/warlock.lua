@@ -1,5 +1,5 @@
 ---@class AddonEnv
-local _, _addon = ...;
+local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "WARLOCK" then
     return;

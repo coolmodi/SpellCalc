@@ -66,11 +66,16 @@ local DEFAULTSETTINGS = {
 	["version"] = 2
 };
 
+---@param info string[]
+---@return string|number|integer
 local function defaultGet(info)
 	return SpellCalc_settings[info[#info]];
 end
 
+---@param info string[]
+---@param val string|number|integer
 local function defaultSet(info, val)
+    ---@diagnostic disable-next-line: no-unknown
 	SpellCalc_settings[info[#info]] = val;
 	_addon.Target:Update();
 	_addon:TriggerUpdate();
@@ -560,9 +565,13 @@ local function CheckUpdates()
 
 	if oldSettingsVer < 1 then
 		-- Remove deprecated entries
+        ---@diagnostic disable-next-line: no-unknown
 		sv.calcEffManaPotionType = nil;
+        ---@diagnostic disable-next-line: no-unknown
 		sv.calcEffManaPotion = nil;
+        ---@diagnostic disable-next-line: no-unknown
 		sv.abOutline = nil;
+        ---@diagnostic disable-next-line: no-unknown
 		sv.abScale = nil;
 
 		-- Update action bar value keys
@@ -593,9 +602,11 @@ function _addon:SetupSettings()
 		SpellCalc_settings = DEFAULTSETTINGS;
 	end
 
+    ---@diagnostic disable-next-line: no-unknown
 	for k, v in pairs(DEFAULTSETTINGS) do
 		if SpellCalc_settings[k] == nil then
 			_addon.util.PrintDebug("Creating missing setting " .. k);
+            ---@diagnostic disable-next-line: no-unknown
 			SpellCalc_settings[k] = v;
 		end
 	end

@@ -16,7 +16,7 @@ end
 local function SchoolStatTable()
     local SCHOOL = _addon.CONST.SCHOOL;
     -- Keys are school types found in _addon.CONST.SCHOOL
-    ---@type table<number, UniformStat>
+    ---@type table<SpellSchool, UniformStat>
     local schoolTable = {
         [SCHOOL.PHYSICAL] = UniformStat(),
         [SCHOOL.HOLY] = UniformStat(),
@@ -32,6 +32,7 @@ end
 local function CreatureTypeStatTable()
     local CREATURE_TYPE = _addon.CONST.CREATURE_TYPE;
     -- Keys are creature types found in _addon.CONST.CREATURE_TYPE
+    ---@type table<CreatureType, UniformStat>
     local creatureTable = {
         [CREATURE_TYPE.BEAST]    = UniformStat(),
         [CREATURE_TYPE.DRAGONKIN] = UniformStat(),
@@ -49,14 +50,14 @@ local function CreatureTypeStatTable()
 end
 
 local function SpellStatTable()
-    ---@type table<number, UniformStat>
+    ---@type table<integer, UniformStat>
     local spellTable = {};
     return spellTable;
 end
 
 local function MechanicStatTable()
     -- Keys are mechanic types found in _addon.CONST.SPELL_MECHANIC
-    ---@type table<number, UniformStat>
+    ---@type table<SpellMechanic, UniformStat>
     local mt = {}
     for _, mechanicId in pairs(_addon.CONST.SPELL_MECHANIC) do
         mt[mechanicId] = UniformStat();

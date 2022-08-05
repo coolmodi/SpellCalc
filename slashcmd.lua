@@ -23,7 +23,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         local talentOverride = {};
 
         for tripel in string.gmatch(arg, "%d %d+ %d") do
-            local tree, talent, rank = string.match(tripel, "(%d) (%d+) (%d)");
+            local tree, talent, rank = strmatch(tripel, "(%d) (%d+) (%d)");
 
             if tree == nil or talent == nil or rank == nil then
                 _addon.util.PrintWarn("tree, talent or rank nil for tripel: "..tripel);
@@ -61,13 +61,13 @@ SlashCmdList["SPELLCALC"] = function(arg)
     end
 
     if string.find(arg, "ps") then
-        local spellId = string.match(arg, "(%d+)");
+        local spellId = strmatch(arg, "(%d+)");
         if spellId == nil then
             _addon.util.PrintWarn("spellId is nil!");
             return;
         end
 
-        local calcedSpell = _addon:GetCurrentSpellData(tonumber(spellId) or 0);
+        local calcedSpell = _addon:GetCurrentSpellData(tonumber(spellId)--[[@as integer]]);
         if calcedSpell == nil then
             _addon.util.PrintWarn("No current data for spell with ID "..spellId);
             return;
@@ -81,7 +81,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
     end
 
     if string.find(arg, "cs") then
-        local spellId = string.match(arg, "(%d+)");
+        local spellId = strmatch(arg, "(%d+)");
         if spellId == nil then
             _addon.util.PrintWarn("spellId is nil!");
             return;
@@ -122,7 +122,8 @@ SlashCmdList["SPELLCALC"] = function(arg)
         local slotid, itemLink = strmatch(arg, "(%d+) (.+)");
         print(slotid, itemLink);
         if itemLink and slotid then
-            local _, _, Color, Ltype, Id, Enchant, Gem1, Gem2, Gem3, Gem4, Suffix, Unique, LinkLvl, reforging, Name = string.find(itemLink, "|?c?f?f?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?");
+            ---@type string
+            local Id = select(5, string.find(itemLink, "|?c?f?f?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?"));
             _addon.util.PrintWarn("Debug equip item "..Id.." into slot "..slotid.."!");
             _addon:DebugEquipItem(tonumber(Id)--[[@as integer]], tonumber(slotid)--[[@as integer]]);
         end
@@ -132,7 +133,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
     if string.find(arg, "dab") then
         local spellId = strmatch(arg, "(%d+)");
         if spellId then
-            _addon:DebugApplyBuff(tonumber(spellId) or 0);
+            _addon:DebugApplyBuff(tonumber(spellId)--[[@as integer]]);
         end
         return;
     end
@@ -161,7 +162,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         local key = string.sub(arg, 6);
         print(key);
         if key then
-            print("Value for ", key, "is", _addon.ScriptEffects.GetValue(key));
+            print("Value for ", key, "is", _addon.scripting.GetValue(key));
         end
         return;
     end

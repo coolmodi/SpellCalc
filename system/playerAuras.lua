@@ -1,21 +1,21 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
----@type table<number, boolean>
+---@type table<integer, boolean>
 local activeRelevantBuffs = {};
 
 --- Apply aura effect using tooltip or hardcoded values.
 ---@param auraEffect UnitAuraEffect
 ---@param usedKey string
 ---@param name string
----@param effectSlot number|nil
+---@param effectSlot integer|nil
 local function ApplyPlayerAuraEffect(auraEffect, usedKey, name, effectSlot)
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
     assert(auraEffect.value or auraEffect.scriptValue, "Player aura effect "..name.." has no value or scriptValue defined!");
-    local value = auraEffect.value or _addon.ScriptEffects.GetValue(auraEffect.scriptValue);
+    local value = auraEffect.value or _addon.scripting.GetValue(auraEffect.scriptValue);
     _addon:ApplyAuraEffect(name, auraEffect, value);
 end
 
@@ -23,14 +23,14 @@ end
 ---@param auraEffect UnitAuraEffect
 ---@param usedKey string
 ---@param name string
----@param effectSlot number|nil
+---@param effectSlot integer|nil
 local function RemovePlayerAuraEffect(auraEffect, usedKey, name, effectSlot)
     if effectSlot then
         usedKey = usedKey.."-"..effectSlot;
         name = name.."-"..effectSlot;
     end
     assert(auraEffect.value or auraEffect.scriptValue, "Player aura effect "..name.." has no value or scriptValue defined!");
-    local value = auraEffect.value or _addon.ScriptEffects.GetValue(auraEffect.scriptValue);
+    local value = auraEffect.value or _addon.scripting.GetValue(auraEffect.scriptValue);
     _addon:RemoveAuraEffect(name, auraEffect, value);
 end
 
@@ -90,7 +90,7 @@ function _addon:UpdatePlayerAuras(clearOnly)
 end
 
 --- Simulate having a buff.
----@param spellId number
+---@param spellId integer
 function _addon:DebugApplyBuff(spellId)
     local buffdata = self.aurasPlayer[spellId];
     local name = GetSpellInfo(spellId);

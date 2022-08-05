@@ -12,6 +12,7 @@ if class == "WARRIOR" or class == "ROGUE" or class == "HUNTER" then
 end
 
 local frame = CreateFrame("Frame");
+---@type table<string, fun(...:any):nil>
 local handlers = {};
 
 -- These can fire too early causing problems. Delay until entering world.
@@ -34,7 +35,7 @@ end
 
 function handlers.PLAYER_LOGIN()
     _A.ActionBarValues:Setup();
-    _A.ScriptEffects.LoadScripts();
+    _A.scripting.LoadScripts();
     _A:ApplyPassives();
 end
 

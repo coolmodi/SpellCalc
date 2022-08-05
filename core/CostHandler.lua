@@ -18,14 +18,14 @@ local CostHandler = {};
 ---@param spellInfo SpellInfo
 ---@param effCastTime number
 ---@param spellName string
----@param spellId number
+---@param spellId integer
 function CostHandler.Mana(calcedSpell, spellInfo, effCastTime, spellName, spellId)
     local mps = stats.mp5.val / 5 + stats.manaRegAura;
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
         local ofsrRegen;
         -- Can't leave FSR while channeling, no base regen even after 5s!
-        if bit.band(calcedSpell[1].effectFlags, AEF.CHANNEL) > 0 then
+        if bit.band(calcedSpell.effects[1].effectFlags, AEF.CHANNEL) > 0 then
             ofsrRegen = stats.manaRegCasting + mps;
         else
             ofsrRegen = stats.manaRegBase + mps;
@@ -36,7 +36,7 @@ function CostHandler.Mana(calcedSpell, spellInfo, effCastTime, spellName, spellI
     if stats.spellModClearCastChance[spellId] and stats.spellModClearCastChance[spellId].val > 0 then
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.spellModClearCastChance[spellId].val / 100);
         calcedSpell:AddToBuffList(stats.spellModClearCastChance[spellId].buffs);
-    elseif stats.clearCastChanceDmg.val > 0 and bit.band(calcedSpell[1].effectFlags, AEF.HEAL + AEF.ABSORB) == 0 then
+    elseif stats.clearCastChanceDmg.val > 0 and bit.band(calcedSpell.effects[1].effectFlags, AEF.HEAL + AEF.ABSORB) == 0 then
         calcedSpell.effectiveCost = calcedSpell.effectiveCost - calcedSpell.baseCost * (stats.clearCastChanceDmg.val / 100);
         calcedSpell:AddToBuffList(stats.clearCastChanceDmg.buffs);
     elseif stats.clearCastChance.val > 0 then
@@ -68,10 +68,10 @@ function CostHandler.Mana(calcedSpell, spellInfo, effCastTime, spellName, spellI
     end
 
     if stats.illumination.val > 0 then
-        if (class == "PALADIN" and (bit.band(calcedSpell[1].effectFlags, AEF.HEAL) > 0 or spellName == HOLY_SHOCK))
+        if (class == "PALADIN" and (bit.band(calcedSpell.effects[1].effectFlags, AEF.HEAL) > 0 or spellName == HOLY_SHOCK))
         or (class == "MAGE" and (spellInfo.school == _addon.CONST.SCHOOL.FIRE or spellInfo.school == _addon.CONST.SCHOOL.FROST))
         or (class == "DRUID" and spellName == HEALING_TOUCH)
-        or (class == "SHAMAN" and bit.band(calcedSpell[1].effectFlags, AEF.HEAL) == 0 and (spellInfo.school == _addon.CONST.SCHOOL.NATURE or spellInfo.school == _addon.CONST.SCHOOL.FROST or spellName == FLAME_SHOCK)) then
+        or (class == "SHAMAN" and bit.band(calcedSpell.effects[1].effectFlags, AEF.HEAL) == 0 and (spellInfo.school == _addon.CONST.SCHOOL.NATURE or spellInfo.school == _addon.CONST.SCHOOL.FROST or spellName == FLAME_SHOCK)) then
             calcedSpell.effectiveCost = calcedSpell.effectiveCost - baseCost * (stats.illumination.val/100) * (calcedSpell.critChance/100);
             calcedSpell:AddToBuffList(stats.illumination.buffs);
         end

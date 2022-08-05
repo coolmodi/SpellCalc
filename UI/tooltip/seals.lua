@@ -6,8 +6,7 @@ local SCT = _addon.SCTooltip;
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 local function SoR(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L.DAMAGE, ("%.1f"):format(calcedEffect.avg));
@@ -25,8 +24,7 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 local function SoC(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
         SCT:AppendMinMaxAvgLine(L.DAMAGE, calcedEffect.min, calcedEffect.max, calcedEffect.avg);
@@ -48,10 +46,10 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 local function SoV_SoCor(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
-    local dotSpell = calcedEffect.spellData--[[@as CalcedSpell]];
-    local dotEffect = dotSpell[1]--[[@as CalcedEffect]];
+    local calcedEffect = calcedSpell.effects[effectNum];
+    local dotSpell = calcedEffect.spellData;
+    assert(dotSpell, "SoV_SoCor tooltip handler calcedEffect.spellData is nil!");
+    local dotEffect = dotSpell.effects[1];
 
     SCT:HeaderLine(L["Hit at 5 stacks:"]);
 

@@ -12,7 +12,12 @@ local SCTooltip = {};
 _addon.SCTooltip = SCTooltip;
 
 local tt = GameTooltip;
+
+---@alias TooltipHandlerFunction fun(calcedSpell:CalcedSpell, effectNum:integer, isHeal:boolean, spellId:integer):boolean
+---@type TooltipHandlerFunction[]
 local tooltipHandler = {};
+---@alias TooltipDummyFunction fun(calcedSpell:CalcedSpell, effectNum:integer, spellId:integer):boolean
+---@type table<string, TooltipDummyFunction>
 local dummyHandler = {};
 
 --- Add tooltip handler
@@ -23,7 +28,7 @@ end
 
 --- Add tooltip handler for dummy spell
 ---@param spellName string
----@param func function:boolean
+---@param func TooltipDummyFunction
 function SCTooltip:AddDummyHandler(spellName, func)
     dummyHandler[spellName] = func;
 end
@@ -39,7 +44,8 @@ end
 ---@return string
 function SCTooltip:FormatNoTrailing0(str, ...)
     -- oh no
-    local r = str:format(...):gsub("%.0+$",""):gsub("(%.0*[1-9]+)0*$","%1"):gsub("%.0+(%D)","%1"):gsub("(%.0*[1-9]+)0*(%D)","%1%2");
+    local r = str:format(...):gsub("%.0+$", ""):gsub("(%.0*[1-9]+)0*$", "%1"):gsub("%.0+(%D)", "%1"):gsub("(%.0*[1-9]+)0*(%D)"
+        , "%1%2");
     return r;
 end
 
@@ -53,9 +59,9 @@ end
 ---@param label string|nil
 ---@param text string|integer
 function SCTooltip:SingleLine(label, text)
-    local t1 = text and TTC_DEFAULT..text;
+    local t1 = text and TTC_DEFAULT .. text;
     if label then
-        t1 = TTC_LABEL..label..": "..t1;
+        t1 = TTC_LABEL .. label .. ": " .. t1;
     end
 
     tt:AddLine(t1);
@@ -67,17 +73,17 @@ end
 ---@param labelr string|nil
 ---@param textr string|integer|nil
 function SCTooltip:DoubleLine(label, text, labelr, textr)
-    local t1 = text and TTC_DEFAULT..text or "";
+    local t1 = text and TTC_DEFAULT .. text or "";
     if label then
-        t1 = TTC_LABEL..label..": "..t1;
+        t1 = TTC_LABEL .. label .. ": " .. t1;
     end
     if t1 == "" then
         t1 = "-";
     end
 
-    local t2 = TTC_DEFAULT..textr;
+    local t2 = TTC_DEFAULT .. textr;
     if labelr then
-        t2 = TTC_LABEL..labelr..": "..t2;
+        t2 = TTC_LABEL .. labelr .. ": " .. t2;
     end
 
     tt:AddDoubleLine(t1, t2);
@@ -110,7 +116,7 @@ function SCTooltip:AppendMinMaxAvgLine(label, min, max, avg, prefix, lr, tr, sho
     end
 
     if prefix then
-        outstr = prefix..outstr;
+        outstr = prefix .. outstr;
     end
 
     if tr then
@@ -145,11 +151,11 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
     local tickPart = "";
     if ticks and ticks > 0 then
         -- completeBonus = completeBonus * ticks;
-        tickPart = ticks.."x ";
+        tickPart = ticks .. "x ";
     end
 
     if completeBonus > 0 then
-        if coefPct > 0 and coefAPPct > 0 then 
+        if coefPct > 0 and coefAPPct > 0 then
             -- SP and AP
             self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP + %.1f%% * %d AP",
                 tickPart,
@@ -158,14 +164,14 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
                 calcedEffect.spellPower,
                 coefAPPct,
                 calcedEffect.attackPower));
-        elseif coefPct > 0 then 
+        elseif coefPct > 0 then
             -- SP only
             self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP",
                 tickPart,
                 completeBonus,
                 coefPct,
                 calcedEffect.spellPower));
-        else 
+        else
             -- AP only
             self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d AP",
                 tickPart,
@@ -183,20 +189,23 @@ end
 ---@param showToOomTime boolean|nil
 ---@param auraStack AuraStackData|nil
 function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTime, auraStack)
-    local calcedEffect = auraStack and auraStack or calcedSpell[effectNum];
+    local calcedEffect = auraStack and auraStack or calcedSpell.effects[effectNum];
 
-    if not auraStack and effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and calcedSpell.effectiveCost ~= calcedSpell.baseCost then
+    if not auraStack and effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and
+        calcedSpell.effectiveCost ~= calcedSpell.baseCost then
         self:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(calcedSpell.effectiveCost));
     end
 
     if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        self:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(calcedEffect.perResource));
+        self:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT),
+            ("%.2f"):format(calcedEffect.perResource));
     end
 
     if SpellCalc_settings.ttToOom and calcedEffect.doneToOom > 0 then
         local outstr = tostring(self:Round(calcedEffect.doneToOom));
         if showToOomTime then
-            outstr = outstr..(" (%.1fs, %.1f casts)"):format(calcedSpell.castingData.timeToOom, calcedSpell.castingData.castsToOom)
+            outstr = outstr ..
+                (" (%.1fs, %.1f casts)"):format(calcedSpell.castingData.timeToOom, calcedSpell.castingData.castsToOom)
         end
         self:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), outstr);
     end
@@ -226,9 +235,9 @@ end
 
 ---Try to show a tooltip for an effect.
 ---@param calcedSpell CalcedSpell
----@param effNum number
+---@param effNum integer
 ---@param isHeal boolean
----@param spellID number
+---@param spellID integer
 ---@return boolean @True if effect could be handled.
 function SCTooltip:ShowEffectTooltip(calcedSpell, effNum, isHeal, spellID)
     for _, func in ipairs(tooltipHandler) do
@@ -248,28 +257,20 @@ end
 
 --- Append data to tooltip if spell is known to the addon.
 local function TooltipHandler(toolTipFrame)
-    local _, spellID = toolTipFrame:GetSpell();
+    local spellID = select(2, toolTipFrame:GetSpell())--[[@as integer]] ;
     local calcedSpell = _addon:GetCalcedSpell(spellID);
 
-    if calcedSpell == nil then
-        return;
-    end
+    if calcedSpell == nil then return end
 
     tt = toolTipFrame;
 
-    for i = 1, 2, 1 do
-        ---@type CalcedEffect
-        local calcedEffect = calcedSpell[i];
-        if calcedEffect == nil then
-            break;
-        end
-
+    for i, calcedEffect in ipairs(calcedSpell.effects) do
         local isTriggerEffect = false;
         local effectFlags = calcedEffect.effectFlags;
 
         if bit.band(effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
             isTriggerEffect = true;
-            effectFlags = calcedEffect.spellData[1].effectFlags;
+            effectFlags = calcedEffect.spellData.effects[1].effectFlags;
         end
 
         local isHeal = bit.band(effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
@@ -277,46 +278,49 @@ local function TooltipHandler(toolTipFrame)
         local sname = GetSpellInfo(spellID);
 
         if not dummyHandler[sname] and #calcedSpell > 1 and (i == 2 or calcedSpell.combined == nil) then
-            SCTooltip:HeaderLine(GetEffectTitle(effectFlags)..":");
+            SCTooltip:HeaderLine(GetEffectTitle(effectFlags) .. ":");
         end
 
         if isTriggerEffect then
-            if calcedEffect.spellData[2] ~= nil then
-                _addon.util.PrintError("Triggered spell on "..sname.." has 2 effects, this is not supported for tooltips! Please report.");
+            if calcedEffect.spellData.effects[2] ~= nil then
+                _addon.util.PrintError("Triggered spell on " ..
+                    sname .. " has 2 effects, this is not supported for tooltips! Please report.");
                 return;
             end
-            calcedEffect.spellData[2] = calcedEffect.spellData[1];
+            calcedEffect.spellData.effects[2] = calcedEffect.spellData.effects[1];
             for _, func in ipairs(tooltipHandler) do
                 if func(calcedEffect.spellData, i, isHeal, spellID) then
                     isHandled = true;
                     break;
                 end
             end
-            calcedEffect.spellData[2] = nil;
+            calcedEffect.spellData.effects[2] = nil;
         elseif dummyHandler[sname] ~= nil then
             dummyHandler[sname](calcedSpell, i, spellID);
             isHandled = true;
         elseif bit.band(effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) > 0 then
-            _addon.util.PrintError("No dummy tooltip handler for spell "..sname.."! Please report this to the addon author!");
+            _addon.util.PrintError("No dummy tooltip handler for spell " ..
+                sname .. "! Please report this to the addon author!");
         else
             isHandled = SCTooltip:ShowEffectTooltip(calcedSpell, i, isHeal, spellID);
         end
 
         if not isHandled then
-            _addon.util.PrintError("No tooltip handler for spell "..sname.."! Please report this to the addon author!");
+            _addon.util.PrintError("No tooltip handler for spell " .. sname ..
+                "! Please report this to the addon author!");
         end
     end
 
     if SpellCalc_settings.ttShowBuffs then
         toolTipFrame:AddLine(L.TT_BUFFS, 0.5, 1, 0.5);
         if #calcedSpell.buffs > 0 then
-            toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell.buffs, ", "));
+            toolTipFrame:AddLine(TTC_DEFAULT .. table.concat(calcedSpell.buffs, ", "));
         end
-        if calcedSpell[1].spellData and #calcedSpell[1].spellData.buffs then
-            toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell[1].spellData.buffs, ", "));
+        if calcedSpell.effects[1].spellData and #calcedSpell.effects[1].spellData.buffs then
+            toolTipFrame:AddLine(TTC_DEFAULT .. table.concat(calcedSpell.effects[1].spellData.buffs, ", "));
         end
-        if calcedSpell[2] and calcedSpell[2].spellData and #calcedSpell[2].spellData.buffs then
-            toolTipFrame:AddLine(TTC_DEFAULT..table.concat(calcedSpell[2].spellData.buffs, ", "));
+        if calcedSpell.effects[2] and calcedSpell.effects[2].spellData and #calcedSpell.effects[2].spellData.buffs then
+            toolTipFrame:AddLine(TTC_DEFAULT .. table.concat(calcedSpell.effects[2].spellData.buffs, ", "));
         end
     end
 end

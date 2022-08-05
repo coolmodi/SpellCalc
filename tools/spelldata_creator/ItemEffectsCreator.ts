@@ -177,6 +177,7 @@ export class ItemEffectsCreator
         const ordered = await orderItemsByClass(itemEffectData);
 
         luaStrings.GENERAL = createFileHead();
+        luaStrings.GENERAL += "---@type ItemEffects\n"
         luaStrings.GENERAL += "_addon.itemEffects = {\n";
 
         for (const [itemId, effects] of ordered.GENERAL)

@@ -563,6 +563,7 @@ function createLua(pclass: string) {
     console.log("Creating Lua for " + pclass);
     let str = `-- GENERATED
 
+---@class AddonEnv
 local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "${pclass.toUpperCase()}" then
@@ -572,7 +573,7 @@ end
 `;
     let classInfo = buildSpellInfo(pclass);
 
-    str += "_addon.spellInfo = {\n";
+    str += "---@type SpellInfoTable\n_addon.spellInfo = {\n";
     for (let sid in classInfo.rankInfo) {
         let ri = classInfo.rankInfo[sid];
         str += `\t[${sid}] = { -- ${ri.spellnamecomment}\n`;

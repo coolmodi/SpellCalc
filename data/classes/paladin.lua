@@ -4,6 +4,7 @@ local _, playerClass = UnitClass("player");
 if playerClass ~= "PALADIN" then return end
 
 local HOLY_VENGEANCE = GetSpellInfo(31803);
+local BLOOD_CORRUPTION = GetSpellInfo(53742);
 
 _addon.talentDataRaw = {
     -----------------------------
@@ -408,6 +409,11 @@ _addon.classPassives = {
         value = 0
     },
     {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+        scriptKey = BLOOD_CORRUPTION,
+        value = 0
+    },
+    {
         type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,
         affectSpell = {0, 262144},
         scriptKey = "Hammer_of_the_Righteous_MH_DPS",
@@ -433,7 +439,12 @@ _addon.classScripts = {
     ---@param cs CalcedSpell
     ---@param ce CalcedEffect
     Holy_Vengeance_Judgement_Mod = function(val, cs, ce)
-        local stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
+        local stacks;
+        if _addon.Target.HasAuraName(BLOOD_CORRUPTION, true) then
+            stacks = _addon.Target.GetAuraApplications(BLOOD_CORRUPTION, true, true);
+        elseif _addon.Target.HasAuraName(BLOOD_CORRUPTION, true) then
+            stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
+        end
         if stacks then
             ce.modBonus = ce.modBonus * (1 + stacks * val/100);
         end

@@ -3,6 +3,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
+---@type ItemSetDataTable
 _addon.itemSetData = {
     [533] = {
         name = "Battlegear of Undead Slaying",
@@ -163,6 +164,7 @@ _addon.itemSetData = {
     },
 }
 
+---@type SetItemDataTable
 _addon.setItemData = {
     [23090] = 533,
     [23087] = 533,

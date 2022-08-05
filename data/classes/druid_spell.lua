@@ -1,11 +1,13 @@
 -- GENERATED
 
+---@class AddonEnv
 local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "DRUID" then
     return;
 end
 
+---@type SpellInfoTable
 _addon.spellInfo = {
     [339] = { -- Entangling Roots(Rank 1)
         spellLevel = 8,
@@ -3686,6 +3688,7 @@ _addon.spellClassSet = {
     },
 };
 
+---@type ClassGlyphs
 _addon.classGlyphs = {
     [54813] = { -- Glyph of Mangle
         {

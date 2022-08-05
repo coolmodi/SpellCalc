@@ -19,7 +19,8 @@ export function createMechanicLists(m: SpellMechanic[], s: SpellData)
     console.log("Creating lists for auras with mechanics");
     let str = `-- GENERATED
 
-local _, _addon = ...;
+---@class AddonEnv
+local _addon = select(2, ...);
 
 _addon.mechanicAuras = {
 `;

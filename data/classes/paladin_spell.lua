@@ -1,11 +1,13 @@
 -- GENERATED
 
+---@class AddonEnv
 local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
 if playerClass ~= "PALADIN" then
     return;
 end
 
+---@type SpellInfoTable
 _addon.spellInfo = {
     [635] = { -- Holy Light(Rank 1)
         spellLevel = 1,
@@ -2563,6 +2565,7 @@ _addon.spellClassSet = {
     },
 };
 
+---@type ClassGlyphs
 _addon.classGlyphs = {
     [54922] = { -- Glyph of Judgement
         {

@@ -2,11 +2,11 @@
 local _addon = select(2, ...);
 
 ---Glyph slot -> active spellID
----@type table<number, number|nil>
+---@type table<integer, integer|nil>
 local activeGlyphs = {}
 
 ---Update specific slot
----@param slot number
+---@param slot integer
 local function UpdateGlyphSlot(slot)
     _addon.util.PrintDebug("Updating glyph "..slot);
     local _, _, glyphSpellID = GetGlyphSocketInfo(slot);
@@ -40,7 +40,7 @@ local function UpdateGlyphSlot(slot)
 end
 
 --- Update player glyphs.
----@param slot number|nil Only update specific slot.
+---@param slot integer|nil Only update specific slot.
 function _addon:UpdateGlyphs(slot)
     if slot then
         UpdateGlyphSlot(slot);

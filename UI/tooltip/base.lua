@@ -51,8 +51,7 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effNum number
 local function AppendOffhandMitigation(calcedSpell, effNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effNum];
+    local calcedEffect = calcedSpell.effects[effNum];
     local ohd = calcedEffect.offhandAttack;
     assert(ohd, "Offhand data missing for tooltip handler!");
 
@@ -90,8 +89,7 @@ end
 ---@param effectNum number
 ---@param isHeal boolean
 local function AppendChainData(calcedSpell, effectNum, isHeal)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     local completeMult = 1;
     local chainHits = tostring(SCT:Round(calcedEffect.avg));
@@ -135,8 +133,7 @@ end
 ---@param isHeal boolean
 ---@param spellId integer
 local function AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
         if calcedSpell.charges and calcedSpell.charges > 1 then
@@ -186,15 +183,14 @@ end
 ---@param effectNum integer
 ---@param isHeal boolean
 local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
     local triggeredSpell = calcedEffect.spellData;
     local coefEffect = calcedEffect;
     local coefMitSpell = calcedSpell;
     local min, max, avg, minCrit, maxCrit, avgCrit, critChance, avgCombined;
 
     if triggeredSpell then
-        local triggeredEffect = triggeredSpell[1];
+        local triggeredEffect = triggeredSpell.effects[1];
         assert(triggeredEffect, "Triggered duration effect has no effect!");
         isHeal = isHeal or bit.band(triggeredEffect.effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
         min = triggeredEffect.min;
@@ -323,8 +319,7 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum integer
 local function AppendDmgShieldEffect(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
     local charges = calcedSpell.charges and calcedSpell.charges or -1;
 
     if SpellCalc_settings.ttHit then
@@ -350,8 +345,7 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum integer
 local function AppendAbsorbEffect(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L.ABSORB, SCT:Round(calcedEffect.avg));
@@ -370,8 +364,7 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum integer
 local function AppendAutoAttack(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     -- MH
 
@@ -391,11 +384,11 @@ local function AppendAutoAttack(calcedSpell, effectNum)
 
     -- OH
 
-    if calcedEffect.offhandAttack == nil or calcedEffect.offhandAttack.min == 0 then
+    local ohd = calcedEffect.offhandAttack;
+
+    if not ohd or ohd.min == 0 then
         return;
     end
-    ---@type EffectOffhandData
-    local ohd = calcedEffect.offhandAttack;
 
     if SpellCalc_settings.ttHit then
         SCT:AppendMinMaxAvgLine(L.TT_MAINHAND, ohd.min, ohd.max, ohd.avg);
@@ -417,13 +410,12 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum number
 local function ManaRestoreEffect(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
     local triggeredSpell = calcedEffect.spellData;
     local min, max, avg, avgCombined;
 
     if triggeredSpell then
-        local triggeredEffect = triggeredSpell[1];
+        local triggeredEffect = triggeredSpell.effects[1];
         assert(triggeredEffect, "Triggered mana restore spell has no effect!");
         min = triggeredEffect.min;
         max = triggeredEffect.max;
@@ -459,8 +451,7 @@ end
 ---@param isHeal boolean
 ---@param spellId integer
 local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DMG_SHIELD) > 0 then
         AppendDmgShieldEffect(calcedSpell, effectNum);
@@ -499,8 +490,7 @@ SCT:AddHandler(BaseTooltips);
 ---@param calcedSpell CalcedSpell
 ---@param effectNum integer
 local function CoA(calcedSpell, effectNum)
-    ---@type CalcedEffect
-    local calcedEffect = calcedSpell[effectNum];
+    local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
         local avgTickNoSP = calcedEffect.min - calcedEffect.effectivePower;

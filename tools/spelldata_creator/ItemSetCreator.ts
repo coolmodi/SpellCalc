@@ -226,6 +226,7 @@ export class ItemSetCreator
         };
 
         luaStrings.GENERAL = createFileHead();
+        luaStrings.GENERAL += "---@type ItemSetDataTable\n";
         luaStrings.GENERAL += "_addon.itemSetData = {\n";
 
         for (const setData of ordered.GENERAL.values())
@@ -241,7 +242,7 @@ export class ItemSetCreator
             luaStrings.GENERAL += `    },\n`;
         }
 
-        luaStrings.GENERAL += `}\n\n_addon.setItemData = {\n`;
+        luaStrings.GENERAL += `}\n\n---@type SetItemDataTable\n_addon.setItemData = {\n`;
 
         for (const setData of ordered.GENERAL.values())
         {

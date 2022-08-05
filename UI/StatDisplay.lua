@@ -6,9 +6,13 @@ local UNIT_COLOR = "|cFFFFFFCC";
 local KEY_COLOR = "|cFFFFAAAA";
 
 local stats = _addon.stats;
+---@type table|nil
 local lastRow;
+---@type {title:string, tab:table, key:string|number, unit:string, f:FontString}[]
 local singleStats = {};
+---@type {title:string, tab:table, unit:string, f:FontString, b:FontString}[]
 local uniformStats = {};
+---@type {row:WoWFrame, listFrames:WoWFrame[], spells:table<integer, UniformStat>, unit:string}[]
 local spellLists = {};
 
 -------------------------------------------------------
@@ -59,10 +63,10 @@ local function CreateStatRow()
 end
 
 --- Add single stat value pair to the list
--- @param label The label for the stat
--- @param inTable The table its value is found in
--- @param key The key of the value
--- @param unit The unit of the value, if any
+---@param label string The label for the stat
+---@param inTable table<any, any> The table its value is found in
+---@param key any The key of the value
+---@param unit string|nil The unit of the value, if any
 local function AddSingleStat(label, inTable, key, unit)
     if type(inTable) ~= "table" then error("inTable not a table!") end
     local row = CreateStatRow();
@@ -80,7 +84,7 @@ local function AddSingleStat(label, inTable, key, unit)
 end
 
 --- Add strings to a frame for stat data display
--- @param parent The parent frame to add strings to
+---@param parent WoWFrame The parent frame to add strings to
 local function CreateUniformStatStrings(parent)
     local text = parent:CreateFontString(nil, "OVERLAY", "GameFontHighlight");
     text:SetPoint("TOPLEFT", 0, 0);
@@ -96,9 +100,9 @@ local function CreateUniformStatStrings(parent)
 end
 
 --- Add a "uniform" stat to the list
--- @param title The label for the stat
--- @param statTable The table of the stat
--- @param unit The unit of the value, if any
+---@param title string The label for the stat
+---@param statTable UniformStat The table of the stat
+---@param unit string|nil The unit of the value, if any
 local function AddUniformStatTable(statTable, title, unit)
     local row = CreateStatRow();
     local text, affectedBy = CreateUniformStatStrings(row);
@@ -112,9 +116,9 @@ local function AddUniformStatTable(statTable, title, unit)
 end
 
 --- Add a school stat list with single primitive values to the list
--- @param schoolTable The table containing the per school values
--- @param title The label for the stat
--- @param unit The unit of the value, if any
+---@param schoolTable table<SpellSchool, string|number> The table containing the per school values
+---@param title string The label for the stat
+---@param unit string|nil The unit of the value, if any
 local function AddSchoolTableSingle(schoolTable, title, unit)
     if title then
         local row = CreateStatRow();
@@ -129,9 +133,9 @@ local function AddSchoolTableSingle(schoolTable, title, unit)
 end
 
 --- Add a school stat list with "uniform stat entries" to the list
--- @param schoolTable The table containing the per school tables
--- @param title The label for the stat
--- @param unit The unit of the value, if any
+---@param schoolTable table<SpellSchool, UniformStat> The table containing the per school values
+---@param title string The label for the stat
+---@param unit string The unit of the value, if any
 local function AddSchoolTableUniform(schoolTable, title, unit)
     if title then
         local row = CreateStatRow();
@@ -146,9 +150,9 @@ local function AddSchoolTableUniform(schoolTable, title, unit)
 end
 
 --- Add a list of spell specific stats to the list
--- @param spellTable The table containing the spell tables
--- @param title The label for the stat
--- @param unit The unit of the value, if any
+---@param spellTable table<integer, UniformStat> The table containing the spell tables
+---@param title string|nil The label for the stat
+---@param unit string|nil The unit of the value, if any
 local function AddSpellTable(spellTable, title, unit)
     if title then
         local row = CreateStatRow();
@@ -166,7 +170,7 @@ local function AddSpellTable(spellTable, title, unit)
 end
 
 --- Add a title
--- @param title The label for the stat
+---@param title string The label for the stat
 local function AddTitle(title)
     if title then
         local row = CreateStatRow();
@@ -181,7 +185,7 @@ end
 -- @param weaponTable The table containing the per weapon tables
 -- @param title The label for the stat
 -- @param unit The unit of the value, if any
-local function AddWeaponTableUniform(weaponTable, title, unit)
+--[[ local function AddWeaponTableUniform(weaponTable, title, unit)
     if title then
         local row = CreateStatRow();
         local text = row:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2");
@@ -199,12 +203,12 @@ local function AddWeaponTableUniform(weaponTable, title, unit)
         end
         AddUniformStatTable(weaponTable[weaponType], label, unit);
     end
-end
+end ]]
 
 --- Add a school stat list with "uniform stat entries" to the list
----@param versusTable table @The creature type stat table
----@param title string|nil @The title for these stats
----@param unit string @The unit for the values
+---@param versusTable table<CreatureType, UniformStat> The creature type stat table
+---@param title string|nil The title for these stats
+---@param unit string|nil The unit for the values
 local function AddVersusTypeTableUniform(versusTable, title, unit)
     if title then
         local row = CreateStatRow();
@@ -290,8 +294,8 @@ local function UpdateDisplay(self, passed)
             if spellList.unit then
                 ostr = ostr .. UNIT_COLOR .. spellList.unit;
             end
-            spellList.listFrames[pos].text:SetText(ostr);
-            spellList.listFrames[pos].affectedBy:SetText("Src: " .. table.concat(uniformStat.buffs, ", "));
+            spellList.listFrames[pos].text--[[@as FontString]]:SetText(ostr);
+            spellList.listFrames[pos].affectedBy--[[@as FontString]]:SetText("Src: " .. table.concat(uniformStat.buffs, ", "));
             pos = pos+1;
         end
 

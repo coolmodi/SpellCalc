@@ -1,12 +1,15 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
+---@type table<string, integer|nil>
 local activeRelevantTalents = {};
 ---@type TalentDataEntry[]|nil
 local talentData;
 
 local function SetupTalentData()
     _addon.util.PrintDebug("Creating talent data.");
+
+    ---@type table<integer, table<integer, table<integer, integer>>>
     local talentAPIData = {};
 
     for tree = 1, 3 do
@@ -36,7 +39,7 @@ local function SetupTalentData()
 end
 
 --- Update player talents.
----@param forceTalents nil|table
+---@param forceTalents nil|{tree:integer, talent:integer, rank:integer}[]
 function _addon:UpdateTalents(forceTalents)
     self.util.PrintDebug("Updating talents");
 
@@ -82,6 +85,7 @@ function _addon:UpdateTalents(forceTalents)
             self.util.PrintDebug("Add talent rank " .. name .. curRank);
             local idName = name .. curRank;
             for k, effect in ipairs(data.effects) do
+                ---@type integer
                 local value;
                 if effect.values then
                     value = effect.values[curRank];
@@ -91,6 +95,7 @@ function _addon:UpdateTalents(forceTalents)
                         value = value + effect.base;
                     end
                 end
+                assert(value, "Talent def for " .. idName .. " has no value!");
                 local useName = (k > 1) and idName .. "-" .. k or idName;
                 self:ApplyAuraEffect(useName, effect, value);
             end

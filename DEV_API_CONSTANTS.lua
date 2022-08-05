@@ -1,4 +1,4 @@
----@diagnostic disable: undefined-global
+---@diagnostic disable: undefined-global, no-unknown
 --
 -- New constants should be added to this file and other constants
 -- deprecated and moved to this file.

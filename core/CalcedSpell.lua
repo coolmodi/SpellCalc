@@ -3,57 +3,43 @@ local _addon = select(2, ...);
 
 local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 
-
+-- All values for full duration!
 ---@class IgniteDataDef
-local IgniteDataDef = {
-    min = 0,                -- All values for full duration!
-    max = 0,
-    avg = 0
-};
+---@field min number
+---@field max number
+---@field avg number
 
 ---@class MeleeMitigationDef
-local MeleeMitigationDef = {
-    dodge = 0,
-    parry = 0,
-    block = 0,
-    glancing = 0,
-    glancingDmg = 0,
-};
+---@field dodge number
+---@field parry number
+---@field block number
+---@field glancing number
+---@field glancingDmg number
 
 ---@class CastinDataDef
-local CastinDataDef = {
-    castsToOom = 0,
-    timeToOom = 0
-};
+---@field castsToOom number
+---@field timeToOom number
 
 ---@class EffectOffhandData
-local EffectOffhandData = {
-    critChance = 0,
-    hitChance = -1,
-    hitChanceBase = -1,
-    hitChanceBonus = 0,
-    ---@type MeleeMitigationDef
-    meleeMitigation = {
-        dodge = 0,
-        parry = 0,
-        block = 0,
-        glancing = 0,
-        glancingDmg = 0,
-    },
+---@field critChance number
+---@field hitChance number
+---@field hitChanceBase number
+---@field timeToOom number
+---@field hitChanceBonus number
+---@field min number
+---@field meleeMitigation MeleeMitigationDef
+---@field max number
+---@field avg number
+---@field minCrit number
+---@field maxCrit number
+---@field avgCrit number
+---@field avgCombined number
+---@field avgAfterMitigation number
+---@field perSec number
 
-    min = 0,
-    max = 0,
-    avg = 0,
-    minCrit = 0,
-    maxCrit = 0,
-    avgCrit = 0,
-    avgCombined = 0,
-    avgAfterMitigation = 0,
-    perSec = 0,
-};
-
----@class AuraStackData
 ---Values for stackable auras when kept at max stacks, only heal compatible for now (Lifebloom)
+---@class AuraStackData
+---@field doneToOom number|nil
 local AuraStackData = {
     stacks = 0,
     min = 0,
@@ -64,8 +50,6 @@ local AuraStackData = {
     perSec = 0,
     perSecDurOrCD = 0,
     perResource = 0,
-    ---@type number|nil
-    doneToOom = nil,
     ticks = 0,
 }
 
@@ -92,14 +76,14 @@ local AuraStackData = {
 ---@field perSecDurOrCD number|nil Done per sec over duration or DPS(CD).
 ---@field perResource number Done per resource spent using the effective cost.
 ---@field doneToOom number|nil Done until OOM for mana spells.
----@field ticks number|nil Ticks for duration spells.
+---@field ticks integer|nil Ticks for duration spells.
 ---@field tickPeriod number|nil Tickperiod for duration spells.
 ---@field auraStack AuraStackData|nil If aura is stackable this will hold data for sustained max stacks.
 ---@field igniteData IgniteDataDef|nil
 ---@field offhandAttack EffectOffhandData|nil Data for offhand attack (auto attack with dual wield, maybe more with TBC?).
----@field chains number|nil How often the effect chains, if any.
+---@field chains integer|nil How often the effect chains, if any.
 ---@field chainMult number|nil Multiplier for each chain, if any.
----@field triggeredSpell number|nil Id of triggered spell if this effect triggers one.
+---@field triggeredSpell integer|nil Id of triggered spell if this effect triggers one.
 ---@field spellData CalcedSpell|nil Data for triggered spell if this effect triggers one.
 local CalcedEffect = {
     effectFlags = 0,
@@ -125,14 +109,13 @@ local CalcedEffect = {
 
 CalcedEffect.__index = CalcedEffect;
 
----@class CalcedSpell @Represents a calculated spell.
----@field school number The spell school.
+---@class CalcedSpell Represents a calculated spell.
+---@field school SpellSchool The spell school.
 ---@field duration number|nil Duration after duration modifiers with haste if used for spell.
 ---@field durationNoHaste number|nil Duration after duration modifiers without haste.
----@field [1] CalcedEffect|nil Effect 1
----@field [2] CalcedEffect|nil Effect 2
+---@field effects CalcedEffect[] The effects of the spell
 local CalcedSpell = {
-    school = 0,
+    school = 1,
     critChance = 0,
     critMult = 0,
     ---@type string[]
@@ -170,7 +153,7 @@ CalcedSpell.__index = CalcedSpell;
 
 
 --- Add buff names to buff list
----@param buffs table The table of buff names to add
+---@param buffs string[] The table of buff names to add
 function CalcedSpell:AddToBuffList(buffs)
     for _, buffName in ipairs(buffs) do
         table.insert(self.buffs, buffName);
@@ -183,16 +166,16 @@ function CalcedSpell:ResetBuffList()
 end
 
 --- Set effect to be a triggered spell.
----@param triggeredSpell number
----@param effIndex number
+---@param triggeredSpell integer
+---@param effIndex integer
 function CalcedSpell:SetTriggeredSpell(triggeredSpell, effIndex)
     if self[effIndex] ~= nil and self[effIndex].effectFlags ~= ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
         _addon.util.PrintError("Tried to add triggered spell when 2nd effect is already in use!");
         return;
     end
 
-    if self[effIndex] == nil then
-        self[effIndex] = {
+    if self.effects[effIndex] == nil then
+        self.effects[effIndex] = {
             effectFlags = ADDON_EFFECT_FLAGS.TRIGGERED_SPELL,
             triggeredSpell = triggeredSpell,
             spellData = nil
@@ -201,10 +184,10 @@ function CalcedSpell:SetTriggeredSpell(triggeredSpell, effIndex)
 end
 
 --- Remove effect if it is a triggered spell.
----@param effIndex number
+---@param effIndex integer
 function CalcedSpell:UnsetTriggeredSpell(effIndex)
-    if self[effIndex] ~= nil and self[effIndex].effectFlags == ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
-        self[effIndex] = nil;
+    if self.effects[effIndex] ~= nil and self[effIndex].effectFlags == ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
+        self.effects[effIndex] = nil;
     end
 end
 
@@ -233,17 +216,19 @@ end
 
 --- Make a new table to store calculated spell data
 ---@param effectFlags integer[]
----@param spellRankEffects table<number, SpellRankEffectData|nil>
+---@param spellRankEffects SpellEffectData[]
 ---@return CalcedSpell
 function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
-    local newInstance = {};
-    setmetatable(newInstance, CalcedSpell);
+    assert(#effectFlags > 0, "Tried to create new spell with no effect!");
+
+    local newInstance = setmetatable({}, CalcedSpell);
 
     newInstance.buffs = {};
     newInstance.castingData = {
         castsToOom = 0,
         timeToOom = 0
     };
+    newInstance.effects = {};
 
     for i = 1, 2, 1 do
         if effectFlags[i] == nil then
@@ -270,7 +255,7 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
                 effTable.triggeredSpell = spellRankEffects[i].valueBase;
             end
 
-            newInstance[i] = effTable;
+            newInstance.effects[i] = effTable;
         end
     end
 

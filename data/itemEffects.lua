@@ -3,6 +3,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
+---@type ItemEffects
 _addon.itemEffects = {
     [18346] = { -- Threadbare Trousers
         {

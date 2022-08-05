@@ -21,28 +21,29 @@ local ITEM_SLOTS = {
     [18] = "ranged",
 };
 
+---@type table<integer,boolean|integer,nil>
 local missingItems = { _count = 0 };
+---@type table<integer, integer>
 local items = {};
+---@type table<integer, integer>
 local sets = {};
+---@type table<string, integer|nil>
 local weaponSubClass = {
-    ---@type integer|nil
     mainhand = nil,
-    ---@type integer|nil
     offhand = nil,
-    ---@type integer|nil
     ranged = nil
 };
 
 local SetWeaponBaseDmgAndSpeed;
 do
-    local scanTT = CreateFrame("GameTooltip", "SpellCalcItemsScanTT", nil, "GameTooltipTemplate");
+    local scanTT = CreateFrame("GameTooltip", "SpellCalcItemsScanTT", nil, "GameTooltipTemplate")--[[@as WoWGameTooltip]];
     scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
     scanTT:AddFontStrings(
         scanTT:CreateFontString("$parentTextLeft1", nil, "GameTooltipText"),
         scanTT:CreateFontString("$parentTextRight1", nil, "GameTooltipText"));
 
     ---Set weapon attack speed and base damage from tooltip.
-    ---@param itemId number|nil
+    ---@param itemId integer|nil
     ---@param key string mainhand, offhand or ranged
     function SetWeaponBaseDmgAndSpeed(itemId, key)
         local speed = 2;
@@ -54,8 +55,8 @@ do
             scanTT:SetOwner(WorldFrame, "ANCHOR_CURSOR");
             scanTT:SetHyperlink("item:" .. itemId .. ":0:0:0:0:0:0:0");
             for i = 1, scanTT:NumLines() do
-                local fstringl = _G["SpellCalcItemsScanTTTextLeft" .. i];
-                local fstringr = _G["SpellCalcItemsScanTTTextRight" .. i];
+                local fstringl = _G["SpellCalcItemsScanTTTextLeft" .. i]--[[@as FontString]];
+                local fstringr = _G["SpellCalcItemsScanTTTextRight" .. i]--[[@as FontString]];
                 if fstringl and fstringr then
                     local textl = fstringl:GetText();
                     local textr = fstringr:GetText();
@@ -83,8 +84,8 @@ do
 end
 
 --- Update set item count and add/remove buffs as needed
----@param setId number
----@param change number
+---@param setId integer
+---@param change integer
 local function UpdateSet(setId, change)
     if sets[setId] == nil then
         sets[setId] = change;
@@ -115,7 +116,7 @@ local function UpdateSet(setId, change)
 end
 
 ---Handle item update after recieved item data.
----@param itemId number
+---@param itemId integer
 function _addon:UpdateRecievedItemData(itemId)
     if missingItems[itemId] then
         missingItems[itemId] = 0;
@@ -128,8 +129,8 @@ function _addon:UpdateRecievedItemData(itemId)
 end
 
 --- Equip item for slot
----@param itemId number
----@param slotId number
+---@param itemId integer
+---@param slotId integer
 local function EquipItem(itemId, slotId)
     _addon.util.PrintDebug("Item " .. itemId .. " -> Slot " .. slotId);
     local itemName, _, _, _, _, _, itemSubTypeName, _, _, _, _, classID, subclassID = GetItemInfo(itemId);
@@ -188,7 +189,7 @@ local function EquipItem(itemId, slotId)
 end
 
 --- Unequip previously equipped item
----@param slotId number
+---@param slotId integer
 local function UnequipItem(slotId)
     local itemName = GetItemInfo(items[slotId]);
     local setId = _addon.setItemData[items[slotId]];
@@ -257,10 +258,10 @@ function _addon:UpdateItems()
     -- Handle meta gems.
     -- 99 is used for meta gem item slot ID internally.
     if items[1] then
-        local gem1, gem2, gem3 = string.match(GetInventoryItemLink("player", 1), "Hitem:%d+:%d*:(%d*):(%d*):(%d*):");
-        gem1 = tonumber(gem1);
-        gem2 = tonumber(gem2);
-        gem3 = tonumber(gem3);
+        local gem1p, gem2p, gem3p = strmatch(GetInventoryItemLink("player", 1), "Hitem:%d+:%d*:(%d*):(%d*):(%d*):");
+        local gem1 = tonumber(gem1p)--[[@as integer]];
+        local gem2 = tonumber(gem2p)--[[@as integer]];
+        local gem3 = tonumber(gem3p)--[[@as integer]];
         local gemId;
         -- Only meta gems should ever have item effects defined.
         if self.itemEffects[gem1] then

@@ -15,7 +15,7 @@ Missing auras
 ---@class AddonEnv
 local _addon = select(2, ...);
 local aurasTarget = _addon.aurasTarget;
-local SETargetAuraChanged = _addon.ScriptEffects.TargetAuraChanged;
+local SETargetAuraChanged = _addon.scripting.TargetAuraChanged;
 
 ---@type table<number, ActiveCategoryData>
 local activeCategory = {};
@@ -64,17 +64,18 @@ local function ApplyTargetAuraEffect(spellId, targetAuraEffect, name, stacks, ef
     end
 
     local acd = activeCategory[targetAuraEffect.debuffCategory];
+    local activeGroupSpell = acd.activeSpellId;
     acd.auras[spellId] = value;
 
-    if acd.activeSpellId == nil then
+    if activeGroupSpell == nil then
         _addon:ApplyAuraEffect(name, targetAuraEffect, value);
         acd.activeSpellId = spellId;
         return true;
     end
 
-    local currentValue = acd.auras[acd.activeSpellId];
+    local currentValue = acd.auras[activeGroupSpell];
     if math.abs(value) > math.abs(currentValue) then
-        local oName = GetSpellInfo(acd.activeSpellId);
+        local oName = GetSpellInfo(activeGroupSpell);
         _addon:RemoveAuraEffect(oName, targetAuraEffect, currentValue);
         _addon:ApplyAuraEffect(name, targetAuraEffect, value);
         acd.activeSpellId = spellId;
@@ -245,7 +246,7 @@ end
 ---@param auraName string The aura name.
 ---@param personalOnly boolean|nil Only return true if aura source is self.
 ---@param debuff boolean|nil Look for debuff instead of buff.
----@return number|nil
+---@return integer|nil
 function Target.GetAuraApplications(auraName, personalOnly, debuff)
     if personalOnly then
         return aurasByNamePersonalStacks[auraName];

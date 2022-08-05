@@ -7,7 +7,7 @@ local toggledFlags = 0;
 --- Apply or remove effect for destination
 ---@param apply boolean
 ---@param value integer The effect value, negative to remove buff
----@param dest table The destination table
+---@param dest UniformStat The destination table
 ---@param name string The name of the buff
 local function ApplyOrRemove(apply, value, dest, name)
     dest.val = dest.val + value;
@@ -22,9 +22,10 @@ end
 ---@param apply boolean
 ---@param name string The name of the buff
 ---@param value integer The effect value, negative to remove buff
----@param destTable table The destination table
+---@param destTable table<integer, UniformStat> The destination table
 ---@param setMasks integer[] The masks of class spell sets to affect
 local function ApplyOrRemoveSpellSet(apply, name, value, destTable, setMasks)
+    ---@type table<integer, boolean>
     local spellIdsDone = {};
     for k, setMask in ipairs(setMasks) do
         for setBit, spellSet in pairs(_addon.spellClassSet[k]) do
@@ -47,7 +48,7 @@ end
 ---@param apply boolean
 ---@param name string The name of the buff
 ---@param value integer The effect value, negative to remove buff
----@param destTable table The destination table
+---@param destTable table<integer, UniformStat> The destination table
 ---@param mask integer The mask of keys to affect
 local function ApplyOrRemoveByMask(apply, name, value, destTable, mask)
     -- Weapons start at 0, other stuff at 1, should always be compatible with everything this way
@@ -121,12 +122,16 @@ local effectAffectKey = {
     [EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT] = stats.targetMechanicModDmgTakenPct,
 }
 
+---@class DelayedUpdateTimer : WoWFrame
 local DelayedUpdateTimer = CreateFrame("Frame");
 DelayedUpdateTimer.timerDiff = 0;
 ---@type number[]
 DelayedUpdateTimer.timers = {};
 DelayedUpdateTimer.timerCount = 0;
 do
+    ---comment
+    ---@param self DelayedUpdateTimer
+    ---@param diff number
     local function TimerUpdate(self, diff)
         self.timerDiff = self.timerDiff + diff;
         if self.timerDiff > 0.1 then
@@ -247,7 +252,7 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
     end
 
     if effectBase.type > EFFECT_TYPE.SCRIPT_MIN_ID_DO_NOT_USE then
-        _addon.ScriptEffects.HandleEffect(apply, name, value, effectBase);
+        _addon.scripting.HandleEffect(apply, name, value, effectBase);
         return;
     end
 

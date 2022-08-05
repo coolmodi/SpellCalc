@@ -1,6 +1,6 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
----@class LocaleTable
+
 local L = _addon:AddLocalization("enUS", true);
 if L == nil then return; end
 
