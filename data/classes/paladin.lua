@@ -471,7 +471,6 @@ _addon.classScripts = {
     ---Shitty hackfix I guess. Some Seals/Judgements are affected by 2H weapon spec.
     -- Affected: JoR, SoR, JoC, JoW, JoL
     -- Not affected: SoV, JoV, SoC
-    -- TODO: Find out how the fuck this works. Other spells affected? Is this intended?
     -- See talent def.
     ---@param val number
     ---@param cs CalcedSpell

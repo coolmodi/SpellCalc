@@ -254,7 +254,6 @@ function _addon:UpdateDmgDoneMods()
         self.stats.spellCrit[i] = GetSpellCritChance(i);
     end
 
-    -- TODO: does this include talents and buffs reliably?
     self.stats.attackCrit.mainhand = GetCritChance();
     self.stats.attackCrit.ranged = GetRangedCritChance();
 

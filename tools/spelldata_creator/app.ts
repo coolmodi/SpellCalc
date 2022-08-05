@@ -494,6 +494,7 @@ function buildSpellInfo(pclass: string) {
         // Create rank info if needed
         if (!classInfo.rankInfo[spellId]) {
             let dur = (spellMisc.DurationIndex) ? spellData.getSpellDuration(spellMisc.DurationIndex).Duration / 1000 : 0;
+            if (dur < 1 ) dur = 0;
             classInfo.rankInfo[spellId] = {
                 school: SCHOOL_MASK_TO_ENUM[spellMisc.SchoolMask],
                 isChannel: ((spellMisc["Attributes[1]"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
