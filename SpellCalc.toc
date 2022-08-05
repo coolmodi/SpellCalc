@@ -17,8 +17,9 @@ i18n/loc.lua
 i18n/enUS.lua
 
 constants.lua
-
 helper.lua
+
+system/scriptEffects.lua
 
 data/auras.lua
 data/aurasTarget.lua
@@ -73,7 +74,6 @@ slashcmd.lua
 events.lua
 
 system/stats.lua
-system/scriptEffects.lua
 system/aura.lua
 system/weaponEnchants.lua
 system/talents.lua

@@ -560,55 +560,41 @@ _addon.classPassives = {
 -- Scripts
 --------------------------------------------------------------------------
 
-_addon.classScripts = {
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    ---@param spellId number
-    ---@param si SpellInfo
-    ---@param scriptType number
-    Imp_IS_Target_Aura_Check = function(val, cs, ce, spellId, si, scriptType)
-        if scriptType == _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT then
-            -- Wrath
-            if _addon.Target.HasAuraName(INSECT_SWARM, true) then
-                ce.modBonus = ce.modBonus * (1 + val/100);
-            end
-        else
-            -- Starfire
-            if _addon.Target.HasAuraName(MOONFIRE, true) then
-                cs.critChance = cs.critChance + val;
-            end
-        end
-    end,
-
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    Glyph_of_Regrowth = function(val, cs, ce)
-        if _addon.Target.HasAuraName(REGROWTH, true) then
+_addon.scripting.RegisterScript("Imp_IS_Target_Aura_Check", function (val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Imp_IS_Target_Aura_Check called with ce nil!");
+    if scriptType == _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT then
+        -- Wrath
+        if _addon.Target.HasAuraName(INSECT_SWARM, true) then
             ce.modBonus = ce.modBonus * (1 + val/100);
         end
-        return _addon.Target.HasAuraName(REGROWTH, true) and val or 0;
-    end,
-
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    Nourish_Script = function(val, cs, ce)
-        local hasAura = _addon.Target.HasAuraName;
-        if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
-        or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
-            ce.modBonus = ce.modBonus * 1.2;
-        end
-    end,
-
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    Imp_FF_Crit = function(val, cs, ce)
-        if _addon.Target.HasAuraName(FF)
-        or _addon.Target.HasAuraName(FF_FERAL) then
+    else
+        -- Starfire
+        if _addon.Target.HasAuraName(MOONFIRE, true) then
             cs.critChance = cs.critChance + val;
         end
-    end,
-}
+    end
+end);
+
+_addon.scripting.RegisterScript("Glyph_of_Regrowth", function (val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Glyph_of_Regrowth called with ce nil!");
+    if _addon.Target.HasAuraName(REGROWTH, true) then
+        ce.modBonus = ce.modBonus * (1 + val/100);
+    end
+end);
+
+_addon.scripting.RegisterScript("Nourish_Script", function (val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Nourish_Script called with ce nil!");
+    local hasAura = _addon.Target.HasAuraName;
+    if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
+    or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
+        ce.modBonus = ce.modBonus * 1.2;
+    end
+end);
+
+_addon.scripting.RegisterScript("Imp_FF_Crit", function (val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Imp_FF_Crit called with ce nil!");
+    if _addon.Target.HasAuraName(FF)
+    or _addon.Target.HasAuraName(FF_FERAL) then
+        cs.critChance = cs.critChance + val;
+    end
+end);

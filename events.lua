@@ -35,7 +35,6 @@ end
 
 function handlers.PLAYER_LOGIN()
     _A.ActionBarValues:Setup();
-    _A.scripting.LoadScripts();
     _A:ApplyPassives();
 end
 

@@ -48,15 +48,6 @@ function scripting.RegisterScript(scriptKey, func)
     scripts[scriptKey] = func;
 end
 
----Load scripts.
-function scripting.LoadScripts()
-    if _addon.classScripts then
-        for scriptKey, func in pairs(_addon.classScripts) do
-            scripting.RegisterScript(scriptKey, func);
-        end
-    end
-end
-
 ---Handle SCRIPT_ effect types.
 ---@param apply boolean
 ---@param name string

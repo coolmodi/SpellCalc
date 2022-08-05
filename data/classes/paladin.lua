@@ -428,54 +428,44 @@ _addon.classPassives = {
 -- Scripts
 --------------------------------------------------------------------------
 
-_addon.classScripts = {
-    ---Scale Shield of Righteousness with block value.
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    Shield_of_Righteousness_BV_Scale = function(val, cs, ce)
-        ce.effectivePower = GetShieldBlock() * ce.modBonus;
-    end,
+-- Scale Shield of Righteousness with block value.
+_addon.scripting.RegisterScript("Shield_of_Righteousness_BV_Scale", function(val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Shield_of_Righteousness_BV_Scale script called with ce nil?!");
+    ce.effectivePower = GetShieldBlock() * ce.modBonus;
+end);
 
-    ---Increase Judgement of Vengeance/Corruption damage if target has seal debuff stacks.
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    Holy_Vengeance_Judgement_Mod = function(val, cs, ce)
-        local stacks;
-        if _addon.Target.HasAuraName(BLOOD_CORRUPTION, true) then
-            stacks = _addon.Target.GetAuraApplications(BLOOD_CORRUPTION, true, true);
-        elseif _addon.Target.HasAuraName(BLOOD_CORRUPTION, true) then
-            stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
-        end
-        if stacks then
-            ce.modBonus = ce.modBonus * (1 + stacks * val/100);
-        end
-    end,
-
-    ---Set Hammer of the Righteous damage.
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    Hammer_of_the_Righteous_MH_DPS = function(val, cs, ce)
-        -- Does 4 times the weapon dps WITHOUT HASTE!
-        local stats = _addon.stats;
-        local baseAtkSpd = stats.baseAttackSpeed.mainhand;
-        if baseAtkSpd > 0 then
-            local avgDmg = 0.5 * (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max);
-            ce.effectivePower = 4 * avgDmg * (1 / stats.baseAttackSpeed.mainhand) - 1;
-            ce.effectivePower = ce.effectivePower * ce.modBonus;
-        end
-    end,
-
-    ---Shitty hackfix I guess. Some Seals/Judgements are affected by 2H weapon spec.
-    -- Affected: JoR, SoR, JoC, JoW, JoL
-    -- Not affected: SoV, JoV, SoC
-    -- See talent def.
-    ---@param val number
-    ---@param cs CalcedSpell
-    ---@param ce CalcedEffect
-    Two_Hand_Weapon_Spec_Hackfixffs = function (val, cs, ce)
-        ce.modBonus = ce.modBonus * (1 + val/100);
+-- Increase Judgement of Vengeance/Corruption damage if target has seal debuff stacks.
+_addon.scripting.RegisterScript("Holy_Vengeance_Judgement_Mod", function(val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Holy_Vengeance_Judgement_Mod script called with ce nil?!");
+    local stacks;
+    if _addon.Target.HasAuraName(BLOOD_CORRUPTION, true) then
+        stacks = _addon.Target.GetAuraApplications(BLOOD_CORRUPTION, true, true);
+    elseif _addon.Target.HasAuraName(BLOOD_CORRUPTION, true) then
+        stacks = _addon.Target.GetAuraApplications(HOLY_VENGEANCE, true, true);
     end
-}
+    if stacks then
+        ce.modBonus = ce.modBonus * (1 + stacks * val / 100);
+    end
+end);
+
+-- Set Hammer of the Righteous damage.
+_addon.scripting.RegisterScript("Hammer_of_the_Righteous_MH_DPS", function(val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Hammer_of_the_Righteous_MH_DPS script called with ce nil?!");
+    -- Does 4 times the weapon dps WITHOUT HASTE!
+    local stats = _addon.stats;
+    local baseAtkSpd = stats.baseAttackSpeed.mainhand;
+    if baseAtkSpd > 0 then
+        local avgDmg = 0.5 * (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max);
+        ce.effectivePower = 4 * avgDmg * (1 / stats.baseAttackSpeed.mainhand) - 1;
+        ce.effectivePower = ce.effectivePower * ce.modBonus;
+    end
+end);
+
+-- Shitty hackfix I guess. Some Seals/Judgements are affected by 2H weapon spec.
+-- Affected: JoR, SoR, JoC, JoW, JoL
+-- Not affected: SoV, JoV, SoC
+-- See talent def.
+_addon.scripting.RegisterScript("Two_Hand_Weapon_Spec_Hackfixffs", function(val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Two_Hand_Weapon_Spec_Hackfixffs script called with ce nil?!");
+    ce.modBonus = ce.modBonus * (1 + val / 100);
+end);

@@ -116,6 +116,3 @@ _addon.talentDataRaw = {}
 
 ---@type UnitAuraEffect[]
 _addon.classPassives = {};
-
----@type table<string, EffectScript>
-_addon.classScripts = {};
