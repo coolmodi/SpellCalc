@@ -10,6 +10,7 @@ end
 _addon.spellBaseInfo = {
 };
 
+---@type SpellInfoTable
 _addon.spellInfo = {
 };
 

@@ -273,6 +273,18 @@ _addon.talentDataRaw = {
             }
         }
     },
+    { -- Feral Instince
+        tree = 2,
+        tier = 2,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {0, 1048576, 1024},
+                perPoint = 10
+            }
+        }
+    },
     { -- Savage Fury
         tree = 2,
         tier = 2,
@@ -290,7 +302,7 @@ _addon.talentDataRaw = {
             }
         }
     },
-    { -- Predatory Instincts
+    { -- Predatory Instincts TODO: only in cat
         tree = 2,
         tier = 8,
         column = 3,
@@ -302,7 +314,7 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Rend and Tear (2/28), dmg and crit on bleeding targets
+    -- TODO: Rend and Tear (2/28), dmg and crit on bleeding targets (dmg is multiplicative script)
     { -- Primal Gore
         tree = 2,
         tier = 10,
@@ -318,6 +330,18 @@ _addon.talentDataRaw = {
     -----------------------------
     -- Restoration
     -----------------------------
+    { -- Naturalist
+        tree = 3,
+        tier = 2,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
+                perPoint = 2
+            }
+        }
+    },
     { -- Intensity
         tree = 3,
         tier = 3,

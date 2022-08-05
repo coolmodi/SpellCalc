@@ -133,7 +133,7 @@ end
 ---@param tickOverride number|nil @Use this amount of ticks, ignore default
 ---@param noCharge boolean|nil @Ignore charges and just output raw coef and used bonus
 function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverride, noCharge)
-    if not SpellCalc_settings.ttPower or not calcedEffect.effectiveSpCoef or calcedEffect.effectiveSpCoef == 0 then
+    if not SpellCalc_settings.ttPower or (calcedEffect.effectiveSpCoef == 0 and calcedEffect.effectiveApCoef == 0) then
         return;
     end
 
@@ -197,8 +197,17 @@ function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTim
     end
 
     if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        self:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT),
-            ("%.2f"):format(calcedEffect.perResource));
+        local str;
+        if isHeal then 
+            str = L.HEAL_PER_MANA_SHORT;
+        elseif calcedSpell.costType == Enum.PowerType.Mana then
+            str = L.DMG_PER_MANA_SHORT;
+        elseif calcedSpell.costType == Enum.PowerType.Rage then
+            str = L["DPR"];
+        elseif calcedSpell.costType == Enum.PowerType.Rage then
+            str = L["DPE"];
+        end
+        self:SingleLine(str, ("%.2f"):format(calcedEffect.perResource));
     end
 
     if SpellCalc_settings.ttToOom and calcedEffect.doneToOom > 0 then
@@ -277,7 +286,7 @@ local function TooltipHandler(toolTipFrame)
         local isHandled = false;
         local sname = GetSpellInfo(spellID);
 
-        if not dummyHandler[sname] and #calcedSpell > 1 and (i == 2 or calcedSpell.combined == nil) then
+        if not dummyHandler[sname] and #calcedSpell.effects > 1 and (i == 2 or calcedSpell.combined == nil) then
             SCTooltip:HeaderLine(GetEffectTitle(effectFlags) .. ":");
         end
 

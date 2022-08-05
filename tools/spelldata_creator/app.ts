@@ -489,7 +489,7 @@ function buildSpellInfo(pclass: string) {
         if (!spellcat) throw new Error("Sspell category not found!");
 
         // Skip physical spells except auto attack and SOtC for now
-        if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID) && spellId != 35395 && spellId != 53385) continue;
+        //if (spellMisc.SchoolMask == 1 && spellName != "Attack" && !isSeal(spellMisc.SpellID) && spellId != 35395 && spellId != 53385) continue;
 
         // Create rank info if needed
         if (!classInfo.rankInfo[spellId]) {
@@ -514,6 +514,7 @@ function buildSpellInfo(pclass: string) {
                 baseCostPct: 0,
                 usePeriodicHaste: (spellMisc["Attributes[5]"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
                 mechanic: spellcat.Mechanic,
+                onNextAttack: (spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_ON_NEXT_SWING_NO_DAMAGE) > 0,
                 effects: []
             };
 
@@ -595,6 +596,7 @@ end
         if (ri.charges != 0) str += `\t\tcharges = ${ri.charges},\n`;
         if (ri.usePeriodicHaste) str += `\t\tusePeriodicHaste = true,\n`;
         if (USEFUL_SPELL_MECHANICS[ri.mechanic]) str += `\t\tmechanic = ${ri.mechanic},\n`;
+        if (ri.onNextAttack) str += `\t\tonNextSwing = true,\n`;
 
         str += `\t\teffects = {\n`;
 

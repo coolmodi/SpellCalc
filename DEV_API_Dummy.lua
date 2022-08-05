@@ -354,6 +354,7 @@ function UnitStat(unit, statID) end
 ---@class SpellPowerEntry
 local SpellPowerEntry = {
     hasRequiredAura = true,
+    ---@type PowerType
     type = 1,
     name = "name",
     cost = 1,

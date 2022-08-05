@@ -117,6 +117,7 @@ const enum DEFENSE_TYPE {
 }
 
 const enum SPELL_ATTR0 {
+    SPELL_ATTR_ON_NEXT_SWING_NO_DAMAGE = 0x4,
     SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK = 0x200000,
 }
 
@@ -188,6 +189,7 @@ interface RankInfo {
     baseCostPct: number,
     usePeriodicHaste: boolean,
     mechanic: number,
+    onNextAttack: boolean,
     effects: EffectInfo[]
 }
 

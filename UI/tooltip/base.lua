@@ -271,7 +271,7 @@ end
 local function AppendCombinedEffect(calcedSpellss)
     local combSpam = calcedSpellss.combined.spam;
     local combDur = calcedSpellss.combined.fullDuration;
-    local isHeal = bit.band(calcedSpellss[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
+    local isHeal = bit.band(calcedSpellss.effects[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
 
     if SpellCalc_settings.ttHit then
         local stype = (isHeal and L.HEAL or L.DAMAGE);
@@ -476,7 +476,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
         AppendAuraStackEffect(calcedSpell, effectNum, isHeal, as);
     end
 
-    if SpellCalc_settings.ttCombined and effectNum == 2 and calcedSpell.combined ~= nil then
+    if SpellCalc_settings.ttCombined and effectNum == 2 and calcedSpell.combined ~= nil and calcedSpell.costType == Enum.PowerType.Mana then
         SCT:HeaderLine(L.TT_TITLE_COMB);
         AppendCombinedEffect(calcedSpell);
     end

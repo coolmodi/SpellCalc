@@ -342,10 +342,15 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, effCastTime, effec
 
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    if spellInfo.isChannel then
-        calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
+    if calcedSpell.meleeMitigation then
+        local realHit = math.max(calcedSpell.hitChance - calcedSpell.meleeMitigation.dodge - calcedSpell.meleeMitigation.parry, 0);
+        calcedEffect.avgAfterMitigation = total * realHit/100;
     else
-        calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
+        if spellInfo.isChannel then
+            calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
+        else
+            calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
+        end
     end
 
     if calcedSpell.hitChanceBinaryLoss == nil then
@@ -568,10 +573,13 @@ local function SchoolDamage(_, calcedSpell, effNum, spellInfo, effCastTime, effe
         calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
     end
 
-    -- TODO: Melee mitigation is also needed here (e.g. Swipe), will probably be needed for other effects too!
-    -- Ranged works fine as is, can't dodge or parry. If block is ever implemented it will be needed too though.
-    -- Move mitigation to a common function or handle before so it applies to all effects as applicable.
-    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedSpell.hitChance/100;
+    -- TODO: Move mitigation to a common function?
+    if calcedSpell.meleeMitigation then
+        local realHit = math.max(calcedSpell.hitChance - calcedSpell.meleeMitigation.dodge - calcedSpell.meleeMitigation.parry, 0);
+        calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * realHit/100;
+    else
+        calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedSpell.hitChance/100;
+    end
 
     if calcedSpell.hitChanceBinaryLoss == nil then
         calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);

@@ -10,6 +10,8 @@ local HEALING_WAVE = GetSpellInfo(332);
 local LESSER_HEALING_WAVE = GetSpellInfo(8004);
 local FLAME_SHOCK = GetSpellInfo(8053);
 local HOLY_SHOCK = GetSpellInfo(33072);
+local MAUL = GetSpellInfo(48480);
+local HEROIC_STRIKE = GetSpellInfo(284);
 
 local CostHandler = {};
 
@@ -93,6 +95,34 @@ function CostHandler.Mana(calcedSpell, spellInfo, effCastTime, spellName, spellI
         calcedSpell.castingData.castsToOom = math.floor(calcedSpell.castingData.castsToOom);
     end
     calcedSpell.castingData.timeToOom = calcedSpell.castingData.castsToOom * effCastTime;
+end
+
+--- Set vars for rage cost.
+---@param calcedSpell CalcedSpell
+---@param spellInfo SpellInfo
+---@param effCastTime number
+---@param spellName string
+---@param spellId integer
+function CostHandler.Rage(calcedSpell, spellInfo, effCastTime, spellName, spellId)
+    if spellName == MAUL or spellName == HEROIC_STRIKE then
+        -- Some rough rage gained on hit estimate?
+        local physMask = _addon.CONST.SCHOOL_MASK.PHYSICAL;
+        local crit = calcedSpell.critChance / 100;
+        local f = 3.5 + 3.5 * crit;
+        local c;
+        local pLevel = UnitLevel("player");
+        if pLevel < 71 then
+            local lvl2 = pLevel * pLevel;
+            c = 0.0091107836 * lvl2 + 3.225598133 * pLevel + 4.2652911;
+        else
+            -- This is just a guess, better than nothing.
+            c = 453.3 - 17.86 * (80 - pLevel);
+        end
+        local s = stats.attackSpeed.mainhand;
+        local roughHitDmg = (1 + 1 * crit) * stats.schoolModPctDamageMult[physMask].currentMult * (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max) / 2;
+        local rangeHitGained = (15 * roughHitDmg) / (4 * c) + (f * s) / 2;
+        calcedSpell.effectiveCost = calcedSpell.baseCost + rangeHitGained;
+    end
 end
 
 _addon.CostHandler = CostHandler;

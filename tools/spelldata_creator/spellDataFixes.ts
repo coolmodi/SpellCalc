@@ -249,11 +249,18 @@ function mageFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-function druidFixes(se: {[index: number]: SpellEffect})
+function druidFixes(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory})
 {
     console.log("Fixing druid coefs and effects");
     const STARFALL = [48505, 53199, 53200, 53201];
     const LB = [33763, 48450, 48451];
+
+    // Fix Lacerate missing mechanic bleed
+    for (const sid of [33745, 48567, 48568])
+    {
+        sc[sid].Mechanic = SpellMechanic.BLEED;
+    }
+
     for(let effId in se) {
         let eff = se[effId];
         if (LB.indexOf(eff.SpellID) > -1 && eff.EffectIndex === 1) {
@@ -337,27 +344,29 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
 
 function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: SpellName})
 {
+    interface CoefEntry {[effectIndex: number]: { ap?: number, sp?: number }}
+
     console.log("Fixing coefs");
     const data: {
-        names: { [spellName: string]: { index: number, ap?: number, sp?: number } },
-        ids: { [spellId: number]: { index: number, ap?: number, sp?: number } },
+        names: { [spellName: string]: CoefEntry },
+        ids: { [spellId: number]: CoefEntry },
     } = JSON.parse(fs.readFileSync("data/wotlk/missingCoef.json", "utf8"));
 
     for (const effId in se)
     {
         const eff = se[effId];
-        if (data.ids[eff.SpellID] && eff.EffectIndex == data.ids[eff.SpellID].index)
+        if (data.ids[eff.SpellID] && data.ids[eff.SpellID][eff.EffectIndex])
         {
-            const thisData = data.ids[eff.SpellID];
+            const thisData = data.ids[eff.SpellID][eff.EffectIndex];
             if (thisData.ap) eff.BonusCoefficientFromAP = thisData.ap;
             if (thisData.sp) eff.EffectBonusCoefficient = thisData.sp;
             continue;
         }
 
         const sname = sn[eff.SpellID]?.Name_lang;
-        if (sname && data.names[sname] && eff.EffectIndex == data.names[sname].index)
+        if (sname && data.names[sname] && data.names[sname][eff.EffectIndex])
         {
-            const thisData = data.names[sname];
+            const thisData = data.names[sname][eff.EffectIndex];
             if (thisData.ap) eff.BonusCoefficientFromAP = thisData.ap;
             if (thisData.sp) eff.EffectBonusCoefficient = thisData.sp;
         }
@@ -368,7 +377,7 @@ export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index:
     paladinFix(se, sc, sm, sl);
     priestFix(se, sm);
     mageFix(se);
-    druidFixes(se);
+    druidFixes(se, sc);
     warlockFixes(se);
     shamanFix(se, sm);
     coefFixes(se, sn);

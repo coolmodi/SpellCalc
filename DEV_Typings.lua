@@ -34,6 +34,7 @@ local _addon = select(2, ...);
 ---@field baseCostPct integer|nil
 ---@field usePeriodicHaste boolean|nil
 ---@field mechanic SpellMechanic|nil
+---@field onNextSwing boolean|nil
 ---@field effects SpellEffectData[]
 
 ---@type SettingsTable
@@ -45,8 +46,6 @@ SpellCalcStatScreen = {}
 _addon.ClassSettings = function() end
 
 ---@alias SpellInfoTable table<integer, SpellInfo>
----@type SpellInfoTable
-_addon.spellInfo = {};
 
 _addon.spellClassSet = {
     ---@type table<integer, integer[]>

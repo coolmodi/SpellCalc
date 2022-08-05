@@ -114,8 +114,12 @@ CalcedEffect.__index = CalcedEffect;
 ---@field duration number|nil Duration after duration modifiers with haste if used for spell.
 ---@field durationNoHaste number|nil Duration after duration modifiers without haste.
 ---@field effects CalcedEffect[] The effects of the spell
+---@field costType PowerType
+---@field castingData CastinDataDef
+---@field meleeMitigation MeleeMitigationDef|nil
 local CalcedSpell = {
     school = 1,
+    costType = 0,
     critChance = 0,
     critMult = 0,
     ---@type string[]
@@ -134,13 +138,6 @@ local CalcedSpell = {
 
     ---@type number|nil
     hitChanceBinaryLoss = nil,
-
-    ---@type MeleeMitigationDef|nil
-    meleeMitigation = nil,
-
-    -- For mana spells
-    ---@type CastinDataDef
-    castingData = nil,
 
     ---@type number|nil
     charges = nil,

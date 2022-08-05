@@ -26,7 +26,7 @@ local DEFAULTSETTINGS = {
 	["ttEffCost"] = true,
 	["ttPerMana"] = true,
 	["ttToOom"] = true,
-	["ttCombined"] = true,
+	["ttCombined"] = false,
 	["ttShowBuffs"] = false,
 
 	["useCurrentTarget"] = true,

@@ -67,6 +67,22 @@ _addon.spellInfo = {
             },
         }
     },
+    [769] = { -- Swipe (Bear)(Rank 3)
+        spellLevel = 34,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 19,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
+            },
+        }
+    },
     [774] = { -- Rejuvenation(Rank 1)
         spellLevel = 4,
         maxLevel = 9,
@@ -83,6 +99,38 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0.15,
                 coefAP = 0,
+            },
+        }
+    },
+    [779] = { -- Swipe (Bear)(Rank 1)
+        spellLevel = 16,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 9,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
+            },
+        }
+    },
+    [780] = { -- Swipe (Bear)(Rank 2)
+        spellLevel = 24,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 13,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
             },
         }
     },
@@ -160,6 +208,45 @@ _addon.spellInfo = {
             },
         }
     },
+    [1079] = { -- Rip(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 3,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [1082] = { -- Claw(Rank 1)
+        spellLevel = 20,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 27,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
     [1430] = { -- Rejuvenation(Rank 3)
         spellLevel = 16,
         maxLevel = 21,
@@ -175,6 +262,87 @@ _addon.spellInfo = {
                 valueBase = 29,
                 valueRange = 0,
                 coef = 0.32,
+                coefAP = 0,
+            },
+        }
+    },
+    [1822] = { -- Rake(Rank 1)
+        spellLevel = 24,
+        maxLevel = 0,
+        duration = 9,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 17,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 30,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [1823] = { -- Rake(Rank 2)
+        spellLevel = 34,
+        maxLevel = 0,
+        duration = 9,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 26,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 45,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [1824] = { -- Rake(Rank 3)
+        spellLevel = 44,
+        maxLevel = 0,
+        duration = 9,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 46,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 69,
+                valueRange = 0,
+                coef = 0,
                 coefAP = 0,
             },
         }
@@ -229,6 +397,24 @@ _addon.spellInfo = {
                 valueBase = 121,
                 valueRange = 28,
                 valuePerLevel = 1.2,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [3029] = { -- Claw(Rank 2)
+        spellLevel = 28,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 39,
+                valueRange = 0,
                 coef = 1,
                 coefAP = 0,
             },
@@ -461,6 +647,60 @@ _addon.spellInfo = {
             },
         }
     },
+    [5201] = { -- Claw(Rank 3)
+        spellLevel = 38,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 57,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [5221] = { -- Shred(Rank 1)
+        spellLevel = 22,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 24,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [5229] = { -- Enrage
+        spellLevel = 12,
+        maxLevel = 0,
+        duration = 10,
+        school = 1,
+        GCD = 0,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 24,
+                valueBase = 10,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
     [5570] = { -- Insect Swarm(Rank 1)
         spellLevel = 20,
         maxLevel = 29,
@@ -510,6 +750,116 @@ _addon.spellInfo = {
                 valueRange = 22,
                 valuePerLevel = 1.6,
                 coef = 0.571,
+                coefAP = 0,
+            },
+        }
+    },
+    [6785] = { -- Ravage(Rank 1)
+        spellLevel = 32,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3.85,
+                valueBase = 42,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [6787] = { -- Ravage(Rank 2)
+        spellLevel = 42,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3.85,
+                valueBase = 62,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [6800] = { -- Shred(Rank 2)
+        spellLevel = 30,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 32,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [6807] = { -- Maul(Rank 1)
+        spellLevel = 10,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 18,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [6808] = { -- Maul(Rank 2)
+        spellLevel = 18,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 27,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [6809] = { -- Maul(Rank 3)
+        spellLevel = 26,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 37,
+                valueRange = 0,
+                coef = 1,
                 coefAP = 0,
             },
         }
@@ -981,6 +1331,140 @@ _addon.spellInfo = {
             },
         }
     },
+    [8972] = { -- Maul(Rank 4)
+        spellLevel = 34,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 64,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [8992] = { -- Shred(Rank 3)
+        spellLevel = 38,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 44,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [9005] = { -- Pounce(Rank 1)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = 3,
+        baseCost = 50,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 64,
+                valueBase = 9007,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9007] = { -- Pounce Bleed(Rank 1)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = 18,
+        school = 1,
+        defType = 0,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 45,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9492] = { -- Rip(Rank 2)
+        spellLevel = 28,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 4,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9493] = { -- Rip(Rank 3)
+        spellLevel = 36,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 6,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9745] = { -- Maul(Rank 5)
+        spellLevel = 42,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 103,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
     [9750] = { -- Regrowth(Rank 6)
         spellLevel = 42,
         maxLevel = 47,
@@ -1005,6 +1489,43 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0.188,
                 coefAP = 0,
+            },
+        }
+    },
+    [9752] = { -- Rip(Rank 4)
+        spellLevel = 44,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 9,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9754] = { -- Swipe (Bear)(Rank 4)
+        spellLevel = 44,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 37,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
             },
         }
     },
@@ -1039,6 +1560,118 @@ _addon.spellInfo = {
                 valueRange = 228,
                 valuePerLevel = 4.5,
                 coef = 1.61,
+                coefAP = 0,
+            },
+        }
+    },
+    [9823] = { -- Pounce(Rank 2)
+        spellLevel = 46,
+        maxLevel = 0,
+        duration = 3,
+        baseCost = 50,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 64,
+                valueBase = 9824,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9824] = { -- Pounce Bleed(Rank 2)
+        spellLevel = 46,
+        maxLevel = 0,
+        duration = 18,
+        school = 1,
+        defType = 0,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 55,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9826] = { -- Pounce Bleed(Rank 3)
+        spellLevel = 56,
+        maxLevel = 0,
+        duration = 18,
+        school = 1,
+        defType = 0,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 75,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9827] = { -- Pounce(Rank 3)
+        spellLevel = 56,
+        maxLevel = 0,
+        duration = 3,
+        baseCost = 50,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 64,
+                valueBase = 9826,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9829] = { -- Shred(Rank 4)
+        spellLevel = 46,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 64,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [9830] = { -- Shred(Rank 5)
+        spellLevel = 54,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 80,
+                valueRange = 0,
+                coef = 1,
                 coefAP = 0,
             },
         }
@@ -1177,6 +1810,42 @@ _addon.spellInfo = {
                 valueBase = 189,
                 valueRange = 0,
                 coef = 0.376,
+                coefAP = 0,
+            },
+        }
+    },
+    [9849] = { -- Claw(Rank 4)
+        spellLevel = 48,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 88,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [9850] = { -- Claw(Rank 5)
+        spellLevel = 58,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 115,
+                valueRange = 0,
+                coef = 1,
                 coefAP = 0,
             },
         }
@@ -1342,6 +2011,44 @@ _addon.spellInfo = {
             },
         }
     },
+    [9866] = { -- Ravage(Rank 3)
+        spellLevel = 50,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3.85,
+                valueBase = 78,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [9867] = { -- Ravage(Rank 4)
+        spellLevel = 58,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3.85,
+                valueBase = 98,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
     [9875] = { -- Starfire(Rank 5)
         spellLevel = 50,
         maxLevel = 56,
@@ -1371,6 +2078,42 @@ _addon.spellInfo = {
                 valueBase = 615,
                 valueRange = 110,
                 valuePerLevel = 3,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [9880] = { -- Maul(Rank 6)
+        spellLevel = 50,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 145,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [9881] = { -- Maul(Rank 7)
+        spellLevel = 58,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 192,
+                valueRange = 0,
                 coef = 1,
                 coefAP = 0,
             },
@@ -1407,6 +2150,91 @@ _addon.spellInfo = {
                 valuePerLevel = 5.7,
                 coef = 1.61,
                 coefAP = 0,
+            },
+        }
+    },
+    [9894] = { -- Rip(Rank 5)
+        spellLevel = 52,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 12,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9896] = { -- Rip(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 17,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9904] = { -- Rake(Rank 4)
+        spellLevel = 54,
+        maxLevel = 0,
+        duration = 9,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 64,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 99,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [9908] = { -- Swipe (Bear)(Rank 5)
+        spellLevel = 54,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 54,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
             },
         }
     },
@@ -1506,6 +2334,109 @@ _addon.spellInfo = {
                 tickPeriod = 1,
                 valueBase = 42233,
                 valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [22568] = { -- Ferocious Bite(Rank 1)
+        spellLevel = 32,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 14,
+                valueRange = 16,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [22570] = { -- Maim(Rank 1)
+        spellLevel = 62,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 45,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [22827] = { -- Ferocious Bite(Rank 2)
+        spellLevel = 40,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 20,
+                valueRange = 24,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [22828] = { -- Ferocious Bite(Rank 3)
+        spellLevel = 48,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 30,
+                valueRange = 40,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [22829] = { -- Ferocious Bite(Rank 4)
+        spellLevel = 56,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 45,
+                valueRange = 50,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [24248] = { -- Ferocious Bite(Rank 6)
+        spellLevel = 63,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 57,
+                valueRange = 66,
                 coef = 0,
                 coefAP = 0,
             },
@@ -1902,6 +2833,199 @@ _addon.spellInfo = {
             },
         }
     },
+    [26996] = { -- Maul(Rank 8)
+        spellLevel = 67,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 290,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [26997] = { -- Swipe (Bear)(Rank 6)
+        spellLevel = 64,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 76,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
+            },
+        }
+    },
+    [27000] = { -- Claw(Rank 6)
+        spellLevel = 67,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 190,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [27001] = { -- Shred(Rank 6)
+        spellLevel = 61,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 105,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [27002] = { -- Shred(Rank 7)
+        spellLevel = 70,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 180,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [27003] = { -- Rake(Rank 5)
+        spellLevel = 64,
+        maxLevel = 0,
+        duration = 9,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 90,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 138,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [27005] = { -- Ravage(Rank 5)
+        spellLevel = 66,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3.85,
+                valueBase = 147,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [27006] = { -- Pounce(Rank 4)
+        spellLevel = 66,
+        maxLevel = 0,
+        duration = 3,
+        baseCost = 50,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 64,
+                valueBase = 27007,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [27007] = { -- Pounce Bleed(Rank 4)
+        spellLevel = 66,
+        maxLevel = 0,
+        duration = 18,
+        school = 1,
+        defType = 0,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 100,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [27008] = { -- Rip(Rank 7)
+        spellLevel = 67,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 24,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
     [27012] = { -- Hurricane(Rank 4)
         spellLevel = 70,
         maxLevel = 76,
@@ -1960,6 +3084,51 @@ _addon.spellInfo = {
             },
         }
     },
+    [31018] = { -- Ferocious Bite(Rank 5)
+        spellLevel = 60,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 52,
+                valueRange = 60,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [33745] = { -- Lacerate(Rank 1)
+        spellLevel = 66,
+        maxLevel = 0,
+        duration = 15,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 31,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0.01,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 31,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0.01,
+                auraStacks = 5,
+            },
+        }
+    },
     [33763] = { -- Lifebloom(Rank 1)
         spellLevel = 64,
         maxLevel = 71,
@@ -1983,6 +3152,117 @@ _addon.spellInfo = {
                 valueBase = 480,
                 valueRange = 0,
                 coef = 0.5161,
+                coefAP = 0,
+            },
+        }
+    },
+    [33876] = { -- Mangle (Cat)(Rank 1)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2,
+                valueBase = 99,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [33878] = { -- Mangle (Bear)(Rank 1)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1.15,
+                valueBase = 75,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [33982] = { -- Mangle (Cat)(Rank 2)
+        spellLevel = 58,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2,
+                valueBase = 128,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [33983] = { -- Mangle (Cat)(Rank 3)
+        spellLevel = 68,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2,
+                valueBase = 165,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [33986] = { -- Mangle (Bear)(Rank 2)
+        spellLevel = 58,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1.15,
+                valueBase = 105,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [33987] = { -- Mangle (Bear)(Rank 3)
+        spellLevel = 68,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1.15,
+                valueBase = 135,
+                valueRange = 0,
+                coef = 1,
                 coefAP = 0,
             },
         }
@@ -2589,6 +3869,42 @@ _addon.spellInfo = {
             },
         }
     },
+    [48479] = { -- Maul(Rank 9)
+        spellLevel = 73,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 472,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48480] = { -- Maul(Rank 10)
+        spellLevel = 79,
+        maxLevel = 0,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        onNextSwing = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 578,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
     [48505] = { -- Starfall(Rank 1)
         spellLevel = 60,
         maxLevel = 69,
@@ -2611,6 +3927,464 @@ _addon.spellInfo = {
                 valueBase = 26,
                 valueRange = 0,
                 coef = 0.127,
+                coefAP = 0,
+            },
+        }
+    },
+    [48561] = { -- Swipe (Bear)(Rank 7)
+        spellLevel = 72,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 95,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
+            },
+        }
+    },
+    [48562] = { -- Swipe (Bear)(Rank 8)
+        spellLevel = 77,
+        maxLevel = 0,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 108,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0.06275,
+            },
+        }
+    },
+    [48563] = { -- Mangle (Bear)(Rank 4)
+        spellLevel = 75,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1.15,
+                valueBase = 219,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48564] = { -- Mangle (Bear)(Rank 5)
+        spellLevel = 80,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1.15,
+                valueBase = 260,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48565] = { -- Mangle (Cat)(Rank 4)
+        spellLevel = 75,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2,
+                valueBase = 239,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48566] = { -- Mangle (Cat)(Rank 5)
+        spellLevel = 80,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2,
+                valueBase = 283,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48567] = { -- Lacerate(Rank 2)
+        spellLevel = 73,
+        maxLevel = 0,
+        duration = 15,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 70,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0.01,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 51,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0.01,
+                auraStacks = 5,
+            },
+        }
+    },
+    [48568] = { -- Lacerate(Rank 3)
+        spellLevel = 80,
+        maxLevel = 0,
+        duration = 15,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 88,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0.01,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 64,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0.01,
+                auraStacks = 5,
+            },
+        }
+    },
+    [48569] = { -- Claw(Rank 7)
+        spellLevel = 73,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 300,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48570] = { -- Claw(Rank 8)
+        spellLevel = 79,
+        maxLevel = 0,
+        baseCost = 45,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 370,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48571] = { -- Shred(Rank 8)
+        spellLevel = 75,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 251,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48572] = { -- Shred(Rank 9)
+        spellLevel = 80,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 2.25,
+                valueBase = 296,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48573] = { -- Rake(Rank 6)
+        spellLevel = 72,
+        maxLevel = 0,
+        duration = 9,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 139,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 297,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [48574] = { -- Rake(Rank 7)
+        spellLevel = 78,
+        maxLevel = 0,
+        duration = 9,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 176,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 358,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [48576] = { -- Ferocious Bite(Rank 7)
+        spellLevel = 72,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 98,
+                valueRange = 112,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [48577] = { -- Ferocious Bite(Rank 8)
+        spellLevel = 78,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 120,
+                valueRange = 140,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [48578] = { -- Ravage(Rank 6)
+        spellLevel = 73,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3.85,
+                valueBase = 365,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [48579] = { -- Ravage(Rank 7)
+        spellLevel = 79,
+        maxLevel = 0,
+        baseCost = 60,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3.85,
+                valueBase = 460,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [49799] = { -- Rip(Rank 8)
+        spellLevel = 71,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 30,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [49800] = { -- Rip(Rank 9)
+        spellLevel = 80,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 30,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 36,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [49802] = { -- Maim(Rank 2)
+        spellLevel = 74,
+        maxLevel = 0,
+        baseCost = 35,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1,
+                valueBase = 66,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [49803] = { -- Pounce(Rank 5)
+        spellLevel = 77,
+        maxLevel = 0,
+        duration = 3,
+        baseCost = 50,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        cantDogeParryBlock = true,
+        effects = {
+            [1] = {
+                effectType = 64,
+                valueBase = 49804,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [49804] = { -- Pounce Bleed(Rank 5)
+        spellLevel = 77,
+        maxLevel = 0,
+        duration = 18,
+        school = 1,
+        defType = 0,
+        mechanic = 15,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 350,
+                valueRange = 0,
+                coef = 0,
                 coefAP = 0,
             },
         }
@@ -2965,6 +4739,24 @@ _addon.spellInfo = {
                 valueBase = 400,
                 valueRange = 0,
                 coef = 0.193,
+                coefAP = 0,
+            },
+        }
+    },
+    [62078] = { -- Swipe (Cat)(Rank 1)
+        spellLevel = 71,
+        maxLevel = 0,
+        baseCost = 50,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 31,
+                weaponCoef = 2.5,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 0,
                 coefAP = 0,
             },
         }

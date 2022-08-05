@@ -215,23 +215,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     local effCastTime = parentEffCastTime or 0;
     local spellInfo = _addon.spellInfo[spellId];
     local GCD = spellInfo.GCD or 1.5;
-    local costs;
-    local spellCost = 0;
-    local costType;
-
-    if spellId == _addon.judgementSpell then
-        costs = GetSpellPowerCost(_addon.CONST.JUDGEMENT_ID);
-    else
-        costs = GetSpellPowerCost(spellId);
-    end
-
-    -- TODO: This will need a change for spells with multiple costs, e.g. combo spells!
-    if costs and #costs > 0 then
-        ---@type SpellPowerEntry
-        local entry = costs[1];
-        spellCost = entry.cost;
-        costType = entry.type;
-    end
 
     --------------------------
     -- Calculation objects
@@ -356,12 +339,17 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
         GCD = GCD * hasteMult;
 
-        if spellInfo.isChannel then
-            castTime = calcedSpell.duration;
+        if spellInfo.onNextSwing then
+            castTime = stats.attackSpeed.mainhand;
+            effCastTime = castTime;
         else
-            castTime = castTime / 1000;
+            if spellInfo.isChannel then
+                castTime = calcedSpell.duration;
+            else
+                castTime = castTime / 1000;
+            end
+            effCastTime = math.max(GCD, castTime);
         end
-        effCastTime = math.max(GCD, castTime);
     end
 
     ----------------------------------------------------------------------------------------------------------------------
@@ -553,14 +541,31 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     -- Cost
 
     if parentSpellData == nil then
+        local costs;
+        local spellCost = 0;
+
+        if spellId == _addon.judgementSpell then
+            costs = GetSpellPowerCost(_addon.CONST.JUDGEMENT_ID);
+        else
+            costs = GetSpellPowerCost(spellId);
+        end
+
+        -- TODO: This will need a change for spells with multiple costs, e.g. combo spells!
+        if costs and #costs > 0 then
+            ---@type SpellPowerEntry
+            local entry = costs[1];
+            spellCost = entry.cost;
+            calcedSpell.costType = entry.type;
+        end
+
         calcedSpell.baseCost = spellCost;
         calcedSpell.effectiveCost = spellCost;
 
-        if costType == 0 then -- mana
+        if calcedSpell.costType == Enum.PowerType.Mana then
             costHandler.Mana(calcedSpell, spellInfo, effCastTime, spellName, spellId);
-        elseif costType == 1 then -- rage
-            -- TODO: rage (on next melee, proc on crit etc.)
-        elseif costType == 3 then -- energy
+        elseif calcedSpell.costType == Enum.PowerType.Rage then
+            costHandler.Rage(calcedSpell, spellInfo, effCastTime, spellName, spellId);
+        elseif calcedSpell.costType == Enum.PowerType.Energy then
             -- TODO: energy??
         end
 
@@ -571,6 +576,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     else
         calcedSpell.baseCost = parentSpellData.baseCost;
         calcedSpell.effectiveCost = parentSpellData.effectiveCost;
+        calcedSpell.costType = parentSpellData.costType;
     end
 
     --------------------------
@@ -674,6 +680,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
             --------------------------
             -- Effect bonus power scaling
+
+            calcedEffect.effectivePower = 0;
 
             -- Spell power
             calcedEffect.spellPower = (isHeal or effectData.forceScaleWithHeal) and stats.spellHealing or stats.spellPower[spellInfo.school];

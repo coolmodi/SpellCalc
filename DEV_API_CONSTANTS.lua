@@ -977,3 +977,12 @@ Enum.ChatChannelType = {
 	Public_Party = 3,
 	Communities = 4,
 };
+
+Enum = {};
+
+---@enum PowerType
+Enum.PowerType = {
+    Mana = 0,
+    Rage = 1,
+    Energy = 3
+}
