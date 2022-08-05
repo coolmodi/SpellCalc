@@ -7,6 +7,8 @@ local scripts = {};
 local auraSripts = {};
 ---@type table<string,integer|nil>
 local scriptValueCache = {};
+---@type table<string, integer|nil>
+local auraValueCache = {};
 ---spellId -> effectType -> scriptKey -> func
 ---@type table<integer, table<AddonEffectType, table<string, EffectScript>>>
 local spellScripts = {};
@@ -74,7 +76,7 @@ function scripting.HandleEffect(apply, name, value, effectBase, auraId, personal
     if type == EFFECT_TYPE.SCRIPT_AURASCRIPT then
         local script = auraSripts[scriptKey];
         assert(script, "Aura " .. name .. " uses SCRIPT_AURASCRIPT with undefined script " .. scriptKey .. "!");
-        script(apply, auraId, personal, type);
+        auraValueCache[scriptKey] = script(apply, auraId, personal, type, auraValueCache[scriptKey]);
         return;
     end
 

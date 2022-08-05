@@ -192,7 +192,29 @@ _addon.aurasPlayer = {
             auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
+    [57669] = { -- Replenishment
+        {
+            type = CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,
+            scriptKey = "Replenishment_Script",
+            value = 0
+        }
+    }
 }
+
+-- Replenishment
+---@type AuraEffectBase
+local replenishmentEffect = { type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5 };
+_addon.scripting.RegisterAuraScript("Replenishment_Script", function (apply, auraId, fromPlayer, scriptType, cacheValue)
+    local name = "ReplenishmentScript";
+    if apply then
+        local manaPer5 = math.floor(_addon.stats.manaMax * 0.01);
+        _addon:ApplyAuraEffect(name, replenishmentEffect, manaPer5, auraId, fromPlayer);
+        return manaPer5;
+    else
+        assert(cacheValue, "Replenishment faded without cached value!");
+        _addon:RemoveAuraEffect(name, replenishmentEffect, cacheValue, auraId, fromPlayer);
+    end
+end);
 
 ---@type UnitAuraEffect[]
 local sanctifiedRetribution = {
@@ -207,7 +229,7 @@ local sanctifiedRetribution = {
 local sanctifiedRetributionAura = {
     type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
     affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL, -- TODO: this currently doesn't do anything, move category stuff to root aura system
+    auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL,
 }
 _addon.scripting.RegisterAuraScript("Sanctified_Retribution_Auras", function (apply, auraId, fromPlayer, scriptType)
     local name = "Sactified Retribution Script";
@@ -224,6 +246,38 @@ _addon.scripting.RegisterAuraScript("Sanctified_Retribution_Auras", function (ap
             _addon:RemoveAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
         end
     end
-end)
-_addon.aurasPlayer[19746] = sanctifiedRetribution;
-_addon.aurasPlayer[32223] = sanctifiedRetribution;
+end);
+_addon.aurasPlayer[19746] = sanctifiedRetribution; -- Conc
+_addon.aurasPlayer[32223] = sanctifiedRetribution; -- Crusader
+_addon.aurasPlayer[465] = sanctifiedRetribution; -- Devotion 1 - 10
+_addon.aurasPlayer[10290] = sanctifiedRetribution;
+_addon.aurasPlayer[643] = sanctifiedRetribution;
+_addon.aurasPlayer[10291] = sanctifiedRetribution;
+_addon.aurasPlayer[1032] = sanctifiedRetribution;
+_addon.aurasPlayer[10292] = sanctifiedRetribution;
+_addon.aurasPlayer[10293] = sanctifiedRetribution;
+_addon.aurasPlayer[27149] = sanctifiedRetribution;
+_addon.aurasPlayer[48941] = sanctifiedRetribution;
+_addon.aurasPlayer[48942] = sanctifiedRetribution;
+_addon.aurasPlayer[7294] = sanctifiedRetribution; -- Retribution 1-7
+_addon.aurasPlayer[10298] = sanctifiedRetribution;
+_addon.aurasPlayer[10299] = sanctifiedRetribution;
+_addon.aurasPlayer[10300] = sanctifiedRetribution;
+_addon.aurasPlayer[10301] = sanctifiedRetribution;
+_addon.aurasPlayer[27150] = sanctifiedRetribution;
+_addon.aurasPlayer[54043] = sanctifiedRetribution;
+_addon.aurasPlayer[19876] = sanctifiedRetribution; -- SR
+_addon.aurasPlayer[19895] = sanctifiedRetribution;
+_addon.aurasPlayer[19896] = sanctifiedRetribution;
+_addon.aurasPlayer[27151] = sanctifiedRetribution;
+_addon.aurasPlayer[48943] = sanctifiedRetribution;
+_addon.aurasPlayer[19888] = sanctifiedRetribution; -- FrR
+_addon.aurasPlayer[19897] = sanctifiedRetribution;
+_addon.aurasPlayer[19898] = sanctifiedRetribution;
+_addon.aurasPlayer[27152] = sanctifiedRetribution;
+_addon.aurasPlayer[48945] = sanctifiedRetribution;
+_addon.aurasPlayer[19891] = sanctifiedRetribution; -- FiR
+_addon.aurasPlayer[19899] = sanctifiedRetribution;
+_addon.aurasPlayer[19900] = sanctifiedRetribution;
+_addon.aurasPlayer[27153] = sanctifiedRetribution;
+_addon.aurasPlayer[48947] = sanctifiedRetribution;
