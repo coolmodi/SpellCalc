@@ -3,37 +3,8 @@ local _addon = select(2, ...);
 local CONST = _addon.CONST;
 
 -- Buffs the player can have
+---@type table<integer, UnitAuraEffect[]>
 _addon.aurasPlayer = {
-    [5677] = { -- Mana Spring 1
-        {
-            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 15 -- 6/2s
-        }
-    },
-    [10491] = { -- Mana Spring 2
-        {
-            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 22 -- 9/2s
-        }
-    },
-    [10493] = { -- Mana Spring 3
-        {
-            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 32 -- 13/2s
-        }
-    },
-    [10494] = { -- Mana Spring 4
-        {
-            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 42 -- 17/2s
-        }
-    },
-    [25569] = { -- Mana Spring 5
-        {
-            type = CONST.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 50 -- 20/2s
-        }
-    },
     [26166] = { -- Obsidian Insight
         {
             type = CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -169,5 +140,56 @@ _addon.aurasPlayer = {
             affectMask = CONST.SCHOOL_MASK.ALL,
             value = 15
         }
-    }
+    },
+    -----------------------
+    -- Pct Damage Done
+    -----------------------
+    [31579] = { -- Arcane Empowerment 1
+        {
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = 1,
+            auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [31582] = { -- Arcane Empowerment 2
+        {
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = 2,
+            auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [31583] = { -- Arcane Empowerment 3
+        {
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = 3,
+            auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [75593] = { -- Ferocious Inspiration 1
+        {
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = 1,
+            auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [75446] = { -- Ferocious Inspiration 2
+        {
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = 2,
+            auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
+    [75447] = { -- Ferocious Inspiration 3
+        {
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = 3,
+            auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
+        }
+    },
 }

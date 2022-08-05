@@ -72,6 +72,8 @@ _addon.spellClassSet = {
 ---@class UnitAuraEffect : AuraEffectBase
 ---@field value integer|nil
 ---@field scriptValue string|nil Get value from scriptKey.
+---@field auraCategory DebuffCategory Effects from same category don't stack with each other.
+---@field hasStacks boolean|nil Does the aura have stacks (e.g. Sunder Armor).
 
 ---@class SetBonusAuraEffect : UnitAuraEffect
 ---@field need integer The number of set items needed for the effect to be active.
@@ -85,16 +87,8 @@ _addon.spellClassSet = {
 ---@alias ItemEffects table<integer, UnitAuraEffect[]>
 ---@alias SetItemDataTable table<integer, integer>
 
-
----@type table<integer, UnitAuraEffect[]>
-_addon.aurasPlayer = {};
-
 ---@class EnchantData : UnitAuraEffect
 ---@field name string
-
----@class TargetAuraEffect : UnitAuraEffect
----@field hasStacks boolean|nil Does the debuff have stacks (e.g. Sunder Armor).
----@field debuffCategory DebuffCategory Debuffs effects from same category don't stack with eacho ther.
 
 ---@class TalentEffect : AuraEffectBase
 ---@field base integer|nil

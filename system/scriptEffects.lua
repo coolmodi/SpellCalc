@@ -98,8 +98,10 @@ function scripting.HandleEffect(apply, name, value, effectBase)
 
     if type == EFFECT_TYPE.SCRIPT_SET_VALUE then
         _addon:UpdatePlayerAuras(true);
+        _addon.Target:UpdateAuras(true);
         scriptValueCache[scriptKey] = apply and value or nil;
         _addon:UpdatePlayerAuras();
+        _addon.Target:UpdateAuras();
         return;
     end
 
@@ -143,13 +145,17 @@ end
 
 ---Triggers update if needed.
 ---@param auraName string
+---@param unit "target"|"player"
 ---@param personal boolean|nil
-function scripting.TargetAuraChanged(auraName, personal)
-    if personal then
-        if targetUpdateOnAuraPersonal[auraName] then _addon:TriggerUpdate() end
+function scripting.AuraChanged(auraName, unit, personal)
+    if unit == "target" then
+        if personal then
+            if targetUpdateOnAuraPersonal[auraName] then _addon:TriggerUpdate() end
+            return;
+        end
+        if targetUpdateOnAura[auraName] then _addon:TriggerUpdate() end
         return;
     end
-    if targetUpdateOnAura[auraName] then _addon:TriggerUpdate() end
 end
 
 _addon.scripting = scripting;

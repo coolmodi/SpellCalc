@@ -321,7 +321,8 @@ _addon.aurasPlayer[20050] = { -- Vengeance 1
     {
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.CONST.SCHOOL_MASK.HOLY + _addon.CONST.SCHOOL_MASK.PHYSICAL,
-        value = 1
+        value = 1,
+        hasStacks = true
     }
 };
 
@@ -329,7 +330,8 @@ _addon.aurasPlayer[20052] = { -- Vengeance 2
     {
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.CONST.SCHOOL_MASK.HOLY + _addon.CONST.SCHOOL_MASK.PHYSICAL,
-        value = 2
+        value = 2,
+        hasStacks = true
     }
 };
 
@@ -337,7 +339,8 @@ _addon.aurasPlayer[20053] = { -- Vengeance 3
     {
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.CONST.SCHOOL_MASK.HOLY + _addon.CONST.SCHOOL_MASK.PHYSICAL,
-        value = 3
+        value = 3,
+        hasStacks = true
     }
 };
 

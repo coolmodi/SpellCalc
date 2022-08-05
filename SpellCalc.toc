@@ -77,10 +77,9 @@ system/scriptEffects.lua
 system/aura.lua
 system/weaponEnchants.lua
 system/talents.lua
-system/playerAuras.lua
 system/items.lua
 system/target.lua
-system/targetAuras.lua
+system/unitAuras.lua
 system/glyphs.lua
 
 core/CostHandler.lua
