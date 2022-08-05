@@ -20,7 +20,7 @@ local function UpdateGlyphSlot(slot)
         local name = GetSpellInfo(oldGlyphId);
         local oldGlyph = _addon.classGlyphs[oldGlyphId];
         for k, effect in ipairs(oldGlyph) do
-            _addon:RemoveAuraEffect(name.."-"..k, effect, effect.value);
+            _addon:RemoveAuraEffect(name.."-"..k, effect, effect.value, oldGlyphId, true);
         end
         activeGlyphs[slot] = nil;
     end
@@ -31,7 +31,7 @@ local function UpdateGlyphSlot(slot)
         -- Apply new glyph effect.
         local name = GetSpellInfo(glyphSpellID);
         for k, effect in ipairs(glyphData) do
-            _addon:ApplyAuraEffect(name.."-"..k, effect, effect.value);
+            _addon:ApplyAuraEffect(name.."-"..k, effect, effect.value, glyphSpellID, true);
         end
         activeGlyphs[slot] = glyphSpellID;
     end

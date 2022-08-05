@@ -193,3 +193,38 @@ _addon.aurasPlayer = {
         }
     },
 }
+
+---@type UnitAuraEffect[]
+local sanctifiedRetribution = {
+    {
+        type = CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,
+        affectMask = CONST.SCHOOL_MASK.ALL,
+        scriptKey = "Sanctified_Retribution_Auras",
+        value = 0
+    }
+}
+---@type AuraEffectBase
+local sanctifiedRetributionAura = {
+    type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+    auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL, -- TODO: this currently doesn't do anything, move category stuff to root aura system
+}
+_addon.scripting.RegisterAuraScript("Sanctified_Retribution_Auras", function (apply, auraId, fromPlayer, scriptType)
+    local name = "Sactified Retribution Script";
+    local val;
+    if fromPlayer then
+        val = _addon.scripting.GetValue("Sanctified_Retribution_Auras_Talent");
+    else
+        val = SpellCalc_settings.auraEffectToggleSactifiedRetribution and 3 or 0;
+    end
+    if val > 0 then
+        if apply then
+            _addon:ApplyAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
+        else
+            _addon:RemoveAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
+        end
+        print(apply, auraId, fromPlayer, scriptType, val)
+    end
+end)
+_addon.aurasPlayer[19746] = sanctifiedRetribution;
+_addon.aurasPlayer[32223] = sanctifiedRetribution;

@@ -60,6 +60,7 @@ _addon.spellClassSet = {
 };
 
 ---@alias EffectScript fun(val:integer, cs:CalcedSpell, ce:CalcedEffect|nil, spellId:number, si:SpellInfo, scriptType: AddonEffectType)
+---@alias AuraScript fun(apply:boolean, auraId:integer, fromPlayer:boolean, scriptType: AddonEffectType)
 
 ---@class AuraEffectBase
 ---@field type AddonEffectType

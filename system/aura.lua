@@ -264,7 +264,9 @@ local effectCustom = {
 ---@param name string The name of the buff
 ---@param effectBase AuraEffectBase
 ---@param value integer The effect value
-local function AuraEffectUpdate(apply, name, effectBase, value)
+---@param auraId integer
+---@param personal boolean
+local function AuraEffectUpdate(apply, name, effectBase, value, auraId, personal)
     if apply == false then
         value = -value;
     end
@@ -297,7 +299,7 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
     end
 
     if effectBase.type > EFFECT_TYPE.SCRIPT_MIN_ID_DO_NOT_USE then
-        _addon.scripting.HandleEffect(apply, name, value, effectBase);
+        _addon.scripting.HandleEffect(apply, name, value, effectBase, auraId, personal);
         return;
     end
 
@@ -324,14 +326,14 @@ function _addon:UpdateWeaponRestrictedAuras()
 
         if not wrai.remove and _addon:IsWeaponTypeMaskEquipped(wrai.effectBase.neededWeaponMask, "mainhand") then
             if wrai.state == 0 then
-                AuraEffectUpdate(true, name, wrai.effectBase, wrai.value);
+                AuraEffectUpdate(true, name, wrai.effectBase, wrai.value, wrai.auraId, wrai.personal);
                 changes = true;
             end
             wrai.state = 1;
         end
 
         if wrai.state == -1 then
-            AuraEffectUpdate(false, name, wrai.effectBase, wrai.value);
+            AuraEffectUpdate(false, name, wrai.effectBase, wrai.value, wrai.auraId, wrai.personal);
             wrai.state = 0;
             changes = true;
         end
@@ -347,7 +349,9 @@ end
 ---@param name string @The name of the buff
 ---@param effectBase AuraEffectBase
 ---@param value integer The effect value
-local function WeaponAuraUpdate(apply, name, effectBase, value)
+---@param auraId integer
+---@param personal boolean
+local function WeaponAuraUpdate(apply, name, effectBase, value, auraId, personal)
     if apply then
         _addon.util.PrintDebug("Adding weapon aura "..name);
         if weaponRestrictedAuras[name] == nil then
@@ -356,7 +360,9 @@ local function WeaponAuraUpdate(apply, name, effectBase, value)
                 effectBase = effectBase,
                 value = value,
                 state = 0,
-                remove = false
+                remove = false,
+                auraId = auraId,
+                personal = personal
             }
         end
         _addon:UpdateWeaponRestrictedAuras();
@@ -372,24 +378,28 @@ end
 ---@param name string The name of the buff
 ---@param effectBase AuraEffectBase
 ---@param value integer The effect value
-function _addon:ApplyAuraEffect(name, effectBase, value)
+---@param auraId integer
+---@param personal boolean
+function _addon:ApplyAuraEffect(name, effectBase, value, auraId, personal)
     if effectBase.neededWeaponMask then
-        WeaponAuraUpdate(true, name, effectBase, value);
+        WeaponAuraUpdate(true, name, effectBase, value, auraId, personal);
         return;
     end
-    AuraEffectUpdate(true, name, effectBase, value);
+    AuraEffectUpdate(true, name, effectBase, value, auraId, personal);
 end
 
 --- Remove a previously applied aura effect.
 ---@param name string @The name of the buff
 ---@param effectBase AuraEffectBase
 ---@param value integer The effect value
-function _addon:RemoveAuraEffect(name, effectBase, value)
+---@param auraId integer
+---@param personal boolean
+function _addon:RemoveAuraEffect(name, effectBase, value, auraId, personal)
     if effectBase.neededWeaponMask then
-        WeaponAuraUpdate(false, name, effectBase, value);
+        WeaponAuraUpdate(false, name, effectBase, value, auraId, personal);
         return;
     end
-    AuraEffectUpdate(false, name, effectBase, value);
+    AuraEffectUpdate(false, name, effectBase, value, auraId, personal);
 end
 
 ---Check if given flag is currently active.
@@ -402,14 +412,14 @@ function _addon:ApplyPassives()
     -- Beast Slaying (Troll Racial)
     local _, raceEn = UnitRace("player");
     if raceEn == "Troll" then
-        _addon:ApplyAuraEffect(GetSpellInfo(20557), { type = EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE, affectMask = _addon.CONST.CREATURE_TYPE_MASK.BEAST }, 5);
+        _addon:ApplyAuraEffect(GetSpellInfo(20557), { type = EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE, affectMask = _addon.CONST.CREATURE_TYPE_MASK.BEAST }, 5, 1234567, true);
     end
 
     -- Class passives
     if _addon.classPassives then
         for k, v in ipairs(_addon.classPassives) do
             local name = v.scriptKey or ("ClassPassive"..k);
-            _addon:ApplyAuraEffect(name, v, v.value);
+            _addon:ApplyAuraEffect(name, v, v.value, 999999 + k, true);
         end
     end
 end

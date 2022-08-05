@@ -63,6 +63,8 @@ local DEFAULTSETTINGS = {
 	calcEffManaPotionTypeNew = "NONE",
 	calcEffManaRune = false,
 
+    auraEffectToggleSactifiedRetribution = false,
+
 	["version"] = 2
 };
 
@@ -516,6 +518,33 @@ local SETTINGS_TABLE = {
 						}
 					}
 				}
+			}
+		},
+
+        auraToggleGroup = {
+			order = 9,
+			type = "group",
+			name = L["Aura Toggles"],
+
+			args = {
+                desc = {
+                    order = 1,
+                    type = "description",
+                    name = L["Some auras can have additional effects, e.g. from talents, that have no indication on the aura about whether they are there or not. You can toggle them on/off here."]
+                },
+                auraEffectToggleSactifiedRetribution = {
+					order = 2,
+					type = "toggle",
+					name = L["Sanctified Retribution"],
+                    desc = L["+3% damage when affected by a paladin's aura."],
+                    set = function(i, val)
+                        _addon:UpdatePlayerAuras(true);
+                        _addon.Target:UpdateAuras(true)
+						SpellCalc_settings.auraEffectToggleSactifiedRetribution = val;
+                        _addon:UpdatePlayerAuras();
+                        _addon.Target:UpdateAuras();
+					end
+				},
 			}
 		},
 

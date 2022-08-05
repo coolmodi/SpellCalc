@@ -21,7 +21,7 @@ local activeCategory = {};
 for _, v in pairs(_addon.CONST.DEBUFF_CATEGORY) do
     ---@class ActiveCategoryData
     ---@field activeSpellId integer|nil The aura currently used.
-    ---@field auras table<integer, integer> Value of active auras in this category.
+    ---@field auras table<integer, { val:integer, isPersonal:boolean }> Value of active auras in this category.
     activeCategory[v] = {
         auras = {}
     }
@@ -63,8 +63,9 @@ local aurasByNamePersonalStacks = {
 ---@param auraEffect UnitAuraEffect
 ---@param name string
 ---@param stacks integer
----@param effectSlot integer|nil
-local function ApplyUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot)
+---@param effectSlot integer
+---@param personal boolean
+local function ApplyUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot, personal)
     if effectSlot then
         name = name .. "-" .. effectSlot;
     end
@@ -77,25 +78,25 @@ local function ApplyUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot
     end
 
     if not auraEffect.auraCategory then
-        _addon:ApplyAuraEffect(name, auraEffect, value);
+        _addon:ApplyAuraEffect(name, auraEffect, value, spellId, personal);
         return true;
     end
 
     local acd = activeCategory[auraEffect.auraCategory];
     local activeGroupSpell = acd.activeSpellId;
-    acd.auras[spellId] = value;
+    acd.auras[spellId] = { val = value, isPersonal = personal };
 
     if activeGroupSpell == nil then
-        _addon:ApplyAuraEffect(name, auraEffect, value);
+        _addon:ApplyAuraEffect(name, auraEffect, value, spellId, personal);
         acd.activeSpellId = spellId;
         return true;
     end
 
-    local currentValue = acd.auras[activeGroupSpell];
-    if math.abs(value) > math.abs(currentValue) then
+    local currentAura = acd.auras[activeGroupSpell];
+    if math.abs(value) > math.abs(currentAura.val) then
         local oName = GetSpellInfo(activeGroupSpell);
-        _addon:RemoveAuraEffect(oName, auraEffect, currentValue);
-        _addon:ApplyAuraEffect(name, auraEffect, value);
+        _addon:RemoveAuraEffect(oName, auraEffect, currentAura.val, activeGroupSpell, currentAura.isPersonal);
+        _addon:ApplyAuraEffect(name, auraEffect, value, spellId, personal);
         acd.activeSpellId = spellId;
         return true;
     end
@@ -109,7 +110,8 @@ end
 ---@param name string
 ---@param stacks integer
 ---@param effectSlot number|nil
-local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot)
+---@param personal boolean
+local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot, personal)
     if effectSlot then
         name = name .. "-" .. effectSlot;
     end
@@ -123,7 +125,7 @@ local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlo
     end
 
     if not auraEffect.auraCategory then
-        _addon:RemoveAuraEffect(name, auraEffect, value);
+        _addon:RemoveAuraEffect(name, auraEffect, value, spellId, personal);
         return true;
     end
 
@@ -134,12 +136,12 @@ local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlo
     if spellId ~= acd.activeSpellId then return false end
 
     -- This spell was active, remove and find next highest in category.
-    _addon:RemoveAuraEffect(name, auraEffect, value);
+    _addon:RemoveAuraEffect(name, auraEffect, value, spellId, personal);
     acd.activeSpellId = nil;
 
     local high;
     for catSpellId, catSpellVal in pairs(acd.auras) do
-        if not high or math.abs(catSpellVal) > math.abs(acd.auras[high]) then
+        if not high or math.abs(catSpellVal.val) > math.abs(acd.auras[high].val) then
             high = catSpellId;
         end
     end
@@ -147,7 +149,7 @@ local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlo
     if high then
         local nName = GetSpellInfo(high);
         local val = acd.auras[high];
-        _addon:ApplyAuraEffect(nName, auraEffect, val);
+        _addon:ApplyAuraEffect(nName, auraEffect, val.val, high, val.isPersonal);
         acd.activeSpellId = high;
     end
 
@@ -170,10 +172,11 @@ local function UpdateAuratype(unit, filter)
     for i = 1, 40 do
         local name, _, count, _, _, _, source, _, _, spellId = UnitAura(unit, i, filter);
         if not name then break end
+        local isPersonal = source == "player";
 
         if auraNameList[name] == nil then ScriptingAuraChanged(name, unit) end
         auraNameList[name] = true;
-        if source == "player" then
+        if isPersonal then
             if auraNamePersonalList[name] == nil
                 or auraNamePersonalStackList[name] ~= count then ScriptingAuraChanged(name, unit, true) end
             auraNamePersonalList[name] = true;
@@ -189,14 +192,14 @@ local function UpdateAuratype(unit, filter)
                     _addon.util.PrintDebug("Remove " .. unit .. " aura " ..
                         name .. " (" .. spellId .. ") slot " .. i .. " because stacks changed.");
                     for k, effect in ipairs(auraEffects) do
-                        aurasChanged = RemoveUnitAuraEffect(spellId, effect, name, auraStacksList[spellId], k) or
+                        aurasChanged = RemoveUnitAuraEffect(spellId, effect, name, auraStacksList[spellId], k, isPersonal) or
                             aurasChanged;
                     end
                 end
                 -- Add new effects.
                 _addon.util.PrintDebug("Add " .. unit .. " aura " .. name .. " (" .. spellId .. ") slot " .. i);
                 for k, effect in ipairs(auraEffects) do
-                    aurasChanged = ApplyUnitAuraEffect(spellId, effect, name, count, k) or aurasChanged;
+                    aurasChanged = ApplyUnitAuraEffect(spellId, effect, name, count, k, isPersonal) or aurasChanged;
                 end
 
                 auraStacksList[spellId] = count;
@@ -245,7 +248,7 @@ local function UpdateAurasForUnit(unit, clearOnly)
             local name = GetSpellInfo(spellId);
             _addon.util.PrintDebug("Remove " .. unit .. " aura " .. name .. " " .. spellId);
             for k, effect in ipairs(auraEffects) do
-                aurasChanged = RemoveUnitAuraEffect(spellId, effect, name, auraStacksList[spellId], k) or
+                aurasChanged = RemoveUnitAuraEffect(spellId, effect, name, auraStacksList[spellId], k, auraNamePersonalList[name] ~= nil) or
                     aurasChanged;
             end
             activeAuraList[spellId] = nil;
@@ -295,7 +298,7 @@ function _addon:DebugApplyBuff(spellId)
     self.util.PrintWarn("Add buff " .. name .. " (" .. spellId .. ")");
 
     for k, effect in ipairs(buffdata) do
-        ApplyUnitAuraEffect(spellId, effect, name, 1, k);
+        ApplyUnitAuraEffect(spellId, effect, name, 1, k, true);
     end
 
     self:TriggerUpdate();

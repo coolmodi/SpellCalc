@@ -216,6 +216,11 @@ _addon.talentDataRaw = {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
                 affectSpell = {8},
                 perPoint = 50
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+                scriptKey = "Sanctified_Retribution_Auras_Talent",
+                perPoint = 3
             }
         }
     },

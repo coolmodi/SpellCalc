@@ -95,10 +95,12 @@ CONST.EFFECT_TYPE = {
     SCRIPT_SPELLMOD_CRIT_CHANCE = 1004,
     SCRIPT_SET_VALUE = 1005, -- Causes complete aura update.
     SCRIPT_SPELLMOD_EFFECT_PRE = 1006,
+    SCRIPT_AURASCRIPT = 1007, -- Aura application/removal triggers script
 };
 
 CONST.BOOLEAN_FLAGS = {
-    PRIEST_T5_2PC = 0x1
+    PRIEST_T5_2PC = 0x1,
+    SANCTIFIED_RETRIBUTION_TALENT = 0x2,
 }
 
 -- Mutually exclusive debuff categories.

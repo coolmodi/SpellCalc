@@ -75,7 +75,7 @@ function _addon:UpdateTalents(forceTalents)
                     end
                 end
                 local useName = (k > 1) and oldIdName .. "-" .. k or oldIdName;
-                self:RemoveAuraEffect(useName, effect, value);
+                self:RemoveAuraEffect(useName, effect, value, -1, true);
             end
             activeRelevantTalents[name] = nil;
         end
@@ -97,7 +97,7 @@ function _addon:UpdateTalents(forceTalents)
                 end
                 assert(value, "Talent def for " .. idName .. " has no value!");
                 local useName = (k > 1) and idName .. "-" .. k or idName;
-                self:ApplyAuraEffect(useName, effect, value);
+                self:ApplyAuraEffect(useName, effect, value, -1, true);
             end
             activeRelevantTalents[name] = curRank;
         end

@@ -3,6 +3,8 @@ local _addon = select(2, ...);
 local EFFECT_TYPE = _addon.CONST.EFFECT_TYPE;
 ---@type table<string, EffectScript>
 local scripts = {};
+---@type table<string, AuraScript>
+local auraSripts = {};
 ---@type table<string,integer|nil>
 local scriptValueCache = {};
 ---spellId -> effectType -> scriptKey -> func
@@ -48,16 +50,33 @@ function scripting.RegisterScript(scriptKey, func)
     scripts[scriptKey] = func;
 end
 
+---Add aura script function.
+---@param scriptKey string
+---@param func AuraScript
+function scripting.RegisterAuraScript(scriptKey, func)
+    assert(not auraSripts[scriptKey], "Aura script already defined! " .. scriptKey);
+    auraSripts[scriptKey] = func;
+end
+
 ---Handle SCRIPT_ effect types.
 ---@param apply boolean
 ---@param name string
 ---@param value integer
 ---@param effectBase AuraEffectBase
-function scripting.HandleEffect(apply, name, value, effectBase)
+---@param auraId integer
+---@param personal boolean
+function scripting.HandleEffect(apply, name, value, effectBase, auraId, personal)
     local scriptKey = effectBase.scriptKey;
     local type = effectBase.type;
 
     assert(scriptKey, "Aura " .. name .. " uses SCRIPT_ effect without scriptKey!");
+
+    if type == EFFECT_TYPE.SCRIPT_AURASCRIPT then
+        local script = auraSripts[scriptKey];
+        assert(script, "Aura " .. name .. " uses SCRIPT_AURASCRIPT with undefined script " .. scriptKey .. "!");
+        script(apply, auraId, personal, type);
+        return;
+    end
 
     if type == EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL then
         if apply then
