@@ -69,11 +69,11 @@ _addon.spellClassSet = {
 ---@field affectMechanic SpellMechanic|nil
 ---@field neededWeaponMask integer|nil
 ---@field scriptKey string|nil Key for script effect. Must be unique!
+---@field auraCategory DebuffCategory Effects from same category don't stack with each other.
 
 ---@class UnitAuraEffect : AuraEffectBase
 ---@field value integer|nil
 ---@field scriptValue string|nil Get value from scriptKey.
----@field auraCategory DebuffCategory Effects from same category don't stack with each other.
 ---@field hasStacks boolean|nil Does the aura have stacks (e.g. Sunder Armor).
 
 ---@class SetBonusAuraEffect : UnitAuraEffect

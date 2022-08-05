@@ -223,7 +223,6 @@ _addon.scripting.RegisterAuraScript("Sanctified_Retribution_Auras", function (ap
         else
             _addon:RemoveAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
         end
-        print(apply, auraId, fromPlayer, scriptType, val)
     end
 end)
 _addon.aurasPlayer[19746] = sanctifiedRetribution;

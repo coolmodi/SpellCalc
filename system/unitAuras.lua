@@ -16,17 +16,6 @@ Missing target auras
 local _addon = select(2, ...);
 local ScriptingAuraChanged = _addon.scripting.AuraChanged;
 
----@type table<number, ActiveCategoryData>
-local activeCategory = {};
-for _, v in pairs(_addon.CONST.DEBUFF_CATEGORY) do
-    ---@class ActiveCategoryData
-    ---@field activeSpellId integer|nil The aura currently used.
-    ---@field auras table<integer, { val:integer, isPersonal:boolean }> Value of active auras in this category.
-    activeCategory[v] = {
-        auras = {}
-    }
-end
-
 ---True => active, false => should be removed, nil => not active
 ---@type table<"target"|"player", table<integer, boolean>>
 local activeAuraIds = {
@@ -77,31 +66,7 @@ local function ApplyUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot
         value = value * stacks;
     end
 
-    if not auraEffect.auraCategory then
-        _addon:ApplyAuraEffect(name, auraEffect, value, spellId, personal);
-        return true;
-    end
-
-    local acd = activeCategory[auraEffect.auraCategory];
-    local activeGroupSpell = acd.activeSpellId;
-    acd.auras[spellId] = { val = value, isPersonal = personal };
-
-    if activeGroupSpell == nil then
-        _addon:ApplyAuraEffect(name, auraEffect, value, spellId, personal);
-        acd.activeSpellId = spellId;
-        return true;
-    end
-
-    local currentAura = acd.auras[activeGroupSpell];
-    if math.abs(value) > math.abs(currentAura.val) then
-        local oName = GetSpellInfo(activeGroupSpell);
-        _addon:RemoveAuraEffect(oName, auraEffect, currentAura.val, activeGroupSpell, currentAura.isPersonal);
-        _addon:ApplyAuraEffect(name, auraEffect, value, spellId, personal);
-        acd.activeSpellId = spellId;
-        return true;
-    end
-
-    return false;
+    return _addon:ApplyAuraEffect(name, auraEffect, value, spellId, personal);
 end
 
 --- Remove unit aura effect.
@@ -124,36 +89,7 @@ local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlo
         value = value * stacks;
     end
 
-    if not auraEffect.auraCategory then
-        _addon:RemoveAuraEffect(name, auraEffect, value, spellId, personal);
-        return true;
-    end
-
-    local acd = activeCategory[auraEffect.auraCategory];
-    acd.auras[spellId] = nil;
-
-    -- If this aura isn't currently used for the category then don't do anything.
-    if spellId ~= acd.activeSpellId then return false end
-
-    -- This spell was active, remove and find next highest in category.
-    _addon:RemoveAuraEffect(name, auraEffect, value, spellId, personal);
-    acd.activeSpellId = nil;
-
-    local high;
-    for catSpellId, catSpellVal in pairs(acd.auras) do
-        if not high or math.abs(catSpellVal.val) > math.abs(acd.auras[high].val) then
-            high = catSpellId;
-        end
-    end
-
-    if high then
-        local nName = GetSpellInfo(high);
-        local val = acd.auras[high];
-        _addon:ApplyAuraEffect(nName, auraEffect, val.val, high, val.isPersonal);
-        acd.activeSpellId = high;
-    end
-
-    return true;
+    return _addon:RemoveAuraEffect(name, auraEffect, value, spellId, personal);
 end
 
 ---Update aura type for unit.

@@ -4,6 +4,17 @@ local EFFECT_TYPE = _addon.CONST.EFFECT_TYPE;
 local stats = _addon.stats;
 local toggledFlags = 0;
 
+---@type table<DebuffCategory, ActiveCategoryData>
+local activeCategory = {};
+for _, v in pairs(_addon.CONST.DEBUFF_CATEGORY) do
+    ---@class ActiveCategoryData
+    ---@field activeSpellId integer|nil The aura currently used.
+    ---@field auras table<integer, { val:integer, isPersonal:boolean }> Value of active auras in this category.
+    activeCategory[v] = {
+        auras = {}
+    }
+end
+
 --- Apply or remove effect for destination
 ---@param apply boolean
 ---@param value integer The effect value, negative to remove buff
@@ -374,6 +385,20 @@ local function WeaponAuraUpdate(apply, name, effectBase, value, auraId, personal
     end
 end
 
+---@param apply boolean
+---@param name string The name of the buff
+---@param effectBase AuraEffectBase
+---@param value integer The effect value
+---@param auraId integer
+---@param personal boolean
+local function HandleApplyRemoveAura(apply, name, effectBase, value, auraId, personal)
+    if effectBase.neededWeaponMask then
+        WeaponAuraUpdate(apply, name, effectBase, value, auraId, personal);
+        return;
+    end
+    AuraEffectUpdate(apply, name, effectBase, value, auraId, personal);
+end
+
 --- Apply an aura effect.
 ---@param name string The name of the buff
 ---@param effectBase AuraEffectBase
@@ -381,11 +406,31 @@ end
 ---@param auraId integer
 ---@param personal boolean
 function _addon:ApplyAuraEffect(name, effectBase, value, auraId, personal)
-    if effectBase.neededWeaponMask then
-        WeaponAuraUpdate(true, name, effectBase, value, auraId, personal);
-        return;
+    if not effectBase.auraCategory then
+        HandleApplyRemoveAura(true, name, effectBase, value, auraId, personal);
+        return true;
     end
-    AuraEffectUpdate(true, name, effectBase, value, auraId, personal);
+
+    local acd = activeCategory[effectBase.auraCategory];
+    local activeGroupSpell = acd.activeSpellId;
+    acd.auras[auraId] = { val = value, isPersonal = personal };
+
+    if activeGroupSpell == nil then
+        HandleApplyRemoveAura(true, name, effectBase, value, auraId, personal);
+        acd.activeSpellId = auraId;
+        return true;
+    end
+
+    local currentAura = acd.auras[activeGroupSpell];
+    if math.abs(value) > math.abs(currentAura.val) then
+        local oName = GetSpellInfo(activeGroupSpell);
+        HandleApplyRemoveAura(false, oName, effectBase, currentAura.val, activeGroupSpell, currentAura.isPersonal);
+        HandleApplyRemoveAura(true, name, effectBase, value, auraId, personal);
+        acd.activeSpellId = auraId;
+        return true;
+    end
+
+    return false;
 end
 
 --- Remove a previously applied aura effect.
@@ -395,11 +440,36 @@ end
 ---@param auraId integer
 ---@param personal boolean
 function _addon:RemoveAuraEffect(name, effectBase, value, auraId, personal)
-    if effectBase.neededWeaponMask then
-        WeaponAuraUpdate(false, name, effectBase, value, auraId, personal);
-        return;
+    if not effectBase.auraCategory then
+        HandleApplyRemoveAura(false, name, effectBase, value, auraId, personal);
+        return true;
     end
-    AuraEffectUpdate(false, name, effectBase, value, auraId, personal);
+
+    local acd = activeCategory[effectBase.auraCategory];
+    acd.auras[auraId] = nil;
+
+    -- If this aura isn't currently used for the category then don't do anything.
+    if auraId ~= acd.activeSpellId then return false end
+
+    -- This spell was active, remove and find next highest in category.
+    HandleApplyRemoveAura(false, name, effectBase, value, auraId, personal);
+    acd.activeSpellId = nil;
+
+    local high;
+    for catSpellId, catSpellVal in pairs(acd.auras) do
+        if not high or math.abs(catSpellVal.val) > math.abs(acd.auras[high].val) then
+            high = catSpellId;
+        end
+    end
+
+    if high then
+        local nName = GetSpellInfo(high);
+        local val = acd.auras[high];
+        HandleApplyRemoveAura(true, nName, effectBase, val.val, high, val.isPersonal);
+        acd.activeSpellId = high;
+    end
+
+    return true;
 end
 
 ---Check if given flag is currently active.
