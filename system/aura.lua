@@ -18,6 +18,27 @@ local function ApplyOrRemove(apply, value, dest, name)
     end
 end
 
+--- Multiplicatively apply or remove effect for destination
+---@param apply boolean
+---@param value integer The effect value, negative to remove buff
+---@param dest UniformStatMult The destination table
+---@param name string The name of the buff
+local function ApplyOrRemoveMult(apply, value, dest, name)
+    if apply then
+        assert(not dest.vals[name], "Tried to add multiplicative aura but it was already active! " .. name);
+        dest.vals[name] = value;
+        table.insert(dest.buffs, name);
+    else
+        dest.vals[name] = nil;
+        _addon.util.RemoveTableEntry(dest.buffs, name);
+    end
+    local m = 1;
+    for _, v in pairs(dest.vals) do
+        m = m * (1 + v/100);
+    end
+    dest.currentMult = m;
+end
+
 --- Apply or remove effect affecting a SpellClassSet
 ---@param apply boolean
 ---@param name string The name of the buff
@@ -56,6 +77,22 @@ local function ApplyOrRemoveByMask(apply, name, value, destTable, mask)
     for bitPos in pairs(destTable) do
         if bit.band(mask, bit.lshift(1, bitPos - offset)) > 0 then
             ApplyOrRemove(apply, value, destTable[bitPos], name);
+        end
+    end
+end
+
+---Multiplicatively apply or remove effect by mask for table with bit position as keys.
+---@param apply boolean
+---@param name string The name of the buff
+---@param value integer The effect value, negative to remove buff
+---@param destTable table<integer, UniformStatMult> The destination table
+---@param mask integer The mask of keys to affect
+local function ApplyOrRemoveByMaskMult(apply, name, value, destTable, mask)
+    -- Weapons start at 0, other stuff at 1, should always be compatible with everything this way
+    local offset = destTable[0] == nil and 1 or 0;
+    for bitPos in pairs(destTable) do
+        if bit.band(mask, bit.lshift(1, bitPos - offset)) > 0 then
+            ApplyOrRemoveMult(apply, value, destTable[bitPos], name);
         end
     end
 end
@@ -104,7 +141,7 @@ local effectSimpleStat = {
 }
 
 local effectAffectMask = {
-    [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE]  = stats.schoolModPctDamage,
+    --[EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE]  = stats.schoolModPctDamage,
     [EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION] = stats.schoolModSpellPen,
     [EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT]   = stats.schoolModFlatCritChance,
     [EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT] = stats.schoolCritBaseMult,
@@ -115,6 +152,10 @@ local effectAffectMask = {
     [EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT] = stats.targetSchoolModResistancePct,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT] = stats.targetSchoolModCritTaken,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT] = stats.targetSchoolModHit,
+}
+
+local fuckThisWhyIsThisMultiplicative = {
+    [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE]  = stats.schoolModPctDamageMult,
 }
 
 ---@type table<number, table<number, UniformStat>>
@@ -242,6 +283,10 @@ local function AuraEffectUpdate(apply, name, effectBase, value)
     if effectBase.affectMask then
         if effectAffectMask[effectBase.type] then
             ApplyOrRemoveByMask(apply, name, value, effectAffectMask[effectBase.type], effectBase.affectMask);
+            return;
+        end
+        if fuckThisWhyIsThisMultiplicative[effectBase.type] then
+            ApplyOrRemoveByMaskMult(apply, name, value, fuckThisWhyIsThisMultiplicative[effectBase.type], effectBase.affectMask);
             return;
         end
     end

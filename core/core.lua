@@ -113,8 +113,10 @@ local function SetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
             end
         end
 
-        bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
-        calcedSpell:AddToBuffList(stats.schoolModPctDamage[school].buffs);
+        --bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
+        --calcedSpell:AddToBuffList(stats.schoolModPctDamage[school].buffs);
+        bonusMod = bonusMod * stats.schoolModPctDamageMult[school].currentMult;
+        calcedSpell:AddToBuffList(stats.schoolModPctDamageMult[school].buffs);
 
         if stats.versusModPctDamage[_addon.Target.creatureType] then
             bonusMod = bonusMod * (100 + stats.versusModPctDamage[_addon.Target.creatureType].val) / 100;

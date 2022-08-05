@@ -13,6 +13,18 @@ local function UniformStat()
     }
 end
 
+local function UniformStatMult()
+    ---@class UniformStatMult
+    ---@field val number
+    ---@field vals table<string, integer>
+    ---@field buffs string[]
+    return {
+        currentMult = 1,
+        vals = {},
+        buffs = {}
+    }
+end
+
 local function SchoolStatTable()
     local SCHOOL = _addon.CONST.SCHOOL;
     -- Keys are school types found in _addon.CONST.SCHOOL
@@ -25,6 +37,22 @@ local function SchoolStatTable()
         [SCHOOL.FROST] = UniformStat(),
         [SCHOOL.SHADOW] = UniformStat(),
         [SCHOOL.ARCANE] = UniformStat()
+    }
+    return schoolTable;
+end
+
+local function SchoolStatTableMult()
+    local SCHOOL = _addon.CONST.SCHOOL;
+    -- Keys are school types found in _addon.CONST.SCHOOL
+    ---@type table<SpellSchool, UniformStatMult>
+    local schoolTable = {
+        [SCHOOL.PHYSICAL] = UniformStatMult(),
+        [SCHOOL.HOLY] = UniformStatMult(),
+        [SCHOOL.FIRE] = UniformStatMult(),
+        [SCHOOL.NATURE] = UniformStatMult(),
+        [SCHOOL.FROST] = UniformStatMult(),
+        [SCHOOL.SHADOW] = UniformStatMult(),
+        [SCHOOL.ARCANE] = UniformStatMult()
     }
     return schoolTable;
 end
@@ -143,7 +171,7 @@ _addon.stats = {
     },
 
     schoolModSpellPen = SchoolStatTable(),
-    schoolModPctDamage = SchoolStatTable(),
+    --schoolModPctDamage = SchoolStatTable(),
     schoolModFlatCritChance = SchoolStatTable(),
     schoolModPctCritMult = SchoolStatTable(),
     schoolCritBaseMult = SchoolStatTable(),
@@ -152,6 +180,8 @@ _addon.stats = {
     targetSchoolModCritTaken = SchoolStatTable(),
     targetSchoolModHit = SchoolStatTable(),
     targetHealingRecieved = UniformStat(),
+
+    schoolModPctDamageMult = SchoolStatTableMult(),
 
     spellModPctEffect = SpellStatTable(),
     spellModPctDamageHealing = SpellStatTable(),

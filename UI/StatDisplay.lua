@@ -350,7 +350,7 @@ AddUniformStatTable(stats.modCriticalHealing, "Crit. Healing done mod (all)", "%
 AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
 AddSpellTable(stats.spellModPctDamageHealing, "Spell Pct Damage/Healing", "%");
 AddSpellTable(stats.spellModPctDoTHoT, "Spell Pct DoT/HoT", "%");
-AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
+--AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
 
 AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "s");
 AddSpellTable(stats.spellModFlatValue, "Flat mods", "");
