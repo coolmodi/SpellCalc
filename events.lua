@@ -74,6 +74,12 @@ end
 
 function handlers.ACTIVE_TALENT_GROUP_CHANGED()
     _A:UpdateTalents();
+    -- There's no slot update event and slots still have wrong value at this point.
+    C_Timer.After(2, function ()
+        for i=1, 120 do
+            _A.ActionBarValues:SlotUpdate(i);
+        end
+    end);
 end
 
 function handlers.SPELL_POWER_CHANGED()

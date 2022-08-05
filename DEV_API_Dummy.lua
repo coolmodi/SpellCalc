@@ -497,3 +497,9 @@ function GetGlyphSocketInfo(socketID, talentGroup) end
 
 ---@return number
 function GetNumGlyphSockets() end
+
+C_Timer = {
+    ---@param delay number Delay in seconds.
+    ---@param callback fun():nil
+    After = function(delay, callback) end
+}
