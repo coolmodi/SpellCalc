@@ -507,3 +507,7 @@ C_Timer = {
 ---@return number expertise
 ---@return number offhandExpertise
 function GetExpertise() end
+
+---Returns the percentage of target's armory your physical attacks ignore due to armor penetration. 
+---@return number armorPenPct
+function GetArmorPenetration() end

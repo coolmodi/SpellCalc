@@ -222,9 +222,17 @@ end
 ---@param baseAtk integer Base attack value for level
 ---@param atk integer Actual attack value for weapon
 local function GetGlancingChanceAndDamage(ldef, baseAtk, atk)
-    local glancing = 10 + (ldef - math.min(baseAtk, atk)) * 2;
-    local minReduction = math.max(0, math.min(0.91, 1.3 - 0.05 * (ldef - atk)));
-    local maxRedcution = math.max(0.2, math.min(0.99, 1.2 - 0.03 * (ldef - atk)));
+    local skillDiff = ldef - atk;
+    local glancing = math.max(0, 6 + skillDiff * 1.2);
+    local minReduction, maxRedcution;
+    if skillDiff > 10 then
+        minReduction = math.max(0.01, math.min(0.91, 1.3 - 0.05 * skillDiff));
+        maxRedcution = math.max(0.2, math.min(0.99, 1.2 - 0.03 * skillDiff));
+    else
+        minReduction = math.max(0.01, math.min(1.4 - 0.05 * skillDiff, 0.91));
+        maxRedcution = math.max(0.2, math.min(1.3 - 0.03 * skillDiff, 0.99));
+    end
+
     local glancingDamage = (minReduction + maxRedcution) / 2;
     return glancing, glancingDamage;
 end
@@ -301,18 +309,22 @@ function MeleeCalc:GetMDPGB()
 end
 
 --- Get damage reduction from armor for current target
----@return number mitigation
----@return number armor
+---@return number mitigation The mitigation multiplier, max 0.75.
+---@return number armor The effective armor after of the current target.
 function MeleeCalc:GetArmorDR()
     local armor = _addon.Target:GetEffectiveResistance(SCHOOL_PHYSICAL);
     local pLevel = UnitLevel("player");
+    local arpCap = (935/6) * _addon.Target.level + armor/3 - 44335/6;
+    local effArmor = armor - (GetArmorPenetration()/100) * math.min(armor, arpCap);
     local mitigation;
+
     if pLevel < 60 then
-        mitigation = armor / (armor + 400 + pLevel * 85);
+        mitigation = effArmor / (effArmor + 400 + pLevel * 85);
     else
-        mitigation = armor / (armor + 400 + 85 * (pLevel + 4.5 * (pLevel - 59)));
+        mitigation = effArmor / (effArmor + 400 + 85 * (pLevel + 4.5 * (pLevel - 59)));
     end
-    return math.min(mitigation, 0.75), armor;
+
+    return math.min(mitigation, 0.75), effArmor;
 end
 
 _addon.MeleeCalc = MeleeCalc;
