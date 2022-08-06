@@ -240,7 +240,7 @@ function Target:Update()
     end
 
     UpdateResistances();
-    self:UpdateAuras();
+    _addon:UpdateAurasForUnit("target");
 
     _addon.util.PrintDebug(("New target: %d (%d), Player: %s, ID: %d"):format(self.level, self.levelDiff, tostring(self.isPlayer), self.npcId));
     _addon.util.PrintDebug(("P: %d, H: %d, Fi: %d, N: %d, Fr: %d, S: %d, A: %d"):format(self.resistanceBase[SCHOOL.PHYSICAL], self.resistanceBase[SCHOOL.HOLY], self.resistanceBase[SCHOOL.FIRE],
@@ -250,3 +250,6 @@ function Target:Update()
 end
 
 _addon.Target = Target;
+
+_addon.events.Register("PLAYER_ENTERING_WORLD", function() Target:Update() end);
+_addon.events.Register("PLAYER_TARGET_CHANGED", function () Target:Update() end);

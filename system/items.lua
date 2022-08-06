@@ -115,19 +115,6 @@ local function UpdateSet(setId, change)
 
 end
 
----Handle item update after recieved item data.
----@param itemId integer
-function _addon:UpdateRecievedItemData(itemId)
-    if missingItems[itemId] then
-        missingItems[itemId] = 0;
-        missingItems._count = missingItems._count - 1;
-        if missingItems._count == 0 then
-            self.util.PrintDebug("Data for all items recieved, updating items");
-            self:UpdateItems();
-        end
-    end
-end
-
 --- Equip item for slot
 ---@param itemId integer
 ---@param slotId integer
@@ -226,30 +213,30 @@ local function UnequipItem(slotId)
 end
 
 --- Update all item slots
-function _addon:UpdateItems()
-    self.util.PrintDebug("Update items");
+local function UpdateItems()
+    _addon.util.PrintDebug("Update items");
     for slot, slotName in pairs(ITEM_SLOTS) do
         local itemId = GetInventoryItemID("player", slot);
         if itemId ~= nil then
             local durability = GetInventoryItemDurability(slot);
             if items[slot] ~= itemId then
                 if items[slot] ~= nil then
-                    self.util.PrintDebug("Unequip old item from slot " .. slotName);
+                    _addon.util.PrintDebug("Unequip old item from slot " .. slotName);
                     UnequipItem(slot);
                 end
                 if durability == nil or durability > 0 then
-                    self.util.PrintDebug("Equip new item " .. itemId .. " in slot " .. slotName);
+                    _addon.util.PrintDebug("Equip new item " .. itemId .. " in slot " .. slotName);
                     EquipItem(itemId, slot);
                 end
             else
                 if durability ~= nil and durability == 0 then
-                    self.util.PrintDebug("Unequip item " .. itemId .. " in slot " .. slotName .. " because it is broken");
+                    _addon.util.PrintDebug("Unequip item " .. itemId .. " in slot " .. slotName .. " because it is broken");
                     UnequipItem(slot);
                 end
             end
         else
             if items[slot] ~= nil then
-                self.util.PrintDebug("Unequip old item from slot " .. slotName);
+                _addon.util.PrintDebug("Unequip old item from slot " .. slotName);
                 UnequipItem(slot);
             end
         end
@@ -264,11 +251,11 @@ function _addon:UpdateItems()
         local gem3 = tonumber(gem3p)--[[@as integer]];
         local gemId;
         -- Only meta gems should ever have item effects defined.
-        if self.itemEffects[gem1] then
+        if _addon.itemEffects[gem1] then
             gemId = gem1;
-        elseif self.itemEffects[gem2] then
+        elseif _addon.itemEffects[gem2] then
             gemId = gem2;
-        elseif self.itemEffects[gem3] then
+        elseif _addon.itemEffects[gem3] then
             gemId = gem3;
         end
         if items[99] ~= gemId then
@@ -283,6 +270,22 @@ function _addon:UpdateItems()
         UnequipItem(99);
     end
 end
+
+_addon.events.Register("UPDATE_INVENTORY_DURABILITY", function () UpdateItems() end);
+_addon.events.Register("PLAYER_ENTERING_WORLD", function() UpdateItems() end);
+_addon.events.Register("UNIT_INVENTORY_CHANGED", function(unit) if unit == "player" then UpdateItems() end end);
+---Handle item update after recieved item data.
+---@param itemId integer
+_addon.events.Register("GET_ITEM_INFO_RECEIVED", function (itemId)
+    if missingItems[itemId] then
+        missingItems[itemId] = 0;
+        missingItems._count = missingItems._count - 1;
+        if missingItems._count == 0 then
+            _addon.util.PrintDebug("Data for all items recieved, updating items");
+            UpdateItems();
+        end
+    end
+end);
 
 --- Return true if a two handed weapon is in the main hand slot
 function _addon:IsTwoHandEquipped()

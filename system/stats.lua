@@ -94,7 +94,7 @@ local function MechanicStatTable()
 end
 
 ---@class InternalStats
-_addon.stats = {
+local stats = {
     manaMax = 0, -- Maximum mana
     manaCurrent = 0, -- Current mana if update is active
     baseMana = 0,
@@ -243,67 +243,52 @@ do
     }
     local _, eclass = UnitClass("player");
     if bm[eclass] then
-        _addon.stats.baseMana = bm[eclass];
+        stats.baseMana = bm[eclass];
     end
 end
 
 --- Update spell power stats from API
-function _addon:UpdateSpellPower()
+local function UpdateSpellPower()
     _addon.util.PrintDebug("Updating spell power");
 
     for i = 1, 7, 1 do
         _addon.stats.spellPower[i] = GetSpellBonusDamage(i);
     end
 
-    self:TriggerUpdate();
+    _addon:TriggerUpdate();
 end
 
 ---Update attack power.
----@param ranged boolean|nil
-function _addon:UpdateAttackPower(ranged)
-    if ranged then
-        local base, posBuff, negBuff = UnitRangedAttackPower("player");
-        self.stats.attackPowerRanged = base + posBuff + negBuff;
-    else
-        local base, posBuff, negBuff = UnitAttackPower("player");
-        self.stats.attackPower = base + posBuff + negBuff;
-    end
-    self:TriggerUpdate();
+local function UpdateAttackPower()
+    local base, posBuff, negBuff = UnitAttackPower("player");
+    stats.attackPower = base + posBuff + negBuff;
+    _addon:TriggerUpdate();
+end
+
+---Update ranged attack power.
+local function UpdateRangedAttackPower()
+    local base, posBuff, negBuff = UnitRangedAttackPower("player");
+    stats.attackPowerRanged = base + posBuff + negBuff;
+    _addon:TriggerUpdate();
 end
 
 --- Update dmg done mods
-function _addon:UpdateDmgDoneMods()
+local function UpdateDmgDoneMods()
     local spellHealing = GetSpellBonusHealing();
-    if spellHealing ~= self.stats.spellHealing then
-        self.util.PrintDebug("Updating healing");
-        self.stats.spellHealing = spellHealing;
+    if spellHealing ~= stats.spellHealing then
+        _addon.util.PrintDebug("Updating healing");
+        stats.spellHealing = spellHealing;
     end
 
-    self.util.PrintDebug("Updating dmg done mods");
+    _addon.util.PrintDebug("Updating dmg done mods");
     for i = 1, 7, 1 do
-        self.stats.spellCrit[i] = GetSpellCritChance(i);
+        stats.spellCrit[i] = GetSpellCritChance(i);
     end
 
-    self.stats.attackCrit.mainhand = GetCritChance();
-    self.stats.attackCrit.ranged = GetRangedCritChance();
+    stats.attackCrit.mainhand = GetCritChance();
+    stats.attackCrit.ranged = GetRangedCritChance();
 
-    self:TriggerUpdate();
-end
-
---- Update power values.
----@param powerType string|nil
-function _addon:UpdatePower(powerType)
-    if powerType == nil then
-        _addon.stats.manaCurrent = UnitPower("player", 0);
-        _addon:TriggerUpdate();
-        return;
-    end
-
-    if powerType == "MANA" then
-        _addon.stats.manaCurrent = UnitPower("player", 0);
-        _addon:TriggerUpdate();
-        return;
-    end
+    _addon:TriggerUpdate();
 end
 
 do
@@ -322,7 +307,6 @@ do
 
     ---Update spirit+int based and MP5 regen values
     function _addon:UpdateManaRegen()
-        local stats = self.stats;
         local _, int = UnitStat("player", 4);
         local _, spirit = UnitStat("player", 5);
         local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]);
@@ -352,108 +336,122 @@ do
 end
 
 --- Update general stats from API
-function _addon:UpdateStats()
+local function UpdateStats()
     _addon.util.PrintDebug("Updating stats");
-    self.stats.manaMax = UnitPowerMax("player", 0);
-    self:TriggerUpdate();
+    stats.manaMax = UnitPowerMax("player", 0);
+    _addon:TriggerUpdate();
 end
 
 --- Update weapon attack speeds
-function _addon:UpdateAttackSpeeds()
+local function UpdateAttackSpeeds()
     local m,o = UnitAttackSpeed("player");
     local r = UnitRangedDamage("player");
 
-    self.stats.attackSpeed.mainhand = m and m or 0;
-    self.stats.attackSpeed.offhand = o and o or 0;
-    self.stats.attackSpeed.ranged = r and r or 0;
+    stats.attackSpeed.mainhand = m and m or 0;
+    stats.attackSpeed.offhand = o and o or 0;
+    stats.attackSpeed.ranged = r and r or 0;
 
-    _addon.util.PrintDebug(("Updated attack speeds: %s, %s, %s"):format(self.stats.attackSpeed.mainhand, self.stats.attackSpeed.offhand, self.stats.attackSpeed.ranged));
+    _addon.util.PrintDebug(("Updated attack speeds: %s, %s, %s"):format(stats.attackSpeed.mainhand, stats.attackSpeed.offhand, stats.attackSpeed.ranged));
 
-    self:TriggerUpdate();
+    _addon:TriggerUpdate();
 end
 
 --- Update weapon attack skill
-function _addon:UpdateWeaponAttack()
+local function UpdateWeaponAttack()
     local mh, mhMod, oh, ohMod = UnitAttackBothHands("player");
     local r, rMod = UnitRangedAttack("player");
 
-    self.stats.attack.mainhand = mh + mhMod;
-    self.stats.attack.offhand = oh + ohMod;
-    self.stats.attack.ranged = r + rMod;
+    stats.attack.mainhand = mh + mhMod;
+    stats.attack.offhand = oh + ohMod;
+    stats.attack.ranged = r + rMod;
 
     _addon.util.PrintDebug(("Updated attack: M: %d + %d O: %d + %d R: %d + %d"):format(mh, mhMod, oh, ohMod, r, rMod));
 
-    self:TriggerUpdate();
+    _addon:TriggerUpdate();
 end
 
 --- Update melee attack damage
-function _addon:UpdateAttackDmg()
+local function UpdateAttackDmg()
     _addon.util.PrintDebug("Updated melee dmg");
     local low, high, offLow, offHigh, _, _, pctMod = UnitDamage("player");
-    self.stats.attackDmg.mainhand.min = low / pctMod;
-    self.stats.attackDmg.mainhand.max = high / pctMod;
-    self.stats.attackDmg.offhand.min = offLow / pctMod;
-    self.stats.attackDmg.offhand.max = offHigh / pctMod;
-    self:TriggerUpdate();
+    stats.attackDmg.mainhand.min = low / pctMod;
+    stats.attackDmg.mainhand.max = high / pctMod;
+    stats.attackDmg.offhand.min = offLow / pctMod;
+    stats.attackDmg.offhand.max = offHigh / pctMod;
+    _addon:TriggerUpdate();
 end
 
 --- Update ranged attack damage
-function _addon:UpdateRangedAttackDmg()
+local function UpdateRangedAttackDmg()
     _addon.util.PrintDebug("Updated ranged dmg");
     local _, lowDmg, hiDmg, _, _, pctMod = UnitRangedDamage("player");
-    self.stats.attackDmg.ranged.min = lowDmg / pctMod;
-    self.stats.attackDmg.ranged.max = hiDmg / pctMod;
-    self:TriggerUpdate();
+    stats.attackDmg.ranged.min = lowDmg / pctMod;
+    stats.attackDmg.ranged.max = hiDmg / pctMod;
+    _addon:TriggerUpdate();
 end
 
 local oldApiHitBonus = 0;
 local oldApiHitBonusSpell = 0;
 
 --- Combat ratings updated (seems to be hit modifier in classic)
-function _addon:CombatRatingUpdate()
-    self.util.PrintDebug("Combat rating update");
+local function CombatRatingUpdate()
+    _addon.util.PrintDebug("Combat rating update");
     local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) -- + GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
     local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
     local changed = false;
 
     if meleeHitBonus ~= oldApiHitBonus then
-        self.stats.hitBonus.val = self.stats.hitBonus.val - oldApiHitBonus + meleeHitBonus;
+        stats.hitBonus.val = stats.hitBonus.val - oldApiHitBonus + meleeHitBonus;
         oldApiHitBonus = meleeHitBonus;
         changed = true;
     end
 
     if spellHitBonus ~= oldApiHitBonusSpell then
-        self.stats.hitBonusSpell.val = self.stats.hitBonusSpell.val - oldApiHitBonusSpell + spellHitBonus;
+        stats.hitBonusSpell.val = stats.hitBonusSpell.val - oldApiHitBonusSpell + spellHitBonus;
         oldApiHitBonusSpell = spellHitBonus;
         changed = true;
     end
 
     if changed then
-        self.util.PrintDebug("Updated hit mods from API. M: " .. meleeHitBonus .. " - S: " .. spellHitBonus);
-        self:TriggerUpdate();
+        _addon.util.PrintDebug("Updated hit mods from API. M: " .. meleeHitBonus .. " - S: " .. spellHitBonus);
+        _addon:TriggerUpdate();
     end
 end
 
--- Update everything manually
-function _addon:FullUpdate()
-    self.util.PrintDebug("Full update");
+_addon.stats = stats;
 
-    self:UpdateStats();
-    self:UpdateSpellPower();
-    self:UpdateDmgDoneMods();
-    self:UpdateTalents();
-    self:UpdatePlayerAuras();
-    self:UpdateWeaponEnchants();
-    self:UpdateItems();
-    self.Target:Update();
-    self:UpdateAttackSpeeds();
-    self:UpdateWeaponAttack();
-    self:UpdateAttackDmg();
-    self:UpdateRangedAttackDmg();
-    self:CombatRatingUpdate();
-    self:UpdatePower();
-    self:UpdateManaRegen();
-    self:UpdateGlyphs();
-    self:UpdateAttackPower();
-    self:UpdateAttackPower(true);
-end
+_addon.events.Register("UNIT_ATTACK_POWER", function (unit) if unit == "player" then UpdateAttackPower() end end);
+_addon.events.Register("UNIT_RANGED_ATTACK_POWER", function (unit) if unit == "player" then UpdateRangedAttackPower() end end);
+_addon.events.Register("UNIT_RANGEDDAMAGE", function (unit) if unit == "player" then UpdateRangedAttackDmg() end end);
+_addon.events.Register("UNIT_DAMAGE", function (unit) if unit == "player" then UpdateAttackDmg() end end);
+_addon.events.Register("UNIT_ATTACK", function (unit) if unit == "player" then UpdateWeaponAttack() end end);
+_addon.events.Register("UNIT_ATTACK_SPEED", function (unit) if unit == "player" then UpdateAttackSpeeds() end end);
+_addon.events.Register("COMBAT_RATING_UPDATE", function () CombatRatingUpdate() end);
+_addon.events.Register("PLAYER_DAMAGE_DONE_MODS", function (unit) if unit == "player" then UpdateDmgDoneMods() end end);
+_addon.events.Register("SPELL_POWER_CHANGED", function () UpdateSpellPower() end);
+_addon.events.Register("PLAYER_ENTERING_WORLD", function()
+    UpdateStats();
+    UpdateSpellPower();
+    UpdateDmgDoneMods();
+    UpdateAttackSpeeds();
+    UpdateWeaponAttack();
+    UpdateAttackDmg();
+    UpdateRangedAttackDmg();
+    CombatRatingUpdate();
+    _addon:UpdateManaRegen();
+    UpdateAttackPower();
+    UpdateRangedAttackPower();
+end);
+
+_addon.events.Register("UNIT_STATS", function (unit)
+    if unit == "player" then
+        UpdateStats();
+        _addon:UpdateManaRegen();
+    end
+end);
+
+_addon.events.Register("UNIT_AURA", function (unit)
+    if unit == "player" then
+        _addon:UpdateManaRegen();
+    end
+end);

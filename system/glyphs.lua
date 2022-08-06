@@ -39,15 +39,11 @@ local function UpdateGlyphSlot(slot)
     _addon:TriggerUpdate();
 end
 
---- Update player glyphs.
----@param slot integer|nil Only update specific slot.
-function _addon:UpdateGlyphs(slot)
-    if slot then
-        UpdateGlyphSlot(slot);
-        return;
-    end
-
+_addon.events.Register("GLYPH_ADDED", UpdateGlyphSlot);
+_addon.events.Register("GLYPH_REMOVED", UpdateGlyphSlot);
+_addon.events.Register("GLYPH_UPDATED", UpdateGlyphSlot);
+_addon.events.Register("PLAYER_ENTERING_WORLD", function ()
     for i=1, GetNumGlyphSockets() do
         UpdateGlyphSlot(i);
     end
-end
+end);

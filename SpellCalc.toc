@@ -70,9 +70,9 @@ data/classes/warrior.lua
 
 data/racials.lua
 
-settings.lua
 slashcmd.lua
 events.lua
+settings.lua
 
 system/stats.lua
 system/aura.lua

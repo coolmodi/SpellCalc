@@ -969,7 +969,7 @@ RELIC_TALENT_LINK_STYLE_POTENTIAL = 2;
 RELIC_TALENT_LINK_STYLE_ACTIVE = 3;
 RELIC_TALENT_LINK_STYLE_UPCOMING = 4;
 RELIC_TALENT_LINK_STYLE_AVAILABLE = 5;
--- TODO: Need to be able to expose this from client...
+
 Enum.ChatChannelType = {
 	None = 0,
 	Custom = 1,

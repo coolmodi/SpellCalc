@@ -165,9 +165,9 @@ end
 ---Update buffs and debuffs for unit.
 ---@param unit "player"|"target"
 ---@param clearOnly boolean|nil
-local function UpdateAurasForUnit(unit, clearOnly)
+function _addon:UpdateAurasForUnit(unit, clearOnly)
     local aurasChanged = false;
-    local auraTable = unit == "target" and _addon.aurasTarget or _addon.aurasPlayer;
+    local auraTable = unit == "target" and self.aurasTarget or self.aurasPlayer;
     local activeAuraList = activeAuraIds[unit];
     local auraNameList = aurasByName[unit];
     local auraNamePersonalList = aurasByNamePersonal[unit];
@@ -200,7 +200,7 @@ local function UpdateAurasForUnit(unit, clearOnly)
         if isActive == false then
             local auraEffects = auraTable[spellId];
             local name = GetSpellInfo(spellId);
-            _addon.util.PrintDebug("Remove " .. unit .. " aura " .. name .. " " .. spellId);
+            self.util.PrintDebug("Remove " .. unit .. " aura " .. name .. " " .. spellId);
             for k, effect in ipairs(auraEffects) do
                 aurasChanged = RemoveUnitAuraEffect(spellId, effect, name, auraStacksList[spellId], k, auraNamePersonalList[name] ~= nil) or
                     aurasChanged;
@@ -230,7 +230,7 @@ local function UpdateAurasForUnit(unit, clearOnly)
         end
     end
 
-    if aurasChanged then _addon:TriggerUpdate() end
+    if aurasChanged then self:TriggerUpdate() end
 end
 
 ---Check if unit has an aura with given mechanic active.
@@ -240,16 +240,15 @@ local function UnitHasMechanicActive(unit, mechanic)
     return mechanicsActive[unit][mechanic] == true;
 end
 
+_addon.events.Register("UNIT_AURA", function (unit)
+    if unit == "player" or unit == "target" then
+        _addon:UpdateAurasForUnit(unit);
+    end
+end);
+
 -----------------------------------------------
 -- Player
 -----------------------------------------------
-
---- Update player auras
----@param clearOnly boolean|nil
-function _addon:UpdatePlayerAuras(clearOnly)
-    self.util.PrintDebug("Updating player auras");
-    UpdateAurasForUnit("player", clearOnly);
-end
 
 --- Simulate having a buff.
 ---@param spellId integer
@@ -271,19 +270,14 @@ function _addon:DebugApplyBuff(spellId)
     self:TriggerUpdate();
 end
 
+_addon.events.Register("PLAYER_ENTERING_WORLD", function() _addon:UpdateAurasForUnit("player") end);
+
 -----------------------------------------------
 -- Target
 -----------------------------------------------
 
 ---@class Target
 local Target = _addon.Target;
-
----Update target auras.
----@param clearOnly boolean|nil
-function Target:UpdateAuras(clearOnly)
-    _addon.util.PrintDebug("Updating target auras");
-    UpdateAurasForUnit("target", clearOnly);
-end
 
 ---Check if target has aura with name.
 ---@param auraName string The aura name.

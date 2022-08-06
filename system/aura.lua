@@ -326,8 +326,8 @@ end
 local weaponRestrictedAuras = {};
 
 ---Update auras that require weapon types equipped to be active.
-function _addon:UpdateWeaponRestrictedAuras()
-    self.util.PrintDebug("Updating weapon type auras");
+local function UpdateWeaponRestrictedAuras()
+    _addon.util.PrintDebug("Updating weapon type auras");
     local changes = false;
 
     for name, wrai in pairs(weaponRestrictedAuras) do
@@ -351,7 +351,7 @@ function _addon:UpdateWeaponRestrictedAuras()
     end
 
     if changes then
-        self:TriggerUpdate();
+        _addon:TriggerUpdate();
     end
 end
 
@@ -376,14 +376,18 @@ local function WeaponAuraUpdate(apply, name, effectBase, value, auraId, personal
                 personal = personal
             }
         end
-        _addon:UpdateWeaponRestrictedAuras();
+        UpdateWeaponRestrictedAuras();
     else
         _addon.util.PrintDebug("Removing weapon aura "..name);
         weaponRestrictedAuras[name].remove = true;
-        _addon:UpdateWeaponRestrictedAuras();
+        UpdateWeaponRestrictedAuras();
         weaponRestrictedAuras[name] = nil;
     end
 end
+
+_addon.events.Register("UNIT_INVENTORY_CHANGED", function (unit)
+    if unit == "player" then UpdateWeaponRestrictedAuras() end
+end);
 
 ---@param apply boolean
 ---@param name string The name of the buff
@@ -478,7 +482,7 @@ function _addon:IsBooleanFlagActive(flag)
     return bit.band(toggledFlags, flag) == flag;
 end
 
-function _addon:ApplyPassives()
+_addon.events.Register("PLAYER_LOGIN", function ()
     -- Beast Slaying (Troll Racial)
     local _, raceEn = UnitRace("player");
     if raceEn == "Troll" then
@@ -492,4 +496,4 @@ function _addon:ApplyPassives()
             _addon:ApplyAuraEffect(name, v, v.value, 999999 + k, true);
         end
     end
-end
+end);

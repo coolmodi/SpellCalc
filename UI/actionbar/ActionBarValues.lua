@@ -191,7 +191,7 @@ end
 
 --- Update action slot
 ---@param slot integer
-function ActionBarValues:SlotUpdate(slot)
+local function SlotUpdate(slot)
     _addon.util.PrintDebug("Action slot update " .. slot);
 
     local aType, aId = GetActionInfo(slot);
@@ -232,13 +232,13 @@ do
             for i = 1, 12, 1 do
                 slotMap[updateOffset + i][barData.origOffset + i] = true;
                 slotMap[barData.origOffset + i][barData.origOffset + i] = nil;
-                ActionBarValues:SlotUpdate(updateOffset + i);
+                SlotUpdate(updateOffset + i);
             end
         else
             for i = 1, 12, 1 do
                 slotMap[barData.updateOffset + i][barData.origOffset + i] = nil;
                 slotMap[barData.origOffset + i][barData.origOffset + i] = true;
-                ActionBarValues:SlotUpdate(updateOffset + i);
+                SlotUpdate(updateOffset + i);
             end
         end
 
@@ -331,7 +331,7 @@ function ActionBarValues:UpdateStyle()
 end
 
 --- Setup action button values.
-function ActionBarValues:Setup()
+_addon.events.Register("PLAYER_LOGIN", function ()
     if buttonText then
         return;
     end
@@ -344,7 +344,7 @@ function ActionBarValues:Setup()
         return;
     end
 
-    self:UpdateStyle();
+    ActionBarValues:UpdateStyle();
 
     if not SetupPagingSupport() then
         _addon.util.PrintError("Paging support missing for used actionbar addon (" .. actionbarSupport .. ")!");
@@ -357,11 +357,30 @@ function ActionBarValues:Setup()
         if delayedButtonUpdate <= 0 then
             _addon.util.PrintDebug("Doing delayed full actionbar slot update")
             for i = 1, 120 do
-                ActionBarValues:SlotUpdate(i);
+                SlotUpdate(i);
             end
             frame:SetScript("OnUpdate", UpdateLoop);
         end
     end);
 
     _addon.util.PrintDebug("Action bar setup complete");
-end
+end)
+
+_addon.events.Register("ACTIVE_TALENT_GROUP_CHANGED", function ()
+    -- There's no slot update event and slots still have wrong value at this point.
+    C_Timer.After(2, function ()
+        for i=1, 120 do
+            SlotUpdate(i);
+        end
+    end);
+end);
+
+_addon.events.Register("PLAYER_ENTERING_WORLD", function (isLogin, isReload)
+    if isLogin or isReload then
+        _addon.events.Register("ACTIONBAR_SLOT_CHANGED", function (slot)
+            if slot >= 1 and slot <= 120 then
+                SlotUpdate(slot);
+            end
+        end);
+    end
+end);

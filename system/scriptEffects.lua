@@ -127,11 +127,11 @@ function scripting.HandleEffect(apply, name, value, effectBase, auraId, personal
     end
 
     if type == EFFECT_TYPE.SCRIPT_SET_VALUE then
-        _addon:UpdatePlayerAuras(true);
-        _addon.Target:UpdateAuras(true);
+        _addon:UpdateAurasForUnit("player", true);
+        _addon:UpdateAurasForUnit("target", true);
         scriptValueCache[scriptKey] = apply and value or nil;
-        _addon:UpdatePlayerAuras();
-        _addon.Target:UpdateAuras();
+        _addon:UpdateAurasForUnit("player");
+        _addon:UpdateAurasForUnit("target");
         return;
     end
 

@@ -106,3 +106,7 @@ function _addon:UpdateTalents(forceTalents)
 
     self:TriggerUpdate();
 end
+
+_addon.events.Register("CHARACTER_POINTS_CHANGED", function (gain) if gain <= -1 then _addon:UpdateTalents() end end);
+_addon.events.Register("PLAYER_ENTERING_WORLD", function() _addon:UpdateTalents() end);
+_addon.events.Register("ACTIVE_TALENT_GROUP_CHANGED", function() _addon:UpdateTalents() end);

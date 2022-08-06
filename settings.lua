@@ -478,7 +478,7 @@ local SETTINGS_TABLE = {
 							desc = L.SETTINGS_CALC_REMAINING_DESC,
 							set = function(info, value)
 								SpellCalc_settings.useCurrentPowerLevel = value;
-								_addon.events.SetPowerUpdateActive(value);
+								_addon:TriggerUpdate();
 							end
 						},
 					}
@@ -538,11 +538,11 @@ local SETTINGS_TABLE = {
 					name = L["Sanctified Retribution"],
                     desc = L["+3% damage when affected by a paladin's aura."],
                     set = function(i, val)
-                        _addon:UpdatePlayerAuras(true);
-                        _addon.Target:UpdateAuras(true)
+                        _addon:UpdateAurasForUnit("player", true);
+                        _addon:UpdateAurasForUnit("target", true);
 						SpellCalc_settings.auraEffectToggleSactifiedRetribution = val;
-                        _addon:UpdatePlayerAuras();
-                        _addon.Target:UpdateAuras();
+                        _addon:UpdateAurasForUnit("player");
+                        _addon:UpdateAurasForUnit("target");
 					end
 				},
 			}
@@ -626,7 +626,7 @@ local function CheckUpdates()
 end
 
 --- Setup SV tables, check settings and setup settings menu
-function _addon:SetupSettings()
+_addon.events.OnAddonLoaded(function ()
     if SpellCalc_settings == nil then
 		SpellCalc_settings = DEFAULTSETTINGS;
 	end
@@ -642,12 +642,12 @@ function _addon:SetupSettings()
 
 	CheckUpdates();
 
-	if self.ClassSettings ~= nil then
+	if _addon.ClassSettings ~= nil then
 		SETTINGS_TABLE.args.classGroup = {
 			order = 10,
 			type = "group",
 			name = classLoc,
-			args = self.ClassSettings()
+			args = _addon.ClassSettings()
 		}
 	end
 
@@ -671,4 +671,4 @@ function _addon:SetupSettings()
 
 	AceConfigRegistry:RegisterOptionsTable(_addonName, SETTINGS_TABLE);
 	AceConfigDialog:AddToBlizOptions(_addonName, _addonName);
-end
+end);

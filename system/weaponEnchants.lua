@@ -46,12 +46,15 @@ local function HandleWeaponTempEnchant(slot, enchantId)
 end
 
 --- Update player weapon enchants
-function _addon:UpdateWeaponEnchants()
-    self.util.PrintDebug("Updating weapon enchants");
+local function UpdateWeaponEnchants()
+    _addon.util.PrintDebug("Updating weapon enchants");
     local _, _, _, mhEnchId, _, _, _, ohEnchId = GetWeaponEnchantInfo();
     local mhchanged = HandleWeaponTempEnchant("MH", mhEnchId);
     local ohchanged = HandleWeaponTempEnchant("OH", ohEnchId);
     if mhchanged or ohchanged then
-        self:TriggerUpdate();
+        _addon:TriggerUpdate();
     end
 end
+
+_addon.events.Register("PLAYER_ENTERING_WORLD", function() UpdateWeaponEnchants() end);
+_addon.events.Register("UNIT_AURA", function(unit) if unit == "player" then UpdateWeaponEnchants() end end);
