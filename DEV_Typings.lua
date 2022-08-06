@@ -15,6 +15,7 @@ local _addon = select(2, ...);
 ---@field chains integer|nil
 ---@field chainMult number|nil
 ---@field auraStacks integer|nil
+---@field mechanic SpellMechanic|nil
 
 ---@class SpellInfo
 ---@field school SpellSchool
@@ -33,7 +34,6 @@ local _addon = select(2, ...);
 ---@field baseCost integer|nil
 ---@field baseCostPct integer|nil
 ---@field usePeriodicHaste boolean|nil
----@field mechanic SpellMechanic|nil
 ---@field onNextSwing boolean|nil
 ---@field effects SpellEffectData[]
 

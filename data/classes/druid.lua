@@ -616,7 +616,6 @@ _addon.scripting.RegisterScript("Nourish_Script", function (val, cs, ce, spellId
 end);
 
 _addon.scripting.RegisterScript("Imp_FF_Crit", function (val, cs, ce, spellId, si, scriptType)
-    assert(ce, "Imp_FF_Crit called with ce nil!");
     if _addon.Target.HasAuraName(FF)
     or _addon.Target.HasAuraName(FF_FERAL) then
         cs.critChance = cs.critChance + val;

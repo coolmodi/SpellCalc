@@ -83,15 +83,15 @@ local function IsDmgShieldEffect(effectType, auraType)
 end
 
 --- Generate effect modifiers (baseMod, bonusMod)
----@param school SpellSchool
 ---@param isDmg boolean
 ---@param isHeal boolean
 ---@param spellId integer
 ---@param calcedSpell CalcedSpell
 ---@param isDuration boolean
 ---@param si SpellInfo
----@param effNum integer
-local function SetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isDuration, si, effNum)
+---@param calcedEffect CalcedEffect
+---@param effectData SpellEffectData
+local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration, si, calcedEffect, effectData)
     local bonusMod = 1;
     local baseMod = 1;
 
@@ -115,20 +115,20 @@ local function SetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
 
         --bonusMod = bonusMod * (100 + stats.schoolModPctDamage[school].val) / 100;
         --calcedSpell:AddToBuffList(stats.schoolModPctDamage[school].buffs);
-        bonusMod = bonusMod * stats.schoolModPctDamageMult[school].currentMult;
-        calcedSpell:AddToBuffList(stats.schoolModPctDamageMult[school].buffs);
+        bonusMod = bonusMod * stats.schoolModPctDamageMult[si.school].currentMult;
+        calcedSpell:AddToBuffList(stats.schoolModPctDamageMult[si.school].buffs);
 
         if stats.versusModPctDamage[_addon.Target.creatureType] then
             bonusMod = bonusMod * (100 + stats.versusModPctDamage[_addon.Target.creatureType].val) / 100;
             calcedSpell:AddToBuffList(stats.versusModPctDamage[_addon.Target.creatureType].buffs);
         end
 
-        if stats.targetSchoolModDamageTaken[school].val ~= 0 then
-            bonusMod = bonusMod * (100 + stats.targetSchoolModDamageTaken[school].val) / 100;
-            calcedSpell:AddToBuffList(stats.targetSchoolModDamageTaken[school].buffs);
+        if stats.targetSchoolModDamageTaken[si.school].val ~= 0 then
+            bonusMod = bonusMod * (100 + stats.targetSchoolModDamageTaken[si.school].val) / 100;
+            calcedSpell:AddToBuffList(stats.targetSchoolModDamageTaken[si.school].buffs);
         end
 
-        local mechanic = si.mechanic;
+        local mechanic = effectData.mechanic;
         if mechanic and stats.targetMechanicModDmgTakenPct[mechanic].val ~= 0 then
             local t = stats.targetMechanicModDmgTakenPct[mechanic];
             bonusMod = bonusMod * (1 + t.val / 100);
@@ -164,13 +164,12 @@ local function SetBaseModifiers(school, isDmg, isHeal, spellId, calcedSpell, isD
         end
     end
 
-    local ce = calcedSpell.effects[effNum];
-    ce.modBase = baseMod;
-    ce.modBonus = bonusMod;
-    scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, ce, spellId, si);
-    ce.modBase = ce.modBase * ce.modBonus;
+    calcedEffect.modBase = baseMod;
+    calcedEffect.modBonus = bonusMod;
+    scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, calcedEffect, spellId, si);
+    calcedEffect.modBase = calcedEffect.modBase * calcedEffect.modBonus;
 
-    _addon.util.PrintDebug("Basemod: "..ce.modBase..", Bonusmod: "..ce.modBonus);
+    _addon.util.PrintDebug("Basemod: "..calcedEffect.modBase..", Bonusmod: "..calcedEffect.modBonus);
 end
 
 --- Get effective mana pool
@@ -659,7 +658,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             _addon.util.PrintDebug("Has trigger spell effect, updating triggered spell!");
             calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
             if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
-                local effectData = spellInfo.effects[i];
                 effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, effCastTime, 0, spellName, spellId, GCD);
             end
         else
@@ -669,7 +667,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isHeal = bit.band(calcedSpell.effects[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
             local isDuration = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell.effects[1].effectFlags, ADDON_EFFECT_FLAGS.ABSORB) == 0;
-            SetBaseModifiers(spellInfo.school, isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellInfo, i);
+            SetBaseModifiers(isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellInfo, calcedEffect, effectData);
 
             --TODO: Remove this
             -- Lets find a case and check if this is still needed.

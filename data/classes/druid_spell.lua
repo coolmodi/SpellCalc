@@ -216,7 +216,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -226,6 +225,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -281,6 +281,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
             [2] = {
                 effectType = 6,
@@ -290,6 +291,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -308,6 +310,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
             [2] = {
                 effectType = 6,
@@ -317,6 +320,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -335,6 +339,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
             [2] = {
                 effectType = 6,
@@ -344,6 +349,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -1392,7 +1398,6 @@ _addon.spellInfo = {
         duration = 18,
         school = 1,
         defType = 0,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1402,6 +1407,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -1413,7 +1419,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1423,6 +1428,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -1434,7 +1440,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1444,6 +1449,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -1500,7 +1506,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1510,6 +1515,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -1589,7 +1595,6 @@ _addon.spellInfo = {
         duration = 18,
         school = 1,
         defType = 0,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1599,6 +1604,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -1608,7 +1614,6 @@ _addon.spellInfo = {
         duration = 18,
         school = 1,
         defType = 0,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1618,6 +1623,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -2161,7 +2167,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2171,6 +2176,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -2182,7 +2188,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2192,6 +2197,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -2210,6 +2216,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
             [2] = {
                 effectType = 6,
@@ -2219,6 +2226,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -2936,6 +2944,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
             [2] = {
                 effectType = 6,
@@ -2945,6 +2954,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -2992,7 +3002,6 @@ _addon.spellInfo = {
         duration = 18,
         school = 1,
         defType = 0,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -3002,6 +3011,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -3013,7 +3023,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -3023,6 +3032,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -3108,7 +3118,6 @@ _addon.spellInfo = {
         baseCost = 150,
         school = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 2,
@@ -3126,6 +3135,7 @@ _addon.spellInfo = {
                 coef = 0,
                 coefAP = 0.01,
                 auraStacks = 5,
+                mechanic = 15,
             },
         }
     },
@@ -4044,7 +4054,6 @@ _addon.spellInfo = {
         baseCost = 150,
         school = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 2,
@@ -4062,6 +4071,7 @@ _addon.spellInfo = {
                 coef = 0,
                 coefAP = 0.01,
                 auraStacks = 5,
+                mechanic = 15,
             },
         }
     },
@@ -4072,7 +4082,6 @@ _addon.spellInfo = {
         baseCost = 150,
         school = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 2,
@@ -4090,6 +4099,7 @@ _addon.spellInfo = {
                 coef = 0,
                 coefAP = 0.01,
                 auraStacks = 5,
+                mechanic = 15,
             },
         }
     },
@@ -4180,6 +4190,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
             [2] = {
                 effectType = 6,
@@ -4189,6 +4200,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -4207,6 +4219,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
             [2] = {
                 effectType = 6,
@@ -4216,6 +4229,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -4299,7 +4313,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -4309,6 +4322,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -4320,7 +4334,6 @@ _addon.spellInfo = {
         school = 1,
         GCD = 1,
         defType = 2,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -4330,6 +4343,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },
@@ -4376,7 +4390,6 @@ _addon.spellInfo = {
         duration = 18,
         school = 1,
         defType = 0,
-        mechanic = 15,
         effects = {
             [1] = {
                 effectType = 6,
@@ -4386,6 +4399,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
+                mechanic = 15,
             },
         }
     },

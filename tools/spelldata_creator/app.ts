@@ -143,6 +143,7 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             forceScaleWithHeal: false,
             period: 0,
             weaponCoef: 0,
+            mechanic: 0,
         };
         const triggeredDummy = spellData.getSpellEffects(effect.EffectTriggerSpell);
         const startTrigger = spellData.getSpellEffects(getCorectBase(triggeredDummy[0]));
@@ -170,6 +171,7 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     forceScaleWithHeal: false,
                     period: 0,
                     weaponCoef: 0,
+                    mechanic: 0,
                 };
             }
         }
@@ -196,6 +198,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         forceScaleWithHeal: false,
         period: 0,
         weaponCoef: 0,
+        mechanic: effect.EffectMechanic,
     };
     fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
@@ -264,7 +267,8 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
         valuePerLevel: effect.EffectRealPointsPerLevel,
         forceScaleWithHeal: false,
         period: 0,
-        weaponCoef: 0 
+        weaponCoef: 0,
+        mechanic: effect.EffectMechanic,
     };
     fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
@@ -322,7 +326,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: 0 
+            weaponCoef: 0,
+            mechanic: effect.EffectMechanic,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
@@ -355,7 +360,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: 1
+            weaponCoef: 1,
+            mechanic: effect.EffectMechanic,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
@@ -370,7 +376,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: 1
+            weaponCoef: 1,
+            mechanic: effect.EffectMechanic,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
@@ -396,7 +403,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: effect.EffectRealPointsPerLevel,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: weaponCoef
+            weaponCoef: weaponCoef,
+            mechanic: effect.EffectMechanic,
         };
 
         // SoC "fix"
@@ -416,7 +424,8 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             valuePerLevel: 0,
             forceScaleWithHeal: false,
             period: 0,
-            weaponCoef: 0 
+            weaponCoef: 0,
+            mechanic: effect.EffectMechanic,
         };
     },
 
@@ -431,6 +440,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             forceScaleWithHeal: false,
             period: 0,
             weaponCoef: 0,
+            mechanic: effect.EffectMechanic,
         };
     },
 
@@ -447,6 +457,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             forceScaleWithHeal: false,
             period: 0,
             weaponCoef: 0,
+            mechanic: effect.EffectMechanic,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
@@ -513,7 +524,6 @@ function buildSpellInfo(pclass: string) {
                 baseCost: 0,
                 baseCostPct: 0,
                 usePeriodicHaste: (spellMisc["Attributes[5]"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
-                mechanic: spellcat.Mechanic,
                 onNextAttack: (spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_ON_NEXT_SWING_NO_DAMAGE) > 0,
                 effects: []
             };
@@ -595,7 +605,6 @@ end
         if (ri.forceHeal) str += `\t\tforceHeal = ${ri.forceHeal},\n`;
         if (ri.charges != 0) str += `\t\tcharges = ${ri.charges},\n`;
         if (ri.usePeriodicHaste) str += `\t\tusePeriodicHaste = true,\n`;
-        if (USEFUL_SPELL_MECHANICS[ri.mechanic]) str += `\t\tmechanic = ${ri.mechanic},\n`;
         if (ri.onNextAttack) str += `\t\tonNextSwing = true,\n`;
 
         str += `\t\teffects = {\n`;
@@ -619,6 +628,7 @@ end
                 str += `\t\t\t\tchainMult = ${eff.chainInfo.mult},\n`;
             }
             if (eff.auraStacks) str += `\t\t\t\tauraStacks = ${eff.auraStacks},\n`;
+            if (USEFUL_SPELL_MECHANICS[eff.mechanic]) str += `\t\t\t\tmechanic = ${eff.mechanic},\n`;
             //if (eff.triggeredSpell) str += `\t\t\t\ttriggeredSpell = ${eff.triggeredSpell},\n`;
             str += `\t\t\t},\n`;
         }

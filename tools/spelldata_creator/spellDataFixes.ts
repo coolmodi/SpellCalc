@@ -249,17 +249,11 @@ function mageFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-function druidFixes(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory})
+function druidFixes(se: {[index: number]: SpellEffect})
 {
     console.log("Fixing druid coefs and effects");
     const STARFALL = [48505, 53199, 53200, 53201];
     const LB = [33763, 48450, 48451];
-
-    // Fix Lacerate missing mechanic bleed
-    for (const sid of [33745, 48567, 48568])
-    {
-        sc[sid].Mechanic = SpellMechanic.BLEED;
-    }
 
     for(let effId in se) {
         let eff = se[effId];
@@ -377,7 +371,7 @@ export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index:
     paladinFix(se, sc, sm, sl);
     priestFix(se, sm);
     mageFix(se);
-    druidFixes(se, sc);
+    druidFixes(se);
     warlockFixes(se);
     shamanFix(se, sm);
     coefFixes(se, sn);

@@ -162,6 +162,7 @@ interface EffectInfo {
         mult: number
     },
     auraStacks?: number,
+    mechanic: number,
 }
 
 const enum PowerType {
@@ -188,7 +189,6 @@ interface RankInfo {
     baseCost: number,
     baseCostPct: number,
     usePeriodicHaste: boolean,
-    mechanic: number,
     onNextAttack: boolean,
     effects: EffectInfo[]
 }
