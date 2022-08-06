@@ -16,6 +16,8 @@ local spellScripts = {};
 local targetUpdateOnAuraPersonal = {};
 ---@type table<string, number|nil>
 local targetUpdateOnAura = {};
+---@type table<SpellMechanic, number|nil>
+local targetUpdateOnMechanic = {};
 
 ---Apply or remove script affecting a SpellClassSet.
 ---@param apply boolean
@@ -70,6 +72,22 @@ end
 function scripting.HandleEffect(apply, name, value, effectBase, auraId, personal)
     local scriptKey = effectBase.scriptKey;
     local type = effectBase.type;
+
+    if type == EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_MECHANIC then
+        local m = effectBase.affectMechanic;
+        assert(m, "SCRIPT_TARGET_UPDATE_ON_AURA_MECHANIC used without affectMechanic defined!");
+        if apply then
+            targetUpdateOnMechanic[m] = targetUpdateOnMechanic[m] or 0;
+            targetUpdateOnMechanic[m] = targetUpdateOnMechanic[m] + 1;
+        else
+            if not targetUpdateOnMechanic[m] then return end
+            targetUpdateOnMechanic[m] = targetUpdateOnMechanic[m] - 1;
+            if targetUpdateOnMechanic[m] == 0 then
+                targetUpdateOnMechanic[m] = nil;
+            end
+        end
+        return;
+    end
 
     assert(scriptKey, "Aura " .. name .. " uses SCRIPT_ effect without scriptKey!");
 
@@ -146,11 +164,12 @@ end
 ---@param ce CalcedEffect|nil
 ---@param spellId integer
 ---@param si SpellInfo
-function scripting.DoSpell(type, cs, ce, spellId, si)
+---@param spellName string
+function scripting.DoSpell(type, cs, ce, spellId, si, spellName)
     if spellScripts[spellId]
         and spellScripts[spellId][type] then
         for scriptKey, func in pairs(spellScripts[spellId][type]) do
-            func(scriptValueCache[scriptKey], cs, ce, spellId, si, type);
+            func(scriptValueCache[scriptKey], cs, ce, spellId, si, type, spellName);
         end
     end
 end
@@ -166,6 +185,16 @@ function scripting.AuraChanged(auraName, unit, personal)
             return;
         end
         if targetUpdateOnAura[auraName] then _addon:TriggerUpdate() end
+        return;
+    end
+end
+
+---Triggers update if needed.
+---@param mechanic SpellMechanic
+---@param unit "target"|"player"
+function scripting.MechanicChanged(mechanic, unit)
+    if unit == "target" then
+        if targetUpdateOnMechanic[mechanic] then _addon:TriggerUpdate() end
         return;
     end
 end

@@ -96,6 +96,7 @@ CONST.EFFECT_TYPE = {
     SCRIPT_SET_VALUE = 1005, -- Causes complete aura update.
     SCRIPT_SPELLMOD_EFFECT_PRE = 1006,
     SCRIPT_AURASCRIPT = 1007, -- Aura application/removal triggers script
+    SCRIPT_TARGET_UPDATE_ON_AURA_MECHANIC = 1008,
 };
 
 CONST.BOOLEAN_FLAGS = {

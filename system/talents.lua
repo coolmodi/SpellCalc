@@ -6,6 +6,7 @@ local activeRelevantTalents = {};
 ---@type TalentDataEntry[]|nil
 local talentData;
 
+-- TODO: check if talents work as expected again? keep this system?
 local function SetupTalentData()
     _addon.util.PrintDebug("Creating talent data.");
 

@@ -15,6 +15,7 @@ Missing target auras
 ---@class AddonEnv
 local _addon = select(2, ...);
 local ScriptingAuraChanged = _addon.scripting.AuraChanged;
+local ScriptingMechanicChanged = _addon.scripting.MechanicChanged;
 
 ---True => active, false => should be removed, nil => not active
 ---@type table<"target"|"player", table<integer, boolean>>
@@ -39,6 +40,11 @@ local aurasByNamePersonal = {
 };
 ---@type table<"target"|"player", table<string, integer|nil>>
 local aurasByNamePersonalStacks = {
+    player = {},
+    target = {}
+};
+---@type table<"target"|"player", table<SpellMechanic, boolean|nil>>
+local mechanicsActive = {
     player = {},
     target = {}
 };
@@ -104,6 +110,8 @@ local function UpdateAuratype(unit, filter)
     local auraNamePersonalStackList = aurasByNamePersonalStacks[unit];
     local auraStacksList = activeAuraStacks[unit];
     local activeAuraList = activeAuraIds[unit];
+    local unitMechanics = mechanicsActive[unit];
+    local mechanicAuras = _addon.mechanicAuras;
 
     for i = 1, 40 do
         local name, _, count, _, _, _, source, _, _, spellId = UnitAura(unit, i, filter);
@@ -117,6 +125,12 @@ local function UpdateAuratype(unit, filter)
                 or auraNamePersonalStackList[name] ~= count then ScriptingAuraChanged(name, unit, true) end
             auraNamePersonalList[name] = true;
             auraNamePersonalStackList[name] = count;
+        end
+
+        if mechanicAuras[spellId] then
+            local m = mechanicAuras[spellId];
+            if unitMechanics[m] == nil then ScriptingMechanicChanged(m, unit) end
+            unitMechanics[m] = true;
         end
 
         if auraTable[spellId] then
@@ -159,6 +173,7 @@ local function UpdateAurasForUnit(unit, clearOnly)
     local auraNamePersonalList = aurasByNamePersonal[unit];
     local auraStacksList = activeAuraStacks[unit];
     local auraNamePersonalStackList = aurasByNamePersonalStacks[unit];
+    local unitMechanics = mechanicsActive[unit];
 
     for spellId in pairs(activeAuraList) do
         activeAuraList[spellId] = false;
@@ -168,6 +183,9 @@ local function UpdateAurasForUnit(unit, clearOnly)
     end
     for auraName in pairs(auraNamePersonalList) do
         auraNamePersonalList[auraName] = false;
+    end
+    for m in pairs(unitMechanics) do
+        unitMechanics[m] = false;
     end
 
     if not clearOnly then
@@ -205,8 +223,21 @@ local function UpdateAurasForUnit(unit, clearOnly)
             ScriptingAuraChanged(auraName, unit, true);
         end
     end
+    for m, isActive in pairs(unitMechanics) do
+        if not isActive then
+            unitMechanics[m] = nil;
+            ScriptingMechanicChanged(m, unit);
+        end
+    end
 
     if aurasChanged then _addon:TriggerUpdate() end
+end
+
+---Check if unit has an aura with given mechanic active.
+---@param unit "player"|"target"
+---@param mechanic SpellMechanic
+local function UnitHasMechanicActive(unit, mechanic)
+    return mechanicsActive[unit][mechanic] == true;
 end
 
 -----------------------------------------------
@@ -283,4 +314,10 @@ function Target.GetAuraApplications(auraName, personalOnly, debuff)
         i = i + 1;
         name, _, count = UnitAura("target", i, filter);
     end
+end
+
+---Check if target has an aura with given mechanic active.
+---@param mechanic SpellMechanic
+function Target.HasMechanicActive(mechanic)
+    return UnitHasMechanicActive("target", mechanic);
 end

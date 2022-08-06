@@ -91,7 +91,8 @@ end
 ---@param si SpellInfo
 ---@param calcedEffect CalcedEffect
 ---@param effectData SpellEffectData
-local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration, si, calcedEffect, effectData)
+---@param spellName string
+local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration, si, calcedEffect, effectData, spellName)
     local bonusMod = 1;
     local baseMod = 1;
 
@@ -166,7 +167,7 @@ local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration,
 
     calcedEffect.modBase = baseMod;
     calcedEffect.modBonus = bonusMod;
-    scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, calcedEffect, spellId, si);
+    scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT, calcedSpell, calcedEffect, spellId, si, spellName);
     calcedEffect.modBase = calcedEffect.modBase * calcedEffect.modBonus;
 
     _addon.util.PrintDebug("Basemod: "..calcedEffect.modBase..", Bonusmod: "..calcedEffect.modBonus);
@@ -367,7 +368,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell:AddToBuffList(stats.spellModFlatCritChance[spellId].buffs);
     end
 
-    scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE, calcedSpell, nil, spellId, spellInfo);
+    scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE, calcedSpell, nil, spellId, spellInfo, spellName);
 
     if calcedSpell.critChance > 100 then
         calcedSpell.critChance = 100;
@@ -667,7 +668,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             local isHeal = bit.band(calcedSpell.effects[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
             local isDuration = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0;
             local isNotHealLike = not isHeal and bit.band(calcedSpell.effects[1].effectFlags, ADDON_EFFECT_FLAGS.ABSORB) == 0;
-            SetBaseModifiers(isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellInfo, calcedEffect, effectData);
+            SetBaseModifiers(isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellInfo, calcedEffect, effectData, spellName);
 
             --TODO: Remove this
             -- Lets find a case and check if this is still needed.
@@ -734,7 +735,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             -- Effect values
 
             -- Pre process script hook
-            scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE, calcedSpell, calcedEffect, spellId, spellInfo);
+            scripting.DoSpell(EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE, calcedSpell, calcedEffect, spellId, spellInfo, spellName);
 
             assert(effectHandler[effectData.effectType] ~= nil, "No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
 

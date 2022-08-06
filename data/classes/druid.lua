@@ -13,7 +13,9 @@ local REJUVENATION = GetSpellInfo(48441);
 local LIFEBLOOM = GetSpellInfo(48451);
 local WILD_GROWTH = GetSpellInfo(53251);
 local MOONFIRE = GetSpellInfo(48463);
+local FEROCIOUS_BITE = GetSpellInfo(22828);
 
+---@type TalentDataRawEntry[]
 _addon.talentDataRaw = {
     -----------------------------
     -- Balance
@@ -314,7 +316,30 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Rend and Tear (2/28), dmg and crit on bleeding targets (dmg is multiplicative script)
+    { -- Rend and Tear
+        tree = 2,
+        tier = 10,
+        column = 2,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+                affectSpell = {2048 + 32768},
+                scriptKey = "Rend_and_Tear_Dmg",
+                perPoint = 4
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
+                affectSpell = {8388608},
+                scriptKey = "Rend_and_Tear_Crit",
+                perPoint = 5
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_MECHANIC,
+                affectMechanic = _addon.CONST.SPELL_MECHANIC.BLEED,
+                perPoint = 0
+            },
+        }
+    },
     { -- Primal Gore
         tree = 2,
         tier = 10,
@@ -619,5 +644,21 @@ _addon.scripting.RegisterScript("Imp_FF_Crit", function (val, cs, ce, spellId, s
     if _addon.Target.HasAuraName(FF)
     or _addon.Target.HasAuraName(FF_FERAL) then
         cs.critChance = cs.critChance + val;
+    end
+end);
+
+_addon.scripting.RegisterScript("Rend_and_Tear_Dmg", function (val, cs, ce, spellId, si, scriptType, spellName)
+    if _addon.Target.HasMechanicActive(_addon.CONST.SPELL_MECHANIC.BLEED) then
+        assert(ce, "Rend_and_Tear called for Maul/Shred with ce nl!");
+        ce.modBonus = ce.modBonus * (1 + val/100);
+    end
+end);
+
+_addon.scripting.RegisterScript("Rend_and_Tear_Crit", function (val, cs, ce, spellId, si, scriptType, spellName)
+    if spellName == FEROCIOUS_BITE -- Spellset also contains Rip and it can crit with talent!
+    and _addon.Target.HasMechanicActive(_addon.CONST.SPELL_MECHANIC.BLEED) then
+        if spellName == FEROCIOUS_BITE then
+            cs.critChance = cs.critChance + val;
+        end
     end
 end);
