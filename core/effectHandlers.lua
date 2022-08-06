@@ -353,7 +353,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, effCastTime, effec
         end
     end
 
-    if calcedSpell.hitChanceBinaryLoss == nil then
+    if calcedSpell.hitChanceBinaryLoss == nil and effectData.mechanic ~= _addon.CONST.SPELL_MECHANIC.BLEED then
         calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
     end
 
