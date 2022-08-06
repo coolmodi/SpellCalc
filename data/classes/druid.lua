@@ -317,7 +317,18 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: King of the Jungle 9 1 (3*5% dmg with enrage 5229 in bear)
+    { -- King of the Jungle
+        tree = 2,
+        tier = 9,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+                scriptKey = "King_of_the_Jugle_Value",
+                perPoint = 5
+            }
+        }
+    },
     { -- Rend and Tear
         tree = 2,
         tier = 10,
@@ -561,6 +572,14 @@ _addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.CONST.SCHOOL_MASK.ARCANE + _addon.CONST.SCHOOL_MASK.NATURE,
         scriptValue = "Master_Shapeshifter_Value"
+    }
+};
+
+_addon.aurasPlayer[5229] = { -- Enrage
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        scriptValue = "King_of_the_Jugle_Value"
     }
 };
 

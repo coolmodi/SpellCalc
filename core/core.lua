@@ -725,19 +725,17 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 calcedEffect.attackPower = stats.attackPower;
             end
 
-            if effectData.coefAP > 0 then
-                calcedEffect.effectiveApCoef = effectData.coefAP * calcedEffect.modBonus;
+            calcedEffect.effectiveApCoef = effectData.coefAP * calcedEffect.modBonus;
 
-                if effectData.perResouce then
-                    local perPoint = effectData.perResouce;
-                    local cp = _addon.Target.comboPoints;
-                    if cp == 0 then cp = 1 end
-                    calcedEffect.effectiveApCoef = calcedEffect.effectiveApCoef * cp;
-                    calcedEffect.flatMod = calcedEffect.flatMod + perPoint * cp;
-                end
-
-                calcedEffect.effectivePower = calcedEffect.effectivePower + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
+            if effectData.perResouce then
+                local perPoint = effectData.perResouce;
+                local cp = _addon.Target.comboPoints;
+                if cp == 0 then cp = 1 end
+                calcedEffect.effectiveApCoef = calcedEffect.effectiveApCoef * cp;
+                calcedEffect.flatMod = calcedEffect.flatMod + perPoint * cp;
             end
+
+            calcedEffect.effectivePower = calcedEffect.effectivePower + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
 
             --------------------------
             -- Effect values
