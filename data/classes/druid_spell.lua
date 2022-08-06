@@ -689,24 +689,6 @@ _addon.spellInfo = {
             },
         }
     },
-    [5229] = { -- Enrage
-        spellLevel = 12,
-        maxLevel = 0,
-        duration = 10,
-        school = 1,
-        GCD = 0,
-        defType = 0,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 24,
-                valueBase = 10,
-                valueRange = 0,
-                coef = 0,
-                coefAP = 0,
-            },
-        }
-    },
     [5570] = { -- Insect Swarm(Rank 1)
         spellLevel = 20,
         maxLevel = 29,
