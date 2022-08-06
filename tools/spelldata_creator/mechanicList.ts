@@ -1,16 +1,47 @@
-import { SpellData } from "./SpellData";
+import { SpellData, SpellEffect } from "./SpellData";
 import * as fs from "fs";
 
 function getMechanicSpellList(s: SpellData, m: SpellMechanic)
 {
-    const list: number[] = [];
+    const list = new Map<number, SpellEffect[]>();
+    
+    // Get all spells with mechanic on spell level
     for (const spellId in s.spellCategories)
     {
         if (s.spellCategories[spellId].Mechanic == m)
         {
-            list.push(parseInt(spellId));
+            const sid = parseInt(spellId);
+            const effs = s.getSpellEffects(sid);
+            list.set(sid, effs);
         }
     }
+
+    // Get all spells with mechanic on effect level
+    for (const effId in s.spellEffects)
+    {
+        const eff = s.spellEffects[effId];
+        if (list.has(eff.SpellID)) continue;
+        if (eff.EffectMechanic == m)
+        {
+            list.set(eff.SpellID, [eff]);
+        }
+    }
+
+    // Filter spells that don't apply auras
+    for (const [spellId, effs] of list)
+    {
+        let hasAura = false;
+        for (const eff of effs)
+        {
+            if (eff.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA || eff.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA)
+            {
+                hasAura = true;
+                break;
+            }
+        }
+        if (!hasAura) list.delete(spellId);
+    }
+
     return list;
 }
 
@@ -22,6 +53,7 @@ export function createMechanicLists(m: SpellMechanic[], s: SpellData)
 ---@class AddonEnv
 local _addon = select(2, ...);
 
+---@type table<integer, SpellMechanic>
 _addon.mechanicAuras = {
 `;
 
@@ -32,7 +64,7 @@ _addon.mechanicAuras = {
         str += `    --------------------------------\n`;
         str += `    -- Mechanic: ${mech}\n`;
         str += `    --------------------------------\n`;
-        for (const spellId of l)
+        for (const spellId of l.keys())
         {
             const name = s.getSpellName(spellId).Name_lang;
             str += `    [${spellId}] = ${mech}, -- ${name}\n`;

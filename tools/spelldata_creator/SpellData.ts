@@ -161,7 +161,7 @@ export interface SpellAuraOptions {
 }
 
 export class SpellData {
-    private spellEffects: {[index: number]: SpellEffect};
+    readonly spellEffects: {[index: number]: SpellEffect};
     private spellLevels: {[index: number]: SpellLevel};
     private spellMiscs: {[index: number]: SpellMisc};
     private spellNames: {[index: number]: SpellName};

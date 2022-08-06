@@ -249,7 +249,7 @@ function mageFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-function druidFixes(se: {[index: number]: SpellEffect})
+function druidFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: SpellName})
 {
     console.log("Fixing druid coefs and effects");
     const STARFALL = [48505, 53199, 53200, 53201];
@@ -257,6 +257,7 @@ function druidFixes(se: {[index: number]: SpellEffect})
 
     for(let effId in se) {
         let eff = se[effId];
+        const name = sn[eff.SpellID]?.Name_lang;
         if (LB.indexOf(eff.SpellID) > -1 && eff.EffectIndex === 1) {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
@@ -265,6 +266,10 @@ function druidFixes(se: {[index: number]: SpellEffect})
         else if (STARFALL.indexOf(eff.SpellID) > -1)
         {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_DUMMY
+        }
+        else if (name == "Maul" && eff.EffectIndex === 0)
+        {
+            eff.EffectMechanic = SpellMechanic.BLEED;
         }
     }
 }
@@ -371,7 +376,7 @@ export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index:
     paladinFix(se, sc, sm, sl);
     priestFix(se, sm);
     mageFix(se);
-    druidFixes(se);
+    druidFixes(se, sn);
     warlockFixes(se);
     shamanFix(se, sm);
     coefFixes(se, sn);
