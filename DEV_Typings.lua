@@ -69,7 +69,7 @@ _addon.spellClassSet = {
 ---@field neededWeaponMask integer|nil
 ---@field scriptKey string|nil Key for script effect. Must be unique!
 ---@field auraCategory DebuffCategory Effects from same category don't stack with each other.
----@field requiredStance integer
+---@field requiredStance PlayerStance
 
 ---@class UnitAuraEffect : AuraEffectBase
 ---@field value integer|nil

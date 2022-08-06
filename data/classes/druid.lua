@@ -397,20 +397,8 @@ _addon.talentDataRaw = {
         column = 3,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
-                requiredStance = _addon.CONST.STANCE_MASK.TREE,
-                perPoint = 2,
-            },
-            {
-                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
-                requiredStance = _addon.CONST.STANCE_MASK.BEAR + _addon.CONST.STANCE_MASK.BEAR_2,
-                perPoint = 2
-            },
-            {
-                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-                affectMask = _addon.CONST.SCHOOL_MASK.ARCANE + _addon.CONST.SCHOOL_MASK.NATURE,
-                requiredStance = _addon.CONST.STANCE_MASK.OWL,
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+                scriptKey = "Master_Shapeshifter_Value",
                 perPoint = 2
             }
         }
@@ -542,6 +530,30 @@ _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
         affectSpell = {1},
         value = 40
+    }
+};
+
+-- TODO: stance?
+_addon.aurasPlayer[48418] = { -- Master Shapeshifter Bear
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
+        scriptValue = "Master_Shapeshifter_Value"
+    }
+};
+
+_addon.aurasPlayer[48422] = { -- Master Shapeshifter Tree
+    {
+        type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
+        scriptValue = "Master_Shapeshifter_Value"
+    }
+};
+
+_addon.aurasPlayer[48421] = { -- Master Shapeshifter Owl
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ARCANE + _addon.CONST.SCHOOL_MASK.NATURE,
+        scriptValue = "Master_Shapeshifter_Value"
     }
 };
 
