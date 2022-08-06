@@ -17,31 +17,6 @@ function util.RemoveTableEntry(t, entry)
     end
 end
 
-local SHAPESHIFTS = {
-    [768] = "cat",
-    [5487] = "bear",
-    [9634] = "bear",
-    [1066] = "aquatic",
-    [783] = "travel",
-    [24858] = "moonkin",
-    [33891] = "tree",
-    [2457] = "battle",
-    [71] = "defensive",
-    [2458] = "berserker"
-}
-
----Return a string naming the shapeshift currently in, nil if no shapeshift.
----@return string|nil
-function util.GetShapeshiftName()
-    local index = GetShapeshiftForm();
-    if index > 0 then
-        local _, _, _, spellId = GetShapeshiftFormInfo(index);
-        if SHAPESHIFTS[spellId] then
-            return SHAPESHIFTS[spellId];
-        end
-    end
-end
-
 ---Print msg to chat, replacing default color.
 ---@param msg string The message to print.
 ---@param defColor string The color to use as default given as color esc sequence.

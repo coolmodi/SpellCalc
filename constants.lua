@@ -312,4 +312,32 @@ CONST.SPELL_MECHANIC = {
     INFECTED = 22,
 }
 
+---@enum PlayerStance
+CONST.STANCE_MASK = {
+    NONE        = 0x0,
+    CAT         = 0x00000001,
+    TREE        = 0x00000002,
+    BEAR        = 0x00000010,
+    BEAR_2      = 0x00000080,
+    OWL         = 0x40000000,
+
+    SHADOW      = 0x08000000,
+
+    BERSERKER   = 0x00040000,
+    DEFENSIVE   = 0x00020000,
+    BATTLE      = 0x00010000,
+}
+
+---@type table<integer, PlayerStance>
+CONST.STANCE_SPELLS = {
+    [768] = CONST.STANCE_MASK.CAT,
+    [5487] = CONST.STANCE_MASK.BEAR,
+    [9634] = CONST.STANCE_MASK.BEAR_2,
+    [24858] = CONST.STANCE_MASK.OWL,
+    [33891] = CONST.STANCE_MASK.TREE,
+    [2457] = CONST.STANCE_MASK.BATTLE,
+    [71] = CONST.STANCE_MASK.DEFENSIVE,
+    [2458] = CONST.STANCE_MASK.BERSERKER
+}
+
 _A.CONST = CONST;

@@ -322,6 +322,10 @@ local function AuraEffectUpdate(apply, name, effectBase, value, auraId, personal
     error("Aura "..name.." uses unknown effect "..effectBase.type.." or invalid effect setup!");
 end
 
+---------------------------------------------------------------
+-- Weapon restricted auras
+---------------------------------------------------------------
+
 ---@type table<string, WeaponRestrictedAuraInfo>
 local weaponRestrictedAuras = {};
 
@@ -389,6 +393,104 @@ _addon.events.Register("UNIT_INVENTORY_CHANGED", function (unit)
     if unit == "player" then UpdateWeaponRestrictedAuras() end
 end);
 
+---------------------------------------------------------------
+-- Stance restricted auras
+---------------------------------------------------------------
+
+---@type PlayerStance
+local currentStance = 0;
+---@type table<string, RestrictedAuraInfo>
+local stanceRestrictedAuras = {};
+
+---Get current stance/shapeshift.
+---@return PlayerStance
+function _addon.GetCurrentStance()
+    return currentStance;
+end
+
+---Check is current stance matches any bit in given mask.
+---@param stances integer The mask to check.
+---@return boolean
+function _addon.IsCurrentStance(stances)
+    return bit.band(currentStance, stances) ~= 0;
+end
+
+---Update auras that require a stance to be active.
+local function UpdateStanceRestrictedAuras()
+    _addon.util.PrintDebug("Updating stance type auras");
+    local changes = false;
+
+    for name, rai in pairs(stanceRestrictedAuras) do
+        if rai.state == 1 then
+            rai.state = -1;
+        end
+
+        if not rai.remove and _addon.IsCurrentStance(rai.effectBase.requiredStance) then
+            if rai.state == 0 then
+                AuraEffectUpdate(true, name, rai.effectBase, rai.value, rai.auraId, rai.personal);
+                changes = true;
+            end
+            rai.state = 1;
+        end
+
+        if rai.state == -1 then
+            AuraEffectUpdate(false, name, rai.effectBase, rai.value, rai.auraId, rai.personal);
+            rai.state = 0;
+            changes = true;
+        end
+    end
+
+    if changes then
+        _addon:TriggerUpdate();
+    end
+end
+
+--- Apply or remove an aura effect requiring a stance.
+---@param apply boolean @True to apply, false to remove
+---@param name string @The name of the buff
+---@param effectBase AuraEffectBase
+---@param value integer The effect value
+---@param auraId integer
+---@param personal boolean
+local function StanceAuraUpdate(apply, name, effectBase, value, auraId, personal)
+    if apply then
+        _addon.util.PrintDebug("Adding stance aura "..name);
+        if stanceRestrictedAuras[name] == nil then
+            ---@class RestrictedAuraInfo
+            stanceRestrictedAuras[name] = {
+                effectBase = effectBase,
+                value = value,
+                state = 0,
+                remove = false,
+                auraId = auraId,
+                personal = personal
+            }
+        end
+        UpdateStanceRestrictedAuras();
+    else
+        _addon.util.PrintDebug("Removing stance aura "..name);
+        stanceRestrictedAuras[name].remove = true;
+        UpdateStanceRestrictedAuras();
+        stanceRestrictedAuras[name] = nil;
+    end
+end
+
+_addon.events.Register("UPDATE_SHAPESHIFT_FORM", function ()
+    local index = GetShapeshiftForm();
+    if index > 0 then
+        local stanceSpells = _addon.CONST.STANCE_SPELLS;
+        local _, _, _, spellId = GetShapeshiftFormInfo(index);
+        currentStance = stanceSpells[spellId] and stanceSpells[spellId] or 0;
+    else
+        currentStance = 0;
+    end
+    UpdateStanceRestrictedAuras();
+end);
+
+---------------------------------------------------------------
+-- Aura application/removal
+---------------------------------------------------------------
+
 ---@param apply boolean
 ---@param name string The name of the buff
 ---@param effectBase AuraEffectBase
@@ -398,6 +500,10 @@ end);
 local function HandleApplyRemoveAura(apply, name, effectBase, value, auraId, personal)
     if effectBase.neededWeaponMask then
         WeaponAuraUpdate(apply, name, effectBase, value, auraId, personal);
+        return;
+    end
+    if effectBase.requiredStance then
+        StanceAuraUpdate(apply, name, effectBase, value, auraId, personal);
         return;
     end
     AuraEffectUpdate(apply, name, effectBase, value, auraId, personal);

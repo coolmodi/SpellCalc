@@ -304,7 +304,7 @@ _addon.talentDataRaw = {
             }
         }
     },
-    { -- Predatory Instincts TODO: only in cat
+    { -- Predatory Instincts
         tree = 2,
         tier = 8,
         column = 3,
@@ -312,7 +312,8 @@ _addon.talentDataRaw = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT,
                 affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
-                values = {3, 7, 10}
+                values = {3, 7, 10},
+                requiredStance = _addon.CONST.STANCE_MASK.CAT
             }
         }
     },
@@ -531,6 +532,7 @@ _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
     }
 };
 
+-- TODO: stance?
 _addon.aurasPlayer[48418] = { -- Master Shapeshifter Bear
     {
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,

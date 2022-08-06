@@ -40,8 +40,8 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
         end
 
         if class == "DRUID" then
-            local form = _addon.util.GetShapeshiftName();
-            if form and (form == "bear" or form == "cat") then
+            local sm = _addon.CONST.STANCE_MASK;
+            if _addon.IsCurrentStance(sm.BEAR + sm.BEAR_2 + sm.CAT) then
                 ratk = latk;
             end
         end
