@@ -533,7 +533,14 @@ _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
     }
 };
 
--- TODO: stance?
+_addon.aurasPlayer[52610] = { -- Savage Roar
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
+        value = 30
+    }
+};
+
 _addon.aurasPlayer[48418] = { -- Master Shapeshifter Bear
     {
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,

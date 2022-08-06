@@ -144,6 +144,7 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             period: 0,
             weaponCoef: 0,
             mechanic: 0,
+            perResource: 0,
         };
         const triggeredDummy = spellData.getSpellEffects(effect.EffectTriggerSpell);
         const startTrigger = spellData.getSpellEffects(getCorectBase(triggeredDummy[0]));
@@ -172,6 +173,7 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
                     period: 0,
                     weaponCoef: 0,
                     mechanic: 0,
+                    perResource: 0,
                 };
             }
         }
@@ -199,6 +201,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         period: 0,
         weaponCoef: 0,
         mechanic: effect.EffectMechanic,
+        perResource: effect.EffectPointsPerResource,
     };
     fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
@@ -269,6 +272,7 @@ function directDmg(rankInfo: RankInfo, effect: SpellEffect, effectNum: number) {
         period: 0,
         weaponCoef: 0,
         mechanic: effect.EffectMechanic,
+        perResource: effect.EffectPointsPerResource,
     };
     fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
@@ -328,6 +332,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             period: 0,
             weaponCoef: 0,
             mechanic: effect.EffectMechanic,
+            perResource: effect.EffectPointsPerResource,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
 
@@ -362,6 +367,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             period: 0,
             weaponCoef: 1,
             mechanic: effect.EffectMechanic,
+            perResource: effect.EffectPointsPerResource,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
@@ -378,6 +384,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             period: 0,
             weaponCoef: 1,
             mechanic: effect.EffectMechanic,
+            perResource: effect.EffectPointsPerResource,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
@@ -405,6 +412,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             period: 0,
             weaponCoef: weaponCoef,
             mechanic: effect.EffectMechanic,
+            perResource: effect.EffectPointsPerResource,
         };
 
         // SoC "fix"
@@ -426,6 +434,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             period: 0,
             weaponCoef: 0,
             mechanic: effect.EffectMechanic,
+            perResource: effect.EffectPointsPerResource,
         };
     },
 
@@ -441,6 +450,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             period: 0,
             weaponCoef: 0,
             mechanic: effect.EffectMechanic,
+            perResource: effect.EffectPointsPerResource,
         };
     },
 
@@ -458,6 +468,7 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
             period: 0,
             weaponCoef: 0,
             mechanic: effect.EffectMechanic,
+            perResource: effect.EffectPointsPerResource,
         };
         fillBaseAndRange(rankInfo.effects[effectNum], effect);
     },
@@ -620,6 +631,7 @@ end
             str += `\t\t\t\tvalueBase = ${eff.valueBase},\n`;
             str += `\t\t\t\tvalueRange = ${eff.valueRange},\n`;
             if (eff.valuePerLevel) str += `\t\t\t\tvaluePerLevel = ${eff.valuePerLevel},\n`;
+            if (eff.perResource) str += `\t\t\t\tperResouce = ${eff.perResource},\n`;
             str += `\t\t\t\tcoef = ${eff.coef},\n`;
             str += `\t\t\t\tcoefAP = ${eff.coefAP},\n`;
             if (eff.chainInfo) 

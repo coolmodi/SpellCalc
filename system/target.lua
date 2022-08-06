@@ -124,6 +124,7 @@ local Target = {
     levelDiff = 0,
     isPlayer = false,
     npcId = -1,
+    comboPoints = 0,
     resistanceBase = {
         [SCHOOL.PHYSICAL] = 0,
         [SCHOOL.HOLY] = 0,
@@ -239,6 +240,8 @@ function Target:Update()
         self.creatureType = nil;
     end
 
+    Target.comboPoints = GetComboPoints("player", "target");
+
     UpdateResistances();
     _addon:UpdateAurasForUnit("target");
 
@@ -253,3 +256,14 @@ _addon.Target = Target;
 
 _addon.events.Register("PLAYER_ENTERING_WORLD", function() Target:Update() end);
 _addon.events.Register("PLAYER_TARGET_CHANGED", function () Target:Update() end);
+
+-- Druid + Rogue
+local _, class = UnitClass("player");
+if class == "ROGUE" or class == "DRUID" then
+    _addon.events.Register("UNIT_POWER_UPDATE", function (unit, powerType)
+        if unit == "player" and powerType == "COMBO_POINTS" then
+            Target.comboPoints = GetComboPoints("player", "target");
+            _addon:TriggerUpdate();
+        end
+    end);
+end

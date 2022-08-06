@@ -152,6 +152,7 @@ interface EffectInfo {
     valueBase: number,
     valueRange: number,
     valuePerLevel: number,
+    perResource: number,
     coef: number,
     coefAP: number,
     forceScaleWithHeal: boolean,

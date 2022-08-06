@@ -512,3 +512,9 @@ function GetExpertise() end
 ---Returns the percentage of target's armory your physical attacks ignore due to armor penetration. 
 ---@return number armorPenPct
 function GetArmorPenetration() end
+
+---Retrieves the number of combo points gained by a player. 
+---@param unit "player"|"vehicle"
+---@param target "target"
+---@return integer
+function GetComboPoints(unit, target) end

@@ -681,6 +681,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             -- Effect bonus power scaling
 
             calcedEffect.effectivePower = 0;
+            calcedEffect.flatMod = flatMod;
 
             -- Spell power
             calcedEffect.spellPower = (isHeal or effectData.forceScaleWithHeal) and stats.spellHealing or stats.spellPower[spellInfo.school];
@@ -726,10 +727,17 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
             if effectData.coefAP > 0 then
                 calcedEffect.effectiveApCoef = effectData.coefAP * calcedEffect.modBonus;
+
+                if effectData.perResouce then
+                    local perPoint = effectData.perResouce;
+                    local cp = _addon.Target.comboPoints;
+                    if cp == 0 then cp = 1 end
+                    calcedEffect.effectiveApCoef = calcedEffect.effectiveApCoef * cp;
+                    calcedEffect.flatMod = calcedEffect.flatMod + perPoint * cp;
+                end
+
                 calcedEffect.effectivePower = calcedEffect.effectivePower + calcedEffect.attackPower * calcedEffect.effectiveApCoef;
             end
-
-            calcedEffect.flatMod = flatMod;
 
             --------------------------
             -- Effect values

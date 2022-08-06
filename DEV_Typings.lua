@@ -16,6 +16,7 @@ local _addon = select(2, ...);
 ---@field chainMult number|nil
 ---@field auraStacks integer|nil
 ---@field mechanic SpellMechanic|nil
+---@field perResouce integer|nil
 
 ---@class SpellInfo
 ---@field school SpellSchool

@@ -141,6 +141,17 @@ _addon.aurasPlayer = {
             value = 15
         }
     },
+    [39953] = { -- Adal Song of Battle
+        {
+            type = CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value =5
+        },
+        {
+            type = CONST.EFFECT_TYPE.PCT_HEALING,
+            value =5
+        },
+    },
     -----------------------
     -- Pct Damage Done
     -----------------------

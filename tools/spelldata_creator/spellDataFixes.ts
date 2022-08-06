@@ -361,8 +361,8 @@ function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: S
         if (data.ids[eff.SpellID] && data.ids[eff.SpellID][eff.EffectIndex])
         {
             const thisData = data.ids[eff.SpellID][eff.EffectIndex];
-            if (thisData.ap) eff.BonusCoefficientFromAP = thisData.ap;
-            if (thisData.sp) eff.EffectBonusCoefficient = thisData.sp;
+            if (typeof thisData.ap !== "undefined") eff.BonusCoefficientFromAP = thisData.ap;
+            if (typeof thisData.sp !== "undefined") eff.EffectBonusCoefficient = thisData.sp;
             continue;
         }
 
@@ -370,8 +370,8 @@ function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: S
         if (sname && data.names[sname] && data.names[sname][eff.EffectIndex])
         {
             const thisData = data.names[sname][eff.EffectIndex];
-            if (thisData.ap) eff.BonusCoefficientFromAP = thisData.ap;
-            if (thisData.sp) eff.EffectBonusCoefficient = thisData.sp;
+            if (typeof thisData.ap !== "undefined") eff.BonusCoefficientFromAP = thisData.ap;
+            if (typeof thisData.sp !== "undefined") eff.EffectBonusCoefficient = thisData.sp;
         }
     }
 }
