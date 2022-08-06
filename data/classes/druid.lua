@@ -317,6 +317,7 @@ _addon.talentDataRaw = {
             }
         }
     },
+    -- TODO: King of the Jungle 9 1 (3*5% dmg with enrage 5229 in bear)
     { -- Rend and Tear
         tree = 2,
         tier = 10,

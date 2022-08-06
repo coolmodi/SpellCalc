@@ -204,7 +204,7 @@ function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTim
             str = L.DMG_PER_MANA_SHORT;
         elseif calcedSpell.costType == Enum.PowerType.Rage then
             str = L["DPR"];
-        elseif calcedSpell.costType == Enum.PowerType.Rage then
+        elseif calcedSpell.costType == Enum.PowerType.Energy then
             str = L["DPE"];
         end
         self:SingleLine(str, ("%.2f"):format(calcedEffect.perResource));

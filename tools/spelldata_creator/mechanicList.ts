@@ -28,9 +28,10 @@ function getMechanicSpellList(s: SpellData, m: SpellMechanic)
     }
 
     // Filter spells that don't apply auras
-    for (const [spellId, effs] of list)
+    for (const spellId of list.keys())
     {
         let hasAura = false;
+        const effs = s.getSpellEffects(spellId);
         for (const eff of effs)
         {
             if (eff.Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA || eff.Effect == EFFECT_TYPE.SPELL_EFFECT_PERSISTENT_AREA_AURA)

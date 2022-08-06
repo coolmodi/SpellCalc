@@ -1,4 +1,4 @@
-import { SpellEffect, SpellCategory, SpellMisc, SpellLevel, SpellName } from "./SpellData";
+import { SpellEffect, SpellCategory, SpellMisc, SpellLevel, SpellName, SpellData } from "./SpellData";
 import { isJudgeDummy, SealType, isSeal } from "./paladinCrap";
 import * as fs from "fs";
 
@@ -249,7 +249,7 @@ function mageFix(se: {[index: number]: SpellEffect}) {
     }
 }
 
-function druidFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: SpellName})
+function druidFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: SpellName}, sd: SpellData)
 {
     console.log("Fixing druid coefs and effects");
     const STARFALL = [48505, 53199, 53200, 53201];
@@ -267,7 +267,11 @@ function druidFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: 
         {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_DUMMY
         }
-        else if (name == "Maul" && eff.EffectIndex === 0)
+        else if (name == "Maul" && sd.spellClassOptions[eff.SpellID]?.SpellClassSet == 7 && eff.EffectIndex === 0)
+        {
+            eff.EffectMechanic = SpellMechanic.BLEED;
+        }
+        else if (name == "Shred" && sd.spellClassOptions[eff.SpellID]?.SpellClassSet == 7 && eff.EffectIndex === 0)
         {
             eff.EffectMechanic = SpellMechanic.BLEED;
         }
@@ -372,11 +376,11 @@ function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: S
     }
 }
 
-export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}, sn: {[spellId: number]: SpellName}) {
+export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}, sn: {[spellId: number]: SpellName}, sd: SpellData) {
     paladinFix(se, sc, sm, sl);
     priestFix(se, sm);
     mageFix(se);
-    druidFixes(se, sn);
+    druidFixes(se, sn, sd);
     warlockFixes(se);
     shamanFix(se, sm);
     coefFixes(se, sn);

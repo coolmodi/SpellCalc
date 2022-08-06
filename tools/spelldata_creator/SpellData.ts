@@ -171,7 +171,7 @@ export class SpellData {
     readonly spellCategories: {[index: number]: SpellCategory};
     private spellCooldowns: {[index: number]: SpellCooldown};
     private spellPowerCost: {[index: number]: SpellPower};
-    private spellClassOptions: {[index: number]: SpellClassOptions};
+    readonly spellClassOptions: {[index: number]: SpellClassOptions};
     private spellEquippedItems: {[index: number]: SpellEquippedItems};
     private spellAuraOptions: {[index: number]: SpellAuraOptions};
 
@@ -230,7 +230,7 @@ export class SpellData {
             }, null, 4));
         }
 
-        fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs, this.spellLevels, this.spellNames);
+        fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs, this.spellLevels, this.spellNames, this);
         console.log("SpellData created!");
     }
 
