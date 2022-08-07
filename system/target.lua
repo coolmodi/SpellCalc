@@ -123,6 +123,8 @@ local Target = {
     level = 0,
     levelDiff = 0,
     isPlayer = false,
+    isSelf = false,
+    exists = false,
     npcId = -1,
     comboPoints = 0,
     resistanceBase = {
@@ -204,20 +206,20 @@ function Target:Update()
     local _, class = UnitClass("target");
 
     self.class = class;
+    self.isSelf = UnitIsUnit("player", "target");
+    self.isPlayer = UnitIsPlayer("target");
+    self.exists = tName ~= nil;
 
     if tName == nil or not SpellCalc_settings.useCurrentTarget then
         self.level = pLevel + SpellCalc_settings.defaultTargetLvlOffset;
         self.levelDiff = SpellCalc_settings.defaultTargetLvlOffset;
-        self.isPlayer = false;
     else
         local tLevel = UnitLevel("target");
         if tLevel == -1 then
             tLevel = pLevel + 3;
         end
-
         self.level = tLevel;
         self.levelDiff = tLevel - pLevel;
-        self.isPlayer = UnitIsPlayer("target");
     end
 
     if tName then

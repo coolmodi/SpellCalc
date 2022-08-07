@@ -257,8 +257,11 @@ end
 ---@param spellName string
 local function Innervate(calcedSpell, effNum, spellInfo, effCastTime, effectMod, spellName)
     local calcedEffect = calcedSpell.effects[effNum];
-    --TODO: Glyph of Innervate.
     calcedEffect.min = stats.baseMana * 2.25 / 10;
+    if (not _addon.Target.exists or _addon.Target.isSelf)
+    and _addon.scripting.GetValue("Glyph_of_Innervate") > 0 then
+        calcedEffect.min = calcedEffect.min + stats.baseMana * 0.45 / 10;
+    end
     calcedEffect.max = calcedEffect.min;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.min;

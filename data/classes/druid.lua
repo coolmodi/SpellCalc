@@ -546,8 +546,8 @@ _addon.aurasPlayer[48517] = { -- Eclipse (Solar)
 
 _addon.aurasPlayer[52610] = { -- Savage Roar
     {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-        affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,
+        scriptKey = "Savage_Roar",
         value = 30
     }
 };
@@ -602,6 +602,22 @@ _addon.classGlyphs[62971] = { -- Glyph of Nourish
         value = 6,
         scriptKey = "Glyph_of_Nourish",
     },
+}
+
+_addon.classGlyphs[63055] = { -- Glyph of Savage Roar
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        value = 3,
+        scriptKey = "Glyph_of_Savage_Roar",
+    },
+}
+
+_addon.classGlyphs[54832] = { -- Glyph of Innervate
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        scriptKey = "Glyph_of_Innervate",
+        value = 1
+    }
 }
 
 --------------------------------------------------------------------------
@@ -698,5 +714,21 @@ _addon.scripting.RegisterScript("Rend_and_Tear_Crit", function (val, cs, ce, spe
         if spellName == FEROCIOUS_BITE then
             cs.critChance = cs.critChance + val;
         end
+    end
+end);
+
+---@type AuraEffectBase
+local svAura = {
+    type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+    affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,
+}
+_addon.scripting.RegisterAuraScript("Savage_Roar", function (apply, auraId, fromPlayer, scriptType, cacheValue)
+    local name = "SavageRoar";
+    local glyphVal = _addon.scripting.GetValue("Glyph_of_Savage_Roar");
+    local total = 30 + glyphVal;
+    if apply then
+        _addon:ApplyAuraEffect(name, svAura, total, auraId, fromPlayer);
+    else
+        _addon:RemoveAuraEffect(name, svAura, total, auraId, fromPlayer);
     end
 end);

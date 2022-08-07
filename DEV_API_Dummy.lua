@@ -518,3 +518,9 @@ function GetArmorPenetration() end
 ---@param target "target"
 ---@return integer
 function GetComboPoints(unit, target) end
+
+---Are 2 units the same?
+---@param unit1 string
+---@param unit2 string
+---@return boolean
+function UnitIsUnit(unit1, unit2) end
