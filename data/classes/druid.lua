@@ -594,10 +594,13 @@ _addon.classGlyphs[54743] = { -- Glyph of Regrowth
         value = 20,
         scriptKey = "Glyph_of_Regrowth",
     },
+}
+
+_addon.classGlyphs[62971] = { -- Glyph of Nourish
     {
-        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
-        scriptKey = REGROWTH,
-        value = 0
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        value = 6,
+        scriptKey = "Glyph_of_Nourish",
     },
 }
 
@@ -663,9 +666,15 @@ end);
 _addon.scripting.RegisterScript("Nourish_Script", function (val, cs, ce, spellId, si, scriptType)
     assert(ce, "Nourish_Script called with ce nil!");
     local hasAura = _addon.Target.HasAuraName;
-    if hasAura(REJUVENATION, true) or hasAura(REGROWTH, true)
-    or hasAura(LIFEBLOOM, true) or hasAura(WILD_GROWTH, true) then
-        ce.modBonus = ce.modBonus * 1.2;
+    local found = 0;
+    if hasAura(REJUVENATION, true) then found = found + 1 end
+    if hasAura(REGROWTH, true) then found = found + 1 end
+    if hasAura(WILD_GROWTH, true) then found = found + 1 end
+    if hasAura(LIFEBLOOM, true) then found = found + 1 end
+    if found > 0 then
+        local gor = _addon.scripting.GetValue("Glyph_of_Nourish");
+        local mod = 1.2 + (gor/100) * found;
+        ce.modBonus = ce.modBonus * mod;
     end
 end);
 
