@@ -136,7 +136,6 @@ local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration,
             calcedSpell:AddToBuffList(t.buffs);
         end
     else
-        -- TODO: Improved PW:S increase bonus as well, Aplify Curse doesn't, any other uses of this for scaling spells to check?
         if stats.spellModPctEffect[spellId] ~= nil then
             bonusMod = bonusMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
             calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
@@ -701,7 +700,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 end
 
                 if spellInfo.maxLevel > 0 and bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) == 0 then
-                    local downrank = (spellInfo.maxLevel + 6) / UnitLevel("player");
+                    local downrank = math.max(0, (22 + spellInfo.maxLevel - UnitLevel("player")) / 20);
                     if downrank < 1 then
                         coef = coef * downrank;
                     end
