@@ -6,6 +6,7 @@ if playerClass ~= "PRIEST" then
 end
 
 local WEAKENED_SOUL = GetSpellInfo(6788);
+local SHADOW_WORD_PAIN = GetSpellInfo(48125);
 
 ---@type TalentDataRawEntry[]
 _addon.talentDataRaw = {
@@ -24,7 +25,7 @@ _addon.talentDataRaw = {
             },
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
-                affectSpell = {35684416},
+                affectSpell = {35684416, 0, 64},
                 perPoint = 1
             }
         }
@@ -224,54 +225,123 @@ _addon.talentDataRaw = {
     -----------------------------
     -- Shadow
     -----------------------------
-    -- Improved Shadow Word: Pain
-    --[[ {
+    { -- Darkness
         tree = 3,
-        talent = 4,
+        tier = 1,
+        column = 3,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {41951232, 524290},
+                perPoint = 2
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {33587200, 1024, 64},
+                perPoint = 2
+            }
+        }
+    },
+    { -- Improved Shadow Word: Pain
+        tree = 3,
+        tier = 2,
+        column = 2,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {32768},
                 perPoint = 3
             }
         }
     },
-    -- Shadow Focus
-    {
+    { -- Shadow Focus
         tree = 3,
-        talent = 5,
+        tier = 2,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
-                affectSpell = {109813764, 1098},
-                perPoint = 2
+                affectSpell = {109814020, 3933258, 8520},
+                perPoint = 1
             }
         }
     },
-    -- Darkness
-    {
+    { -- Mind Melt
         tree = 3,
-        talent = 17,
-        effects = {
-            {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {42508288, 1026},
-                perPoint = 2
-            }
-        }
-    },
-    -- Shadow Power
-    {
-        tree = 3,
-        talent = 19,
+        tier = 6,
+        column = 1,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {8192, 2},
+                affectSpell = {8396800, 524288, 64},
+                perPoint = 2
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {33587200, 1024},
                 perPoint = 3
             }
         }
-    }, ]]
+    },
+    { -- Improved Devouring Plague
+        tree = 3,
+        tier = 6,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {33554432},
+                perPoint = 5
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_DOT_ON_HIT,
+                affectSpell = {33554432},
+                perPoint = 10
+            }
+        }
+    },
+    { -- Shadow Power
+        tree = 3,
+        tier = 7,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+                affectSpell = {8396800, 2, 64},
+                perPoint = 20
+            }
+        }
+    },
+    { -- Misery
+        tree = 3,
+        tier = 8,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                affectSpell = {8396800, 524288, 64},
+                perPoint = 5
+            }
+        }
+    },
+    { -- Twisted Faith
+        tree = 3,
+        tier = 10,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+                affectSpell = {8388608 + 8192, 0, 64},
+                scriptKey = "Twisted_Faith_SWP",
+                perPoint = 2
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA_PERSONAL,
+                scriptKey = SHADOW_WORD_PAIN,
+                perPoint = 0
+            }
+        }
+    },
 };
 
 --------------------------------------------------------------------------
@@ -293,17 +363,43 @@ _addon.aurasPlayer[33151] = { -- Surge of Light
     }
 }
 
+_addon.aurasPlayer[15258] = { -- Shadow Weaving
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
+        value = 2,
+        hasStacks = true
+    }
+}
+
 -- Shadowform
 _addon.aurasPlayer[15473] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
-    value = 15,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
+        value = 15,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+        affectSpell = {33587200, 1024},
+        value = 1,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+        affectSpell = {33587200, 1024},
+        value = 100,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE,
+        affectSpell = {33554432, 1024},
+        value = 1,
+    }
 }
 
 -- Inner Focus
 _addon.aurasPlayer[14751] = {
     {type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-    affectSpell = {-917225840, 54},
+    affectSpell = {-908837232, 13205558, 64},
     value = 25}
 }
 
@@ -345,7 +441,11 @@ _addon.aurasTarget[47930] = { -- Grace
 
 ---@type UnitAuraEffect[]
 _addon.classPassives = {
-
+    { -- Allow MF crit (MF was made a duration effect in this addon because I was lazy...)
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+        affectSpell = {0, 0, 64},
+        value = 1
+    }
 }
 
 --------------------------------------------------------------------------
@@ -355,5 +455,12 @@ _addon.classPassives = {
 _addon.scripting.RegisterScript("Renewed_Hope_Crit", function (val, cs, ce, spellId, si, scriptType, spellName)
     if _addon.Target.HasAuraName(WEAKENED_SOUL) then
         cs.critChance = cs.critChance + val;
+    end
+end);
+
+_addon.scripting.RegisterScript("Twisted_Faith_SWP", function (val, cs, ce, spellId, si, scriptType, spellName)
+    assert(ce, "Twisted_Faith_SWP called with ce nil!");
+    if _addon.Target.HasAuraName(SHADOW_WORD_PAIN, true) then
+        ce.modBonus = ce.modBonus * (1 + val/100);
     end
 end);

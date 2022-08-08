@@ -1454,6 +1454,28 @@ _addon.spellInfo = {
             },
         }
     },
+    [15407] = { -- Mind Flay(Rank 1)
+        spellLevel = 20,
+        maxLevel = 28,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 15,
+                valueRange = 0,
+                coef = 0.257,
+                coefAP = 0,
+            },
+        }
+    },
     [15430] = { -- Holy Nova(Rank 2)
         spellLevel = 28,
         maxLevel = 34,
@@ -1498,6 +1520,116 @@ _addon.spellInfo = {
                 valueBase = 23459,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [17311] = { -- Mind Flay(Rank 2)
+        spellLevel = 28,
+        maxLevel = 36,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 36,
+                valueRange = 0,
+                coef = 0.257,
+                coefAP = 0,
+            },
+        }
+    },
+    [17312] = { -- Mind Flay(Rank 3)
+        spellLevel = 36,
+        maxLevel = 44,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 53,
+                valueRange = 0,
+                coef = 0.257,
+                coefAP = 0,
+            },
+        }
+    },
+    [17313] = { -- Mind Flay(Rank 4)
+        spellLevel = 44,
+        maxLevel = 52,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 74,
+                valueRange = 0,
+                coef = 0.257,
+                coefAP = 0,
+            },
+        }
+    },
+    [17314] = { -- Mind Flay(Rank 5)
+        spellLevel = 52,
+        maxLevel = 60,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 94,
+                valueRange = 0,
+                coef = 0.257,
+                coefAP = 0,
+            },
+        }
+    },
+    [18807] = { -- Mind Flay(Rank 6)
+        spellLevel = 60,
+        maxLevel = 68,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 121,
+                valueRange = 0,
+                coef = 0.257,
                 coefAP = 0,
             },
         }
@@ -2127,6 +2259,28 @@ _addon.spellInfo = {
                 valueBase = 21,
                 valueRange = 0,
                 coef = 0.024,
+                coefAP = 0,
+            },
+        }
+    },
+    [25387] = { -- Mind Flay(Rank 7)
+        spellLevel = 68,
+        maxLevel = 72,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 150,
+                valueRange = 0,
+                coef = 0.257,
                 coefAP = 0,
             },
         }
@@ -3082,6 +3236,50 @@ _addon.spellInfo = {
                 valueBase = 50,
                 valueRange = 0,
                 coef = 0.024,
+                coefAP = 0,
+            },
+        }
+    },
+    [48155] = { -- Mind Flay(Rank 8)
+        spellLevel = 74,
+        maxLevel = 78,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 164,
+                valueRange = 0,
+                coef = 0.257,
+                coefAP = 0,
+            },
+        }
+    },
+    [48156] = { -- Mind Flay(Rank 9)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 3,
+        baseCostPct = 9,
+        school = 6,
+        isChannel = true,
+        isBinary = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 196,
+                valueRange = 0,
+                coef = 0.257,
                 coefAP = 0,
             },
         }

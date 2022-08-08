@@ -171,6 +171,12 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
             sc.DefenseType = DEFENSE_TYPE.MAGIC; */
             sd.getSpellMisc(eff.SpellID).DurationIndex = 39;
         }
+        else if (sd.getSpellName(eff.SpellID).Name_lang == "Mind Flay" && eff.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE)
+        {
+            const tspellCoef = sd.getSpellEffects(eff.EffectTriggerSpell)[0].EffectBonusCoefficient;
+            eff.EffectAura = AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE;
+            eff.EffectBonusCoefficient = tspellCoef;
+        }
     }
 
     const divineHymn = sd.getSpellCategory(64844);
