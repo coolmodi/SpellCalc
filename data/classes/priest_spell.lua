@@ -7,129 +7,15 @@ if playerClass ~= "PRIEST" then
     return;
 end
 
-_addon.spellBaseInfo = {
-    [GetSpellInfo(6603)] = { -- Attack
-        school = 1,
-        defType = 2,
-    },
-    [GetSpellInfo(585)] = { -- Smite
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2050)] = { -- Lesser Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(589)] = { -- Shadow Word: Pain
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(17)] = { -- Power Word: Shield
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(139)] = { -- Renew
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(8092)] = { -- Mind Blast
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(13908)] = { -- Desperate Prayer
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(10797)] = { -- Starshards
-        school = 7,
-        defType = 1,
-    },
-    [GetSpellInfo(2652)] = { -- Touch of Weakness
-        school = 6,
-        defType = 1,
-        charges = 1,
-    },
-    [GetSpellInfo(2054)] = { -- Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2061)] = { -- Flash Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(14914)] = { -- Holy Fire
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2944)] = { -- Devouring Plague
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(18137)] = { -- Shadowguard
-        school = 6,
-        defType = 1,
-        noCrit = true,
-        charges = 3,
-    },
-    [GetSpellInfo(15237)] = { -- Holy Nova
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(15407)] = { -- Mind Flay
-        school = 6,
-        isChannel = true,
-        isBinary = true,
-        defType = 1,
-    },
-    [GetSpellInfo(596)] = { -- Prayer of Healing
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(2060)] = { -- Greater Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(37563)] = { -- Renewal
-        school = 2,
-        defType = 0,
-    },
-    [GetSpellInfo(34861)] = { -- Circle of Healing
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(34914)] = { -- Vampiric Touch
-        school = 6,
-        defType = 1,
-    },
-    [GetSpellInfo(44041)] = { -- Chastise
-        school = 2,
-        isBinary = true,
-        GCD = 0.5,
-        defType = 1,
-    },
-    [GetSpellInfo(32546)] = { -- Binding Heal
-        school = 2,
-        defType = 1,
-    },
-    [GetSpellInfo(33076)] = { -- Prayer of Mending
-        school = 2,
-        defType = 0,
-        noCrit = true,
-        forceHeal = true,
-        charges = 5,
-    },
-    [GetSpellInfo(32379)] = { -- Shadow Word: Death
-        school = 6,
-        defType = 1,
-    },
-};
-
+---@type SpellInfoTable
 _addon.spellInfo = {
     [17] = { -- Power Word: Shield(Rank 1)
         spellLevel = 6,
         maxLevel = 11,
         duration = 30,
-        baseCost = 45,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -138,7 +24,8 @@ _addon.spellInfo = {
                 valueBase = 44,
                 valueRange = 0,
                 valuePerLevel = 0.8,
-                coef = 0.1425,
+                coef = 0.3827075,
+                coefAP = 0,
             },
         }
     },
@@ -146,7 +33,9 @@ _addon.spellInfo = {
         spellLevel = 8,
         maxLevel = 13,
         duration = 15,
-        baseCost = 30,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -154,14 +43,17 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 9,
                 valueRange = 0,
-                coef = 0.11,
+                coef = 0.207,
+                coefAP = 0,
             },
         }
     },
     [585] = { -- Smite(Rank 1)
         spellLevel = 1,
         maxLevel = 6,
-        baseCost = 20,
+        baseCostPct = 9,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -169,14 +61,17 @@ _addon.spellInfo = {
                 valueRange = 4,
                 valuePerLevel = 0.5,
                 coef = 0.123,
+                coefAP = 0,
             },
         }
     },
     [589] = { -- Shadow Word: Pain(Rank 1)
         spellLevel = 4,
-        maxLevel = 0,
+        maxLevel = 9,
         duration = 18,
-        baseCost = 25,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -184,14 +79,17 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 5,
                 valueRange = 0,
-                coef = 0.0732,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [591] = { -- Smite(Rank 2)
         spellLevel = 6,
         maxLevel = 11,
-        baseCost = 30,
+        baseCostPct = 12,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -199,6 +97,7 @@ _addon.spellInfo = {
                 valueRange = 6,
                 valuePerLevel = 0.6,
                 coef = 0.271,
+                coefAP = 0,
             },
         }
     },
@@ -206,7 +105,9 @@ _addon.spellInfo = {
         spellLevel = 12,
         maxLevel = 17,
         duration = 30,
-        baseCost = 80,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -215,44 +116,53 @@ _addon.spellInfo = {
                 valueBase = 88,
                 valueRange = 0,
                 valuePerLevel = 1.2,
-                coef = 0.21,
+                coef = 0.56399,
+                coefAP = 0,
             },
         }
     },
     [594] = { -- Shadow Word: Pain(Rank 2)
         spellLevel = 10,
-        maxLevel = 0,
+        maxLevel = 17,
         duration = 18,
-        baseCost = 50,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 11,
+                valueBase = 10,
                 valueRange = 0,
-                coef = 0.114,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [596] = { -- Prayer of Healing(Rank 1)
         spellLevel = 30,
         maxLevel = 39,
-        baseCost = 410,
+        baseCostPct = 48,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 301,
                 valueRange = 20,
                 valuePerLevel = 1.3,
-                coef = 0.429,
+                coef = 0.526,
+                coefAP = 0,
             },
         }
     },
     [598] = { -- Smite(Rank 3)
         spellLevel = 14,
         maxLevel = 19,
-        baseCost = 60,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -260,6 +170,7 @@ _addon.spellInfo = {
                 valueRange = 8,
                 valuePerLevel = 0.9,
                 coef = 0.554,
+                coefAP = 0,
             },
         }
     },
@@ -267,7 +178,9 @@ _addon.spellInfo = {
         spellLevel = 18,
         maxLevel = 23,
         duration = 30,
-        baseCost = 130,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -276,30 +189,36 @@ _addon.spellInfo = {
                 valueBase = 158,
                 valueRange = 0,
                 valuePerLevel = 1.6,
-                coef = 0.2775,
+                coef = 0.0201425,
+                coefAP = 0,
             },
         }
     },
     [970] = { -- Shadow Word: Pain(Rank 3)
         spellLevel = 18,
-        maxLevel = 0,
+        maxLevel = 25,
         duration = 18,
-        baseCost = 95,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 22,
+                valueBase = 20,
                 valueRange = 0,
-                coef = 0.169,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [984] = { -- Smite(Rank 4)
         spellLevel = 22,
         maxLevel = 27,
-        baseCost = 95,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -307,43 +226,52 @@ _addon.spellInfo = {
                 valueRange = 14,
                 valuePerLevel = 1.3,
                 coef = 0.714,
+                coefAP = 0,
             },
         }
     },
     [992] = { -- Shadow Word: Pain(Rank 4)
         spellLevel = 26,
-        maxLevel = 0,
+        maxLevel = 33,
         duration = 18,
-        baseCost = 155,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 39,
+                valueBase = 35,
                 valueRange = 0,
-                coef = 0.183,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [996] = { -- Prayer of Healing(Rank 2)
         spellLevel = 40,
         maxLevel = 49,
-        baseCost = 560,
+        baseCostPct = 48,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 444,
                 valueRange = 28,
                 valuePerLevel = 1.6,
-                coef = 0.429,
+                coef = 0.526,
+                coefAP = 0,
             },
         }
     },
     [1004] = { -- Smite(Rank 5)
         spellLevel = 30,
         maxLevel = 35,
-        baseCost = 140,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -351,148 +279,145 @@ _addon.spellInfo = {
                 valueRange = 20,
                 valuePerLevel = 1.6,
                 coef = 0.714,
+                coefAP = 0,
             },
         }
     },
     [2050] = { -- Lesser Heal(Rank 1)
         spellLevel = 1,
         maxLevel = 3,
-        baseCost = 30,
+        baseCostPct = 16,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 46,
                 valueRange = 10,
                 valuePerLevel = 0.9,
-                coef = 0.123,
+                coef = 0.231,
+                coefAP = 0,
             },
         }
     },
     [2052] = { -- Lesser Heal(Rank 2)
         spellLevel = 4,
         maxLevel = 9,
-        baseCost = 45,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 71,
                 valueRange = 14,
                 valuePerLevel = 1.1,
-                coef = 0.229,
+                coef = 0.431,
+                coefAP = 0,
             },
         }
     },
     [2053] = { -- Lesser Heal(Rank 3)
         spellLevel = 10,
         maxLevel = 15,
-        baseCost = 75,
+        baseCostPct = 27,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 135,
                 valueRange = 22,
                 valuePerLevel = 1.6,
-                coef = 0.446,
+                coef = 0.839,
+                coefAP = 0,
             },
         }
     },
     [2054] = { -- Heal(Rank 1)
         spellLevel = 16,
         maxLevel = 21,
-        baseCost = 155,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 295,
                 valueRange = 46,
                 valuePerLevel = 2.4,
-                coef = 0.729,
+                coef = 1.371,
+                coefAP = 0,
             },
         }
     },
     [2055] = { -- Heal(Rank 2)
         spellLevel = 22,
         maxLevel = 27,
-        baseCost = 205,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 429,
                 valueRange = 62,
                 valuePerLevel = 3.2,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
     [2060] = { -- Greater Heal(Rank 1)
         spellLevel = 40,
         maxLevel = 45,
-        baseCost = 370,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 899,
                 valueRange = 114,
                 valuePerLevel = 5.1,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
     [2061] = { -- Flash Heal(Rank 1)
         spellLevel = 20,
         maxLevel = 25,
-        baseCost = 125,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 193,
                 valueRange = 44,
                 valuePerLevel = 1.9,
-                coef = 0.429,
-            },
-        }
-    },
-    [2652] = { -- Touch of Weakness(Rank 1)
-        spellLevel = 10,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 25,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 2943,
-                valueRange = 0,
-                coef = 0,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [2767] = { -- Shadow Word: Pain(Rank 5)
         spellLevel = 34,
-        maxLevel = 0,
+        maxLevel = 41,
         duration = 18,
-        baseCost = 230,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 61,
+                valueBase = 55,
                 valueRange = 0,
-                coef = 0.183,
-            },
-        }
-    },
-    [2943] = { -- Touch of Weakness(Rank 1)
-        spellLevel = 10,
-        maxLevel = 0,
-        duration = 120,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 8,
-                valueRange = 0,
-                coef = 0.067,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
@@ -500,7 +425,9 @@ _addon.spellInfo = {
         spellLevel = 20,
         maxLevel = 0,
         duration = 24,
-        baseCost = 215,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -508,7 +435,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 19,
                 valueRange = 0,
-                coef = 0.1,
+                coef = 0.185,
+                coefAP = 0,
             },
         }
     },
@@ -516,7 +444,9 @@ _addon.spellInfo = {
         spellLevel = 24,
         maxLevel = 29,
         duration = 30,
-        baseCost = 175,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -525,14 +455,17 @@ _addon.spellInfo = {
                 valueBase = 234,
                 valueRange = 0,
                 valuePerLevel = 2,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
     [6060] = { -- Smite(Rank 6)
         spellLevel = 38,
         maxLevel = 43,
-        baseCost = 185,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -540,34 +473,41 @@ _addon.spellInfo = {
                 valueRange = 28,
                 valuePerLevel = 2,
                 coef = 0.714,
+                coefAP = 0,
             },
         }
     },
     [6063] = { -- Heal(Rank 3)
         spellLevel = 28,
         maxLevel = 33,
-        baseCost = 255,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 566,
                 valueRange = 76,
                 valuePerLevel = 4,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
     [6064] = { -- Heal(Rank 4)
         spellLevel = 34,
         maxLevel = 39,
-        baseCost = 305,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 712,
                 valueRange = 92,
                 valuePerLevel = 4.5,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
@@ -575,7 +515,9 @@ _addon.spellInfo = {
         spellLevel = 30,
         maxLevel = 35,
         duration = 30,
-        baseCost = 210,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -584,7 +526,8 @@ _addon.spellInfo = {
                 valueBase = 301,
                 valueRange = 0,
                 valuePerLevel = 2.3,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
@@ -592,7 +535,9 @@ _addon.spellInfo = {
         spellLevel = 36,
         maxLevel = 41,
         duration = 30,
-        baseCost = 250,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -601,7 +546,8 @@ _addon.spellInfo = {
                 valueBase = 381,
                 valueRange = 0,
                 valuePerLevel = 2.6,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
@@ -609,7 +555,9 @@ _addon.spellInfo = {
         spellLevel = 14,
         maxLevel = 19,
         duration = 15,
-        baseCost = 65,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -617,7 +565,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 20,
                 valueRange = 0,
-                coef = 0.155,
+                coef = 0.291,
+                coefAP = 0,
             },
         }
     },
@@ -625,7 +574,9 @@ _addon.spellInfo = {
         spellLevel = 20,
         maxLevel = 25,
         duration = 15,
-        baseCost = 105,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -633,7 +584,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 35,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
@@ -641,7 +593,9 @@ _addon.spellInfo = {
         spellLevel = 26,
         maxLevel = 31,
         duration = 15,
-        baseCost = 140,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -649,7 +603,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 49,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
@@ -657,7 +612,9 @@ _addon.spellInfo = {
         spellLevel = 32,
         maxLevel = 37,
         duration = 15,
-        baseCost = 170,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -665,7 +622,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 63,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
@@ -673,7 +631,9 @@ _addon.spellInfo = {
         spellLevel = 38,
         maxLevel = 43,
         duration = 15,
-        baseCost = 205,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -681,26 +641,17 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 80,
                 valueRange = 0,
-                coef = 0.2,
-            },
-        }
-    },
-    [6603] = { -- Attack
-        spellLevel = 0,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 78,
-                valueBase = 0,
-                valueRange = 0,
-                coef = 0,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
     [8092] = { -- Mind Blast(Rank 1)
         spellLevel = 10,
         maxLevel = 15,
-        baseCost = 50,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -708,13 +659,16 @@ _addon.spellInfo = {
                 valueRange = 4,
                 valuePerLevel = 0.6,
                 coef = 0.268,
+                coefAP = 0,
             },
         }
     },
     [8102] = { -- Mind Blast(Rank 2)
         spellLevel = 16,
         maxLevel = 21,
-        baseCost = 80,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -722,13 +676,16 @@ _addon.spellInfo = {
                 valueRange = 6,
                 valuePerLevel = 0.9,
                 coef = 0.364,
+                coefAP = 0,
             },
         }
     },
     [8103] = { -- Mind Blast(Rank 3)
         spellLevel = 22,
         maxLevel = 27,
-        baseCost = 110,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -736,13 +693,16 @@ _addon.spellInfo = {
                 valueRange = 8,
                 valuePerLevel = 1.1,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [8104] = { -- Mind Blast(Rank 4)
         spellLevel = 28,
         maxLevel = 33,
-        baseCost = 150,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -750,13 +710,16 @@ _addon.spellInfo = {
                 valueRange = 10,
                 valuePerLevel = 1.4,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [8105] = { -- Mind Blast(Rank 5)
         spellLevel = 34,
         maxLevel = 39,
-        baseCost = 185,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -764,13 +727,16 @@ _addon.spellInfo = {
                 valueRange = 14,
                 valuePerLevel = 1.6,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [8106] = { -- Mind Blast(Rank 6)
         spellLevel = 40,
         maxLevel = 45,
-        baseCost = 225,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -778,111 +744,115 @@ _addon.spellInfo = {
                 valueRange = 18,
                 valuePerLevel = 1.9,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [9472] = { -- Flash Heal(Rank 2)
         spellLevel = 26,
         maxLevel = 31,
-        baseCost = 155,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 258,
                 valueRange = 56,
                 valuePerLevel = 2.2,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [9473] = { -- Flash Heal(Rank 3)
         spellLevel = 32,
         maxLevel = 37,
-        baseCost = 185,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 327,
                 valueRange = 66,
                 valuePerLevel = 2.5,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [9474] = { -- Flash Heal(Rank 4)
         spellLevel = 38,
         maxLevel = 43,
-        baseCost = 215,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 400,
                 valueRange = 78,
                 valuePerLevel = 2.8,
-                coef = 0.429,
-            },
-        }
-    },
-    [10797] = { -- Starshards(Rank 1)
-        spellLevel = 10,
-        maxLevel = 16,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 12,
-                valueRange = 0,
-                coef = 0.167,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [10892] = { -- Shadow Word: Pain(Rank 6)
         spellLevel = 42,
-        maxLevel = 0,
+        maxLevel = 49,
         duration = 18,
-        baseCost = 305,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 85,
+                valueBase = 77,
                 valueRange = 0,
-                coef = 0.183,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [10893] = { -- Shadow Word: Pain(Rank 7)
         spellLevel = 50,
-        maxLevel = 0,
+        maxLevel = 57,
         duration = 18,
-        baseCost = 385,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 112,
+                valueBase = 101,
                 valueRange = 0,
-                coef = 0.183,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [10894] = { -- Shadow Word: Pain(Rank 8)
         spellLevel = 58,
-        maxLevel = 0,
+        maxLevel = 64,
         duration = 18,
-        baseCost = 470,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 142,
+                valueBase = 128,
                 valueRange = 0,
-                coef = 0.183,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
@@ -890,7 +860,9 @@ _addon.spellInfo = {
         spellLevel = 42,
         maxLevel = 47,
         duration = 30,
-        baseCost = 300,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -899,7 +871,8 @@ _addon.spellInfo = {
                 valueBase = 484,
                 valueRange = 0,
                 valuePerLevel = 3,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
@@ -907,7 +880,9 @@ _addon.spellInfo = {
         spellLevel = 48,
         maxLevel = 53,
         duration = 30,
-        baseCost = 355,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -916,7 +891,8 @@ _addon.spellInfo = {
                 valueBase = 605,
                 valueRange = 0,
                 valuePerLevel = 3.4,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
@@ -924,7 +900,9 @@ _addon.spellInfo = {
         spellLevel = 54,
         maxLevel = 59,
         duration = 30,
-        baseCost = 425,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -933,7 +911,8 @@ _addon.spellInfo = {
                 valueBase = 763,
                 valueRange = 0,
                 valuePerLevel = 3.9,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
@@ -941,7 +920,9 @@ _addon.spellInfo = {
         spellLevel = 60,
         maxLevel = 65,
         duration = 30,
-        baseCost = 500,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -950,49 +931,59 @@ _addon.spellInfo = {
                 valueBase = 942,
                 valueRange = 0,
                 valuePerLevel = 4.3,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
     [10915] = { -- Flash Heal(Rank 5)
         spellLevel = 44,
         maxLevel = 49,
-        baseCost = 265,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 518,
                 valueRange = 98,
                 valuePerLevel = 3.3,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [10916] = { -- Flash Heal(Rank 6)
         spellLevel = 50,
         maxLevel = 55,
-        baseCost = 315,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 644,
                 valueRange = 120,
                 valuePerLevel = 3.7,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [10917] = { -- Flash Heal(Rank 7)
         spellLevel = 56,
         maxLevel = 61,
-        baseCost = 380,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 812,
                 valueRange = 146,
                 valuePerLevel = 4.2,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
@@ -1000,7 +991,9 @@ _addon.spellInfo = {
         spellLevel = 44,
         maxLevel = 49,
         duration = 15,
-        baseCost = 250,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1008,7 +1001,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 102,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
@@ -1016,7 +1010,9 @@ _addon.spellInfo = {
         spellLevel = 50,
         maxLevel = 55,
         duration = 15,
-        baseCost = 305,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1024,7 +1020,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 130,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
@@ -1032,7 +1029,9 @@ _addon.spellInfo = {
         spellLevel = 56,
         maxLevel = 61,
         duration = 15,
-        baseCost = 365,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1040,14 +1039,17 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 162,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
     [10933] = { -- Smite(Rank 7)
         spellLevel = 46,
         maxLevel = 51,
-        baseCost = 230,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1055,13 +1057,16 @@ _addon.spellInfo = {
                 valueRange = 36,
                 valuePerLevel = 2.3,
                 coef = 0.714,
+                coefAP = 0,
             },
         }
     },
     [10934] = { -- Smite(Rank 8)
         spellLevel = 54,
         maxLevel = 59,
-        baseCost = 280,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1069,13 +1074,16 @@ _addon.spellInfo = {
                 valueRange = 44,
                 valuePerLevel = 2.7,
                 coef = 0.714,
+                coefAP = 0,
             },
         }
     },
     [10945] = { -- Mind Blast(Rank 7)
         spellLevel = 46,
         maxLevel = 51,
-        baseCost = 265,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1083,13 +1091,16 @@ _addon.spellInfo = {
                 valueRange = 20,
                 valuePerLevel = 2.1,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [10946] = { -- Mind Blast(Rank 8)
         spellLevel = 52,
         maxLevel = 57,
-        baseCost = 310,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1097,13 +1108,16 @@ _addon.spellInfo = {
                 valueRange = 24,
                 valuePerLevel = 2.4,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [10947] = { -- Mind Blast(Rank 9)
         spellLevel = 58,
         maxLevel = 63,
-        baseCost = 350,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1111,119 +1125,128 @@ _addon.spellInfo = {
                 valueRange = 28,
                 valuePerLevel = 2.6,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [10960] = { -- Prayer of Healing(Rank 3)
         spellLevel = 50,
         maxLevel = 59,
-        baseCost = 770,
+        baseCostPct = 48,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 657,
                 valueRange = 38,
                 valuePerLevel = 2,
-                coef = 0.429,
+                coef = 0.526,
+                coefAP = 0,
             },
         }
     },
     [10961] = { -- Prayer of Healing(Rank 4)
         spellLevel = 60,
         maxLevel = 69,
-        baseCost = 1030,
+        baseCostPct = 48,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 939,
                 valueRange = 52,
                 valuePerLevel = 2.4,
-                coef = 0.429,
+                coef = 0.526,
+                coefAP = 0,
             },
         }
     },
     [10963] = { -- Greater Heal(Rank 2)
         spellLevel = 46,
         maxLevel = 51,
-        baseCost = 455,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1149,
                 valueRange = 140,
                 valuePerLevel = 5.8,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
     [10964] = { -- Greater Heal(Rank 3)
         spellLevel = 52,
         maxLevel = 57,
-        baseCost = 545,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1437,
                 valueRange = 172,
                 valuePerLevel = 6.6,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
     [10965] = { -- Greater Heal(Rank 4)
         spellLevel = 58,
         maxLevel = 63,
-        baseCost = 655,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1798,
                 valueRange = 208,
                 valuePerLevel = 7.5,
-                coef = 0.857,
-            },
-        }
-    },
-    [13908] = { -- Desperate Prayer(Rank 1)
-        spellLevel = 10,
-        maxLevel = 16,
-        effects = {
-            [1] = {
-                effectType = 10,
-                valueBase = 134,
-                valueRange = 36,
-                valuePerLevel = 2.4,
-                coef = 0.268,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
     [14914] = { -- Holy Fire(Rank 1)
         spellLevel = 20,
         maxLevel = 24,
-        duration = 10,
-        baseCost = 85,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 78,
-                valueRange = 20,
+                valueBase = 102,
+                valueRange = 26,
                 valuePerLevel = 1.5,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 6,
+                tickPeriod = 1,
+                valueBase = 3,
                 valueRange = 0,
-                coef = 0.033,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15237] = { -- Holy Nova(Rank 1)
         spellLevel = 20,
         maxLevel = 26,
-        baseCost = 185,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1231,196 +1254,212 @@ _addon.spellInfo = {
                 valueRange = 4,
                 valuePerLevel = 0.2,
                 coef = 0.161,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 64,
                 valueBase = 23455,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
     [15261] = { -- Holy Fire(Rank 8)
         spellLevel = 60,
         maxLevel = 66,
-        duration = 10,
-        baseCost = 255,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 355,
-                valueRange = 94,
+                valueBase = 639,
+                valueRange = 172,
                 valuePerLevel = 3.4,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 29,
+                tickPeriod = 1,
+                valueBase = 18,
                 valueRange = 0,
-                coef = 0.033,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15262] = { -- Holy Fire(Rank 2)
         spellLevel = 24,
         maxLevel = 30,
-        duration = 10,
-        baseCost = 95,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 96,
-                valueRange = 24,
+                valueBase = 137,
+                valueRange = 36,
                 valuePerLevel = 1.7,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 8,
+                tickPeriod = 1,
+                valueBase = 4,
                 valueRange = 0,
-                coef = 0.033,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15263] = { -- Holy Fire(Rank 3)
         spellLevel = 30,
         maxLevel = 36,
-        duration = 10,
-        baseCost = 125,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 132,
-                valueRange = 34,
+                valueBase = 200,
+                valueRange = 52,
                 valuePerLevel = 2,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 11,
+                tickPeriod = 1,
+                valueBase = 6,
                 valueRange = 0,
-                coef = 0.033,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15264] = { -- Holy Fire(Rank 4)
         spellLevel = 36,
         maxLevel = 42,
-        duration = 10,
-        baseCost = 145,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 165,
-                valueRange = 44,
+                valueBase = 267,
+                valueRange = 72,
                 valuePerLevel = 2.2,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 13,
+                tickPeriod = 1,
+                valueBase = 8,
                 valueRange = 0,
-                coef = 0.033,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15265] = { -- Holy Fire(Rank 5)
         spellLevel = 42,
         maxLevel = 48,
-        duration = 10,
-        baseCost = 170,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 204,
-                valueRange = 54,
+                valueBase = 348,
+                valueRange = 92,
                 valuePerLevel = 2.5,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 17,
+                tickPeriod = 1,
+                valueBase = 10,
                 valueRange = 0,
-                coef = 0.033,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15266] = { -- Holy Fire(Rank 6)
         spellLevel = 48,
         maxLevel = 54,
-        duration = 10,
-        baseCost = 200,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 254,
-                valueRange = 68,
+                valueBase = 430,
+                valueRange = 116,
                 valuePerLevel = 2.9,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 20,
+                tickPeriod = 1,
+                valueBase = 13,
                 valueRange = 0,
-                coef = 0.033,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15267] = { -- Holy Fire(Rank 7)
         spellLevel = 54,
         maxLevel = 60,
-        duration = 10,
-        baseCost = 230,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 304,
-                valueRange = 82,
+                valueBase = 529,
+                valueRange = 142,
                 valuePerLevel = 3.2,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 25,
-                valueRange = 0,
-                coef = 0.033,
-            },
-        }
-    },
-    [15407] = { -- Mind Flay(Rank 1)
-        spellLevel = 20,
-        maxLevel = 28,
-        duration = 3,
-        baseCost = 45,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
                 tickPeriod = 1,
-                valueBase = 25,
+                valueBase = 16,
                 valueRange = 0,
-                coef = 0.19,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
     [15430] = { -- Holy Nova(Rank 2)
         spellLevel = 28,
         maxLevel = 34,
-        baseCost = 290,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1428,19 +1467,23 @@ _addon.spellInfo = {
                 valueRange = 8,
                 valuePerLevel = 0.4,
                 coef = 0.161,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 64,
                 valueBase = 23458,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
     [15431] = { -- Holy Nova(Rank 3)
         spellLevel = 36,
         maxLevel = 42,
-        baseCost = 400,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -1448,325 +1491,111 @@ _addon.spellInfo = {
                 valueRange = 12,
                 valuePerLevel = 0.6,
                 coef = 0.161,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 64,
                 valueBase = 23459,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
-    [17311] = { -- Mind Flay(Rank 2)
-        spellLevel = 28,
-        maxLevel = 36,
-        duration = 3,
-        baseCost = 70,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 1,
-                valueBase = 42,
-                valueRange = 0,
-                coef = 0.19,
-            },
-        }
-    },
-    [17312] = { -- Mind Flay(Rank 3)
-        spellLevel = 36,
-        maxLevel = 44,
-        duration = 3,
-        baseCost = 100,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 1,
-                valueBase = 62,
-                valueRange = 0,
-                coef = 0.19,
-            },
-        }
-    },
-    [17313] = { -- Mind Flay(Rank 4)
-        spellLevel = 44,
-        maxLevel = 52,
-        duration = 3,
-        baseCost = 135,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 1,
-                valueBase = 87,
-                valueRange = 0,
-                coef = 0.19,
-            },
-        }
-    },
-    [17314] = { -- Mind Flay(Rank 5)
-        spellLevel = 52,
-        maxLevel = 60,
-        duration = 3,
-        baseCost = 165,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 1,
-                valueBase = 110,
-                valueRange = 0,
-                coef = 0.19,
-            },
-        }
-    },
-    [18137] = { -- Shadowguard(Rank 1)
+    [19236] = { -- Desperate Prayer(Rank 1)
         spellLevel = 20,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 50,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 28377,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [18807] = { -- Mind Flay(Rank 6)
-        spellLevel = 60,
-        maxLevel = 68,
-        duration = 3,
-        baseCost = 205,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 1,
-                valueBase = 142,
-                valueRange = 0,
-                coef = 0.19,
-            },
-        }
-    },
-    [19236] = { -- Desperate Prayer(Rank 2)
-        spellLevel = 18,
-        maxLevel = 24,
+        maxLevel = 26,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 263,
                 valueRange = 62,
-                valuePerLevel = 3.4,
-                coef = 0.396,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
-    [19238] = { -- Desperate Prayer(Rank 3)
+    [19238] = { -- Desperate Prayer(Rank 2)
         spellLevel = 26,
         maxLevel = 32,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 447,
                 valueRange = 96,
-                valuePerLevel = 4.5,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
-    [19240] = { -- Desperate Prayer(Rank 4)
+    [19240] = { -- Desperate Prayer(Rank 3)
         spellLevel = 34,
         maxLevel = 40,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 588,
                 valueRange = 120,
-                valuePerLevel = 5.3,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
-    [19241] = { -- Desperate Prayer(Rank 5)
+    [19241] = { -- Desperate Prayer(Rank 4)
         spellLevel = 42,
         maxLevel = 48,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 834,
                 valueRange = 160,
                 valuePerLevel = 6.4,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
-    [19242] = { -- Desperate Prayer(Rank 6)
+    [19242] = { -- Desperate Prayer(Rank 5)
         spellLevel = 50,
-        maxLevel = 56,
+        maxLevel = 0,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1101,
                 valueRange = 204,
-                valuePerLevel = 7.4,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
-    [19243] = { -- Desperate Prayer(Rank 7)
+    [19243] = { -- Desperate Prayer(Rank 6)
         spellLevel = 58,
-        maxLevel = 64,
+        maxLevel = 0,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1324,
                 valueRange = 238,
-                valuePerLevel = 8.2,
-                coef = 0.429,
-            },
-        }
-    },
-    [19249] = { -- Touch of Weakness(Rank 2)
-        spellLevel = 20,
-        maxLevel = 0,
-        duration = 120,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 15,
-                valueRange = 0,
-                coef = 0.107,
-            },
-        }
-    },
-    [19251] = { -- Touch of Weakness(Rank 3)
-        spellLevel = 30,
-        maxLevel = 0,
-        duration = 120,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 24,
-                valueRange = 0,
-                coef = 0.107,
-            },
-        }
-    },
-    [19252] = { -- Touch of Weakness(Rank 4)
-        spellLevel = 40,
-        maxLevel = 0,
-        duration = 120,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 35,
-                valueRange = 0,
-                coef = 0.107,
-            },
-        }
-    },
-    [19253] = { -- Touch of Weakness(Rank 5)
-        spellLevel = 50,
-        maxLevel = 0,
-        duration = 120,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 48,
-                valueRange = 0,
-                coef = 0.107,
-            },
-        }
-    },
-    [19254] = { -- Touch of Weakness(Rank 6)
-        spellLevel = 60,
-        maxLevel = 0,
-        duration = 120,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 64,
-                valueRange = 0,
-                coef = 0.107,
-            },
-        }
-    },
-    [19261] = { -- Touch of Weakness(Rank 2)
-        spellLevel = 20,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 45,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 19249,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19262] = { -- Touch of Weakness(Rank 3)
-        spellLevel = 30,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 75,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 19251,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19264] = { -- Touch of Weakness(Rank 4)
-        spellLevel = 40,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 105,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 19252,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19265] = { -- Touch of Weakness(Rank 5)
-        spellLevel = 50,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 145,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 19253,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19266] = { -- Touch of Weakness(Rank 6)
-        spellLevel = 60,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 195,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 19254,
-                valueRange = 0,
-                coef = 0,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
@@ -1774,7 +1603,9 @@ _addon.spellInfo = {
         spellLevel = 28,
         maxLevel = 0,
         duration = 24,
-        baseCost = 350,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1782,7 +1613,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 34,
                 valueRange = 0,
-                coef = 0.1,
+                coef = 0.185,
+                coefAP = 0,
             },
         }
     },
@@ -1790,7 +1622,9 @@ _addon.spellInfo = {
         spellLevel = 36,
         maxLevel = 0,
         duration = 24,
-        baseCost = 495,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1798,7 +1632,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 50,
                 valueRange = 0,
-                coef = 0.1,
+                coef = 0.185,
+                coefAP = 0,
             },
         }
     },
@@ -1806,7 +1641,9 @@ _addon.spellInfo = {
         spellLevel = 44,
         maxLevel = 0,
         duration = 24,
-        baseCost = 645,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1814,7 +1651,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 68,
                 valueRange = 0,
-                coef = 0.1,
+                coef = 0.185,
+                coefAP = 0,
             },
         }
     },
@@ -1822,7 +1660,9 @@ _addon.spellInfo = {
         spellLevel = 52,
         maxLevel = 0,
         duration = 24,
-        baseCost = 810,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1830,7 +1670,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 89,
                 valueRange = 0,
-                coef = 0.1,
+                coef = 0.185,
+                coefAP = 0,
             },
         }
     },
@@ -1838,7 +1679,9 @@ _addon.spellInfo = {
         spellLevel = 60,
         maxLevel = 0,
         duration = 24,
-        baseCost = 985,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -1846,254 +1689,90 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 113,
                 valueRange = 0,
-                coef = 0.1,
-            },
-        }
-    },
-    [19296] = { -- Starshards(Rank 2)
-        spellLevel = 18,
-        maxLevel = 24,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 23,
-                valueRange = 0,
-                coef = 0.167,
-            },
-        }
-    },
-    [19299] = { -- Starshards(Rank 3)
-        spellLevel = 26,
-        maxLevel = 32,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 40,
-                valueRange = 0,
-                coef = 0.167,
-            },
-        }
-    },
-    [19302] = { -- Starshards(Rank 4)
-        spellLevel = 34,
-        maxLevel = 40,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 58,
-                valueRange = 0,
-                coef = 0.167,
-            },
-        }
-    },
-    [19303] = { -- Starshards(Rank 5)
-        spellLevel = 42,
-        maxLevel = 48,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 79,
-                valueRange = 0,
-                coef = 0.167,
-            },
-        }
-    },
-    [19304] = { -- Starshards(Rank 6)
-        spellLevel = 50,
-        maxLevel = 56,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 105,
-                valueRange = 0,
-                coef = 0.167,
-            },
-        }
-    },
-    [19305] = { -- Starshards(Rank 7)
-        spellLevel = 58,
-        maxLevel = 64,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 130,
-                valueRange = 0,
-                coef = 0.167,
-            },
-        }
-    },
-    [19308] = { -- Shadowguard(Rank 2)
-        spellLevel = 28,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 85,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 28378,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19309] = { -- Shadowguard(Rank 3)
-        spellLevel = 36,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 120,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 28379,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19310] = { -- Shadowguard(Rank 4)
-        spellLevel = 44,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 160,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 28380,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19311] = { -- Shadowguard(Rank 5)
-        spellLevel = 52,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 200,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 28381,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [19312] = { -- Shadowguard(Rank 6)
-        spellLevel = 60,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 250,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 28382,
-                valueRange = 0,
-                coef = 0,
-            },
-        }
-    },
-    [22009] = { -- Greater Heal
-        spellLevel = 32,
-        maxLevel = 37,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 8,
-                tickPeriod = 3,
-                valueBase = 63,
-                valueRange = 0,
-                coef = 0.2,
+                coef = 0.185,
+                coefAP = 0,
             },
         }
     },
     [23455] = { -- Holy Nova(Rank 1)
         spellLevel = 20,
         maxLevel = 26,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 52,
                 valueRange = 8,
                 valuePerLevel = 0.4,
-                coef = 0.161,
+                coef = 0.303,
+                coefAP = 0,
             },
         }
     },
     [23458] = { -- Holy Nova(Rank 2)
         spellLevel = 28,
         maxLevel = 34,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 86,
                 valueRange = 12,
                 valuePerLevel = 0.5,
-                coef = 0.161,
+                coef = 0.303,
+                coefAP = 0,
             },
         }
     },
     [23459] = { -- Holy Nova(Rank 3)
         spellLevel = 36,
         maxLevel = 42,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 121,
                 valueRange = 18,
                 valuePerLevel = 0.6,
-                coef = 0.161,
+                coef = 0.303,
+                coefAP = 0,
             },
         }
     },
     [25210] = { -- Greater Heal(Rank 6)
         spellLevel = 63,
         maxLevel = 67,
-        baseCost = 750,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 2074,
                 valueRange = 336,
                 valuePerLevel = 8.4,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
     [25213] = { -- Greater Heal(Rank 7)
         spellLevel = 68,
         maxLevel = 72,
-        baseCost = 825,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 2396,
                 valueRange = 388,
                 valuePerLevel = 9.3,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
@@ -2101,7 +1780,9 @@ _addon.spellInfo = {
         spellLevel = 65,
         maxLevel = 69,
         duration = 30,
-        baseCost = 540,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2110,7 +1791,8 @@ _addon.spellInfo = {
                 valueBase = 1125,
                 valueRange = 0,
                 valuePerLevel = 4.7,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
@@ -2118,7 +1800,9 @@ _addon.spellInfo = {
         spellLevel = 70,
         maxLevel = 74,
         duration = 30,
-        baseCost = 600,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2127,7 +1811,8 @@ _addon.spellInfo = {
                 valueBase = 1265,
                 valueRange = 0,
                 valuePerLevel = 5.1,
-                coef = 0.3,
+                coef = 0.8057,
+                coefAP = 0,
             },
         }
     },
@@ -2135,7 +1820,9 @@ _addon.spellInfo = {
         spellLevel = 65,
         maxLevel = 69,
         duration = 15,
-        baseCost = 430,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2143,7 +1830,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 202,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
@@ -2151,7 +1839,9 @@ _addon.spellInfo = {
         spellLevel = 70,
         maxLevel = 74,
         duration = 15,
-        baseCost = 450,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2159,63 +1849,76 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 222,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
     [25233] = { -- Flash Heal(Rank 8)
         spellLevel = 61,
         maxLevel = 65,
-        baseCost = 400,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 913,
                 valueRange = 146,
                 valuePerLevel = 4.7,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [25235] = { -- Flash Heal(Rank 9)
         spellLevel = 67,
         maxLevel = 71,
-        baseCost = 470,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1101,
                 valueRange = 178,
                 valuePerLevel = 5.2,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [25308] = { -- Prayer of Healing(Rank 6)
         spellLevel = 68,
         maxLevel = 75,
-        baseCost = 1255,
+        baseCostPct = 48,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1246,
                 valueRange = 70,
                 valuePerLevel = 2.8,
-                coef = 0.429,
+                coef = 0.526,
+                coefAP = 0,
             },
         }
     },
     [25314] = { -- Greater Heal(Rank 5)
         spellLevel = 60,
         maxLevel = 65,
-        baseCost = 710,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1966,
                 valueRange = 228,
                 valuePerLevel = 8.1,
-                coef = 0.857,
+                coef = 1.611,
+                coefAP = 0,
             },
         }
     },
@@ -2223,7 +1926,9 @@ _addon.spellInfo = {
         spellLevel = 60,
         maxLevel = 65,
         duration = 15,
-        baseCost = 410,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2231,41 +1936,50 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 194,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.376,
+                coefAP = 0,
             },
         }
     },
     [25316] = { -- Prayer of Healing(Rank 5)
         spellLevel = 60,
         maxLevel = 69,
-        baseCost = 1070,
+        baseCostPct = 48,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 997,
                 valueRange = 56,
                 valuePerLevel = 2.5,
-                coef = 0.429,
+                coef = 0.526,
+                coefAP = 0,
             },
         }
     },
     [25329] = { -- Holy Nova(Rank 7)
         spellLevel = 68,
         maxLevel = 74,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 384,
                 valueRange = 62,
                 valuePerLevel = 1,
-                coef = 0.161,
+                coef = 0.303,
+                coefAP = 0,
             },
         }
     },
     [25331] = { -- Holy Nova(Rank 7)
         spellLevel = 68,
         maxLevel = 74,
-        baseCost = 875,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2273,19 +1987,23 @@ _addon.spellInfo = {
                 valueRange = 38,
                 valuePerLevel = 1.4,
                 coef = 0.161,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 64,
                 valueBase = 25329,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
     [25363] = { -- Smite(Rank 9)
         spellLevel = 61,
         maxLevel = 66,
-        baseCost = 300,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2293,13 +2011,16 @@ _addon.spellInfo = {
                 valueRange = 48,
                 valuePerLevel = 3.4,
                 coef = 0.714,
+                coefAP = 0,
             },
         }
     },
     [25364] = { -- Smite(Rank 10)
         spellLevel = 69,
-        maxLevel = 75,
-        baseCost = 385,
+        maxLevel = 73,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2307,45 +2028,54 @@ _addon.spellInfo = {
                 valueRange = 66,
                 valuePerLevel = 4.1,
                 coef = 0.714,
+                coefAP = 0,
             },
         }
     },
     [25367] = { -- Shadow Word: Pain(Rank 9)
         spellLevel = 65,
-        maxLevel = 0,
+        maxLevel = 69,
         duration = 18,
-        baseCost = 510,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 167,
+                valueBase = 151,
                 valueRange = 0,
-                coef = 0.183,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [25368] = { -- Shadow Word: Pain(Rank 10)
         spellLevel = 70,
-        maxLevel = 0,
+        maxLevel = 74,
         duration = 18,
-        baseCost = 575,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 206,
+                valueBase = 186,
                 valueRange = 0,
-                coef = 0.183,
+                coef = 0.1833,
+                coefAP = 0,
             },
         }
     },
     [25372] = { -- Mind Blast(Rank 10)
         spellLevel = 63,
         maxLevel = 68,
-        baseCost = 380,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2353,13 +2083,16 @@ _addon.spellInfo = {
                 valueRange = 30,
                 valuePerLevel = 2.9,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [25375] = { -- Mind Blast(Rank 11)
         spellLevel = 69,
-        maxLevel = 74,
-        baseCost = 450,
+        maxLevel = 73,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2367,101 +2100,50 @@ _addon.spellInfo = {
                 valueRange = 40,
                 valuePerLevel = 3.2,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [25384] = { -- Holy Fire(Rank 9)
         spellLevel = 66,
-        maxLevel = 72,
-        duration = 10,
-        baseCost = 290,
+        maxLevel = 70,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 412,
-                valueRange = 110,
+                valueBase = 705,
+                valueRange = 190,
                 valuePerLevel = 3.6,
-                coef = 0.857,
+                coef = 0.571,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
-                tickPeriod = 2,
-                valueBase = 33,
-                valueRange = 0,
-                coef = 0.033,
-            },
-        }
-    },
-    [25387] = { -- Mind Flay(Rank 7)
-        spellLevel = 68,
-        maxLevel = 76,
-        duration = 3,
-        baseCost = 230,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
                 tickPeriod = 1,
-                valueBase = 176,
+                valueBase = 21,
                 valueRange = 0,
-                coef = 0.19,
+                coef = 0.024,
+                coefAP = 0,
             },
         }
     },
-    [25437] = { -- Desperate Prayer(Rank 8)
+    [25437] = { -- Desperate Prayer(Rank 7)
         spellLevel = 66,
-        maxLevel = 72,
+        maxLevel = 0,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1601,
                 valueRange = 286,
-                valuePerLevel = 9.1,
-                coef = 0.429,
-            },
-        }
-    },
-    [25446] = { -- Starshards(Rank 8)
-        spellLevel = 66,
-        maxLevel = 72,
-        duration = 15,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 3,
-                tickPeriod = 3,
-                valueBase = 157,
-                valueRange = 0,
-                coef = 0.167,
-            },
-        }
-    },
-    [25460] = { -- Touch of Weakness(Rank 7)
-        spellLevel = 70,
-        maxLevel = 0,
-        duration = 120,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 80,
-                valueRange = 0,
-                coef = 0.107,
-            },
-        }
-    },
-    [25461] = { -- Touch of Weakness(Rank 7)
-        spellLevel = 70,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 235,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 25460,
-                valueRange = 0,
-                coef = 0,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
@@ -2469,37 +2151,27 @@ _addon.spellInfo = {
         spellLevel = 68,
         maxLevel = 0,
         duration = 24,
-        baseCost = 1145,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 53,
                 tickPeriod = 3,
-                valueBase = 152,
+                valueBase = 136,
                 valueRange = 0,
-                coef = 0.1,
-            },
-        }
-    },
-    [25477] = { -- Shadowguard(Rank 7)
-        spellLevel = 68,
-        maxLevel = 0,
-        duration = 600,
-        baseCost = 270,
-        effects = {
-            [1] = {
-                effectType = 6,
-                auraType = 42,
-                valueBase = 28385,
-                valueRange = 0,
-                coef = 0,
+                coef = 0.185,
+                coefAP = 0,
             },
         }
     },
     [27799] = { -- Holy Nova(Rank 4)
         spellLevel = 44,
         maxLevel = 50,
-        baseCost = 520,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2507,19 +2179,23 @@ _addon.spellInfo = {
                 valueRange = 16,
                 valuePerLevel = 0.8,
                 coef = 0.161,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 64,
                 valueBase = 27803,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
     [27800] = { -- Holy Nova(Rank 5)
         spellLevel = 52,
         maxLevel = 58,
-        baseCost = 635,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2527,19 +2203,23 @@ _addon.spellInfo = {
                 valueRange = 22,
                 valuePerLevel = 1,
                 coef = 0.161,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 64,
                 valueBase = 27804,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
     [27801] = { -- Holy Nova(Rank 6)
         spellLevel = 60,
         maxLevel = 66,
-        baseCost = 750,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
@@ -2547,259 +2227,215 @@ _addon.spellInfo = {
                 valueRange = 28,
                 valuePerLevel = 1.2,
                 coef = 0.161,
+                coefAP = 0,
             },
             [2] = {
                 effectType = 64,
                 valueBase = 27805,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
     [27803] = { -- Holy Nova(Rank 4)
         spellLevel = 44,
         maxLevel = 50,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 161,
                 valueRange = 26,
                 valuePerLevel = 0.7,
-                coef = 0.161,
+                coef = 0.303,
+                coefAP = 0,
             },
         }
     },
     [27804] = { -- Holy Nova(Rank 5)
         spellLevel = 52,
         maxLevel = 58,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 235,
                 valueRange = 36,
                 valuePerLevel = 0.8,
-                coef = 0.161,
+                coef = 0.303,
+                coefAP = 0,
             },
         }
     },
     [27805] = { -- Holy Nova(Rank 6)
         spellLevel = 60,
         maxLevel = 66,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 302,
                 valueRange = 48,
                 valuePerLevel = 0.9,
-                coef = 0.161,
-            },
-        }
-    },
-    [28377] = { -- Shadowguard(Rank 1)
-        spellLevel = 20,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 20,
-                valueRange = 0,
-                coef = 0.267,
-            },
-        }
-    },
-    [28378] = { -- Shadowguard(Rank 2)
-        spellLevel = 28,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 35,
-                valueRange = 0,
-                coef = 0.267,
-            },
-        }
-    },
-    [28379] = { -- Shadowguard(Rank 3)
-        spellLevel = 36,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 51,
-                valueRange = 0,
-                coef = 0.267,
-            },
-        }
-    },
-    [28380] = { -- Shadowguard(Rank 4)
-        spellLevel = 44,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 70,
-                valueRange = 0,
-                coef = 0.267,
-            },
-        }
-    },
-    [28381] = { -- Shadowguard(Rank 5)
-        spellLevel = 52,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 90,
-                valueRange = 0,
-                coef = 0.267,
-            },
-        }
-    },
-    [28382] = { -- Shadowguard(Rank 6)
-        spellLevel = 60,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 116,
-                valueRange = 0,
-                coef = 0.267,
-            },
-        }
-    },
-    [28385] = { -- Shadowguard(Rank 7)
-        spellLevel = 68,
-        maxLevel = 0,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 130,
-                valueRange = 0,
-                coef = 0.267,
+                coef = 0.303,
+                coefAP = 0,
             },
         }
     },
     [32379] = { -- Shadow Word: Death(Rank 1)
         spellLevel = 62,
         maxLevel = 69,
-        baseCost = 243,
+        baseCostPct = 12,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
                 valueBase = 450,
                 valueRange = 72,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [32546] = { -- Binding Heal(Rank 1)
         spellLevel = 64,
-        maxLevel = 70,
-        baseCost = 705,
+        maxLevel = 71,
+        baseCostPct = 27,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
                 valueBase = 1042,
                 valueRange = 296,
                 valuePerLevel = 1.9,
-                coef = 0.429,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [32996] = { -- Shadow Word: Death(Rank 2)
         spellLevel = 70,
-        maxLevel = 77,
-        baseCost = 309,
+        maxLevel = 74,
+        baseCostPct = 12,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
                 valueBase = 572,
                 valueRange = 92,
                 coef = 0.429,
+                coefAP = 0,
             },
         }
     },
     [33076] = { -- Prayer of Mending(Rank 1)
         spellLevel = 68,
-        maxLevel = 74,
-        baseCost = 390,
+        maxLevel = 72,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
+        forceHeal = true,
+        charges = 5,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 4,
-                valueBase = 801,
-                valueRange = -1,
-                coef = 0.429,
+                valueBase = 800,
+                valueRange = 0,
+                coef = 0.807,
+                coefAP = 0,
             },
         }
     },
     [34861] = { -- Circle of Healing(Rank 1)
         spellLevel = 50,
         maxLevel = 54,
-        baseCost = 300,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
-                valueBase = 246,
-                valueRange = 24,
+                valueBase = 343,
+                valueRange = 36,
                 valuePerLevel = 1,
-                coef = 0.214,
+                coef = 0.402,
+                coefAP = 0,
             },
         }
     },
     [34863] = { -- Circle of Healing(Rank 2)
         spellLevel = 56,
         maxLevel = 60,
-        baseCost = 337,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
-                valueBase = 288,
-                valueRange = 30,
+                valueBase = 403,
+                valueRange = 42,
                 valuePerLevel = 1.2,
-                coef = 0.214,
+                coef = 0.402,
+                coefAP = 0,
             },
         }
     },
     [34864] = { -- Circle of Healing(Rank 3)
         spellLevel = 60,
         maxLevel = 64,
-        baseCost = 375,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
-                valueBase = 327,
-                valueRange = 34,
+                valueBase = 458,
+                valueRange = 48,
                 valuePerLevel = 1.4,
-                coef = 0.214,
+                coef = 0.402,
+                coefAP = 0,
             },
         }
     },
     [34865] = { -- Circle of Healing(Rank 4)
         spellLevel = 65,
         maxLevel = 69,
-        baseCost = 412,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
-                valueBase = 370,
-                valueRange = 38,
+                valueBase = 518,
+                valueRange = 54,
                 valuePerLevel = 1.6,
-                coef = 0.214,
+                coef = 0.402,
+                coefAP = 0,
             },
         }
     },
     [34866] = { -- Circle of Healing(Rank 5)
         spellLevel = 70,
         maxLevel = 74,
-        baseCost = 450,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 10,
-                valueBase = 409,
-                valueRange = 42,
+                valueBase = 572,
+                valueRange = 60,
                 valuePerLevel = 1.8,
-                coef = 0.214,
+                coef = 0.402,
+                coefAP = 0,
             },
         }
     },
@@ -2807,7 +2443,9 @@ _addon.spellInfo = {
         spellLevel = 50,
         maxLevel = 59,
         duration = 15,
-        baseCost = 325,
+        baseCostPct = 16,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2815,7 +2453,8 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 90,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.4,
+                coefAP = 0,
             },
         }
     },
@@ -2823,7 +2462,9 @@ _addon.spellInfo = {
         spellLevel = 60,
         maxLevel = 69,
         duration = 15,
-        baseCost = 400,
+        baseCostPct = 16,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2831,15 +2472,18 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 120,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.4,
+                coefAP = 0,
             },
         }
     },
     [34917] = { -- Vampiric Touch(Rank 3)
         spellLevel = 70,
-        maxLevel = 79,
+        maxLevel = 74,
         duration = 15,
-        baseCost = 425,
+        baseCostPct = 16,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
@@ -2847,106 +2491,1006 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 130,
                 valueRange = 0,
-                coef = 0.2,
+                coef = 0.4,
+                coefAP = 0,
             },
         }
     },
-    [37563] = { -- Renewal(Rank 1)
-        spellLevel = 40,
-        maxLevel = 0,
-        duration = 9,
+    [47540] = { -- Penance(Rank 1)
+        spellLevel = 60,
+        maxLevel = 69,
+        duration = 2,
+        baseCostPct = 16,
+        school = 2,
+        isChannel = true,
+        defType = 0,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 47750,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 47666,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [47666] = { -- Penance(Rank 1)
+        spellLevel = 60,
+        maxLevel = 69,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 240,
+                valueRange = 0,
+                coef = 0.229,
+                coefAP = 0,
+            },
+        }
+    },
+    [47750] = { -- Penance(Rank 1)
+        spellLevel = 60,
+        maxLevel = 69,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 670,
+                valueRange = 86,
+                coef = 0.537,
+                coefAP = 0,
+            },
+        }
+    },
+    [48045] = { -- Mind Sear(Rank 1)
+        spellLevel = 75,
+        maxLevel = 79,
+        duration = 5,
+        baseCostPct = 28,
+        school = 6,
+        isChannel = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 49821,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [48062] = { -- Greater Heal(Rank 8)
+        spellLevel = 73,
+        maxLevel = 77,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 3395,
+                valueRange = 550,
+                valuePerLevel = 13.2,
+                coef = 1.611,
+                coefAP = 0,
+            },
+        }
+    },
+    [48063] = { -- Greater Heal(Rank 9)
+        spellLevel = 78,
+        maxLevel = 82,
+        baseCostPct = 32,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 3950,
+                valueRange = 640,
+                valuePerLevel = 15.4,
+                coef = 1.611,
+                coefAP = 0,
+            },
+        }
+    },
+    [48065] = { -- Power Word: Shield(Rank 13)
+        spellLevel = 75,
+        maxLevel = 79,
+        duration = 30,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 69,
+                forceScaleWithHeal = true,
+                valueBase = 1920,
+                valueRange = 0,
+                valuePerLevel = 7.7,
+                coef = 0.8057,
+                coefAP = 0,
+            },
+        }
+    },
+    [48066] = { -- Power Word: Shield(Rank 14)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 30,
+        baseCostPct = 23,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 69,
+                forceScaleWithHeal = true,
+                valueBase = 2230,
+                valueRange = 0,
+                valuePerLevel = 9,
+                coef = 0.8057,
+                coefAP = 0,
+            },
+        }
+    },
+    [48067] = { -- Renew(Rank 13)
+        spellLevel = 75,
+        maxLevel = 79,
+        duration = 15,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 8,
                 tickPeriod = 3,
-                valueBase = 50,
+                valueBase = 247,
+                valueRange = 0,
+                coef = 0.376,
+                coefAP = 0,
+            },
+        }
+    },
+    [48068] = { -- Renew(Rank 14)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 15,
+        baseCostPct = 17,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 280,
+                valueRange = 0,
+                coef = 0.376,
+                coefAP = 0,
+            },
+        }
+    },
+    [48070] = { -- Flash Heal(Rank 10)
+        spellLevel = 73,
+        maxLevel = 78,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 1578,
+                valueRange = 254,
+                valuePerLevel = 8,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48071] = { -- Flash Heal(Rank 11)
+        spellLevel = 79,
+        maxLevel = 84,
+        baseCostPct = 18,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 1887,
+                valueRange = 306,
+                valuePerLevel = 9.7,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48072] = { -- Prayer of Healing(Rank 7)
+        spellLevel = 76,
+        maxLevel = 82,
+        baseCostPct = 48,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 2091,
+                valueRange = 118,
+                valuePerLevel = 4.7,
+                coef = 0.526,
+                coefAP = 0,
+            },
+        }
+    },
+    [48075] = { -- Holy Nova(Rank 8)
+        spellLevel = 75,
+        maxLevel = 79,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 611,
+                valueRange = 98,
+                valuePerLevel = 1.6,
+                coef = 0.303,
+                coefAP = 0,
+            },
+        }
+    },
+    [48076] = { -- Holy Nova(Rank 9)
+        spellLevel = 80,
+        maxLevel = 84,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 713,
+                valueRange = 114,
+                valuePerLevel = 1.9,
+                coef = 0.303,
+                coefAP = 0,
+            },
+        }
+    },
+    [48077] = { -- Holy Nova(Rank 8)
+        spellLevel = 75,
+        maxLevel = 79,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 333,
+                valueRange = 54,
+                valuePerLevel = 2,
+                coef = 0.161,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 64,
+                valueBase = 48075,
                 valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
-    [44041] = { -- Chastise(Rank 1)
-        spellLevel = 20,
-        maxLevel = 29,
-        duration = 2,
-        baseCost = 50,
+    [48078] = { -- Holy Nova(Rank 9)
+        spellLevel = 80,
+        maxLevel = 84,
+        baseCostPct = 20,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 47,
-                valueRange = 6,
-                coef = 0.143,
+                valueBase = 398,
+                valueRange = 64,
+                valuePerLevel = 3,
+                coef = 0.161,
+                coefAP = 0,
             },
-        }
-    },
-    [44043] = { -- Chastise(Rank 2)
-        spellLevel = 30,
-        maxLevel = 39,
-        duration = 2,
-        baseCost = 100,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 93,
-                valueRange = 14,
-                coef = 0.143,
-            },
-        }
-    },
-    [44044] = { -- Chastise(Rank 3)
-        spellLevel = 40,
-        maxLevel = 49,
-        duration = 2,
-        baseCost = 135,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 139,
-                valueRange = 22,
-                coef = 0.143,
-            },
-        }
-    },
-    [44045] = { -- Chastise(Rank 4)
-        spellLevel = 50,
-        maxLevel = 59,
-        duration = 2,
-        baseCost = 180,
-        effects = {
-            [1] = {
-                effectType = 2,
-                valueBase = 209,
-                valueRange = 32,
+            [2] = {
+                effectType = 64,
+                valueBase = 48076,
+                valueRange = 0,
                 coef = 0,
+                coefAP = 0,
             },
         }
     },
-    [44046] = { -- Chastise(Rank 5)
-        spellLevel = 60,
-        maxLevel = 69,
-        duration = 2,
-        baseCost = 225,
+    [48088] = { -- Circle of Healing(Rank 6)
+        spellLevel = 75,
+        maxLevel = 79,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 825,
+                valueRange = 86,
+                valuePerLevel = 2,
+                coef = 0.402,
+                coefAP = 0,
+            },
+        }
+    },
+    [48089] = { -- Circle of Healing(Rank 7)
+        spellLevel = 80,
+        maxLevel = 84,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 958,
+                valueRange = 100,
+                valuePerLevel = 3,
+                coef = 0.402,
+                coefAP = 0,
+            },
+        }
+    },
+    [48112] = { -- Prayer of Mending(Rank 2)
+        spellLevel = 74,
+        maxLevel = 78,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
+        forceHeal = true,
+        charges = 5,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                valueBase = 905,
+                valueRange = 0,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48113] = { -- Prayer of Mending(Rank 3)
+        spellLevel = 79,
+        maxLevel = 84,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
+        forceHeal = true,
+        charges = 5,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                valueBase = 1043,
+                valueRange = 0,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48119] = { -- Binding Heal(Rank 2)
+        spellLevel = 72,
+        maxLevel = 76,
+        baseCostPct = 27,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 1619,
+                valueRange = 462,
+                valuePerLevel = 3,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48120] = { -- Binding Heal(Rank 3)
+        spellLevel = 78,
+        maxLevel = 82,
+        baseCostPct = 27,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 1952,
+                valueRange = 556,
+                valuePerLevel = 3.6,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48122] = { -- Smite(Rank 11)
+        spellLevel = 74,
+        maxLevel = 78,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 278,
-                valueRange = 44,
-                coef = 0.143,
+                valueBase = 604,
+                valueRange = 72,
+                valuePerLevel = 5,
+                coef = 0.714,
+                coefAP = 0,
             },
         }
     },
-    [44047] = { -- Chastise(Rank 6)
+    [48123] = { -- Smite(Rank 12)
+        spellLevel = 79,
+        maxLevel = 83,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 707,
+                valueRange = 86,
+                valuePerLevel = 6,
+                coef = 0.714,
+                coefAP = 0,
+            },
+        }
+    },
+    [48124] = { -- Shadow Word: Pain(Rank 11)
+        spellLevel = 75,
+        maxLevel = 79,
+        duration = 18,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 196,
+                valueRange = 0,
+                coef = 0.1833,
+                coefAP = 0,
+            },
+        }
+    },
+    [48125] = { -- Shadow Word: Pain(Rank 12)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 18,
+        baseCostPct = 22,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 230,
+                valueRange = 0,
+                coef = 0.1833,
+                coefAP = 0,
+            },
+        }
+    },
+    [48126] = { -- Mind Blast(Rank 12)
+        spellLevel = 74,
+        maxLevel = 78,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 837,
+                valueRange = 46,
+                valuePerLevel = 4,
+                coef = 0.429,
+                coefAP = 0,
+            },
+        }
+    },
+    [48127] = { -- Mind Blast(Rank 13)
+        spellLevel = 79,
+        maxLevel = 83,
+        baseCostPct = 17,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 992,
+                valueRange = 56,
+                valuePerLevel = 5,
+                coef = 0.429,
+                coefAP = 0,
+            },
+        }
+    },
+    [48134] = { -- Holy Fire(Rank 10)
+        spellLevel = 72,
+        maxLevel = 76,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 732,
+                valueRange = 196,
+                valuePerLevel = 4,
+                coef = 0.571,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 41,
+                valueRange = 0,
+                coef = 0.024,
+                coefAP = 0,
+            },
+        }
+    },
+    [48135] = { -- Holy Fire(Rank 11)
+        spellLevel = 78,
+        maxLevel = 82,
+        duration = 7,
+        baseCostPct = 11,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 890,
+                valueRange = 240,
+                valuePerLevel = 5,
+                coef = 0.571,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 1,
+                valueBase = 50,
+                valueRange = 0,
+                coef = 0.024,
+                coefAP = 0,
+            },
+        }
+    },
+    [48157] = { -- Shadow Word: Death(Rank 3)
+        spellLevel = 75,
+        maxLevel = 79,
+        baseCostPct = 12,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 639,
+                valueRange = 102,
+                coef = 0.429,
+                coefAP = 0,
+            },
+        }
+    },
+    [48158] = { -- Shadow Word: Death(Rank 4)
+        spellLevel = 80,
+        maxLevel = 84,
+        baseCostPct = 12,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 750,
+                valueRange = 120,
+                coef = 0.429,
+                coefAP = 0,
+            },
+        }
+    },
+    [48159] = { -- Vampiric Touch(Rank 4)
+        spellLevel = 75,
+        maxLevel = 79,
+        duration = 15,
+        baseCostPct = 16,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 147,
+                valueRange = 0,
+                coef = 0.4,
+                coefAP = 0,
+            },
+        }
+    },
+    [48160] = { -- Vampiric Touch(Rank 5)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 15,
+        baseCostPct = 16,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 170,
+                valueRange = 0,
+                coef = 0.4,
+                coefAP = 0,
+            },
+        }
+    },
+    [48172] = { -- Desperate Prayer(Rank 8)
+        spellLevel = 73,
+        maxLevel = 0,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 3111,
+                valueRange = 558,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48173] = { -- Desperate Prayer(Rank 9)
+        spellLevel = 80,
+        maxLevel = 0,
+        baseCostPct = 21,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 3716,
+                valueRange = 668,
+                coef = 0.807,
+                coefAP = 0,
+            },
+        }
+    },
+    [48299] = { -- Devouring Plague(Rank 8)
+        spellLevel = 73,
+        maxLevel = 0,
+        duration = 24,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 3,
+                valueBase = 143,
+                valueRange = 0,
+                coef = 0.185,
+                coefAP = 0,
+            },
+        }
+    },
+    [48300] = { -- Devouring Plague(Rank 9)
+        spellLevel = 79,
+        maxLevel = 0,
+        duration = 24,
+        baseCostPct = 25,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 3,
+                valueBase = 172,
+                valueRange = 0,
+                coef = 0.185,
+                coefAP = 0,
+            },
+        }
+    },
+    [49821] = { -- Mind Sear(Rank 1)
+        spellLevel = 75,
+        maxLevel = 79,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 183,
+                valueRange = 14,
+                coef = 0.286,
+                coefAP = 0,
+            },
+        }
+    },
+    [52983] = { -- Penance(Rank 2)
         spellLevel = 70,
+        maxLevel = 74,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 805,
+                valueRange = 104,
+                coef = 0.537,
+                coefAP = 0,
+            },
+        }
+    },
+    [52984] = { -- Penance(Rank 3)
+        spellLevel = 75,
+        maxLevel = 79,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 1278,
+                valueRange = 164,
+                coef = 0.537,
+                coefAP = 0,
+            },
+        }
+    },
+    [52985] = { -- Penance(Rank 4)
+        spellLevel = 80,
+        maxLevel = 84,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 1484,
+                valueRange = 192,
+                coef = 0.537,
+                coefAP = 0,
+            },
+        }
+    },
+    [52998] = { -- Penance(Rank 2)
+        spellLevel = 70,
+        maxLevel = 74,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 292,
+                valueRange = 0,
+                coef = 0.229,
+                coefAP = 0,
+            },
+        }
+    },
+    [52999] = { -- Penance(Rank 3)
+        spellLevel = 75,
+        maxLevel = 79,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 333,
+                valueRange = 0,
+                coef = 0.229,
+                coefAP = 0,
+            },
+        }
+    },
+    [53000] = { -- Penance(Rank 4)
+        spellLevel = 80,
+        maxLevel = 84,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 375,
+                valueRange = 0,
+                coef = 0.229,
+                coefAP = 0,
+            },
+        }
+    },
+    [53005] = { -- Penance(Rank 2)
+        spellLevel = 70,
+        maxLevel = 74,
+        duration = 2,
+        baseCostPct = 16,
+        school = 2,
+        isChannel = true,
+        defType = 0,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 52983,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 52998,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [53006] = { -- Penance(Rank 3)
+        spellLevel = 75,
         maxLevel = 79,
         duration = 2,
-        baseCost = 300,
+        baseCostPct = 16,
+        school = 2,
+        isChannel = true,
+        defType = 0,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 52984,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 52999,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [53007] = { -- Penance(Rank 4)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 2,
+        baseCostPct = 16,
+        school = 2,
+        isChannel = true,
+        defType = 0,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 52985,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 53000,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [53022] = { -- Mind Sear(Rank 2)
+        spellLevel = 80,
+        maxLevel = 84,
+        school = 6,
+        defType = 1,
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 370,
-                valueRange = 60,
-                coef = 0.143,
+                valueBase = 212,
+                valueRange = 16,
+                coef = 0.286,
+                coefAP = 0,
+            },
+        }
+    },
+    [53023] = { -- Mind Sear(Rank 2)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 5,
+        baseCostPct = 28,
+        school = 6,
+        isChannel = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 53022,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [64843] = { -- Divine Hymn(Rank 1)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 8,
+        baseCostPct = 63,
+        school = 2,
+        isChannel = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                valueBase = 64844,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [64844] = { -- Divine Hymn
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 8,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 3024,
+                valueRange = 318,
+                coef = 0.564,
+                coefAP = 0,
             },
         }
     },
@@ -2972,6 +3516,10 @@ _addon.spellClassSet = {
             44175, -- Power Word: Shield
             44291, -- Power Word: Shield
             46193, -- Power Word: Shield
+            48065, -- Power Word: Shield(Rank 13)
+            48066, -- Power Word: Shield(Rank 14)
+            71548, -- Power Word: Shield
+            71780, -- Power Word: Shield
         },
         [2] = {
             588, -- Inner Fire(Rank 1)
@@ -2982,6 +3530,8 @@ _addon.spellClassSet = {
             10952, -- Inner Fire(Rank 6)
             16329, -- Juju Might
             25431, -- Inner Fire(Rank 7)
+            48040, -- Inner Fire(Rank 8)
+            48168, -- Inner Fire(Rank 9)
         },
         [4] = {
             15286, -- Vampiric Embrace
@@ -2991,6 +3541,7 @@ _addon.spellClassSet = {
             28418, -- General's Warcry
             28419, -- General's Warcry
             28420, -- General's Warcry
+            71269, -- Vampiric Embrace
         },
         [8] = {
             1243, -- Power Word: Fortitude(Rank 1)
@@ -3016,15 +3567,13 @@ _addon.spellClassSet = {
             31815, -- Mark of Lore
             32025, -- Test Buff (DND)
             39231, -- Prayer of Fortitude(Rank 3)
+            43939, -- Prayer of Fortitude(Rank 3)
+            48161, -- Power Word: Fortitude(Rank 8)
+            48162, -- Prayer of Fortitude(Rank 4)
+            63613, -- CK Test Disarm(Rank 8)
         },
         [16] = {
-            8129, -- Mana Burn(Rank 1)
-            8131, -- Mana Burn(Rank 2)
-            10874, -- Mana Burn(Rank 3)
-            10875, -- Mana Burn(Rank 4)
-            10876, -- Mana Burn(Rank 5)
-            25379, -- Mana Burn(Rank 6)
-            25380, -- Mana Burn(Rank 7)
+            8129, -- Mana Burn
         },
         [32] = {
             14752, -- Divine Spirit(Rank 1)
@@ -3036,6 +3585,8 @@ _addon.spellClassSet = {
             27841, -- Divine Spirit(Rank 4)
             32999, -- Prayer of Spirit(Rank 2)
             39234, -- Divine Spirit(Rank 4)
+            48073, -- Divine Spirit(Rank 6)
+            48074, -- Prayer of Spirit(Rank 3)
         },
         [64] = {
             139, -- Renew(Rank 1)
@@ -3054,6 +3605,9 @@ _addon.spellClassSet = {
             32125, -- Medicinal Swamp Moss
             44174, -- Renew
             46192, -- Renew
+            48067, -- Renew(Rank 13)
+            48068, -- Renew(Rank 14)
+            51956, -- Death Pact
         },
         [128] = {
             585, -- Smite(Rank 1)
@@ -3066,6 +3620,8 @@ _addon.spellClassSet = {
             10934, -- Smite(Rank 8)
             25363, -- Smite(Rank 9)
             25364, -- Smite(Rank 10)
+            48122, -- Smite(Rank 11)
+            48123, -- Smite(Rank 12)
         },
         [256] = {
             976, -- Shadow Protection(Rank 1)
@@ -3078,6 +3634,8 @@ _addon.spellClassSet = {
             37539, -- Nether Protection
             39236, -- Prayer of Shadow Protection(Rank 1)
             39374, -- Prayer of Shadow Protection(Rank 2)
+            48169, -- Shadow Protection(Rank 5)
+            48170, -- Prayer of Shadow Protection(Rank 3)
         },
         [512] = {
             596, -- Prayer of Healing(Rank 1)
@@ -3087,6 +3645,7 @@ _addon.spellClassSet = {
             25308, -- Prayer of Healing(Rank 6)
             25316, -- Prayer of Healing(Rank 5)
             30604, -- Prayer of Healing
+            48072, -- Prayer of Healing(Rank 7)
         },
         [1024] = {
             2054, -- Heal(Rank 1)
@@ -3119,7 +3678,27 @@ _addon.spellClassSet = {
             41378, -- Greater Heal
             42420, -- Flash Heal
             43431, -- Flash Heal
+            43516, -- Flash Heal
             43575, -- Flash Heal
+            47536, -- Rapture(Rank 2)
+            48070, -- Flash Heal(Rank 10)
+            48071, -- Flash Heal(Rank 11)
+            49348, -- Greater Heal
+            56331, -- Flash Heal
+            56919, -- Flash Heal
+            57766, -- Flash of Light
+            57775, -- Greater Heal
+            59997, -- Flash of Light
+            60003, -- Greater Heal
+            61965, -- Greater Heal
+            62334, -- Greater Heal
+            62442, -- Greater Heal
+            62809, -- Great Heal
+            63760, -- Greater Heal
+            67254, -- Blazing Light
+            71930, -- Flash of Light
+            71931, -- Greater Heal
+            72484, -- Debug Heal
         },
         [4096] = {
             2060, -- Greater Heal(Rank 1)
@@ -3132,6 +3711,9 @@ _addon.spellClassSet = {
             25314, -- Greater Heal(Rank 5)
             26565, -- Heal Brethren
             39321, -- Heal Self
+            47536, -- Rapture(Rank 2)
+            48062, -- Greater Heal(Rank 8)
+            48063, -- Greater Heal(Rank 9)
         },
         [8192] = {
             8092, -- Mind Blast(Rank 1)
@@ -3145,15 +3727,11 @@ _addon.spellClassSet = {
             10947, -- Mind Blast(Rank 9)
             25372, -- Mind Blast(Rank 10)
             25375, -- Mind Blast(Rank 11)
+            48126, -- Mind Blast(Rank 12)
+            48127, -- Mind Blast(Rank 13)
         },
         [16384] = {
-            586, -- Fade(Rank 1)
-            9578, -- Fade(Rank 2)
-            9579, -- Fade(Rank 3)
-            9592, -- Fade(Rank 4)
-            10941, -- Fade(Rank 5)
-            10942, -- Fade(Rank 6)
-            25429, -- Fade(Rank 7)
+            586, -- Fade
         },
         [32768] = {
             589, -- Shadow Word: Pain(Rank 1)
@@ -3167,6 +3745,8 @@ _addon.spellClassSet = {
             25367, -- Shadow Word: Pain(Rank 9)
             25368, -- Shadow Word: Pain(Rank 10)
             27605, -- Shadow Word: Pain(Rank 8)
+            48124, -- Shadow Word: Pain(Rank 11)
+            48125, -- Shadow Word: Pain(Rank 12)
         },
         [65536] = {
             8122, -- Psychic Scream(Rank 1)
@@ -3176,9 +3756,7 @@ _addon.spellClassSet = {
             27610, -- Psychic Scream(Rank 4)
         },
         [131072] = {
-            605, -- Mind Control(Rank 1)
-            10911, -- Mind Control(Rank 2)
-            10912, -- Mind Control(Rank 3)
+            605, -- Mind Control
             16053, -- Dominion of Soul
             32974, -- Cinematic - Mind Control(Rank 1)
             32976, -- Cinematic - Mind Control(Rank 1)
@@ -3192,14 +3770,7 @@ _addon.spellClassSet = {
             2053, -- Lesser Heal(Rank 3)
         },
         [524288] = {
-            2943, -- Touch of Weakness(Rank 1)
             16875, -- Divine Spirit(Rank 3)
-            19249, -- Touch of Weakness(Rank 2)
-            19251, -- Touch of Weakness(Rank 3)
-            19252, -- Touch of Weakness(Rank 4)
-            19253, -- Touch of Weakness(Rank 5)
-            19254, -- Touch of Weakness(Rank 6)
-            25460, -- Touch of Weakness(Rank 7)
         },
         [1048576] = {
             14914, -- Holy Fire(Rank 1)
@@ -3220,16 +3791,10 @@ _addon.spellClassSet = {
             29563, -- Holy Fire
             36947, -- Holy Fire
             38585, -- Holy Fire
+            48134, -- Holy Fire(Rank 10)
+            48135, -- Holy Fire(Rank 11)
         },
         [2097152] = {
-            10797, -- Starshards(Rank 1)
-            19296, -- Starshards(Rank 2)
-            19299, -- Starshards(Rank 3)
-            19302, -- Starshards(Rank 4)
-            19303, -- Starshards(Rank 5)
-            19304, -- Starshards(Rank 6)
-            19305, -- Starshards(Rank 7)
-            25446, -- Starshards(Rank 8)
             27636, -- Starshards
         },
         [4194304] = {
@@ -3255,16 +3820,18 @@ _addon.spellClassSet = {
             40096, -- Holy Nova
             41380, -- Holy Nova
             46564, -- Holy Nova
+            47586, -- Twin Disciplines(Rank 1)
+            47587, -- Twin Disciplines(Rank 2)
+            47588, -- Twin Disciplines(Rank 3)
+            48077, -- Holy Nova(Rank 8)
+            48078, -- Holy Nova(Rank 9)
+            52802, -- Twin Disciplines(Rank 4)
+            52803, -- Twin Disciplines(Rank 5)
+            57771, -- Holy Nova
         },
         [8388608] = {
-            15407, -- Mind Flay(Rank 1)
             16568, -- Mind Flay
             17165, -- Mind Flay
-            17311, -- Mind Flay(Rank 2)
-            17312, -- Mind Flay(Rank 3)
-            17313, -- Mind Flay(Rank 4)
-            17314, -- Mind Flay(Rank 5)
-            18807, -- Mind Flay(Rank 6)
             22203, -- Blue Beam
             22205, -- Trigger Blue Beam
             22313, -- Purple Hands
@@ -3274,7 +3841,6 @@ _addon.spellClassSet = {
             23642, -- Corruption
             23953, -- Mind Flay
             23979, -- Holy Wrath
-            25387, -- Mind Flay(Rank 7)
             26044, -- Mind Flay
             26143, -- Mind Flay
             27286, -- Shadow Wrath
@@ -3282,8 +3848,6 @@ _addon.spellClassSet = {
             28309, -- Purple Beam
             28310, -- Mind Flay
             28516, -- Sunwell Torrent
-            28883, -- Holy Wrath
-            29407, -- Mind Flay
             29420, -- Wretched Tap
             29570, -- Mind Flay
             31806, -- Blue Beam
@@ -3378,16 +3942,31 @@ _addon.spellClassSet = {
             40954, -- TEST - LAB - Shade of Akama(Rank 7)
             41264, -- Energy Surge
             42396, -- Mind Flay
+            43512, -- Mind Flay
+            47581, -- Pain and Suffering(Rank 2)
+            52292, -- Pestilience Test
+            52586, -- Mind Flay
+            52778, -- Welding Beam
+            53638, -- Holy Wrath
+            57941, -- Mind Flay
+            58381, -- Mind Flay(Rank 9)
+            59166, -- Welding Beam
+            59367, -- Mind Flay
+            59974, -- Mind Flay
+            60181, -- Arcane Stream
+            60472, -- Mind Flay
+            61998, -- Welding Beam
         },
         [16777216] = {
-            13908, -- Desperate Prayer(Rank 1)
-            19236, -- Desperate Prayer(Rank 2)
-            19238, -- Desperate Prayer(Rank 3)
-            19240, -- Desperate Prayer(Rank 4)
-            19241, -- Desperate Prayer(Rank 5)
-            19242, -- Desperate Prayer(Rank 6)
-            19243, -- Desperate Prayer(Rank 7)
-            25437, -- Desperate Prayer(Rank 8)
+            19236, -- Desperate Prayer(Rank 1)
+            19238, -- Desperate Prayer(Rank 2)
+            19240, -- Desperate Prayer(Rank 3)
+            19241, -- Desperate Prayer(Rank 4)
+            19242, -- Desperate Prayer(Rank 5)
+            19243, -- Desperate Prayer(Rank 6)
+            25437, -- Desperate Prayer(Rank 7)
+            48172, -- Desperate Prayer(Rank 8)
+            48173, -- Desperate Prayer(Rank 9)
         },
         [33554432] = {
             2944, -- Devouring Plague(Rank 1)
@@ -3397,32 +3976,12 @@ _addon.spellClassSet = {
             19279, -- Devouring Plague(Rank 5)
             19280, -- Devouring Plague(Rank 6)
             25467, -- Devouring Plague(Rank 7)
-            28377, -- Shadowguard(Rank 1)
-            28378, -- Shadowguard(Rank 2)
-            28379, -- Shadowguard(Rank 3)
-            28380, -- Shadowguard(Rank 4)
-            28381, -- Shadowguard(Rank 5)
-            28382, -- Shadowguard(Rank 6)
-            28385, -- Shadowguard(Rank 7)
+            48299, -- Devouring Plague(Rank 8)
+            48300, -- Devouring Plague(Rank 9)
         },
         [67108864] = {
             2096, -- Mind Vision(Rank 1)
-            2652, -- Touch of Weakness(Rank 1)
-            9035, -- Hex of Weakness(Rank 1)
             10909, -- Mind Vision(Rank 2)
-            15487, -- Silence
-            19261, -- Touch of Weakness(Rank 2)
-            19262, -- Touch of Weakness(Rank 3)
-            19264, -- Touch of Weakness(Rank 4)
-            19265, -- Touch of Weakness(Rank 5)
-            19266, -- Touch of Weakness(Rank 6)
-            19281, -- Hex of Weakness(Rank 2)
-            19282, -- Hex of Weakness(Rank 3)
-            19283, -- Hex of Weakness(Rank 4)
-            19284, -- Hex of Weakness(Rank 5)
-            19285, -- Hex of Weakness(Rank 6)
-            25461, -- Touch of Weakness(Rank 7)
-            25470, -- Hex of Weakness(Rank 7)
             25816, -- Hex of Weakness(Rank 6)
             32926, -- Lurk
             40789, -- Zoom Out
@@ -3432,6 +3991,7 @@ _addon.spellClassSet = {
             41233, -- Brute Cologne
             42129, -- First Person Camera
             45468, -- Mind Vision
+            48301, -- Mind Trauma
         },
         [134217728] = {
             15007, -- Resurrection Sickness
@@ -3442,6 +4002,8 @@ _addon.spellClassSet = {
             27803, -- Holy Nova(Rank 4)
             27804, -- Holy Nova(Rank 5)
             27805, -- Holy Nova(Rank 6)
+            48075, -- Holy Nova(Rank 8)
+            48076, -- Holy Nova(Rank 9)
         },
         [268435456] = {
             15068, -- TEST Heal Self
@@ -3462,7 +4024,27 @@ _addon.spellClassSet = {
             41378, -- Greater Heal
             42420, -- Flash Heal
             43431, -- Flash Heal
+            43516, -- Flash Heal
             43575, -- Flash Heal
+            48088, -- Circle of Healing(Rank 6)
+            48089, -- Circle of Healing(Rank 7)
+            49306, -- Circle of Healing(Rank 7)
+            49348, -- Greater Heal
+            56331, -- Flash Heal
+            56919, -- Flash Heal
+            57766, -- Flash of Light
+            57775, -- Greater Heal
+            59997, -- Flash of Light
+            60003, -- Greater Heal
+            61965, -- Greater Heal
+            62334, -- Greater Heal
+            62442, -- Greater Heal
+            62809, -- Great Heal
+            63760, -- Greater Heal
+            67254, -- Blazing Light
+            71930, -- Flash of Light
+            71931, -- Greater Heal
+            72484, -- Debug Heal
         },
         [536870912] = {
             6788, -- Weakened Soul
@@ -3488,7 +4070,7 @@ _addon.spellClassSet = {
             28275, -- Lightwell(Rank 4)
             30036, -- Steal Magic
             32841, -- Mass Resurrection
-            34433, -- Shadowfiend(Rank 1)
+            34433, -- Shadowfiend
             39649, -- Summon Shadowfiends
             40081, -- Free Friend
             40135, -- Shackle Undead
@@ -3496,45 +4078,26 @@ _addon.spellClassSet = {
             40769, -- Shivan Self Cleansing
             41159, -- Summon Shadowfiends
             43577, -- Dispel Magic
+            47788, -- Guardian Spirit
+            48086, -- Lightwell(Rank 5)
+            48087, -- Lightwell(Rank 6)
+            48171, -- Resurrection(Rank 7)
+            51035, -- Gan'jo's Resurrection(Rank 7)
+            55598, -- Cleanse Magic
         },
         [2147483648] = {
             1706, -- Levitate
-            2651, -- Elune's Grace
-            2652, -- Touch of Weakness(Rank 1)
             6346, -- Fear Ward
-            9035, -- Hex of Weakness(Rank 1)
             10060, -- Power Infusion
-            13896, -- Feedback(Rank 1)
             15090, -- Dispel Magic
             15229, -- Crystal Restore
             15473, -- Shadowform
-            15487, -- Silence
             16329, -- Juju Might
             16873, -- Holy Word: Fortitude(Rank 6)
             16874, -- Shadow Protection(Rank 3)
             16875, -- Divine Spirit(Rank 3)
             17151, -- Shadow Barrier
             17201, -- Dispel Magic
-            18137, -- Shadowguard(Rank 1)
-            19261, -- Touch of Weakness(Rank 2)
-            19262, -- Touch of Weakness(Rank 3)
-            19264, -- Touch of Weakness(Rank 4)
-            19265, -- Touch of Weakness(Rank 5)
-            19266, -- Touch of Weakness(Rank 6)
-            19271, -- Feedback(Rank 2)
-            19273, -- Feedback(Rank 3)
-            19274, -- Feedback(Rank 4)
-            19275, -- Feedback(Rank 5)
-            19281, -- Hex of Weakness(Rank 2)
-            19282, -- Hex of Weakness(Rank 3)
-            19283, -- Hex of Weakness(Rank 4)
-            19284, -- Hex of Weakness(Rank 5)
-            19285, -- Hex of Weakness(Rank 6)
-            19308, -- Shadowguard(Rank 2)
-            19309, -- Shadowguard(Rank 3)
-            19310, -- Shadowguard(Rank 4)
-            19311, -- Shadowguard(Rank 5)
-            19312, -- Shadowguard(Rank 6)
             20694, -- Holy Nova
             22751, -- Fury of the Frostwolf
             22822, -- Starshards
@@ -3544,10 +4107,6 @@ _addon.spellClassSet = {
             23859, -- Dispel Magic
             23964, -- Bloodrager's Requiem
             24022, -- Cleanse Nova
-            25441, -- Feedback(Rank 6)
-            25461, -- Touch of Weakness(Rank 7)
-            25470, -- Hex of Weakness(Rank 7)
-            25477, -- Shadowguard(Rank 7)
             25808, -- Dispel
             25816, -- Hex of Weakness(Rank 6)
             27609, -- Dispel Magic(Rank 2)
@@ -3560,11 +4119,9 @@ _addon.spellClassSet = {
             29514, -- Holy Nova
             30036, -- Steal Magic
             30238, -- Lordaeron's Blessing
-            32548, -- Symbol of Hope
             33206, -- Pain Suppression
             34222, -- Sunseeker Blessing
             34379, -- Bloodgem Infusion
-            34433, -- Shadowfiend(Rank 1)
             34944, -- Holy Nova
             35261, -- Arcane Nova
             35749, -- Starfall
@@ -3582,7 +4139,12 @@ _addon.spellClassSet = {
             41380, -- Holy Nova
             43577, -- Dispel Magic
             46564, -- Holy Nova
+            47788, -- Guardian Spirit
+            48301, -- Mind Trauma
+            49868, -- Shadowform
             52970, -- Levitate
+            55598, -- Cleanse Magic
+            71167, -- Shadowform
         },
     },
     [2] = {
@@ -3593,127 +4155,450 @@ _addon.spellClassSet = {
             988, -- Dispel Magic(Rank 2)
             30238, -- Lordaeron's Blessing
             38082, -- Mass Dispel
+            49946, -- Chaff(Rank 1)
+            55677, -- Glyph of Dispel Magic
         },
         [2] = {
             32379, -- Shadow Word: Death(Rank 1)
-            32409, -- Shadow Word: Death(Rank 1)
             32996, -- Shadow Word: Death(Rank 2)
+            48157, -- Shadow Word: Death(Rank 3)
+            48158, -- Shadow Word: Death(Rank 4)
         },
         [4] = {
             32546, -- Binding Heal(Rank 1)
+            48119, -- Binding Heal(Rank 2)
+            48120, -- Binding Heal(Rank 3)
         },
         [8] = {
-            15258, -- Shadow Vulnerability(Rank 1)
-        },
-        [16] = {
-            44041, -- Chastise(Rank 1)
-            44043, -- Chastise(Rank 2)
-            44044, -- Chastise(Rank 3)
-            44045, -- Chastise(Rank 4)
-            44046, -- Chastise(Rank 5)
-            44047, -- Chastise(Rank 6)
+            15258, -- Shadow Weaving(Rank 1)
         },
         [32] = {
             33076, -- Prayer of Mending(Rank 1)
-            39623, -- Ron's Test Spell(Rank 1)
+            33110, -- Prayer of Mending
             41635, -- Prayer of Mending(Rank 1)
+            48110, -- Prayer of Mending(Rank 2)
+            48111, -- Prayer of Mending(Rank 3)
+            48112, -- Prayer of Mending(Rank 2)
+            48113, -- Prayer of Mending(Rank 3)
             351575, -- Prayer of Mending(Rank 1)
         },
         [64] = {
-            453, -- Mind Soothe(Rank 1)
-            8192, -- Mind Soothe(Rank 2)
-            10953, -- Mind Soothe(Rank 3)
-            25596, -- Mind Soothe(Rank 4)
+            453, -- Mind Soothe
         },
         [128] = {
             32375, -- Mass Dispel
             32592, -- Mass Dispel
             39897, -- Mass Dispel
+            43241, -- Mass Dispel - Cosmetic
             353184, -- Mass Dispel
         },
         [256] = {
-            34433, -- Shadowfiend(Rank 1)
+            34433, -- Shadowfiend
             39649, -- Summon Shadowfiends
             41159, -- Summon Shadowfiends
         },
         [512] = {
-            34754, -- Clearcasting
+            34754, -- Holy Concentration
+            63724, -- Holy Concentration
+            63725, -- Holy Concentration
         },
         [1024] = {
             34914, -- Vampiric Touch(Rank 1)
             34916, -- Vampiric Touch(Rank 2)
             34917, -- Vampiric Touch(Rank 3)
+            48159, -- Vampiric Touch(Rank 4)
+            48160, -- Vampiric Touch(Rank 5)
         },
         [2048] = {
             15473, -- Shadowform
+            49868, -- Shadowform
+            71167, -- Shadowform
         },
         [4096] = {
-            586, -- Fade(Rank 1)
+            586, -- Fade
             1706, -- Levitate
-            2651, -- Elune's Grace
-            2652, -- Touch of Weakness(Rank 1)
             2944, -- Devouring Plague(Rank 1)
             6346, -- Fear Ward
-            9035, -- Hex of Weakness(Rank 1)
             9484, -- Shackle Undead(Rank 1)
             9485, -- Shackle Undead(Rank 2)
-            9578, -- Fade(Rank 2)
-            9579, -- Fade(Rank 3)
-            9592, -- Fade(Rank 4)
             10060, -- Power Infusion
-            10941, -- Fade(Rank 5)
-            10942, -- Fade(Rank 6)
             10955, -- Shackle Undead(Rank 3)
             14743, -- Focused Casting(Rank 1)
             14751, -- Inner Focus
             14893, -- Inspiration(Rank 1)
-            15269, -- Blackout(Rank 1)
             15271, -- Spirit Tap(Rank 1)
             15357, -- Inspiration(Rank 2)
             15359, -- Inspiration(Rank 3)
             15487, -- Silence
-            18137, -- Shadowguard(Rank 1)
-            19261, -- Touch of Weakness(Rank 2)
-            19262, -- Touch of Weakness(Rank 3)
-            19264, -- Touch of Weakness(Rank 4)
-            19265, -- Touch of Weakness(Rank 5)
-            19266, -- Touch of Weakness(Rank 6)
             19276, -- Devouring Plague(Rank 2)
             19277, -- Devouring Plague(Rank 3)
             19278, -- Devouring Plague(Rank 4)
             19279, -- Devouring Plague(Rank 5)
             19280, -- Devouring Plague(Rank 6)
-            19281, -- Hex of Weakness(Rank 2)
-            19282, -- Hex of Weakness(Rank 3)
-            19283, -- Hex of Weakness(Rank 4)
-            19284, -- Hex of Weakness(Rank 5)
-            19285, -- Hex of Weakness(Rank 6)
-            19308, -- Shadowguard(Rank 2)
-            19309, -- Shadowguard(Rank 3)
-            19310, -- Shadowguard(Rank 4)
-            19311, -- Shadowguard(Rank 5)
-            19312, -- Shadowguard(Rank 6)
-            25429, -- Fade(Rank 7)
-            25461, -- Touch of Weakness(Rank 7)
             25467, -- Devouring Plague(Rank 7)
-            25470, -- Hex of Weakness(Rank 7)
-            25477, -- Shadowguard(Rank 7)
             27813, -- Blessed Recovery(Rank 1)
             27817, -- Blessed Recovery(Rank 2)
             27818, -- Blessed Recovery(Rank 3)
             27828, -- Focused Casting(Rank 2)
-            32548, -- Symbol of Hope
             33143, -- Blessed Resilience(Rank 1)
             33151, -- Surge of Light(Rank 1)
             33206, -- Pain Suppression
             45237, -- Focused Will(Rank 1)
             45241, -- Focused Will(Rank 2)
             45242, -- Focused Will(Rank 3)
+            47753, -- Divine Aegis(Rank 1)
+            47930, -- Grace
+            48299, -- Devouring Plague(Rank 8)
+            48300, -- Devouring Plague(Rank 9)
+            48301, -- Mind Trauma
+            49694, -- Improved Spirit Tap(Rank 1)
+            50779, -- Blood Rune Mastery
+            54704, -- Divine Aegis(Rank 1)
+            59000, -- Improved Spirit Tap(Rank 2)
+            63731, -- Serendipity
+            63734, -- Serendipity
+            63735, -- Serendipity
+        },
+        [8192] = {
+            32409, -- Shadow Word: Death
+        },
+        [16384] = {
+            33619, -- Reflective Shield
+        },
+        [32768] = {
+            47666, -- Penance(Rank 1)
+            52998, -- Penance(Rank 2)
+            52999, -- Penance(Rank 3)
+            53000, -- Penance(Rank 4)
+        },
+        [65536] = {
+            47536, -- Rapture(Rank 2)
+            47750, -- Penance(Rank 1)
+            47757, -- Penance(Rank 1)
+            52983, -- Penance(Rank 2)
+            52984, -- Penance(Rank 3)
+            52985, -- Penance(Rank 4)
+            52986, -- Penance(Rank 2)
+            52987, -- Penance(Rank 3)
+            52988, -- Penance(Rank 4)
+        },
+        [131072] = {
+            34753, -- Holy Concentration(Rank 1)
+            34859, -- Holy Concentration(Rank 2)
+            34860, -- Holy Concentration(Rank 3)
+        },
+        [262144] = {
+            47585, -- Dispersion
+            60069, -- Dispersion
+        },
+        [524288] = {
+            49821, -- Mind Sear(Rank 1)
+            53022, -- Mind Sear(Rank 2)
+        },
+        [1048576] = {
+            48045, -- Mind Sear(Rank 1)
+            53023, -- Mind Sear(Rank 2)
+        },
+        [2097152] = {
+            15487, -- Silence
+            55742, -- Accelerated
+        },
+        [4194304] = {
+            27790, -- Holy Reach(Rank 2)
+            64843, -- Divine Hymn(Rank 1)
+        },
+        [8388608] = {
+            47540, -- Penance(Rank 1)
+            53005, -- Penance(Rank 2)
+            53006, -- Penance(Rank 3)
+            53007, -- Penance(Rank 4)
+        },
+        [16777216] = {
+            47753, -- Divine Aegis(Rank 1)
+            54704, -- Divine Aegis(Rank 1)
+        },
+        [33554432] = {
+            6346, -- Fear Ward
+        },
+        [67108864] = {
+            9484, -- Shackle Undead(Rank 1)
+            9485, -- Shackle Undead(Rank 2)
+            10955, -- Shackle Undead(Rank 3)
+        },
+        [134217728] = {
+            48153, -- Guardian Spirit
+        },
+        [268435456] = {
+            33206, -- Pain Suppression
+        },
+        [536870912] = {
+            10060, -- Power Infusion
+        },
+        [1073741824] = {
+            14751, -- Inner Focus
+        },
+        [2147483648] = {
+            2096, -- Mind Vision(Rank 1)
+            10909, -- Mind Vision(Rank 2)
         },
     },
     [3] = {
+        [1] = {
+            1706, -- Levitate
+        },
+        [4] = {
+            64844, -- Divine Hymn
+        },
+        [8] = {
+            63675, -- Improved Devouring Plague
+            75999, -- Improved Devouring Plague
+        },
+        [16] = {
+            64901, -- Hymn of Hope
+            64904, -- Hymn of Hope
+        },
+        [32] = {
+            59887, -- Borrowed Time
+            59888, -- Borrowed Time
+            59889, -- Borrowed Time
+            59890, -- Borrowed Time
+            59891, -- Borrowed Time
+        },
+        [64] = {
+            15407, -- Mind Flay(Rank 1)
+            17311, -- Mind Flay(Rank 2)
+            17312, -- Mind Flay(Rank 3)
+            17313, -- Mind Flay(Rank 4)
+            17314, -- Mind Flay(Rank 5)
+            18807, -- Mind Flay(Rank 6)
+            25387, -- Mind Flay(Rank 7)
+            48155, -- Mind Flay(Rank 8)
+            48156, -- Mind Flay(Rank 9)
+            61978, -- Ron's Test Spell #5(Rank 9)
+        },
+        [128] = {
+            47757, -- Penance(Rank 1)
+            47758, -- Penance(Rank 1)
+            52986, -- Penance(Rank 2)
+            52987, -- Penance(Rank 3)
+            52988, -- Penance(Rank 4)
+            53001, -- Penance(Rank 2)
+            53002, -- Penance(Rank 3)
+            53003, -- Penance(Rank 4)
+        },
+        [512] = {
+            20711, -- Spirit of Redemption
+            27827, -- Spirit of Redemption
+        },
+        [1024] = {
+            17, -- Power Word: Shield(Rank 1)
+            139, -- Renew(Rank 1)
+            528, -- Cure Disease
+            552, -- Abolish Disease
+            586, -- Fade
+            588, -- Inner Fire(Rank 1)
+            589, -- Shadow Word: Pain(Rank 1)
+            592, -- Power Word: Shield(Rank 2)
+            594, -- Shadow Word: Pain(Rank 2)
+            600, -- Power Word: Shield(Rank 3)
+            602, -- Inner Fire(Rank 3)
+            970, -- Shadow Word: Pain(Rank 3)
+            976, -- Shadow Protection(Rank 1)
+            992, -- Shadow Word: Pain(Rank 4)
+            1006, -- Inner Fire(Rank 4)
+            1243, -- Power Word: Fortitude(Rank 1)
+            1244, -- Power Word: Fortitude(Rank 2)
+            1245, -- Power Word: Fortitude(Rank 3)
+            1706, -- Levitate
+            2767, -- Shadow Word: Pain(Rank 5)
+            2791, -- Power Word: Fortitude(Rank 4)
+            2944, -- Devouring Plague(Rank 1)
+            3747, -- Power Word: Shield(Rank 4)
+            6065, -- Power Word: Shield(Rank 5)
+            6066, -- Power Word: Shield(Rank 6)
+            6074, -- Renew(Rank 2)
+            6075, -- Renew(Rank 3)
+            6076, -- Renew(Rank 4)
+            6077, -- Renew(Rank 5)
+            6078, -- Renew(Rank 6)
+            6346, -- Fear Ward
+            7128, -- Inner Fire(Rank 2)
+            10060, -- Power Infusion
+            10892, -- Shadow Word: Pain(Rank 6)
+            10893, -- Shadow Word: Pain(Rank 7)
+            10894, -- Shadow Word: Pain(Rank 8)
+            10898, -- Power Word: Shield(Rank 7)
+            10899, -- Power Word: Shield(Rank 8)
+            10900, -- Power Word: Shield(Rank 9)
+            10901, -- Power Word: Shield(Rank 10)
+            10927, -- Renew(Rank 7)
+            10928, -- Renew(Rank 8)
+            10929, -- Renew(Rank 9)
+            10937, -- Power Word: Fortitude(Rank 5)
+            10938, -- Power Word: Fortitude(Rank 6)
+            10951, -- Inner Fire(Rank 5)
+            10952, -- Inner Fire(Rank 6)
+            10957, -- Shadow Protection(Rank 2)
+            10958, -- Shadow Protection(Rank 3)
+            14743, -- Focused Casting(Rank 1)
+            14751, -- Inner Focus
+            14752, -- Divine Spirit(Rank 1)
+            14818, -- Divine Spirit(Rank 2)
+            14819, -- Divine Spirit(Rank 3)
+            14914, -- Holy Fire(Rank 1)
+            15258, -- Shadow Weaving(Rank 1)
+            15261, -- Holy Fire(Rank 8)
+            15262, -- Holy Fire(Rank 2)
+            15263, -- Holy Fire(Rank 3)
+            15264, -- Holy Fire(Rank 4)
+            15265, -- Holy Fire(Rank 5)
+            15266, -- Holy Fire(Rank 6)
+            15267, -- Holy Fire(Rank 7)
+            15271, -- Spirit Tap(Rank 1)
+            15407, -- Mind Flay(Rank 1)
+            17311, -- Mind Flay(Rank 2)
+            17312, -- Mind Flay(Rank 3)
+            17313, -- Mind Flay(Rank 4)
+            17314, -- Mind Flay(Rank 5)
+            18807, -- Mind Flay(Rank 6)
+            19276, -- Devouring Plague(Rank 2)
+            19277, -- Devouring Plague(Rank 3)
+            19278, -- Devouring Plague(Rank 4)
+            19279, -- Devouring Plague(Rank 5)
+            19280, -- Devouring Plague(Rank 6)
+            21562, -- Prayer of Fortitude(Rank 1)
+            21564, -- Prayer of Fortitude(Rank 2)
+            25217, -- Power Word: Shield(Rank 11)
+            25218, -- Power Word: Shield(Rank 12)
+            25221, -- Renew(Rank 11)
+            25222, -- Renew(Rank 12)
+            25312, -- Divine Spirit(Rank 5)
+            25315, -- Renew(Rank 10)
+            25367, -- Shadow Word: Pain(Rank 9)
+            25368, -- Shadow Word: Pain(Rank 10)
+            25384, -- Holy Fire(Rank 9)
+            25387, -- Mind Flay(Rank 7)
+            25389, -- Power Word: Fortitude(Rank 7)
+            25392, -- Prayer of Fortitude(Rank 3)
+            25431, -- Inner Fire(Rank 7)
+            25433, -- Shadow Protection(Rank 4)
+            25467, -- Devouring Plague(Rank 7)
+            27683, -- Prayer of Shadow Protection(Rank 1)
+            27813, -- Blessed Recovery(Rank 1)
+            27817, -- Blessed Recovery(Rank 2)
+            27818, -- Blessed Recovery(Rank 3)
+            27828, -- Focused Casting(Rank 2)
+            27841, -- Divine Spirit(Rank 4)
+            33076, -- Prayer of Mending(Rank 1)
+            33151, -- Surge of Light(Rank 1)
+            33206, -- Pain Suppression
+            34754, -- Holy Concentration
+            34914, -- Vampiric Touch(Rank 1)
+            34916, -- Vampiric Touch(Rank 2)
+            34917, -- Vampiric Touch(Rank 3)
+            39374, -- Prayer of Shadow Protection(Rank 2)
+            41635, -- Prayer of Mending(Rank 1)
+            45237, -- Focused Will(Rank 1)
+            45241, -- Focused Will(Rank 2)
+            45242, -- Focused Will(Rank 3)
+            47585, -- Dispersion
+            47753, -- Divine Aegis(Rank 1)
+            47788, -- Guardian Spirit
+            47930, -- Grace
+            48040, -- Inner Fire(Rank 8)
+            48065, -- Power Word: Shield(Rank 13)
+            48066, -- Power Word: Shield(Rank 14)
+            48067, -- Renew(Rank 13)
+            48068, -- Renew(Rank 14)
+            48073, -- Divine Spirit(Rank 6)
+            48110, -- Prayer of Mending(Rank 2)
+            48111, -- Prayer of Mending(Rank 3)
+            48112, -- Prayer of Mending(Rank 2)
+            48113, -- Prayer of Mending(Rank 3)
+            48124, -- Shadow Word: Pain(Rank 11)
+            48125, -- Shadow Word: Pain(Rank 12)
+            48134, -- Holy Fire(Rank 10)
+            48135, -- Holy Fire(Rank 11)
+            48153, -- Guardian Spirit
+            48155, -- Mind Flay(Rank 8)
+            48159, -- Vampiric Touch(Rank 4)
+            48160, -- Vampiric Touch(Rank 5)
+            48161, -- Power Word: Fortitude(Rank 8)
+            48162, -- Prayer of Fortitude(Rank 4)
+            48168, -- Inner Fire(Rank 9)
+            48169, -- Shadow Protection(Rank 5)
+            48170, -- Prayer of Shadow Protection(Rank 3)
+            48299, -- Devouring Plague(Rank 8)
+            48300, -- Devouring Plague(Rank 9)
+            49694, -- Improved Spirit Tap(Rank 1)
+            54704, -- Divine Aegis(Rank 1)
+            59000, -- Improved Spirit Tap(Rank 2)
+            59887, -- Borrowed Time
+            59888, -- Borrowed Time
+            59889, -- Borrowed Time
+            59890, -- Borrowed Time
+            59891, -- Borrowed Time
+            60069, -- Dispersion
+            63613, -- CK Test Disarm(Rank 8)
+            63724, -- Holy Concentration
+            63725, -- Holy Concentration
+            63731, -- Serendipity
+            63734, -- Serendipity
+            63735, -- Serendipity
+        },
+        [2048] = {
+            47788, -- Guardian Spirit
+        },
+        [4096] = {
+            63544, -- Empowered Renew
+        },
+        [8192] = {
+            64044, -- Psychic Horror
+        },
+        [16384] = {
+            7001, -- Lightwell Renew(Rank 1)
+            27873, -- Lightwell Renew(Rank 2)
+            27874, -- Lightwell Renew(Rank 3)
+            28276, -- Lightwell Renew(Rank 4)
+            48084, -- Lightwell Renew(Rank 5)
+            48085, -- Lightwell Renew(Rank 6)
+        },
+        [32768] = {
+            56160, -- Glyph of Power Word: Shield
+        },
+        [2147483648] = {
+            59544, -- Gift of the Naaru(Racial)
+        },
     },
     [4] = {
+    },
+};
+
+---@type ClassGlyphs
+_addon.classGlyphs = {
+    [55683] = { -- Glyph of Holy Nova
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {134217728, 0, 0, 0},
+            value = 20,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {4194304, 0, 0, 0},
+            value = 20,
+        },
+    },
+    [55674] = { -- Glyph of Renew
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {64, 0, 0, 0},
+            value = -3,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {64, 0, 0, 0},
+            value = 25,
+        },
     },
 };
 

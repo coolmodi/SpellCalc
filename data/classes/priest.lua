@@ -5,14 +5,45 @@ if playerClass ~= "PRIEST" then
     return;
 end
 
-_addon.talentData = {
+local WEAKENED_SOUL = GetSpellInfo(6788);
+
+---@type TalentDataRawEntry[]
+_addon.talentDataRaw = {
     -----------------------------
     -- Discipline
     -----------------------------
-    -- Improved Power Word: Shield
-    {
+    { -- Twin Disciplines
         tree = 1,
-        talent = 5,
+        tier = 1,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {-1713373184, 622610 + 32},
+                perPoint = 1
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {35684416},
+                perPoint = 1
+            }
+        }
+    },
+    { -- Meditation
+        tree = 1,
+        tier = 3,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                values = {17, 33, 50}
+            }
+        }
+    },
+    { -- Improved Power Word: Shield
+        tree = 1,
+        tier = 3,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
@@ -21,43 +52,61 @@ _addon.talentData = {
             }
         }
     },
-    -- Meditation
-    {
+    { -- Focused Power
         tree = 1,
-        talent = 9,
+        tier = 6,
+        column = 1,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                perPoint = 10
-            }
-        }
-    },
-    -- Focused Power
-    {
-        tree = 1,
-        talent = 16,
-        effects = {
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.ALL_SPELL,
+                perPoint = 2
+            },
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
-                affectSpell = {8320, 128},
+                type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
                 perPoint = 2
             }
         }
     },
-    -- Force of will
-    {
+    { -- Renewed Hope
         tree = 1,
-        talent = 17,
+        tier = 8,
+        column = 1,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {49848464, 1042},
-                perPoint = 1
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE,
+                affectSpell = {2048 + 4096, 65536},
+                scriptKey = "Renewed_Hope_Crit",
+                perPoint = 2
             },
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {139993232, 18},
-                perPoint = 1
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+                scriptKey = WEAKENED_SOUL,
+                perPoint = 0
+            }
+        }
+    },
+    { -- Divine Aegis
+        tree = 1,
+        tier = 9,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                affectSpell = {512 + 2048 + 4096 + 134217728, 4 + 65536 + 4194304, 4},
+                perPoint = 10
+            }
+        }
+    },
+    { -- Borrowed Time
+        tree = 1,
+        tier = 10,
+        column = 2,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
+                affectSpell = {1},
+                perPoint = 8
             }
         }
     },
@@ -65,7 +114,7 @@ _addon.talentData = {
     -- Holy
     -----------------------------
     -- Improved Renew
-    {
+    --[[ {
         tree = 2,
         talent = 2,
         effects = {
@@ -123,12 +172,12 @@ _addon.talentData = {
                 perPoint = 2
             }
         }
-    },
+    }, ]]
     -----------------------------
     -- Shadow
     -----------------------------
     -- Improved Shadow Word: Pain
-    {
+    --[[ {
         tree = 3,
         talent = 4,
         effects = {
@@ -174,8 +223,19 @@ _addon.talentData = {
                 perPoint = 3
             }
         }
-    },
+    }, ]]
 };
+
+--------------------------------------------------------------------------
+-- Player auras
+--------------------------------------------------------------------------
+
+_addon.aurasPlayer[59891] = { -- Borrowed Time (trigger update for haste)
+    {
+        type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 0,
+    }
+}
 
 -- Shadowform
 _addon.aurasPlayer[15473] = {
@@ -190,3 +250,53 @@ _addon.aurasPlayer[14751] = {
     affectSpell = {-917225840, 54},
     value = 25}
 }
+
+--------------------------------------------------------------------------
+-- Target auras
+--------------------------------------------------------------------------
+
+_addon.aurasTarget[64844] = { -- Divine Hymn
+    {
+        type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+        value = 10
+    }
+};
+
+_addon.aurasTarget[47930] = { -- Grace
+    {
+        type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+        value = 3,
+        hasStacks = true
+    }
+};
+
+--------------------------------------------------------------------------
+-- Additional Glyphs (generated effects are in <class>_spell.lua)
+--------------------------------------------------------------------------
+
+--[[ _addon.classGlyphs[54743] = { -- Glyph of Regrowth
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        affectSpell = {64},
+        value = 20,
+        scriptKey = "Glyph_of_Regrowth",
+    },
+} ]]
+
+--------------------------------------------------------------------------
+-- Passives
+--------------------------------------------------------------------------
+
+_addon.classPassives = {
+
+}
+
+--------------------------------------------------------------------------
+-- Scripts
+--------------------------------------------------------------------------
+
+_addon.scripting.RegisterScript("Renewed_Hope_Crit", function (val, cs, ce, spellId, si, scriptType, spellName)
+    if _addon.Target.HasAuraName(WEAKENED_SOUL) then
+        cs.critChance = cs.critChance + val;
+    end
+end);

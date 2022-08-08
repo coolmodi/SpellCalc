@@ -643,6 +643,15 @@ function HealEffect(_, calcedSpell, effNum, spellInfo, effCastTime, effectMod, s
     calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
     calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
 
+    if stats.spellModExtraOnCrit[spellId] and stats.spellModExtraOnCrit[spellId].val ~= 0 then
+        calcedEffect.critExtraAvg = calcedEffect.avgCrit * stats.spellModExtraOnCrit[spellId].val / 100;
+        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.critExtraAvg * calcedSpell.critChance/100;
+        calcedSpell:AddToBuffList(stats.spellModExtraOnCrit[spellId].buffs);
+    else
+        calcedEffect.critExtraAvg = nil;
+    end
+
+    -- TODO: remove?
     if SpellCalc_settings.healDisregardCrit then
         calcedEffect.avgCombined = calcedEffect.avg;
     else

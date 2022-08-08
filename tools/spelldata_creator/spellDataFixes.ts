@@ -18,7 +18,7 @@ function cloneEntry(entry: SpellEffect): SpellEffect {
     return k;
 }
 
-function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}) {
+function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}, sd: SpellData) {
     console.log("Fixing priest coefs and effects");
     const PWS_COEF = 0.8057;
     const PW_SHIELD: {[spellId: number]: number} = {
@@ -79,6 +79,25 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         25477: 28385
     };
 
+    const PENANCE_TRIGGERS: {[spellId: number]: {dmg: number, heal: number}} = {
+        47540: {
+            dmg: 47758,
+            heal: 47757
+        },
+        53005: {
+            dmg: 53001,
+            heal: 52986
+        },
+        53006: {
+            dmg: 53002,
+            heal: 52987
+        },
+        53007: {
+            dmg: 53003,
+            heal: 52988
+        }
+    }
+
     for(let effId in se) {
         const eff = se[effId];
         if (PW_SHIELD[eff.SpellID]) {
@@ -87,7 +106,7 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
             let clone = cloneEntry(eff);
             clone.EffectIndex = 1;
             clone.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
-            clone.EffectTriggerSpell = HOLY_NOVA_TRIGGER[eff.SpellID];
+            clone.EffectTriggerSpell = HOLY_NOVA_TRIGGER[eff.SpellID];6
             se[clone.ID] = clone;
         // Touch of Weakness does not have any usefull data about its proc by default, replace with proc entirely
         } else if (TOW_MAP[eff.SpellID]) {
@@ -96,12 +115,11 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
             eff.Effect = 0; // Ignore this effect
         } 
         // Prayer of Mending
-        else if (eff.SpellID === 33076 && eff.EffectIndex === 0) 
+        else if (sd.getSpellName(eff.SpellID).Name_lang == "Prayer of Mending" && eff.EffectIndex === 0) 
         {
             // Make PoM a dummy aura
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
             eff.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY;
-            eff.EffectBonusCoefficient = 0.429; // Taken from spell 33110, the PoM triggered heal spell
             sm[eff.SpellID]["Attributes[2]"] |= sm[33110]["Attributes[2]"];
         }
         // Shadowguard trigger fix
@@ -109,7 +127,54 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         {
             eff.EffectTriggerSpell = SHADOWGUARD_TRIGGER_IDS[eff.SpellID];
         }
+        else if (PENANCE_TRIGGERS[eff.SpellID] && eff.EffectIndex === 0)
+        {
+            const heal = sd.getSpellEffects(PENANCE_TRIGGERS[eff.SpellID].heal);
+            const dmg = sd.getSpellEffects(PENANCE_TRIGGERS[eff.SpellID].dmg);
+
+            // Heal effect
+            let done = false;
+            for (const heff of heal)
+            {
+                if (heff.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL)
+                {
+                    const origId = eff.SpellID;
+                    for (const key in heff)
+                    {
+                        eff[key as keyof SpellEffect] = heff[key as keyof SpellEffect];
+                    }
+                    eff.SpellID = origId;
+                    eff.EffectIndex = 0;
+                    done = true;
+                    break;
+                }
+            }
+            if (!done) throw new Error("Couldn't add heal effect of Penance " + eff.SpellID);
+
+            // damage
+            done = false;
+            for (const deff of dmg)
+            {
+                if (deff.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL)
+                {
+                    deff.EffectIndex = 1;
+                    deff.SpellID = eff.SpellID;
+                    done = true;
+                    break;
+                }
+            }
+            if (!done) throw new Error("Couldn't add dmg effect of Penance " + eff.SpellID);
+
+            // Set def type on main spell
+            /* const sc = sd.getSpellCategory(eff.SpellID);
+            if (!sc) throw new Error("No spellcat for Penance!");
+            sc.DefenseType = DEFENSE_TYPE.MAGIC; */
+            sd.getSpellMisc(eff.SpellID).DurationIndex = 39;
+        }
     }
+
+    const divineHymn = sd.getSpellCategory(64844);
+    if (divineHymn) divineHymn.DefenseType = DEFENSE_TYPE.MAGIC;
 }
 
 function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, _sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}) {
@@ -378,7 +443,7 @@ function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: S
 
 export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}, sn: {[spellId: number]: SpellName}, sd: SpellData) {
     paladinFix(se, sc, sm, sl);
-    priestFix(se, sm);
+    priestFix(se, sm, sd);
     mageFix(se);
     druidFixes(se, sn, sd);
     warlockFixes(se);

@@ -171,6 +171,8 @@ export class AuraHandlers
                 case 70757:
                 case 70760:
                 case 68082:
+                case 71132: // Glyph of Shadow Word: Pain
+                case 61792: // Glyph of Shadow
                     return;
                 case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
                     return {

@@ -203,6 +203,9 @@ _addon.aurasPlayer = {
             auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL
         }
     },
+    -----------------------
+    -- Scripted
+    -----------------------
     [57669] = { -- Replenishment
         {
             type = CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,

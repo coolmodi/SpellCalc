@@ -447,4 +447,44 @@ _addon.aurasTarget = {
             auraCategory = CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_POSITIVE
         }
     },
+    ---------------------------------------------------------------------
+    ---------------------------------------------------------------------
+    -- Non-exclusive
+    ---------------------------------------------------------------------
+    [45237] = { -- Focused Will 1
+        {
+            type = CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            value = 3,
+            hasStacks = true
+        },
+        {
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            value = 2,
+            hasStacks = true
+        }
+    },
+    [45241] = { -- Focused Will 2
+        {
+            type = CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            value = 4,
+            hasStacks = true
+        },
+        {
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            value = 3,
+            hasStacks = true
+        }
+    },
+    [45242] = { -- Focused Will 3
+        {
+            type = CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            value = 5,
+            hasStacks = true
+        },
+        {
+            type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            value = 4,
+            hasStacks = true
+        }
+    },
 }

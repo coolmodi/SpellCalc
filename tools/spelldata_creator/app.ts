@@ -13,7 +13,7 @@ const outputdir = __dirname + "/../../../data/classes/";
 
 const CLASSES = [
     "druid", 
-    //"priest", 
+    "priest", 
     //"warlock",
     //"mage", 
     "paladin",
@@ -98,6 +98,7 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
         fillBaseAndRange(ei, effect);
         ei.coef = effect.EffectBonusCoefficient;
         ri.forceHeal = true;
+        ri.defenseType = DEFENSE_TYPE.MAGIC;
         return;
     }
 

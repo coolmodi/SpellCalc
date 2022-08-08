@@ -25,12 +25,19 @@ function SCT:AppendCritExtra(spellId, calcedEffect)
 
     local text;
     local spellName = GetSpellInfo(spellId);
+    local _, class = UnitClass("player");
 
-    if Righteous_Vengeance_Spells[spellName] then
-        text = self:FormatNoTrailing0(L["~%.1f (4x %.f over 8s)"], calcedEffect.critExtraAvg, calcedEffect.critExtraAvg/4);
-    elseif Sheath_of_Light_Spells[spellName] then
-        text = self:FormatNoTrailing0(L["~%.1f (4x %.f over 12s)"], calcedEffect.critExtraAvg, calcedEffect.critExtraAvg/4);
-    else
+    if class == "PALADIN" then
+        if Righteous_Vengeance_Spells[spellName] then
+            text = self:FormatNoTrailing0(L["~%.1f (4x %.f over 8s)"], calcedEffect.critExtraAvg, calcedEffect.critExtraAvg/4);
+        elseif Sheath_of_Light_Spells[spellName] then
+            text = self:FormatNoTrailing0(L["~%.1f (4x %.f over 12s)"], calcedEffect.critExtraAvg, calcedEffect.critExtraAvg/4);
+        end
+    elseif class == "PRIEST" then
+        text = self:FormatNoTrailing0(L["~%.1f absorbed"], calcedEffect.critExtraAvg);
+    end
+
+    if not text then
         text = self:FormatNoTrailing0("~%.1f", calcedEffect.critExtraAvg);
     end
 
