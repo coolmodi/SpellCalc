@@ -135,7 +135,12 @@ do
                     calcedEffect = calcedSpell.effects[1];
                 end
 
-                local isHeal = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.HEAL + ADDON_EFFECT_FLAGS.ABSORB) > 0;
+                local isHeal = false;
+                if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.HEAL + ADDON_EFFECT_FLAGS.ABSORB) > 0
+                or bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0
+                and bit.band(calcedEffect.spellData.effects[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL + ADDON_EFFECT_FLAGS.ABSORB) > 0 then
+                    isHeal = true;
+                end
                 local isMana = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.MANA_RESTORE) > 0;
                 local showValue;
 

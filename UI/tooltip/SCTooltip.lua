@@ -280,6 +280,8 @@ local function TooltipHandler(toolTipFrame)
         if bit.band(effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
             isTriggerEffect = true;
             effectFlags = calcedEffect.spellData.effects[1].effectFlags;
+        elseif bit.band(effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+            effectFlags = calcedEffect.spellData.effects[1].effectFlags;
         end
 
         local isHeal = bit.band(effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
