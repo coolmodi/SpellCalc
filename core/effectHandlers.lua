@@ -340,10 +340,19 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, effCastTime, effec
         calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
         calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
     else
+        calcedEffect.minCrit = 0;
         calcedEffect.avgCombined = calcedEffect.avg;
     end
 
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
+
+    if stats.spellModDotOnHit[spellId] and stats.spellModDotOnHit[spellId].val ~= 0 then
+        local onHit = calcedEffect.min * calcedEffect.ticks * stats.spellModDotOnHit[spellId].val / 100;
+        local onHitCrit = onHit * calcedSpell.critMult;
+        local onHitAvg = onHit + (onHitCrit - onHit) * calcedSpell.critChance/100;
+        calcedSpell:AddToBuffList(stats.spellModDotOnHit[spellId].buffs);
+        total = total + onHitAvg;
+    end
 
     if calcedSpell.meleeMitigation then
         local realHit = math.max(calcedSpell.hitChance - calcedSpell.meleeMitigation.dodge - calcedSpell.meleeMitigation.parry, 0);
@@ -382,6 +391,14 @@ local function PeriodicHeal(calcedSpell, effNum, spellInfo, effCastTime, effectM
     calcedEffect.avgCombined = calcedEffect.avg;
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedEffect.ticks;
+
+    if stats.spellModDotOnHit[spellId] and stats.spellModDotOnHit[spellId].val ~= 0 then
+        local onHit = calcedEffect.min * calcedEffect.ticks * stats.spellModDotOnHit[spellId].val / 100;
+        local onHitCrit = onHit * calcedSpell.critMult;
+        local onHitAvg = onHit + (onHitCrit - onHit) * calcedSpell.critChance/100;
+        calcedSpell:AddToBuffList(stats.spellModDotOnHit[spellId].buffs);
+        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation + onHitAvg;
+    end
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.perSecDurOrCD = calcedEffect.avgAfterMitigation / calcedSpell.duration;

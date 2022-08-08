@@ -206,6 +206,7 @@ local stats = {
     spellModAllowDotCrit = SpellStatTable(),
     spellModAllowDotHaste = SpellStatTable(),
     spellModExtraOnCrit = SpellStatTable(),
+    spellModDotOnHit = SpellStatTable(),
 
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),

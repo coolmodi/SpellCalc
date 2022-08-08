@@ -196,8 +196,12 @@ _addon.talentDataRaw = {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
                 affectSpell = {64},
                 perPoint = 5
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_DOT_ON_HIT,
+                affectSpell = {64},
+                perPoint = 5
             }
-            -- TODO: instant heal
         }
     },
     { -- Divine Providence
