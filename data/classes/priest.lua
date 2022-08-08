@@ -113,13 +113,13 @@ _addon.talentDataRaw = {
     -----------------------------
     -- Holy
     -----------------------------
-    -- Improved Renew
-    --[[ {
+    { -- Improved Renew
         tree = 2,
-        talent = 2,
+        tier = 1,
+        column = 2,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {64},
                 perPoint = 5
             }
@@ -127,52 +127,96 @@ _addon.talentDataRaw = {
     },
     { -- Searing Light
         tree = 2,
-        talent = 11,
+        tier = 4,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {1048704},
+                affectSpell = {5243008, 32768},
+                perPoint = 5
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {1048576},
                 perPoint = 5
             }
         }
     },
     { -- Spiritual Healing
         tree = 2,
-        talent = 16,
+        tier = 6,
+        column = 3,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {419700288, 134283268, 4},
+                perPoint = 2
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {419700288, 134283268, 4},
                 perPoint = 2
             }
         }
     },
-    { -- Holy Concentration
+    { -- Spiritual Healing
         tree = 2,
-        talent = 17,
+        tier = 7,
+        column = 3,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_CLEARCAST_CHANCE,
-                affectSpell = {6144, 4},
-                perPoint = 2
-            }
+                type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
+                perPoint = 1
+            },
         }
     },
     { -- Empowered Healing
         tree = 2,
-        talent = 20,
+        tier = 8,
+        column = 2,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {4096},
-                perPoint = 4
+                perPoint = 8
             },
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {2048, 4},
+                perPoint = 4
+            }
+        }
+    },
+    { -- Empowered Renew
+        tree = 2,
+        tier = 9,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                affectSpell = {64},
+                perPoint = 5
+            }
+            -- TODO: instant heal
+        }
+    },
+    { -- Divine Providence
+        tree = 2,
+        tier = 10,
+        column = 2,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {402653696, 4, 4},
+                perPoint = 2
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {0, 0, 4},
                 perPoint = 2
             }
         }
-    }, ]]
+    },
     -----------------------------
     -- Shadow
     -----------------------------
@@ -237,6 +281,14 @@ _addon.aurasPlayer[59891] = { -- Borrowed Time (trigger update for haste)
     }
 }
 
+_addon.aurasPlayer[33151] = { -- Surge of Light
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {128 + 2048},
+        value = -100,
+    }
+}
+
 -- Shadowform
 _addon.aurasPlayer[15473] = {
     {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -287,6 +339,7 @@ _addon.aurasTarget[47930] = { -- Grace
 -- Passives
 --------------------------------------------------------------------------
 
+---@type UnitAuraEffect[]
 _addon.classPassives = {
 
 }

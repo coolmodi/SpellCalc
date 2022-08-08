@@ -398,6 +398,7 @@ _addon.classGlyphs[54943] = {
 -- Passives
 --------------------------------------------------------------------------
 
+---@type UnitAuraEffect[]
 _addon.classPassives = {
     {
         type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE,

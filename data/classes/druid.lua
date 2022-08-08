@@ -624,6 +624,7 @@ _addon.classGlyphs[54832] = { -- Glyph of Innervate
 -- Passives
 --------------------------------------------------------------------------
 
+---@type UnitAuraEffect[]
 _addon.classPassives = {
     {
         type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,

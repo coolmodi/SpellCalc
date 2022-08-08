@@ -487,4 +487,10 @@ _addon.aurasTarget = {
             hasStacks = true
         }
     },
+    [47788] = { -- Guardian Spirit
+        {
+            type = CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            value = 40
+        },
+    },
 }
