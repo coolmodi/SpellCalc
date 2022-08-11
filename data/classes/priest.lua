@@ -7,6 +7,8 @@ end
 
 local WEAKENED_SOUL = GetSpellInfo(6788);
 local SHADOW_WORD_PAIN = GetSpellInfo(48125);
+local HOLY_FIRE = GetSpellInfo(48135);
+local MIND_FLAY = GetSpellInfo(48156);
 
 ---@type TalentDataRawEntry[]
 _addon.talentDataRaw = {
@@ -426,14 +428,33 @@ _addon.aurasTarget[47930] = { -- Grace
 -- Additional Glyphs (generated effects are in <class>_spell.lua)
 --------------------------------------------------------------------------
 
---[[ _addon.classGlyphs[54743] = { -- Glyph of Regrowth
+_addon.classGlyphs[55692] = { -- Glyph of Smite
     {
         type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
-        affectSpell = {64},
+        affectSpell = {128},
         value = 20,
-        scriptKey = "Glyph_of_Regrowth",
+        scriptKey = "Glyph_of_Smite",
     },
-} ]]
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+        value = 0,
+        scriptKey = HOLY_FIRE,
+    },
+}
+
+_addon.classGlyphs[55687] = { -- Glyph of Mind Flay
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        affectSpell = {8388608},
+        value = 10,
+        scriptKey = "Glyph_of_Mind_Flay",
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+        value = 0,
+        scriptKey = SHADOW_WORD_PAIN,
+    },
+}
 
 --------------------------------------------------------------------------
 -- Passives
@@ -451,7 +472,26 @@ end);
 
 _addon.scripting.RegisterScript("Twisted_Faith_SWP", function (val, cs, ce, spellId, si, scriptType, spellName)
     assert(ce, "Twisted_Faith_SWP called with ce nil!");
+    if spellName == MIND_FLAY and _addon.scripting.GetValue("Glyph_of_Mind_Flay") > 0 then
+        -- Handle in glyph script.
+        return;
+    end
     if _addon.Target.HasAuraName(SHADOW_WORD_PAIN, true) then
         ce.modBonus = ce.modBonus * (1 + val/100);
+    end
+end);
+
+_addon.scripting.RegisterScript("Glyph_of_Smite", function (val, cs, ce, spellId, si, scriptType, spellName)
+    assert(ce, "Glyph_of_Smite called with ce nil!");
+    if _addon.Target.HasAuraName(HOLY_FIRE, true) then
+        ce.modBonus = ce.modBonus * (1 + val/100);
+    end
+end);
+
+_addon.scripting.RegisterScript("Glyph_of_Mind_Flay", function (val, cs, ce, spellId, si, scriptType, spellName)
+    assert(ce, "Glyph_of_Mind_Flay called with ce nil!");
+    if _addon.Target.HasAuraName(SHADOW_WORD_PAIN) then
+        local tfVal = _addon.scripting.GetValue("Twisted_Faith_SWP");
+        ce.modBonus = ce.modBonus * (1 + (val + tfVal) / 100);
     end
 end);
