@@ -664,7 +664,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData)
             _addon.util.PrintDebug("Has trigger spell effect, updating triggered spell!");
             calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell);
             if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
-                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, calcedSpell.effCastTime, 0, spellName, spellId, calcedSpell.gcd);
+                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, spellName, spellId);
             end
         else
             --------------------------
@@ -750,7 +750,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData)
 
             assert(effectHandler[effectData.effectType] ~= nil, "No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
 
-            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, calcedSpell.effCastTime, calcedEffect.modBase, spellName, spellId, calcedSpell.gcd);
+            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, spellName, spellId);
 
             --------------------------
             -- Aura stacking (Only Lifebloom, incompatible with dmg spells!)
