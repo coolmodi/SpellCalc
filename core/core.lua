@@ -206,14 +206,11 @@ end
 ---@param spellId integer
 ---@param calcedSpell CalcedSpell|nil
 ---@param parentSpellData CalcedSpell|nil
----@param parentEffCastTime number|nil
 ---@return CalcedSpell
-local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTime)
+local function CalcSpell(spellId, calcedSpell, parentSpellData)
     local spellName, _, _, castTime = GetSpellInfo(spellId);
     _addon.util.PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
-    local effCastTime = parentEffCastTime or 0;
     local spellInfo = _addon.spellInfo[spellId];
-    local GCD = spellInfo.GCD or 1.5;
 
     --------------------------
     -- Calculation objects
@@ -330,7 +327,10 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     ----------------------------------------------------------------------------------------------------------------------
     -- Cast time and GCD
 
-    if parentEffCastTime == nil then
+    if not parentSpellData then
+        local GCD = spellInfo.GCD or 1.5;
+        local effCastTime = 0;
+
         if stats.spellModGCDms[spellId] ~= nil then
             GCD = GCD + stats.spellModGCDms[spellId].val / 1000;
             calcedSpell:AddToBuffList(stats.spellModGCDms[spellId].buffs);
@@ -349,6 +349,12 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
             end
             effCastTime = math.max(GCD, castTime);
         end
+
+        calcedSpell.gcd = GCD;
+        calcedSpell.effCastTime = effCastTime;
+    else
+        calcedSpell.gcd = parentSpellData.gcd;
+        calcedSpell.effCastTime = parentSpellData.effCastTime;
     end
 
     ----------------------------------------------------------------------------------------------------------------------
@@ -523,15 +529,15 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
     --------------------------
     -- Cast time mods
 
-    if parentEffCastTime == nil then
+    if not parentSpellData then
         if stats.spellModMageNWR[spellId] ~= nil and stats.spellModMageNWR[spellId].val ~= 0 and castTime > 0 then
             -- E.g. with a 10% chance every 10th cast will proc, causing the next to be 1.5s (GCD).
             -- NWR has a 10sec ICD, therefore 1 instant + floor(8.5/castTime) casts can't proc it after a proc.
             -- So in reality you have 10 normal casts, 1 GCD and floor(8.5/castTime) additional normal casts.
             -- The effective cast time is then (10*castTime + 1.5 + floor(8.5/castTime)*castTime)/(10 + floor(8.5/castTime) + 1)
-            local castsInICD = math.floor(8.5/effCastTime);
-            effCastTime = (GCD + (10 + castsInICD) * effCastTime) / (11 + castsInICD);
-            effCastTime = math.max(effCastTime, GCD);
+            local castsInICD = math.floor(8.5/calcedSpell.effCastTime);
+            calcedSpell.effCastTime = (calcedSpell.gcd + (10 + castsInICD) * calcedSpell.effCastTime) / (11 + castsInICD);
+            calcedSpell.effCastTime = math.max(calcedSpell.effCastTime, calcedSpell.gcd);
             calcedSpell:AddToBuffList(stats.spellModMageNWR[spellId].buffs);
         end
     end
@@ -561,9 +567,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         calcedSpell.effectiveCost = spellCost;
 
         if calcedSpell.costType == Enum.PowerType.Mana then
-            costHandler.Mana(calcedSpell, spellInfo, effCastTime, spellName, spellId);
+            costHandler.Mana(calcedSpell, spellInfo, calcedSpell.effCastTime, spellName, spellId);
         elseif calcedSpell.costType == Enum.PowerType.Rage then
-            costHandler.Rage(calcedSpell, spellInfo, effCastTime, spellName, spellId);
+            costHandler.Rage(calcedSpell, spellInfo, calcedSpell.effCastTime, spellName, spellId);
         elseif calcedSpell.costType == Enum.PowerType.Energy then
             -- TODO: energy??
         end
@@ -656,9 +662,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
         -- Trigger spell spell effect, update triggered spell data
         if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL + ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
             _addon.util.PrintDebug("Has trigger spell effect, updating triggered spell!");
-            calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, effCastTime);
+            calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell);
             if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
-                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, effCastTime, 0, spellName, spellId, GCD);
+                effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, calcedSpell.effCastTime, 0, spellName, spellId, calcedSpell.gcd);
             end
         else
             --------------------------
@@ -744,7 +750,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
 
             assert(effectHandler[effectData.effectType] ~= nil, "No effect handler for effect #"..i..":"..effectData.effectType.." on spell ("..spellId..") "..spellName);
 
-            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, effCastTime, calcedEffect.modBase, spellName, spellId, GCD);
+            effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, calcedSpell.effCastTime, calcedEffect.modBase, spellName, spellId, calcedSpell.gcd);
 
             --------------------------
             -- Aura stacking (Only Lifebloom, incompatible with dmg spells!)
@@ -760,7 +766,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentEffCastTim
                 stackData.avg = calcedEffect.avg * stackCount;
                 stackData.avgCombined = stackData.avg;
                 stackData.avgAfterMitigation = stackData.ticks * stackData.avgCombined;
-                stackData.perSec = stackData.avgAfterMitigation / effCastTime;
+                stackData.perSec = stackData.avgAfterMitigation / calcedSpell.effCastTime;
                 stackData.perSecDurOrCD = calcedEffect.perSecDurOrCD * stackCount;
                 stackData.perResource = stackData.avgAfterMitigation / calcedSpell.effectiveCost;
                 stackData.doneToOom = calcedSpell.castingData.castsToOom * stackData.avgAfterMitigation;

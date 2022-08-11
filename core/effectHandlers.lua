@@ -6,39 +6,88 @@ local EFFECT_TYPES = _addon.CONST.SPELL_EFFECT_TYPES;
 local AURA_TYPES = _addon.CONST.SPELL_AURA_TYPES;
 local SHADOW_BOLT = GetSpellInfo(686);
 
---- Get level bonus if spell has one.
+---Fill effect base values.
+---Fills min, max, avg and avgCombined.
+---@param calcedEffect CalcedEffect
 ---@param spellInfo SpellInfo
 ---@param effectData SpellEffectData
-local function GetLevelBonus(spellInfo, effectData)
+---@param flat number Flat value added before modifier.
+---@param mod number|nil Modifier for base values.
+---@param add number|nil Additional value to add after modifier.
+local function FillBaseValues(calcedEffect, spellInfo, effectData, flat, mod, add)
+    mod = mod or 1;
+    add = add or 0;
+
+    local baseLow = effectData.valueBase + flat;
     if effectData.valuePerLevel and effectData.valuePerLevel > 0 then
-        return (math.min(UnitLevel("player"), spellInfo.maxLevel) - spellInfo.spellLevel) * effectData.valuePerLevel;
+        baseLow = baseLow + (math.min(UnitLevel("player"), spellInfo.maxLevel) - spellInfo.spellLevel) * effectData.valuePerLevel;
     end
-    return 0;
+    baseLow = baseLow * mod + add;
+
+    calcedEffect.min = baseLow;
+    calcedEffect.max = baseLow + effectData.valueRange;
+    calcedEffect.avg = baseLow + effectData.valueRange * 0.5;
+    calcedEffect.avgCombined = calcedEffect.avg;
 end
 
----Sum of probability weighted remaining damage done in channel duration? Or something like that at least.
--- No clue if this is even remotely right, but looks better than just doing *hitchance like other similar addons did in the past.
----@param hitChance number In percent
----@param gcd number
----@param duration number
----@return number
-local function channelEffDmgNotMissed(hitChance, gcd, duration)
-    local hitc = hitChance / 100;
-    local missc = 1 - hitc;
-    local attemptsInDuration = math.floor(duration/gcd);
-    local avgDone = 0;
-    for i = 0, attemptsInDuration do
-        avgDone = avgDone + hitc * missc^i * (1 - (gcd * i) / duration);
+---Fill crit values and avgCombined. Also handle on crit effects.
+---@param calcedSpell CalcedSpell
+---@param calcedEffect CalcedEffect
+---@param spellId integer
+local function FillCritValues(calcedSpell, calcedEffect, spellId)
+    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
+    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
+    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
+    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+
+    if stats.spellModExtraOnCrit[spellId] and stats.spellModExtraOnCrit[spellId].val ~= 0 then
+        calcedEffect.critExtraAvg = calcedEffect.avgCrit * stats.spellModExtraOnCrit[spellId].val / 100;
+        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.critExtraAvg * calcedSpell.critChance/100;
+        calcedSpell:AddToBuffList(stats.spellModExtraOnCrit[spellId].buffs);
+    else
+        calcedEffect.critExtraAvg = nil;
     end
-    return avgDone;
+end
+
+---Apply mitigation, i.e. hit chance, resistance/armor.
+---Fills avgAfterMitigation.
+---@param spellName string
+---@param calcedSpell CalcedSpell
+---@param calcedEffect CalcedEffect
+---@param isBleed boolean|nil
+---@param totalOverride number|nil Use this instead of avgCombined to calculate avgAfterMitigation.
+local function Mitigate(spellName, calcedSpell, calcedEffect, mustBeMelee, isBleed, totalOverride)
+    local mmit = calcedSpell.meleeMitigation;
+    local usedHit;
+    local combined = totalOverride and totalOverride or calcedEffect.avgCombined;
+
+    if mmit or mustBeMelee then
+        assert(mmit, "meleeMitigation table missing for melee spell "..spellName);
+        usedHit = math.max(calcedSpell.hitChance - mmit.dodge - mmit.parry, 0) / 100;
+    else
+        if bit.band(calcedEffect.effectFlags, _addon.CONST.ADDON_EFFECT_FLAGS.CHANNEL) > 0 then
+            -- This is the relative damage done per default timeframe, i.e. cast/channel time, with failed GCDs.
+            -- duration / the effective cast time with extra GCDs
+            usedHit = calcedSpell.effCastTime / ((100 / calcedSpell.hitChance - 1) * calcedSpell.gcd + calcedSpell.effCastTime);
+        else
+            usedHit = calcedSpell.hitChance / 100;
+        end
+    end
+
+    calcedEffect.avgAfterMitigation = combined * usedHit;
+
+    if calcedSpell.hitChanceBinaryLoss == nil and not isBleed then
+        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
+    end
 end
 
 ---Get normalized weapon damage based on equipped weapon and given AP value.
 ---@param slot string mainhand, offhand or ranged
 ---@param ap number The attack power used.
+---@param weaponCoef number
 ---@return number low
 ---@return number high
-local function GetNormalizedWeaponDamage(slot, ap)
+local function GetNormalizedWeaponDamage(slot, ap, weaponCoef)
     local CONST = _addon.CONST;
     local low = stats.weaponBaseDamage[slot].min;
     local high = stats.weaponBaseDamage[slot].max;
@@ -62,8 +111,8 @@ local function GetNormalizedWeaponDamage(slot, ap)
         dmgFromAP = 2 * dpsFromAP; -- Unarmed fallback.
     end
 
-    low = low + dmgFromAP;
-    high = high + dmgFromAP;
+    low = (low + dmgFromAP) * weaponCoef;
+    high = (high + dmgFromAP) * weaponCoef;
 
     return low, high;
 end
@@ -216,6 +265,8 @@ local function Starfall(calcedSpell, effNum, spellInfo, effCastTime, effectMod, 
 
     assert(effectData, "Effect data in Starfall handler missing!");
 
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
+
     calcedEffect.min = effectData.valueBase * effectMod + calcedEffect.effectivePower;
     calcedEffect.max = calcedEffect.min + effectData.valueRange;
     calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
@@ -315,7 +366,7 @@ dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
 ----------------------------------------------------------------------------------------------------------------------------------------
 
 ---@type table<SpellAuraType, AuraEffectHandler>
-local auraHandler = {}
+local auraHandler = {};
 
 --- Handler for periodic damage auras.
 ---@param calcedSpell CalcedSpell
@@ -330,16 +381,10 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, effCastTime, effec
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    local baseIncrease = GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod;
-
-    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
 
     if stats.spellModAllowDotCrit[spellId] and stats.spellModAllowDotCrit[spellId].val > 0 then
-        calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-        calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-        calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
-        calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
+        FillCritValues(calcedSpell, calcedEffect, spellId);
     else
         calcedEffect.minCrit = 0;
         calcedEffect.avgCombined = calcedEffect.avg;
@@ -355,20 +400,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, effCastTime, effec
         total = total + onHitAvg;
     end
 
-    if calcedSpell.meleeMitigation then
-        local realHit = math.max(calcedSpell.hitChance - calcedSpell.meleeMitigation.dodge - calcedSpell.meleeMitigation.parry, 0);
-        calcedEffect.avgAfterMitigation = total * realHit/100;
-    else
-        if spellInfo.isChannel then
-            calcedEffect.avgAfterMitigation = total * channelEffDmgNotMissed(calcedSpell.hitChance, gcd, effCastTime);
-        else
-            calcedEffect.avgAfterMitigation = total * calcedSpell.hitChance / 100;
-        end
-    end
-
-    if calcedSpell.hitChanceBinaryLoss == nil and effectData.mechanic ~= _addon.CONST.SPELL_MECHANIC.BLEED then
-        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
-    end
+    Mitigate(spellName, calcedSpell, calcedEffect, false, effectData.mechanic == _addon.CONST.SPELL_MECHANIC.BLEED, total);
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.perSecDurOrCD = total / calcedSpell.duration;
@@ -387,9 +419,7 @@ local function PeriodicHeal(calcedSpell, effNum, spellInfo, effCastTime, effectM
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
-    calcedEffect.avgCombined = calcedEffect.avg;
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedEffect.ticks;
 
@@ -418,13 +448,11 @@ local function DamageShield(calcedSpell, effNum, spellInfo, effCastTime, effectM
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
-    calcedEffect.avgCombined = calcedEffect.avg;
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
 
     local total = (calcedSpell.charges and calcedSpell.charges > 0) and calcedSpell.charges * calcedEffect.avgCombined or calcedEffect.avgCombined;
 
-    calcedEffect.avgAfterMitigation = total * (calcedSpell.hitChance / 100) * (1 - calcedSpell.avgResist);
+    Mitigate(spellName, calcedSpell, calcedEffect, false, false, total);
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
@@ -442,9 +470,7 @@ local function AbsorbAura(calcedSpell, effNum, spellInfo, effCastTime, effectMod
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
-    calcedEffect.avgCombined = calcedEffect.avg;
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 
@@ -464,9 +490,7 @@ local function ManaShield(calcedSpell, effNum, spellInfo, effCastTime, effectMod
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    calcedEffect.min = (effectData.valueBase + GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.avg = calcedEffect.min;
-    calcedEffect.avgCombined = calcedEffect.avg;
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 
@@ -555,23 +579,10 @@ local function SchoolDamage(_, calcedSpell, effNum, spellInfo, effCastTime, effe
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    local baseIncrease = GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod;
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
+    FillCritValues(calcedSpell, calcedEffect, spellId);
 
-    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.max = calcedEffect.min + effectData.valueRange;
-    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
-    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
-
-    if stats.spellModExtraOnCrit[spellId] and stats.spellModExtraOnCrit[spellId].val ~= 0 then
-        calcedEffect.critExtraAvg = calcedEffect.avgCrit * stats.spellModExtraOnCrit[spellId].val / 100;
-        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.critExtraAvg * calcedSpell.critChance/100;
-        calcedSpell:AddToBuffList(stats.spellModExtraOnCrit[spellId].buffs);
-    else
-        calcedEffect.critExtraAvg = nil;
-    end
-
+    -- TODO: make ignite extra on crit?
     if stats.ignite.val > 0 and spellInfo.school == _addon.CONST.SCHOOL.FIRE then
         local igniteMult = stats.ignite.val/100;
 
@@ -594,17 +605,7 @@ local function SchoolDamage(_, calcedSpell, effNum, spellInfo, effCastTime, effe
         calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
     end
 
-    -- TODO: Move mitigation to a common function?
-    if calcedSpell.meleeMitigation then
-        local realHit = math.max(calcedSpell.hitChance - calcedSpell.meleeMitigation.dodge - calcedSpell.meleeMitigation.parry, 0);
-        calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * realHit/100;
-    else
-        calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedSpell.hitChance/100;
-    end
-
-    if calcedSpell.hitChanceBinaryLoss == nil then
-        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 - calcedSpell.avgResist);
-    end
+    Mitigate(spellName, calcedSpell, calcedEffect);
 
     if stats.impShadowBolt.val ~= 0 and spellName == SHADOW_BOLT and SpellCalc_settings.useImpSB then
         local mod = stats.impShadowBolt.val/100;
@@ -652,22 +653,8 @@ function HealEffect(_, calcedSpell, effNum, spellInfo, effCastTime, effectMod, s
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    local baseIncrease = GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod;
-
-    calcedEffect.min = (effectData.valueBase + baseIncrease) * effectMod + calcedEffect.effectivePower;
-    calcedEffect.max = calcedEffect.min + effectData.valueRange;
-    calcedEffect.avg = calcedEffect.min + effectData.valueRange * 0.5;
-    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
-
-    if stats.spellModExtraOnCrit[spellId] and stats.spellModExtraOnCrit[spellId].val ~= 0 then
-        calcedEffect.critExtraAvg = calcedEffect.avgCrit * stats.spellModExtraOnCrit[spellId].val / 100;
-        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.critExtraAvg * calcedSpell.critChance/100;
-        calcedSpell:AddToBuffList(stats.spellModExtraOnCrit[spellId].buffs);
-    else
-        calcedEffect.critExtraAvg = nil;
-    end
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, effectMod, calcedEffect.effectivePower);
+    FillCritValues(calcedSpell, calcedEffect, spellId);
 
     -- TODO: remove?
     if SpellCalc_settings.healDisregardCrit then
@@ -806,44 +793,27 @@ local function WeaponDamage(_, calcedSpell, effNum, spellInfo, effCastTime, effe
     local effectData = spellInfo.effects[effNum];
     assert(effectData, "effectData missing in SPELL_EFFECT_WEAPON_DAMAGE handler for spell "..spellName);
 
+    local weaponCoef = effectData.weaponCoef * effectMod;
+
     --print(spellName, "weapon damage");
     local weaponLow, weaponHigh;
     if spellInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_NORMALIZED_WEAPON_DMG
     --[[ TODO: bug or intended? > or spellInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE ]] then
         --print("normalized", calcedEffect.attackPower)
-        weaponLow, weaponHigh = GetNormalizedWeaponDamage("mainhand", calcedEffect.attackPower);
+        weaponLow, weaponHigh = GetNormalizedWeaponDamage("mainhand", calcedEffect.attackPower, weaponCoef);
     else
-        weaponLow = stats.attackDmg.mainhand.min;
-        weaponHigh = stats.attackDmg.mainhand.max;
+        weaponLow = stats.attackDmg.mainhand.min * weaponCoef;
+        weaponHigh = stats.attackDmg.mainhand.max * weaponCoef;
     end
     --print(weaponLow, "-", weaponHigh);
-
-    local weaponCoef = effectData.weaponCoef * effectMod;
-    local baseIncrease = GetLevelBonus(spellInfo, effectData) + calcedEffect.flatMod;
-    local baseValue = (effectData.valueBase + baseIncrease);
-
     --print("coef", weaponCoef, "bv", baseValue, "bi", baseIncrease, "(fm)", calcedEffect.flatMod);
 
-    calcedEffect.min = (baseValue + weaponLow) * weaponCoef + calcedEffect.effectivePower;
-    calcedEffect.max = (baseValue + weaponHigh) * weaponCoef + calcedEffect.effectivePower + effectData.valueRange;
-    calcedEffect.avg = 0.5 * (calcedEffect.min + calcedEffect.max);
-    calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
-    calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
-    calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
-    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
-
-    if stats.spellModExtraOnCrit[spellId] and stats.spellModExtraOnCrit[spellId].val ~= 0 then
-        calcedEffect.critExtraAvg = calcedEffect.avgCrit * stats.spellModExtraOnCrit[spellId].val / 100;
-        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.critExtraAvg * calcedSpell.critChance/100;
-        calcedSpell:AddToBuffList(stats.spellModExtraOnCrit[spellId].buffs);
-    else
-        calcedEffect.critExtraAvg = nil;
-    end
-
-    local mmit = calcedSpell.meleeMitigation;
-    assert(mmit, "meleeMitigation taböe missing in SPELL_EFFECT_WEAPON_DAMAGE handler for spell "..spellName);
-    local realHit = math.max(calcedSpell.hitChance - mmit.dodge - mmit.parry, 0);
-    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * realHit/100 * (1 - calcedSpell.avgResist);
+    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, weaponCoef, calcedEffect.effectivePower);
+    calcedEffect.min = calcedEffect.min + weaponLow;
+    calcedEffect.max = calcedEffect.max + weaponHigh;
+    calcedEffect.avg = calcedEffect.avg + 0.5 * (weaponLow + weaponHigh);
+    FillCritValues(calcedSpell, calcedEffect, spellId);
+    Mitigate(spellName, calcedSpell, calcedEffect, true);
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;

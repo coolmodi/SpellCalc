@@ -117,6 +117,8 @@ CalcedEffect.__index = CalcedEffect;
 ---@field costType PowerType
 ---@field castingData CastinDataDef
 ---@field meleeMitigation MeleeMitigationDef|nil
+---@field gcd number The global cooldown this spell uses.
+---@field effCastTime number The effective cast time of the spell. Duration for channeled spells.
 local CalcedSpell = {
     school = 1,
     costType = 0,
