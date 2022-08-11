@@ -387,13 +387,6 @@ _addon.itemEffects = {
             value = 20,
         },
     },
-    [22505] = { -- Plagueheart Leggings
-        {
-            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-            affectMask = 124,
-            value = 10,
-        },
-    },
     [23017] = { -- Veil of Eclipse
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,

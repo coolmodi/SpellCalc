@@ -14,7 +14,7 @@ const outputdir = __dirname + "/../../../data/classes/";
 const CLASSES = [
     "druid", 
     "priest", 
-    //"warlock",
+    "warlock",
     //"mage", 
     "paladin",
     //"shaman",
@@ -567,7 +567,7 @@ function buildSpellInfo(pclass: string) {
             // Make sure maxlevel is defined for spells with level scaling
             if (classInfo.rankInfo[spellId].effects[i] 
                 && classInfo.rankInfo[spellId].effects[i].valuePerLevel != 0 
-                && classInfo.rankInfo[spellId].maxLevel == 0) throw "Effect has perlevel scaling but maxlevel of the spell is 0!";
+                && classInfo.rankInfo[spellId].maxLevel == 0) console.error("Effect has perlevel scaling but maxlevel of the spell is 0! " + spellId);
         }
     }
 

@@ -328,7 +328,7 @@ export class AuraHandlers
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT1: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
                         }
                     }
-                case 12: // TODO: SPELLMOD_EFFECT2 (melee stuff mostly?)
+                case 12: // SPELLMOD_EFFECT2 (melee stuff mostly?)
                     {
                         switch (effect.SpellID)
                         {
@@ -356,6 +356,7 @@ export class AuraHandlers
                             case 67234: // TODO WARRIOR: "BerserkerStancegrantsanadditional$s1%criticalstrikechance,andBattleStancegrantsanadditional$s2%armorpenetration."
                             case 34318: // Your Water Shield ability grants an additional $s1 mana each time it triggers and an additional $s2 mana per 5 sec.
                             case 54802: // NOTE: Doesn't make sense? -> Increases the damage over time caused by your Plague Strike ability by ${$m1}.
+                            case 58079: // Increases the swim speed of targets affected by your Unending Breath spell by $58079s1%.
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT2: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -373,6 +374,8 @@ export class AuraHandlers
                             case 67234: // "BerserkerStancegrantsanadditional$s1%criticalstrikechance,andBattleStancegrantsanadditional$s2%armorpenetration."
                             case 37742: // Increases your block rating by $s1 while Holy Shield is active.
                             case 54803: // Increases the damage reduction of your Icebound Fortitude by 2%.
+                            case 58081: // Increases the movement speed of your Eye of Kilrogg by $s1% and allows it to fly in areas where flying mounts are enabled
+                            case 63302: // TODO WL: The bonus damage granted by your Haunt spell is increased by an additional $63302s1%.
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -390,7 +393,7 @@ export class AuraHandlers
                 case 5: // SPELLMOD_RANGE
                 case 6:  // SPELLMOD_RADIUS
                 case 11: // SPELLMOD_COOLDOWN (TODO: if DPSCD is ever implemented?)
-                case 17: // SPELLMOD_JUMP_TARGETS (TODO: make this add chain targets?)
+                case 17: // SPELLMOD_JUMP_TARGETS
                 case 18: // SPELLMOD_CHANCE_OF_SUCCESS
                     return;
                 default:
@@ -427,6 +430,30 @@ export class AuraHandlers
                 case 15: // SPELLMOD_CRIT_DAMAGE_BONUS
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT;
                     break;
+                case 3: // SPELLMOD_EFFECT1 (melee stuff mostly?)
+                    {
+                        switch (effect.SpellID)
+                        {
+                            case 55686: // Increases the armor from your Inner Fire spell by $55686m1%
+                            case 38390: // Increases the mana you gain from your Aspect of the Viper by $s1%
+                            case 60166: // Your Water Shield is $s1% stronger
+                            case 67164: // "IncreasesthearmoryougainfromIceArmorby$s1%,themanaregenerationyougainfromMageArmorby$s2%,andaddsanadditional$s3%ofyourSpiritincriticalstrikeratingwhenMoltenArmorisactive."
+                                return;
+                            default:
+                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
+                        }
+                    }
+                case 12: // SPELLMOD_EFFECT2
+                    {
+                        switch (effect.SpellID)
+                        {
+                            case 54939: // Your Lay on Hands grants twice as much mana as normal and also grants you as much mana as it grants your target.
+                            case 60166: // Your Water Shield is $s1% stronger
+                                return;
+                            default:
+                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
+                        }
+                    }
                 case 27: // SPELLMOD_MULTIPLE_VALUE
                 case 1: // SPELLMOD_DURATION (shouldn't be used for DoTs and HoTs)
                 case 11: // SPELLMOD_COOLDOWN
@@ -436,8 +463,6 @@ export class AuraHandlers
                 case 6: // SPELLMOD_RADIUS
                 case 10: // SPELLMOD_CASTING_TIME
                 case 9: // SPELLMOD_NOT_LOSE_CASTING_TIME
-                case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
-                case 12: // TODO: SPELLMOD_EFFECT2
                 case 26: // SPELLMOD_FREQUENCY_OF_SUCCESS
                     return;
                 default:
