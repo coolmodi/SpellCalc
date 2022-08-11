@@ -885,3 +885,9 @@ end
 function _addon:GetCurrentState()
     return currentState;
 end
+
+_G["SpellCalc"] = {
+    GetSpell = function (spellId)
+        return _addon:GetCalcedSpell(spellId);
+    end
+}
