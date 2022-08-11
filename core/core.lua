@@ -567,9 +567,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData)
         calcedSpell.effectiveCost = spellCost;
 
         if calcedSpell.costType == Enum.PowerType.Mana then
-            costHandler.Mana(calcedSpell, spellInfo, calcedSpell.effCastTime, spellName, spellId);
+            costHandler.Mana(calcedSpell, spellInfo, spellName, spellId);
         elseif calcedSpell.costType == Enum.PowerType.Rage then
-            costHandler.Rage(calcedSpell, spellInfo, calcedSpell.effCastTime, spellName, spellId);
+            costHandler.Rage(calcedSpell, spellInfo, spellName, spellId);
         elseif calcedSpell.costType == Enum.PowerType.Energy then
             -- TODO: energy??
         end

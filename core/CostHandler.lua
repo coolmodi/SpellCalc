@@ -18,11 +18,12 @@ local CostHandler = {};
 --- Set vars for mana cost.
 ---@param calcedSpell CalcedSpell
 ---@param spellInfo SpellInfo
----@param effCastTime number
 ---@param spellName string
 ---@param spellId integer
-function CostHandler.Mana(calcedSpell, spellInfo, effCastTime, spellName, spellId)
+function CostHandler.Mana(calcedSpell, spellInfo, spellName, spellId)
     local mps = stats.mp5.val / 5 + stats.manaRegAura;
+    local effCastTime = calcedSpell.effCastTime;
+
     calcedSpell.effectiveCost = calcedSpell.baseCost - math.min(5, effCastTime) * (stats.manaRegCasting + mps);
     if effCastTime > 5 then
         local ofsrRegen;
@@ -100,10 +101,9 @@ end
 --- Set vars for rage cost.
 ---@param calcedSpell CalcedSpell
 ---@param spellInfo SpellInfo
----@param effCastTime number
 ---@param spellName string
 ---@param spellId integer
-function CostHandler.Rage(calcedSpell, spellInfo, effCastTime, spellName, spellId)
+function CostHandler.Rage(calcedSpell, spellInfo, spellName, spellId)
     if spellName == MAUL or spellName == HEROIC_STRIKE then
         -- Some rough rage gained on hit estimate?
         local physMask = _addon.CONST.SCHOOL_MASK.PHYSICAL;
