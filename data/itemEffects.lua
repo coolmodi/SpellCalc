@@ -840,13 +840,6 @@ _addon.itemEffects = {
             value = 31,
         },
     },
-    [45254] = { -- Sigil of the Vengeful Heart
-        {
-            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
-            affectSpell = {},
-            value = 380,
-        },
-    },
     [37018] = { -- G.E.H.T.A.
         {
             type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,

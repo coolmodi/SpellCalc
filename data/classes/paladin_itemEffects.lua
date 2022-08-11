@@ -7,11 +7,35 @@ if playerClass ~= "PALADIN" then
     return;
 end
 
+_addon.itemEffects[16410] = { -- Knight-Lieutenant's Lamellar Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[16471] = { -- Marshal's Lamellar Gloves
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
 _addon.itemEffects[23006] = { -- Libram of Light
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
         affectSpell = {1073741824},
         value = 43,
+    },
+}
+
+_addon.itemEffects[23274] = { -- Knight-Lieutenant's Lamellar Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
     },
 }
 
@@ -47,6 +71,14 @@ _addon.itemEffects[28296] = { -- Libram of the Lightbringer
     },
 }
 
+_addon.itemEffects[27880] = { -- Gladiator's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
 _addon.itemEffects[28065] = { -- Libram of Wracking
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
@@ -63,11 +95,67 @@ _addon.itemEffects[27917] = { -- Libram of the Eternal Rest
     },
 }
 
+_addon.itemEffects[28832] = { -- High Warlord's Lamellar Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
 _addon.itemEffects[28592] = { -- Libram of Souls Redeemed
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {1073741824, 0, 0, 0},
         value = 89,
+    },
+}
+
+_addon.itemEffects[28680] = { -- Grand Marshal's Lamellar Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[28862] = { -- High Warlord's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[29600] = { -- Blood Guard's Lamellar Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[28710] = { -- Grand Marshal's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[29613] = { -- General's Lamellar Gloves
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[31033] = { -- Libram of Righteous Power
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {0, 32768, 0, 0},
+        value = 33,
     },
 }
 
@@ -79,6 +167,22 @@ _addon.itemEffects[31614] = { -- Gladiator's Ornamented Gloves
     },
 }
 
+_addon.itemEffects[32154] = { -- Chancellor's Lamellar Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[32159] = { -- Chancellor's Ornamented Gloves
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
 _addon.itemEffects[31993] = { -- Merciless Gladiator's Lamellar Gauntlets
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -87,11 +191,43 @@ _addon.itemEffects[31993] = { -- Merciless Gladiator's Lamellar Gauntlets
     },
 }
 
+_addon.itemEffects[31631] = { -- Grand Marshal's Ornamented Gloves
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[32169] = { -- Chancellor's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[31636] = { -- High Warlord's Ornamented Gloves
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
 _addon.itemEffects[32021] = { -- Merciless Gladiator's Ornamented Gloves
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
         affectSpell = {1073741824, 0, 0, 0},
         value = 2,
+    },
+}
+
+_addon.itemEffects[32040] = { -- Merciless Gladiator's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
     },
 }
 
@@ -140,11 +276,35 @@ _addon.itemEffects[35089] = { -- Brutal Gladiator's Scaled Gauntlets
     },
 }
 
+_addon.itemEffects[35477] = { -- Crusader's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
 _addon.itemEffects[35028] = { -- Brutal Gladiator's Lamellar Gauntlets
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
         affectSpell = {1073741824, 0, 0, 0},
         value = 2,
+    },
+}
+
+_addon.itemEffects[35403] = { -- Crusader's Ornamented Gloves
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
+    },
+}
+
+_addon.itemEffects[35413] = { -- Crusader's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
     },
 }
 
@@ -185,6 +345,14 @@ _addon.itemEffects[40337] = { -- Libram of Resurgence
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
         affectSpell = {32, 0, 0, 0},
         value = 141,
+    },
+}
+
+_addon.itemEffects[40191] = { -- Libram of Radiance
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {0, 32768, 0, 0},
+        value = 105,
     },
 }
 
@@ -304,6 +472,14 @@ _addon.itemEffects[42616] = { -- Relentless Gladiator's Libram of Justice
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {1073741824, 0, 0, 0},
         value = 352,
+    },
+}
+
+_addon.itemEffects[42631] = { -- Gladiator's Scaled Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {8388608, 0, 8, 0},
+        value = 20,
     },
 }
 

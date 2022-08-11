@@ -17,6 +17,7 @@ const classMask = {
     hunter: 1 << 2,
     rogue: 1 << 3,
     priest: 1 << 4,
+    deathknight: 1 << 5,
     shaman: 1 << 6,
     mage: 1 << 7,
     warlock: 1 << 8,
@@ -90,6 +91,7 @@ export async function orderItemsByClass<T>(itemMap: Map<number, T>)
         mage: new Map<number, T>(),
         warlock: new Map<number, T>(),
         druid: new Map<number, T>(),
+        deathknight: new Map<number, T>(),
         GENERAL: new Map<number, T>(),
     };
 

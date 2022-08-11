@@ -221,6 +221,7 @@ export class ItemSetCreator
             mage: "",
             warlock: "",
             druid: "",
+            deathknight: "",
             GENERAL: ""
         };
 

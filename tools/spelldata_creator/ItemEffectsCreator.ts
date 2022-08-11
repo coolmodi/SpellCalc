@@ -169,6 +169,7 @@ export class ItemEffectsCreator
             mage: "",
             warlock: "",
             druid: "",
+            deathknight: "",
             GENERAL: ""
         };
 

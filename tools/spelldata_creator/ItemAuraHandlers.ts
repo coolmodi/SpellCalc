@@ -291,6 +291,48 @@ export class AuraHandlers
                 case 19: // SPELLMOD_ACTIVATION_TIME
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_TICKPERIOD;
                     break;
+                case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
+                    {
+                        switch (effect.SpellID)
+                        {
+                            case 54831: // Glyph of Hurricane
+                            case 57856: // "" of ugly seal
+                            case 65243: // Glyph of Survival Instincts
+                            case 37209:
+                            case 37223:
+                            case 67234: // TODO WARRIOR: Berserker Stance grants an additional 2% critical strike chance, and Battle Stance grants an additional 6% armor penetration.
+                            case 27850:
+                            case 34318:
+                                return
+                            case 37186: // Increases the damage of your Judgements by 33.
+                            case 37333: // Your Shred ability deals an additional 75 damage, and your Lacerate ability does an additional 15 per application.
+                            case 23300: // Increases the Holy damage of your Judgements by 20.
+                            case 27851: // Increases the damage of your Claw and Rake abilites by $s1.
+                            case 28855: // Increases the damage dealt by your Maul ability by $s1 and Swipe ability by $s2.
+                            case 37736: // Increases the damage dealt by Mangle (Cat) by ${$33876m3*$m1/100} and the damage dealt by Mangle (Bear) by ${$33878m3*$m2/100}.
+                            case 33565: //Increases the damage of your Claw and Rake abilites by $s1.
+                            case 33693: // Increases the damage dealt by Shred by 88.
+                            case 37763: // Increases the damage dealt by Crusader Strike by ${$m1*$35395m2/100}.
+                            case 52394: // Increases the damage dealt by your Blood Strike and Heart Strike by ${$m1}.
+                            case 52314: // Increases the damage dealt by your Maul ability by $s1 and Swipe ability by $s2.
+                            case 60837: // Increases the base damage dealt by your Scourge Strike by 189, your Obliterate by 336, and your Death Strike by ${0.75*420}.
+                            case 60821: // Increases the damage dealt by Crusader Strike by ${$m1*$35395m2/100}.
+                            case 54807: // Increases the damage dealt by your Death Coil ability by ${$m1}.
+                            case 54809: // Increases the base damage dealt by your Scourge Strike ability by ${$m1*$m2/100}.
+                            case 60773: // Increases the damage dealt by Shred by 203.
+                            case 54800: // Increases the damage dealt by your Icy Touch ability by ${$m1}.
+                            case 64959: // Increases weapon damage when you use Stormstrike by $s1.
+                            case 64962: // Increases the damage done by your Death Coil ability by $s2 and by your Frost Strike ability by $s3.
+                            case 64961: // Increases the base damage of your Lava Burst by $s1
+                                return {
+                                    type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+                                    affectSpell: this.getAffectSpell(effect),
+                                    value: effect.EffectBasePoints + 1
+                                }
+                            default:
+                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT1: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
+                        }
+                    }
                 case 14: // SPELLMOD_COST
                 case 10: // SPELLMOD_CASTING_TIME (handled by addon api, gear change will always trigger update)
                 case 2: // SPELLMOD_THREAT
@@ -300,7 +342,6 @@ export class AuraHandlers
                 case 17: // SPELLMOD_JUMP_TARGETS (TODO: make this add chain targets?)
                 case 18: // SPELLMOD_CHANCE_OF_SUCCESS
                 case 12: // TODO: SPELLMOD_EFFECT2 (melee stuff mostly?)
-                case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
                 case 23: // TODO: SPELLMOD_EFFECT3 (melee stuff mostly?)
                 case 4: // TODO: SPELLMOD_CHARGES
                     return;

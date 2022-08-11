@@ -136,6 +136,12 @@ _addon.itemSetData[641] = {
         {
             need = 4,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+            affectSpell = {32768, 0, 0, 0},
+            value = 33,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
             affectSpell = {0, 256, 0, 0},
             value = 3,
         },
@@ -258,6 +264,23 @@ _addon.setItemData[43753] = 798;
 _addon.setItemData[43756] = 798;
 _addon.setItemData[43822] = 798;
 _addon.setItemData[43758] = 798;
+
+_addon.itemSetData[799] = {
+    name = "Dreamwalker Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+            value = 5,
+            scriptKey = "Druid_T7_Nourish,"
+        },
+    }
+}
+_addon.setItemData[43752] = 799;
+_addon.setItemData[43754] = 799;
+_addon.setItemData[43755] = 799;
+_addon.setItemData[43759] = 799;
+_addon.setItemData[43820] = 799;
 
 _addon.itemSetData[800] = {
     name = "Dreamwalker Garb",

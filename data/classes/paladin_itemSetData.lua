@@ -75,6 +75,18 @@ _addon.itemSetData[626] = {
     name = "Justicar Battlegear",
     effects = {
         {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+            affectSpell = {8388608, 0, 8, 0},
+            value = 33,
+        },
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+            affectSpell = {0, 0, 16, 0},
+            value = 93,
+        },
+        {
             need = 4,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {0, 512, 0, 0},
