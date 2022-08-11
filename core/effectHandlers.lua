@@ -454,7 +454,7 @@ local function ManaShield(calcedSpell, effNum, spellInfo, spellName)
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 
     local drain = 1.5;
-    local name, _, _, _, curRank = GetTalentInfo(1, 11); -- TODO: This will currently fail
+    local name, _, _, _, curRank = GetTalentInfo(1, 11); -- TODO MAGE: This will currently fail
     if curRank > 0 then
         drain = drain * (1 - 0.165 * curRank);
         calcedSpell:AddToBuffList({name..curRank});
@@ -533,7 +533,7 @@ local function SchoolDamage(_, calcedSpell, effNum, spellInfo, spellName, spellI
     FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
     FillCritValues(calcedSpell, calcedEffect, spellId);
 
-    -- TODO: make ignite extra on crit?
+    -- TODO MAGE: make ignite extra on crit?
     if stats.ignite.val > 0 and spellInfo.school == _addon.CONST.SCHOOL.FIRE then
         local igniteMult = stats.ignite.val/100;
 
@@ -604,13 +604,6 @@ function HealEffect(_, calcedSpell, effNum, spellInfo, spellName, spellId)
 
     FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
     FillCritValues(calcedSpell, calcedEffect, spellId);
-
-    -- TODO: remove?
-    if SpellCalc_settings.healDisregardCrit then
-        calcedEffect.avgCombined = calcedEffect.avg;
-    else
-        calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
-    end
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 

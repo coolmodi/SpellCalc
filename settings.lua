@@ -53,8 +53,6 @@ local DEFAULTSETTINGS = {
 	["abColorHelp"] = {0.3, 1, 0.3},
     abColorMana = {0.1, 0.7, 1},
 
-	["healDisregardCrit"] = false,
-
 	["meleeFromFront"] = false,
 
 	["useRealToOom"] = false,
@@ -569,15 +567,6 @@ local SETTINGS_TABLE = {
 	}
 }
 
-local ARGS_HEAL = {
-	healDisregardCrit = {
-		order = 1,
-		type = "toggle",
-		name = L.SETTINGS_HEAL_NO_CRIT,
-		desc = L.SETTINGS_HEAL_NO_CRIT_TT
-	}
-}
-
 local ARGS_MELEE = {
 	meleeFromFront = {
 		order = 1,
@@ -657,15 +646,6 @@ _addon.events.OnAddonLoaded(function ()
 			type = "group",
 			name = L.SETTINGS_MELEE_HEAD,
 			args = ARGS_MELEE
-		}
-	end
-
-	if _addon.CONST.HEALING_CLASSES[class] then
-		SETTINGS_TABLE.args.healGroup = {
-			order = 14,
-			type = "group",
-			name = L.SETTINGS_HEAL_HEAD,
-			args = ARGS_HEAL
 		}
 	end
 
