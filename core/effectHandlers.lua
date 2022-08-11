@@ -200,6 +200,7 @@ local function SealOfVengeance(calcedSpell, effNum, spellInfo, effCastTime, effe
     calcedEffect.minCrit = calcedEffect.min * calcedSpell.critMult;
     calcedEffect.maxCrit = calcedEffect.max * calcedSpell.critMult;
     calcedEffect.avgCrit = calcedEffect.avg * calcedSpell.critMult;
+    calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
 end
 
 ---@param calcedSpell CalcedSpell
@@ -842,7 +843,7 @@ local function WeaponDamage(_, calcedSpell, effNum, spellInfo, effCastTime, effe
     local mmit = calcedSpell.meleeMitigation;
     assert(mmit, "meleeMitigation taböe missing in SPELL_EFFECT_WEAPON_DAMAGE handler for spell "..spellName);
     local realHit = math.max(calcedSpell.hitChance - mmit.dodge - mmit.parry, 0);
-    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * realHit/100;
+    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * realHit/100 * (1 - calcedSpell.avgResist);
 
     calcedEffect.perSec = calcedEffect.avgAfterMitigation / effCastTime;
     calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
