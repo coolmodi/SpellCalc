@@ -250,6 +250,7 @@ const enum ADDON_EFFECT_TYPE {
     BOOLEAN_BITFLAG_SET = "_addon.CONST.EFFECT_TYPE.BOOLEAN_BITFLAG_SET",
     SPELLMOD_ALLOW_PERIODIC_HASTE = "_addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE",
     SPELLMOD_ALLOW_PERIODIC_CRIT = "_addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT",
+    SCRIPT_SET_VALUE = "_addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE",
 }
 
 interface AddonEffectData
@@ -257,7 +258,8 @@ interface AddonEffectData
     type: string,
     affectMask?: number,
     affectSpell?: number[],
-    value?: number | string
+    value?: number,
+    scriptKey?: string
 }
 
 const enum SpellMechanic 

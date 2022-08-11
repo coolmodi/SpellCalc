@@ -6,8 +6,7 @@ import { createEffectLua, createFileHead, orderItemsByClass } from "./itemFuncti
 import { SpellData } from "./SpellData";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
-    //[AURA_TYPE.SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS]: true, // TODO: future
-    //[AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER_VERSUS]: true, // TODO: future
+
 }
 Object.assign(AURA_TYPES_TO_IGNORE, USELESS_AURAS);
 

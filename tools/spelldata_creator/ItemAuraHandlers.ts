@@ -400,14 +400,14 @@ export class AuraHandlers
                 case 32403:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                        affectSpell: [1073741824], // TODO: check set
+                        affectSpell: [1073741824],
                         value: effect.EffectBasePoints + 1,
                     }
                 case 34231: // Holy Light Librams
                 case 64956: // Increases spell power of Holy Light by 160.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-                        affectSpell: [2147483648], // TODO: check set
+                        affectSpell: [2147483648],
                         value: effect.EffectBasePoints + 1,
                     }
                 case 64950: //  Increases the spell power of your Insect Swarm by 374.
@@ -467,25 +467,19 @@ export class AuraHandlers
                 case 60779: // Increases the spell power on the periodic portion of your Lifebloom by 125.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER,
-                        affectSpell: [0, 16], // TODO: check set
+                        affectSpell: [0, 16],
                         value: effect.EffectBasePoints + 1
-                    }
-                case 60144: // Your ranged attack speed is increased by 20% while Aspect of the Viper is active. TODO: Hunter
-                    return {
-                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
-                        affectSpell: [0, 0],
-                        value: 20
                     }
                 case 67201:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                        affectSpell: [0, 32], // TODO: check set
+                        affectSpell: [0, 32],
                         value: 20
                     }
                 case 70658:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
-                        affectSpell: [0, 67108864], // TODO: check set
+                        affectSpell: [0, 67108864],
                         value: 15 // TODO: Get correct average heal increase. (The healing granted by your Wild Growth spell reduces 30% less over time.)
                     }
                 case 70650:
@@ -503,11 +497,18 @@ export class AuraHandlers
                             value: 380
                         }
                     }
-                case 37169: // TODO: Your Eviscerate and Envenom abilities cause 40 extra damage per combo point.
-                case 37182: // TODO: Increases the amount healed by your Judgement of Light by $s1.
-                case 34241: // TODO: Increases periodic damage done by Rip by $s1 per combo point.
-                case 38320: // TODO: Increases the benefit your Flash of Light spell receives from Blessing of Light by ${$m1/2} and Holy Light spell receives from Blessing of Light by $s1.
-                case 39926: // TODO: ToL heal bonus improvement
+                case 70755: // T10 While your Divine Illumination talent is active, your healing spells are 35% stronger.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SCRIPT_SET_VALUE,
+                        value: 35,
+                        scriptKey: "Pala_T10_DI"
+                    }
+                case 60144:
+                case 37169: // Your Eviscerate and Envenom abilities cause 40 extra damage per combo point.
+                case 37182: // Increases the amount healed by your Judgement of Light by $s1.
+                case 34241: // Increases periodic damage done by Rip by $s1 per combo point.
+                case 38320: // Increases the benefit your Flash of Light spell receives from Blessing of Light by ${$m1/2} and Holy Light spell receives from Blessing of Light by $s1.
+                case 39926:
                 case 28849: // Regain up to 10 mana each time you cast Lesser Healing Wave. (depends on rank...)
                 case 28847: // Gain up to 25 mana each time you cast Healing Touch. (depends on rank...)
                 case 28809: // On Greater Heal critical hits, your target will gain Armor of Faith, absorbing up to 500 damage.
@@ -582,7 +583,6 @@ export class AuraHandlers
                 case 70817:
                 case 70832:
                 case 70847:
-                case 70755: // TODO: T10 While your Divine Illumination talent is active, your healing spells are 35% stronger.
                 case 70765:
                 case 60244:
                 case 60792:
@@ -687,12 +687,17 @@ export class AuraHandlers
                 case 26127: // Enigma Blizzard Bonus
                 case 28716: // Your Rejuvenation ticks have a chance to restore 60 mana, 8 energy, or 2 rage to your target.
                 case 28744: // Your initial cast and Regrowth ticks will increase the maximum health of your target by up to 50, stacking up to 7 times.
-                case 37327: // TODO: Increases your Starfire damage against targets afflicted with Moonfire or Insect Swarm by $s1%.
+                case 37327: // Increases your Starfire damage against targets afflicted with Moonfire or Insect Swarm by $s1%.
                 case 37447:
                 case 37424:
-                case 60137: // TODO: Your Nourish heals an additional 5% for each of your heal over time effects present on the target.
                 case 61062:
                     return;
+                case 60137: // Your Nourish heals an additional 5% for each of your heal over time effects present on the target.
+                    return {
+                        type: ADDON_EFFECT_TYPE.SCRIPT_SET_VALUE,
+                        value: 5,
+                        scriptKey: "Druid_T7_Nourish"
+                    }
                 case 27859:
                 case 27855:
                 case 27853:

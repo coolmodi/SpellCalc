@@ -416,6 +416,23 @@ _addon.setItemData[48924] = 880;
 _addon.setItemData[48925] = 880;
 _addon.setItemData[48926] = 880;
 
+_addon.itemSetData[899] = {
+    name = "Lightsworn Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+            value = 35,
+            scriptKey = "Pala_T10_DI,"
+        },
+    }
+}
+_addon.setItemData[51726] = 899;
+_addon.setItemData[51725] = 899;
+_addon.setItemData[51724] = 899;
+_addon.setItemData[51723] = 899;
+_addon.setItemData[51722] = 899;
+
 _addon.itemSetData[900] = {
     name = "Lightsworn Battlegear",
     effects = {

@@ -690,7 +690,8 @@ _addon.scripting.RegisterScript("Nourish_Script", function (val, cs, ce, spellId
     if hasAura(LIFEBLOOM, true) then found = found + 1 end
     if found > 0 then
         local gor = _addon.scripting.GetValue("Glyph_of_Nourish");
-        local mod = 1.2 + (gor/100) * found;
+        local t7 = _addon.scripting.GetValue("Druid_T7_Nourish");
+        local mod = 1.2 + ((gor + t7) / 100) * found;
         ce.modBonus = ce.modBonus * mod;
     end
 end);

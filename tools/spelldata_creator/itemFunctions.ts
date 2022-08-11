@@ -157,6 +157,7 @@ export function createEffectLua(indent: string, eff: AddonEffectData, additional
     if (eff.affectMask) lua += `${indent}    affectMask = ${eff.affectMask},\n`;
     if (eff.affectSpell) lua += `${indent}    affectSpell = {${eff.affectSpell.join(", ")}},\n`;
     if (typeof eff.value !== "undefined") lua += `${indent}    value = ${eff.value},\n`;
+    if (typeof eff.scriptKey !== "undefined") lua += `${indent}    scriptKey = "${eff.scriptKey},"\n`;
     lua += `${indent}},\n`;
     return lua;
 }

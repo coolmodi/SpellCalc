@@ -369,6 +369,13 @@ _addon.aurasPlayer[20165] = { -- Seal of Light
     }
 }
 
+_addon.aurasPlayer[31842] = { -- Divine Illumination (with T10 bonus)
+    {
+        type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
+        scriptValue = "Pala_T10_DI"
+    }
+}
+
 --------------------------------------------------------------------------
 -- Target auras
 --------------------------------------------------------------------------
