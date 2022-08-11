@@ -1399,7 +1399,7 @@ _addon.spellInfo = {
                 valueBase = 45,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.03,
                 mechanic = 15,
             },
         }
@@ -1601,7 +1601,7 @@ _addon.spellInfo = {
                 valueBase = 55,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.03,
                 mechanic = 15,
             },
         }
@@ -1620,7 +1620,7 @@ _addon.spellInfo = {
                 valueBase = 75,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.03,
                 mechanic = 15,
             },
         }
@@ -3031,7 +3031,7 @@ _addon.spellInfo = {
                 valueBase = 100,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.03,
                 mechanic = 15,
             },
         }
@@ -4435,7 +4435,7 @@ _addon.spellInfo = {
                 valueBase = 350,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.03,
                 mechanic = 15,
             },
         }
