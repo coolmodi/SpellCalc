@@ -173,6 +173,7 @@ export class AuraHandlers
                 case 68082:
                 case 71132: // Glyph of Shadow Word: Pain
                 case 61792: // Glyph of Shadow
+                case 28753: // hunter t3 mana restore
                     return;
                 case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
                     return {
@@ -191,12 +192,6 @@ export class AuraHandlers
                         type: ADDON_EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
                         affectSpell: [-1877999613],
                         value: 30 // If 11% chance
-                    }
-                case 28753: // hunter t3 mana restore
-                    return {
-                        type: ADDON_EFFECT_TYPE.SPELLMOD_CRIT_MANARESTORE,
-                        affectSpell: [4096], // TODO: spellset
-                        value: 50
                     }
                 case 0:
                     if (effect.SpellID === 37558) // Your Prayer of Mending heals an additional $s1 health.
@@ -291,7 +286,7 @@ export class AuraHandlers
                 case 19: // SPELLMOD_ACTIVATION_TIME
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_TICKPERIOD;
                     break;
-                case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
+                case 3: // SPELLMOD_EFFECT1 (melee stuff mostly?)
                     {
                         switch (effect.SpellID)
                         {
@@ -333,6 +328,62 @@ export class AuraHandlers
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT1: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
                         }
                     }
+                case 12: // TODO: SPELLMOD_EFFECT2 (melee stuff mostly?)
+                    {
+                        switch (effect.SpellID)
+                        {
+                            case 54830: // "IncreasesthedamageofyourInsectSwarmabilityby$s2%,butitnolongeraffectsyourvictim'schancetohit.
+                            case 54940: // "WhileSealofWisdomisactive,thecostofyourhealingspellsisreducedby$54940s1%."
+                            case 54943: // "WhileSealofLightisactive,theeffectofyourhealingspellsisincreasedby$54943s1%."
+                            case 57947: // TODO?: Damage against Undead increased by $57947s1% while your Sense Undead ability is active
+                            case 56416: // Your Seal of Vengeance or Seal of Corruption also grants $56416s1 expertise while active
+                            case 63220: // Your Divine Storm now heals for an additional $63220s1% of the damage it causes
+                            case 37209: // Your Water Shield ability grants an additional $s1 mana each time it triggers and an additional $s2 mana per 5 sec.
+                            case 37212: // Your Flametongue Weapon ability grants an additional $s1 spell power.
+                            case 37286: // Your Rejuvenation spell now also grants $s1 dodge rating.
+                            case 37314: // TODO?: T5 Increases the final amount healed by your Lifebloom spell by $s1
+                            case 42367: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 43725: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 34128: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 46100: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 60733: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 60736: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1.
+                            case 60738: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 60739: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 60740: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1.
+                            case 60741: // ^^^^?: Increases the spell power of the final healing value of your Lifebloom by $s1
+                            case 67164: // "IncreasesthearmoryougainfromIceArmorby$s1%,themanaregenerationyougainfromMageArmorby$s2%,andaddsanadditional$s3%ofyourSpiritincriticalstrikeratingwhenMoltenArmorisactive."
+                            case 67234: // TODO WARRIOR: "BerserkerStancegrantsanadditional$s1%criticalstrikechance,andBattleStancegrantsanadditional$s2%armorpenetration."
+                            case 34318: // Your Water Shield ability grants an additional $s1 mana each time it triggers and an additional $s2 mana per 5 sec.
+                            case 54802: // NOTE: Doesn't make sense? -> Increases the damage over time caused by your Plague Strike ability by ${$m1}.
+                                return;
+                            default:
+                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT2: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
+                        }
+                    }
+                case 23: // SPELLMOD_EFFECT3 (melee stuff mostly?)
+                    {
+                        switch (effect.SpellID)
+                        {
+                            case 54810: // "WhileFrenziedRegenerationisactive,healingeffectsonyouare$54810s1%morepowerful.
+                            case 62970: // Wild Growth can affect $62970s1 additional target.
+                            case 54938: // Reduces the cooldown of your Hammer of Wrath spell by $54938s1% while Avenging Wrath is active
+                            case 63223: // "WhileDivinePleaisactive,youtake$63223s1%reduceddamagefromallsources."
+                            case 67164: // "IncreasesthearmoryougainfromIceArmorby$s1%,themanaregenerationyougainfromMageArmorby$s2%,andaddsanadditional$s3%ofyourSpiritincriticalstrikeratingwhenMoltenArmorisactive."
+                            case 67234: // "BerserkerStancegrantsanadditional$s1%criticalstrikechance,andBattleStancegrantsanadditional$s2%armorpenetration."
+                            case 37742: // Increases your block rating by $s1 while Holy Shield is active.
+                            case 54803: // Increases the damage reduction of your Icebound Fortitude by 2%.
+                                return;
+                            default:
+                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
+                        }
+                    }
+                case 4: // SPELLMOD_CHARGES 
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_CHARGES,
+                        affectSpell: this.getAffectSpell(effect),
+                        value: effect.EffectBasePoints + 1
+                    }
                 case 14: // SPELLMOD_COST
                 case 10: // SPELLMOD_CASTING_TIME (handled by addon api, gear change will always trigger update)
                 case 2: // SPELLMOD_THREAT
@@ -341,9 +392,6 @@ export class AuraHandlers
                 case 11: // SPELLMOD_COOLDOWN (TODO: if DPSCD is ever implemented?)
                 case 17: // SPELLMOD_JUMP_TARGETS (TODO: make this add chain targets?)
                 case 18: // SPELLMOD_CHANCE_OF_SUCCESS
-                case 12: // TODO: SPELLMOD_EFFECT2 (melee stuff mostly?)
-                case 23: // TODO: SPELLMOD_EFFECT3 (melee stuff mostly?)
-                case 4: // TODO: SPELLMOD_CHARGES
                     return;
                 default:
                     throw "SPELL_AURA_ADD_FLAT_MODIFIER type not handled!";

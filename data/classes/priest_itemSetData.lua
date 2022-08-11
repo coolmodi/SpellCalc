@@ -210,6 +210,23 @@ _addon.setItemData[34562] = 675;
 _addon.setItemData[34527] = 675;
 _addon.setItemData[34435] = 675;
 
+_addon.itemSetData[804] = {
+    name = "Regalia of Faith",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_CHARGES,
+            affectSpell = {0, 32, 0, 0},
+            value = 1,
+        },
+    }
+}
+_addon.setItemData[43733] = 804;
+_addon.setItemData[43782] = 804;
+_addon.setItemData[43784] = 804;
+_addon.setItemData[43808] = 804;
+_addon.setItemData[43810] = 804;
+
 _addon.itemSetData[805] = {
     name = "Garb of Faith",
     effects = {
