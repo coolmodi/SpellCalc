@@ -5549,7 +5549,7 @@ _addon.classGlyphs = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {8388608, 0, 0, 0},
-            value = 4,
+            value = 4000,
         },
     },
     [54825] = { -- Glyph of Healing Touch
@@ -5563,7 +5563,7 @@ _addon.classGlyphs = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {0, 16, 0, 0},
-            value = 1,
+            value = 1000,
         },
     },
     [54830] = { -- Glyph of Insect Swarm

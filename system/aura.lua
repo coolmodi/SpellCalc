@@ -116,6 +116,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE] = stats.spellModFlatHitChance,
     [EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC] = stats.spellModMageNWR,
     [EFFECT_TYPE.SPELLMOD_FLAT_DURATION] = stats.spellModFlatDuration,
+    [EFFECT_TYPE.SPELLMOD_FLAT_TICKPERIOD] = stats.spellModFlatTickperiod,
     [EFFECT_TYPE.SPELLMOD_FLAT_VALUE]   = stats.spellModFlatValue,
     [EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER] = stats.spellModFlatSpellpower,
     [EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER] = stats.spellModEff1FlatSpellpower,

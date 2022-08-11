@@ -315,14 +315,16 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
     -- Duration
 
     if spellInfo.duration then
+        ---@type number
         local baseDuration = spellInfo.duration;
+        calcedSpell.durationNoHaste = spellInfo.duration * 1000;
 
         if stats.spellModFlatDuration[spellId] ~= nil then
-            baseDuration = baseDuration + stats.spellModFlatDuration[spellId].val;
+            baseDuration = baseDuration + stats.spellModFlatDuration[spellId].val / 1000;
+            calcedSpell.durationNoHaste = calcedSpell.durationNoHaste + stats.spellModFlatDuration[spellId].val;
             calcedSpell:AddToBuffList(stats.spellModFlatDuration[spellId].buffs);
         end
 
-        calcedSpell.durationNoHaste = baseDuration;
         calcedSpell.duration = baseDuration;
 
         if spellInfo.usePeriodicHaste
@@ -663,7 +665,14 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
         -- Ticks
 
         if effectData.tickPeriod then
-            calcedEffect.ticks = math.floor(calcedSpell.durationNoHaste / effectData.tickPeriod);
+            local tpms = effectData.tickPeriod * 1000;
+
+            if stats.spellModFlatTickperiod[spellId] ~= nil then
+                tpms = tpms + stats.spellModFlatTickperiod[spellId].val;
+                calcedSpell:AddToBuffList(stats.spellModFlatTickperiod[spellId].buffs);
+            end
+
+            calcedEffect.ticks = math.floor(calcedSpell.durationNoHaste / tpms);
             calcedEffect.tickPeriod = calcedSpell.duration / calcedEffect.ticks;
         end
 

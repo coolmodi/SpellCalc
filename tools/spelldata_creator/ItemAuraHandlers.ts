@@ -284,10 +284,12 @@ export class AuraHandlers
                     break;
                 case 1: // SPELLMOD_DURATION
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_DURATION;
-                    aed.value /= 1000;
                     break;
                 case 16: // SPELLMOD_RESIST_MISS_CHANCE
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE;
+                    break;
+                case 19: // SPELLMOD_ACTIVATION_TIME
+                    aed.type = ADDON_EFFECT_TYPE.SPELLMOD_FLAT_TICKPERIOD;
                     break;
                 case 14: // SPELLMOD_COST
                 case 10: // SPELLMOD_CASTING_TIME (handled by addon api, gear change will always trigger update)
@@ -301,7 +303,6 @@ export class AuraHandlers
                 case 3: // TODO: SPELLMOD_EFFECT1 (melee stuff mostly?)
                 case 23: // TODO: SPELLMOD_EFFECT3 (melee stuff mostly?)
                 case 4: // TODO: SPELLMOD_CHARGES
-                case 19: // TODO: SPELLMOD_ACTIVATION_TIME
                     return;
                 default:
                     throw "SPELL_AURA_ADD_FLAT_MODIFIER type not handled!";

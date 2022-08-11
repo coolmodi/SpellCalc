@@ -352,7 +352,8 @@ AddSpellTable(stats.spellModPctDamageHealing, "Spell Pct Damage/Healing", "%");
 AddSpellTable(stats.spellModPctDoTHoT, "Spell Pct DoT/HoT", "%");
 --AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
 
-AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "s");
+AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "ms");
+AddSpellTable(stats.spellModFlatTickperiod, "Period mods:", "ms");
 AddSpellTable(stats.spellModFlatValue, "Flat mods", "");
 AddSpellTable(stats.spellModFlatSpellpower, "Extra SP", "");
 AddSpellTable(stats.spellModMageNWR, "Mage NWR proc", "");

@@ -4834,7 +4834,7 @@ _addon.classGlyphs = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {64, 0, 0, 0},
-            value = -3,
+            value = -3000,
         },
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,

@@ -101,17 +101,17 @@ _addon.talentDataRaw = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                 affectSpell = {18},
-                perPoint = 3
+                perPoint = 3000
             },
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                 affectSpell = {64},
-                perPoint = 6
+                perPoint = 6000
             },
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
                 affectSpell = {2097152, 16},
-                perPoint = 2
+                perPoint = 2000
             }
         }
     },

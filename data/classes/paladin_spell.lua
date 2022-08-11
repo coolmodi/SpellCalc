@@ -2585,7 +2585,7 @@ _addon.classGlyphs = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {32, 0, 0, 0},
-            value = 2,
+            value = 2000,
         },
     },
     [54930] = { -- Glyph of Avenger's Shield

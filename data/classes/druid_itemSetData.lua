@@ -46,7 +46,7 @@ _addon.itemSetData[214] = {
             need = 8,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {16, 0, 0, 0},
-            value = 3,
+            value = 3000,
         },
     }
 }
@@ -154,7 +154,7 @@ _addon.itemSetData[642] = {
             need = 2,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {64, 0, 0, 0},
-            value = 6,
+            value = 6000,
         },
     }
 }
@@ -197,7 +197,7 @@ _addon.itemSetData[677] = {
             need = 2,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {2, 0, 0, 0},
-            value = 3,
+            value = 3000,
         },
         {
             need = 4,
@@ -243,7 +243,7 @@ _addon.itemSetData[798] = {
             need = 2,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {8388608, 0, 0, 0},
-            value = 4,
+            value = 4000,
         },
         {
             need = 2,
@@ -381,7 +381,7 @@ _addon.itemSetData[855] = {
             need = 2,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {4096, 0, 0, 0},
-            value = 3,
+            value = 3000,
         },
         {
             need = 2,
@@ -410,7 +410,7 @@ _addon.itemSetData[856] = {
             need = 2,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {4096, 0, 0, 0},
-            value = 3,
+            value = 3000,
         },
         {
             need = 2,

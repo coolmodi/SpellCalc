@@ -112,7 +112,7 @@ CalcedEffect.__index = CalcedEffect;
 ---@class CalcedSpell Represents a calculated spell.
 ---@field school SpellSchool The spell school.
 ---@field duration number|nil Duration after duration modifiers with haste if used for spell.
----@field durationNoHaste number|nil Duration after duration modifiers without haste.
+---@field durationNoHaste integer|nil Duration after duration modifiers without haste. Milliseconds.
 ---@field effects CalcedEffect[] The effects of the spell
 ---@field costType PowerType
 ---@field castingData CastinDataDef

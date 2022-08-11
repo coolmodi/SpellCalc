@@ -60,7 +60,7 @@ _addon.itemSetData[507] = {
             need = 5,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {64, 0, 0, 0},
-            value = 3,
+            value = 3000,
         },
     }
 }
@@ -113,7 +113,7 @@ _addon.itemSetData[664] = {
         },
         {
             need = 4,
-            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
             affectSpell = {8388608, 0, 0, 0},
             value = 5,
         },
@@ -137,7 +137,7 @@ _addon.itemSetData[665] = {
             need = 4,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {64, 0, 0, 0},
-            value = 3,
+            value = 3000,
         },
     }
 }
@@ -171,7 +171,7 @@ _addon.itemSetData[674] = {
             need = 2,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {32768, 0, 0, 0},
-            value = 3,
+            value = 3000,
         },
         {
             need = 4,
@@ -209,4 +209,187 @@ _addon.setItemData[31066] = 675;
 _addon.setItemData[34562] = 675;
 _addon.setItemData[34527] = 675;
 _addon.setItemData[34435] = 675;
+
+_addon.itemSetData[805] = {
+    name = "Garb of Faith",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {0, 2, 0, 0},
+            value = 10,
+        },
+    }
+}
+_addon.setItemData[43732] = 805;
+_addon.setItemData[43783] = 805;
+_addon.setItemData[43785] = 805;
+_addon.setItemData[43786] = 805;
+_addon.setItemData[43792] = 805;
+
+_addon.itemSetData[832] = {
+    name = "Sanctification Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {33554432, 0, 0, 0},
+            value = 15,
+        },
+    }
+}
+_addon.setItemData[46230] = 832;
+_addon.setItemData[46248] = 832;
+_addon.setItemData[46255] = 832;
+_addon.setItemData[46256] = 832;
+_addon.setItemData[46257] = 832;
+
+_addon.itemSetData[833] = {
+    name = "Sanctification Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {512, 0, 0, 0},
+            value = 10,
+        },
+    }
+}
+_addon.setItemData[46231] = 833;
+_addon.setItemData[46247] = 833;
+_addon.setItemData[46254] = 833;
+_addon.setItemData[46258] = 833;
+_addon.setItemData[46259] = 833;
+
+_addon.itemSetData[847] = {
+    name = "Velen's Raiment",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 32},
+            value = 20,
+        },
+    }
+}
+_addon.setItemData[48745] = 847;
+_addon.setItemData[48746] = 847;
+_addon.setItemData[48747] = 847;
+_addon.setItemData[48748] = 847;
+_addon.setItemData[48749] = 847;
+
+_addon.itemSetData[848] = {
+    name = "Zabra's Raiment",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 32},
+            value = 20,
+        },
+    }
+}
+_addon.setItemData[48750] = 848;
+_addon.setItemData[48751] = 848;
+_addon.setItemData[48752] = 848;
+_addon.setItemData[48753] = 848;
+_addon.setItemData[48754] = 848;
+
+_addon.itemSetData[849] = {
+    name = "Velen's Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {0, 1024, 0, 0},
+            value = 6000,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {8388608, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48755] = 849;
+_addon.setItemData[48756] = 849;
+_addon.setItemData[48757] = 849;
+_addon.setItemData[48758] = 849;
+_addon.setItemData[48759] = 849;
+
+_addon.itemSetData[850] = {
+    name = "Zabra's Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {0, 1024, 0, 0},
+            value = 6000,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {8388608, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48760] = 850;
+_addon.setItemData[48761] = 850;
+_addon.setItemData[48762] = 850;
+_addon.setItemData[48763] = 850;
+_addon.setItemData[48764] = 850;
+
+_addon.itemSetData[885] = {
+    name = "Crimson Acolyte's Raiment",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+            affectSpell = {1, 0, 0, 0},
+            value = 5,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {268435456, 0, 0, 0},
+            value = 10,
+        },
+    }
+}
+_addon.setItemData[51732] = 885;
+_addon.setItemData[51733] = 885;
+_addon.setItemData[51734] = 885;
+_addon.setItemData[51735] = 885;
+_addon.setItemData[51736] = 885;
+
+_addon.itemSetData[886] = {
+    name = "Crimson Acolyte's Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {33587200, 1024, 0, 0},
+            value = 5,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {0, 0, 64, 0},
+            value = -510,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_TICKPERIOD,
+            affectSpell = {0, 0, 64, 0},
+            value = -170,
+        },
+    }
+}
+_addon.setItemData[51741] = 886;
+_addon.setItemData[51740] = 886;
+_addon.setItemData[51739] = 886;
+_addon.setItemData[51738] = 886;
+_addon.setItemData[51737] = 886;
 
