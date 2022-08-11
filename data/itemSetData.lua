@@ -5,6 +5,23 @@ local _addon = select(2, ...);
 
 ---@type ItemSetDataTable
 _addon.itemSetData = {
+    [163] = {
+        name = "Chain of the Scarlet Crusade",
+        effects = {
+            {
+                need = 5,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
+                affectMask = 32,
+                value = 15,
+            },
+            {
+                need = 5,
+                type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
+                affectMask = 32,
+                value = 1,
+            },
+        }
+    },
     [533] = {
         name = "Battlegear of Undead Slaying",
         effects = {
@@ -166,6 +183,12 @@ _addon.itemSetData = {
 
 ---@type SetItemDataTable
 _addon.setItemData = {
+    [10329] = 163,
+    [10332] = 163,
+    [10328] = 163,
+    [10331] = 163,
+    [10330] = 163,
+    [10333] = 163,
     [23090] = 533,
     [23087] = 533,
     [23078] = 533,

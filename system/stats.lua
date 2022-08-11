@@ -212,6 +212,8 @@ local stats = {
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),
     versusModFlatSpellpower = CreatureTypeStatTable(),
+    versusModFlatAttackpower = CreatureTypeStatTable(),
+    versusModFlatAttackpowerRanged = CreatureTypeStatTable(),
 
     targetMechanicModDmgTakenPct = MechanicStatTable(),
 

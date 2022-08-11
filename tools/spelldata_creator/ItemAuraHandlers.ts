@@ -744,6 +744,24 @@ export class AuraHandlers
             }
         }
 
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
+                affectMask: effect["EffectMiscValue[0]"],
+                value: effect.EffectBasePoints + 1,
+            }
+        }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER_VERSUS] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
+                affectMask: effect["EffectMiscValue[0]"],
+                value: effect.EffectBasePoints + 1,
+            }
+        }
+
         this.handlers[AURA_TYPE.SPELL_AURA_PERIODIC_HASTE] = effect =>
         {
             return {

@@ -118,7 +118,13 @@ _addon.aurasPlayer = {
             value = 15
         }
     },
-    -- 28486 "Scourgebane Draught" 30 AP vs undead
+    [28486] = { -- Scourgebane Draught
+        {
+            type = CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
+            affectMask = CONST.CREATURE_TYPE_MASK.UNDEAD,
+            value = 30
+        }
+    },
     [6562] = { -- Heroic Presence
         { type = CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE, value = 1 },
         { type = CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL, value = 1 }

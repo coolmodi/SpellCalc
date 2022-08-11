@@ -145,8 +145,6 @@ export class ClassSpellLists
                 {
                     if (PTSA_IGNORES.indexOf(effect.SpellID) != -1 || effect.EffectTriggerSpell == 0) continue;
                     const tspell = this.spellData.getSpellEffects(effect.EffectTriggerSpell);
-                    //const tspellCat = this.spellData.getSpellCategory(effect.EffectTriggerSpell);
-                    //baseInfo.defenseType = (tspellCat) ? tspellCat.DefenseType : baseInfo.defenseType; // TODO: Is this supposed to be that way or is DBC just buggy atm?
                     let found = false;
                     for (let i = 0; i < tspell.length; i++)
                     {

@@ -405,6 +405,8 @@ AddSchoolTableUniform(stats.targetSchoolModResistancePct, "School Pct Mod Resist
 AddSchoolTableUniform(stats.targetSchoolModDamageTaken, "School Pct Damage Taken", "%");
 
 
-AddVersusTypeTableUniform(stats.versusModFlatSpellpower, "Creature Type Flat SP", "%");
+AddVersusTypeTableUniform(stats.versusModFlatSpellpower, "Creature Type Flat SP", "");
+AddVersusTypeTableUniform(stats.versusModFlatAttackpower, "Creature Type Flat AP melee", "");
+AddVersusTypeTableUniform(stats.versusModFlatAttackpowerRanged, "Creature Type Flat AP ranged", "");
 AddVersusTypeTableUniform(stats.versusModPctDamage, "Creature Type Mult", "%");
 AddVersusTypeTableUniform(stats.versusModPctCritDamage, "Creature Type Crit Mult", "%");

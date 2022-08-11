@@ -744,8 +744,16 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
             -- Attack power
             if spellInfo.defType == DEF_TYPE.RANGED then
                 calcedEffect.attackPower = stats.attackPowerRanged;
+                if stats.versusModFlatAttackpowerRanged[_addon.Target.creatureType] then
+                    calcedEffect.attackPower = calcedEffect.attackPower + stats.versusModFlatAttackpowerRanged[_addon.Target.creatureType].val;
+                    calcedSpell:AddToBuffList(stats.versusModFlatAttackpowerRanged[_addon.Target.creatureType].buffs);
+                end
             else
                 calcedEffect.attackPower = stats.attackPower;
+                if stats.versusModFlatAttackpower[_addon.Target.creatureType] then
+                    calcedEffect.attackPower = calcedEffect.attackPower + stats.versusModFlatAttackpower[_addon.Target.creatureType].val;
+                    calcedSpell:AddToBuffList(stats.versusModFlatAttackpower[_addon.Target.creatureType].buffs);
+                end
             end
 
             calcedEffect.effectiveApCoef = effectData.coefAP * calcedEffect.modBonus;
