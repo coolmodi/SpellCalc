@@ -61,7 +61,8 @@ local function IsDurationEffect(effectType, auraType)
         if auraType == AURA_TYPES.SPELL_AURA_PERIODIC_DAMAGE 
         or auraType == AURA_TYPES.SPELL_AURA_PERIODIC_HEAL 
         or auraType == AURA_TYPES.SPELL_AURA_PERIODIC_LEECH 
-        or auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL then
+        or auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL
+        or auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE then
             return true;
         end
     end
@@ -210,8 +211,9 @@ end
 ---@param spellId integer
 ---@param calcedSpell CalcedSpell|nil
 ---@param parentSpellData CalcedSpell|nil
+---@param parentValue number|nil
 ---@return CalcedSpell
-local function CalcSpell(spellId, calcedSpell, parentSpellData)
+local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
     local spellName, _, _, castTime = GetSpellInfo(spellId);
     _addon.util.PrintDebug("Calculating spell " .. spellId .. " " .. spellName);
     local spellInfo = _addon.spellInfo[spellId];
@@ -250,7 +252,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData)
                     effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.CHANNEL;
                 end
 
-                if red.auraType and red.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL then
+                if red.auraType and (red.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL
+                or red.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE) then
                     effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA;
                 end
 
@@ -591,9 +594,10 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData)
     --------------------------
     -- Flat mods
 
-    local flatMod = 0;
+    local flatMod = parentValue or 0;
+
     if stats.spellModFlatValue[spellId] ~= nil then
-        flatMod = stats.spellModFlatValue[spellId].val;
+        flatMod = flatMod + stats.spellModFlatValue[spellId].val;
         calcedSpell:AddToBuffList(stats.spellModFlatValue[spellId].buffs);
     end
 
@@ -666,7 +670,8 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData)
         -- Trigger spell spell effect, update triggered spell data
         if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL + ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
             _addon.util.PrintDebug("Has trigger spell effect, updating triggered spell!");
-            calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell);
+            local triggerWithValue = effectData.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE and effectData.valueBase or nil;
+            calcedEffect.spellData = CalcSpell(calcedEffect.triggeredSpell, calcedEffect.spellData, calcedSpell, triggerWithValue);
             if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
                 effectHandler[effectData.effectType](effectData.auraType, calcedSpell, i, spellInfo, spellName, spellId);
             end

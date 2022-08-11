@@ -8,6 +8,7 @@ local _addon = select(2, ...);
 ---@field valueBase integer
 ---@field valueRange integer
 ---@field valuePerLevel number|nil
+---@field triggeredSpell integer|nil
 ---@field coef number
 ---@field coefAP number
 ---@field weaponCoef number|nil

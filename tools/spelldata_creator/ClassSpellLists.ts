@@ -32,7 +32,8 @@ const DO_AURAS = [
     AURA_TYPE.SPELL_AURA_DUMMY,
     AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE,
     AURA_TYPE.SPELL_AURA_OBS_MOD_MANA,
-    AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE
+    AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE,
+    AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE
 ];
 
 /* const DMG_SHIELD_DATA: { [index: string]: boolean } = {
@@ -140,7 +141,7 @@ export class ClassSpellLists
                     if (!this.addTriggeredSpellIfValid(effect.EffectTriggerSpell, binaryCache, list)) throw new Error("Triggered spell has no valid effects!");
                 }
 
-                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL)
+                if (effect.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL || effect.EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE)
                 {
                     if (PTSA_IGNORES.indexOf(effect.SpellID) != -1 || effect.EffectTriggerSpell == 0) continue;
                     const tspell = this.spellData.getSpellEffects(effect.EffectTriggerSpell);

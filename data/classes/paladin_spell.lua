@@ -497,8 +497,9 @@ _addon.spellInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 42,
-                valueBase = 20168,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 20168,
                 coef = 0,
                 coefAP = 0,
             },
@@ -581,15 +582,17 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 25914,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 25914,
                 coef = 0,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 64,
-                valueBase = 25912,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 25912,
                 coef = 0,
                 coefAP = 0,
             },
@@ -718,15 +721,17 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 25913,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 25913,
                 coef = 0,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 64,
-                valueBase = 25911,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 25911,
                 coef = 0,
                 coefAP = 0,
             },
@@ -741,15 +746,17 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 25903,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 25903,
                 coef = 0,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 64,
-                valueBase = 25902,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 25902,
                 coef = 0,
                 coefAP = 0,
             },
@@ -1081,15 +1088,17 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 27175,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 27175,
                 coef = 0,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 64,
-                valueBase = 27176,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 27176,
                 coef = 0,
                 coefAP = 0,
             },
@@ -1278,15 +1287,17 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 33074,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 33074,
                 coef = 0,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 64,
-                valueBase = 33073,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 33073,
                 coef = 0,
                 coefAP = 0,
             },
@@ -1621,15 +1632,17 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 48820,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 48820,
                 coef = 0,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 64,
-                valueBase = 48822,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 48822,
                 coef = 0,
                 coefAP = 0,
             },
@@ -1644,15 +1657,17 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 48821,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 48821,
                 coef = 0,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 64,
-                valueBase = 48823,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 48823,
                 coef = 0,
                 coefAP = 0,
             },

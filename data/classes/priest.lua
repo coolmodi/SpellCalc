@@ -25,7 +25,7 @@ _addon.talentDataRaw = {
             },
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
-                affectSpell = {35684416, 0, 64},
+                affectSpell = {35684416},
                 perPoint = 1
             }
         }
@@ -237,7 +237,7 @@ _addon.talentDataRaw = {
             },
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
-                affectSpell = {33587200, 1024, 64},
+                affectSpell = {33587200, 1024},
                 perPoint = 2
             }
         }
@@ -273,7 +273,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {8396800, 524288, 64},
+                affectSpell = {8396800, 524288},
                 perPoint = 2
             },
             {
@@ -307,7 +307,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
-                affectSpell = {8396800, 2, 64},
+                affectSpell = {8396800, 2},
                 perPoint = 20
             }
         }
@@ -319,7 +319,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
-                affectSpell = {8396800, 524288, 64},
+                affectSpell = {8396800, 524288},
                 perPoint = 5
             }
         }
@@ -331,7 +331,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
-                affectSpell = {8388608 + 8192, 0, 64},
+                affectSpell = {8388608 + 8192},
                 scriptKey = "Twisted_Faith_SWP",
                 perPoint = 2
             },
@@ -399,7 +399,7 @@ _addon.aurasPlayer[15473] = {
 -- Inner Focus
 _addon.aurasPlayer[14751] = {
     {type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-    affectSpell = {-908837232, 13205558, 64},
+    affectSpell = {-908837232, 13205558},
     value = 25}
 }
 
@@ -438,15 +438,6 @@ _addon.aurasTarget[47930] = { -- Grace
 --------------------------------------------------------------------------
 -- Passives
 --------------------------------------------------------------------------
-
----@type UnitAuraEffect[]
-_addon.classPassives = {
-    { -- Allow MF crit (MF was made a duration effect in this addon because I was lazy...)
-        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
-        affectSpell = {0, 0, 64},
-        value = 1
-    }
-}
 
 --------------------------------------------------------------------------
 -- Scripts

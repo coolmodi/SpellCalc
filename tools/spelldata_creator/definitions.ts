@@ -154,6 +154,7 @@ interface EffectInfo {
     valueRange: number,
     valuePerLevel: number,
     perResource: number,
+    triggeredSpell: number,
     coef: number,
     coefAP: number,
     forceScaleWithHeal: boolean,

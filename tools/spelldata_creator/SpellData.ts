@@ -257,7 +257,9 @@ export class SpellData {
     getSpellLevel(spellId: number) {
         if (this.spellLevels[spellId]) return this.spellLevels[spellId];
 
-        if (spellId == AUTO_ATTACK_ID || spellId == 23590) {
+        if (spellId == AUTO_ATTACK_ID 
+            || spellId == 23590 
+            || spellId == 58381 /** Mind Flay */) {
             return {
                 ID: 0,
                 DifficultyID: 0,

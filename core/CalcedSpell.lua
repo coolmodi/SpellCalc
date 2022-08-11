@@ -235,7 +235,7 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
         end
 
         if bit.band(effectFlags[i], ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 then
-            newInstance:SetTriggeredSpell(spellRankEffects[i].valueBase, i);
+            newInstance:SetTriggeredSpell(spellRankEffects[i].triggeredSpell, i);
         else
             local effTable = {};
             setmetatable(effTable, CalcedEffect);
@@ -251,7 +251,7 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
             end
 
             if bit.band(effTable.effectFlags, ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
-                effTable.triggeredSpell = spellRankEffects[i].valueBase;
+                effTable.triggeredSpell = spellRankEffects[i].triggeredSpell;
             end
 
             newInstance.effects[i] = effTable;
