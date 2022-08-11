@@ -86,7 +86,6 @@ L.SETTINGS_CALC_REMAINING = "Remaining Casts";
 L.SETTINGS_CALC_REMAINING_DESC = "Calculate possible casts with current mana value instead of always assuming full mana.";
 L.SETTINGS_CALC_EM_HEAD = "Effective Mana Pool";
 L.SETTINGS_CALC_EM_DESC = "Consider mana gained from chosen effects for relevant calculations.";
-L.SETTINGS_CALC_EM_INNER = "Use Innervate";
 L.SETTINGS_CALC_EM_POTION = "Mana Potion";
 L.SETTINGS_CALC_EM_POTION_MAJOR = "Major Mana Potion";
 L.SETTINGS_CALC_EM_POTION_SUPERIOR = "Superior Mana Potion";

@@ -190,13 +190,17 @@ function _addon:GetEffectiveManaPool()
             potVal = 1200;
         elseif SpellCalc_settings.calcEffManaPotionTypeNew == "SUPER" then
             potVal = 2400;
+        elseif SpellCalc_settings.calcEffManaPotionTypeNew == "RUNIC" then
+            potVal = 4300;
+        elseif SpellCalc_settings.calcEffManaPotionTypeNew == "RUNIC_ENGI" then
+            potVal = 5375;
         end
         mana = mana + potVal;
     end
 
     if SpellCalc_settings.calcEffManaInnervate then
-        -- Regen in 5sec rule is already accounted for in effective mana cost, we can't add it again here!
-        mana = mana + stats.manaRegBase * 100 - stats.manaRegCasting * 20;
+        -- lvl 80 druid base mana * 225%
+        mana = mana + 3496 * 2.25;
     end
 
     return mana;

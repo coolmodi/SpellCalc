@@ -495,7 +495,8 @@ local SETTINGS_TABLE = {
 						calcEffManaInnervate = {
 							order = 2,
 							type = "toggle",
-							name = L.SETTINGS_CALC_EM_INNER
+							name = L["Innervate"],
+                            desc = L["Innervate from a lvl 80 druid."]
 						},
 						calcEffManaRune = {
 							order = 3,
@@ -511,7 +512,9 @@ local SETTINGS_TABLE = {
 								SUPER = L.SETTINGS_CALC_EM_POTION_SUPER,
 								MAJOR = L.SETTINGS_CALC_EM_POTION_MAJOR,
 								SUPERIOR = L.SETTINGS_CALC_EM_POTION_SUPERIOR,
-								GREATER = L.SETTINGS_CALC_EM_POTION_GREATER
+								GREATER = L.SETTINGS_CALC_EM_POTION_GREATER,
+                                RUNIC = L["Runic Mana Potion"],
+                                RUNIC_ENGI = L["Runic (Engineer + 25%)"],
 							}
 						}
 					}
