@@ -92,6 +92,29 @@ local function ApplyOrRemoveByMask(apply, name, value, destTable, mask)
     end
 end
 
+--- Multiplicatively apply or remove effect affecting a SpellClassSet.
+---@param apply boolean
+---@param name string The name of the buff
+---@param value integer The effect value, negative to remove buff
+---@param destTable table<integer, UniformStatMult> The destination table
+---@param setMasks integer[] The masks of class spell sets to affect
+local function ApplyOrRemoveSpellSetMult(apply, name, value, destTable, setMasks)
+    ---@type table<integer, boolean>
+    local spellIdsDone = {};
+    for k, setMask in ipairs(setMasks) do
+        for setBit, spellSet in pairs(_addon.spellClassSet[k]) do
+            if bit.band(setBit, setMask) > 0 then
+                for _, spellId in ipairs(spellSet) do
+                    if not spellIdsDone[spellId] then
+                        spellIdsDone[spellId] = true;
+                        ApplyOrRemoveMult(apply, value, destTable[spellId], name);
+                    end
+                end
+            end
+        end
+    end
+end
+
 ---Multiplicatively apply or remove effect by mask for table with bit position as keys.
 ---@param apply boolean
 ---@param name string The name of the buff
@@ -135,6 +158,10 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE] = stats.spellModAllowDotHaste,
     [EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT] = stats.spellModExtraOnCrit,
     [EFFECT_TYPE.SPELLMOD_DOT_ON_HIT] = stats.spellModDotOnHit,
+}
+
+local effectAffectSpellSetPersonal = {
+    [EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER] = stats.targetSpellModDmgTakenPersonal,
 }
 
 local effectSimpleStat = {
@@ -287,9 +314,17 @@ local function AuraEffectUpdate(apply, name, effectBase, value, auraId, personal
     end
     _addon.util.PrintDebug(("Change buff %s effect %d > %f"):format(name, effectBase.type, value));
 
-    if effectBase.affectSpell and effectAffectSpellSet[effectBase.type] then
-        ApplyOrRemoveSpellSet(apply, name, value, effectAffectSpellSet[effectBase.type], effectBase.affectSpell);
-        return;
+    if effectBase.affectSpell then
+        if effectAffectSpellSet[effectBase.type] then
+            ApplyOrRemoveSpellSet(apply, name, value, effectAffectSpellSet[effectBase.type], effectBase.affectSpell);
+            return;
+        end
+        if effectAffectSpellSetPersonal[effectBase.type] then
+            if personal then
+                ApplyOrRemoveSpellSetMult(apply, name, value, effectAffectSpellSetPersonal[effectBase.type], effectBase.affectSpell);
+            end
+            return;
+        end
     end
 
     if effectSimpleStat[effectBase.type] then

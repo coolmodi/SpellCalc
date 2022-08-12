@@ -130,6 +130,11 @@ local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration,
             calcedSpell:AddToBuffList(stats.targetSchoolModDamageTaken[si.school].buffs);
         end
 
+        if stats.targetSpellModDmgTakenPersonal[spellId] ~= nil then
+            bonusMod = bonusMod * stats.targetSpellModDmgTakenPersonal[spellId].currentMult;
+            calcedSpell:AddToBuffList(stats.targetSpellModDmgTakenPersonal[spellId].buffs);
+        end
+
         local mechanic = effectData.mechanic;
         if mechanic and stats.targetMechanicModDmgTakenPct[mechanic].val ~= 0 then
             local t = stats.targetMechanicModDmgTakenPct[mechanic];

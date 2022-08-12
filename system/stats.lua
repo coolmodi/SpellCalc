@@ -1,6 +1,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
+---@return UniformStat
 local function UniformStat()
     ---@class UniformStat
     ---@field val integer
@@ -13,6 +14,7 @@ local function UniformStat()
     }
 end
 
+---@return UniformStatMult
 local function UniformStatMult()
     ---@class UniformStatMult
     ---@field val number
@@ -80,6 +82,17 @@ end
 local function SpellStatTable()
     ---@type table<integer, UniformStat>
     local spellTable = {};
+    return spellTable;
+end
+
+local function SpellStatTableMult()
+    ---@type table<integer, UniformStatMult>
+    local spellTable = setmetatable({}, {
+        __index = function(self, key)
+            rawset(self, key, UniformStatMult());
+            return self[key];
+        end
+    });
     return spellTable;
 end
 
@@ -208,6 +221,8 @@ local stats = {
     spellModAllowDotHaste = SpellStatTable(),
     spellModExtraOnCrit = SpellStatTable(),
     spellModDotOnHit = SpellStatTable(),
+
+    targetSpellModDmgTakenPersonal = SpellStatTableMult(),
 
     versusModPctDamage = CreatureTypeStatTable(),
     versusModPctCritDamage = CreatureTypeStatTable(),

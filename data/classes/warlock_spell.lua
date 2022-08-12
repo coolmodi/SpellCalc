@@ -2003,6 +2003,44 @@ _addon.spellInfo = {
             },
         }
     },
+    [30404] = { -- Unstable Affliction(Rank 2)
+        spellLevel = 60,
+        maxLevel = 69,
+        duration = 15,
+        baseCostPct = 15,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 140,
+                valueRange = 0,
+                coef = 0.2,
+                coefAP = 0,
+            },
+        }
+    },
+    [30405] = { -- Unstable Affliction(Rank 3)
+        spellLevel = 70,
+        maxLevel = 74,
+        duration = 15,
+        baseCostPct = 15,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 175,
+                valueRange = 0,
+                coef = 0.2,
+                coefAP = 0,
+            },
+        }
+    },
     [30413] = { -- Shadowfury(Rank 2)
         spellLevel = 60,
         maxLevel = 69,
@@ -2701,6 +2739,44 @@ _addon.spellInfo = {
                 valueRange = 94,
                 valuePerLevel = 4,
                 coef = 0.714,
+                coefAP = 0,
+            },
+        }
+    },
+    [47841] = { -- Unstable Affliction(Rank 4)
+        spellLevel = 75,
+        maxLevel = 79,
+        duration = 15,
+        baseCostPct = 15,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 197,
+                valueRange = 0,
+                coef = 0.2,
+                coefAP = 0,
+            },
+        }
+    },
+    [47843] = { -- Unstable Affliction(Rank 5)
+        spellLevel = 80,
+        maxLevel = 84,
+        duration = 15,
+        baseCostPct = 15,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 230,
+                valueRange = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
