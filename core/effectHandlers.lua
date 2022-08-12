@@ -20,7 +20,11 @@ local function FillBaseValues(calcedEffect, spellInfo, effectData, flat, mod, ad
 
     local baseLow = effectData.valueBase + flat;
     if effectData.valuePerLevel and effectData.valuePerLevel > 0 then
-        baseLow = baseLow + (math.min(UnitLevel("player"), spellInfo.maxLevel) - spellInfo.spellLevel) * effectData.valuePerLevel;
+        local refLevel = UnitLevel("player");
+        if spellInfo.maxLevel and spellInfo.maxLevel > 0 and spellInfo.maxLevel < refLevel then
+            refLevel = spellInfo.maxLevel;
+        end
+        baseLow = baseLow + (refLevel - spellInfo.spellLevel) * effectData.valuePerLevel;
     end
     baseLow = baseLow * mod + add;
 
