@@ -63,8 +63,8 @@ end
 local function GetSpellHitChance()
     local tData = _addon.Target;
 
-    if tData.levelDiff < -2 then
-        return 99;
+    if tData.levelDiff < -3 then
+        return 100;
     elseif tData.levelDiff < 3 then
         return 96 - tData.levelDiff;
     end
