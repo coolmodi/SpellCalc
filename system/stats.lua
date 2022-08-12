@@ -313,7 +313,7 @@ do
     function _addon:UpdateManaRegen()
         local _, int = UnitStat("player", 4);
         local _, spirit = UnitStat("player", 5);
-        local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]);
+        local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]) * 0.6;
         local changed = false;
 
         local newmanaRegCasting = spiritIntRegen * (stats.fsrRegenMult.val/100);
