@@ -563,13 +563,6 @@ local function SchoolDamage(_, calcedSpell, effNum, spellInfo, spellName, spellI
 
     Mitigate(spellName, calcedSpell, calcedEffect);
 
-    if stats.impShadowBolt.val ~= 0 and spellName == SHADOW_BOLT and SpellCalc_settings.useImpSB then
-        local mod = stats.impShadowBolt.val/100;
-        local pCritIn4 = (1 - math.pow(1 - calcedSpell.critChance/100, 4));
-        calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation * (1 + mod * pCritIn4);
-        calcedSpell:AddToBuffList(stats.impShadowBolt.buffs);
-    end
-
     if stats.shamanLightningOverload[spellId] and stats.shamanLightningOverload[spellId].val > 0 then
         local procChance = stats.shamanLightningOverload[spellId].val / 100;
         -- Procs do 50% of normal spell damage and they can miss.

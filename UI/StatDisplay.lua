@@ -389,7 +389,6 @@ AddUniformStatTable(stats.clearCastChance, "Clearcast chance", "%");
 AddTitle("Misc");
 AddUniformStatTable(stats.illumination, "Illumination", "%");
 AddUniformStatTable(stats.ignite, "Ignite", "");
-AddUniformStatTable(stats.impShadowBolt, "Imp Shadow Bolt", "%");
 AddUniformStatTable(stats.earthfuryReturn, "Earthfury return", "");
 
 AddTitle("Target");

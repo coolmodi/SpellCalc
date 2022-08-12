@@ -174,16 +174,6 @@ _addon.talentDataRaw = {
     -----------------------------
     -- Destruction
     -----------------------------
-    { -- Improved Shadow Bolt
-        tree = 3,
-        talent = 1,
-        effects = {
-            {
-                type = _addon.CONST.EFFECT_TYPE.WL_IMP_SB,
-                perPoint = 4
-            }
-        }
-    },
     { -- Devastation
         tree = 3,
         talent = 7,
@@ -469,21 +459,4 @@ do
     end
 
     table.insert(_addon.talentDataRaw, talent);
-end
-
-
-
-
--- Add class settings page
-function _addon.ClassSettings()
-    if SpellCalc_settings.useImpSB == nil then
-        SpellCalc_settings.useImpSB = false;
-    end
-    return {
-        useImpSB = {
-            type = "toggle",
-            name = L.SETTINGS_WL_USE_IMP_SB,
-            desc = L.SETTINGS_WL_USE_IMP_SB_TT,
-        }
-    }
 end

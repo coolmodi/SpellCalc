@@ -67,9 +67,6 @@ L.SETTINGS_AB_SEAL_VALUE = "Seals";
 L.SETTINGS_AB_SEAL_VALUE_HIT = "Avg. hit";
 L.DAMAGE_OVER_DURATION = "Damage over duration";
 
-L.SETTINGS_WL_USE_IMP_SB = "Use Improved Shadow Bolt talent";
-L.SETTINGS_WL_USE_IMP_SB_TT = "Use talent in Shadow Bolt dps calculation, assumes nobody \"steals\" your debuff charges.";
-
 L.SETTINGS_HEAL_HEAD = "Healing";
 L.SETTINGS_HEAL_NO_CRIT = "Disregard crit heals";
 L.SETTINGS_HEAL_NO_CRIT_TT = "Do not consider crits for hps and efficiency calculation.";
