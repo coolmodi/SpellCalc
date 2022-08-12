@@ -113,7 +113,7 @@ local function UpdateAuratype(unit, filter)
     local unitMechanics = mechanicsActive[unit];
     local mechanicAuras = _addon.mechanicAuras;
 
-    for i = 1, 40 do
+    for i = 1, 255 do
         local name, _, count, _, _, _, source, _, _, spellId = UnitAura(unit, i, filter);
         if not name then break end
         local isPersonal = source == "player";
