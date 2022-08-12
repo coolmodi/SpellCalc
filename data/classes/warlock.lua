@@ -250,6 +250,16 @@ _addon.aurasPlayer[25228] = {
     value = 3,}
 };
 
+
+
+_addon.aurasPlayer[70840] = { -- Devious Minds
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        value = 10
+    }
+}
+
 --------------------------------------------------------------------------
 -- Target auras
 --------------------------------------------------------------------------

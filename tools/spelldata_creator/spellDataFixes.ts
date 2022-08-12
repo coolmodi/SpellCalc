@@ -353,6 +353,11 @@ function warlockFixes(se: {[index: number]: SpellEffect})
         [47836]: 47834,
     }
 
+    const shadowFlame: {[sid: number]: number} = {
+        [47897]: 47960,
+        [61290]: 61291,
+    }
+
     for(let effId in se) {
         let eff = se[effId];
         // Ignore trigger effect for shard debuff
@@ -361,6 +366,16 @@ function warlockFixes(se: {[index: number]: SpellEffect})
         } else if (SOC[eff.SpellID] && eff.EffectIndex === 1) {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
             eff.EffectTriggerSpell = SOC[eff.SpellID];
+        } else if (shadowFlame[eff.SpellID] && eff.EffectIndex === 0) {
+            const clone = cloneEntry(eff);
+            clone.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
+            clone.EffectTriggerSpell = shadowFlame[eff.SpellID];
+            clone.EffectIndex = 1;
+            clone.EffectBasePoints = 0;
+            clone.EffectBonusCoefficient = 0;
+            clone.EffectRealPointsPerLevel = 0;
+            clone.EffectDieSides = 0;
+            se[clone.ID] = clone;
         }
     }
 }

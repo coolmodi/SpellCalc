@@ -2954,6 +2954,32 @@ _addon.spellInfo = {
                 coef = 0.107,
                 coefAP = 0,
             },
+            [2] = {
+                effectType = 64,
+                valueBase = 0,
+                valueRange = 0,
+                triggeredSpell = 47960,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [47960] = { -- Shadowflame
+        spellLevel = 75,
+        maxLevel = 83,
+        duration = 8,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 136,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
         }
     },
     [48181] = { -- Haunt(Rank 1)
@@ -3161,6 +3187,32 @@ _addon.spellInfo = {
                 valueRange = 56,
                 valuePerLevel = 2.5,
                 coef = 0.107,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 64,
+                valueBase = 0,
+                valueRange = 0,
+                triggeredSpell = 61291,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [61291] = { -- Shadowflame
+        spellLevel = 75,
+        maxLevel = 83,
+        duration = 8,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 2,
+                valueBase = 161,
+                valueRange = 0,
+                coef = 0,
                 coefAP = 0,
             },
         }
