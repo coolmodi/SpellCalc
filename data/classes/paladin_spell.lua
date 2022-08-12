@@ -1979,6 +1979,7 @@ _addon.aurasPlayer[31801] = { -- Seal of Vengeance
     }
 };
 
+---@type SpellClassSet
 _addon.spellClassSet = {
     [1] = {
         [1] = {

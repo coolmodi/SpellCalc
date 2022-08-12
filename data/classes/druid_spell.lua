@@ -4835,6 +4835,7 @@ _addon.spellInfo = {
     },
 };
 
+---@type SpellClassSet
 _addon.spellClassSet = {
     [1] = {
         [1] = {

@@ -676,7 +676,7 @@ end
     const classSetNum: number = SpellClassSet[pclass.toUpperCase()];
     const classSpellSet = classSpellSets.getClassSets(classSetNum);
 
-    str += "_addon.spellClassSet = {\n";
+    str += "---@type SpellClassSet\n_addon.spellClassSet = {\n";
     for (let i = 0; i < 4; i++) {
         let sset = classSpellSet[i];
         str += `\t[${i + 1}] = {\n`;

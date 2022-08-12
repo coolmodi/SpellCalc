@@ -8,7 +8,9 @@
         "Ferocious Bite": {"0": {"ap": 0.07}},
         "Rip": {"0": {"ap": 0.01}},
         "Shadow Word: Pain": {"0": {"sp": 0.1833}},
-        "Pounce Bleed": {"0": {"ap": 0.03}}
+        "Pounce Bleed": {"0": {"ap": 0.03}},
+        "Corruption": {"0": {"sp": 0.2}},
+        "Immolate": {"1": {"sp": 0.2}}
     },
     "ids": {
         "20187": {"0": {"ap": 0.2}},

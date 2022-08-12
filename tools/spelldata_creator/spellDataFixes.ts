@@ -350,6 +350,7 @@ function warlockFixes(se: {[index: number]: SpellEffect})
     const SOC: {[sid: number]: number} = {
         [27243]: 27285,
         [47835]: 47833,
+        [47836]: 47834,
     }
 
     for(let effId in se) {

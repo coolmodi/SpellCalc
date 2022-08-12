@@ -23,7 +23,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 10,
                 valueRange = 0,
-                coef = 0.0624,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -50,7 +50,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 4,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -189,7 +189,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 8,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -312,7 +312,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 18,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -418,7 +418,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 33,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -577,7 +577,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 18,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -596,7 +596,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 37,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -686,7 +686,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 54,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -829,7 +829,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 51,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -856,7 +856,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 73,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -883,7 +883,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 97,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -902,7 +902,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 81,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -921,7 +921,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 111,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -1555,7 +1555,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 102,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -1574,7 +1574,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 137,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -1723,7 +1723,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 123,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -1742,7 +1742,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 150,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -1845,6 +1845,33 @@ _addon.spellInfo = {
                 valueRange = 0,
                 valuePerLevel = 3.4,
                 coef = 0.214,
+                coefAP = 0,
+            },
+        }
+    },
+    [27243] = { -- Seed of Corruption(Rank 1)
+        spellLevel = 70,
+        maxLevel = 0,
+        duration = 18,
+        baseCostPct = 34,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 174,
+                valueRange = 0,
+                coef = 0.25,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 64,
+                valueBase = 0,
+                valueRange = 0,
+                triggeredSpell = 27285,
+                coef = 0,
                 coefAP = 0,
             },
         }
@@ -2259,7 +2286,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 139,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -2286,7 +2313,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 157,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -2305,7 +2332,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 164,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -2324,7 +2351,7 @@ _addon.spellInfo = {
                 tickPeriod = 3,
                 valueBase = 180,
                 valueRange = 0,
-                coef = 0,
+                coef = 0.2,
                 coefAP = 0,
             },
         }
@@ -2572,6 +2599,22 @@ _addon.spellInfo = {
             },
         }
     },
+    [47834] = { -- Seed of Corruption(Rank 3)
+        spellLevel = 80,
+        maxLevel = 0,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 1633,
+                valueRange = 264,
+                valuePerLevel = 2,
+                coef = 0.286,
+                coefAP = 0,
+            },
+        }
+    },
     [47835] = { -- Seed of Corruption(Rank 2)
         spellLevel = 75,
         maxLevel = 0,
@@ -2614,6 +2657,14 @@ _addon.spellInfo = {
                 valueBase = 253,
                 valueRange = 0,
                 coef = 0.25,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 64,
+                valueBase = 0,
+                valueRange = 0,
+                triggeredSpell = 47834,
+                coef = 0,
                 coefAP = 0,
             },
         }
@@ -3116,6 +3167,7 @@ _addon.spellInfo = {
     },
 };
 
+---@type SpellClassSet
 _addon.spellClassSet = {
     [1] = {
         [1] = {

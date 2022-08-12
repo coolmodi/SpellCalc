@@ -11,4 +11,5 @@ _addon.spellBaseInfo = {};
 
 _addon.spellInfo = {};
 
+---@type SpellClassSet
 _addon.spellClassSet = {};
