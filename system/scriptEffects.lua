@@ -141,7 +141,8 @@ function scripting.HandleEffect(apply, name, value, effectBase, auraId, personal
 
     if (type == EFFECT_TYPE.SCRIPT_SPELLMOD_CRIT_CHANCE
         or type == EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT
-        or type == EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE)
+        or type == EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_PRE
+        or type == EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_BASEVALUES)
         and effectBase.affectSpell then
         scriptValueCache[scriptKey] = apply and value or nil;
         ApplyOrRemoveSpellSet(apply, type, effectBase.affectSpell, scriptKey, script);

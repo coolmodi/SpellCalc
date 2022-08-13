@@ -5,7 +5,7 @@ if playerClass ~= "WARLOCK" then
     return;
 end
 
-local L = _addon:GetLocalization();
+local IMMOLATE = GetSpellInfo(47811);
 
 ---@type TalentDataRawEntry[]
 _addon.talentDataRaw = {
@@ -192,24 +192,49 @@ _addon.talentDataRaw = {
             }
         }
     },
-    --[[ 
     -----------------------------
     -- Destruction
     -----------------------------
-    { -- Devastation
+    { -- Improved Shadow Bolt
         tree = 3,
-        talent = 7,
+        tier = 1,
+        column = 2,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {901, 4288},
-                perPoint = 1
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {1},
+                perPoint = 2
+            }
+        }
+    },
+    { -- Aftermath
+        tree = 3,
+        tier = 2,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {4},
+                perPoint = 3
+            }
+        }
+    },
+    { -- Ruin
+        tree = 3,
+        tier = 3,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+                affectSpell = {5093, 12783808},
+                perPoint = 20
             }
         }
     },
     { -- Improved Searing Pain
         tree = 3,
-        talent = 11,
+        tier = 4,
+        column = 4,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -221,49 +246,75 @@ _addon.talentDataRaw = {
     },
     { -- Improved Immolate
         tree = 3,
-        talent = 13,
+        tier = 5,
+        column = 2,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {4},
-                perPoint = 5
+                perPoint = 10
             }
         }
     },
-    { -- Ruin
+    { -- Devastation
         tree = 3,
-        talent = 14,
+        tier = 5,
+        column = 3,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
-                affectSpell = {965, 4288},
-                perPoint = 100
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {997, 8589504},
+                perPoint = 5
             }
         }
     },
     { -- Emberstorm
         tree = 3,
-        talent = 16,
+        tier = 6,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {868, 192},
-                perPoint = 2
+                affectSpell = {868, 8519872},
+                perPoint = 3
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {100, 8388608, 2},
+                perPoint = 3
             }
         }
     },
     { -- Shadow and Flame
         tree = 3,
-        talent = 20,
+        tier = 8,
+        column = 2,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
-                affectSpell = {1, 64},
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_SPELL_SCALE,
+                affectSpell = {129, 131136},
                 perPoint = 4
             }
         }
-    }, 
-    ]]
+    },
+    { -- Fire and Brimstone
+        tree = 3,
+        tier = 10,
+        column = 2,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+                affectSpell = {0, 64 + 131072},
+                scriptKey = "Fire_and_Brimstone",
+                perPoint = 2
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {0, 8388608},
+                perPoint = 5
+            },
+        }
+    },
 }
 
 --------------------------------------------------------------------------
@@ -439,6 +490,28 @@ _addon.aurasPlayer[63167] = { -- Decimation 2
     },
 }
 
+_addon.aurasPlayer[18093] = { -- Pyroclasm 1
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 2
+    },
+}
+_addon.aurasPlayer[63243] = { -- Pyroclasm 2
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 4
+    },
+}
+_addon.aurasPlayer[63244] = { -- Pyroclasm 3
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 6
+    },
+}
+
 --------------------------------------------------------------------------
 -- Target auras
 --------------------------------------------------------------------------
@@ -488,11 +561,12 @@ _addon.aurasTarget[32391] = { -- Shadow Embrace 5
     }
 }
 
+---@type UnitAuraEffect[]
 local haunt = {
     {
-        type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
-        affectSpell = {17418, 273},
-        value = 20
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,
+        scriptKey = "Haunt_Script",
+        value = 0
     }
 }
 _addon.aurasTarget[48181] = haunt; -- Haunt 1
@@ -504,9 +578,37 @@ _addon.aurasTarget[59164] = haunt; -- Haunt 4
 -- Additional Glyphs (generated effects are in <class>_spell.lua)
 --------------------------------------------------------------------------
 
+_addon.classGlyphs[63302] = { -- Glyph of Haunt
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        value = 3,
+        scriptKey = "Glyph_of_Haunt",
+    },
+}
+
 --------------------------------------------------------------------------
 -- Passives
 --------------------------------------------------------------------------
+
+---@type UnitAuraEffect[]
+_addon.classPassives = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT,
+        affectSpell = {4},
+        value = 1,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+        scriptKey = IMMOLATE,
+        value = 1,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_BASEVALUES,
+        affectSpell = {0, 64},
+        scriptKey = "Incinerate_Extra",
+        value = 1,
+    }
+}
 
 --------------------------------------------------------------------------
 -- Scripts
@@ -566,4 +668,41 @@ do
     end
 
     table.insert(_addon.talentDataRaw, talent);
+end
+
+_addon.scripting.RegisterScript("Fire_and_Brimstone", function (val, cs, ce, spellId, si, scriptType, spellName)
+    assert(ce, "Fire_and_Brimstone called with ce nil!");
+    if _addon.Target.HasAuraName(IMMOLATE, true) then
+        ce.modBonus = ce.modBonus * (1 + val/100);
+    end
+end);
+
+_addon.scripting.RegisterScript("Incinerate_Extra", function (val, cs, ce, spellId, si, scriptType, spellName)
+    assert(ce, "Incinerate_Extra called with ce nil!");
+    if _addon.Target.HasAuraName(IMMOLATE) then
+        local extra = ce.modBase * si.effects[1].valueBase / 4;
+        ce.min = ce.min + extra;
+        ce.max = ce.max + extra + ce.modBase * si.effects[1].valueRange / 4;
+        ce.avg = 0.5 * (ce.min + ce.max);
+        ce.avgCombined = ce.avg;
+    end
+end);
+
+do
+    ---@type AuraEffectBase
+    local hauntAuraEffect = {
+        type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
+        affectSpell = {17418, 273},
+    }
+
+    _addon.scripting.RegisterAuraScript("Haunt_Script", function (apply, auraId, fromPlayer, scriptType, cacheValue)
+        if not fromPlayer then return end
+        local name = "HauntScript";
+        local val = 20 + _addon.scripting.GetValue("Glyph_of_Haunt");
+        if apply then
+            _addon:ApplyAuraEffect(name, hauntAuraEffect, val, auraId, fromPlayer);
+        else
+            _addon:RemoveAuraEffect(name, hauntAuraEffect, val, auraId, fromPlayer);
+        end
+    end);
 end

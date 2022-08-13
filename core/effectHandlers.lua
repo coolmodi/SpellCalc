@@ -8,13 +8,16 @@ local SHADOW_BOLT = GetSpellInfo(686);
 
 ---Fill effect base values.
 ---Fills min, max, avg and avgCombined.
+---@param calcedSpell CalcedSpell
 ---@param calcedEffect CalcedEffect
+---@param spellId integer
 ---@param spellInfo SpellInfo
+---@param spellName string
 ---@param effectData SpellEffectData
 ---@param flat number Flat value added before modifier.
 ---@param mod number|nil Modifier for base values.
 ---@param add number|nil Additional value to add after modifier.
-local function FillBaseValues(calcedEffect, spellInfo, effectData, flat, mod, add)
+local function FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, flat, mod, add)
     mod = mod or 1;
     add = add or 0;
 
@@ -32,6 +35,8 @@ local function FillBaseValues(calcedEffect, spellInfo, effectData, flat, mod, ad
     calcedEffect.max = baseLow + effectData.valueRange;
     calcedEffect.avg = baseLow + effectData.valueRange * 0.5;
     calcedEffect.avgCombined = calcedEffect.avg;
+
+    _addon.scripting.DoSpell(_addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_BASEVALUES, calcedSpell, calcedEffect, spellId, spellInfo, spellName);
 end
 
 ---Fill crit values and avgCombined. Also handle on crit effects.
@@ -254,7 +259,7 @@ local function Starfall(calcedSpell, effNum, spellInfo, spellName, spellId)
 
     assert(effectData, "Effect data in Starfall handler missing!");
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
     FillCritValues(calcedSpell, calcedEffect, spellId);
     Mitigate(spellName, calcedSpell, calcedEffect);
 
@@ -352,7 +357,7 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, spellName, spellId
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
 
     if stats.spellModAllowDotCrit[spellId] and stats.spellModAllowDotCrit[spellId].val > 0 then
         FillCritValues(calcedSpell, calcedEffect, spellId);
@@ -388,7 +393,7 @@ local function PeriodicHeal(calcedSpell, effNum, spellInfo, spellName, spellId)
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedEffect.ticks;
 
@@ -411,11 +416,12 @@ end
 ---@param effNum integer
 ---@param spellInfo SpellInfo
 ---@param spellName string
-local function DamageShield(calcedSpell, effNum, spellInfo, spellName)
+---@param spellId integer
+local function DamageShield(calcedSpell, effNum, spellInfo, spellName, spellId)
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
 
     local total = (calcedSpell.charges and calcedSpell.charges > 0) and calcedSpell.charges * calcedEffect.avgCombined or calcedEffect.avgCombined;
 
@@ -431,11 +437,12 @@ end
 ---@param effNum integer
 ---@param spellInfo SpellInfo
 ---@param spellName string
-local function AbsorbAura(calcedSpell, effNum, spellInfo, spellName)
+---@param spellId integer
+local function AbsorbAura(calcedSpell, effNum, spellInfo, spellName, spellId)
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 
@@ -449,11 +456,12 @@ end
 ---@param effNum integer
 ---@param spellInfo SpellInfo
 ---@param spellName string
-local function ManaShield(calcedSpell, effNum, spellInfo, spellName)
+---@param spellId integer
+local function ManaShield(calcedSpell, effNum, spellInfo, spellName, spellId)
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 
@@ -535,7 +543,7 @@ local function SchoolDamage(_, calcedSpell, effNum, spellInfo, spellName, spellI
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
     FillCritValues(calcedSpell, calcedEffect, spellId);
 
     -- TODO MAGE: make ignite extra on crit?
@@ -600,7 +608,7 @@ function HealEffect(_, calcedSpell, effNum, spellInfo, spellName, spellId)
     local calcedEffect = calcedSpell.effects[effNum];
     local effectData = spellInfo.effects[effNum];
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
     FillCritValues(calcedSpell, calcedEffect, spellId);
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
@@ -739,7 +747,7 @@ local function WeaponDamage(_, calcedSpell, effNum, spellInfo, spellName, spellI
     --print(weaponLow, "-", weaponHigh);
     --print("coef", weaponCoef, "bv", baseValue, "bi", baseIncrease, "(fm)", calcedEffect.flatMod);
 
-    FillBaseValues(calcedEffect, spellInfo, effectData, calcedEffect.flatMod, weaponCoef, calcedEffect.effectivePower);
+    FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, weaponCoef, calcedEffect.effectivePower);
     calcedEffect.min = calcedEffect.min + weaponLow;
     calcedEffect.max = calcedEffect.max + weaponHigh;
     calcedEffect.avg = calcedEffect.avg + 0.5 * (weaponLow + weaponHigh);
