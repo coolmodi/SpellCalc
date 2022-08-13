@@ -153,16 +153,13 @@ _addon.talentDataRaw = {
             }
         }
     },
-    --[[ 
-    
-    
-    
     -----------------------------
     -- Demonology
     -----------------------------
     { -- Improved Health Funnel
         tree = 2,
-        talent = 4,
+        tier = 2,
+        column = 1,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
@@ -171,6 +168,31 @@ _addon.talentDataRaw = {
             }
         }
     },
+    { -- Molten Core
+        tree = 2,
+        tier = 6,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+                affectSpell = {4},
+                perPoint = 3000
+            }
+        }
+    },
+    { -- Demonic Pact
+        tree = 2,
+        tier = 10,
+        column = 2,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.FIRE + _addon.CONST.SCHOOL_MASK.SHADOW,
+                perPoint = 2
+            }
+        }
+    },
+    --[[ 
     -----------------------------
     -- Destruction
     -----------------------------
@@ -248,81 +270,116 @@ _addon.talentDataRaw = {
 -- Player auras
 --------------------------------------------------------------------------
 
--- Demonic Sacrifice Succubus
-_addon.aurasPlayer[18791] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
-    value = 15,}
-};
-
--- Demonic Sacrifice Imp
-_addon.aurasPlayer[18789] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
-    value = 15,}
-};
-
 -- Master Demonologist Succubus
 _addon.aurasPlayer[23761] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 2,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
+        value = 1,
+    }
 };
 _addon.aurasPlayer[23833] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 4,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
+        value = 2,
+    }
 };
 _addon.aurasPlayer[23834] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 6,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
+        value = 3,
+    }
 };
 _addon.aurasPlayer[23835] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 8,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
+        value = 4,
+    }
 };
 _addon.aurasPlayer[23836] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 10,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.SHADOW,
+        value = 5,
+    }
 };
+
 -- Master Demonologist Felguard
 _addon.aurasPlayer[35702] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 1,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        value = 1,
+    }
 };
 _addon.aurasPlayer[35703] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 2,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        value = 2,
+    }
 };
 _addon.aurasPlayer[35704] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 3,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        value = 3,
+    }
 };
 _addon.aurasPlayer[35705] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 4,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        value = 4,
+    }
 };
 _addon.aurasPlayer[35706] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 5,}
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        value = 5,
+    }
 };
 
--- Soul Link
-_addon.aurasPlayer[25228] = {
-    {type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-    affectMask = _addon.CONST.SCHOOL_MASK.ALL,
-    value = 3,}
+-- Master Demonologist Imp
+_addon.aurasPlayer[23759] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 1,
+    }
 };
-
-
+_addon.aurasPlayer[23826] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 2,
+    }
+};
+_addon.aurasPlayer[23827] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 3,
+    }
+};
+_addon.aurasPlayer[23828] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 4,
+    }
+};
+_addon.aurasPlayer[23829] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.FIRE,
+        value = 5,
+    }
+};
 
 _addon.aurasPlayer[70840] = { -- Devious Minds (T10)
     {
@@ -330,6 +387,56 @@ _addon.aurasPlayer[70840] = { -- Devious Minds (T10)
         affectMask = _addon.CONST.SCHOOL_MASK.ALL,
         value = 10
     }
+}
+
+_addon.aurasPlayer[47383] = { -- Molten Core 1
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {0, 192},
+        value = 6
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {0, 128},
+        value = 5
+    }
+}
+_addon.aurasPlayer[71162] = { -- Molten Core 2
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {0, 192},
+        value = 12
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {0, 128},
+        value = 10
+    }
+}
+_addon.aurasPlayer[71165] = { -- Molten Core 3
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {0, 192},
+        value = 18
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {0, 128},
+        value = 15
+    }
+}
+
+_addon.aurasPlayer[63165] = { -- Decimation 1
+    {
+        type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 0
+    },
+}
+_addon.aurasPlayer[63167] = { -- Decimation 2
+    {
+        type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 0
+    },
 }
 
 --------------------------------------------------------------------------
