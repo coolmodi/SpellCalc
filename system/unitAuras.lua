@@ -133,7 +133,7 @@ local function UpdateAuratype(unit, filter)
             unitMechanics[m] = true;
         end
 
-        if auraTable[spellId] then
+        if auraTable[spellId] and (not auraTable[spellId][1].onlyPersonal or isPersonal) then
             local auraEffects = auraTable[spellId];
 
             if auraStacksList[spellId] ~= count then

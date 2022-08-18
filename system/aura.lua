@@ -319,9 +319,8 @@ local function AuraEffectUpdate(apply, name, effectBase, value, auraId, personal
             return;
         end
         if effectAffectSpellSetPersonal[effectBase.type] then
-            if personal then
-                ApplyOrRemoveSpellSetMult(apply, name, value, effectAffectSpellSetPersonal[effectBase.type], effectBase.affectSpell);
-            end
+            assert(personal, "Aura effect update for personal only effect reached, aura definition wrong? "..name);
+            ApplyOrRemoveSpellSetMult(apply, name, value, effectAffectSpellSetPersonal[effectBase.type], effectBase.affectSpell);
             return;
         end
     end

@@ -63,6 +63,7 @@ _addon.ClassSettings = function() end
 ---@field scriptKey string|nil Key for script effect. Must be unique!
 ---@field auraCategory DebuffCategory Effects from same category don't stack with each other.
 ---@field requiredStance PlayerStance
+---@field onlyPersonal boolean|nil
 
 ---@class UnitAuraEffect : AuraEffectBase
 ---@field value integer|nil

@@ -123,7 +123,6 @@ _addon.talentDataRaw = {
             }
         }
     },
-    -- TODO: Death's Embrace
     { -- Pandemic
         tree = 1,
         tier = 9,
@@ -521,7 +520,8 @@ _addon.aurasTarget[32386] = { -- Shadow Embrace 1
         type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
         affectSpell = {17434, 273},
         value = 1,
-        hasStacks = true
+        hasStacks = true,
+        onlyPersonal = true
     }
 }
 
@@ -530,7 +530,8 @@ _addon.aurasTarget[32388] = { -- Shadow Embrace 2
         type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
         affectSpell = {17434, 273},
         value = 2,
-        hasStacks = true
+        hasStacks = true,
+        onlyPersonal = true
     }
 }
 
@@ -539,7 +540,8 @@ _addon.aurasTarget[32389] = { -- Shadow Embrace 3
         type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
         affectSpell = {17434, 273},
         value = 3,
-        hasStacks = true
+        hasStacks = true,
+        onlyPersonal = true
     }
 }
 
@@ -548,7 +550,8 @@ _addon.aurasTarget[32390] = { -- Shadow Embrace 4
         type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
         affectSpell = {17434, 273},
         value = 4,
-        hasStacks = true
+        hasStacks = true,
+        onlyPersonal = true
     }
 }
 
@@ -557,7 +560,8 @@ _addon.aurasTarget[32391] = { -- Shadow Embrace 5
         type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
         affectSpell = {17434, 273},
         value = 5,
-        hasStacks = true
+        hasStacks = true,
+        onlyPersonal = true
     }
 }
 
@@ -566,7 +570,8 @@ local haunt = {
     {
         type = _addon.CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,
         scriptKey = "Haunt_Script",
-        value = 0
+        value = 0,
+        onlyPersonal = true
     }
 }
 _addon.aurasTarget[48181] = haunt; -- Haunt 1
@@ -696,7 +701,7 @@ do
     }
 
     _addon.scripting.RegisterAuraScript("Haunt_Script", function (apply, auraId, fromPlayer, scriptType, cacheValue)
-        if not fromPlayer then return end
+        assert(fromPlayer, "Haunt_Script called for foreign aura, aura def wrong?");
         local name = "HauntScript";
         local val = 20 + _addon.scripting.GetValue("Glyph_of_Haunt");
         if apply then
