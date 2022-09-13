@@ -459,7 +459,8 @@ _addon.aurasTarget = {
         },
         {
             type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            value = 2,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = -2,
             hasStacks = true
         }
     },
@@ -471,7 +472,8 @@ _addon.aurasTarget = {
         },
         {
             type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            value = 3,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = -3,
             hasStacks = true
         }
     },
@@ -483,7 +485,8 @@ _addon.aurasTarget = {
         },
         {
             type = CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            value = 4,
+            affectMask = CONST.SCHOOL_MASK.ALL,
+            value = -4,
             hasStacks = true
         }
     },
