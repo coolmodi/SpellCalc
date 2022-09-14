@@ -248,20 +248,14 @@ local stats = {
     modCriticalHealing = UniformStat(),
 };
 
-do
-    -- Hardcoded base mana for level 80.
-    local bm = {
-        DRUID   = 3496,
-        HUNTER  = 3383,
-        MAGE    = 3268,
-        PALADIN = 4394,
-        Priest  = 3863,
-        SHAMAN  = 4396,
-        WARLOCK = 3856
-    }
+---Update base mana for current level.
+---@param level integer
+local function UpdateBaseMana(level)
     local _, eclass = UnitClass("player");
-    if bm[eclass] then
-        stats.baseMana = bm[eclass];
+    local basemana = _addon.GetBaseMana(eclass, level);
+    if basemana ~= stats.baseMana then
+        stats.baseMana = basemana;
+        _addon:TriggerUpdate();
     end
 end
 
@@ -447,6 +441,7 @@ _addon.events.Register("UNIT_ATTACK_SPEED", function (unit) if unit == "player" 
 _addon.events.Register("COMBAT_RATING_UPDATE", function () CombatRatingUpdate() end);
 _addon.events.Register("PLAYER_DAMAGE_DONE_MODS", function (unit) if unit == "player" then UpdateDmgDoneMods() end end);
 _addon.events.Register("SPELL_POWER_CHANGED", function () UpdateSpellPower() end);
+_addon.events.Register("PLAYER_LEVEL_UP", function (level) UpdateBaseMana(level) end);
 _addon.events.Register("PLAYER_ENTERING_WORLD", function()
     UpdateStats();
     UpdateSpellPower();
@@ -459,6 +454,7 @@ _addon.events.Register("PLAYER_ENTERING_WORLD", function()
     _addon:UpdateManaRegen();
     UpdateAttackPower();
     UpdateRangedAttackPower();
+    UpdateBaseMana(UnitLevel("player"));
 end);
 
 _addon.events.Register("UNIT_STATS", function (unit)

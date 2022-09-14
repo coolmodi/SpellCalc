@@ -30,6 +30,7 @@ data/npcResistances.lua
 data/itemEffects.lua
 data/metaGemEffects.lua
 data/itemSetData.lua
+data/basemana.lua
 data/classes/druid_spell.lua
 data/classes/hunter_spell.lua
 data/classes/mage_spell.lua
