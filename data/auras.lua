@@ -252,7 +252,7 @@ local sanctifiedRetributionAura = {
     auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL,
 }
 _addon.scripting.RegisterAuraScript("Sanctified_Retribution_Auras", function (apply, auraId, fromPlayer, scriptType)
-    local name = "Sactified Retribution Script";
+    local name = "Sactified Retribution Script "..auraId;
     local val;
     if fromPlayer then
         val = _addon.scripting.GetValue("Sanctified_Retribution_Auras_Talent");

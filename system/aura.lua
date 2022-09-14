@@ -9,7 +9,7 @@ local activeCategory = {};
 for _, v in pairs(_addon.CONST.DEBUFF_CATEGORY) do
     ---@class ActiveCategoryData
     ---@field activeSpellId integer|nil The aura currently used.
-    ---@field auras table<integer, { val:integer, isPersonal:boolean }> Value of active auras in this category.
+    ---@field auras table<integer, { val:integer, isPersonal:boolean, name:string }> Value of active auras in this category.
     activeCategory[v] = {
         auras = {}
     }
@@ -560,7 +560,7 @@ function _addon:ApplyAuraEffect(name, effectBase, value, auraId, personal)
 
     local acd = activeCategory[effectBase.auraCategory];
     local activeGroupSpell = acd.activeSpellId;
-    acd.auras[auraId] = { val = value, isPersonal = personal };
+    acd.auras[auraId] = { val = value, isPersonal = personal, name = name };
 
     if activeGroupSpell == nil then
         HandleApplyRemoveAura(true, name, effectBase, value, auraId, personal);
@@ -570,8 +570,7 @@ function _addon:ApplyAuraEffect(name, effectBase, value, auraId, personal)
 
     local currentAura = acd.auras[activeGroupSpell];
     if math.abs(value) > math.abs(currentAura.val) then
-        local oName = GetSpellInfo(activeGroupSpell);
-        HandleApplyRemoveAura(false, oName, effectBase, currentAura.val, activeGroupSpell, currentAura.isPersonal);
+        HandleApplyRemoveAura(false, currentAura.name, effectBase, currentAura.val, activeGroupSpell, currentAura.isPersonal);
         HandleApplyRemoveAura(true, name, effectBase, value, auraId, personal);
         acd.activeSpellId = auraId;
         return true;
@@ -610,9 +609,8 @@ function _addon:RemoveAuraEffect(name, effectBase, value, auraId, personal)
     end
 
     if high then
-        local nName = GetSpellInfo(high);
-        local val = acd.auras[high];
-        HandleApplyRemoveAura(true, nName, effectBase, val.val, high, val.isPersonal);
+        local auraData = acd.auras[high];
+        HandleApplyRemoveAura(true, auraData.name, effectBase, auraData.val, high, auraData.isPersonal);
         acd.activeSpellId = high;
     end
 
