@@ -117,8 +117,9 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
     {
         ei.effectType = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
         ei.auraType = 0;
-        ei.valueBase = effect.EffectTriggerSpell;
+        ei.valueBase = 0;
         ei.valueRange = 0;
+        ei.triggeredSpell = effect.EffectTriggerSpell;
         return;
     }
 

@@ -1808,8 +1808,9 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 64,
-                valueBase = 58597,
+                valueBase = 0,
                 valueRange = 0,
+                triggeredSpell = 58597,
                 coef = 0,
                 coefAP = 0,
             },
