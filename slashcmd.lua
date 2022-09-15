@@ -21,7 +21,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
-    if string.find(arg, "^tt") then
+--[[     if string.find(arg, "^tt") then
         local talentOverride = {};
 
         for tripel in string.gmatch(arg, "%d %d+ %d") do
@@ -60,7 +60,7 @@ SlashCmdList["SPELLCALC"] = function(arg)
         _addon:UpdateTalents(talentOverride);
 
         return;
-    end
+    end ]]
 
     if string.find(arg, "ps") then
         local spellId = strmatch(arg, "(%d+)");
