@@ -184,6 +184,27 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         return;
     }
 
+    // Conflagrate
+    if (spellName == "Conflagrate")
+    {
+        rankInfo.effects = [{
+            effectType: EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA,
+            auraType: AURA_TYPE.SPELL_AURA_DUMMY,
+            coef: 0,
+            coefAP: 0,
+            valueBase: 0,
+            valueRange: 0,
+            valuePerLevel: 0,
+            forceScaleWithHeal: false,
+            period: 0,
+            weaponCoef: 0,
+            mechanic: 0,
+            perResource: 0,
+            triggeredSpell: 0,
+        }];
+        return;
+    }
+
     throw new Error("Dummy effect not handled!");
 }
 

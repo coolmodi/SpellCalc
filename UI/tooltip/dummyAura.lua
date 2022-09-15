@@ -131,3 +131,9 @@ local function StarFall(calcedSpell, effNum)
 end
 
 SCT:AddDummyHandler(GetSpellInfo(48505), StarFall);
+
+---Conflagrate
+SCT:AddDummyHandler(GetSpellInfo(17962), function(calcedSpell, effNum, spellId)
+    SCT:HeaderLine(L["With Immolate"]);
+    SCT:ShowEffectTooltip(calcedSpell, effNum, false, spellId);
+end);

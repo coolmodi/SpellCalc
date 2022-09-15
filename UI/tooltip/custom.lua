@@ -35,6 +35,11 @@ function SCT:AppendCritExtra(spellId, calcedEffect)
         end
     elseif class == "PRIEST" then
         text = self:FormatNoTrailing0(L["~%.1f absorbed"], calcedEffect.critExtraAvg);
+    elseif class == "WARLOCK" then
+        if spellId == 17962 then
+            self:SingleLine(L["Extra DoT"], self:FormatNoTrailing0(L["~%.1f over 6s"], calcedEffect.critExtraAvg));
+            return;
+        end
     end
 
     if not text then

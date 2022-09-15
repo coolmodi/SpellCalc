@@ -225,6 +225,7 @@ export class ClassSpellLists
                 switch (spellName)
                 {
                     case "Starfall":
+                    case "Conflagrate":
                         break;
                     default:
                         continue;

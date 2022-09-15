@@ -63,6 +63,7 @@ end
 ---@param spellName string
 ---@param calcedSpell CalcedSpell
 ---@param calcedEffect CalcedEffect
+---@param mustBeMelee boolean|nil
 ---@param isBleed boolean|nil
 ---@param totalOverride number|nil Use this instead of avgCombined to calculate avgAfterMitigation.
 local function Mitigate(spellName, calcedSpell, calcedEffect, mustBeMelee, isBleed, totalOverride)
@@ -328,6 +329,40 @@ local function SealOfWisdomMelee(calcedSpell, effNum, spellInfo, spellName)
     calcedSpell.effects[effNum].perSec = 15/60 * stats.baseAttackSpeed.mainhand; -- 15 PPM, this should be the proc chance
 end
 
+---@param calcedSpell CalcedSpell
+---@param effNum integer
+---@param spellInfo SpellInfo
+---@param spellName string
+---@param spellId integer
+local function Conflagrate(calcedSpell, effNum, spellInfo, spellName, spellId)
+    local _, immoId = GetSpellBookItemInfo(GetSpellInfo(47811));
+    local immolate = _addon:GetCalcedSpell(immoId);
+    assert(immolate and immolate.effects[2], "Wrong Immolate Id? Immolate DoT effect not found for this spell!");
+    local immoDoTDamage = immolate.effects[2].avg * immolate.effects[2].ticks;
+
+    local calcedEffect = calcedSpell.effects[effNum];
+    local baseMult = 0.6;
+    local baseMultDoT = 0.4;
+
+    calcedEffect.min = baseMult * immoDoTDamage;
+    calcedEffect.max = calcedEffect.min;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.avg;
+    FillCritValues(calcedSpell, calcedEffect, spellId);
+
+    -- Misuse this for the DoT part
+    calcedEffect.critExtraAvg = calcedEffect.avgCombined * (baseMultDoT / baseMult);
+
+    Mitigate(spellName, calcedSpell, calcedEffect, false, false, calcedEffect.avgCombined + calcedEffect.critExtraAvg);
+
+    calcedEffect.perSec = calcedEffect.avgAfterMitigation / calcedSpell.effCastTime;
+    calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
+    calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
+
+    -- So it's treated like a normal dmg spell.
+    calcedEffect.effectFlags = 0;
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
@@ -339,6 +374,7 @@ dummyAuraHandlers[GetSpellInfo(54428)] = DivinePlea;
 dummyAuraHandlers[GetSpellInfo(29166)] = Innervate;
 dummyAuraHandlers[GetSpellInfo(20166)] = SealOfWisdomMelee;
 dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
+dummyAuraHandlers[GetSpellInfo(17962)] = Conflagrate;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler

@@ -524,3 +524,9 @@ function GetComboPoints(unit, target) end
 ---@param unit2 string
 ---@return boolean
 function UnitIsUnit(unit1, unit2) end
+
+---Retrieves information about a specific SpellBook item 
+---@param entryName string
+---@return string skillType The type of the spell (known values: "SPELL", "PETACTION", "FUTURESPELL", "FLYOUT")
+---@return integer contextualID For SPELL and FUTURESPELL this is the spellID. For PetAction is it an integer value that is troublesome to use outside of two functions related solely to the PetBarUI. For Flyout, it is the FlyoutID.
+function GetSpellBookItemInfo(entryName) end
