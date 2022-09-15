@@ -249,6 +249,11 @@ _addon.talentDataRaw = {
         column = 2,
         effects = {
             {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {4},
+                perPoint = 10
+            },
+            {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {4},
                 perPoint = 10
