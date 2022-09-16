@@ -410,7 +410,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
         calcedSpell:AddToBuffList(stats.spellModPctCritMult[spellId].buffs);
     end
 
-    -- TODO: ?????
     if stats.versusModPctCritDamage[_addon.Target.creatureType] then
         calcedSpell.critMult = calcedSpell.critMult + stats.versusModPctCritDamage[_addon.Target.creatureType].val / 100;
         calcedSpell:AddToBuffList(stats.versusModPctCritDamage[_addon.Target.creatureType].buffs);
@@ -569,7 +568,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
             costs = GetSpellPowerCost(spellId);
         end
 
-        -- TODO: This will need a change for spells with multiple costs, e.g. combo spells!
         if costs and #costs > 0 then
             ---@type SpellPowerEntry
             local entry = costs[1];

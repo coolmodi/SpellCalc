@@ -381,7 +381,7 @@ export class AuraHandlers
                             case 37742: // Increases your block rating by $s1 while Holy Shield is active.
                             case 54803: // Increases the damage reduction of your Icebound Fortitude by 2%.
                             case 58081: // Increases the movement speed of your Eye of Kilrogg by $s1% and allows it to fly in areas where flying mounts are enabled
-                            case 63302: // TODO WL: The bonus damage granted by your Haunt spell is increased by an additional $63302s1%.
+                            case 63302: // The bonus damage granted by your Haunt spell is increased by an additional $63302s1%.
                             case 56382: // Your Molten Armor grants an additional $56382s1% of your spirit as critical strike rating
                                 return;
                             default:

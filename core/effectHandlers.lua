@@ -746,18 +746,13 @@ local function WeaponDamage(_, calcedSpell, effNum, spellInfo, spellName, spellI
 
     local weaponCoef = effectData.weaponCoef * calcedEffect.modBase;
 
-    --print(spellName, "weapon damage");
     local weaponLow, weaponHigh;
-    if spellInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_NORMALIZED_WEAPON_DMG
-    --[[ TODO: bug or intended? > or spellInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE ]] then
-        --print("normalized", calcedEffect.attackPower)
+    if spellInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_NORMALIZED_WEAPON_DMG then
         weaponLow, weaponHigh = GetNormalizedWeaponDamage("mainhand", calcedEffect.attackPower, weaponCoef);
     else
         weaponLow = stats.attackDmg.mainhand.min * weaponCoef;
         weaponHigh = stats.attackDmg.mainhand.max * weaponCoef;
     end
-    --print(weaponLow, "-", weaponHigh);
-    --print("coef", weaponCoef, "bv", baseValue, "bi", baseIncrease, "(fm)", calcedEffect.flatMod);
 
     FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, weaponCoef, calcedEffect.effectivePower);
     calcedEffect.min = calcedEffect.min + weaponLow;
