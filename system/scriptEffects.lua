@@ -94,7 +94,7 @@ function scripting.HandleEffect(apply, name, value, effectBase, auraId, personal
     if type == EFFECT_TYPE.SCRIPT_AURASCRIPT then
         local script = auraSripts[scriptKey];
         assert(script, "Aura " .. name .. " uses SCRIPT_AURASCRIPT with undefined script " .. scriptKey .. "!");
-        auraValueCache[scriptKey] = script(apply, auraId, personal, type, auraValueCache[scriptKey]);
+        auraValueCache[scriptKey] = script(apply, auraId, personal, type, auraValueCache[scriptKey], value);
         return;
     end
 

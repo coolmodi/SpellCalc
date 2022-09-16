@@ -424,11 +424,10 @@ do
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.CONST.SCHOOL_MASK.ARCANE
     };
-    _addon.scripting.RegisterAuraScript("Arcane_Blast_Debuff", function (apply, auraId, fromPlayer, scriptType, cacheValue)
+    _addon.scripting.RegisterAuraScript("Arcane_Blast_Debuff", function (apply, auraId, fromPlayer, scriptType, cacheValue, value)
         local name = "ArcaneBlastDebuff";
         local glyphVal = _addon.scripting.GetValue("Glyph_of_Arcane_Blast");
-        local valWIP = 15; -- TODO: get value from aura handler (stacking)
-        local total = valWIP + glyphVal * math.floor(valWIP / 15);
+        local total = value + glyphVal * math.floor(value / 15);
         if apply then
             _addon:ApplyAuraEffect(name, effectBase, total, auraId, fromPlayer);
         else
