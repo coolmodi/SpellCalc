@@ -184,8 +184,8 @@ local stats = {
     },
 
     schoolModSpellPen = SchoolStatTable(),
-    --schoolModPctDamage = SchoolStatTable(),
-    schoolModFlatCritChance = SchoolStatTable(),
+    schoolModPctDamage = SchoolStatTable(),
+    --schoolModFlatCritChance = SchoolStatTable(),
     schoolModPctCritMult = SchoolStatTable(),
     schoolCritBaseMult = SchoolStatTable(),
     targetSchoolModDamageTaken = SchoolStatTable(),

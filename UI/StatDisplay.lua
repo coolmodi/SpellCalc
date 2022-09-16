@@ -332,7 +332,7 @@ AddSchoolTableSingle(stats.spellPower, "Spell power");
 AddSingleStat("Healing bonus", stats, "spellHealing");
 
 AddSchoolTableSingle(stats.spellCrit, "Spell crit", "%");
-AddSchoolTableUniform(stats.schoolModFlatCritChance, "Crit mods", "%");
+--AddSchoolTableUniform(stats.schoolModFlatCritChance, "Crit mods", "%");
 AddSpellTable(stats.spellModFlatCritChance, nil, "%");
 AddSchoolTableUniform(stats.schoolModPctCritMult, "Crit mult mods", "%");
 AddSpellTable(stats.spellModPctCritMult, nil, "%");
@@ -350,7 +350,7 @@ AddUniformStatTable(stats.modCriticalHealing, "Crit. Healing done mod (all)", "%
 AddSpellTable(stats.spellModPctEffect, "Spell Pct Effect", "%");
 AddSpellTable(stats.spellModPctDamageHealing, "Spell Pct Damage/Healing", "%");
 AddSpellTable(stats.spellModPctDoTHoT, "Spell Pct DoT/HoT", "%");
---AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
+AddSchoolTableUniform(stats.schoolModPctDamage, "School Pct Damage", "%");
 
 AddSpellTable(stats.spellModFlatDuration, "Duration mods:", "ms");
 AddSpellTable(stats.spellModFlatTickperiod, "Period mods:", "ms");

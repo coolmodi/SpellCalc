@@ -31,8 +31,8 @@ function MagicCalc:GetSchoolCritChance()
     local school = self.spellInfo.school;
     local chance = stats.spellCrit[school];
 
-    chance = chance + stats.schoolModFlatCritChance[school].val;
-    self.calcedSpell:AddToBuffList(stats.schoolModFlatCritChance[school].buffs);
+    --chance = chance + stats.schoolModFlatCritChance[school].val;
+    --self.calcedSpell:AddToBuffList(stats.schoolModFlatCritChance[school].buffs);
 
     if stats.targetSchoolModCritTaken[school].val ~= 0 then
         chance = chance + stats.targetSchoolModCritTaken[school].val;
