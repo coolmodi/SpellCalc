@@ -132,7 +132,6 @@ L.TT_PARRYCHANCE = "Parry";
 L.TT_BLOCKCHANCE = "Block";
 L.TT_PROCCHANCE = "Proc chance";
 L.TT_HITS_OVER_DURATION = "Procs over duration";
-L.TT_IGNITE = "Ignite";
 L.TT_MAINHAND = "Mainhand";
 L.TT_OFFHAND = "Offhand";
 L.TT_GLANCECHANCE = "Glancing";

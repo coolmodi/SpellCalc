@@ -40,6 +40,8 @@ function SCT:AppendCritExtra(spellId, calcedEffect)
             self:SingleLine(L["Extra DoT"], self:FormatNoTrailing0(L["~%.1f over 6s"], calcedEffect.critExtraAvg));
             return;
         end
+    elseif class == "MAGE" then
+        text = self:FormatNoTrailing0(L["~%.1f (2x %.1f over 4s)"], calcedEffect.critExtraAvg, calcedEffect.critExtraAvg/2);
     end
 
     if not text then

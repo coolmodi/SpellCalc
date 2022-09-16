@@ -174,6 +174,7 @@ export class AuraHandlers
                 case 71132: // Glyph of Shadow Word: Pain
                 case 61792: // Glyph of Shadow
                 case 28753: // hunter t3 mana restore
+                case 60803:
                     return;
                 case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
                     return {
@@ -298,6 +299,7 @@ export class AuraHandlers
                             case 67234: // TODO WARRIOR: Berserker Stance grants an additional 2% critical strike chance, and Battle Stance grants an additional 6% armor penetration.
                             case 27850:
                             case 34318:
+                            case 62210: // Increases the damage from your Arcane Blast buff by $62210s1%.
                                 return
                             case 37186: // Increases the damage of your Judgements by 33.
                             case 37333: // Your Shred ability deals an additional 75 damage, and your Lacerate ability does an additional 15 per application.
@@ -357,6 +359,10 @@ export class AuraHandlers
                             case 34318: // Your Water Shield ability grants an additional $s1 mana each time it triggers and an additional $s2 mana per 5 sec.
                             case 54802: // NOTE: Doesn't make sense? -> Increases the damage over time caused by your Plague Strike ability by ${$m1}.
                             case 58079: // Increases the swim speed of targets affected by your Unending Breath spell by $58079s1%.
+                            case 56380: // Your Evocation ability also causes you to regain ${$56380m1*4}% of your health over its duration.
+                            case 56383: // Your Mage Armor spell grants an additional $56383s1% mana regeneration while casting.
+                            case 57926: // You have an additional $57926s1% chance to reflect Fire spells while your Fire Ward is active.
+                            case 57927: // You have an additional $57927s1% chance to reflect Frost spells while your Frost Ward is active.
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT2: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -376,6 +382,7 @@ export class AuraHandlers
                             case 54803: // Increases the damage reduction of your Icebound Fortitude by 2%.
                             case 58081: // Increases the movement speed of your Eye of Kilrogg by $s1% and allows it to fly in areas where flying mounts are enabled
                             case 63302: // TODO WL: The bonus damage granted by your Haunt spell is increased by an additional $63302s1%.
+                            case 56382: // Your Molten Armor grants an additional $56382s1% of your spirit as critical strike rating
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -438,9 +445,10 @@ export class AuraHandlers
                             case 38390: // Increases the mana you gain from your Aspect of the Viper by $s1%
                             case 60166: // Your Water Shield is $s1% stronger
                             case 67164: // "IncreasesthearmoryougainfromIceArmorby$s1%,themanaregenerationyougainfromMageArmorby$s2%,andaddsanadditional$s3%ofyourSpiritincriticalstrikeratingwhenMoltenArmorisactive."
+                            case 56384: // Your Ice Armor and Frost Armor spells grant an additional $56384s1% armor and resistance.
                                 return;
                             default:
-                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
+                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT1: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
                         }
                     }
                 case 12: // SPELLMOD_EFFECT2
@@ -449,6 +457,16 @@ export class AuraHandlers
                         {
                             case 54939: // Your Lay on Hands grants twice as much mana as normal and also grants you as much mana as it grants your target.
                             case 60166: // Your Water Shield is $s1% stronger
+                                return;
+                            default:
+                                throw new Error("Unhandled FLAT SPELLMOD_EFFECT2: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
+                        }
+                    }
+                case 23: // SPELLMOD_EFFECT3
+                    {
+                        switch (effect.SpellID)
+                        {
+                            case 56384: // Your Ice Armor and Frost Armor spells grant an additional $56384s1% armor and resistance.
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);

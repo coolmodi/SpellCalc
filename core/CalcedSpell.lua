@@ -3,12 +3,6 @@ local _addon = select(2, ...);
 
 local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 
--- All values for full duration!
----@class IgniteDataDef
----@field min number
----@field max number
----@field avg number
-
 ---@class MeleeMitigationDef
 ---@field dodge number
 ---@field parry number
@@ -79,7 +73,6 @@ local AuraStackData = {
 ---@field ticks integer|nil Ticks for duration spells.
 ---@field tickPeriod number|nil Tickperiod for duration spells.
 ---@field auraStack AuraStackData|nil If aura is stackable this will hold data for sustained max stacks.
----@field igniteData IgniteDataDef|nil
 ---@field offhandAttack EffectOffhandData|nil Data for offhand attack (auto attack with dual wield, maybe more with TBC?).
 ---@field chains integer|nil How often the effect chains, if any.
 ---@field chainMult number|nil Multiplier for each chain, if any.

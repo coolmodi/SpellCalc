@@ -502,10 +502,10 @@ local function ManaShield(calcedSpell, effNum, spellInfo, spellName, spellId)
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 
     local drain = 1.5;
-    local name, _, _, _, curRank = GetTalentInfo(1, 11); -- TODO MAGE: This will currently fail
-    if curRank > 0 then
-        drain = drain * (1 - 0.165 * curRank);
-        calcedSpell:AddToBuffList({name..curRank});
+    local reduction = _addon.scripting.GetValue("Mage_Arcane_Shielding");
+    if reduction > 0 then
+        drain = drain * (1 - reduction / 100);
+        calcedSpell:AddToBuffList({"Mage_Arcane_Shielding_"..reduction});
     end
     calcedSpell.effectiveCost = calcedSpell.effectiveCost + drain * calcedEffect.avgAfterMitigation;
     calcedSpell.castingData.castsToOom = _addon:GetEffectiveManaPool() / calcedSpell.effectiveCost;
@@ -581,30 +581,6 @@ local function SchoolDamage(_, calcedSpell, effNum, spellInfo, spellName, spellI
 
     FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
     FillCritValues(calcedSpell, calcedEffect, spellId);
-
-    -- TODO MAGE: make ignite extra on crit?
-    if stats.ignite.val > 0 and spellInfo.school == _addon.CONST.SCHOOL.FIRE then
-        local igniteMult = stats.ignite.val/100;
-
-        if calcedEffect.igniteData == nil then
-            ---@type IgniteDataDef
-            calcedEffect.igniteData = {
-                min = 0,
-                max = 0,
-                avg = 0
-            };
-        end
-
-        calcedEffect.igniteData.min = calcedEffect.minCrit * igniteMult;
-        calcedEffect.igniteData.max = calcedEffect.maxCrit * igniteMult;
-        calcedEffect.igniteData.avg = calcedEffect.avgCrit * igniteMult;
-
-        calcedSpell:AddToBuffList(stats.ignite.buffs);
-        calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit + calcedEffect.igniteData.avg - calcedEffect.avg) * calcedSpell.critChance/100;
-    else
-        calcedEffect.avgCombined = calcedEffect.avg + (calcedEffect.avgCrit - calcedEffect.avg) * calcedSpell.critChance/100;
-    end
-
     Mitigate(spellName, calcedSpell, calcedEffect);
 
     if stats.shamanLightningOverload[spellId] and stats.shamanLightningOverload[spellId].val > 0 then

@@ -145,9 +145,6 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId)
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
         SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance), true);
-        if calcedEffect.igniteData then
-            SCT:AppendMinMaxAvgLine(L.TT_IGNITE, calcedEffect.igniteData.min/2, calcedEffect.igniteData.max/2, calcedEffect.igniteData.avg/2, "2x ");
-        end
     end
 
     if calcedEffect.critExtraAvg then

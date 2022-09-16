@@ -5,35 +5,26 @@ if playerClass ~= "MAGE" then
     return;
 end
 
-_addon.talentData = {
+_addon.talentDataRaw = {
     -----------------------------
     -- Arcane
     -----------------------------
-    { -- Arcane Subtlety
-        tree = 1,
-        talent = 1,
-        effects = {
-            {
-                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-                affectMask = _addon.CONST.SCHOOL_MASK.ALL_SPELL,
-                perPoint = 5
-            }
-        }
-    },
     { -- Arcane Focus
         tree = 1,
-        talent = 2,
+        tier = 1,
+        column = 2,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
-                affectSpell = {-1591717888, 16},
-                perPoint = 2
+                affectSpell = {-1591717888, 32784},
+                perPoint = 1
             }
         }
     },
     { -- Arcane Concentration
         tree = 1,
-        talent = 6,
+        tier = 2,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.CLEARCAST_CHANCE_DMG,
@@ -41,30 +32,49 @@ _addon.talentData = {
             }
         }
     },
-    { -- Arcane Impact
+    { -- Spell Impact
         tree = 1,
-        talent = 8,
+        tier = 3,
+        column = 2,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {536875008},
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {537006611, 64},
                 perPoint = 2
+            }
+        }
+    },
+    { -- Arcane Shielding
+        tree = 1,
+        tier = 4,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+                values = {17, 33},
+                scriptKey = "Mage_Arcane_Shielding,"
             }
         }
     },
     { -- Arcane Meditation
         tree = 1,
-        talent = 12,
+        tier = 4,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                perPoint = 10
+                values = {17, 33, 50}
             }
         }
     },
+
+    -- TODO: Torment the Weak
+    -- Use/implenmet debuff mechanic tracking for snare/slow similar to bleed
+
     { -- Arcane Instability
         tree = 1,
-        talent = 17,
+        tier = 6,
+        column = 2,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -73,24 +83,26 @@ _addon.talentData = {
             }
         }
     },
-    { -- Empowered Arcane Missiles
+    { -- Arcane Empowerment
         tree = 1,
-        talent = 19,
+        tier = 7,
+        column = 1,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
-                affectSpell = {2048},
+                affectSpell = {538968064},
                 perPoint = 3
             }
         }
     },
     { -- Spell Power
         tree = 1,
-        talent = 21,
+        tier = 10,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
-                affectSpell = {551686775, 8},
+                affectSpell = {551686903, 102472},
                 perPoint = 25
             }
         }
@@ -98,41 +110,46 @@ _addon.talentData = {
     -----------------------------
     -- Fire
     -----------------------------
-    { -- Ignite
+    { -- Incineration
         tree = 2,
-        talent = 3,
-        effects = {
-            {
-                type = _addon.CONST.EFFECT_TYPE.IGNITE,
-                perPoint = 8
-            }
-        }
-    },
-    { -- Incinerate
-        tree = 2,
-        talent = 6,
+        tier = 1,
+        column = 2,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {18},
+                affectSpell = {536871442},
                 perPoint = 2
             }
         }
     },
-    { -- Improved Flamestrike
+    { -- Ignite
         tree = 2,
-        talent = 7,
+        tier = 2,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
+                affectSpell = {1 + 2 + 4 + 16 + 4194304 + 8388608, 4096 + 65536},
+                perPoint = 8
+            }
+        }
+    },
+    { -- World in Flames
+        tree = 2,
+        tier = 2,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {4},
-                perPoint = 5
+                affectSpell = {12587140, 65600},
+                perPoint = 2
             }
         }
     },
     { -- Master of Elements
         tree = 2,
-        talent = 12,
+        tier = 4,
+        column = 4,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.ILLUMINATION,
@@ -142,7 +159,8 @@ _addon.talentData = {
     },
     { -- Playing with Fire
         tree = 2,
-        talent = 13,
+        tier = 5,
+        column = 1,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -153,65 +171,98 @@ _addon.talentData = {
     },
     { -- Fire Power
         tree = 2,
-        talent = 17,
+        tier = 6,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {12845079, 8},
+                affectSpell = {12845079, 69704},
+                perPoint = 2
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+                affectSpell = {4194309, 135168},
                 perPoint = 2
             }
         }
     },
-    { -- Empowered Fireball
+    { -- Pyromaniac
         tree = 2,
-        talent = 21,
+        tier = 7,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
+                values = {17, 33, 50}
+            }
+        }
+    },
+    { -- Empowered Fire
+        tree = 2,
+        tier = 8,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
-                affectSpell = {1},
-                perPoint = 3
+                affectSpell = {4194305, 4096},
+                perPoint = 5
+            }
+        }
+    },
+    { -- Burnout
+        tree = 2,
+        tier = 10,
+        column = 2,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+                affectSpell = {551686903, 233544},
+                perPoint = 10
             }
         }
     },
     -----------------------------
     -- Frost
     -----------------------------
-    { -- Elemental Precision
-        tree = 3,
-        talent = 3,
-        effects = {
-            {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_HIT_CHANCE,
-                affectSpell = {13763319, 8},
-                perPoint = 1
-            }
-        }
-    },
     { -- Ice Shards
         tree = 3,
-        talent = 4,
+        tier = 2,
+        column = 1,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
-                affectSpell = {131808},
-                perPoint = 20
+                affectSpell = {131808, 1052672, 32},
+                values = {33, 66, 100}
+            }
+        }
+    },
+    { -- Precision
+        tree = 3,
+        tier = 2,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                perPoint = 1
             }
         }
     },
     { -- Piercing Ice
         tree = 3,
-        talent = 8,
+        tier = 3,
+        column = 1,
         effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {131808},
+                type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask = _addon.CONST.SCHOOL_MASK.FROST,
                 perPoint = 2
             }
         }
     },
     { -- Improved Cone of Cold
         tree = 3,
-        talent = 16,
+        tier = 5,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -223,7 +274,8 @@ _addon.talentData = {
     },
     { -- Arctic Winds
         tree = 3,
-        talent = 20,
+        tier = 7,
+        column = 3,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -234,37 +286,153 @@ _addon.talentData = {
     },
     { -- Empowered Frostbolt
         tree = 3,
-        talent = 21,
+        tier = 8,
+        column = 2,
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                 affectSpell = {32},
-                perPoint = 2,
-            },
+                perPoint = 5,
+            }
+        }
+    },
+    { -- Chilled to the Bone
+        tree = 3,
+        tier = 10,
+        column = 2,
+        effects = {
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {32},
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+                affectSpell = {131104, 4096},
                 perPoint = 1,
             }
         }
-    }
+    },
 };
+
+--------------------------------------------------------------------------
+-- Player auras
+--------------------------------------------------------------------------
 
 _addon.aurasPlayer[12042] = { -- Arcane Power
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-        affectSpell = {685904631, 8},
-        value = 30,
+        affectSpell = {685904631, 102472},
+        value = 20,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+        affectSpell = {4194437, 4096},
+        value = 20,
+    }
+};
+
+_addon.aurasPlayer[44401] = { -- Missile Barrage
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+        affectSpell = {2048},
+        value = -2500,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_TICKPERIOD,
+        affectSpell = {2048},
+        value = -500,
+    }
+};
+
+_addon.aurasPlayer[70747] = { -- Quad Core
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ALL,
+        value = 18,
     }
 };
 
 local mageArmorEffect = {
     {
-        type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
-        value = 30,
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,
+        scriptKey = "Mage_Armor",
+        value = 50,
     }
 };
 _addon.aurasPlayer[6117] = mageArmorEffect;
 _addon.aurasPlayer[22782] = mageArmorEffect;
 _addon.aurasPlayer[22783] = mageArmorEffect;
 _addon.aurasPlayer[27125] = mageArmorEffect;
+_addon.aurasPlayer[43023] = mageArmorEffect;
+_addon.aurasPlayer[43024] = mageArmorEffect;
+
+_addon.aurasPlayer[36032] = { -- Arcane Blast
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_AURASCRIPT,
+        scriptKey = "Arcane_Blast_Debuff",
+        value = 15,
+        hasStacks = true
+    }
+}
+
+--------------------------------------------------------------------------
+-- Target auras
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+-- Additional Glyphs (generated effects are in <class>_spell.lua)
+--------------------------------------------------------------------------
+
+-- Glyph of Mage Armor
+_addon.classGlyphs[54943] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        scriptKey = "Glyph_of_Mage_Armor",
+        value = 20
+    }
+}
+
+-- Glyph of Arcane Blast
+_addon.classGlyphs[62210] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        scriptKey = "Glyph_of_Arcane_Blast",
+        value = 3
+    }
+}
+
+--------------------------------------------------------------------------
+-- Passives
+--------------------------------------------------------------------------
+
+--------------------------------------------------------------------------
+-- Scripts
+--------------------------------------------------------------------------
+
+do
+    local mageArmorAura = { type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN };
+    _addon.scripting.RegisterAuraScript("Mage_Armor", function (apply, auraId, fromPlayer, scriptType, cacheValue)
+        local name = "MageArmor";
+        local glyphVal = _addon.scripting.GetValue("Glyph_of_Mage_Armor");
+        local total = 50 + glyphVal;
+        if apply then
+            _addon:ApplyAuraEffect(name, mageArmorAura, total, auraId, fromPlayer);
+        else
+            _addon:RemoveAuraEffect(name, mageArmorAura, total, auraId, fromPlayer);
+        end
+    end);
+end
+
+do
+    local effectBase = {
+        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+        affectMask = _addon.CONST.SCHOOL_MASK.ARCANE
+    };
+    _addon.scripting.RegisterAuraScript("Arcane_Blast_Debuff", function (apply, auraId, fromPlayer, scriptType, cacheValue)
+        local name = "ArcaneBlastDebuff";
+        local glyphVal = _addon.scripting.GetValue("Glyph_of_Arcane_Blast");
+        local valWIP = 15; -- TODO: get value from aura handler (stacking)
+        local total = valWIP + glyphVal * math.floor(valWIP / 15);
+        if apply then
+            _addon:ApplyAuraEffect(name, effectBase, total, auraId, fromPlayer);
+        else
+            _addon:RemoveAuraEffect(name, effectBase, total, auraId, fromPlayer);
+        end
+    end);
+end

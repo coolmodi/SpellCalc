@@ -201,6 +201,12 @@ export class ClassSpellLists
                         continue;
                 }
 
+                switch (spellName)
+                {
+                    case "Arcane Blast":
+                        continue;
+                }
+
                 const tspell = this.spellData.getSpellEffects(effect.EffectTriggerSpell);
                 let found = false;
                 for (let i = 0; i < tspell.length; i++)

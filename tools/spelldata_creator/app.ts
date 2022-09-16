@@ -15,7 +15,7 @@ const CLASSES = [
     "druid", 
     "priest", 
     "warlock",
-    //"mage", 
+    "mage", 
     "paladin",
     //"shaman",
 
@@ -265,9 +265,11 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         case AURA_TYPE.SPELL_AURA_OBS_MOD_MANA:
             break;
         default:
-            if (effectNum == 1 && effect.EffectMechanic != 0) {
-                if (rankInfo.school != 1) {
-                    rankInfo.isBinary = (spellName == "Frostbolt") ? false : true;
+            if (effect.EffectMechanic != 0) {
+                const misc = spellData.getSpellMisc(effect.SpellID);
+                if (rankInfo.school != 1
+                    && (misc["Attributes[6]"] & SPELL_ATTR6.SPELL_ATTR_NO_BINARY_OR_MAYBE_NOT_IDK_WHAT_THIS_DOES) === 0) {
+                    rankInfo.isBinary = true;
                 }
                 rankInfo.effects.splice(effectNum);
             } else {

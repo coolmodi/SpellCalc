@@ -241,7 +241,6 @@ local stats = {
     clearCastChanceDmg = UniformStat(),
     clearCastChance = UniformStat(),
     illumination = UniformStat(),
-    ignite = UniformStat(),
     earthfuryReturn = UniformStat(),
     shamanLightningOverload = SpellStatTable(),
     castManaRestoreAvg = UniformStat(),

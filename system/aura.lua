@@ -170,7 +170,6 @@ local effectSimpleStat = {
     [EFFECT_TYPE.CLEARCAST_CHANCE_DMG]  = stats.clearCastChanceDmg,
     [EFFECT_TYPE.CLEARCAST_CHANCE]      = stats.clearCastChance,
     [EFFECT_TYPE.ILLUMINATION]          = stats.illumination,
-    [EFFECT_TYPE.IGNITE]                = stats.ignite,
     [EFFECT_TYPE.EARTHFURY_RETURN]      = stats.earthfuryReturn,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL] = stats.hitBonusSpell,
     [EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE] = stats.hitBonus,
