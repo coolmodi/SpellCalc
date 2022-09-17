@@ -363,6 +363,21 @@ local function Conflagrate(calcedSpell, effNum, spellInfo, spellName, spellId)
     calcedEffect.effectFlags = 0;
 end
 
+---@param calcedSpell CalcedSpell
+---@param effNum integer
+---@param spellInfo SpellInfo
+---@param spellName string
+local function Evocation(calcedSpell, effNum, spellInfo, spellName)
+    local calcedEffect = calcedSpell.effects[effNum];
+    calcedEffect.min = stats.manaMax * 0.15;
+    calcedEffect.max = calcedEffect.min;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.min;
+    calcedEffect.ticks = 4;
+    calcedEffect.tickPeriod = 2000 * calcedSpell.duration / calcedSpell.durationNoHaste;
+    calcedEffect.avgAfterMitigation = calcedEffect.avg * calcedEffect.ticks;
+end
+
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
 dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
@@ -375,6 +390,7 @@ dummyAuraHandlers[GetSpellInfo(29166)] = Innervate;
 dummyAuraHandlers[GetSpellInfo(20166)] = SealOfWisdomMelee;
 dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
 dummyAuraHandlers[GetSpellInfo(17962)] = Conflagrate;
+dummyAuraHandlers[GetSpellInfo(12051)] = Evocation;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler
