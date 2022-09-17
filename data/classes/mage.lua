@@ -5,6 +5,11 @@ if playerClass ~= "MAGE" then
     return;
 end
 
+local FROST_NOVA = GetSpellInfo(122);
+local FROSTBITE = GetSpellInfo(12494);
+local DEEP_FREEZE = GetSpellInfo(58534);
+local FREEZE = GetSpellInfo(33395);
+
 _addon.talentDataRaw = {
     -----------------------------
     -- Arcane
@@ -401,6 +406,36 @@ _addon.classGlyphs[62210] = {
 -- Passives
 --------------------------------------------------------------------------
 
+---@type UnitAuraEffect[]
+_addon.classPassives = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        affectSpell = {131072},
+        value = 0,
+        scriptKey = "Ice_Lance_Script",
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+        scriptKey = FREEZE,
+        value = 0
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+        scriptKey = FROST_NOVA,
+        value = 0
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+        scriptKey = DEEP_FREEZE,
+        value = 0
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
+        scriptKey = FROSTBITE,
+        value = 0
+    },
+}
+
 --------------------------------------------------------------------------
 -- Scripts
 --------------------------------------------------------------------------
@@ -435,3 +470,17 @@ do
         end
     end);
 end
+
+_addon.scripting.RegisterScript("Ice_Lance_Script", function (val, cs, ce, spellId, si, scriptType)
+    assert(ce, "Ice_Lance_Script called with ce nil!");
+    print("Ice_Lance_Script")
+    local hasAura = _addon.Target.HasAuraName;
+
+    if hasAura(FROST_NOVA)
+    or hasAura(FROSTBITE)
+    or hasAura(DEEP_FREEZE)
+    or hasAura(FREEZE) then
+        print("has freeze effect");
+        ce.modBonus = ce.modBonus * 3;
+    end
+end);
