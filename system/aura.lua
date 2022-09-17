@@ -179,7 +179,6 @@ local effectSimpleStat = {
 }
 
 local effectAffectMask = {
-    [EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE]  = stats.schoolModPctDamage,
     [EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION] = stats.schoolModSpellPen,
     --[EFFECT_TYPE.SCHOOLMOD_FLAT_CRIT]   = stats.schoolModFlatCritChance,
     [EFFECT_TYPE.SCHOOLMOD_PCT_CRIT_BASE_MULT] = stats.schoolCritBaseMult,
