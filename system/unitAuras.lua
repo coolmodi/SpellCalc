@@ -190,9 +190,7 @@ function _addon:UpdateAurasForUnit(unit, clearOnly)
 
     if not clearOnly then
         aurasChanged = UpdateAuratype(unit, "HELPFUL") or aurasChanged;
-        if unit == "target" then -- TODO: Player debuffs?
-            aurasChanged = UpdateAuratype(unit, "HARMFUL") or aurasChanged;
-        end
+        aurasChanged = UpdateAuratype(unit, "HARMFUL") or aurasChanged;
     end
 
     -- Remove effects from missing auras.
