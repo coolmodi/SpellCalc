@@ -473,7 +473,6 @@ end
 
 _addon.scripting.RegisterScript("Ice_Lance_Script", function (val, cs, ce, spellId, si, scriptType)
     assert(ce, "Ice_Lance_Script called with ce nil!");
-    print("Ice_Lance_Script")
     local hasAura = _addon.Target.HasAuraName;
 
     if hasAura(FROST_NOVA)
