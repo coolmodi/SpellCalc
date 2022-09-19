@@ -29,11 +29,10 @@ local function FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spe
         end
         baseLow = baseLow + (refLevel - spellInfo.spellLevel) * effectData.valuePerLevel;
     end
-    baseLow = baseLow * mod + add;
 
-    calcedEffect.min = baseLow;
-    calcedEffect.max = baseLow + effectData.valueRange;
-    calcedEffect.avg = baseLow + effectData.valueRange * 0.5;
+    calcedEffect.min = baseLow * mod + add;
+    calcedEffect.max = (baseLow + effectData.valueRange) * mod + add;
+    calcedEffect.avg = (calcedEffect.min + calcedEffect.max) * 0.5;
     calcedEffect.avgCombined = calcedEffect.avg;
 
     _addon.scripting.DoSpell(_addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_EFFECT_BASEVALUES, calcedSpell, calcedEffect, spellId, spellInfo, spellName);
