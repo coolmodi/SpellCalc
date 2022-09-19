@@ -33,6 +33,7 @@ const SCHOOL_MASK_TO_ENUM = {
     [SCHOOL_MASK.FROST]: 5,
     [SCHOOL_MASK.SHADOW]: 6,
     [SCHOOL_MASK.ARCANE]: 7,
+    [SCHOOL_MASK.FROST + SCHOOL_MASK.FIRE]: 5 // TODO: Hackfix for FFB, just set as frost, most likely won't do what it should do
 }
 
 const USEFUL_SPELL_MECHANICS: {[sm: number]: boolean} = {
