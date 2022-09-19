@@ -69,7 +69,7 @@ _addon.itemSetData[649] = {
             need = 2,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {536870912, 0, 0, 0},
-            value = 20,
+            value = 5,
         },
     }
 }
@@ -82,6 +82,12 @@ _addon.setItemData[30196] = 649;
 _addon.itemSetData[671] = {
     name = "Tempest Regalia",
     effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {67108864, 0, 0, 0},
+            value = 2000,
+        },
         {
             need = 4,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
@@ -98,4 +104,55 @@ _addon.setItemData[31057] = 671;
 _addon.setItemData[34574] = 671;
 _addon.setItemData[34447] = 671;
 _addon.setItemData[34557] = 671;
+
+_addon.itemSetData[803] = {
+    name = "Frostfire Garb",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+            affectSpell = {6429431, 1282112, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[43777] = 803;
+_addon.setItemData[43778] = 803;
+_addon.setItemData[43779] = 803;
+_addon.setItemData[43780] = 803;
+_addon.setItemData[43781] = 803;
+
+_addon.itemSetData[843] = {
+    name = "Khadgar's Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {538968097, 4096, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48725] = 843;
+_addon.setItemData[48726] = 843;
+_addon.setItemData[48727] = 843;
+_addon.setItemData[48728] = 843;
+_addon.setItemData[48729] = 843;
+
+_addon.itemSetData[844] = {
+    name = "Sunstrider's Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {538968097, 4096, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48730] = 844;
+_addon.setItemData[48731] = 844;
+_addon.setItemData[48732] = 844;
+_addon.setItemData[48733] = 844;
+_addon.setItemData[48734] = 844;
 
