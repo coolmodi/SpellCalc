@@ -57,7 +57,7 @@ _addon.talentDataRaw = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
                 values = {17, 33},
-                scriptKey = "Mage_Arcane_Shielding,"
+                scriptKey = "Mage_Arcane_Shielding",
             }
         }
     },
