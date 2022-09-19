@@ -426,6 +426,15 @@ _addon.classGlyphs[62210] = {
     }
 }
 
+-- Glyph of Ice Lance
+_addon.classGlyphs[56377] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        scriptKey = "Glyph_of_Ice_Lance",
+        value = 1
+    }
+}
+
 --------------------------------------------------------------------------
 -- Passives
 --------------------------------------------------------------------------
@@ -501,13 +510,18 @@ end
 
 _addon.scripting.RegisterScript("Ice_Lance_Script", function (val, cs, ce, spellId, si, scriptType)
     assert(ce, "Ice_Lance_Script called with ce nil!");
-    local hasAura = _addon.Target.HasAuraName;
+    local HasAura = _addon.Target.HasAuraName;
+    local GetValue = _addon.scripting.GetValue;
 
-    if hasAura(FROST_NOVA)
-    or hasAura(FROSTBITE)
-    or hasAura(DEEP_FREEZE)
-    or hasAura(FREEZE)
-    or _addon.scripting.GetValue("Finger_of_Frost_active") > 0 then
+    if HasAura(FROST_NOVA)
+    or HasAura(FROSTBITE)
+    or HasAura(DEEP_FREEZE)
+    or HasAura(FREEZE)
+    or GetValue("Finger_of_Frost_active") > 0 then
+        if GetValue("Glyph_of_Ice_Lance") > 0 and _addon.Target.levelDiff > 0 then
+            ce.modBonus = ce.modBonus * 4;
+            return;
+        end
         ce.modBonus = ce.modBonus * 3;
     end
 end);
