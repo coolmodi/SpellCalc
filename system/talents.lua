@@ -6,7 +6,9 @@ local activeRelevantTalents = {};
 ---@type TalentDataEntry[]|nil
 local talentData;
 
--- TODO: check if talents work as expected again? keep this system?
+---Setup talent data.
+---With wrath GetTalentInfo() changed and talents are no longer in order.
+---This function gets and stores the "correct" talent index for tracked talents.
 local function SetupTalentData()
     _addon.util.PrintDebug("Creating talent data.");
 
