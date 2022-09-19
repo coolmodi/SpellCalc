@@ -4089,6 +4089,30 @@ _addon.spellInfo = {
                 coef = 0.2,
                 coefAP = 0,
             },
+            [2] = {
+                effectType = 6,
+                auraType = 42,
+                valueBase = 44461,
+                valueRange = 0,
+                triggeredSpell = 44461,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [44461] = { -- Living Bomb(Rank 1)
+        spellLevel = 60,
+        maxLevel = 66,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 306,
+                valueRange = 0,
+                coef = 0.4,
+                coefAP = 0,
+            },
         }
     },
     [44614] = { -- Frostfire Bolt(Rank 1)
@@ -4198,6 +4222,15 @@ _addon.spellInfo = {
                 coef = 0.2,
                 coefAP = 0,
             },
+            [2] = {
+                effectType = 6,
+                auraType = 42,
+                valueBase = 55361,
+                valueRange = 0,
+                triggeredSpell = 55361,
+                coef = 0,
+                coefAP = 0,
+            },
         }
     },
     [55360] = { -- Living Bomb(Rank 3)
@@ -4215,6 +4248,45 @@ _addon.spellInfo = {
                 valueBase = 345,
                 valueRange = 0,
                 coef = 0.2,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 42,
+                valueBase = 55362,
+                valueRange = 0,
+                triggeredSpell = 55362,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [55361] = { -- Living Bomb(Rank 2)
+        spellLevel = 70,
+        maxLevel = 76,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 512,
+                valueRange = 0,
+                coef = 0.4,
+                coefAP = 0,
+            },
+        }
+    },
+    [55362] = { -- Living Bomb(Rank 3)
+        spellLevel = 80,
+        maxLevel = 86,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 690,
+                valueRange = 0,
+                coef = 0.4,
                 coefAP = 0,
             },
         }

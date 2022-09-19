@@ -299,17 +299,21 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
     sl[31804].MaxLevel = 99;
 }
 
-function mageFix(se: {[index: number]: SpellEffect}) {
+function mageFix(se: {[index: number]: SpellEffect}, sd: SpellData) {
     console.log("Fixing mage coefs and effects");
     const ICE_BARRIER = [11426, 13031, 13032, 13033, 27134, 33405, 43038, 43039];
     const MANA_SHIELD = [1463, 8494, 8495, 10191, 10192, 10193, 27131, 43019, 43020];
 
     for(let effId in se) {
         let eff = se[effId];
+        const spellName = sd.getSpellName(eff.SpellID);
         if (ICE_BARRIER.indexOf(eff.SpellID) != -1) {
             eff.EffectBonusCoefficient = 0.8053;
         } else if (MANA_SHIELD.indexOf(eff.SpellID) != -1) {
             eff.EffectBonusCoefficient = 0.8053;
+        } else if (spellName.Name_lang == "Living Bomb" && eff.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY && eff.EffectBasePoints > 10000) {
+            eff.EffectAura = AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL;
+            eff.EffectTriggerSpell = eff.EffectBasePoints + 1;
         }
     }
 }
@@ -460,7 +464,7 @@ function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: S
 export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}, sn: {[spellId: number]: SpellName}, sd: SpellData) {
     paladinFix(se, sc, sm, sl);
     priestFix(se, sm, sd);
-    mageFix(se);
+    mageFix(se, sd);
     druidFixes(se, sn, sd);
     warlockFixes(se);
     shamanFix(se, sm);
