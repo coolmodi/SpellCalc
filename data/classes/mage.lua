@@ -277,6 +277,18 @@ _addon.talentDataRaw = {
             }
         }
     },
+    { -- Winter's Chill
+        tree = 3,
+        tier = 6,
+        column = 3,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {32},
+                perPoint = 1
+            }
+        }
+    },
     { -- Arctic Winds
         tree = 3,
         tier = 7,
@@ -373,6 +385,18 @@ _addon.aurasPlayer[36032] = { -- Arcane Blast
         scriptKey = "Arcane_Blast_Debuff",
         value = 15,
         hasStacks = true
+    }
+}
+
+_addon.aurasPlayer[74396] = { -- Fingers of Frost
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        scriptKey = "Finger_of_Frost_active",
+        value = 1
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 0
     }
 }
 
