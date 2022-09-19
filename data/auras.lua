@@ -251,22 +251,35 @@ local sanctifiedRetributionAura = {
     affectMask = _addon.CONST.SCHOOL_MASK.ALL,
     auraCategory = CONST.DEBUFF_CATEGORY.DAMAGE_DONE_ALL,
 }
-_addon.scripting.RegisterAuraScript("Sanctified_Retribution_Auras", function (apply, auraId, fromPlayer, scriptType)
-    local name = "Sactified Retribution Script "..auraId;
-    local val;
-    if fromPlayer then
-        val = _addon.scripting.GetValue("Sanctified_Retribution_Auras_Talent");
-    else
-        val = SpellCalc_settings.auraEffectToggleSactifiedRetribution and 3 or 0;
-    end
-    if val > 0 then
+do
+    -- Need to use own value cache due to aura script handling multiple auras at once.
+    ---@type table<string, integer>
+    local auraValueCache = {};
+
+    _addon.scripting.RegisterAuraScript("Sanctified_Retribution_Auras", function (apply, auraId, fromPlayer)
+        local name = "Sactified Retribution Script "..auraId;
+        local val;
+
         if apply then
-            _addon:ApplyAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
+            if fromPlayer then
+                val = _addon.scripting.GetValue("Sanctified_Retribution_Auras_Talent");
+            else
+                val = SpellCalc_settings.auraEffectToggleSactifiedRetribution and 3 or 0;
+            end
+            auraValueCache[name] = val;
         else
-            _addon:RemoveAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
+            val = auraValueCache[name] or 0;
         end
-    end
-end);
+
+        if val > 0 then
+            if apply then
+                _addon:ApplyAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
+            else
+                _addon:RemoveAuraEffect(name, sanctifiedRetributionAura, val, auraId, fromPlayer);
+            end
+        end
+    end);
+end
 _addon.aurasPlayer[19746] = sanctifiedRetribution; -- Conc
 _addon.aurasPlayer[32223] = sanctifiedRetribution; -- Crusader
 _addon.aurasPlayer[465] = sanctifiedRetribution; -- Devotion 1 - 10

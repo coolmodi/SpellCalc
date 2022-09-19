@@ -726,11 +726,13 @@ local svAura = {
 }
 _addon.scripting.RegisterAuraScript("Savage_Roar", function (apply, auraId, fromPlayer, scriptType, cacheValue)
     local name = "SavageRoar";
-    local glyphVal = _addon.scripting.GetValue("Glyph_of_Savage_Roar");
-    local total = 30 + glyphVal;
     if apply then
+        local glyphVal = _addon.scripting.GetValue("Glyph_of_Savage_Roar");
+        local total = 30 + glyphVal;
         _addon:ApplyAuraEffect(name, svAura, total, auraId, fromPlayer);
+        return total;
     else
-        _addon:RemoveAuraEffect(name, svAura, total, auraId, fromPlayer);
+        assert(cacheValue, "Savage Roar aura removed while cacheValue is nil!");
+        _addon:RemoveAuraEffect(name, svAura, cacheValue, auraId, fromPlayer);
     end
 end);

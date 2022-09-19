@@ -49,6 +49,9 @@ local mechanicsActive = {
     target = {}
 };
 
+---@type table<string, integer>
+local scriptedValueCache = {};
+
 -----------------------------------------------
 -- General functions
 -----------------------------------------------
@@ -67,6 +70,9 @@ local function ApplyUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot
 
     assert(auraEffect.value or auraEffect.scriptValue, "Aura effect " .. name .. " has no value or scriptValue defined!");
     local value = auraEffect.value or _addon.scripting.GetValue(auraEffect.scriptValue);
+    if auraEffect.scriptValue then
+        scriptedValueCache[name] = value;
+    end
 
     if stacks > 1 and auraEffect.hasStacks then
         value = value * stacks;
@@ -87,9 +93,18 @@ local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlo
         name = name .. "-" .. effectSlot;
     end
 
-    assert(auraEffect.value or auraEffect.scriptValue,
-        "Player aura effect " .. name .. " has no value or scriptValue defined!");
-    local value = auraEffect.value or _addon.scripting.GetValue(auraEffect.scriptValue);
+    local value = auraEffect.value;
+
+    if value == nil then
+        if not auraEffect.scriptValue then 
+            error("Aura effect " .. name .. " has no value or scriptValue defined!");
+        end
+        if scriptedValueCache[name] == nil then 
+            error("Removed "..name.." with scriptValue without having cached value!");
+        end
+        value = scriptedValueCache[name];
+        scriptedValueCache[name] = nil;
+    end
 
     if stacks > 1 and auraEffect.hasStacks then
         value = value * stacks;

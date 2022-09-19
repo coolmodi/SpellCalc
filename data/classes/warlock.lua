@@ -708,11 +708,13 @@ do
     _addon.scripting.RegisterAuraScript("Haunt_Script", function (apply, auraId, fromPlayer, scriptType, cacheValue)
         assert(fromPlayer, "Haunt_Script called for foreign aura, aura def wrong?");
         local name = "HauntScript";
-        local val = 20 + _addon.scripting.GetValue("Glyph_of_Haunt");
         if apply then
+            local val = 20 + _addon.scripting.GetValue("Glyph_of_Haunt");
             _addon:ApplyAuraEffect(name, hauntAuraEffect, val, auraId, fromPlayer);
+            return val;
         else
-            _addon:RemoveAuraEffect(name, hauntAuraEffect, val, auraId, fromPlayer);
+            assert(cacheValue, "Haunt removed while cacheValue is nil!");
+            _addon:RemoveAuraEffect(name, hauntAuraEffect, cacheValue, auraId, fromPlayer);
         end
     end);
 end

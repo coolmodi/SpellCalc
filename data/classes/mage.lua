@@ -385,7 +385,7 @@ _addon.aurasPlayer[36032] = { -- Arcane Blast
 --------------------------------------------------------------------------
 
 -- Glyph of Mage Armor
-_addon.classGlyphs[54943] = {
+_addon.classGlyphs[56383] = {
     {
         type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
         scriptKey = "Glyph_of_Mage_Armor",
@@ -444,12 +444,14 @@ do
     local mageArmorAura = { type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN };
     _addon.scripting.RegisterAuraScript("Mage_Armor", function (apply, auraId, fromPlayer, scriptType, cacheValue)
         local name = "MageArmor";
-        local glyphVal = _addon.scripting.GetValue("Glyph_of_Mage_Armor");
-        local total = 50 + glyphVal;
         if apply then
+            print(_addon.scripting.GetValue("Glyph_of_Mage_Armor"))
+            local total = 50 + _addon.scripting.GetValue("Glyph_of_Mage_Armor");
             _addon:ApplyAuraEffect(name, mageArmorAura, total, auraId, fromPlayer);
+            return total;
         else
-            _addon:RemoveAuraEffect(name, mageArmorAura, total, auraId, fromPlayer);
+            assert(cacheValue, "Mage Armor aura removed with cacheValue being nil!");
+            _addon:RemoveAuraEffect(name, mageArmorAura, cacheValue, auraId, fromPlayer);
         end
     end);
 end
@@ -461,12 +463,14 @@ do
     };
     _addon.scripting.RegisterAuraScript("Arcane_Blast_Debuff", function (apply, auraId, fromPlayer, scriptType, cacheValue, value)
         local name = "ArcaneBlastDebuff";
-        local glyphVal = _addon.scripting.GetValue("Glyph_of_Arcane_Blast");
-        local total = value + glyphVal * math.floor(value / 15);
         if apply then
+            local glyphVal = _addon.scripting.GetValue("Glyph_of_Arcane_Blast");
+            local total = value + glyphVal * math.floor(value / 15);
             _addon:ApplyAuraEffect(name, effectBase, total, auraId, fromPlayer);
+            return total;
         else
-            _addon:RemoveAuraEffect(name, effectBase, total, auraId, fromPlayer);
+            assert(cacheValue, "Arcane Blast debuff removed while cacheValue is nil!");
+            _addon:RemoveAuraEffect(name, effectBase, cacheValue, auraId, fromPlayer);
         end
     end);
 end
@@ -478,8 +482,8 @@ _addon.scripting.RegisterScript("Ice_Lance_Script", function (val, cs, ce, spell
     if hasAura(FROST_NOVA)
     or hasAura(FROSTBITE)
     or hasAura(DEEP_FREEZE)
-    or hasAura(FREEZE) then
-        print("has freeze effect");
+    or hasAura(FREEZE)
+    or _addon.scripting.GetValue("Finger_of_Frost_active") > 0 then
         ce.modBonus = ce.modBonus * 3;
     end
 end);
