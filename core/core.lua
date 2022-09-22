@@ -676,7 +676,13 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
             end
 
             calcedEffect.ticks = math.floor(calcedSpell.durationNoHaste / tpms);
-            calcedEffect.tickPeriod = calcedSpell.duration / calcedEffect.ticks;
+            calcedEffect.tickPeriod = tpms / 1000;
+
+            if spellInfo.usePeriodicHaste
+            or stats.spellModAllowDotHaste[spellId] and stats.spellModAllowDotHaste[spellId].val > 0 then
+                calcedSpell.duration = calcedSpell.duration * hasteMult;
+                calcedEffect.tickPeriod = calcedEffect.tickPeriod * hasteMult;
+            end
         end
 
         -- Trigger spell spell effect, update triggered spell data
