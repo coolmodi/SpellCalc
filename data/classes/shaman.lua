@@ -64,7 +64,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {-2147483648},
+                affectSpell = {0, -2147483648},
                 perPoint = 10
             },
         }
@@ -78,17 +78,6 @@ _addon.talentDataRaw = {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
                 affectSpell = {3, 8192},
                 perPoint = 5
-            }
-        }
-    },
-    { -- Unrelenting Storm
-        tree = 1,
-        tier = 5,
-        column = 4,
-        effects = {
-            {
-                type = _addon.CONST.EFFECT_TYPE.MANA_PER_5_FROM_INT,
-                perPoint = 4,
             }
         }
     },

@@ -321,12 +321,9 @@ function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: num
 
     switch(spellName) {
         case "Searing Totem":
-            rankInfo.effects[effectNum].effectType = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
-            rankInfo.effects[effectNum].auraType = AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL;
-            rankInfo.effects[effectNum].triggeredSpell = totemSpell;
-            rankInfo.effects[effectNum].period = 2.2;
-            break;
+            throw new Error("Searing Totem should be handled in spell fixes!");
         case "Magma Totem":
+            throw new Error("Magma Totem should be handled in spell fixes!");
         case "Healing Stream Totem":
             applyAuraAreaAura(rankInfo, totemEffects[0], effectNum, spellName);
             break;

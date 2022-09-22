@@ -384,7 +384,7 @@ function warlockFixes(se: {[index: number]: SpellEffect})
     }
 }
 
-function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}) {
+function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}, sd: SpellData) {
     console.log("Fixing shaman coefs and effects");
 
     // Shadowguard -> triggerID
@@ -424,6 +424,8 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         61657: 61654,
     }
 
+
+
     for(let effId in se) {
         const eff = se[effId];
         // Shadowguard trigger fix
@@ -436,14 +438,33 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
             eff.EffectTriggerSpell = fireNova[eff.SpellID];
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL
         }
-    }
+        else
+        {
+            const sn = sd.getSpellName(eff.SpellID).Name_lang;
+            const tts = sd.getTotemSpell(eff.SpellID);
+            if (tts)
+            {
+                if (sn == "Searing Totem")
+                {
+                    eff.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
+                    eff.EffectAura = AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL;
+                    eff.EffectAuraPeriod = 2200;
+                    eff.EffectTriggerSpell = tts;
+                }
+                else if (sn == "Magma Totem")
+                {
+                    const misc = sm[eff.SpellID];
+                    if (!misc) throw "No SM entry for totem spell!";
+                    misc.DurationIndex = 18 // 20000
 
-    // Make Magma Totem 20s duration instead of 21
-    for (const spellId of MAGMA_TOTEM)
-    {
-        const misc = sm[spellId];
-        if (!misc) throw "No SM entry for totem spell!";
-        misc.DurationIndex = 18 // 20000
+                    const ttsEffs = sd.getSpellEffects(tts);
+                    eff.Effect = ttsEffs[0].Effect;
+                    eff.EffectAura = ttsEffs[0].EffectAura;
+                    eff.EffectAuraPeriod = ttsEffs[0].EffectAuraPeriod;
+                    eff.EffectTriggerSpell = ttsEffs[0].EffectTriggerSpell;
+                }
+            }
+        }
     }
 }
 
@@ -484,6 +505,6 @@ export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index:
     mageFix(se, sd);
     druidFixes(se, sn, sd);
     warlockFixes(se);
-    shamanFix(se, sm);
+    shamanFix(se, sm, sd);
     coefFixes(se, sn);
 }

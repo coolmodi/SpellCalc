@@ -387,17 +387,33 @@ _addon.spellInfo = {
     },
     [3599] = { -- Searing Totem(Rank 1)
         spellLevel = 10,
-        maxLevel = 19,
+        maxLevel = 0,
         duration = 30,
         baseCostPct = 7,
         school = 1,
         GCD = 1,
-        defType = 1,
+        defType = 0,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2.2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 3606,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [3606] = { -- Attack(Rank 1)
+        spellLevel = 10,
+        maxLevel = 19,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
                 valueBase = 9,
                 valueRange = 2,
                 coef = 0.104,
@@ -443,19 +459,14 @@ _addon.spellInfo = {
             },
         }
     },
-    [6363] = { -- Searing Totem(Rank 2)
+    [6350] = { -- Attack(Rank 2)
         spellLevel = 20,
         maxLevel = 29,
-        duration = 35,
-        baseCostPct = 7,
-        school = 1,
-        GCD = 1,
+        school = 3,
         defType = 1,
         effects = {
             [1] = {
-                effectType = 6,
-                auraType = 23,
-                tickPeriod = 2.2,
+                effectType = 2,
                 valueBase = 13,
                 valueRange = 4,
                 coef = 0.167,
@@ -463,19 +474,14 @@ _addon.spellInfo = {
             },
         }
     },
-    [6364] = { -- Searing Totem(Rank 3)
+    [6351] = { -- Attack(Rank 3)
         spellLevel = 30,
         maxLevel = 39,
-        duration = 40,
-        baseCostPct = 7,
-        school = 1,
-        GCD = 1,
+        school = 3,
         defType = 1,
         effects = {
             [1] = {
-                effectType = 6,
-                auraType = 23,
-                tickPeriod = 2.2,
+                effectType = 2,
                 valueBase = 19,
                 valueRange = 6,
                 coef = 0.167,
@@ -483,22 +489,80 @@ _addon.spellInfo = {
             },
         }
     },
-    [6365] = { -- Searing Totem(Rank 4)
+    [6352] = { -- Attack(Rank 4)
         spellLevel = 40,
         maxLevel = 49,
-        duration = 45,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 26,
+                valueRange = 8,
+                coef = 0.167,
+                coefAP = 0,
+            },
+        }
+    },
+    [6363] = { -- Searing Totem(Rank 2)
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 35,
         baseCostPct = 7,
         school = 1,
         GCD = 1,
-        defType = 1,
+        defType = 0,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2.2,
-                valueBase = 26,
-                valueRange = 8,
-                coef = 0.167,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 6350,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [6364] = { -- Searing Totem(Rank 3)
+        spellLevel = 30,
+        maxLevel = 0,
+        duration = 40,
+        baseCostPct = 7,
+        school = 1,
+        GCD = 1,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2.2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 6351,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [6365] = { -- Searing Totem(Rank 4)
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 45,
+        baseCostPct = 7,
+        school = 1,
+        GCD = 1,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2.2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 6352,
+                coef = 0,
                 coefAP = 0,
             },
         }
@@ -830,6 +894,21 @@ _addon.spellInfo = {
             },
         }
     },
+    [8187] = { -- Magma Totem(Rank 1)
+        spellLevel = 26,
+        maxLevel = 35,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 38,
+                valueRange = 0,
+                coef = 0.1,
+                coefAP = 0,
+            },
+        }
+    },
     [8190] = { -- Magma Totem(Rank 1)
         spellLevel = 26,
         maxLevel = 0,
@@ -843,7 +922,7 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 0,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 8187,
                 coef = 0,
@@ -1096,19 +1175,14 @@ _addon.spellInfo = {
             },
         }
     },
-    [10437] = { -- Searing Totem(Rank 5)
+    [10435] = { -- Attack(Rank 5)
         spellLevel = 50,
         maxLevel = 59,
-        duration = 50,
-        baseCostPct = 7,
-        school = 1,
-        GCD = 1,
+        school = 3,
         defType = 1,
         effects = {
             [1] = {
-                effectType = 6,
-                auraType = 23,
-                tickPeriod = 2.2,
+                effectType = 2,
                 valueBase = 33,
                 valueRange = 12,
                 coef = 0.167,
@@ -1116,22 +1190,59 @@ _addon.spellInfo = {
             },
         }
     },
-    [10438] = { -- Searing Totem(Rank 6)
+    [10436] = { -- Attack(Rank 6)
         spellLevel = 60,
         maxLevel = 68,
-        duration = 55,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 40,
+                valueRange = 14,
+                coef = 0.167,
+                coefAP = 0,
+            },
+        }
+    },
+    [10437] = { -- Searing Totem(Rank 5)
+        spellLevel = 50,
+        maxLevel = 0,
+        duration = 50,
         baseCostPct = 7,
         school = 1,
         GCD = 1,
-        defType = 1,
+        defType = 0,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2.2,
-                valueBase = 40,
-                valueRange = 14,
-                coef = 0.167,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 10435,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [10438] = { -- Searing Totem(Rank 6)
+        spellLevel = 60,
+        maxLevel = 0,
+        duration = 55,
+        baseCostPct = 7,
+        school = 1,
+        GCD = 1,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2.2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 10436,
+                coef = 0,
                 coefAP = 0,
             },
         }
@@ -1323,6 +1434,51 @@ _addon.spellInfo = {
             },
         }
     },
+    [10579] = { -- Magma Totem(Rank 2)
+        spellLevel = 36,
+        maxLevel = 45,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 64,
+                valueRange = 0,
+                coef = 0.1,
+                coefAP = 0,
+            },
+        }
+    },
+    [10580] = { -- Magma Totem(Rank 3)
+        spellLevel = 46,
+        maxLevel = 55,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 94,
+                valueRange = 0,
+                coef = 0.1,
+                coefAP = 0,
+            },
+        }
+    },
+    [10581] = { -- Magma Totem(Rank 4)
+        spellLevel = 56,
+        maxLevel = 64,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 131,
+                valueRange = 0,
+                coef = 0.1,
+                coefAP = 0,
+            },
+        }
+    },
     [10585] = { -- Magma Totem(Rank 2)
         spellLevel = 36,
         maxLevel = 0,
@@ -1336,7 +1492,7 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 0,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 10579,
                 coef = 0,
@@ -1357,7 +1513,7 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 0,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 10580,
                 coef = 0,
@@ -1378,7 +1534,7 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 0,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 10581,
                 coef = 0,
@@ -1853,22 +2009,38 @@ _addon.spellInfo = {
             },
         }
     },
-    [25533] = { -- Searing Totem(Rank 7)
+    [25530] = { -- Attack(Rank 7)
         spellLevel = 69,
         maxLevel = 74,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 56,
+                valueRange = 18,
+                coef = 0.167,
+                coefAP = 0,
+            },
+        }
+    },
+    [25533] = { -- Searing Totem(Rank 7)
+        spellLevel = 69,
+        maxLevel = 0,
         duration = 60,
         baseCostPct = 7,
         school = 1,
         GCD = 1,
-        defType = 1,
+        defType = 0,
         effects = {
             [1] = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2.2,
-                valueBase = 56,
-                valueRange = 18,
-                coef = 0.167,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 25530,
+                coef = 0,
                 coefAP = 0,
             },
         }
@@ -1939,6 +2111,21 @@ _addon.spellInfo = {
             },
         }
     },
+    [25550] = { -- Magma Totem(Rank 5)
+        spellLevel = 65,
+        maxLevel = 72,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 180,
+                valueRange = 0,
+                coef = 0.1,
+                coefAP = 0,
+            },
+        }
+    },
     [25552] = { -- Magma Totem(Rank 5)
         spellLevel = 65,
         maxLevel = 0,
@@ -1952,7 +2139,7 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 0,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 25550,
                 coef = 0,
@@ -2687,6 +2874,186 @@ _addon.spellInfo = {
                 coefAP = 0,
                 chains = 3,
                 chainMult = 0.6,
+            },
+        }
+    },
+    [58699] = { -- Searing Totem(Rank 8)
+        spellLevel = 71,
+        maxLevel = 0,
+        duration = 60,
+        baseCostPct = 7,
+        school = 1,
+        GCD = 1,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2.2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58700,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [58700] = { -- Attack(Rank 8)
+        spellLevel = 71,
+        maxLevel = 0,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 68,
+                valueRange = 24,
+                coef = 0.167,
+                coefAP = 0,
+            },
+        }
+    },
+    [58701] = { -- Attack(Rank 9)
+        spellLevel = 75,
+        maxLevel = 0,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 77,
+                valueRange = 26,
+                coef = 0.167,
+                coefAP = 0,
+            },
+        }
+    },
+    [58702] = { -- Attack(Rank 10)
+        spellLevel = 80,
+        maxLevel = 0,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 90,
+                valueRange = 30,
+                coef = 0.167,
+                coefAP = 0,
+            },
+        }
+    },
+    [58703] = { -- Searing Totem(Rank 9)
+        spellLevel = 75,
+        maxLevel = 0,
+        duration = 60,
+        baseCostPct = 7,
+        school = 1,
+        GCD = 1,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2.2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58701,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [58704] = { -- Searing Totem(Rank 10)
+        spellLevel = 80,
+        maxLevel = 0,
+        duration = 60,
+        baseCostPct = 7,
+        school = 1,
+        GCD = 1,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2.2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58702,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [58731] = { -- Magma Totem(Rank 6)
+        spellLevel = 73,
+        maxLevel = 0,
+        duration = 20,
+        baseCostPct = 27,
+        school = 1,
+        GCD = 1,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58732,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [58732] = { -- Magma Totem(Rank 6)
+        spellLevel = 73,
+        maxLevel = 77,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 314,
+                valueRange = 0,
+                coef = 0.1,
+                coefAP = 0,
+            },
+        }
+    },
+    [58734] = { -- Magma Totem(Rank 7)
+        spellLevel = 78,
+        maxLevel = 0,
+        duration = 20,
+        baseCostPct = 27,
+        school = 1,
+        GCD = 1,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58735,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [58735] = { -- Magma Totem(Rank 7)
+        spellLevel = 78,
+        maxLevel = 82,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 371,
+                valueRange = 0,
+                coef = 0.1,
+                coefAP = 0,
             },
         }
     },
