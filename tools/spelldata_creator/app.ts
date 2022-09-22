@@ -562,6 +562,7 @@ function buildSpellInfo(pclass: string) {
                 baseCostPct: 0,
                 usePeriodicHaste: (spellMisc["Attributes[5]"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
                 onNextAttack: (spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_ON_NEXT_SWING_NO_DAMAGE) > 0,
+                isOffhandAttack: (spellMisc["Attributes[3]"] & SPELL_ATTR3.SPELL_ATTR_EX3_REQUIRES_OFFHAND_WEAPON) > 0,
                 effects: []
             };
 
@@ -643,6 +644,7 @@ end
         if (ri.charges != 0) str += `\t\tcharges = ${ri.charges},\n`;
         if (ri.usePeriodicHaste) str += `\t\tusePeriodicHaste = true,\n`;
         if (ri.onNextAttack) str += `\t\tonNextSwing = true,\n`;
+        if (ri.isOffhandAttack) str += `\t\tisOffhandAttack = true,\n`;
 
         str += `\t\teffects = {\n`;
 

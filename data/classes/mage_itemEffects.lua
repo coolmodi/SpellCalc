@@ -63,14 +63,6 @@ _addon.itemEffects[21343] = { -- Enigma Robes
     },
 }
 
-_addon.itemEffects[22503] = { -- Frostfire Bindings
-    {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 124,
-        value = 10,
-    },
-}
-
 _addon.itemEffects[21345] = { -- Enigma Shoulderpads
     {
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -108,14 +100,6 @@ _addon.itemEffects[22870] = { -- Blood Guard's Silk Handwraps
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {32768, 0, 0, 0},
         value = 285,
-    },
-}
-
-_addon.itemEffects[22496] = { -- Frostfire Robe
-    {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 124,
-        value = 15,
     },
 }
 

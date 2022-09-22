@@ -777,10 +777,15 @@ local function WeaponDamage(_, calcedSpell, effNum, spellInfo, spellName, spellI
 
     local weaponLow, weaponHigh;
     if spellInfo.effects[effNum].effectType == EFFECT_TYPES.SPELL_EFFECT_NORMALIZED_WEAPON_DMG then
-        weaponLow, weaponHigh = GetNormalizedWeaponDamage("mainhand", calcedEffect.attackPower, weaponCoef);
+        weaponLow, weaponHigh = GetNormalizedWeaponDamage(spellInfo.isOffhandAttack and "offhand" or "mainhand", calcedEffect.attackPower, weaponCoef);
     else
-        weaponLow = stats.attackDmg.mainhand.min * weaponCoef;
-        weaponHigh = stats.attackDmg.mainhand.max * weaponCoef;
+        if spellInfo.isOffhandAttack then
+            weaponLow = stats.attackDmg.offhand.min * weaponCoef;
+            weaponHigh = stats.attackDmg.offhand.max * weaponCoef;
+        else
+            weaponLow = stats.attackDmg.mainhand.min * weaponCoef;
+            weaponHigh = stats.attackDmg.mainhand.max * weaponCoef;
+        end
     end
 
     FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, weaponCoef, calcedEffect.effectivePower);

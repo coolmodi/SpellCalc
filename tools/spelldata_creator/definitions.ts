@@ -132,6 +132,10 @@ const enum SPELL_ATTR2 {
     SPELL_ATTR_EX2_CANT_CRIT = 0x20000000
 }
 
+const enum SPELL_ATTR3 {
+    SPELL_ATTR_EX3_REQUIRES_OFFHAND_WEAPON = 0x01000000
+}
+
 const enum SPELL_ATTR5 {
     SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC = 0x2000,
 }
@@ -197,6 +201,7 @@ interface RankInfo {
     baseCostPct: number,
     usePeriodicHaste: boolean,
     onNextAttack: boolean,
+    isOffhandAttack: boolean,
     effects: EffectInfo[]
 }
 

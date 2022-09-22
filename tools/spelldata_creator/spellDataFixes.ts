@@ -431,6 +431,12 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         else
         {
             const sn = sd.getSpellName(eff.SpellID).Name_lang;
+            if (sn == "Stormstrike")
+            {
+                const ao = sd.getSpellAuraOptions(eff.SpellID);
+                if (ao) ao.ProcCharges = 0;
+            }
+
             const tts = sd.getTotemSpell(eff.SpellID);
             if (tts)
             {
