@@ -156,18 +156,6 @@ _addon.talentDataRaw = {
             }
         }
     },
-    { -- Dreamstate
-        tree = 1,
-        tier = 6,
-        column = 1,
-        effects = {
-            {
-                type = _addon.CONST.EFFECT_TYPE.MANA_PER_5_FROM_INT,
-                perPoint = 3,
-                base = 1
-            }
-        }
-    },
     { -- Moonfury
         tree = 1,
         tier = 6,

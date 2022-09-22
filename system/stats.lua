@@ -233,7 +233,6 @@ local stats = {
     targetMechanicModDmgTakenPct = MechanicStatTable(),
 
     mp5 = UniformStat();
-    intToMP5Pct = UniformStat(),
     fsrRegenMult = UniformStat();
     modhealingDone = UniformStat(),
     hitBonus = UniformStat();
@@ -314,8 +313,6 @@ do
         0.008859, 0.008415, 0.007993, 0.007592, 0.007211, 0.006849, 0.006506, 0.006179, 0.005869, 0.005575
     }
 
-    local oldIntPctMP5 = 0;
-
     ---Update spirit+int based and MP5 regen values
     function _addon:UpdateManaRegen()
         local _, int = UnitStat("player", 4);
@@ -332,13 +329,6 @@ do
             stats.manaRegBase = spiritIntRegen;
             stats.manaRegCasting = newmanaRegCasting;
             stats.manaRegAura = newmanaRegAura;
-            changed = true;
-        end
-
-        local regFromIntPct = stats.intToMP5Pct.val * 0.01 * int;
-        if oldIntPctMP5 ~= regFromIntPct then
-            stats.mp5.val = stats.mp5.val - oldIntPctMP5 + regFromIntPct;
-            oldIntPctMP5 = regFromIntPct;
             changed = true;
         end
 

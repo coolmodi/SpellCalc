@@ -257,13 +257,6 @@ local effectCustom = {
     ---@param apply boolean
     ---@param name string
     ---@param value integer
-    [EFFECT_TYPE.MANA_PER_5_FROM_INT] = function (apply, name, value)
-        ApplyOrRemove(apply, value, stats.intToMP5Pct, name);
-        _addon:UpdateManaRegen();
-    end,
-    ---@param apply boolean
-    ---@param name string
-    ---@param value integer
     [EFFECT_TYPE.JUDGEMENT_SPELL] = function(apply, name, value)
         if value > 0 then
             _addon.judgementSpell = value;
