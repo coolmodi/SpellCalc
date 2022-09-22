@@ -323,6 +323,19 @@ end
 ---@param effNum integer
 ---@param spellInfo SpellInfo
 ---@param spellName string
+local function Thunderstorm(calcedSpell, effNum, spellInfo, spellName)
+    local calcedEffect = calcedSpell.effects[effNum];
+    calcedEffect.min = stats.manaMax * (spellInfo.effects[effNum].valueBase + _addon.scripting.GetValue("Glyph_of_Thunderstorm")) / 100;
+    calcedEffect.max = calcedEffect.min;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.min;
+    calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
+end
+
+---@param calcedSpell CalcedSpell
+---@param effNum integer
+---@param spellInfo SpellInfo
+---@param spellName string
 local function SealOfWisdomMelee(calcedSpell, effNum, spellInfo, spellName)
     ArcaneTorrent(calcedSpell, effNum, spellInfo, spellName);
     calcedSpell.effects[effNum].perSec = 15/60 * stats.baseAttackSpeed.mainhand; -- 15 PPM, this should be the proc chance
@@ -390,6 +403,7 @@ dummyAuraHandlers[GetSpellInfo(20166)] = SealOfWisdomMelee;
 dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
 dummyAuraHandlers[GetSpellInfo(17962)] = Conflagrate;
 dummyAuraHandlers[GetSpellInfo(12051)] = Evocation;
+dummyAuraHandlers[GetSpellInfo(51490)] = Thunderstorm;
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler

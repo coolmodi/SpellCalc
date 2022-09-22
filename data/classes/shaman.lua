@@ -404,8 +404,20 @@ _addon.classGlyphs[55446] = { -- Glyph of Stormstrike
     },
 }
 
--- TODO: 55444: Glyph of Lava Lash // Damage on your Lava Lash is increased by an additional $55444s1% if your weapon is enchanted with Flametongue.
--- TODO: 62132: Glyph of Thunderstorm // "IncreasesthemanayoureceivefromyourThunderstormspellby$62132s1%,butitnolongerknocksenemiesback."
+_addon.classGlyphs[62132] = { -- Glyph of Thunderstorm
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        value = 2,
+        scriptKey = "Glyph_of_Thunderstorm",
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
+        value = 0
+    }
+}
+
+-- TODO: 55451: Glyph of Flametongue Weapon // Increases spell critical strike chance by 2% while Flametongue Weapon is active.
+-- TODO: 55444: Glyph of Lava Lash // Damage on your Lava Lash is increased by an additional 10% if your weapon is enchanted with Flametongue.
 
 --------------------------------------------------------------------------
 -- Passives
