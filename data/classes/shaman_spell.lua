@@ -325,7 +325,7 @@ _addon.spellInfo = {
                 auraType = 4,
                 valueBase = 150,
                 valueRange = 0,
-                coef = 0.286,
+                coef = 0.538,
                 coefAP = 0,
             },
         }
@@ -2392,7 +2392,7 @@ _addon.spellInfo = {
                 auraType = 4,
                 valueBase = 205,
                 valueRange = 0,
-                coef = 0.286,
+                coef = 0.538,
                 coefAP = 0,
             },
         }
@@ -2412,7 +2412,7 @@ _addon.spellInfo = {
                 auraType = 4,
                 valueBase = 270,
                 valueRange = 0,
-                coef = 0.286,
+                coef = 0.538,
                 coefAP = 0,
             },
         }
@@ -2774,7 +2774,7 @@ _addon.spellInfo = {
                 auraType = 4,
                 valueBase = 300,
                 valueRange = 0,
-                coef = 0.286,
+                coef = 0.538,
                 coefAP = 0,
             },
         }
@@ -2794,7 +2794,7 @@ _addon.spellInfo = {
                 auraType = 4,
                 valueBase = 337,
                 valueRange = 0,
-                coef = 0.286,
+                coef = 0.538,
                 coefAP = 0,
             },
         }

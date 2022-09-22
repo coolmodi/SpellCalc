@@ -226,7 +226,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-                affectSpell = {16384},
+                affectSpell = {8192},
                 perPoint = 15
             }
         }
@@ -414,6 +414,14 @@ _addon.classGlyphs[62132] = { -- Glyph of Thunderstorm
         type = _addon.CONST.EFFECT_TYPE.TRIGGER_UPDATE,
         value = 0
     }
+}
+
+_addon.classGlyphs[63279] = { -- Glyph of Earth Shield
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {0, 1024},
+        value = 20
+    },
 }
 
 -- TODO: 55451: Glyph of Flametongue Weapon // Increases spell critical strike chance by 2% while Flametongue Weapon is active.

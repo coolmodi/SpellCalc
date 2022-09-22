@@ -108,7 +108,7 @@ function handleDummyAura(effect: SpellEffect, ei: EffectInfo, ri: RankInfo) {
     {
         ri.charges = 6;
         fillBaseAndRange(ei, effect);
-        ei.coef = 0.286;
+        ei.coef = 0.538;
         ri.forceHeal = true;
         return;
     }
