@@ -434,10 +434,10 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 6,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 52041,
-                coef = 0,
+                coef = 0.0825,
                 coefAP = 0,
             },
         }
@@ -580,10 +580,10 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 8,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 52046,
-                coef = 0,
+                coef = 0.0825,
                 coefAP = 0,
             },
         }
@@ -601,10 +601,10 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 10,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 52047,
-                coef = 0,
+                coef = 0.0825,
                 coefAP = 0,
             },
         }
@@ -1316,10 +1316,10 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 12,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 52048,
-                coef = 0,
+                coef = 0.0825,
                 coefAP = 0,
             },
         }
@@ -1337,10 +1337,10 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 14,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 52049,
-                coef = 0,
+                coef = 0.0825,
                 coefAP = 0,
             },
         }
@@ -2160,10 +2160,10 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 23,
                 tickPeriod = 2,
-                valueBase = 18,
+                valueBase = 5,
                 valueRange = 0,
                 triggeredSpell = 52050,
-                coef = 0,
+                coef = 0.0825,
                 coefAP = 0,
             },
         }
@@ -2839,6 +2839,96 @@ _addon.spellInfo = {
             },
         }
     },
+    [52041] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 6,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [52046] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 8,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [52047] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 10,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [52048] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 12,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [52049] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 14,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [52050] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 18,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
     [55458] = { -- Chain Heal(Rank 6)
         spellLevel = 74,
         maxLevel = 79,
@@ -3053,6 +3143,114 @@ _addon.spellInfo = {
                 valueBase = 371,
                 valueRange = 0,
                 coef = 0.1,
+                coefAP = 0,
+            },
+        }
+    },
+    [58755] = { -- Healing Stream Totem(Rank 7)
+        spellLevel = 71,
+        maxLevel = 0,
+        duration = 300,
+        baseCostPct = 3,
+        school = 5,
+        GCD = 1,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58759,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [58756] = { -- Healing Stream Totem(Rank 8)
+        spellLevel = 76,
+        maxLevel = 0,
+        duration = 300,
+        baseCostPct = 3,
+        school = 5,
+        GCD = 1,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58760,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [58757] = { -- Healing Stream Totem(Rank 9)
+        spellLevel = 80,
+        maxLevel = 0,
+        duration = 300,
+        baseCostPct = 3,
+        school = 5,
+        GCD = 1,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 2,
+                valueBase = 5,
+                valueRange = 0,
+                triggeredSpell = 58761,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [58759] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 20,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [58760] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 23,
+                valueRange = 0,
+                coef = 0.0825,
+                coefAP = 0,
+            },
+        }
+    },
+    [58761] = { -- Healing Stream Totem
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 25,
+                valueRange = 0,
+                coef = 0.0825,
                 coefAP = 0,
             },
         }

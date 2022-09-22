@@ -402,16 +402,6 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         49281: 49279
     };
 
-    const MAGMA_TOTEM = [
-        8190,
-        10585,
-        10586,
-        10587,
-        25552,
-        58731,
-        58734
-    ];
-
     const fireNova: {[spellId: number]: number} = {
         1535: 8349,
         8498: 8502,
@@ -462,6 +452,17 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
                     eff.EffectAura = ttsEffs[0].EffectAura;
                     eff.EffectAuraPeriod = ttsEffs[0].EffectAuraPeriod;
                     eff.EffectTriggerSpell = ttsEffs[0].EffectTriggerSpell;
+                }
+                else if (sn == "Healing Stream Totem")
+                {
+                    const ttsEffs = sd.getSpellEffects(tts);
+                    eff.Effect = ttsEffs[0].Effect;
+                    eff.EffectAura = ttsEffs[0].EffectAura;
+                    eff.EffectAuraPeriod = ttsEffs[0].EffectAuraPeriod;
+                    eff.EffectTriggerSpell = ttsEffs[0].EffectTriggerSpell;
+
+                    const triggeredHeal = sd.getSpellEffects(ttsEffs[0].EffectTriggerSpell);
+                    triggeredHeal[0].Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
                 }
             }
         }

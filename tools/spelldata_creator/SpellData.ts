@@ -315,7 +315,7 @@ export class SpellData {
             return sc;
         }
 
-        if (spellId == 23590 ||spellId == 20168) {
+        if (spellId == 23590 ||spellId == 20168 || this.getSpellName(spellId).Name_lang == "Healing Stream Totem") {
             let sc: SpellCategory = {
                 DefenseType: DEFENSE_TYPE.NONE,
                 DifficultyID: 0,
