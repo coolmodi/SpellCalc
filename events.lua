@@ -6,7 +6,7 @@ local _A = select(2, ...);
 -- dirty fix to "disable" the addon preventing errors on unsupported classes
 -- TODO: Remove when classes are supported
 local _, class = UnitClass("player");
-if class == "WARRIOR" or class == "ROGUE" or class == "HUNTER" then
+if class == "WARRIOR" or class == "ROGUE" or class == "HUNTER" or class == "DEATHKNIGHT" then
     _A.util.PrintError("Class not (yet) supported, addon won't work!");
     return;
 end
