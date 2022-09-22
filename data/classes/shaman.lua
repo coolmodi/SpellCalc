@@ -424,7 +424,14 @@ _addon.classGlyphs[63279] = { -- Glyph of Earth Shield
     },
 }
 
--- TODO: 55451: Glyph of Flametongue Weapon // Increases spell critical strike chance by 2% while Flametongue Weapon is active.
+_addon.classGlyphs[55456] = { -- Glyph of Healing Stream Totem
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {8192},
+        value = 20
+    },
+}
+
 -- TODO: 55444: Glyph of Lava Lash // Damage on your Lava Lash is increased by an additional 10% if your weapon is enchanted with Flametongue.
 
 --------------------------------------------------------------------------
