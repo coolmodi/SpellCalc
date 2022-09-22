@@ -89,7 +89,7 @@ _addon.itemSetData[476] = {
             need = 3,
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {-2147483648, 0, 0, 0},
-            value = 1,
+            value = 1000,
         },
     }
 }
@@ -346,4 +346,227 @@ _addon.setItemData[35387] = 746;
 _addon.setItemData[35388] = 746;
 _addon.setItemData[35389] = 746;
 _addon.setItemData[35390] = 746;
+
+_addon.itemSetData[795] = {
+    name = "Earthshatter Battlegear",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {1024, 0, 0, 0},
+            value = 10,
+        },
+    }
+}
+_addon.setItemData[43762] = 795;
+_addon.setItemData[43763] = 795;
+_addon.setItemData[43765] = 795;
+_addon.setItemData[43772] = 795;
+_addon.setItemData[43776] = 795;
+
+_addon.itemSetData[796] = {
+    name = "Earthshatter Garb",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+            affectSpell = {0, 4096, 0, 0},
+            value = 10,
+        },
+    }
+}
+_addon.setItemData[43764] = 796;
+_addon.setItemData[43767] = 796;
+_addon.setItemData[43769] = 796;
+_addon.setItemData[43770] = 796;
+_addon.setItemData[43773] = 796;
+
+_addon.itemSetData[797] = {
+    name = "Earthshatter Regalia",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {320, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[43766] = 797;
+_addon.setItemData[43768] = 797;
+_addon.setItemData[43771] = 797;
+_addon.setItemData[43774] = 797;
+_addon.setItemData[43775] = 797;
+
+_addon.itemSetData[823] = {
+    name = "Worldbreaker Battlegear",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 16, 4, 0},
+            value = 20,
+        },
+    }
+}
+_addon.setItemData[46293] = 823;
+_addon.setItemData[46294] = 823;
+_addon.setItemData[46296] = 823;
+_addon.setItemData[46303] = 823;
+_addon.setItemData[46307] = 823;
+
+_addon.itemSetData[824] = {
+    name = "Worldbreaker Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {268435456, 0, 0, 0},
+            value = 20,
+        },
+    }
+}
+_addon.setItemData[46295] = 824;
+_addon.setItemData[46298] = 824;
+_addon.setItemData[46300] = 824;
+_addon.setItemData[46301] = 824;
+_addon.setItemData[46304] = 824;
+
+_addon.itemSetData[861] = {
+    name = "Nobundo's Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {0, 0, 16, 0},
+            value = 20,
+        },
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 0, 16, 0},
+            value = 20,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {256, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48824] = 861;
+_addon.setItemData[48825] = 861;
+_addon.setItemData[48826] = 861;
+_addon.setItemData[48827] = 861;
+_addon.setItemData[48828] = 861;
+
+_addon.itemSetData[862] = {
+    name = "Thrall's Garb",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {0, 0, 16, 0},
+            value = 20,
+        },
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 0, 16, 0},
+            value = 20,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {256, 0, 0, 0},
+            value = 5,
+        },
+    }
+}
+_addon.setItemData[48829] = 862;
+_addon.setItemData[48830] = 862;
+_addon.setItemData[48831] = 862;
+_addon.setItemData[48832] = 862;
+_addon.setItemData[48833] = 862;
+
+_addon.itemSetData[863] = {
+    name = "Thrall's Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {268435456, 0, 0, 0},
+            value = 9000,
+        },
+    }
+}
+_addon.setItemData[48841] = 863;
+_addon.setItemData[48842] = 863;
+_addon.setItemData[48843] = 863;
+_addon.setItemData[48844] = 863;
+_addon.setItemData[48845] = 863;
+
+_addon.itemSetData[864] = {
+    name = "Nobundo's Regalia",
+    effects = {
+        {
+            need = 2,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+            affectSpell = {268435456, 0, 0, 0},
+            value = 9000,
+        },
+    }
+}
+_addon.setItemData[48836] = 864;
+_addon.setItemData[48837] = 864;
+_addon.setItemData[48838] = 864;
+_addon.setItemData[48839] = 864;
+_addon.setItemData[48840] = 864;
+
+_addon.itemSetData[865] = {
+    name = "Nobundo's Battlegear",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {-1877999616, 0, 0, 0},
+            value = 25,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {-1877999616, 0, 0, 0},
+            value = 25,
+        },
+    }
+}
+_addon.setItemData[48846] = 865;
+_addon.setItemData[48847] = 865;
+_addon.setItemData[48848] = 865;
+_addon.setItemData[48849] = 865;
+_addon.setItemData[48850] = 865;
+
+_addon.itemSetData[866] = {
+    name = "Thrall's Battlegear",
+    effects = {
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {-1877999616, 0, 0, 0},
+            value = 25,
+        },
+        {
+            need = 4,
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {-1877999616, 0, 0, 0},
+            value = 25,
+        },
+    }
+}
+_addon.setItemData[48854] = 866;
+_addon.setItemData[48855] = 866;
+_addon.setItemData[48852] = 866;
+_addon.setItemData[48853] = 866;
+_addon.setItemData[48851] = 866;
 

@@ -412,12 +412,29 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         58734
     ];
 
+    const fireNova: {[spellId: number]: number} = {
+        1535: 8349,
+        8498: 8502,
+        8499: 8503,
+        11314: 11306,
+        11315: 11307,
+        25546: 25535,
+        25547: 25537,
+        61649: 61650,
+        61657: 61654,
+    }
+
     for(let effId in se) {
         const eff = se[effId];
         // Shadowguard trigger fix
         if (LIGHTNING_SHIELD_TRIGGERS[eff.SpellID] && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA && eff.EffectAura === AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL) 
         {
             eff.EffectTriggerSpell = LIGHTNING_SHIELD_TRIGGERS[eff.SpellID];
+        }
+        else if (fireNova[eff.SpellID])
+        {
+            eff.EffectTriggerSpell = fireNova[eff.SpellID];
+            eff.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL
         }
     }
 

@@ -17,7 +17,7 @@ const CLASSES = [
     "warlock",
     "mage", 
     "paladin",
-    //"shaman",
+    "shaman",
 
     //"hunter",
     //"rogue",
@@ -321,11 +321,10 @@ function summonTotemSlot(rankInfo: RankInfo, effect: SpellEffect, effectNum: num
 
     switch(spellName) {
         case "Searing Totem":
-            directDmg(rankInfo, totemEffects[0], effectNum);
-            rankInfo.effects[effectNum].period = 2.2;
-            rankInfo.defenseType = totemSpellCat.DefenseType;
             rankInfo.effects[effectNum].effectType = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
             rankInfo.effects[effectNum].auraType = AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL;
+            rankInfo.effects[effectNum].triggeredSpell = totemSpell;
+            rankInfo.effects[effectNum].period = 2.2;
             break;
         case "Magma Totem":
         case "Healing Stream Totem":

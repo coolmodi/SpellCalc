@@ -90,7 +90,7 @@ _addon.itemEffects[27947] = { -- Totem of Impact
 _addon.itemEffects[27544] = { -- Totem of Spontaneous Regrowth
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {128, 0, 0, 0},
+        affectSpell = {64},
         value = 88,
     },
 }
@@ -135,6 +135,14 @@ _addon.itemEffects[28523] = { -- Totem of Healing Rains
     },
 }
 
+_addon.itemEffects[32139] = { -- Chancellor's Linked Gauntlets
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {1024, 0, 0, 0},
+        value = 8,
+    },
+}
+
 _addon.itemEffects[32330] = { -- Totem of Ancestral Guidance
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
@@ -167,51 +175,123 @@ _addon.itemEffects[31397] = { -- Gladiator's Ringmail Gauntlets
     },
 }
 
-_addon.itemEffects[33706] = { -- Vengeful Gladiator's Linked Armor
+_addon.itemEffects[38361] = { -- Venture Co. Lightning Rod
     {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {0, 4096, 0, 0},
+        value = 121,
     },
 }
 
-_addon.itemEffects[33708] = { -- Vengeful Gladiator's Linked Helm
+_addon.itemEffects[38367] = { -- Venture Co. Flame Slicer
     {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {0, 0, 4, 0},
+        value = 25,
     },
 }
 
-_addon.itemEffects[33709] = { -- Vengeful Gladiator's Linked Leggings
+_addon.itemEffects[38368] = { -- Totem of the Bay
     {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {256, 0, 0, 0},
+        value = 102,
     },
 }
 
-_addon.itemEffects[35042] = { -- Brutal Gladiator's Linked Armor
+_addon.itemEffects[40267] = { -- Totem of Hex
     {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {3, 0, 0, 0},
+        value = 165,
     },
 }
 
-_addon.itemEffects[35044] = { -- Brutal Gladiator's Linked Helm
+_addon.itemEffects[42665] = { -- Vengeful Gladiator's Ringmail Gauntlets
     {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+        affectSpell = {128, 0, 0, 0},
+        value = 2,
     },
 }
 
-_addon.itemEffects[35045] = { -- Brutal Gladiator's Linked Leggings
+_addon.itemEffects[42670] = { -- Gladiator's Linked Gauntlets
     {
-        type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-        affectMask = 1,
-        value = 84,
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {1024, 0, 0, 0},
+        value = 8,
+    },
+}
+
+_addon.itemEffects[42595] = { -- Savage Gladiator's Totem of the Third Wind
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {128, 0, 0, 0},
+        value = 204,
+    },
+}
+
+_addon.itemEffects[42596] = { -- Hateful Gladiator's Totem of the Third Wind
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {128, 0, 0, 0},
+        value = 236,
+    },
+}
+
+_addon.itemEffects[42597] = { -- Deadly Gladiator's Totem of the Third Wind
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {128, 0, 0, 0},
+        value = 267,
+    },
+}
+
+_addon.itemEffects[42598] = { -- Furious Gladiator's Totem of the Third Wind
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {128, 0, 0, 0},
+        value = 320,
+    },
+}
+
+_addon.itemEffects[42599] = { -- Relentless Gladiator's Totem of the Third Wind
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {128, 0, 0, 0},
+        value = 404,
+    },
+}
+
+_addon.itemEffects[45169] = { -- Totem of the Dancing Flame
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {0, 0, 4096, 0},
+        value = 155,
+    },
+}
+
+_addon.itemEffects[45255] = { -- Thunderfall Totem
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {0, 4096, 0, 0},
+        value = 215,
+    },
+}
+
+_addon.itemEffects[45114] = { -- Steamcaller's Totem
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
+        affectSpell = {256, 0, 0, 0},
+        value = 243,
+    },
+}
+
+_addon.itemEffects[51501] = { -- Wrathful Gladiator's Totem of the Third Wind
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
+        affectSpell = {128, 0, 0, 0},
+        value = 459,
     },
 }
 

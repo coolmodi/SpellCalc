@@ -211,7 +211,8 @@ export class ClassSpellLists
                 let found = false;
                 for (let i = 0; i < tspell.length; i++)
                 {
-                    if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA)
+                    if (tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA
+                        || tspell[i].Effect == EFFECT_TYPE.SPELL_EFFECT_WEAPON_DAMAGE)
                     {
                         found = true;
                         break;

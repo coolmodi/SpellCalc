@@ -300,6 +300,7 @@ export class AuraHandlers
                             case 27850:
                             case 34318:
                             case 62210: // Increases the damage from your Arcane Blast buff by $62210s1%.
+                            case 55446: // Increases the Nature damage bonus from your Stormstrike ability by an additional $55446s1%.
                                 return
                             case 37186: // Increases the damage of your Judgements by 33.
                             case 37333: // Your Shred ability deals an additional 75 damage, and your Lacerate ability does an additional 15 per application.
@@ -363,6 +364,8 @@ export class AuraHandlers
                             case 56383: // Your Mage Armor spell grants an additional $56383s1% mana regeneration while casting.
                             case 57926: // You have an additional $57926s1% chance to reflect Fire spells while your Fire Ward is active.
                             case 57927: // You have an additional $57927s1% chance to reflect Frost spells while your Frost Ward is active.
+                            case 55444: // Damage on your Lava Lash is increased by an additional $55444s1% if your weapon is enchanted with Flametongue
+                            case 62132: // "IncreasesthemanayoureceivefromyourThunderstormspellby$62132s1%,butitnolongerknocksenemiesback."
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT2: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -383,6 +386,8 @@ export class AuraHandlers
                             case 58081: // Increases the movement speed of your Eye of Kilrogg by $s1% and allows it to fly in areas where flying mounts are enabled
                             case 63302: // The bonus damage granted by your Haunt spell is increased by an additional $63302s1%.
                             case 56382: // Your Molten Armor grants an additional $56382s1% of your spirit as critical strike rating
+                            case 55451: // Increases your spell critical strike chance by $55451s1% on each of your weapons with Flametongue Weapon active.
+                            case 59289: // Your Ghost Wolf form regenerates an additional $59289s1% of your maximum health every 5 sec.
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -391,6 +396,12 @@ export class AuraHandlers
                 case 4: // SPELLMOD_CHARGES 
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_CHARGES,
+                        affectSpell: this.getAffectSpell(effect),
+                        value: effect.EffectBasePoints + 1
+                    }
+                case 24: // SPELLMOD_FLAT_SPELL_SCALE
+                    return {
+                        type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                         affectSpell: this.getAffectSpell(effect),
                         value: effect.EffectBasePoints + 1
                     }
@@ -457,6 +468,7 @@ export class AuraHandlers
                         {
                             case 54939: // Your Lay on Hands grants twice as much mana as normal and also grants you as much mana as it grants your target.
                             case 60166: // Your Water Shield is $s1% stronger
+                            case 55436: // Increases the passive mana regeneration of your Water Shield spell by $55436s1%
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT2: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
