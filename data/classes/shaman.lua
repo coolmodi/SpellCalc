@@ -432,6 +432,15 @@ _addon.classGlyphs[55456] = { -- Glyph of Healing Stream Totem
     },
 }
 
+_addon.classGlyphs[55456] = { -- Glyph of Healing Stream Totem
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+        affectSpell = {128},
+        scriptKey = "LHW_Glyph_Script",
+        value = 20
+    },
+}
+
 -- TODO: 55444: Glyph of Lava Lash // Damage on your Lava Lash is increased by an additional 10% if your weapon is enchanted with Flametongue.
 
 --------------------------------------------------------------------------
@@ -468,5 +477,15 @@ do
 
         assert(cacheValue, "Stormstrike aura removed while cacheValue is nil!");
         _addon:RemoveAuraEffect(name, auraEffect, cacheValue, auraId, fromPlayer);
+    end);
+end
+
+do
+    local EARTH_SHIELD = GetSpellInfo(974);
+    _addon.scripting.RegisterScript("LHW_Glyph_Script", function (val, cs, ce, spellId, si, scriptType, spellName)
+        assert(ce, "LHW_Glyph_Script called with ce nil!");
+        if _addon.Target.HasAuraName(EARTH_SHIELD) then
+            ce.modBonus = ce.modBonus * (1 + val) / 100;
+        end
     end);
 end
