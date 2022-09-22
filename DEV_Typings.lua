@@ -85,6 +85,7 @@ _addon.ClassSettings = function() end
 
 ---@class EnchantData : UnitAuraEffect
 ---@field name string
+---@field requireSlot string|nil MH or OH
 
 ---@class TalentEffect : AuraEffectBase
 ---@field base integer|nil

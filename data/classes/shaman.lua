@@ -192,7 +192,7 @@ _addon.talentDataRaw = {
             }
         }
     },
-    { -- Frozen Power TODO: add frostbrand aura effect
+    { -- Frozen Power
         tree = 2,
         tier = 6,
         column = 4,
@@ -441,7 +441,13 @@ _addon.classGlyphs[55456] = { -- Glyph of Healing Stream Totem
     },
 }
 
--- TODO: 55444: Glyph of Lava Lash // Damage on your Lava Lash is increased by an additional 10% if your weapon is enchanted with Flametongue.
+_addon.classGlyphs[55444] = { -- Glyph of Lava Lash
+    {
+        type = _addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE,
+        scriptKey = "Glyph_of_Lava_Lash",
+        value = 10
+    },
+}
 
 --------------------------------------------------------------------------
 -- Passives
@@ -454,6 +460,19 @@ _addon.classPassives = {
         affectSpell = {268435456},
         value = 1
     }
+}
+
+--------------------------------------------------------------------------
+-- Weapon Enchants
+--------------------------------------------------------------------------
+
+_addon.enchantData[3781] = {
+    name = "Flametongue",
+    requireSlot = "OH",
+    type = _addon.CONST.EFFECT_TYPE.SCRIPT_SPELLMOD_DONE_PCT,
+    affectSpell = {0, 0, 4},
+    scriptKey = "Flametongue_Lava_Lash",
+    value = 25
 }
 
 --------------------------------------------------------------------------
@@ -485,7 +504,12 @@ do
     _addon.scripting.RegisterScript("LHW_Glyph_Script", function (val, cs, ce, spellId, si, scriptType, spellName)
         assert(ce, "LHW_Glyph_Script called with ce nil!");
         if _addon.Target.HasAuraName(EARTH_SHIELD) then
-            ce.modBonus = ce.modBonus * (1 + val) / 100;
+            ce.modBonus = ce.modBonus * (1 + val / 100);
         end
     end);
 end
+
+_addon.scripting.RegisterScript("Flametongue_Lava_Lash", function (val, cs, ce, spellId, si, scriptType, spellName)
+    assert(ce, "Flametongue_Lava_Lash called with ce nil!");
+    ce.modBonus = ce.modBonus * (100 + val + _addon.scripting.GetValue("Glyph_of_Lava_Lash")) / 100 ;
+end);

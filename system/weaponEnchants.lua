@@ -34,7 +34,7 @@ local function HandleWeaponTempEnchant(slot, enchantId)
     -- Apply echant effect if it isn't already active
     if enchantId and enchantId ~= activeEnchants[slot] then
         local ed = _addon.enchantData[enchantId];
-        if ed then
+        if ed and (not ed.requireSlot or ed.requireSlot == slot) then
             _addon:ApplyAuraEffect(GetEnchantIdent(ed.name, enchantId, slot), ed, ed.value, enchantId, true);
             activeEnchants[slot] = enchantId;
             enchantChanged = true;
