@@ -157,7 +157,7 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
     if completeBonus > 0 then
         if coefPct > 0 and coefAPPct > 0 then
             -- SP and AP
-            self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP + %.1f%% * %d AP",
+            self:SingleLine(L["Bonus"], self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP + %.1f%% * %d AP",
                 tickPart,
                 completeBonus,
                 coefPct,
@@ -166,14 +166,14 @@ function SCTooltip:AppendCoefData(calcedSpell, calcedEffect, coefMult, tickOverr
                 calcedEffect.attackPower));
         elseif coefPct > 0 then
             -- SP only
-            self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP",
+            self:SingleLine(L["Bonus"], self:FormatNoTrailing0("%s%.0f | %.1f%% * %d SP",
                 tickPart,
                 completeBonus,
                 coefPct,
                 calcedEffect.spellPower));
         else
             -- AP only
-            self:SingleLine(L.TT_POWER, self:FormatNoTrailing0("%s%.0f | %.1f%% * %d AP",
+            self:SingleLine(L["Bonus"], self:FormatNoTrailing0("%s%.0f | %.1f%% * %d AP",
                 tickPart,
                 completeBonus,
                 coefAPPct,
@@ -193,15 +193,15 @@ function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTim
 
     if not auraStack and effectNum == 1 and SpellCalc_settings.ttEffCost and calcedSpell.baseCost ~= 0 and
         calcedSpell.effectiveCost ~= calcedSpell.baseCost then
-        self:SingleLine(L.EFFECTIVE_COST, ("%.1f"):format(calcedSpell.effectiveCost));
+        self:SingleLine(L["Effective cost"], ("%.1f"):format(calcedSpell.effectiveCost));
     end
 
     if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
         local str;
         if isHeal then 
-            str = L.HEAL_PER_MANA_SHORT;
+            str = L["HPM"];
         elseif calcedSpell.costType == Enum.PowerType.Mana then
-            str = L.DMG_PER_MANA_SHORT;
+            str = L["DPM"];
         elseif calcedSpell.costType == Enum.PowerType.Rage then
             str = L["DPR"];
         elseif calcedSpell.costType == Enum.PowerType.Energy then
@@ -216,7 +216,7 @@ function SCTooltip:AppendEfficiency(calcedSpell, effectNum, isHeal, showToOomTim
             outstr = outstr ..
                 (" (%.1fs, %.1f casts)"):format(calcedSpell.castingData.timeToOom, calcedSpell.castingData.castsToOom)
         end
-        self:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), outstr);
+        self:SingleLine((isHeal and L["HOOM"] or L["DOOM"]), outstr);
     end
 end
 
@@ -225,21 +225,21 @@ end
 local function GetEffectTitle(flags)
     if bit.band(flags, ADDON_EFFECT_FLAGS.HEAL) > 0 then
         if bit.band(flags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
-            return L.HEAL_OVER_TIME_SHORT;
+            return L["HoT"];
         end
 
-        return L.HEAL;
+        return L["Heal"];
     end
 
     if bit.band(flags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
-        return L.DMG_OVER_TIME_SHORT;
+        return L["DoT"];
     end
 
     if bit.band(flags, ADDON_EFFECT_FLAGS.ABSORB) > 0 then
-        return L.ABSORB;
+        return L["Absorb"];
     end
 
-    return L.DAMAGE;
+    return L["Damage"];
 end
 
 ---Try to show a tooltip for an effect.
@@ -261,7 +261,7 @@ end
 ---@param critChance number
 ---@return string
 function SCTooltip:CritStr(critChance)
-    return self:FormatNoTrailing0("%.2f%% %s", critChance, L.CHANCE);
+    return self:FormatNoTrailing0("%.2f%% %s", critChance, L["chance"]);
 end
 
 --- Append data to tooltip if spell is known to the addon.
@@ -323,7 +323,7 @@ local function TooltipHandler(toolTipFrame)
     end
 
     if SpellCalc_settings.ttShowBuffs then
-        toolTipFrame:AddLine(L.TT_BUFFS, 0.5, 1, 0.5);
+        toolTipFrame:AddLine(L["Considered buffs:"], 0.5, 1, 0.5);
         if #calcedSpell.buffs > 0 then
             toolTipFrame:AddLine(TTC_DEFAULT .. table.concat(calcedSpell.buffs, ", "));
         end

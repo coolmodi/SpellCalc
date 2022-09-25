@@ -89,12 +89,13 @@ local SETTINGS_TABLE = {
 		targetGroup = {
 			order = 2,
 			type = "group",
-			name = L.TARGET,
+			name = L["Target"],
 			args = {
 				defaultTargetLvlOffset = {
 					order = 1,
 					type = "range",
-					name = L.SETTINGS_TAR_DEFLEVEL_LABEL,
+					name = L["Default level difference"],
+                    desc = L["Level difference to use if no target available."],
 					min = -3,
 					max = 13,
 					step = 1
@@ -102,24 +103,24 @@ local SETTINGS_TABLE = {
 				useCurrentTarget = {
 					order = 2,
 					type = "toggle",
-					name = L.SETTINGS_TT_USECURRENT_LABEL,
-					desc = L.SETTINGS_TT_USECURRENT_TT
+					name = L["Use current target"],
+					desc = L["If possible use target's level instead."]
 				},
 
 				resHead = {
 					order = 10,
 					type = "header",
-					name = L.SETTINGS_HEAD_RESISTANCE
+					name = L["Custom Resistance Values"]
 				},
 				resDesc = {
 					order = 11,
 					type = "description",
-					name = L.SETTINGS_RESISTANCE_DESC
+					name = L["If not 0 treat all targets as if they have this resistance value on top of possible resistance due to level difference."]
 				},
 				resOverrideFrost = {
 					order = 12,
 					type = "range",
-					name = L.FROST,
+					name = L["Frost"],
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -127,7 +128,7 @@ local SETTINGS_TABLE = {
 				resOverrideFire = {
 					order = 13,
 					type = "range",
-					name = L.FIRE,
+					name = L["Fire"],
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -135,7 +136,7 @@ local SETTINGS_TABLE = {
 				resOverrideShadow = {
 					order = 14,
 					type = "range",
-					name = L.SHADOW,
+					name = L["Shadow"],
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -143,7 +144,7 @@ local SETTINGS_TABLE = {
 				resOverrideNature = {
 					order = 15,
 					type = "range",
-					name = L.NATURE,
+					name = L["Nature"],
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -151,7 +152,7 @@ local SETTINGS_TABLE = {
 				resOverrideArcane = {
 					order = 16,
 					type = "range",
-					name = L.ARCANE,
+					name = L["Arcane"],
 					min = 0,
 					max = MAX_RESIST,
 					step = 1
@@ -159,7 +160,7 @@ local SETTINGS_TABLE = {
 				resOverrideArmor = {
 					order = 17,
 					type = "range",
-					name = L.ARMOR,
+					name = L["Armor"],
 					min = 0,
 					max = 17265,
 					step = 1
@@ -170,84 +171,84 @@ local SETTINGS_TABLE = {
 		tooltipGroup = {
 			order = 4,
 			type = "group",
-			name = L.TOOLTIP,
+			name = L["Tooltip"],
 			args = {
 				ttDesc = {
 					order = 0,
 					type = "description",
-					name = L.SETTINGS_HEAD_TOOLTIP
+					name = L["Values to show in tooltips."]
 				},
 
 				ttHit = {
 					order = 1,
 					type = "toggle",
-					name = L.SETTINGS_TT_HITVAL_LABEL
+					name = L["Hit value"]
 				},
 				ttCrit = {
 					order = 2,
 					type = "toggle",
-					name = L.CRITICAL
+					name = L["Critical"]
 				},
 				ttAverages = {
 					order = 3,
 					type = "toggle",
-					name = L.SETTINGS_TT_AVG_LABEL
+					name = L["Averages"]
 				},
 
 				ttPower = {
 					order = 10,
 					type = "toggle",
-					name = L.SETTINGS_TT_POWER_LABEL,
-					desc = L.SETTINGS_TT_POWER_TT
+					name = L["Scaling"],
+					desc = L["Show spell/attack power scaling."]
 				},
 
 				ttHitChance = {
 					order = 20,
 					type = "toggle",
-					name = L.HIT_CHANCE
+					name = L["Hit chance"]
 				},
 				ttHitDetail = {
 					order = 21,
 					type = "toggle",
-					name = L.SETTINGS_TT_HITCHANCE_DETAIL_LABEL,
-					desc = L.SETTINGS_TT_HITCHANCE_DETAIL_TT
+					name = L["Detailed hit chance"],
+					desc = L["Show base hit and bonus hit, also hit lost for binary spells."]
 				},
 				ttResist = {
 					order = 22,
 					type = "toggle",
-					name = L.SETTINGS_TT_RESISTANCE_LABEL,
-					desc = L.SETTINGS_TT_RESISTANCE_TT
+					name = L["Resistance"],
+					desc = L["Show average resisted damage and resistance value."]
 				},
 
 				ttPerSecond = {
 					order = 30,
 					type = "toggle",
-					name = L.SETTINGS_TT_PERSEC_LABEL
+					name = L["Per second (after mitigation)"]
 				},
 
 				ttEffCost = {
 					order = 40,
 					type = "toggle",
-					name = L.EFFECTIVE_COST,
-					desc = L.SETTINGS_TT_EFFCOST_TT
+					name = L["Effective cost"],
+					desc = L["Cost considering regeneration and procs."]
 				},
 				ttPerMana = {
 					order = 41,
 					type = "toggle",
-					name = L.SETTINGS_TT_PERMANA_LABEL
+					name = L["Per mana"]
 				},
 				ttToOom = {
 					order = 42,
 					type = "toggle",
-					name = L.SETTINGS_TT_OOM_LABEL
+					name = L["Done until oom"]
 				},
 
 				ttCombined = {
 					order = 50,
 					type = "toggle",
 					width = "double",
-					name = L.SETTINGS_TT_COMBINED_LABEL,
-					desc = L.SETTINGS_TT_COMBINED_TT
+					name = L["Combined direct + over time"],
+					desc = L["Show combined values of direct and over time effect for spells that have both."]
 				},
 			}
 		},
@@ -255,12 +256,12 @@ local SETTINGS_TABLE = {
 		actionbarGroup = {
 			order = 6,
 			type = "group",
-			name = L.SETTINGS_AB_TITLE,
+			name = L["Actionbar"],
 			args = {
 				abShow = {
 					order = 1,
 					type = "toggle",
-					name = L.SETTINGS_AB_SHOW,
+					name = L["Show values on actionbar"],
 					width = 1.25,
 					set = function(i, val)
 						SpellCalc_settings.abShow = val;
@@ -272,8 +273,8 @@ local SETTINGS_TABLE = {
 				abPosition = {
 					order = 2,
 					type = "range",
-					name = L.SETTINGS_AB_POS,
-					desc = L.SETTINGS_AB_POS_TT,
+					name = L["Position"],
+					desc = L["Offset from the bottom of the button in percent."],
 					min = 0,
 					max = 100,
 					step = 1,
@@ -286,13 +287,13 @@ local SETTINGS_TABLE = {
 					order = 3,
 					type = "group",
 					guiInline = true,
-					name = L.SETTINGS_AB_FONT,
+					name = L["Font"],
 					args = {
 						abFont = {
 							order = 1,
 							type = "select", 
 							dialogControl = "LSM30_Font",
-							name = L.SETTINGS_AB_FONT,
+							name = L["Font"],
 							values = AceGUIWidgetLSMlists.font,
 							set = function(i, val)
 								SpellCalc_settings.abFont = val;
@@ -302,7 +303,7 @@ local SETTINGS_TABLE = {
 						abSize = {
 							order = 2,
 							type = "range",
-							name = L.SETTINGS_AB_SIZE,
+							name = L["Font size"],
 							min = 8,
 							max = 20,
 							step = 1,
@@ -314,12 +315,12 @@ local SETTINGS_TABLE = {
 						abFontFlags = {
 							order = 3,
 							type = "select",
-							name = L.SETTINGS_AB_FONT_STYLE,
+							name = L["Font Style"],
 							values = {
-								NONE = L.NONE,
-								OUTLINE = L.SETTINGS_AB_FONT_STYLE_OUTLINE,
-								MONOCHROME = L.SETTINGS_AB_FONT_STYLE_MONOCHROME,
-								["MONOCHROME,OUTLINE"] = L.SETTINGS_AB_FONT_STYLE_MONOCHROME_OUTLINE,
+								NONE = L["None"],
+								OUTLINE = L["Outline"],
+								MONOCHROME = L["Monochrome"],
+								["MONOCHROME,OUTLINE"] = L["Monochrome + Outline"],
 							},
 							set = function(i, val)
 								SpellCalc_settings.abFontFlags = val;
@@ -332,12 +333,12 @@ local SETTINGS_TABLE = {
 					order = 4,
 					type = "group",
 					guiInline = true,
-					name = L.SETTINGS_AB_COLORS,
+					name = L["Colors"],
 					args = {
 						abColorHarm = {
 							order = 1,
 							type = "color",
-							name = L.SETTINGS_AB_COLOR_HARM,
+							name = L["Damage Color"],
 							hasAlpha = false,
 							get = function()
 								return unpack(SpellCalc_settings.abColorHarm);
@@ -352,7 +353,7 @@ local SETTINGS_TABLE = {
 						abColorHelp = {
 							order = 2,
 							type = "color",
-							name = L.SETTINGS_AB_COLOR_HELP,
+							name = L["Heal Color"],
 							hasAlpha = false,
 							get = function()
 								return unpack(SpellCalc_settings.abColorHelp);
@@ -385,41 +386,41 @@ local SETTINGS_TABLE = {
 					order = 4,
 					type = "group",
 					guiInline = true,
-					name = L.SETTINGS_AB_HEAD,
+					name = L["Shown values"],
 					args = {
 						abDirectValue = {
 							order = 1,
 							type = "select",
-							name = L.SETTINGS_AB_DIRECT_VALUE,
+							name = L["Direct"],
 							values = {
-								avg = L.SETTINGS_AB_DIRECT_VALUE_AVG,
-								avgCrit = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG,
-								avgAfterMitigation = L.REAL_AVERAGE,
-								perSec = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT,
-								casts = L.SETTINGS_CALC_TOOM_HEAD,
-								castsTime = L.TIME_TO_OOM
+								avg = L["Avg. normal hit"],
+								avgCrit = L["Avg. crit"],
+								avgAfterMitigation = L["Real average"],
+								perSec = L["DPS"].."/"..L["HPS"],
+								casts = L["Possible Casts"],
+								castsTime = L["Time to OOM"]
 							}
 						},
 						abDurationValue = {
 							order = 2,
 							type = "select",
-							name = L.SETTINGS_AB_DURATION_VALUE,
+							name = L["DoT/HoT"],
 							values = {
-								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
-								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
-								avgAfterMitigation = L.REAL_AVERAGE,
-								perSec = L.DMG_PER_SEC_CAST_SHORT.."/"..L.HEAL_PER_SEC_CAST_SHORT,
-								perSecDurOrCD = L.DMG_PER_SEC_SHORT.."/"..L.HEAL_PER_SEC_SHORT,
-								casts = L.SETTINGS_CALC_TOOM_HEAD,
-								castsTime = L.TIME_TO_OOM
+								avgCombined = L["Per tick"],
+								allTicks = L["All ticks"],
+								avgAfterMitigation = L["Real average"],
+								perSec = L["DPSC"].."/"..L["HPSC"],
+								perSecDurOrCD = L["DPS"].."/"..L["HPS"],
+								casts = L["Possible Casts"],
+								castsTime = L["Time to OOM"]
 							}
 						},
 						--[[ abSealValue = {
 							order = 3,
 							type = "select",
-							name = L.SETTINGS_AB_SEAL_VALUE,
+							name = L["Seals"],
 							values = {
-								avg = L.SETTINGS_AB_SEAL_VALUE_HIT,
+								avg = L["Avg. hit"],
 								avgCrit = L.SETTINGS_AB_DIRECT_VALUE_CRITAVG
 							}
 						}, ]]
@@ -428,9 +429,9 @@ local SETTINGS_TABLE = {
 							type = "select",
 							name = L["Damage Shields"],
 							values = {
-								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
-								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
-								casts = L.SETTINGS_CALC_TOOM_HEAD
+								avgCombined = L["Per tick"],
+								allTicks = L["All ticks"],
+								casts = L["Possible Casts"]
 							}
 						},
 						abManaRestoreValue = {
@@ -438,14 +439,14 @@ local SETTINGS_TABLE = {
 							type = "select",
 							name = L["Mana Restore"],
 							values = {
-								avgCombined = L.SETTINGS_AB_DURATION_VALUE_TICK,
-								allTicks = L.SETTINGS_AB_DURATION_VALUE_ALL,
+								avgCombined = L["Per tick"],
+								allTicks = L["All ticks"],
 							}
 						},
 						desc = {
 							order = 6,
 							type = "description",
-							name = L.SETTINGS_AB_VAL_INFO
+							name = L["If using Time to OOM or Possible Casts you may want to enable Remaining Casts in Calculation settings!"]
 						},
 					}
 				},
@@ -455,25 +456,25 @@ local SETTINGS_TABLE = {
 		calcGroup = {
 			order = 8,
 			type = "group",
-			name = L.SETTINGS_CALC_HEAD,
+			name = L["Calculation"],
 			args = {
 				toOomGroup = {
 					order = 1,
 					type = "group",
 					guiInline = true,
-					name = L.SETTINGS_CALC_TOOM_HEAD,
+					name = L["Possible Casts"],
 					args = {
 						useRealToOom = {
 							order = 1,
 							type = "toggle",
-							name = L.SETTINGS_CALC_REAL_OOM,
-							desc = L.SETTINGS_CALC_REAL_OOM_TT
+							name = L["Real until OOM"],
+							desc = L["Consider mana below spellcost as 0 mana instead of calculating with theoretical partial casts."]
 						},
 						useCurrentPowerLevel = {
 							order = 2,
 							type = "toggle",
-							name = L.SETTINGS_CALC_REMAINING,
-							desc = L.SETTINGS_CALC_REMAINING_DESC,
+							name = L["Remaining Casts"],
+							desc = L["Calculate possible casts with current mana value instead of always assuming full mana."],
 							set = function(info, value)
 								SpellCalc_settings.useCurrentPowerLevel = value;
 								_addon:TriggerUpdate();
@@ -485,12 +486,12 @@ local SETTINGS_TABLE = {
 					order = 3,
 					type = "group",
 					guiInline = true,
-					name = L.SETTINGS_CALC_EM_HEAD,
+					name = L["Effective Mana Pool"],
 					args = {
 						desc = {
 							order = 1,
 							type = "description",
-							name = L.SETTINGS_CALC_EM_DESC
+							name = L["Consider mana gained from chosen effects for relevant calculations."]
 						},
 						calcEffManaInnervate = {
 							order = 2,
@@ -501,18 +502,18 @@ local SETTINGS_TABLE = {
 						calcEffManaRune = {
 							order = 3,
 							type = "toggle",
-							name = L.SETTINGS_CALC_EM_RUNE
+							name = L["Use Rune"]
 						},
 						calcEffManaPotionTypeNew = {
 							order = 4,
 							type = "select",
-							name = L.SETTINGS_CALC_EM_POTION,
+							name = L["Mana Potion"],
 							values = {
-								NONE = L.NONE,
-								SUPER = L.SETTINGS_CALC_EM_POTION_SUPER,
-								MAJOR = L.SETTINGS_CALC_EM_POTION_MAJOR,
-								SUPERIOR = L.SETTINGS_CALC_EM_POTION_SUPERIOR,
-								GREATER = L.SETTINGS_CALC_EM_POTION_GREATER,
+								NONE = L["None"],
+								SUPER = L["Super Mana Potion"],
+								MAJOR = L["Major Mana Potion"],
+								SUPERIOR = L["Superior Mana Potion"],
+								GREATER = L["Greater Mana Potion"],
                                 RUNIC = L["Runic Mana Potion"],
                                 RUNIC_ENGI = L["Runic (Engineer + 25%)"],
 							}
@@ -557,8 +558,8 @@ local SETTINGS_TABLE = {
 				ttShowBuffs = {
 					order = 1,
 					type = "toggle",
-					name = L.SETTINGS_TT_BUFFS_LABEL,
-					desc = L.SETTINGS_TT_BUFFS_TT
+					name = L["Show buffs"],
+					desc = L["Show buffs/gear/talents affecting the spell calculation. This doesn't include things that the addon doesn't need to handle itself!"]
 				},
 				debug = {
 					order = 2,
@@ -574,8 +575,8 @@ local ARGS_MELEE = {
 	meleeFromFront = {
 		order = 1,
 		type = "toggle",
-		name = L.SETTINGS_MELEE_FROM_FRONT,
-		desc = L.SETTINGS_MELEE_FROM_FRONT_TT
+		name = L["Attacking from front"],
+		desc = L["Use parry and block against PvE targets."]
 	}
 }
 
@@ -647,7 +648,7 @@ _addon.events.OnAddonLoaded(function ()
 		SETTINGS_TABLE.args.meleeGroup = {
 			order = 12,
 			type = "group",
-			name = L.SETTINGS_MELEE_HEAD,
+			name = L["Melee"],
 			args = ARGS_MELEE
 		}
 	end

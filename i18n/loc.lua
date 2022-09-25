@@ -9,9 +9,8 @@ end});
 
 --- Add localization
 ---@param locale string
----@param default boolean
-function _addon:AddLocalization(locale, default)
-	if locale ~= clientlocale and (localStrings ~= nil or not default) then
+function _addon:AddLocalization(locale)
+	if locale ~= clientlocale then
 		return;
 	end
 	return localStrings;

@@ -15,6 +15,7 @@ libs\AceGUI-3.0-SharedMediaWidgets\widget.xml
 
 i18n/loc.lua
 i18n/enUS.lua
+i18n/deDE.lua
 
 constants.lua
 helper.lua

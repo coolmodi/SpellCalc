@@ -9,15 +9,15 @@ local function SoR(calcedSpell, effectNum)
     local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L.DAMAGE, ("%.1f"):format(calcedEffect.avg));
+        SCT:SingleLine(L["Damage"], ("%.1f"):format(calcedEffect.avg));
     end
 
     SCT:AppendCoefData(calcedSpell, calcedEffect, nil, 0);
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
-        local strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
-        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
+        local strUsed = calcedSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
+        SCT:SingleLine(L["Avg. resisted"], strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 end
 
@@ -27,18 +27,18 @@ local function SoC(calcedSpell, effectNum)
     local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.DAMAGE, calcedEffect.min, calcedEffect.max, calcedEffect.avg);
+        SCT:AppendMinMaxAvgLine(L["Damage"], calcedEffect.min, calcedEffect.max, calcedEffect.avg);
     end
 
     if SpellCalc_settings.ttCrit then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil,
+        SCT:AppendMinMaxAvgLine(L["Critical"], calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil,
             nil, SCT:CritStr(calcedSpell.critChance));
     end
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
-        local strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
-        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
+        local strUsed = calcedSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
+        SCT:SingleLine(L["Avg. resisted"], strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 end
 
@@ -54,18 +54,18 @@ local function SoV_SoCor(calcedSpell, effectNum)
     SCT:HeaderLine(L["Hit at 5 stacks:"]);
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.DAMAGE, calcedEffect.min, calcedEffect.max, calcedEffect.avg);
+        SCT:AppendMinMaxAvgLine(L["Damage"], calcedEffect.min, calcedEffect.max, calcedEffect.avg);
     end
 
     if SpellCalc_settings.ttCrit then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil,
+        SCT:AppendMinMaxAvgLine(L["Critical"], calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil,
             nil, SCT:CritStr(calcedSpell.critChance));
     end
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
-        local strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
-        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
+        local strUsed = calcedSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
+        SCT:SingleLine(L["Avg. resisted"], strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 
     SCT:HeaderLine(L["DoT at 5 stacks:"]);
@@ -76,21 +76,21 @@ local function SoV_SoCor(calcedSpell, effectNum)
     local perSecDurOrCD = dotEffect.perSecDurOrCD * 5;
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.DAMAGE, min, max, avg, nil,
-            L.TICKS, SCT:FormatNoTrailing0(L.TICKS_TOOLTIP, dotEffect.ticks, dotEffect.tickPeriod, dotSpell.duration), true);
+        SCT:AppendMinMaxAvgLine(L["Damage"], min, max, avg, nil,
+            L["Ticks"], SCT:FormatNoTrailing0(L["%dx every %.2fs (%.2fs)"], dotEffect.ticks, dotEffect.tickPeriod, dotSpell.duration), true);
     end
 
-    SCT:SingleLine(L.TT_TOTAL, SCT:Round(dotEffect.ticks * avg));
+    SCT:SingleLine(L["Total"], SCT:Round(dotEffect.ticks * avg));
     SCT:AppendCoefData(dotSpell, dotEffect, 5);
 
     if SpellCalc_settings.ttResist and dotSpell.avgResist > 0 then
         local effRes = math.max(0, dotSpell.resistance - dotSpell.resistancePen) + dotSpell.resistanceFromLevel;
-        local strUsed = dotSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
-        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(dotSpell.avgResist * 100, effRes, dotSpell.resistanceFromLevel));
+        local strUsed = dotSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
+        SCT:SingleLine(L["Avg. resisted"], strUsed:format(dotSpell.avgResist * 100, effRes, dotSpell.resistanceFromLevel));
     end
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_OVER_TIME_SHORT .. " " .. L.DMG_PER_SEC_SHORT, ("%.1f"):format(perSecDurOrCD));
+        SCT:SingleLine(L["DoT"] .. " " .. L["DPS"], ("%.1f"):format(perSecDurOrCD));
     end
 end
 

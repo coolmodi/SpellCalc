@@ -12,25 +12,25 @@ local function AppendMitigation(calcedSpell)
         if SpellCalc_settings.ttHitDetail then
             outstr = outstr..SCT:FormatNoTrailing0(" (%.2f%% + %.2f%%)", calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus);
             if calcedSpell.hitChanceBinaryLoss and calcedSpell.hitChanceBinaryLoss > 0 then
-                outstr = outstr .. (" (-%.1f%% %s)"):format(calcedSpell.hitChanceBinaryLoss, L.TT_BINARYMISS);
+                outstr = outstr .. (" (-%.1f%% %s)"):format(calcedSpell.hitChanceBinaryLoss, L["binary resist"]);
             end
         end
-        SCT:SingleLine(L.HIT_CHANCE, outstr);
+        SCT:SingleLine(L["Hit chance"], outstr);
     end
 
     local mmit = calcedSpell.meleeMitigation;
     if mmit then
         if mmit.dodge > 0 then
-            SCT:SingleLine(L.TT_DODGECHANCE, ("%.1f%%"):format(mmit.dodge));
+            SCT:SingleLine(L["Dodge"], ("%.1f%%"):format(mmit.dodge));
         end
         if mmit.parry > 0 then
-            SCT:SingleLine(L.TT_PARRYCHANCE, ("%.1f%%"):format(mmit.parry));
+            SCT:SingleLine(L["Parry"], ("%.1f%%"):format(mmit.parry));
         end
         if mmit.glancing > 0 then
-            SCT:SingleLine(L.TT_GLANCECHANCE, L.TT_GLANCEDATA:format(mmit.glancing, mmit.glancingDmg * 100));
+            SCT:SingleLine(L["Glancing"], L["%.1f%% for %.1f%% damage"]:format(mmit.glancing, mmit.glancingDmg * 100));
         end
         if mmit.block > 0 then
-            SCT:SingleLine(L.TT_BLOCKCHANCE, ("%.1f%%"):format(mmit.block));
+            SCT:SingleLine(L["Block"], ("%.1f%%"):format(mmit.block));
         end
     end
 
@@ -41,9 +41,9 @@ local function AppendMitigation(calcedSpell)
         if calcedSpell.school == _addon.CONST.SCHOOL.PHYSICAL then
             strUsed = L["%.1f%% (Armor: %d)"];
         else
-            strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
+            strUsed = calcedSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
         end
-        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
+        SCT:SingleLine(L["Avg. resisted"], strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 end
 
@@ -60,26 +60,26 @@ local function AppendOffhandMitigation(calcedSpell, effNum)
         if SpellCalc_settings.ttHitDetail then
             outstr = outstr..(" (%d%% + %d%%)"):format(calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus)
             if calcedSpell.hitChanceBinaryLoss and calcedSpell.hitChanceBinaryLoss > 0 then
-                outstr = outstr .. (" (-%.1f%% %s)"):format(calcedSpell.hitChanceBinaryLoss, L.TT_BINARYMISS);
+                outstr = outstr .. (" (-%.1f%% %s)"):format(calcedSpell.hitChanceBinaryLoss, L["binary resist"]);
             end
         end
-        SCT:SingleLine(L.HIT_CHANCE, outstr);
+        SCT:SingleLine(L["Hit chance"], outstr);
     end
 
     local mmit = calcedSpell.meleeMitigation;
     local ohmit = ohd.meleeMitigation;
     if mmit and ohmit then
         if ohmit.dodge > 0 and ohmit.dodge ~= mmit.dodge then
-            SCT:SingleLine(L.TT_DODGECHANCE, ("%.1f%%"):format(ohmit.dodge));
+            SCT:SingleLine(L["Dodge"], ("%.1f%%"):format(ohmit.dodge));
         end
         if ohmit.parry > 0 and ohmit.parry ~= mmit.parry then
-            SCT:SingleLine(L.TT_PARRYCHANCE, ("%.1f%%"):format(ohmit.parry));
+            SCT:SingleLine(L["Parry"], ("%.1f%%"):format(ohmit.parry));
         end
         if ohmit.glancing > 0 and ohmit.glancing ~= mmit.glancing then
-            SCT:SingleLine(L.TT_GLANCECHANCE, L.TT_GLANCEDATA:format(ohmit.glancing, ohmit.glancingDmg * 100));
+            SCT:SingleLine(L["Glancing"], L["%.1f%% for %.1f%% damage"]:format(ohmit.glancing, ohmit.glancingDmg * 100));
         end
         if ohmit.block > 0 and ohmit.block ~= mmit.block then
-            SCT:SingleLine(L.TT_BLOCKCHANCE, ("%.1f%%"):format(ohmit.block));
+            SCT:SingleLine(L["Block"], ("%.1f%%"):format(ohmit.block));
         end
     end
 end
@@ -102,28 +102,28 @@ local function AppendChainData(calcedSpell, effectNum, isHeal)
         chainCrits = chainCrits.." - "..SCT:Round(calcedEffect.avgCrit * thisMult);
     end
 
-    SCT:HeaderLine(L.TT_TITLE_CHAINS);
+    SCT:HeaderLine(L["With Chaining:"]);
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), chainHits);
+        SCT:SingleLine((isHeal and L["Heal"] or L["Damage"]), chainHits);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:SingleLine(L.CRITICAL, chainCrits);
+        SCT:SingleLine(L["Critical"], chainCrits);
     end
 
     SCT:AppendCoefData(calcedSpell, calcedEffect, completeMult);
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine((isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT), ("%.1f"):format(calcedEffect.perSec * completeMult));
+        SCT:SingleLine((isHeal and L["HPS"] or L["DPS"]), ("%.1f"):format(calcedEffect.perSec * completeMult));
     end
 
     if SpellCalc_settings.ttPerMana and calcedEffect.perResource > 0 then
-        SCT:SingleLine((isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT), ("%.2f"):format(calcedEffect.perResource * completeMult));
+        SCT:SingleLine((isHeal and L["HPM"] or L["DPM"]), ("%.2f"):format(calcedEffect.perResource * completeMult));
     end
 
     if SpellCalc_settings.ttToOom and calcedEffect.doneToOom > 0 then
-        SCT:SingleLine((isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT), SCT:Round(calcedEffect.doneToOom * completeMult));
+        SCT:SingleLine((isHeal and L["HOOM"] or L["DOOM"]), SCT:Round(calcedEffect.doneToOom * completeMult));
     end
 end
 
@@ -137,14 +137,14 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId)
 
     if SpellCalc_settings.ttHit then
         if calcedSpell.charges and calcedSpell.charges > 1 then
-            SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %d | %d total"):format(calcedSpell.charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * calcedSpell.charges)));
+            SCT:SingleLine((isHeal and L["Heal"] or L["Damage"]), ("%dx %d | %d total"):format(calcedSpell.charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * calcedSpell.charges)));
         else
-            SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), calcedEffect.min, calcedEffect.max, calcedEffect.avg, nil, nil, nil, true);
+            SCT:AppendMinMaxAvgLine((isHeal and L["Heal"] or L["Damage"]), calcedEffect.min, calcedEffect.max, calcedEffect.avg, nil, nil, nil, true);
         end
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffect.minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance), true);
+        SCT:AppendMinMaxAvgLine(L["Critical"], calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance), true);
     end
 
     if calcedEffect.critExtraAvg then
@@ -160,12 +160,12 @@ local function AppendDirectEffect(calcedSpell, effectNum, isHeal, spellId)
     -- Some spells have 1 charge for no reason, only 1+ (Lightning Shield etc.) should show this tooltip.
     if calcedSpell.charges and calcedSpell.charges > 1 then
         if SpellCalc_settings.ttPerSecond then
-            SCT:SingleLine((isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT), ("%.1f"):format(calcedEffect.perSec));
+            SCT:SingleLine((isHeal and L["HPSC"] or L["DPSC"]), ("%.1f"):format(calcedEffect.perSec));
         end
         SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, true);
     else
         if SpellCalc_settings.ttPerSecond then
-            SCT:SingleLine((isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT), ("%.1f"):format(calcedEffect.perSec));
+            SCT:SingleLine((isHeal and L["HPS"] or L["DPS"]), ("%.1f"):format(calcedEffect.perSec));
         end
         SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, true);
     end
@@ -212,15 +212,15 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
     end
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine((isHeal and L.HEAL or L.DAMAGE), min, max, avg, nil,
-            L.TICKS, SCT:FormatNoTrailing0(L.TICKS_TOOLTIP, calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
+        SCT:AppendMinMaxAvgLine((isHeal and L["Heal"] or L["Damage"]), min, max, avg, nil,
+            L["Ticks"], SCT:FormatNoTrailing0(L["%dx every %.2fs (%.2fs)"], calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
     end
 
     if SpellCalc_settings.ttCrit and critChance > 0 and minCrit > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, minCrit, maxCrit, avgCrit, nil, nil, SCT:CritStr(critChance), true);
+        SCT:AppendMinMaxAvgLine(L["Critical"], minCrit, maxCrit, avgCrit, nil, nil, SCT:CritStr(critChance), true);
     end
 
-    SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * avgCombined));
+    SCT:SingleLine(L["Total"], SCT:Round(calcedEffect.ticks * avgCombined));
     SCT:AppendCoefData(coefMitSpell, coefEffect, nil, calcedEffect.ticks);
 
     if not isHeal and effectNum == 1 then
@@ -230,10 +230,10 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
     local isChannel = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.CHANNEL) > 0;
 
     if SpellCalc_settings.ttPerSecond then
-        local spersec = isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT;
+        local spersec = isHeal and L["HPS"] or L["DPS"];
         if not isChannel then
-            local sperseccast = isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT;
-            local spersecdur = (isHeal and L.HEAL_OVER_TIME_SHORT or L.DMG_OVER_TIME_SHORT) .. " " .. spersec;
+            local sperseccast = isHeal and L["HPSC"] or L["DPSC"];
+            local spersecdur = (isHeal and L["HoT"] or L["DoT"]) .. " " .. spersec;
             SCT:DoubleLine(sperseccast, ("%.1f"):format(calcedEffect.perSec),  spersecdur, ("%.1f"):format(calcedEffect.perSecDurOrCD));
         else
             SCT:SingleLine(spersec, ("%.1f"):format(calcedEffect.perSec));
@@ -250,13 +250,13 @@ end
 ---@param auraStackData AuraStackData
 local function AppendAuraStackEffect(calcedSpell, effectNum, isHeal, auraStackData)
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine((isHeal and L.HEAL or L.DAMAGE), ("%dx %.1f (%d)"):format(auraStackData.ticks, auraStackData.min, SCT:Round(auraStackData.min * auraStackData.ticks)));
+        SCT:SingleLine((isHeal and L["Heal"] or L["Damage"]), ("%dx %.1f (%d)"):format(auraStackData.ticks, auraStackData.min, SCT:Round(auraStackData.min * auraStackData.ticks)));
     end
 
     if SpellCalc_settings.ttPerSecond then
-        local spersec = isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT;
-        local sperseccast = isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT;
-        local spersecdur = (isHeal and L.HEAL_OVER_TIME_SHORT or L.DMG_OVER_TIME_SHORT) .. " " .. spersec;
+        local spersec = isHeal and L["HPS"] or L["DPS"];
+        local sperseccast = isHeal and L["HPSC"] or L["DPSC"];
+        local spersecdur = (isHeal and L["HoT"] or L["DoT"]) .. " " .. spersec;
         SCT:DoubleLine(sperseccast, ("%.1f"):format(auraStackData.perSec),  spersecdur, ("%.1f"):format(auraStackData.perSecDurOrCD));
     end
 
@@ -271,9 +271,9 @@ local function AppendCombinedEffect(calcedSpellss)
     local isHeal = bit.band(calcedSpellss.effects[1].effectFlags, ADDON_EFFECT_FLAGS.HEAL) > 0;
 
     if SpellCalc_settings.ttHit then
-        local stype = (isHeal and L.HEAL or L.DAMAGE);
+        local stype = (isHeal and L["Heal"] or L["Damage"]);
         if combSpam.ticksUsed > 0 then
-            SCT:DoubleLine(stype, SCT:Round(combDur.hitAvg), stype..L.SPAM_SUFFIX, SCT:Round(combSpam.hitAvg));
+            SCT:DoubleLine(stype, SCT:Round(combDur.hitAvg), stype..L[" (spam)"], SCT:Round(combSpam.hitAvg));
         else
             SCT:SingleLine(stype, SCT:Round(combDur.hitAvg));
         end
@@ -281,34 +281,34 @@ local function AppendCombinedEffect(calcedSpellss)
 
     if SpellCalc_settings.ttCrit then
         if combSpam.ticksUsed > 0 then
-            SCT:DoubleLine(L.CRITICAL, SCT:Round(combDur.critAvg), L.CRITICAL..L.SPAM_SUFFIX, SCT:Round(combSpam.critAvg));
+            SCT:DoubleLine(L["Critical"], SCT:Round(combDur.critAvg), L["Critical"]..L[" (spam)"], SCT:Round(combSpam.critAvg));
         else
-            SCT:SingleLine(L.CRITICAL, SCT:Round(combDur.critAvg));
+            SCT:SingleLine(L["Critical"], SCT:Round(combDur.critAvg));
         end
     end
 
     if SpellCalc_settings.ttPerSecond then
-        local sperseccast = isHeal and L.HEAL_PER_SEC_CAST_SHORT or L.DMG_PER_SEC_CAST_SHORT;
+        local sperseccast = isHeal and L["HPSC"] or L["DPSC"];
         if combSpam.ticksUsed > 0 then
-            local spersec = isHeal and L.HEAL_PER_SEC_SHORT or L.DMG_PER_SEC_SHORT;
-            SCT:DoubleLine(sperseccast, ("%.1f"):format(combDur.perSecond), spersec..L.SPAM_SUFFIX, ("%.1f"):format(combSpam.perSecond));
+            local spersec = isHeal and L["HPS"] or L["DPS"];
+            SCT:DoubleLine(sperseccast, ("%.1f"):format(combDur.perSecond), spersec..L[" (spam)"], ("%.1f"):format(combSpam.perSecond));
         else
             SCT:SingleLine(sperseccast, ("%.1f"):format(combDur.perSecond));
         end
     end
 
     if SpellCalc_settings.ttPerMana then
-        local spermanacast = isHeal and L.HEAL_PER_MANA_CAST_SHORT or L.DMG_PER_MANA_CAST_SHORT;
+        local spermanacast = isHeal and L["HPMC"] or L["DPMC"];
         if combSpam.ticksUsed > 0 then
-            local spermana = isHeal and L.HEAL_PER_MANA_SHORT or L.DMG_PER_MANA_SHORT;
-            SCT:DoubleLine(spermanacast, ("%.2f"):format(combDur.perResource), spermana..L.SPAM_SUFFIX, ("%.2f"):format(combSpam.perResource));
+            local spermana = isHeal and L["HPM"] or L["DPM"];
+            SCT:DoubleLine(spermanacast, ("%.2f"):format(combDur.perResource), spermana..L[" (spam)"], ("%.2f"):format(combSpam.perResource));
         else
             SCT:SingleLine(spermanacast, ("%.2f"):format(combDur.perResource));
         end
     end
 
     if combSpam.ticksUsed > 0 and SpellCalc_settings.ttPerMana then
-        SCT:DoubleLine(nil, nil, (isHeal and L.HEAL_UNTIL_OOM_SHORT or L.DMG_UNTIL_OOM_SHORT)..L.SPAM_SUFFIX, SCT:Round(combSpam.doneToOom));
+        SCT:DoubleLine(nil, nil, (isHeal and L["HOOM"] or L["DOOM"])..L[" (spam)"], SCT:Round(combSpam.doneToOom));
     end
 end
 
@@ -321,9 +321,9 @@ local function AppendDmgShieldEffect(calcedSpell, effectNum)
 
     if SpellCalc_settings.ttHit then
         if charges > 0 then
-            SCT:SingleLine(L.DAMAGE, ("%dx %d | %d total"):format(charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * charges)));
+            SCT:SingleLine(L["Damage"], ("%dx %d | %d total"):format(charges, SCT:Round(calcedEffect.avg), SCT:Round(calcedEffect.avg * charges)));
         else
-            SCT:SingleLine(L.DAMAGE, ("%.1f"):format(calcedEffect.avg));
+            SCT:SingleLine(L["Damage"], ("%.1f"):format(calcedEffect.avg));
         end
     end
 
@@ -332,7 +332,7 @@ local function AppendDmgShieldEffect(calcedSpell, effectNum)
 
     if charges > 0 then
         if SpellCalc_settings.ttPerSecond then
-            SCT:SingleLine(L.DMG_PER_SEC_CAST_SHORT, ("%.1f"):format(calcedEffect.perSec));
+            SCT:SingleLine(L["DPSC"], ("%.1f"):format(calcedEffect.perSec));
         end
         SCT:AppendEfficiency(calcedSpell, effectNum, false);
     end
@@ -345,13 +345,13 @@ local function AppendAbsorbEffect(calcedSpell, effectNum)
     local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
-        SCT:SingleLine(L.ABSORB, SCT:Round(calcedEffect.avg));
+        SCT:SingleLine(L["Absorb"], SCT:Round(calcedEffect.avg));
     end
 
     SCT:AppendCoefData(calcedSpell, calcedEffect);
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.HEAL_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
+        SCT:SingleLine(L["HPS"], ("%.1f"):format(calcedEffect.perSec));
     end
 
     SCT:AppendEfficiency(calcedSpell, effectNum, true, false);
@@ -366,17 +366,17 @@ local function AppendAutoAttack(calcedSpell, effectNum)
     -- MH
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.TT_MAINHAND, calcedEffect.min, calcedEffect.max, calcedEffect.avg);
+        SCT:AppendMinMaxAvgLine(L["Mainhand"], calcedEffect.min, calcedEffect.max, calcedEffect.avg);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
+        SCT:AppendMinMaxAvgLine(L["Critical"], calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
 
     AppendMitigation(calcedSpell);
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec));
+        SCT:SingleLine(L["DPS"], ("%.1f"):format(calcedEffect.perSec));
     end
 
     -- OH
@@ -388,18 +388,18 @@ local function AppendAutoAttack(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.TT_MAINHAND, ohd.min, ohd.max, ohd.avg);
+        SCT:AppendMinMaxAvgLine(L["Offhand"], ohd.min, ohd.max, ohd.avg);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, ohd.minCrit, ohd.maxCrit, ohd.avgCrit, nil, nil, ("%.2f%% %s"):format(ohd.critChance, L.CHANCE));
+        SCT:AppendMinMaxAvgLine(L["Critical"], ohd.minCrit, ohd.maxCrit, ohd.avgCrit, nil, nil, ("%.2f%% %s"):format(ohd.critChance, L["chance"]));
     end
 
     AppendOffhandMitigation(calcedSpell, effectNum);
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(ohd.perSec));
-        SCT:SingleLine(L.TT_PERSEC_COMBINED_DAMAGE, ("%.1f"):format(calcedEffect.perSec + ohd.perSec));
+        SCT:SingleLine(L["DPS"], ("%.1f"):format(ohd.perSec));
+        SCT:SingleLine(L["Combined DPS"], ("%.1f"):format(calcedEffect.perSec + ohd.perSec));
     end
 end
 
@@ -428,18 +428,18 @@ local function ManaRestoreEffect(calcedSpell, effectNum)
     if SpellCalc_settings.ttHit then
         if calcedSpell.duration and calcedSpell.duration > 0 then
             SCT:AppendMinMaxAvgLine(L["Mana"], min, max, avg, nil,
-                L.TICKS, SCT:FormatNoTrailing0(L.TICKS_TOOLTIP, calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
+                L["Ticks"], SCT:FormatNoTrailing0(L["%dx every %.2fs (%.2fs)"], calcedEffect.ticks, calcedEffect.tickPeriod, calcedSpell.duration), true);
         else
             SCT:AppendMinMaxAvgLine(L["Mana"], min, max, avg);
         end
     end
 
     if calcedSpell.duration and calcedSpell.duration > 0 then
-        SCT:SingleLine(L.TT_TOTAL, SCT:Round(calcedEffect.ticks * avgCombined));
+        SCT:SingleLine(L["Total"], SCT:Round(calcedEffect.ticks * avgCombined));
     end
 
     if calcedEffect.perSec and calcedEffect.perSec > 0 then
-        SCT:SingleLine(L.TT_PROCCHANCE, SCT:FormatNoTrailing0("%.2f%%", calcedEffect.perSec * 100));
+        SCT:SingleLine(L["Proc chance"], SCT:FormatNoTrailing0("%.2f%%", calcedEffect.perSec * 100));
     end
 end
 
@@ -469,12 +469,12 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
     if calcedEffect.auraStack then
         local as = calcedEffect.auraStack;
         assert(as, "AurastackData not defined! Something went wrong. " .. spellId);
-        SCT:HeaderLine(L.SUSTAINED_X_STACKS:format(as.stacks));
+        SCT:HeaderLine(L["Sustained %d Stacks:"]:format(as.stacks));
         AppendAuraStackEffect(calcedSpell, effectNum, isHeal, as);
     end
 
     if SpellCalc_settings.ttCombined and effectNum == 2 and calcedSpell.combined ~= nil and calcedSpell.costType == Enum.PowerType.Mana then
-        SCT:HeaderLine(L.TT_TITLE_COMB);
+        SCT:HeaderLine(L["Combined:"]);
         AppendCombinedEffect(calcedSpell);
     end
 
@@ -494,14 +494,14 @@ local function CoA(calcedSpell, effectNum)
         local tickStart = avgTickNoSP * 0.5 + calcedEffect.effectivePower;
         local tickEnd = avgTickNoSP * 1.5 + calcedEffect.effectivePower;
         local total = calcedEffect.min * calcedEffect.ticks;
-        SCT:SingleLine(L.DAMAGE, ("4x %.1f, 4x %.1f, 4x %.1f | %d total"):format(tickStart, calcedEffect.min, tickEnd, total));
+        SCT:SingleLine(L["Damage"], ("4x %.1f, 4x %.1f, 4x %.1f | %d total"):format(tickStart, calcedEffect.min, tickEnd, total));
     end
 
     SCT:AppendCoefData(calcedSpell, calcedEffect);
     AppendMitigation(calcedSpell);
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:DoubleLine(L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSec), L.DMG_OVER_TIME_SHORT.." "..L.DMG_PER_SEC_SHORT, ("%.1f"):format(calcedEffect.perSecDurOrCD));
+        SCT:DoubleLine(L["DPS"], ("%.1f"):format(calcedEffect.perSec), L["DoT"].." "..L["DPS"], ("%.1f"):format(calcedEffect.perSecDurOrCD));
     end
 
     SCT:AppendEfficiency(calcedSpell, effectNum);

@@ -14,13 +14,13 @@ local function PoM(calcedSpell, effectNum)
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
+        SCT:AppendMinMaxAvgLine(L["Critical"], calcedEffect.minCrit, calcedEffect.maxCrit, calcedEffect.avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
 
     SCT:AppendCoefData(calcedSpell, calcedEffect);
 
     if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L.HEAL_PER_SEC_CAST_SHORT, ("%.1f"):format(calcedEffect.perSec));
+        SCT:SingleLine(L["HPSC"], ("%.1f"):format(calcedEffect.perSec));
     end
 
     SCT:AppendEfficiency(calcedSpell, effectNum, true, false);
@@ -57,7 +57,7 @@ local function GreaterHeal(calcedSpell, effectNum, spellId)
         calcedSpell.castingData.timeToOom = calcedSpell.castingData.castsToOom * castTime;
         calcedEffect.doneToOom = calcedSpell.castingData.castsToOom * calcedEffect.avgAfterMitigation;
 
-        SCT:HeaderLine(L.IF_HEALED_TO_FULL);
+        SCT:HeaderLine(L["If healed to full:"]);
         SCT:AppendEfficiency(calcedSpell, 1, true, true);
 
         calcedSpell.effectiveCost = calcedSpell.effectiveCost + 100;
@@ -82,11 +82,11 @@ local function StarFall(calcedSpell, effNum)
 
     SCT:HeaderLine(L["Main Stars"]);
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.DAMAGE, mainEff.min, mainEff.max, mainEff.avg);
+        SCT:AppendMinMaxAvgLine(L["Damage"], mainEff.min, mainEff.max, mainEff.avg);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, mainEff.minCrit, mainEff.maxCrit, mainEff.avgCrit,
+        SCT:AppendMinMaxAvgLine(L["Critical"], mainEff.minCrit, mainEff.maxCrit, mainEff.avgCrit,
             nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
 
@@ -99,14 +99,14 @@ local function StarFall(calcedSpell, effNum)
         if SpellCalc_settings.ttHitDetail then
             outstr = outstr..(" (%d%% + %.1f%%)"):format(calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus)
         end
-        SCT:SingleLine(L.HIT_CHANCE, outstr);
+        SCT:SingleLine(L["Hit chance"], outstr);
     end
 
     if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 
     and calcedSpell.hitChanceBinaryLoss == nil or calcedSpell.hitChanceBinaryLoss == 0 then
         local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
-        local strUsed = calcedSpell.resistanceFromLevel > 0 and L.RES_TOOLTIP_LEVEL or L.RES_TOOLTIP;
-        SCT:SingleLine(L.AVG_RESISTED, strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
+        local strUsed = calcedSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
+        SCT:SingleLine(L["Avg. resisted"], strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
     end
 
     if SpellCalc_settings.ttPerSecond then
@@ -120,11 +120,11 @@ local function StarFall(calcedSpell, effNum)
 
     SCT:HeaderLine(L["Splash Effect"]);
     if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L.DAMAGE, splashEff.min, splashEff.max, splashEff.avg);
+        SCT:AppendMinMaxAvgLine(L["Damage"], splashEff.min, splashEff.max, splashEff.avg);
     end
 
     if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L.CRITICAL, splashEff.minCrit, splashEff.maxCrit, splashEff.avgCrit,
+        SCT:AppendMinMaxAvgLine(L["Critical"], splashEff.minCrit, splashEff.maxCrit, splashEff.avgCrit,
             nil, nil, SCT:CritStr(calcedSpell.critChance));
     end
     SCT:AppendCoefData(calcedSpell, splashEff);

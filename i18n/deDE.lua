@@ -1,10 +1,10 @@
 local _addon = select(2, ...);
-local L = _addon:AddLocalization("enUS");
+local L = _addon:AddLocalization("deDE");
 if L == nil then return end
 
--- L["Target"] = "Target";
--- L["Default level difference"] = "Default level difference";
--- L["Level difference to use if no target available."] = "Level difference to use if no target available.";
+L["Target"] = "Ziel";
+L["Default level difference"] = "Standard Leveldifferenz.";
+L["Level difference to use if no target available."] = "Verwendete Leveldifferenz wenn kein Ziel verfügbar.";
 -- L["Use current target"] = "Use current target";
 -- L["If possible use target's level instead."] = "If possible use target's level instead.";
 -- L["Custom Resistance Values"] = "Custom Resistance Values";
