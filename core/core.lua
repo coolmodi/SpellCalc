@@ -844,6 +844,38 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
         end
     end
 
+    --------------------------
+    -- Dual wield data
+    if calcedSpell.dualWield then
+        ---@type DualWieldData
+        local dw = calcedSpell.dualWield;
+        local calcedEffectMH = calcedSpell.effects[1];
+        local calcedEffectOH = calcedSpell.effects[2];
+        if calcedEffectMH.spellData then calcedEffectMH = calcedEffectMH.spellData.effects[1] end
+        if calcedEffectOH.spellData then calcedEffectOH = calcedEffectOH.spellData.effects[1] end
+
+        dw.min.mh = calcedEffectMH.min;
+        dw.min.oh = calcedEffectOH.min;
+        dw.max.mh = calcedEffectMH.max;
+        dw.max.oh = calcedEffectOH.max;
+        dw.avg.mh = calcedEffectMH.avg;
+        dw.avg.oh = calcedEffectOH.avg;
+
+        dw.minCrit.mh = calcedEffectMH.minCrit;
+        dw.minCrit.oh = calcedEffectOH.minCrit;
+        dw.maxCrit.mh = calcedEffectMH.maxCrit;
+        dw.maxCrit.oh = calcedEffectOH.maxCrit;
+        dw.avgCrit.mh = calcedEffectMH.avgCrit;
+        dw.avgCrit.oh = calcedEffectOH.avgCrit;
+
+        dw.critChance.mh = calcedEffectMH.spellData and calcedEffectMH.spellData.critChance or calcedSpell.critChance;
+        dw.critChance.oh = calcedEffectOH.spellData and calcedEffectOH.spellData.critChance or calcedSpell.critChance;
+
+        dw.perSec = calcedEffectMH.perSec + calcedEffectOH.perSec;
+        dw.perResource = calcedEffectMH.perResource + calcedEffectOH.perResource;
+        dw.avgAfterMitigation = calcedEffectMH.avgAfterMitigation + calcedEffectOH.avgAfterMitigation;
+    end
+
     calcedSpell.updated = currentState;
 
     -- _addon.util.PrintDebug("== Updated spell (".. spellId .. ") " .. spellName .. " ==");

@@ -50,3 +50,44 @@ function SCT:AppendCritExtra(spellId, calcedEffect)
 
     self:SingleLine(L["On Crit"], text);
 end
+
+--- Apend dual wield effects.
+-- TODO: Show DW spells in a more sensible way in tooltips
+---@param calcedSpell CalcedSpell
+---@param spellId integer
+--[[ function SCT:AppendDWEffects(calcedSpell, spellId)
+    local calcedEffectMH = calcedSpell.effects[1];
+    local calcedEffectOH = calcedSpell.effects[2];
+
+    if calcedEffectMH.spellData then calcedEffectMH = calcedEffectMH.spellData.effects[1] end
+    if calcedEffectOH.spellData then calcedEffectOH = calcedEffectOH.spellData.effects[1] end
+
+    if SpellCalc_settings.ttHit then
+        local min = calcedEffectMH.min + calcedEffectOH.min;
+        local max = calcedEffectMH.max + calcedEffectOH.max;
+        local avg = calcedEffectMH.avg + calcedEffectOH.avg;
+        SCT:AppendMinMaxAvgLine(L["Mainhand"], calcedEffectMH.min, calcedEffectMH.max, calcedEffectMH.avg, nil, nil, nil, true);
+        SCT:AppendMinMaxAvgLine(L["Offhand"], calcedEffectOH.min, calcedEffectOH.max, calcedEffectOH.avg, nil, nil, nil, true);
+        SCT:AppendMinMaxAvgLine(L["Combined"], min, max, avg, nil, nil, nil, true);
+    end
+
+    if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 and calcedEffectMH.minCrit > 0 then
+        local minCrit = calcedEffectMH.minCrit + calcedEffectOH.minCrit;
+        local maxCrit = calcedEffectMH.maxCrit + calcedEffectOH.maxCrit;
+        local avgCrit = calcedEffectMH.avgCrit + calcedEffectOH.avgCrit;
+        SCT:AppendMinMaxAvgLine(L["Critical (both)"], minCrit, maxCrit, avgCrit, nil, nil, SCT:CritStr(calcedSpell.critChance), true);
+    end
+
+    if calcedEffectMH.critExtraAvg then
+
+        --SCT:AppendCritExtra(spellId, calcedEffect);
+    end
+
+    --AppendMitigation(calcedSpell);
+
+    if SpellCalc_settings.ttPerSecond then
+        SCT:SingleLine(L["DPS"], ("%.1f"):format(calcedEffectMH.perSec + calcedEffectOH.perSec));
+    end
+
+    --SCT:AppendEfficiency(calcedSpell, effectNum, isHeal, true);
+end ]]

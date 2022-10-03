@@ -128,7 +128,7 @@ do
                 local calcedEffect = calcedSpell.effects[1];
                 assert(calcedEffect, "Spell has no effect attached?");
 
-                if (bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0) then
+                if (bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL) > 0 and not calcedSpell.dualWield) then
                     calcedSpell = calcedEffect.spellData;
                     assert(calcedSpell and calcedSpell.effects[1] ~= nil, "Triggere effect is missing spell or effect data!");
                     ---@type CalcedEffect
@@ -147,6 +147,15 @@ do
                 if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) > 0 then
                     local spellName = GetSpellInfo(spellId);
                     showValue = GetDummyValue(calcedEffect, spellName);
+                elseif calcedSpell.dualWield then
+                    local key = SpellCalc_settings.abDirectValue;
+                    if key == "avgCrit" then
+                        showValue = calcedSpell.dualWield.avgCrit.mh + calcedSpell.dualWield.avgCrit.oh;
+                    elseif key == "avgAfterMitigation" then
+                        showValue = calcedSpell.dualWield.avgAfterMitigation;
+                    else
+                        showValue = calcedSpell.dualWield.avg.mh + calcedSpell.dualWield.avg.oh;
+                    end
                 elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DMG_SHIELD) > 0 then
                     showValue = GetBasicValue(calcedSpell, calcedSpell.critChance, SpellCalc_settings.abDmgShieldValue);
                 elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0 then

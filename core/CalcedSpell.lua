@@ -112,6 +112,7 @@ CalcedEffect.__index = CalcedEffect;
 ---@field meleeMitigation MeleeMitigationDef|nil
 ---@field gcd number The global cooldown this spell uses.
 ---@field effCastTime number The effective cast time of the spell. Duration for channeled spells.
+---@field dualWield DualWieldData|nil
 local CalcedSpell = {
     school = 1,
     costType = 0,
@@ -206,6 +207,27 @@ local function AddCombinedData(so)
     };
 end
 
+--- Add table for dual wield spells.
+---@param so CalcedSpell
+local function AddDWData(so)
+    ---@class DualWieldData
+    so.dualWield = {
+        min = { mh = 0, oh = 0 },
+        max = { mh = 0, oh = 0 },
+        avg = { mh = 0, oh = 0 },
+        minCrit = { mh = 0, oh = 0 },
+        maxCrit = { mh = 0, oh = 0 },
+        avgCrit = { mh = 0, oh = 0 },
+        critChance = { mh = 0, oh = 0 },
+        ---@type number
+        perSec = 0,
+        ---@type number
+        perResource = 0,
+        ---@type number
+        avgAfterMitigation = 0,
+    };
+end
+
 --- Make a new table to store calculated spell data
 ---@param effectFlags integer[]
 ---@param spellRankEffects SpellEffectData[]
@@ -256,6 +278,14 @@ function _addon.NewCalcedSpell(effectFlags, spellRankEffects)
     and bit.band(effectFlags[1], ADDON_EFFECT_FLAGS.DURATION) == 0
     and bit.band(effectFlags[2], ADDON_EFFECT_FLAGS.DURATION) > 0 then
         AddCombinedData(newInstance);
+    end
+
+    -- Is DW spell
+    if newInstance.effects[2] and newInstance.effects[2].triggeredSpell then
+        local tid = newInstance.effects[2].triggeredSpell--[[@as integer]];
+        if _addon.spellInfo[tid].isOffhandAttack then
+            AddDWData(newInstance);
+        end
     end
 
     return newInstance;
