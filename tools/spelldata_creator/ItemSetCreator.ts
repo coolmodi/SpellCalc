@@ -45,6 +45,20 @@ interface ItemSetSpell
     ItemSetID: number
 }
 
+interface ItemSparse
+{
+    ID: number,
+    AllowableRace: number,
+    Display_lang: string,
+    "Flags[0]": number,
+    "Flags[1]": number,
+    "Flags[2]": number,
+    "Flags[3]": number,
+    ItemSet: number,
+    AllowableClass: number,
+    InventoryType: number
+}
+
 interface ItemSetAddonData
 {
     ID: number,
@@ -61,10 +75,24 @@ export class ItemSetCreator
     private readonly spellData: SpellData;
     private readonly auraHandlers: AuraHandlers;
 
+    private readonly itemsparse = new Map<number, ItemSparse>();
+    private readonly setIdToSparse = new Map<number, ItemSparse[]>();
+
     constructor(spellData: SpellData, classSpellLists: ClassSpellLists, classSpellSets: ClassSpellSets)
     {
         this.spellData = spellData;
         this.auraHandlers = new AuraHandlers(spellData, classSpellLists, classSpellSets);
+
+        this.itemsparse = readDBCSVtoMap<ItemSparse>("data/wotlk/dbc/itemsparse.csv", "ID");
+
+        for (const sparse of this.itemsparse.values())
+        {
+            if (!sparse.ItemSet) continue;
+            if (!this.setIdToSparse.has(sparse.ItemSet))
+                this.setIdToSparse.set(sparse.ItemSet, []);
+            const setMap = this.setIdToSparse.get(sparse.ItemSet)!;
+            setMap.push(sparse);
+        }
     }
 
     /**
@@ -79,7 +107,7 @@ export class ItemSetCreator
         for (let spellEffect of spellEffects)
         {
             if (spellId === 24746 || spellId === 67191 || spellId === 70847 || spellId === 70844
-                || spellId ===  70656) continue;
+                || spellId === 70656) continue;
             if (spellEffect.Effect !== EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) throw "Item bonus effect doesn't apply an aura?!" + spellId;
             if (AURA_TYPES_TO_IGNORE[spellEffect.EffectAura]) continue;
             if (!this.auraHandlers.handlers[spellEffect.EffectAura]) throw "Aura type isn't ignored but also not handled!";
@@ -88,6 +116,31 @@ export class ItemSetCreator
         }
 
         return aedarr;
+    }
+
+    /**
+     * Get real set items from item if item is "placeholder" for set items, e.e. for 10 and 25 versions.
+     * @param itemId 
+     * @returns 
+     */
+    private getSetItemsForItem(itemId: number)
+    {
+        const sparse = this.itemsparse.get(itemId);
+        if (!sparse) return;
+        const setId = sparse.ItemSet;
+        const setItemList = this.setIdToSparse.get(setId);
+        if (!setItemList) return;
+        const invType = sparse.InventoryType;
+        const items: number[] = [];
+
+        for (const setItem of setItemList)
+        {
+            if (setItem.InventoryType === invType)
+                items.push(setItem.ID);
+        }
+
+        if (items.length == 0) return;
+        return items;
     }
 
     /**
@@ -114,8 +167,19 @@ export class ItemSetCreator
 
         for (let i = 0; i <= 16; i++)
         {
-            const itemKey = ("ItemID[" + i + "]") as keyof ItemSet;
-            if (setDataEntry[itemKey] != 0) setAddonData.items.push(setDataEntry[itemKey] as number);
+            const itemId = setDataEntry[("ItemID[" + i + "]") as keyof ItemSet] as number;
+            if (itemId != 0)
+            {
+                const realItems = this.getSetItemsForItem(itemId);
+                if (realItems)
+                {
+                    setAddonData.items.push(...realItems);
+                }
+                else
+                {
+                    setAddonData.items.push(itemId);
+                }
+            }
         }
 
         for (let setSpellEntry of setSpells)
@@ -273,7 +337,15 @@ export class ItemSetCreator
                 entrystr += `}\n`;
                 for (const itemId of setData.items)
                 {
-                    entrystr += `_addon.setItemData[${itemId}] = ${setData.ID};\n`
+                    const sparse = this.itemsparse.get(itemId);
+                    if (sparse)
+                    {
+                        entrystr += `_addon.setItemData[${itemId}] = ${setData.ID}; -- ${sparse.Display_lang}\n`
+                    }
+                    else
+                    {
+                        entrystr += `_addon.setItemData[${itemId}] = ${setData.ID};\n`
+                    }
                 }
                 entrystr += "\n";
 

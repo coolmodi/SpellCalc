@@ -85,7 +85,7 @@ export function readDBCSVtoMap<V extends object>(path: string, index: string): M
         for (let j = 0; j < headers.length; j++) {
             if (lineData[j].match(/\d\.\d/)) {
                 thisData[headers[j]] = parseFloat(lineData[j]);
-            } else if (headers[j] == "Name_lang" || headers[j] == "NameSubtext_lang" || headers[j] == "Description_lang" || headers[j] == "AuraDescription_lang") {
+            } else if (headers[j].indexOf("_lang") > -1) {
                 thisData[headers[j]] = lineData[j];
             } else {
                 thisData[headers[j]] = parseInt(lineData[j]);
