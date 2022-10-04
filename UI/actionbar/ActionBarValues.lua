@@ -22,7 +22,7 @@ local buttonText;
 
 _addon.ActionBarValues = ActionBarValues;
 
-for i = 1, 144 do
+for i = 1, 156 do
     slotMap[i] = {
         [i] = true
     }
