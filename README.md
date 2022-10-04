@@ -6,7 +6,7 @@ This is NOT a combat simulation tool. Calculated values are for the current stat
 
 ## Current Features
 
-* Scaling with bonus damage/healing.
+* Scaling with spell and attack power.
 * Crit and hit chance.
 * Includes most buffs and debuffs in calculations.
 * Average damage resisted or additional miss chance for binary spells.
