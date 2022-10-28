@@ -438,11 +438,6 @@ _addon.itemEffects[40928] = { -- Relentless Gladiator's Ornamented Gloves
 
 _addon.itemEffects[42614] = { -- Deadly Gladiator's Libram of Justice
     {
-        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1073741824, 0, 0, 0},
-        value = 331,
-    },
-    {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {1073741824, 0, 0, 0},
         value = 267,
@@ -451,11 +446,6 @@ _addon.itemEffects[42614] = { -- Deadly Gladiator's Libram of Justice
 
 _addon.itemEffects[42615] = { -- Furious Gladiator's Libram of Justice
     {
-        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1073741824, 0, 0, 0},
-        value = 375,
-    },
-    {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {1073741824, 0, 0, 0},
         value = 303,
@@ -463,11 +453,6 @@ _addon.itemEffects[42615] = { -- Furious Gladiator's Libram of Justice
 }
 
 _addon.itemEffects[42616] = { -- Relentless Gladiator's Libram of Justice
-    {
-        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1073741824, 0, 0, 0},
-        value = 436,
-    },
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {1073741824, 0, 0, 0},
@@ -501,11 +486,6 @@ _addon.itemEffects[42612] = { -- Savage Gladiator's Libram of Justice
 
 _addon.itemEffects[42613] = { -- Hateful Gladiator's Libram of Justice
     {
-        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1073741824, 0, 0, 0},
-        value = 293,
-    },
-    {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {1073741824, 0, 0, 0},
         value = 236,
@@ -537,11 +517,6 @@ _addon.itemEffects[51469] = { -- Wrathful Gladiator's Ornamented Gloves
 }
 
 _addon.itemEffects[51472] = { -- Wrathful Gladiator's Libram of Justice
-    {
-        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
-        affectSpell = {1073741824, 0, 0, 0},
-        value = 510,
-    },
     {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
         affectSpell = {1073741824, 0, 0, 0},

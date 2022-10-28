@@ -589,12 +589,13 @@ export class AuraHandlers
                 case 60661: // Increases spell power of Flash of Light by 375.
                 case 60662: // Increases spell power of Flash of Light by 436.
                 case 60664: // Increases spell power of Flash of Light by 510.
-                    return {
+                    /* return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: this.getAffectSpell(effect),
                         value: effect.EffectBasePoints + 1,
-                    }
-
+                    } */
+                    // They have both sp and flat value and only use flat value, tooltip is fake news.
+                    return; 
                 case 37288: // Your helpful spells have a chance to restore up to 120 mana.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_MANARESTORE,
