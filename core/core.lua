@@ -147,6 +147,9 @@ local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration,
             calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
         end
 
+        bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;
+        calcedSpell:AddToBuffList(stats.modhealingDone.buffs);
+
         if isHeal then
             if not isDuration then
                 if stats.spellModPctDamageHealing[spellId] ~= nil then
@@ -159,9 +162,6 @@ local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration,
                     calcedSpell:AddToBuffList(stats.spellModPctDoTHoT[spellId].buffs);
                 end
             end
-
-            bonusMod = bonusMod * (100 + stats.modhealingDone.val) / 100;
-            calcedSpell:AddToBuffList(stats.modhealingDone.buffs);
 
             if stats.targetHealingRecieved.val ~= 0 then
                 bonusMod = bonusMod * (1 + stats.targetHealingRecieved.val / 100);

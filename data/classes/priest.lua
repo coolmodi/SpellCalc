@@ -29,6 +29,11 @@ _addon.talentDataRaw = {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
                 affectSpell = {35684416},
                 perPoint = 1
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                affectSpell = {1},
+                perPoint = 1
             }
         }
     },

@@ -24,7 +24,7 @@ _addon.spellInfo = {
                 valueBase = 44,
                 valueRange = 0,
                 valuePerLevel = 0.8,
-                coef = 0.3827075,
+                coef = 0.38323,
                 coefAP = 0,
             },
         }
@@ -116,7 +116,7 @@ _addon.spellInfo = {
                 valueBase = 88,
                 valueRange = 0,
                 valuePerLevel = 1.2,
-                coef = 0.56399,
+                coef = 0.56476,
                 coefAP = 0,
             },
         }
@@ -189,7 +189,7 @@ _addon.spellInfo = {
                 valueBase = 158,
                 valueRange = 0,
                 valuePerLevel = 1.6,
-                coef = 0.0201425,
+                coef = 0.74629,
                 coefAP = 0,
             },
         }
@@ -455,7 +455,7 @@ _addon.spellInfo = {
                 valueBase = 234,
                 valueRange = 0,
                 valuePerLevel = 2,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -526,7 +526,7 @@ _addon.spellInfo = {
                 valueBase = 301,
                 valueRange = 0,
                 valuePerLevel = 2.3,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -546,7 +546,7 @@ _addon.spellInfo = {
                 valueBase = 381,
                 valueRange = 0,
                 valuePerLevel = 2.6,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -871,7 +871,7 @@ _addon.spellInfo = {
                 valueBase = 484,
                 valueRange = 0,
                 valuePerLevel = 3,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -891,7 +891,7 @@ _addon.spellInfo = {
                 valueBase = 605,
                 valueRange = 0,
                 valuePerLevel = 3.4,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -911,7 +911,7 @@ _addon.spellInfo = {
                 valueBase = 763,
                 valueRange = 0,
                 valuePerLevel = 3.9,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -931,7 +931,7 @@ _addon.spellInfo = {
                 valueBase = 942,
                 valueRange = 0,
                 valuePerLevel = 4.3,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -1932,7 +1932,7 @@ _addon.spellInfo = {
                 valueBase = 1125,
                 valueRange = 0,
                 valuePerLevel = 4.7,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -1952,7 +1952,7 @@ _addon.spellInfo = {
                 valueBase = 1265,
                 valueRange = 0,
                 valuePerLevel = 5.1,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -2797,7 +2797,7 @@ _addon.spellInfo = {
                 valueBase = 1920,
                 valueRange = 0,
                 valuePerLevel = 7.7,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }
@@ -2817,7 +2817,7 @@ _addon.spellInfo = {
                 valueBase = 2230,
                 valueRange = 0,
                 valuePerLevel = 9,
-                coef = 0.8057,
+                coef = 0.8068,
                 coefAP = 0,
             },
         }

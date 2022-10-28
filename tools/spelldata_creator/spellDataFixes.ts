@@ -20,23 +20,6 @@ function cloneEntry(entry: SpellEffect): SpellEffect {
 
 function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}, sd: SpellData) {
     console.log("Fixing priest coefs and effects");
-    const PWS_COEF = 0.8057;
-    const PW_SHIELD: {[spellId: number]: number} = {
-        17: 0.475 * PWS_COEF,
-        592: 0.7 * PWS_COEF,
-        600: 0.025 * PWS_COEF, 
-        3747: PWS_COEF, 
-        6065: PWS_COEF, 
-        6066: PWS_COEF, 
-        10898: PWS_COEF, 
-        10899: PWS_COEF, 
-        10900: PWS_COEF, 
-        10901: PWS_COEF, 
-        25217: PWS_COEF, 
-        25218: PWS_COEF,
-        48065: PWS_COEF,
-        48066: PWS_COEF,
-    };
 
     // Holy Nova spell -> its heal spell
     const HOLY_NOVA_TRIGGER: {[spellId: number]: number} = {
@@ -100,9 +83,7 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
 
     for(let effId in se) {
         const eff = se[effId];
-        if (PW_SHIELD[eff.SpellID]) {
-            eff.EffectBonusCoefficient = PW_SHIELD[eff.SpellID];
-        } else if (HOLY_NOVA_TRIGGER[eff.SpellID] && eff.EffectIndex == 0) {
+        if (HOLY_NOVA_TRIGGER[eff.SpellID] && eff.EffectIndex == 0) {
             let clone = cloneEntry(eff);
             clone.EffectIndex = 1;
             clone.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
