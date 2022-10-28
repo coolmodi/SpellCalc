@@ -680,7 +680,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
 
             if spellInfo.usePeriodicHaste
             or stats.spellModAllowDotHaste[spellId] and stats.spellModAllowDotHaste[spellId].val > 0 then
-                calcedSpell.duration = calcedSpell.duration * hasteMult;
                 calcedEffect.tickPeriod = calcedEffect.tickPeriod * hasteMult;
             end
         end
