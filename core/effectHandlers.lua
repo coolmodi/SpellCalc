@@ -433,12 +433,12 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, spellName, spellId
 
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    if stats.spellModDotOnHit[spellId] and stats.spellModDotOnHit[spellId].val ~= 0 then
+    if stats.spellModExtraOnHit[spellId] and stats.spellModExtraOnHit[spellId].val ~= 0 then
         if not calcedEffect.hitExtra then calcedEffect.hitExtra = {} end
-        calcedEffect.hitExtra.avgHit = calcedEffect.min * calcedEffect.ticks * stats.spellModDotOnHit[spellId].val / 100;
+        calcedEffect.hitExtra.avgHit = calcedEffect.min * calcedEffect.ticks * stats.spellModExtraOnHit[spellId].val / 100;
         calcedEffect.hitExtra.avgCrit = calcedEffect.hitExtra.avgHit * 1.5;
         calcedEffect.hitExtra.avg = calcedEffect.hitExtra.avgHit + (calcedEffect.hitExtra.avgCrit - calcedEffect.hitExtra.avgHit) * calcedSpell.critChance/100;
-        calcedSpell:AddToBuffList(stats.spellModDotOnHit[spellId].buffs);
+        calcedSpell:AddToBuffList(stats.spellModExtraOnHit[spellId].buffs);
         total = total + calcedEffect.hitExtra.avg;
     else
         calcedEffect.hitExtra = nil;
@@ -465,11 +465,11 @@ local function PeriodicHeal(calcedSpell, effNum, spellInfo, spellName, spellId)
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedEffect.ticks;
 
-    if stats.spellModDotOnHit[spellId] and stats.spellModDotOnHit[spellId].val ~= 0 then
-        local onHit = calcedEffect.min * calcedEffect.ticks * stats.spellModDotOnHit[spellId].val / 100;
+    if stats.spellModExtraOnHit[spellId] and stats.spellModExtraOnHit[spellId].val ~= 0 then
+        local onHit = calcedEffect.min * calcedEffect.ticks * stats.spellModExtraOnHit[spellId].val / 100;
         local onHitCrit = onHit * calcedSpell.critMult;
         local onHitAvg = onHit + (onHitCrit - onHit) * calcedSpell.critChance/100;
-        calcedSpell:AddToBuffList(stats.spellModDotOnHit[spellId].buffs);
+        calcedSpell:AddToBuffList(stats.spellModExtraOnHit[spellId].buffs);
         calcedEffect.avgAfterMitigation = calcedEffect.avgAfterMitigation + onHitAvg;
     end
 
@@ -511,6 +511,16 @@ local function AbsorbAura(calcedSpell, effNum, spellInfo, spellName, spellId)
     local effectData = spellInfo.effects[effNum];
 
     FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+
+    if stats.spellModExtraOnHit[spellId] and stats.spellModExtraOnHit[spellId].val ~= 0 then
+        if not calcedEffect.hitExtra then calcedEffect.hitExtra = {} end
+        calcedEffect.hitExtra.avgHit = calcedEffect.min * stats.spellModExtraOnHit[spellId].val / 100;
+        calcedEffect.hitExtra.avg = calcedEffect.hitExtra.avgHit;
+        calcedSpell:AddToBuffList(stats.spellModExtraOnHit[spellId].buffs);
+        calcedEffect.avgCombined = calcedEffect.avgCombined + calcedEffect.hitExtra.avg;
+    else
+        calcedEffect.hitExtra = nil;
+    end
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined;
 

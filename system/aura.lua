@@ -157,7 +157,7 @@ local effectAffectSpellSet = {
     [EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_CRIT] = stats.spellModAllowDotCrit,
     [EFFECT_TYPE.SPELLMOD_ALLOW_PERIODIC_HASTE] = stats.spellModAllowDotHaste,
     [EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT] = stats.spellModExtraOnCrit,
-    [EFFECT_TYPE.SPELLMOD_DOT_ON_HIT] = stats.spellModDotOnHit,
+    [EFFECT_TYPE.SPELLMOD_EXTRA_ON_HIT] = stats.spellModExtraOnHit,
 }
 
 local effectAffectSpellSetPersonal = {

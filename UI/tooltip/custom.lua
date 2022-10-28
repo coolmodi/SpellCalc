@@ -66,6 +66,8 @@ function SCT:AppendHitExtra(spellId, calcedEffect)
         -- Devouring Plague
         if spellName == GetSpellInfo(48300) then
             text = self:FormatNoTrailing0("%.1f (%.1f %s)", hitData.avgHit, hitData.avgCrit, L["crit"]);
+        elseif spellName == GetSpellInfo(48066) then -- PWS glyph heal
+            text = self:FormatNoTrailing0("%.1f %s", hitData.avgHit, L["healing"]);
         end
     end
 

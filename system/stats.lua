@@ -220,7 +220,7 @@ local stats = {
     spellModAllowDotCrit = SpellStatTable(),
     spellModAllowDotHaste = SpellStatTable(),
     spellModExtraOnCrit = SpellStatTable(),
-    spellModDotOnHit = SpellStatTable(),
+    spellModExtraOnHit = SpellStatTable(),
 
     targetSpellModDmgTakenPersonal = SpellStatTableMult(),
 

@@ -201,7 +201,7 @@ _addon.talentDataRaw = {
                 perPoint = 5
             },
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_DOT_ON_HIT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_HIT,
                 affectSpell = {64},
                 perPoint = 5
             }
@@ -296,7 +296,7 @@ _addon.talentDataRaw = {
                 perPoint = 5
             },
             {
-                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_DOT_ON_HIT,
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_HIT,
                 affectSpell = {33554432},
                 perPoint = 10
             }
@@ -453,6 +453,14 @@ _addon.classGlyphs[55687] = { -- Glyph of Mind Flay
         type = _addon.CONST.EFFECT_TYPE.SCRIPT_TARGET_UPDATE_ON_AURA,
         value = 0,
         scriptKey = SHADOW_WORD_PAIN,
+    },
+}
+
+_addon.classGlyphs[55672] = { -- Glyph of Power Word: Shield
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_HIT,
+        affectSpell = {1},
+        value = 20
     },
 }
 

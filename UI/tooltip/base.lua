@@ -347,12 +347,15 @@ end
 --- Apend absorb effect values.
 ---@param calcedSpell CalcedSpell
 ---@param effectNum integer
-local function AppendAbsorbEffect(calcedSpell, effectNum)
+---@param spellId integer
+local function AppendAbsorbEffect(calcedSpell, effectNum, spellId)
     local calcedEffect = calcedSpell.effects[effectNum];
 
     if SpellCalc_settings.ttHit then
         SCT:SingleLine(L["Absorb"], SCT:Round(calcedEffect.avg));
     end
+
+    SCT:AppendHitExtra(spellId, calcedEffect);
 
     SCT:AppendCoefData(calcedSpell, calcedEffect);
 
@@ -461,7 +464,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
     elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
         AppendDurationEffect(calcedSpell, effectNum, isHeal, spellId);
     elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.ABSORB) > 0 then
-        AppendAbsorbEffect(calcedSpell, effectNum);
+        AppendAbsorbEffect(calcedSpell, effectNum, spellId);
     elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.AUTO_ATTACK) > 0 then
         AppendAutoAttack(calcedSpell, effectNum);
     elseif calcedEffect.effectFlags == 0 or calcedEffect.effectFlags == ADDON_EFFECT_FLAGS.HEAL then
