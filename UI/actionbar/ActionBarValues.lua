@@ -68,7 +68,9 @@ local function GetBasicValue(calcedSpell, critChance, valueKey)
             end
             return calcedEffect.avgCombined;
         else
-            return calcedEffect.avgCombined * (calcedEffect.ticks or 1);
+            local total = calcedEffect.avgCombined * (calcedEffect.ticks or 1);
+            if calcedEffect.hitExtra then total = total + calcedEffect.hitExtra.avg end
+            return total;
         end
     end
 

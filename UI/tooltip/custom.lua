@@ -51,6 +51,35 @@ function SCT:AppendCritExtra(spellId, calcedEffect)
     self:SingleLine(L["On Crit"], text);
 end
 
+---Append line describing the extra value on hit if it exists.
+---@param spellId number
+---@param calcedEffect CalcedEffect
+function SCT:AppendHitExtra(spellId, calcedEffect)
+    local hitData = calcedEffect.hitExtra;
+    if not hitData then return end
+
+    local text;
+    local spellName = GetSpellInfo(spellId);
+    local _, class = UnitClass("player");
+
+    if class == "PRIEST" then
+        -- Devouring Plague
+        if spellName == GetSpellInfo(48300) then
+            text = self:FormatNoTrailing0("%.1f (%.1f %s)", hitData.avgHit, hitData.avgCrit, L["crit"]);
+        end
+    end
+
+    if not text then
+        if hitData.avgCrit then
+            text = self:FormatNoTrailing0("~%.1f (~%.1f %s)", hitData.avgHit, hitData.avgCrit, L["crit"]);
+        else
+            text = self:FormatNoTrailing0("~%.1f", hitData.avgHit);
+        end
+    end
+
+    self:SingleLine(L["On Hit"], text);
+end
+
 --- Apend dual wield effects.
 -- TODO: Show DW spells in a more sensible way in tooltips
 ---@param calcedSpell CalcedSpell

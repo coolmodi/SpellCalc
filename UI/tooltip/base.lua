@@ -179,7 +179,8 @@ end
 ---@param calcedSpell CalcedSpell
 ---@param effectNum integer
 ---@param isHeal boolean
-local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
+---@param spellId integer
+local function AppendDurationEffect(calcedSpell, effectNum, isHeal, spellId)
     local calcedEffect = calcedSpell.effects[effectNum];
     local triggeredSpell = calcedEffect.spellData;
     local coefEffect = calcedEffect;
@@ -220,7 +221,12 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal)
         SCT:AppendMinMaxAvgLine(L["Critical"], minCrit, maxCrit, avgCrit, nil, nil, SCT:CritStr(critChance), true);
     end
 
-    SCT:SingleLine(L["Total"], SCT:Round(calcedEffect.ticks * avgCombined));
+    SCT:AppendHitExtra(spellId, calcedEffect);
+
+    local total = calcedEffect.ticks * avgCombined;
+    if calcedEffect.hitExtra then total = total + calcedEffect.hitExtra.avg end
+    SCT:SingleLine(L["Total"], SCT:Round(total));
+
     SCT:AppendCoefData(coefMitSpell, coefEffect, nil, calcedEffect.ticks);
 
     if not isHeal and effectNum == 1 then
@@ -453,7 +459,7 @@ local function BaseTooltips(calcedSpell, effectNum, isHeal, spellId)
     if bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DMG_SHIELD) > 0 then
         AppendDmgShieldEffect(calcedSpell, effectNum);
     elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DURATION) > 0 then
-        AppendDurationEffect(calcedSpell, effectNum, isHeal);
+        AppendDurationEffect(calcedSpell, effectNum, isHeal, spellId);
     elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.ABSORB) > 0 then
         AppendAbsorbEffect(calcedSpell, effectNum);
     elseif bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.AUTO_ATTACK) > 0 then

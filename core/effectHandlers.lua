@@ -434,11 +434,14 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, spellName, spellId
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
     if stats.spellModDotOnHit[spellId] and stats.spellModDotOnHit[spellId].val ~= 0 then
-        local onHit = calcedEffect.min * calcedEffect.ticks * stats.spellModDotOnHit[spellId].val / 100;
-        local onHitCrit = onHit * calcedSpell.critMult;
-        local onHitAvg = onHit + (onHitCrit - onHit) * calcedSpell.critChance/100;
+        if not calcedEffect.hitExtra then calcedEffect.hitExtra = {} end
+        calcedEffect.hitExtra.avgHit = calcedEffect.min * calcedEffect.ticks * stats.spellModDotOnHit[spellId].val / 100;
+        calcedEffect.hitExtra.avgCrit = calcedEffect.hitExtra.avgHit * 1.5;
+        calcedEffect.hitExtra.avg = calcedEffect.hitExtra.avgHit + (calcedEffect.hitExtra.avgCrit - calcedEffect.hitExtra.avgHit) * calcedSpell.critChance/100;
         calcedSpell:AddToBuffList(stats.spellModDotOnHit[spellId].buffs);
-        total = total + onHitAvg;
+        total = total + calcedEffect.hitExtra.avg;
+    else
+        calcedEffect.hitExtra = nil;
     end
 
     Mitigate(spellName, calcedSpell, calcedEffect, false, effectData.mechanic == _addon.CONST.SPELL_MECHANIC.BLEED, total);

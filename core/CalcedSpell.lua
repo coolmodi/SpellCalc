@@ -47,6 +47,11 @@ local AuraStackData = {
     ticks = 0,
 }
 
+---@class HitExtraData
+---@field avgHit number
+---@field avgCrit number|nil
+---@field avg number The average done with crits.
+
 ---@class CalcedEffect
 ---@field effectFlags integer
 ---@field modBase number Modifier affecting the base value of the spell.
@@ -64,6 +69,7 @@ local AuraStackData = {
 ---@field maxCrit number Maximum critical value. 0 if effect doesn't crit.
 ---@field avgCrit number Average critical value. 0 if effect doesn't crit.
 ---@field critExtraAvg number|nil If effect has added extra value on crit then this is the avg. done extra.
+---@field hitExtra HitExtraData|nil If effect has added extra value on hit this holds the data.
 ---@field avgCombined number Average combined value.
 ---@field avgAfterMitigation number Combined average done after all mitigation sources.
 ---@field perSec number Done per second. DPSC for non-channel duration spells.
