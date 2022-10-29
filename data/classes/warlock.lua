@@ -621,6 +621,40 @@ _addon.classPassives = {
 }
 
 --------------------------------------------------------------------------
+-- Weapon Enchants
+--------------------------------------------------------------------------
+
+do
+    ---@type EnchantData
+    local spellstoneEffect = {
+        name = GetSpellInfo(55171),
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+        affectSpell = {2+4+8+1024+16384, 2+256+65536, 2},
+        value = 1
+    }
+    _addon.enchantData[3615] = spellstoneEffect;
+    _addon.enchantData[3616] = spellstoneEffect;
+    _addon.enchantData[3617] = spellstoneEffect;
+    _addon.enchantData[3618] = spellstoneEffect;
+    _addon.enchantData[3619] = spellstoneEffect;
+    _addon.enchantData[3620] = spellstoneEffect;
+
+    ---@type EnchantData
+    local firestoneEffect = {
+        name = GetSpellInfo(55171),
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+        affectSpell = {1+4+128+256+524288, 64+128+4096+32768+65536+131072+262144+8388608, 2},
+        value = 1
+    }
+    _addon.enchantData[3610] = firestoneEffect;
+    _addon.enchantData[3611] = firestoneEffect;
+    _addon.enchantData[3612] = firestoneEffect;
+    _addon.enchantData[3597] = firestoneEffect;
+    _addon.enchantData[3613] = firestoneEffect;
+    _addon.enchantData[3614] = firestoneEffect;
+end
+
+--------------------------------------------------------------------------
 -- Scripts
 --------------------------------------------------------------------------
 
