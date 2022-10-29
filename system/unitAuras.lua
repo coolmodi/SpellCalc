@@ -71,6 +71,7 @@ local function ApplyUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlot
     assert(auraEffect.value or auraEffect.scriptValue, "Aura effect " .. name .. " has no value or scriptValue defined!");
     local value = auraEffect.value or _addon.scripting.GetValue(auraEffect.scriptValue);
     if auraEffect.scriptValue then
+        name = name.."-"..spellId;
         scriptedValueCache[name] = value;
     end
 
@@ -96,6 +97,7 @@ local function RemoveUnitAuraEffect(spellId, auraEffect, name, stacks, effectSlo
     local value = auraEffect.value;
 
     if value == nil then
+        name = name.."-"..spellId;
         if not auraEffect.scriptValue then 
             error("Aura effect " .. name .. " has no value or scriptValue defined!");
         end
