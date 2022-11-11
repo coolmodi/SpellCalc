@@ -3062,7 +3062,7 @@ _addon.spellInfo = {
                 effectType = 2,
                 valueBase = 405,
                 valueRange = 68,
-                coef = 0,
+                coef = 0.4286,
                 coefAP = 0,
             },
         }
@@ -3152,7 +3152,7 @@ _addon.spellInfo = {
                 effectType = 2,
                 valueBase = 487,
                 valueRange = 82,
-                coef = 0,
+                coef = 0.4286,
                 coefAP = 0,
             },
         }
@@ -3169,7 +3169,7 @@ _addon.spellInfo = {
                 effectType = 2,
                 valueBase = 550,
                 valueRange = 92,
-                coef = 0,
+                coef = 0.4286,
                 coefAP = 0,
             },
         }
@@ -3186,7 +3186,7 @@ _addon.spellInfo = {
                 effectType = 2,
                 valueBase = 645,
                 valueRange = 108,
-                coef = 0,
+                coef = 0.4286,
                 coefAP = 0,
             },
         }
