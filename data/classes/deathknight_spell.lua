@@ -3,7 +3,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
-if playerClass ~= "ROGUE" then
+if playerClass ~= "DEATHKNIGHT" then
     return;
 end
 
@@ -24,3 +24,4 @@ _addon.spellClassSet = {
 
 ---@type ClassGlyphs
 _addon.classGlyphs = {};
+

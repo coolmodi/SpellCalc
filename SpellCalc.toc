@@ -1,7 +1,7 @@
 ## Interface: 30400
 ## Title: SpellCalc
 ## Author: coolmodi
-## Version: 0.18
+## Version: 0.19
 ## Notes: Shows some numbers for spells
 ## SavedVariables: SpellCalc_settings
 ## OptionalDeps: Dominos, ElvUI, Bartender4
@@ -41,6 +41,7 @@ data/classes/rogue_spell.lua
 data/classes/shaman_spell.lua
 data/classes/warlock_spell.lua
 data/classes/warrior_spell.lua
+data/classes/deathknight_spell.lua
 data/classes/druid_itemEffects.lua
 data/classes/hunter_itemEffects.lua
 data/classes/mage_itemEffects.lua
@@ -69,6 +70,7 @@ data/classes/rogue.lua
 data/classes/shaman.lua
 data/classes/warlock.lua
 data/classes/warrior.lua
+data/classes/deathknight.lua
 
 data/racials.lua
 

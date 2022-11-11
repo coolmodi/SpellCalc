@@ -5,3 +5,5 @@ if playerClass ~= "HUNTER" then
     return;
 end
 
+---@type TalentDataRawEntry[]
+_addon.talentDataRaw = {}

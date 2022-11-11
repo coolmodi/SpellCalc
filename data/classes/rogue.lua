@@ -4,3 +4,6 @@ local _, playerClass = UnitClass("player");
 if playerClass ~= "ROGUE" then
     return;
 end
+
+---@type TalentDataRawEntry[]
+_addon.talentDataRaw = {}

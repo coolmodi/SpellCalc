@@ -7,9 +7,21 @@ if playerClass ~= "HUNTER" then
     return;
 end
 
-_addon.spellBaseInfo = {};
-
+---@type SpellInfoTable
 _addon.spellInfo = {};
 
 ---@type SpellClassSet
-_addon.spellClassSet = {};
+_addon.spellClassSet = {
+    [1] = {
+    },
+    [2] = {
+    },
+    [3] = {
+    },
+    [4] = {
+    },
+};
+
+---@type ClassGlyphs
+_addon.classGlyphs = {};
+

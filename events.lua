@@ -3,14 +3,6 @@ local _addonName = select(1, ...);
 ---@class AddonEnv
 local _A = select(2, ...);
 
--- dirty fix to "disable" the addon preventing errors on unsupported classes
--- TODO: Remove when classes are supported
-local _, class = UnitClass("player");
-if class == "WARRIOR" or class == "ROGUE" or class == "HUNTER" or class == "DEATHKNIGHT" then
-    _A.util.PrintError("Class not (yet) supported, addon won't work!");
-    return;
-end
-
 local frame = CreateFrame("Frame");
 
 ---@type table<string, (fun(...:any):boolean|nil)[]>
@@ -36,6 +28,13 @@ end);
 ---@param event string
 ---@param callback fun(...:any):boolean|nil
 local function Register(event, callback)
+    -- dirty fix to "disable" the addon preventing errors on unsupported classes
+    -- TODO: Remove when classes are supported
+    local _, class = UnitClass("player");
+    if class == "WARRIOR" or class == "ROGUE" or class == "HUNTER" or class == "DEATHKNIGHT" then
+        return;
+    end
+
     handlers[event] = handlers[event] or {};
     table.insert(handlers[event], callback);
     if #handlers[event] == 1 then frame:RegisterEvent(event) end
@@ -66,16 +65,12 @@ end
 
 Register("ADDON_LOADED", function (addonName)
     if addonName ~= _addonName then return end
-    if not loadedCallbacks then return end
-    for _, f in ipairs(loadedCallbacks) do
-        f();
+    if loadedCallbacks then
+        for _, f in ipairs(loadedCallbacks) do
+            f();
+        end
+        loadedCallbacks = nil;
     end
-    loadedCallbacks = nil;
-
-    if _A.spellInfo == nil or _A.talentDataRaw == nil then
-        _A.util.PrintError(_addonName .. ": No data for this class (yet)! Addon won't work!");
-    end
-
     return true;
 end);
 

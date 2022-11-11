@@ -1,7 +1,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 local _, playerClass = UnitClass("player");
-if playerClass ~= "WARRIOR" then
+if playerClass ~= "DEATHKNIGHT" then
     return;
 end
 
