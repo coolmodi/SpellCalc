@@ -222,6 +222,13 @@ function Target:Update()
         self.levelDiff = tLevel - pLevel;
     end
 
+    -- Make sure level can never be below 1.
+    if self.level < 1 then
+        local diffToOne = self.level - 1;
+        self.level = 1;
+        self.levelDiff = self.levelDiff - diffToOne;
+    end
+
     if tName then
         if not self.isPlayer then
             local unitType, _, _, _, _, npcID = strsplit("-", UnitGUID("target"));
