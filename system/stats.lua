@@ -317,11 +317,20 @@ do
     function _addon:UpdateManaRegen()
         local _, int = UnitStat("player", 4);
         local _, spirit = UnitStat("player", 5);
-        local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[UnitLevel("player")]) * 0.6;
+        local level = UnitLevel("player");
+        local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[level]) * 0.6;
         local changed = false;
+
+        -- Low levels have increased regen until lvl 15.
+        if level < 15 then
+            local mult = 3.2446 * math.exp(-0.078 * level);
+            spiritIntRegen = spiritIntRegen * mult;
+        end
 
         local newmanaRegCasting = spiritIntRegen * (stats.fsrRegenMult.val/100);
         local newmanaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
+        -- Remove minor errors in spirit regen calculation if mp5 should be 0.
+        if newmanaRegAura < 0.1 then newmanaRegAura = 0 end
 
         if stats.manaRegBase ~= spiritIntRegen
         or stats.manaRegCasting ~= newmanaRegCasting
