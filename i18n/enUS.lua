@@ -151,3 +151,6 @@ if L == nil then return end
 -- L["DoT at 5 stacks:"] = "DoT at 5 stacks:";
 -- L["Combined"] = "Combined";
 -- L["Critical (both)"] = "Critical (both)";
+-- L["crit"] = "crit";
+-- L["healing"] = "healing";
+-- L["On Hit"] = "On Hit";
