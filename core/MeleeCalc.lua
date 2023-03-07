@@ -33,7 +33,8 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
     self.isPvP = tData.isPlayer;
 
     if not self.isPvP then
-        if isRanged and stats.attackDmg.ranged.min > 0 then
+        if isRanged and stats.attackDmg.ranged.min > 0
+        and class ~= "PALADIN" then -- HoW fix?
             ratk = stats.attack.ranged;
         else
             ratk = isOffhand and stats.attack.offhand or stats.attack.mainhand;
