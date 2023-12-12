@@ -13,7 +13,9 @@
         "Immolate": {"1": {"sp": 0.2}},
         "Healing Stream Totem": {"0": {"sp": 0.0825}},
         "Power Word: Shield": {"0": {"sp": 0.8068}},
-        "Haunt": {"0": {"sp": 0.4286}}
+        "Haunt": {"0": {"sp": 0.4286}},
+        "Ice Barrier": {"0": {"sp": 0.8053}},
+        "Mana Shield": {"0": {"sp": 0.8053}}
     },
     "ids": {
         "20187": {"0": {"ap": 0.2}},

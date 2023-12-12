@@ -5,11 +5,9 @@ import { ItemSetCreator } from "./ItemSetCreator";
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { ItemEffectsCreator } from "./ItemEffectsCreator";
-import { getHandledClassGlyphs } from "./Glyphs";
+import { getHandledClassGlyphs } from "./glyphs";
 import { createMechanicLists } from "./mechanicList";
-
-const expansion = 2;
-const outputdir = __dirname + "/../../../data/classes/";
+import { cfg } from "./config";
 
 const CLASSES = [
     "druid", 
@@ -41,8 +39,8 @@ const USEFUL_SPELL_MECHANICS: {[sm: number]: boolean} = {
     [SpellMechanic.INFECTED]: true
 }
 
-const spellData = new SpellData(expansion);
-const classSpellLists = new ClassSpellLists(spellData, CLASSES, expansion);
+const spellData = new SpellData();
+const classSpellLists = new ClassSpellLists(spellData, CLASSES);
 const classSpellSets = new ClassSpellSets(spellData);
 
 const SpellClassSet = {
@@ -206,6 +204,11 @@ function handleDummyEffect(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
         return;
     }
 
+    if (cfg.expansion == "CLASSIC")
+    {
+        if (spellName == "Judgement of Righteousness") return;
+    }
+
     throw new Error("Dummy effect not handled!");
 }
 
@@ -269,7 +272,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             if (effect.EffectMechanic != 0) {
                 const misc = spellData.getSpellMisc(effect.SpellID);
                 if (rankInfo.school != 1
-                    && (misc["Attributes[6]"] & SPELL_ATTR6.SPELL_ATTR_NO_BINARY_OR_MAYBE_NOT_IDK_WHAT_THIS_DOES) === 0) {
+                    && (misc["Attributes_6"] & SPELL_ATTR6.SPELL_ATTR_NO_BINARY_OR_MAYBE_NOT_IDK_WHAT_THIS_DOES) === 0) {
                     rankInfo.isBinary = true;
                 }
                 rankInfo.effects.splice(effectNum);
@@ -545,13 +548,13 @@ function buildSpellInfo(pclass: string) {
             if (dur < 1 ) dur = 0;
             classInfo.rankInfo[spellId] = {
                 school: SCHOOL_MASK_TO_ENUM[spellMisc.SchoolMask],
-                isChannel: ((spellMisc["Attributes[1]"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
+                isChannel: ((spellMisc["Attributes_1"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
                 isBinary: false,
                 gcd: spellcd.StartRecoveryTime / 1000,
                 defenseType: spellcat.DefenseType,
-                cantDogeParryBlock: ((spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
+                cantDogeParryBlock: ((spellMisc["Attributes_0"] & SPELL_ATTR0.SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK) > 0),
                 equippedWeaponMask: (spellEquippedItems && spellEquippedItems.EquippedItemClass === ItemClass.ITEM_CLASS_WEAPON) ? spellEquippedItems.EquippedItemSubclass : 0,
-                noCrit: (spellMisc["Attributes[2]"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT,
+                noCrit: (spellMisc["Attributes_2"] & SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT) === SPELL_ATTR2.SPELL_ATTR_EX2_CANT_CRIT,
                 forceHeal: false,
                 charges: (spellAuraOptions && spellAuraOptions.ProcCharges > 0) ? spellAuraOptions.ProcCharges : 0,
                 spellnamecomment: spellName + ( (spellspell.NameSubtext_lang.length) ? `(${spellspell.NameSubtext_lang})` : "" ),
@@ -560,9 +563,9 @@ function buildSpellInfo(pclass: string) {
                 duration: dur,
                 baseCost: 0,
                 baseCostPct: 0,
-                usePeriodicHaste: (spellMisc["Attributes[5]"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
-                onNextAttack: (spellMisc["Attributes[0]"] & SPELL_ATTR0.SPELL_ATTR_ON_NEXT_SWING_NO_DAMAGE) > 0,
-                isOffhandAttack: (spellMisc["Attributes[3]"] & SPELL_ATTR3.SPELL_ATTR_EX3_REQUIRES_OFFHAND_WEAPON) > 0,
+                usePeriodicHaste: (spellMisc["Attributes_5"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
+                onNextAttack: (spellMisc["Attributes_0"] & SPELL_ATTR0.SPELL_ATTR_ON_NEXT_SWING_NO_DAMAGE) > 0,
+                isOffhandAttack: (spellMisc["Attributes_3"] & SPELL_ATTR3.SPELL_ATTR_EX3_REQUIRES_OFFHAND_WEAPON) > 0,
                 effects: []
             };
 
@@ -723,11 +726,14 @@ end
     }
     str += "};\n\n";
 
-    str += getHandledClassGlyphs(spellData, classSetNum, classSpellLists, classSpellSets);
+    if (cfg.expansion == "WOTLK")
+    {
+        str += getHandledClassGlyphs(spellData, classSetNum, classSpellLists, classSpellSets);
+    }
 
     str = str.replace(/\t/gm, "    ");
 
-    fs.writeFileSync(outputdir + pclass + "_spell.lua", str);
+    fs.writeFileSync(cfg.outputDir + "classes/" + pclass + "_spell.lua", str);
 }
 
 /**
@@ -736,20 +742,20 @@ end
 async function createItemLua() {
     const isc = new ItemSetCreator(spellData, classSpellLists, classSpellSets);
     const setLua = await isc.getItemSetLua();
-    fs.writeFileSync(__dirname + "/../../../data/itemSetData.lua", setLua.GENERAL);
+    fs.writeFileSync(cfg.outputDir + "itemSetData.lua", setLua.GENERAL);
     for (const classname in setLua)
     {
         if (classname == "GENERAL" || CLASSES.indexOf(classname) === -1) continue;
-        fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemSetData.lua", setLua[classname as keyof typeof setLua]);
+        fs.writeFileSync(cfg.outputDir + "classes/" + classname + "_itemSetData.lua", setLua[classname as keyof typeof setLua]);
     }
 
     const iec = new ItemEffectsCreator(spellData, classSpellLists, classSpellSets);
     const itemLua = await iec.getItemEffectLua();
-    fs.writeFileSync(__dirname + "/../../../data/itemEffects.lua", itemLua.GENERAL);
+    fs.writeFileSync(cfg.outputDir + "itemEffects.lua", itemLua.GENERAL);
     for (const classname in itemLua)
     {
         if (classname == "GENERAL" || CLASSES.indexOf(classname) === -1) continue;
-        fs.writeFileSync(__dirname + "/../../../data/classes/" + classname + "_itemEffects.lua", itemLua[classname as keyof typeof itemLua]);
+        fs.writeFileSync(cfg.outputDir + "classes/" + classname + "_itemEffects.lua", itemLua[classname as keyof typeof itemLua]);
     }
 }
 

@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { SpellEffect } from "./SpellData";
+import { cfg } from "./config";
 
 export enum SealType {
     SOR = "SOR", 
@@ -21,7 +22,7 @@ interface SealData {
     }
 }
 
-const SEALDATA: SealData = JSON.parse(fs.readFileSync("data/wotlk/sealData.json", "utf8"));
+const SEALDATA: SealData = JSON.parse(fs.readFileSync(cfg.dataDir + "sealData.json", "utf8"));
 
 /**
  * Is spell a seal
@@ -35,6 +36,9 @@ export function isSeal(id: number, specific?: SealType) {
     if ((!specific || specific == SealType.SOC) && SEALDATA.seals.SOC.spells.indexOf(id) != -1) {
         return SealType.SOC;
     }
+
+    if (cfg.expansion == "CLASSIC") return false;
+
     if ((!specific || specific == SealType.SoCor) && SEALDATA.seals.SoCor.spells.indexOf(id) != -1) {
         return SealType.SoCor;
     }

@@ -1,13 +1,16 @@
 import { SpellEffect, SpellCategory, SpellMisc, SpellLevel, SpellName, SpellData } from "./SpellData";
+import { cfg } from "./config";
 import { isJudgeDummy, SealType, isSeal } from "./paladinCrap";
 import * as fs from "fs";
 
 // This isn't used anywhere, just put something there just in case
 let effCustIndex = 999900;
 
-function cloneEntry(entry: SpellEffect): SpellEffect {
+function cloneEntry(entry: SpellEffect): SpellEffect
+{
     let k = {};
-    for (let key in entry) {
+    for (let key in entry)
+    {
         //@ts-ignore
         k[key] = entry[key];
     }
@@ -18,11 +21,12 @@ function cloneEntry(entry: SpellEffect): SpellEffect {
     return k;
 }
 
-function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}, sd: SpellData) {
+function priestFix(se: { [index: number]: SpellEffect }, sm: { [index: number]: SpellMisc }, sd: SpellData)
+{
     console.log("Fixing priest coefs and effects");
 
     // Holy Nova spell -> its heal spell
-    const HOLY_NOVA_TRIGGER: {[spellId: number]: number} = {
+    const HOLY_NOVA_TRIGGER: { [spellId: number]: number } = {
         15237: 23455,
         15430: 23458,
         15431: 23459,
@@ -35,7 +39,7 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
     }
 
     // map Touch of Weakness proc spells
-    const TOW_MAP: {[spellId: number]: number} = {
+    const TOW_MAP: { [spellId: number]: number } = {
         2652: 2943,
         19261: 19249,
         19262: 19251,
@@ -45,14 +49,14 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         25461: 25460
     };
 
-    const BINDING_HEAL: {[spellId: number]: boolean} = {
+    const BINDING_HEAL: { [spellId: number]: boolean } = {
         32546: true,
         48119: true,
         48120: true
     }
 
     // Shadowguard -> triggerID
-    const SHADOWGUARD_TRIGGER_IDS: {[spellId: number]: number} = {
+    const SHADOWGUARD_TRIGGER_IDS: { [spellId: number]: number } = {
         18137: 28377,
         19308: 28378,
         19309: 28379,
@@ -62,7 +66,7 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         25477: 28385
     };
 
-    const PENANCE_TRIGGERS: {[spellId: number]: {dmg: number, heal: number}} = {
+    const PENANCE_TRIGGERS: { [spellId: number]: { dmg: number, heal: number } } = {
         47540: {
             dmg: 47758,
             heal: 47757
@@ -81,27 +85,34 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         }
     }
 
-    for(let effId in se) {
+    for (let effId in se)
+    {
         const eff = se[effId];
-        if (HOLY_NOVA_TRIGGER[eff.SpellID] && eff.EffectIndex == 0) {
+        if (HOLY_NOVA_TRIGGER[eff.SpellID] && eff.EffectIndex == 0)
+        {
             let clone = cloneEntry(eff);
             clone.EffectIndex = 1;
             clone.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
-            clone.EffectTriggerSpell = HOLY_NOVA_TRIGGER[eff.SpellID];6
+            clone.EffectTriggerSpell = HOLY_NOVA_TRIGGER[eff.SpellID]; 6
             se[clone.ID] = clone;
-        // Touch of Weakness does not have any usefull data about its proc by default, replace with proc entirely
-        } else if (TOW_MAP[eff.SpellID]) {
+            // Touch of Weakness does not have any usefull data about its proc by default, replace with proc entirely
+        } else if (TOW_MAP[eff.SpellID])
+        {
             eff.EffectTriggerSpell = TOW_MAP[eff.SpellID];
-        } else if (BINDING_HEAL[eff.SpellID] && eff.EffectIndex === 1) {
+        } else if (BINDING_HEAL[eff.SpellID] && eff.EffectIndex === 1)
+        {
             eff.Effect = 0; // Ignore this effect
-        } 
+        }
         // Prayer of Mending
         else if (sd.getSpellName(eff.SpellID).Name_lang == "Prayer of Mending" && eff.EffectIndex === 0) 
         {
             // Make PoM a dummy aura
+
+            const PoM_ID = cfg.expansion == "WOTLK" ? 33110 : 401859;
+
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA;
             eff.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY;
-            sm[eff.SpellID]["Attributes[2]"] |= sm[33110]["Attributes[2]"];
+            sm[eff.SpellID]["Attributes_2"] |= sm[PoM_ID]["Attributes_2"];
         }
         // Shadowguard trigger fix
         else if (SHADOWGUARD_TRIGGER_IDS[eff.SpellID] && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA && eff.EffectAura === AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL) 
@@ -154,13 +165,17 @@ function priestFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         }
     }
 
-    const divineHymn = sd.getSpellCategory(64844);
-    if (divineHymn) divineHymn.DefenseType = DEFENSE_TYPE.MAGIC;
+    if (cfg.expansion == "WOTLK")
+    {
+        const divineHymn = sd.getSpellCategory(64844);
+        if (divineHymn) divineHymn.DefenseType = DEFENSE_TYPE.MAGIC;
+    }
 }
 
-function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, _sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}) {
+function paladinFix(se: { [index: number]: SpellEffect }, sc: { [index: number]: SpellCategory }, _sm: { [index: number]: SpellMisc }, sl: { [spellId: number]: SpellLevel })
+{
     console.log("Fixing pala coefs and effects");
-    const HOLY_SHOCK_TRIGGERS: {[spellId: number]: {dmg: number, heal: number}} = {
+    const HOLY_SHOCK_TRIGGERS: { [spellId: number]: { dmg: number, heal: number } } = {
         20473: {
             dmg: 25912,
             heal: 25914
@@ -192,8 +207,34 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
         }
     }
 
-    for(let effId in se) {
+    const HL_GENERIC = [1026, 1042, 3472, 10328, 10329, 25292];
+    const FOL_GENERIC = [19750, 19939, 19940, 19941, 19942, 19943];
+
+    for (let effId in se)
+    {
         let eff = se[effId];
+
+        if (cfg.expansion == "CLASSIC")
+        {
+            // HL
+            if (eff.SpellID == 635) {
+                eff.EffectBonusCoefficient = 0.205;
+                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+            } else if (eff.SpellID == 639) {
+                eff.EffectBonusCoefficient = 0.339;
+                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+            } else if (eff.SpellID == 647) {
+                eff.EffectBonusCoefficient = 0.554;
+                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+            } else if (HL_GENERIC.indexOf(eff.SpellID) > -1) {
+                eff.EffectBonusCoefficient = 2.5/3.5;
+                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+            // FOL
+            } else if (FOL_GENERIC.indexOf(eff.SpellID) > -1) {
+                eff.EffectBonusCoefficient = 1.5/3.5;
+                eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+            }
+        }
 
         if (HOLY_SHOCK_TRIGGERS[eff.SpellID] && eff.EffectIndex === 0)
         {
@@ -205,14 +246,18 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
             se[clone.ID] = clone;
             sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MAGIC;
         }
-        else {
+        else
+        {
             // replace SoC judgement dummy spell id, it's inside even another spell
-            if (isJudgeDummy(eff) == SealType.SOC) {
+            if (isJudgeDummy(eff) == SealType.SOC)
+            {
                 console.log("Replace SoC dummy id for " + eff.SpellID);
                 let jdId = eff.EffectBasePoints + eff.EffectDieSides;
-                for (let jeffId in se) {
+                for (let jeffId in se)
+                {
                     let jeff = se[jeffId];
-                    if (jeff.SpellID == jdId) {
+                    if (jeff.SpellID == jdId)
+                    {
                         eff.EffectBasePoints = jeff.EffectBasePoints;
                         break;
                     }
@@ -220,10 +265,13 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
             }
 
             // replace SoC trigger with it's triggered effect
-            if (isSeal(eff.SpellID, SealType.SOC) && eff.EffectIndex == 0) {
-                for (let jeffId in se) {
+            if (isSeal(eff.SpellID, SealType.SOC) && eff.EffectIndex == 0)
+            {
+                for (let jeffId in se)
+                {
                     let jeff = se[jeffId];
-                    if (jeff.SpellID == eff.EffectTriggerSpell) {
+                    if (jeff.SpellID == eff.EffectTriggerSpell)
+                    {
                         console.log("Replace SOC " + eff.SpellID);
                         eff.EffectBasePoints = jeff.EffectBasePoints;
                         eff.EffectBonusCoefficient = jeff.EffectBonusCoefficient;
@@ -235,17 +283,19 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
             }
 
             // Make seals melee
-            if (isSeal(eff.SpellID) && eff.EffectIndex == 0) {
+            if (isSeal(eff.SpellID) && eff.EffectIndex == 0)
+            {
                 sc[eff.SpellID].DefenseType = DEFENSE_TYPE.MELEE;
             }
 
             // Fix SoW and SoL not having judgement ID
             if (isSeal(eff.SpellID, SealType.SoW) && eff.EffectIndex == 0
-            || isSeal(eff.SpellID, SealType.SoL) && eff.EffectIndex == 0) {
+                || isSeal(eff.SpellID, SealType.SoL) && eff.EffectIndex == 0)
+            {
                 const ce = cloneEntry(eff);
                 ce.Effect = EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA,
-                ce.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY,
-                ce.EffectBasePoints = 54158;
+                    ce.EffectAura = AURA_TYPE.SPELL_AURA_DUMMY,
+                    ce.EffectBasePoints = 54158;
                 ce.EffectTriggerSpell = 0;
                 ce.EffectDieSides = 0;
                 ce.EffectIndex = 2;
@@ -266,49 +316,51 @@ function paladinFix(se: {[index: number]: SpellEffect}, sc: {[index: number]: Sp
                 eff.EffectDieSides = 0;
             }
 
-            // Fix JoC weapon pct scaling
-            if (eff.SpellID == 20467 && eff.Effect == EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE)
+            if (cfg.expansion == "WOTLK")
             {
-                eff.EffectBasePoints = 19;
-                eff.EffectDieSides = 0;
+                // Fix JoC weapon pct scaling
+                if (eff.SpellID == 20467 && eff.Effect == EFFECT_TYPE.SPELL_EFFECT_WEAPON_PERCENT_DAMAGE)
+                {
+                    eff.EffectBasePoints = 19;
+                    eff.EffectDieSides = 0;
+                }
             }
         }
     }
 
     // Give JoB and JoV a max level
-    sl[31898].MaxLevel = 99;
-    sl[31804].MaxLevel = 99;
+    if (sl[31898] && !sl[31898].MaxLevel) sl[31898].MaxLevel = 99;
+    if (sl[31804] && !sl[31804].MaxLevel) sl[31804].MaxLevel = 99;
 }
 
-function mageFix(se: {[index: number]: SpellEffect}, sd: SpellData) {
+function mageFix(se: { [index: number]: SpellEffect }, sd: SpellData)
+{
     console.log("Fixing mage coefs and effects");
-    const ICE_BARRIER = [11426, 13031, 13032, 13033, 27134, 33405, 43038, 43039];
-    const MANA_SHIELD = [1463, 8494, 8495, 10191, 10192, 10193, 27131, 43019, 43020];
 
-    for(let effId in se) {
+    for (let effId in se)
+    {
         let eff = se[effId];
         const spellName = sd.getSpellName(eff.SpellID);
-        if (ICE_BARRIER.indexOf(eff.SpellID) != -1) {
-            eff.EffectBonusCoefficient = 0.8053;
-        } else if (MANA_SHIELD.indexOf(eff.SpellID) != -1) {
-            eff.EffectBonusCoefficient = 0.8053;
-        } else if (spellName.Name_lang == "Living Bomb" && eff.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY && eff.EffectBasePoints > 10000) {
+        if (spellName.Name_lang == "Living Bomb" && eff.EffectAura == AURA_TYPE.SPELL_AURA_DUMMY && eff.EffectBasePoints > 10000)
+        {
             eff.EffectAura = AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL;
             eff.EffectTriggerSpell = eff.EffectBasePoints + 1;
         }
     }
 }
 
-function druidFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: SpellName}, sd: SpellData)
+function druidFixes(se: { [index: number]: SpellEffect }, sn: { [spellId: number]: SpellName }, sd: SpellData)
 {
     console.log("Fixing druid coefs and effects");
     const STARFALL = [48505, 53199, 53200, 53201];
     const LB = [33763, 48450, 48451];
 
-    for(let effId in se) {
+    for (let effId in se)
+    {
         let eff = se[effId];
         const name = sn[eff.SpellID]?.Name_lang;
-        if (LB.indexOf(eff.SpellID) > -1 && eff.EffectIndex === 1) {
+        if (LB.indexOf(eff.SpellID) > -1 && eff.EffectIndex === 1)
+        {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
             eff.EffectBonusCoefficient = 0.5161;
@@ -328,30 +380,34 @@ function druidFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: 
     }
 }
 
-function warlockFixes(se: {[index: number]: SpellEffect})
+function warlockFixes(se: { [index: number]: SpellEffect })
 {
     console.log("Fixing warlock coefs and effects");
     const SHADOW_BURN = [17877, 18867, 18868, 18869, 18870, 18871, 27263, 30546, 47826, 47827];
-    const SOC: {[sid: number]: number} = {
+    const SOC: { [sid: number]: number } = {
         [27243]: 27285,
         [47835]: 47833,
         [47836]: 47834,
     }
 
-    const shadowFlame: {[sid: number]: number} = {
+    const shadowFlame: { [sid: number]: number } = {
         [47897]: 47960,
         [61290]: 61291,
     }
 
-    for(let effId in se) {
+    for (let effId in se)
+    {
         let eff = se[effId];
         // Ignore trigger effect for shard debuff
-        if (SHADOW_BURN.indexOf(eff.SpellID) != -1 && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL) {
+        if (SHADOW_BURN.indexOf(eff.SpellID) != -1 && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL)
+        {
             eff.Effect = 0;
-        } else if (SOC[eff.SpellID] && eff.EffectIndex === 1) {
+        } else if (SOC[eff.SpellID] && eff.EffectIndex === 1)
+        {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
             eff.EffectTriggerSpell = SOC[eff.SpellID];
-        } else if (shadowFlame[eff.SpellID] && eff.EffectIndex === 0) {
+        } else if (shadowFlame[eff.SpellID] && eff.EffectIndex === 0)
+        {
             const clone = cloneEntry(eff);
             clone.Effect = EFFECT_TYPE.SPELL_EFFECT_TRIGGER_SPELL;
             clone.EffectTriggerSpell = shadowFlame[eff.SpellID];
@@ -365,11 +421,12 @@ function warlockFixes(se: {[index: number]: SpellEffect})
     }
 }
 
-function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: SpellMisc}, sd: SpellData) {
+function shamanFix(se: { [index: number]: SpellEffect }, sm: { [index: number]: SpellMisc }, sd: SpellData)
+{
     console.log("Fixing shaman coefs and effects");
 
     // Shadowguard -> triggerID
-    const LIGHTNING_SHIELD_TRIGGERS: {[spellId: number]: number} = {
+    const LIGHTNING_SHIELD_TRIGGERS: { [spellId: number]: number } = {
         324: 26364,
         325: 26365,
         905: 26366,
@@ -383,7 +440,7 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
         49281: 49279
     };
 
-    const fireNova: {[spellId: number]: number} = {
+    const fireNova: { [spellId: number]: number } = {
         1535: 8349,
         8498: 8502,
         8499: 8503,
@@ -397,7 +454,8 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
 
 
 
-    for(let effId in se) {
+    for (let effId in se)
+    {
         const eff = se[effId];
         // Shadowguard trigger fix
         if (LIGHTNING_SHIELD_TRIGGERS[eff.SpellID] && eff.Effect === EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA && eff.EffectAura === AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL) 
@@ -448,23 +506,26 @@ function shamanFix(se: {[index: number]: SpellEffect}, sm: {[index: number]: Spe
                     eff.EffectAuraPeriod = ttsEffs[0].EffectAuraPeriod;
                     eff.EffectTriggerSpell = ttsEffs[0].EffectTriggerSpell;
 
-                    const triggeredHeal = sd.getSpellEffects(ttsEffs[0].EffectTriggerSpell);
-                    triggeredHeal[0].Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+                    if (cfg.expansion == "WOTLK")
+                    {
+                        const triggeredHeal = sd.getSpellEffects(ttsEffs[0].EffectTriggerSpell);
+                        triggeredHeal[0].Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
+                    }
                 }
             }
         }
     }
 }
 
-function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: SpellName})
+function coefFixes(se: { [index: number]: SpellEffect }, sn: { [spellId: number]: SpellName })
 {
-    interface CoefEntry {[effectIndex: number]: { ap?: number, sp?: number }}
+    interface CoefEntry { [effectIndex: number]: { ap?: number, sp?: number } }
 
     console.log("Fixing coefs");
     const data: {
         names: { [spellName: string]: CoefEntry },
         ids: { [spellId: number]: CoefEntry },
-    } = JSON.parse(fs.readFileSync("data/wotlk/missingCoef.json", "utf8"));
+    } = JSON.parse(fs.readFileSync(cfg.dataDir + "missingCoef.json", "utf8"));
 
     for (const effId in se)
     {
@@ -487,7 +548,8 @@ function coefFixes(se: {[index: number]: SpellEffect}, sn: {[spellId: number]: S
     }
 }
 
-export function fixSpellEffects(se: {[index: number]: SpellEffect}, sc: {[index: number]: SpellCategory}, sm: {[index: number]: SpellMisc}, sl: {[spellId: number]: SpellLevel}, sn: {[spellId: number]: SpellName}, sd: SpellData) {
+export function fixSpellEffects(se: { [index: number]: SpellEffect }, sc: { [index: number]: SpellCategory }, sm: { [index: number]: SpellMisc }, sl: { [spellId: number]: SpellLevel }, sn: { [spellId: number]: SpellName }, sd: SpellData)
+{
     paladinFix(se, sc, sm, sl);
     priestFix(se, sm, sd);
     mageFix(se, sd);

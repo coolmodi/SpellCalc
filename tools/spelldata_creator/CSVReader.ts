@@ -8,21 +8,21 @@ import * as fs from "fs";
 export function readDBCSV<T>(path: string, index: string, filter?: {key: keyof T, is: any}[]): {[index: string]: T} {
     let raw = fs.readFileSync(path, "utf8");
     raw = raw.replace(/"(.|\r|\n)*?"/g, (subs) => {
-        return subs.replace(/\s/g, "");
+        return subs.replace(/\r|\n/g, "");
     });
     let lines = raw.replace("\r","").split("\n");
     let headers = lines[0].split(",");
     let data: {[index: string]: {[index: string]: number | string}} = {};
     for (let i = 1; i < lines.length; i++) {
         if (lines[i].length < 2) continue;
-        const lineData = lines[i].split(/(?<!"[^"]+),(?=(?![^"]+")|(?:.*,))/);
+        const lineData = lines[i].split(/(?:(?<!"[^"]+),(?=(?![^"]+")|(?:.*,)))|(?:(?<=",),)|(?:,$)/);
         if (headers.length != lineData.length) throw new Error(path + " > Line column count doesn't match header count! Line: " + i);
         const thisData: {[index: string]: number | string} = {};
         for (let j = 0; j < headers.length; j++) {
             if (lineData[j].match(/\d\.\d/)) {
                 thisData[headers[j]] = parseFloat(lineData[j]);
             } else if (headers[j] == "Name_lang" || headers[j] == "NameSubtext_lang" || headers[j] == "Description_lang" || headers[j] == "AuraDescription_lang") {
-                thisData[headers[j]] = lineData[j];
+                thisData[headers[j]] = lineData[j].replace(/"/g, "");
             } else {
                 thisData[headers[j]] = parseInt(lineData[j]);
             }

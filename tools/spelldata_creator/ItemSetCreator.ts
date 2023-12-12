@@ -1,5 +1,6 @@
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
+import { cfg } from "./config";
 import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers, USELESS_AURAS } from "./ItemAuraHandlers";
 import { createEffectLua, createFileHead, orderItemsByClass } from "./itemFunctions";
@@ -17,23 +18,23 @@ interface ItemSet
     SetFlags: number,
     RequiredSkill: number,
     RequiredSkillRank: number,
-    ["ItemID[0]"]: number,
-    ["ItemID[1]"]: number,
-    ["ItemID[2]"]: number,
-    ["ItemID[3]"]: number,
-    ["ItemID[4]"]: number,
-    ["ItemID[5]"]: number,
-    ["ItemID[6]"]: number,
-    ["ItemID[7]"]: number,
-    ["ItemID[8]"]: number,
-    ["ItemID[9]"]: number,
-    ["ItemID[10]"]: number,
-    ["ItemID[11]"]: number,
-    ["ItemID[12]"]: number,
-    ["ItemID[13]"]: number,
-    ["ItemID[14]"]: number,
-    ["ItemID[15]"]: number,
-    ["ItemID[16]"]: number
+    ItemID_0: number,
+    ItemID_1: number,
+    ItemID_2: number,
+    ItemID_3: number,
+    ItemID_4: number,
+    ItemID_5: number,
+    ItemID_6: number,
+    ItemID_7: number,
+    ItemID_8: number,
+    ItemID_9: number,
+    ItemID_10: number,
+    ItemID_11: number,
+    ItemID_12: number,
+    ItemID_13: number,
+    ItemID_14: number,
+    ItemID_15: number,
+    ItemID_16: number
 }
 
 interface ItemSetSpell
@@ -50,10 +51,10 @@ interface ItemSparse
     ID: number,
     AllowableRace: number,
     Display_lang: string,
-    "Flags[0]": number,
-    "Flags[1]": number,
-    "Flags[2]": number,
-    "Flags[3]": number,
+    Flags_0: number,
+    Flags_1: number,
+    Flags_2: number,
+    Flags_3: number,
     ItemSet: number,
     AllowableClass: number,
     InventoryType: number
@@ -83,7 +84,7 @@ export class ItemSetCreator
         this.spellData = spellData;
         this.auraHandlers = new AuraHandlers(spellData, classSpellLists, classSpellSets);
 
-        this.itemsparse = readDBCSVtoMap<ItemSparse>("data/wotlk/dbc/itemsparse.csv", "ID");
+        this.itemsparse = readDBCSVtoMap<ItemSparse>(cfg.dataDir + "dbc/itemsparse.csv", "ID");
 
         for (const sparse of this.itemsparse.values())
         {
@@ -167,7 +168,7 @@ export class ItemSetCreator
 
         for (let i = 0; i <= 16; i++)
         {
-            const itemId = setDataEntry[("ItemID[" + i + "]") as keyof ItemSet] as number;
+            const itemId = setDataEntry[("ItemID_" + i) as keyof ItemSet] as number;
             if (itemId != 0)
             {
                 const realItems = this.getSetItemsForItem(itemId);
@@ -215,7 +216,7 @@ export class ItemSetCreator
     private getSpellsByItemSet()
     {
         console.log("Mapping set spells...");
-        const itemSetSpellData = readDBCSVtoMap<ItemSetSpell>("data/wotlk/dbc/itemsetspell.csv", "ID");
+        const itemSetSpellData = readDBCSVtoMap<ItemSetSpell>(cfg.dataDir + "dbc/itemsetspell.csv", "ID");
         const spellsbyItemSet = new Map<number, ItemSetSpell[]>();
 
         for (let spellEntry of itemSetSpellData.values())
@@ -242,7 +243,7 @@ export class ItemSetCreator
     private getProcessedSetData()
     {
         const spellsbyItemSet = this.getSpellsByItemSet();
-        const itemSetData = readDBCSVtoMap<ItemSet>("data/wotlk/dbc/itemset.csv", "ID");
+        const itemSetData = readDBCSVtoMap<ItemSet>(cfg.dataDir + "dbc/itemset.csv", "ID");
         const setAddonExportData = new Map<number, ItemSetAddonData>();
 
         console.log("Creating data for sets...");

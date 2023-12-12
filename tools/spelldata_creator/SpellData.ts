@@ -2,6 +2,7 @@ import * as fs from "fs";
 import { fixSpellEffects } from "./spellDataFixes";
 import { isSeal } from "./paladinCrap";
 import { readDBCSV } from "./CSVReader";
+import { cfg } from "./config";
 
 const AUTO_ATTACK_ID = 6603;
 
@@ -41,16 +42,16 @@ export interface SpellEffect {
     Variance: number,
     ResourceCoefficient: number,
     GroupSizeBasePointsCoefficient: number,
-    "EffectMiscValue[0]": number,
-    "EffectMiscValue[1]": number,
-    "EffectRadiusIndex[0]": number,
-    "EffectRadiusIndex[1]": number,
-    "EffectSpellClassMask[0]": number,
-    "EffectSpellClassMask[1]": number,
-    "EffectSpellClassMask[2]": number,
-    "EffectSpellClassMask[3]": number,
-    "ImplicitTarget[0]": number,
-    "ImplicitTarget[1]": number,
+    EffectMiscValue_0: number,
+    EffectMiscValue_1: number,
+    EffectRadiusIndex_0: number,
+    EffectRadiusIndex_1: number,
+    EffectSpellClassMask_0: number,
+    EffectSpellClassMask_1: number,
+    EffectSpellClassMask_2: number,
+    EffectSpellClassMask_3: number,
+    ImplicitTarget_0: number,
+    ImplicitTarget_1: number,
     SpellID: number
 }
 
@@ -59,10 +60,10 @@ export interface SpellClassOptions {
     SpellID: number,
     ModalNextSpell: number,
     SpellClassSet: number,
-    "SpellClassMask[0]": number,
-    "SpellClassMask[1]": number,
-    "SpellClassMask[2]": number,
-    "SpellClassMask[3]": number,
+    SpellClassMask_0: number,
+    SpellClassMask_1: number,
+    SpellClassMask_2: number,
+    SpellClassMask_3: number,
 }
 
 export interface SpellMisc {
@@ -77,20 +78,20 @@ export interface SpellMisc {
     MinDuration: number,
     SpellIconFileDataID: number,
     ActiveIconFileDataID: number,
-    "Attributes[0]": number,
-    "Attributes[1]": number,
-    "Attributes[2]": number,
-    "Attributes[3]": number,
-    "Attributes[4]": number,
-    "Attributes[5]": number,
-    "Attributes[6]": number,
-    "Attributes[7]": number,
-    "Attributes[8]": number,
-    "Attributes[9]": number,
-    "Attributes[10]": number,
-    "Attributes[11]": number,
-    "Attributes[12]": number,
-    "Attributes[13]": number,
+    Attributes_0: number,
+    Attributes_1: number,
+    Attributes_2: number,
+    Attributes_3: number,
+    Attributes_4: number,
+    Attributes_5: number,
+    Attributes_6: number,
+    Attributes_7: number,
+    Attributes_8: number,
+    Attributes_9: number,
+    Attributes_10: number,
+    Attributes_11: number,
+    Attributes_12: number,
+    Attributes_13: number,
     SpellID: number
 }
 
@@ -155,8 +156,8 @@ export interface SpellAuraOptions {
     ProcChance: number,
     ProcCharges: number,
     SpellProcsPerMinuteID: number,
-    ["ProcTypeMask[0]"]: number,
-    ["ProcTypeMask[1]"]: number,
+    ProcTypeMask_0: number,
+    ProcTypeMask_1: number,
     SpellID: number,
 }
 
@@ -175,11 +176,10 @@ export class SpellData {
     private spellEquippedItems: {[index: number]: SpellEquippedItems};
     private spellAuraOptions: {[index: number]: SpellAuraOptions};
 
-    constructor(expansion: number) {
+    constructor() {
         console.log("Creating SpellData");
         
-        let baseDir = "data/";
-        if (expansion === 2) baseDir += "wotlk/";
+        let baseDir = cfg.dataDir;
 
         this.spellNames = readDBCSV<SpellName>(baseDir + "dbc/spellname.csv", "ID");
         this.spell = readDBCSV<Spell>(baseDir + "dbc/spell.csv", "ID");
@@ -193,7 +193,7 @@ export class SpellData {
         this.totemSpells = JSON.parse(fs.readFileSync(baseDir + "totemSpells.json", "utf8"));
 
         try {
-            const cacheData = JSON.parse(fs.readFileSync("cache/spellDataCache.json", "utf8"));
+            const cacheData = JSON.parse(fs.readFileSync("cache/spellDataCache_" + cfg.expansion + ".json", "utf8"));
             this.spellEffects = cacheData.se;
             this.spellCategories = cacheData.sc;
             this.spellMiscs = cacheData.sm;
@@ -222,7 +222,7 @@ export class SpellData {
                 }
             }
 
-            fs.writeFileSync("cache/spellDataCache.json", JSON.stringify({
+            fs.writeFileSync("cache/spellDataCache_" + cfg.expansion + ".json", JSON.stringify({
                 se: this.spellEffects,
                 sc: this.spellCategories,
                 sm: this.spellMiscs,

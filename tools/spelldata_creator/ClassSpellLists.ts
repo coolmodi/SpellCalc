@@ -1,6 +1,7 @@
 import { SpellData, SpellEffect } from "./SpellData";
 import * as fs from "fs";
 import { isJudgeDummy, isSeal } from "./paladinCrap";
+import { cfg } from "./config";
 
 const DO_EFFECTS = [
     EFFECT_TYPE.SPELL_EFFECT_HEAL,
@@ -55,6 +56,11 @@ const TRIGGER_SPELL_IGNORE: { [spellName: string]: boolean } = {
     "Barkskin": true,
 }
 
+if (cfg.expansion == "CLASSIC")
+{
+    TRIGGER_SPELL_IGNORE["Seal of Wisdom"] = true;
+}
+
 const PTSA_IGNORES = [
     552, 1515, 2893, 1949, 11683, 11684
 ];
@@ -65,7 +71,7 @@ export class ClassSpellLists
     private readonly validClassSpells: { [className: string]: Map<number, SpellEffect[]> } = {};
     private readonly judgementRemap: Map<number, number> = new Map<number, number>();
 
-    constructor(spellData: SpellData, classesToDo: string[], expansion: number)
+    constructor(spellData: SpellData, classesToDo: string[])
     {
         this.spellData = spellData;
 
@@ -73,7 +79,7 @@ export class ClassSpellLists
 
         for (const className of classesToDo)
         {
-            const list = this.createValidSpellList(className, expansion);
+            const list = this.createValidSpellList(className);
             this.validClassSpells[className] = list;
         }
 
@@ -250,14 +256,11 @@ export class ClassSpellLists
      * Get list of valid/handled spells for a class
      * @param pclass 
      */
-    private createValidSpellList(pclass: string, expansion: number)
+    private createValidSpellList(pclass: string)
     {
         console.log("Building list of spells for class " + pclass);
 
-        let baseDir = "data/";
-        if (expansion === 2) baseDir += "wotlk/";
-
-        const data: { [index: string]: number } = JSON.parse(fs.readFileSync(baseDir + "class_spells/" + pclass + ".json", "utf8"));
+        const data: { [index: string]: number } = JSON.parse(fs.readFileSync(cfg.dataDir + "class_spells/" + pclass + ".json", "utf8"));
         const list: Map<number, SpellEffect[]> = new Map<number, SpellEffect[]>();
         const binaryCache: Map<number, SpellEffect> = new Map<number, SpellEffect>();
 

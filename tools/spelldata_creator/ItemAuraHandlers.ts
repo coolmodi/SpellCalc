@@ -251,7 +251,7 @@ export class AuraHandlers
         {
             const aed: AddonEffectData = {
                 type: ADDON_EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-                affectMask: effect["EffectMiscValue[0]"],
+                affectMask: effect["EffectMiscValue_0"],
                 value: -(effect.EffectBasePoints + 1)
             }
             return aed;
@@ -265,7 +265,7 @@ export class AuraHandlers
                 value: effect.EffectBasePoints + 1
             }
 
-            switch (effect["EffectMiscValue[0]"])
+            switch (effect["EffectMiscValue_0"])
             {
                 case 21: // SPELLMOD_CASTING_TIME_OLD (GCD reduction)
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_GCD_MS;
@@ -431,7 +431,7 @@ export class AuraHandlers
                 value: effect.EffectBasePoints + 1,
             }
 
-            switch (effect["EffectMiscValue[0]"])
+            switch (effect["EffectMiscValue_0"])
             {
                 case 8: // SPELLMOD_ALL_EFFECTS
                     aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_EFFECT;
@@ -880,7 +880,7 @@ export class AuraHandlers
         {
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
-                affectMask: effect["EffectMiscValue[0]"],
+                affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
             };
         }
@@ -889,7 +889,7 @@ export class AuraHandlers
         {
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
-                affectMask: effect["EffectMiscValue[0]"],
+                affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
             }
         }
@@ -898,7 +898,7 @@ export class AuraHandlers
         {
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
-                affectMask: effect["EffectMiscValue[0]"],
+                affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
             }
         }
@@ -907,7 +907,7 @@ export class AuraHandlers
         {
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
-                affectMask: effect["EffectMiscValue[0]"],
+                affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
             }
         }
@@ -937,8 +937,8 @@ export class AuraHandlers
      */
     private getAffectSpell(effect: SpellEffect)
     {
-        if (effect["EffectSpellClassMask[0]"] === 0 && effect["EffectSpellClassMask[1]"] === 0 && effect["EffectSpellClassMask[2]"] === 0) throw "wtf?"
-        return [effect["EffectSpellClassMask[0]"], effect["EffectSpellClassMask[1]"], effect["EffectSpellClassMask[2]"], effect["EffectSpellClassMask[3]"]];
+        if (effect["EffectSpellClassMask_0"] === 0 && effect["EffectSpellClassMask_1"] === 0 && effect["EffectSpellClassMask_2"] === 0) throw "wtf?"
+        return [effect["EffectSpellClassMask_0"], effect["EffectSpellClassMask_1"], effect["EffectSpellClassMask_2"], effect["EffectSpellClassMask_3"]];
     }
 
     /**

@@ -1,5 +1,6 @@
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
+import { cfg } from "./config";
 import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers, USELESS_AURAS } from "./ItemAuraHandlers";
 import { createEffectLua, createFileHead, getItemDbData, orderItemsByClass } from "./itemFunctions";
@@ -92,13 +93,13 @@ export class ItemEffectsCreator
 
     private getItemEffectData(dbData: { [itemId: number]: DbRow })
     {
-        const itemEffects = readDBCSVtoMap<ItemEffect>("data/wotlk/dbc/itemeffect.csv", "ID");
+        const itemEffects = readDBCSVtoMap<ItemEffect>(cfg.dataDir + "dbc/itemeffect.csv", "ID");
         const filteredItems = new Map<number, AddonEffectData[]>();
         let doneEffectIds: { [id: number]: true | { item: number, effs: AddonEffectData[] } };
         try
         {
             console.log("Load done item effect cache...");
-            doneEffectIds = JSON.parse(readFileSync("cache/itemEffDoneCache.json", "utf-8"));
+            doneEffectIds = JSON.parse(readFileSync("cache/itemEffDoneCache_" + cfg.expansion + ".json", "utf-8"));
             for (const id in doneEffectIds)
             {
                 const effEntry = doneEffectIds[id];
@@ -127,7 +128,7 @@ export class ItemEffectsCreator
 
             if (done % 100 === 0)
             {
-                writeFileSync("cache/itemEffDoneCache.json", JSON.stringify(doneEffectIds, null, 4));
+                writeFileSync("cache/itemEffDoneCache_" + cfg.expansion + ".json", JSON.stringify(doneEffectIds, null, 4));
             }
 
             if (ie.TriggerType !== 1) continue; // 1 == on equip auras, we can ignore the rest

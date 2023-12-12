@@ -23,7 +23,7 @@ export class ClassSpellSets
             const thisClassSet = this.spellSets[scopt.SpellClassSet];
     
             for (let i = 0; i < 4; i++) {
-                const mask = scopt["SpellClassMask[" + i + "]" as keyof SpellClassOptions];
+                const mask = scopt["SpellClassMask_" + i as keyof SpellClassOptions];
                 if (mask == 0) continue;
                 let bit = 1;
                 while (bit != 0) {
