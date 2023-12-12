@@ -26,9 +26,12 @@ local function PoM(calcedSpell, effectNum)
     SCT:AppendEfficiency(calcedSpell, effectNum, true, false);
 end
 
-SCT:AddDummyHandler(GetSpellInfo(33076), PoM); -- PoM
+if _addon.IS_CLASSIC then
+    SCT:AddDummyHandler(GetSpellInfo(401859), PoM); -- PoM
+else
+    SCT:AddDummyHandler(GetSpellInfo(33076), PoM); -- PoM
+end
 SCT:AddDummyHandler(GetSpellInfo(974), PoM); -- Earth Shield
-
 
 ---Display extended information if T5 2PC is used.
 ---@param calcedSpell CalcedSpell
@@ -70,70 +73,72 @@ end
 
 SCT:AddDummyHandler(GetSpellInfo(2060), GreaterHeal);
 
----Starfall pew pew.
----@param calcedSpell CalcedSpell
----@param effNum number
-local function StarFall(calcedSpell, effNum)
-    if effNum > 1 then return end
+if _addon.IS_WRATH then
+    ---Starfall pew pew.
+    ---@param calcedSpell CalcedSpell
+    ---@param effNum number
+    local function StarFall(calcedSpell, effNum)
+        if effNum > 1 then return end
 
-    -- Main Stars
-    local mainEff = calcedSpell.effects[1];
-    assert(mainEff, "Starfall triggered effect missing!");
+        -- Main Stars
+        local mainEff = calcedSpell.effects[1];
+        assert(mainEff, "Starfall triggered effect missing!");
 
-    SCT:HeaderLine(L["Main Stars"]);
-    if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L["Damage"], mainEff.min, mainEff.max, mainEff.avg);
-    end
-
-    if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L["Critical"], mainEff.minCrit, mainEff.maxCrit, mainEff.avgCrit,
-            nil, nil, SCT:CritStr(calcedSpell.critChance));
-    end
-
-    SCT:SingleLine(L["Total Singel Target"], SCT:Round(10 * mainEff.avgCombined));
-    SCT:SingleLine(L["Total 20 Stars"], SCT:Round(20 * mainEff.avgCombined));
-    SCT:AppendCoefData(calcedSpell, mainEff, nil, 20);
-
-    if SpellCalc_settings.ttHitChance then
-        local outstr = ("%.1f%%"):format(calcedSpell.hitChance);
-        if SpellCalc_settings.ttHitDetail then
-            outstr = outstr..(" (%d%% + %.1f%%)"):format(calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus)
+        SCT:HeaderLine(L["Main Stars"]);
+        if SpellCalc_settings.ttHit then
+            SCT:AppendMinMaxAvgLine(L["Damage"], mainEff.min, mainEff.max, mainEff.avg);
         end
-        SCT:SingleLine(L["Hit chance"], outstr);
+
+        if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
+            SCT:AppendMinMaxAvgLine(L["Critical"], mainEff.minCrit, mainEff.maxCrit, mainEff.avgCrit,
+                nil, nil, SCT:CritStr(calcedSpell.critChance));
+        end
+
+        SCT:SingleLine(L["Total Singel Target"], SCT:Round(10 * mainEff.avgCombined));
+        SCT:SingleLine(L["Total 20 Stars"], SCT:Round(20 * mainEff.avgCombined));
+        SCT:AppendCoefData(calcedSpell, mainEff, nil, 20);
+
+        if SpellCalc_settings.ttHitChance then
+            local outstr = ("%.1f%%"):format(calcedSpell.hitChance);
+            if SpellCalc_settings.ttHitDetail then
+                outstr = outstr..(" (%d%% + %.1f%%)"):format(calcedSpell.hitChanceBase, calcedSpell.hitChanceBonus)
+            end
+            SCT:SingleLine(L["Hit chance"], outstr);
+        end
+
+        if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 
+        and calcedSpell.hitChanceBinaryLoss == nil or calcedSpell.hitChanceBinaryLoss == 0 then
+            local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
+            local strUsed = calcedSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
+            SCT:SingleLine(L["Avg. resisted"], strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
+        end
+
+        if SpellCalc_settings.ttPerSecond then
+            SCT:SingleLine(L["DPS Single Target"], ("%.1f"):format(mainEff.perSec / 2));
+            SCT:SingleLine(L["DPS 20 Stars"], ("%.1f"):format(mainEff.perSec));
+        end
+
+        -- Splash Effect
+        local splashEff = calcedSpell.effects[2];
+        assert(splashEff, "Starfall splash effect missing!");
+
+        SCT:HeaderLine(L["Splash Effect"]);
+        if SpellCalc_settings.ttHit then
+            SCT:AppendMinMaxAvgLine(L["Damage"], splashEff.min, splashEff.max, splashEff.avg);
+        end
+
+        if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
+            SCT:AppendMinMaxAvgLine(L["Critical"], splashEff.minCrit, splashEff.maxCrit, splashEff.avgCrit,
+                nil, nil, SCT:CritStr(calcedSpell.critChance));
+        end
+        SCT:AppendCoefData(calcedSpell, splashEff);
     end
 
-    if SpellCalc_settings.ttResist and calcedSpell.avgResist > 0 
-    and calcedSpell.hitChanceBinaryLoss == nil or calcedSpell.hitChanceBinaryLoss == 0 then
-        local effRes = math.max(0, calcedSpell.resistance - calcedSpell.resistancePen) + calcedSpell.resistanceFromLevel;
-        local strUsed = calcedSpell.resistanceFromLevel > 0 and L["%.1f%% (Res: %d (%d from level))"] or L["%.1f%% (Res: %d)"];
-        SCT:SingleLine(L["Avg. resisted"], strUsed:format(calcedSpell.avgResist * 100, effRes, calcedSpell.resistanceFromLevel));
-    end
+    SCT:AddDummyHandler(GetSpellInfo(48505), StarFall);
 
-    if SpellCalc_settings.ttPerSecond then
-        SCT:SingleLine(L["DPS Single Target"], ("%.1f"):format(mainEff.perSec / 2));
-        SCT:SingleLine(L["DPS 20 Stars"], ("%.1f"):format(mainEff.perSec));
-    end
-
-    -- Splash Effect
-    local splashEff = calcedSpell.effects[2];
-    assert(splashEff, "Starfall splash effect missing!");
-
-    SCT:HeaderLine(L["Splash Effect"]);
-    if SpellCalc_settings.ttHit then
-        SCT:AppendMinMaxAvgLine(L["Damage"], splashEff.min, splashEff.max, splashEff.avg);
-    end
-
-    if SpellCalc_settings.ttCrit and calcedSpell.critChance > 0 then
-        SCT:AppendMinMaxAvgLine(L["Critical"], splashEff.minCrit, splashEff.maxCrit, splashEff.avgCrit,
-            nil, nil, SCT:CritStr(calcedSpell.critChance));
-    end
-    SCT:AppendCoefData(calcedSpell, splashEff);
+    ---Conflagrate
+    SCT:AddDummyHandler(GetSpellInfo(17962), function(calcedSpell, effNum, spellId)
+        SCT:HeaderLine(L["With Immolate"]);
+        SCT:ShowEffectTooltip(calcedSpell, effNum, false, spellId);
+    end);
 end
-
-SCT:AddDummyHandler(GetSpellInfo(48505), StarFall);
-
----Conflagrate
-SCT:AddDummyHandler(GetSpellInfo(17962), function(calcedSpell, effNum, spellId)
-    SCT:HeaderLine(L["With Immolate"]);
-    SCT:ShowEffectTooltip(calcedSpell, effNum, false, spellId);
-end);

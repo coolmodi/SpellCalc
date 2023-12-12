@@ -3,6 +3,9 @@ local _addonName = select(1, ...);
 ---@class AddonEnv
 local _A = select(2, ...);
 
+_A.IS_CLASSIC = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC;
+_A.IS_WRATH = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC;
+
 local util = {};
 
 ---Remove a single table entry.

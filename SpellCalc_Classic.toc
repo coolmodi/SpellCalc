@@ -1,4 +1,4 @@
-## Interface: 30400
+## Interface: 11500
 ## Title: SpellCalc
 ## Author: coolmodi
 ## Version: 0.19
@@ -32,6 +32,7 @@ data/itemEffects.lua
 data/metaGemEffects.lua
 data/itemSetData.lua
 data/basemana.lua
+
 data/classes/druid_spell.lua
 data/classes/hunter_spell.lua
 data/classes/mage_spell.lua
@@ -60,7 +61,6 @@ data/classes/rogue_itemSetData.lua
 data/classes/shaman_itemSetData.lua
 data/classes/warlock_itemSetData.lua
 data/classes/warrior_itemSetData.lua
-
 data/classes/druid.lua
 data/classes/hunter.lua
 data/classes/mage.lua
@@ -85,7 +85,6 @@ system/talents.lua
 system/items.lua
 system/target.lua
 system/unitAuras.lua
-system/glyphs.lua
 
 core/CostHandler.lua
 core/MagicCalc.lua

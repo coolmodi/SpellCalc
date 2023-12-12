@@ -4,13 +4,15 @@ local L = _addon:GetLocalization();
 ---@class SCTooltip
 local SCT = _addon.SCTooltip;
 
-local Righteous_Vengeance_Spells = {
-    [GetSpellInfo(35395)] = true, -- CS
-    [GetSpellInfo(53385)] = true, -- DS
-    [GetSpellInfo(53408)] = true, -- Wisdom
-    [GetSpellInfo(53407)] = true, -- Justice
-    [GetSpellInfo(20271)] = true, -- Light
-}
+---@type table<string, boolean>
+local Righteous_Vengeance_Spells = {};
+if _addon.IS_WRATH then
+    Righteous_Vengeance_Spells[GetSpellInfo(35395)] = true; -- CS
+    Righteous_Vengeance_Spells[GetSpellInfo(53385)] = true; -- DS
+    Righteous_Vengeance_Spells[GetSpellInfo(53408)] = true; -- Wisdom
+    Righteous_Vengeance_Spells[GetSpellInfo(53407)] = true; -- Justice
+    Righteous_Vengeance_Spells[GetSpellInfo(20271)] = true; -- Light
+end
 
 local Sheath_of_Light_Spells = {
     [GetSpellInfo(19940)] = true, -- FoL

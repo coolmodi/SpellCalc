@@ -96,5 +96,7 @@ end
 
 SCT:AddDummyHandler(GetSpellInfo(20375), SoC);
 SCT:AddDummyHandler(GetSpellInfo(21084), SoR);
-SCT:AddDummyHandler(GetSpellInfo(31801), SoV_SoCor);
-SCT:AddDummyHandler(GetSpellInfo(348704), SoV_SoCor);
+if _addon.IS_WRATH then
+    SCT:AddDummyHandler(GetSpellInfo(31801), SoV_SoCor);
+    SCT:AddDummyHandler(GetSpellInfo(348704), SoV_SoCor);
+end

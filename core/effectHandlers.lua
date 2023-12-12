@@ -392,18 +392,24 @@ end
 
 dummyAuraHandlers[GetSpellInfo(20154)] = SealOfRighteousness;
 dummyAuraHandlers[GetSpellInfo(20375)] = SealOfCommand;
-dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
 dummyAuraHandlers[GetSpellInfo(974)] = PoM_ES; -- Earth Shield
-dummyAuraHandlers[GetSpellInfo(31801)] = SealOfVengeance;
-dummyAuraHandlers[GetSpellInfo(348704)] = SealOfVengeance; -- Seal of Corruption
-dummyAuraHandlers[GetSpellInfo(48505)] = Starfall;
-dummyAuraHandlers[GetSpellInfo(54428)] = DivinePlea;
 dummyAuraHandlers[GetSpellInfo(29166)] = Innervate;
 dummyAuraHandlers[GetSpellInfo(20166)] = SealOfWisdomMelee;
-dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
-dummyAuraHandlers[GetSpellInfo(17962)] = Conflagrate;
 dummyAuraHandlers[GetSpellInfo(12051)] = Evocation;
-dummyAuraHandlers[GetSpellInfo(51490)] = Thunderstorm;
+
+if _addon.IS_CLASSIC then
+    dummyAuraHandlers[GetSpellInfo(401859)] = PoM_ES; -- Prayer of Mending
+else
+    dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
+    dummyAuraHandlers[GetSpellInfo(48505)] = Starfall;
+    dummyAuraHandlers[GetSpellInfo(54428)] = DivinePlea;
+    dummyAuraHandlers[GetSpellInfo(51490)] = Thunderstorm;
+    dummyAuraHandlers[GetSpellInfo(17962)] = Conflagrate;
+    dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
+    dummyAuraHandlers[GetSpellInfo(31801)] = SealOfVengeance;
+    dummyAuraHandlers[GetSpellInfo(348704)] = SealOfVengeance; -- Seal of Corruption
+end
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 -- Aura Handler
