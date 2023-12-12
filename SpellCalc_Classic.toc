@@ -29,7 +29,6 @@ data/enchants.lua
 data/npcResistances.lua
 
 data/itemEffects.lua
-data/metaGemEffects.lua
 data/itemSetData.lua
 data/basemana.lua
 

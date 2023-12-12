@@ -24,13 +24,13 @@ system/scriptEffects.lua
 
 data/auras.lua
 data/aurasTarget.lua
-data/mechanicAuras.lua
+data/wrath/mechanicAuras.lua
 data/enchants.lua
 data/npcResistances.lua
 
-data/itemEffects.lua
-data/metaGemEffects.lua
-data/itemSetData.lua
+data/wrath/itemEffects.lua
+data/wrath/metaGemEffects.lua
+data/wrath/itemSetData.lua
 data/basemana.lua
 
 data/wrath/classes/druid_spell.lua
@@ -72,7 +72,7 @@ data/wrath/classes/warlock.lua
 data/wrath/classes/warrior.lua
 data/wrath/classes/deathknight.lua
 
-data/racials.lua
+data/wrath/racials.lua
 
 slashcmd.lua
 events.lua
