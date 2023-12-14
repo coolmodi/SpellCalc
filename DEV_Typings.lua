@@ -38,6 +38,7 @@ local _addon = select(2, ...);
 ---@field usePeriodicHaste boolean|nil
 ---@field onNextSwing boolean|nil
 ---@field isOffhandAttack boolean|nil
+---@field useScalingFormula string|nil
 ---@field effects SpellEffectData[]
 
 ---@type SettingsTable

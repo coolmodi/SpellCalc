@@ -357,7 +357,7 @@ function druidFixes(se: { [index: number]: SpellEffect }, sn: { [spellId: number
 {
     console.log("Fixing druid coefs and effects");
     const STARFALL = [48505, 53199, 53200, 53201];
-    const LB = [33763, 48450, 48451];
+    const LB = [33763, 48450, 48451, 408124];
 
     for (let effId in se)
     {
@@ -367,7 +367,7 @@ function druidFixes(se: { [index: number]: SpellEffect }, sn: { [spellId: number
         {
             eff.Effect = EFFECT_TYPE.SPELL_EFFECT_HEAL;
             eff.EffectAura = 0;
-            eff.EffectBonusCoefficient = 0.5161;
+            if (cfg.expansion == "WOTLK") eff.EffectBonusCoefficient = 0.5161;
         }
         else if (STARFALL.indexOf(eff.SpellID) > -1)
         {

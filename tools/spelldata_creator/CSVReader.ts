@@ -19,12 +19,14 @@ export function readDBCSV<T>(path: string, index: string, filter?: {key: keyof T
         if (headers.length != lineData.length) throw new Error(path + " > Line column count doesn't match header count! Line: " + i);
         const thisData: {[index: string]: number | string} = {};
         for (let j = 0; j < headers.length; j++) {
-            if (lineData[j].match(/\d\.\d/)) {
+            if (lineData[j].match(/\d\.\d/) && !isNaN(parseFloat(lineData[j]))) {
                 thisData[headers[j]] = parseFloat(lineData[j]);
             } else if (headers[j] == "Name_lang" || headers[j] == "NameSubtext_lang" || headers[j] == "Description_lang" || headers[j] == "AuraDescription_lang") {
                 thisData[headers[j]] = lineData[j].replace(/"/g, "");
-            } else {
+            } else if (!isNaN(parseInt(lineData[j]))) {
                 thisData[headers[j]] = parseInt(lineData[j]);
+            } else {
+                thisData[headers[j]] = lineData[j].replace(/"/g, "");
             }
         }
 

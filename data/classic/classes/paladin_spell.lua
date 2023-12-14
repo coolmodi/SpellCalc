@@ -1564,6 +1564,7 @@ _addon.spellInfo = {
         baseCostPct = 26,
         school = 2,
         defType = 3,
+        useScalingFormula = "815damagepower",
         effects = {
             [1] = {
                 effectType = 2,

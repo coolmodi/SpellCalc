@@ -11,6 +11,7 @@ import { cfg } from "./config";
 import { TalentsCreator } from "./modules/TalentCreator";
 import { AuraHandlers } from "./ItemAuraHandlers";
 import { isPlayerClass } from "./helper";
+import { SpellLevelScaling } from "./modules/SpellLevelScaling";
 
 const DO_CLASSES: PlayerClass[] = [
     PlayerClass.DRUID,
@@ -46,6 +47,7 @@ const classSpellLists = new ClassSpellLists(spellData, DO_CLASSES);
 const classSpellSets = new ClassSpellSets(spellData);
 const auraHandlers = new AuraHandlers(spellData, classSpellLists, classSpellSets);
 const talentCreator = new TalentsCreator(spellData, auraHandlers, classSpellSets);
+const spellLevelScaling = new SpellLevelScaling(spellData);
 
 const SpellClassSet = {
     MAGE: 3,
@@ -580,6 +582,7 @@ function buildSpellInfo(pclass: string) {
                 usePeriodicHaste: (spellMisc["Attributes_5"] & SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC) === SPELL_ATTR5.SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC,
                 onNextAttack: (spellMisc["Attributes_0"] & SPELL_ATTR0.SPELL_ATTR_ON_NEXT_SWING_NO_DAMAGE) > 0,
                 isOffhandAttack: (spellMisc["Attributes_3"] & SPELL_ATTR3.SPELL_ATTR_EX3_REQUIRES_OFFHAND_WEAPON) > 0,
+                useScalingFormula: spellLevelScaling.getVariableKeyForSpell(spellId),
                 effects: []
             };
 
@@ -668,6 +671,7 @@ end
         if (ri.usePeriodicHaste) str += `\t\tusePeriodicHaste = true,\n`;
         if (ri.onNextAttack) str += `\t\tonNextSwing = true,\n`;
         if (ri.isOffhandAttack) str += `\t\tisOffhandAttack = true,\n`;
+        if (ri.useScalingFormula) str += `\t\tuseScalingFormula = "${ri.useScalingFormula}",\n`;
 
         str += `\t\teffects = {\n`;
 
@@ -785,6 +789,9 @@ for (let i = 0; i < DO_CLASSES.length; i++) {
     const ctlua = talentCreator.buildTalentLua(DO_CLASSES[i]);
     fs.writeFileSync(cfg.outputDir + "classes/" + DO_CLASSES[i] + "_talents.lua", ctlua);
 }
+
+const levelScalingLua = spellLevelScaling.getVariablesLua();
+fs.writeFileSync(cfg.outputDir + "levelScaling.lua", levelScalingLua);
 
 createMechanicLists([SpellMechanic.BLEED], spellData);
 createItemLua();
