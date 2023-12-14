@@ -929,6 +929,14 @@ export class AuraHandlers
                 value: 1,
             }
         }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_PERCENT_DONE] = effect => {
+            return {
+                type: ADDON_EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+                affectMask: effect["EffectMiscValue_0"],
+                value: effect.EffectBasePoints + 1,
+            };
+        }
     }
 
     /**

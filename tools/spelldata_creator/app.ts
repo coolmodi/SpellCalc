@@ -8,18 +8,20 @@ import { ItemEffectsCreator } from "./ItemEffectsCreator";
 import { getHandledClassGlyphs } from "./glyphs";
 import { createMechanicLists } from "./mechanicList";
 import { cfg } from "./config";
+import { TalentsCreator } from "./modules/TalentCreator";
+import { AuraHandlers } from "./ItemAuraHandlers";
+import { isPlayerClass } from "./helper";
 
-const CLASSES = [
-    "druid", 
-    "priest", 
-    "warlock",
-    "mage", 
-    "paladin",
-    "shaman",
-
-    //"hunter",
-    //"rogue",
-    //"warrior"
+const DO_CLASSES: PlayerClass[] = [
+    PlayerClass.DRUID,
+    PlayerClass.PRIEST,
+    PlayerClass.WARLOCK,
+    PlayerClass.MAGE,
+    PlayerClass.PALADIN,
+    PlayerClass.SHAMAN,
+    //PlayerClass.HUNTER,
+    //PlayerClass.WARRIOR,
+    //PlayerClass.ROGUE,
 ];
 
 const SCHOOL_MASK_TO_ENUM = {
@@ -40,8 +42,10 @@ const USEFUL_SPELL_MECHANICS: {[sm: number]: boolean} = {
 }
 
 const spellData = new SpellData();
-const classSpellLists = new ClassSpellLists(spellData, CLASSES);
+const classSpellLists = new ClassSpellLists(spellData, DO_CLASSES);
 const classSpellSets = new ClassSpellSets(spellData);
+const auraHandlers = new AuraHandlers(spellData, classSpellLists, classSpellSets);
+const talentCreator = new TalentsCreator(spellData, auraHandlers, classSpellSets);
 
 const SpellClassSet = {
     MAGE: 3,
@@ -53,6 +57,16 @@ const SpellClassSet = {
     HUNTER: 9,
     PALADIN: 10,
     SHAMAN: 11,
+}
+
+/**
+ * Should class be handled?
+ * @param pclass 
+ * @returns 
+ */
+function shouldDoClass(pclass: string)
+{
+    return isPlayerClass(pclass) && DO_CLASSES.indexOf(pclass) !== -1;
 }
 
 function getCorectBase(effect: SpellEffect)
@@ -745,7 +759,7 @@ async function createItemLua() {
     fs.writeFileSync(cfg.outputDir + "itemSetData.lua", setLua.GENERAL);
     for (const classname in setLua)
     {
-        if (classname == "GENERAL" || CLASSES.indexOf(classname) === -1) continue;
+        if (classname == "GENERAL" || !shouldDoClass(classname)) continue;
         fs.writeFileSync(cfg.outputDir + "classes/" + classname + "_itemSetData.lua", setLua[classname as keyof typeof setLua]);
     }
 
@@ -754,13 +768,16 @@ async function createItemLua() {
     fs.writeFileSync(cfg.outputDir + "itemEffects.lua", itemLua.GENERAL);
     for (const classname in itemLua)
     {
-        if (classname == "GENERAL" || CLASSES.indexOf(classname) === -1) continue;
+        if (classname == "GENERAL" || !shouldDoClass(classname)) continue;
         fs.writeFileSync(cfg.outputDir + "classes/" + classname + "_itemEffects.lua", itemLua[classname as keyof typeof itemLua]);
     }
 }
 
-for (let i = 0; i < CLASSES.length; i++) {
-    createLua(CLASSES[i]);
+for (let i = 0; i < DO_CLASSES.length; i++) {
+    createLua(DO_CLASSES[i]);
+
+    const ctlua = talentCreator.buildTalentLua(DO_CLASSES[i]);
+    fs.writeFileSync(cfg.outputDir + "classes/" + DO_CLASSES[i] + "_talents.lua", ctlua);
 }
 
 createMechanicLists([SpellMechanic.BLEED], spellData);

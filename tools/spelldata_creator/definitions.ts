@@ -56,6 +56,7 @@ const enum AURA_TYPE {
     SPELL_AURA_MOD_POWER_COST_SCHOOL_PCT = 72,
     SPELL_AURA_MOD_POWER_COST_SCHOOL = 73,
     SPELL_AURA_MECHANIC_IMMUNITY = 77,
+    SPELL_AURA_MOD_DAMAGE_PERCENT_DONE = 79,
     SPELL_AURA_WATER_BREATHING = 82,
     SPELL_AURA_MOD_POWER_REGEN = 85,
     SPELL_AURA_PERIODIC_DAMAGE_PERCENT = 89,
@@ -262,6 +263,7 @@ const enum ADDON_EFFECT_TYPE {
     SCRIPT_SET_VALUE = "_addon.CONST.EFFECT_TYPE.SCRIPT_SET_VALUE",
     SPELLMOD_CHARGES = "_addon.CONST.EFFECT_TYPE.SPELLMOD_CHARGES",
     SPELLMOD_FLAT_SPELL_SCALE = "_addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE",
+    SCHOOLMOD_PCT_DAMAGE = "_addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE",
 }
 
 interface AddonEffectData
@@ -270,11 +272,60 @@ interface AddonEffectData
     affectMask?: number,
     affectSpell?: number[],
     value?: number,
-    scriptKey?: string
+    neededWeaponMask?: number,
+    scriptKey?: string,
+    requiredStance?: number,
+}
+
+interface AddonTalentData extends AddonEffectData
+{
+    perPoint?: number,
+    values?: number[],
 }
 
 const enum SpellMechanic 
 {
     BLEED = 15,
     INFECTED = 22
+}
+
+const enum PlayerClass
+{
+    DRUID = "druid",
+    HUNTER = "hunter",
+    PRIEST = "priest",
+    WARRIOR = "warrior",
+    WARLOCK = "warlock",
+    MAGE = "mage",
+    PALADIN = "paladin",
+    SHAMAN = "shaman",
+    DEATHKNIGHT = "deathknight",
+    ROGUE = "rogue"
+}
+
+const enum ClassMask 
+{
+    WARRIOR = 1,
+    PALADIN = 1 << 1,
+    HUNTER = 1 << 2,
+    ROGUE = 1 << 3,
+    PRIEST = 1 << 4,
+    DEATHKNIGHT = 1 << 5,
+    SHAMAN = 1 << 6,
+    MAGE = 1 << 7,
+    WARLOCK = 1 << 8,
+    DRUID = 1 << 10
+};
+
+const enum SpellClassSetId 
+{
+    MAGE = 3,
+    WARRIOR = 4,
+    WARLOCK = 5,
+    PRIEST = 6,
+    DRUID = 7,
+    ROGUE = 8,
+    HUNTER = 9,
+    PALADIN = 10,
+    SHAMAN = 11,
 }

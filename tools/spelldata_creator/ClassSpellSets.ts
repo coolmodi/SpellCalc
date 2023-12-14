@@ -43,7 +43,7 @@ export class ClassSpellSets
      * Get spell sets for a player class.
      * @param classSetId 
      */
-    getClassSets(classSetId: number)
+    getClassSets(classSetId: SpellClassSetId)
     {
         if (!this.spellSets[classSetId]) throw "Invalid class ID!";
         return this.spellSets[classSetId];

@@ -148,6 +148,11 @@ export async function orderItemsByClass<T>(itemMap: Map<number, T>)
 export function createEffectLua(indent: string, eff: AddonEffectData, additionalMembers?: { [key: string]: any })
 {
     let lua = `${indent}{\n`;
+    lua += `${indent}    type = ${eff.type},\n`;
+    if (eff.affectMask) lua += `${indent}    affectMask = ${eff.affectMask},\n`;
+    if (eff.affectSpell) lua += `${indent}    affectSpell = {${eff.affectSpell.join(", ")}},\n`;
+    if (typeof eff.value !== "undefined") lua += `${indent}    value = ${eff.value},\n`;
+    if (typeof eff.scriptKey !== "undefined") lua += `${indent}    scriptKey = "${eff.scriptKey},"\n`;
     if (additionalMembers)
     {
         for (const k in additionalMembers)
@@ -155,11 +160,6 @@ export function createEffectLua(indent: string, eff: AddonEffectData, additional
             lua += `${indent}    ${k} = ${additionalMembers[k]},\n`;
         }
     }
-    lua += `${indent}    type = ${eff.type},\n`;
-    if (eff.affectMask) lua += `${indent}    affectMask = ${eff.affectMask},\n`;
-    if (eff.affectSpell) lua += `${indent}    affectSpell = {${eff.affectSpell.join(", ")}},\n`;
-    if (typeof eff.value !== "undefined") lua += `${indent}    value = ${eff.value},\n`;
-    if (typeof eff.scriptKey !== "undefined") lua += `${indent}    scriptKey = "${eff.scriptKey},"\n`;
     lua += `${indent}},\n`;
     return lua;
 }
