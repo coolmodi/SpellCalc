@@ -2327,6 +2327,57 @@ _addon.spellInfo = {
             },
         }
     },
+    [400574] = { -- Arcane Blast
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 7,
+        school = 7,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 453,
+                valueRange = 74,
+                coef = 0.71399998665,
+                coefAP = 0,
+            },
+        }
+    },
+    [400613] = { -- Living Bomb
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 12,
+        baseCostPct = 22,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 85,
+                valueRange = 0,
+                coef = 0.20000000298,
+                coefAP = 0,
+            },
+        }
+    },
+    [400640] = { -- Ice Lance
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 8,
+        school = 5,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 55,
+                valueRange = 10,
+                coef = 0.14300000668,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 ---@type SpellClassSet

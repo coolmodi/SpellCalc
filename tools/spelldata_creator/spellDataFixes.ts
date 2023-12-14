@@ -82,6 +82,10 @@ function priestFix(se: { [index: number]: SpellEffect }, sm: { [index: number]: 
         53007: {
             dmg: 53003,
             heal: 52988
+        },
+        402174: {
+            dmg: 402261,
+            heal: 402277
         }
     }
 

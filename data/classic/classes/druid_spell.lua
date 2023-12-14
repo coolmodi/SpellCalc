@@ -2584,6 +2584,197 @@ _addon.spellInfo = {
             },
         }
     },
+    [407993] = { -- Mangle(Cat)
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 40,
+        school = 1,
+        GCD = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 3,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [407995] = { -- Mangle(Bear)
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 60,
+        baseCost = 200,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 58,
+                weaponCoef = 1.6,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
+    [408120] = { -- Wild Growth
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 7,
+        baseCostPct = 56,
+        school = 4,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 1,
+                valueBase = 34,
+                valueRange = 0,
+                coef = 0.06100000069,
+                coefAP = 0,
+            },
+        }
+    },
+    [408124] = { -- Lifebloom
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 7,
+        baseCostPct = 28,
+        school = 4,
+        GCD = 1,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 1,
+                valueBase = 4,
+                valueRange = 0,
+                coef = 0.05099999905,
+                coefAP = 0,
+                auraStacks = 3,
+            },
+        }
+    },
+    [414644] = { -- Lacerate
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 15,
+        baseCost = 150,
+        school = 1,
+        defType = 2,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 20,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+                auraStacks = 5,
+            },
+        }
+    },
+    [414684] = { -- Sunfire
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 12,
+        baseCostPct = 21,
+        school = 4,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 130,
+                valueRange = 22,
+                coef = 0.15000000596,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 65,
+                valueRange = 0,
+                coef = 0.12999999523,
+                coefAP = 0,
+            },
+        }
+    },
+    [414687] = { -- Sunfire
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 200,
+        school = 4,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 130,
+                valueRange = 22,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 65,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [414689] = { -- Sunfire
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 12,
+        baseCost = 40,
+        school = 4,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 130,
+                valueRange = 22,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 65,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [417157] = { -- Starsurge
+        spellLevel = 1,
+        maxLevel = 1,
+        baseCostPct = 3,
+        school = 7,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 135,
+                valueRange = 30,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 ---@type SpellClassSet

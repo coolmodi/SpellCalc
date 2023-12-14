@@ -1557,6 +1557,65 @@ _addon.spellInfo = {
             },
         }
     },
+    [407669] = { -- Avenger's Shield
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 10,
+        baseCostPct = 26,
+        school = 2,
+        defType = 3,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 366,
+                valueRange = 82,
+                coef = 0.09099999815,
+                coefAP = 0.09099999815,
+            },
+        }
+    },
+    [407676] = { -- Crusader Strike
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 1,
+        defType = 2,
+        equippedWeaponMask = 173555,
+        effects = {
+            [1] = {
+                effectType = 121,
+                weaponCoef = 0.75,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 137,
+                valueBase = 2,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [407778] = { -- Divine Storm
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 12,
+        school = 1,
+        defType = 2,
+        equippedWeaponMask = 173555,
+        effects = {
+            [1] = {
+                effectType = 31,
+                weaponCoef = 1.1,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 _addon.aurasPlayer[21084] = { -- Seal of Righteousness(Rank 1)

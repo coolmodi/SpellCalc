@@ -167,5 +167,11 @@
   "Healing Wave (10)": 25357,
   "Earth Shock (7)": 10414,
   "Searing Totem (6)": 10438,
-  "Flame Shock (6)": 29228
+  "Flame Shock (6)": 29228,
+
+  "Healing Rain": 415236,
+  "Earth Shield": 408514,
+  "Lava Burst": 408490,
+  "Lava Lash": 408507,
+  "Molten Blast": 425339
 }

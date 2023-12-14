@@ -41,6 +41,18 @@ _addon.talentDataRaw = {
             },
         }
     },
+    { -- Improved Thorns
+        tree = 1,
+        tier = 3,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+                affectSpell = {256, 0, 0, 0},
+                perPoint = 25,
+            },
+        }
+    },
     { -- Vengeance
         tree = 1,
         tier = 4,

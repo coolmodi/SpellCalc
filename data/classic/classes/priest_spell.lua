@@ -2667,6 +2667,175 @@ _addon.spellInfo = {
             },
         }
     },
+    [401859] = { -- Prayer of Mending
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 15,
+        school = 2,
+        defType = 1,
+        forceHeal = true,
+        charges = 5,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                valueBase = 93,
+                valueRange = 0,
+                coef = 0.42899999022,
+                coefAP = 0,
+            },
+        }
+    },
+    [401946] = { -- Circle of Healing
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 56,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 162,
+                valueRange = 18,
+                coef = 0.21400000155,
+                coefAP = 0,
+            },
+        }
+    },
+    [401955] = { -- Shadow Word: Death
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 12,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 261,
+                valueRange = 44,
+                coef = 0.42899999022,
+                coefAP = 0,
+            },
+        }
+    },
+    [402174] = { -- Penance
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 2,
+        baseCostPct = 16,
+        school = 2,
+        isChannel = true,
+        defType = 0,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 0,
+                valueRange = 0,
+                triggeredSpell = 402289,
+                coef = 0,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 0,
+                valueRange = 0,
+                triggeredSpell = 402284,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [402284] = { -- Penance
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 128,
+                valueRange = 0,
+                coef = 0.28499999642,
+                coefAP = 0,
+            },
+        }
+    },
+    [402289] = { -- Penance
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 2,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 10,
+                valueBase = 106,
+                valueRange = 0,
+                coef = 0.28499999642,
+                coefAP = 0,
+            },
+        }
+    },
+    [413259] = { -- Mind Sear
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 5,
+        baseCostPct = 28,
+        school = 6,
+        isChannel = true,
+        defType = 1,
+        usePeriodicHaste = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 23,
+                tickPeriod = 1,
+                valueBase = 25,
+                valueRange = 0,
+                triggeredSpell = 413260,
+                coef = 0.15000000596,
+                coefAP = 0,
+            },
+        }
+    },
+    [413260] = { -- Mind Sear
+        spellLevel = 1,
+        maxLevel = 0,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 70,
+                valueRange = 8,
+                coef = 0.28600001335,
+                coefAP = 0,
+            },
+        }
+    },
+    [425204] = { -- Void Plague
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 18,
+        baseCostPct = 13,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 3,
+                tickPeriod = 3,
+                valueBase = 39,
+                valueRange = 0,
+                coef = 0.20000000298,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 ---@type SpellClassSet

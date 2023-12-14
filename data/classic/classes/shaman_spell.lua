@@ -1848,6 +1848,77 @@ _addon.spellInfo = {
             },
         }
     },
+    [408490] = { -- Lava Burst
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 10,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 469,
+                valueRange = 136,
+                coef = 0.57099997997,
+                coefAP = 0,
+            },
+        }
+    },
+    [408507] = { -- Lava Lash
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 4,
+        school = 3,
+        defType = 2,
+        equippedWeaponMask = 173555,
+        isOffhandAttack = true,
+        effects = {
+            [1] = {
+                effectType = 31,
+                weaponCoef = 1,
+                valueBase = 0,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
+    [408514] = { -- Earth Shield
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 600,
+        baseCostPct = 15,
+        school = 4,
+        defType = 1,
+        forceHeal = true,
+        charges = 6,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 4,
+                valueBase = 100,
+                valueRange = 0,
+                coef = 0.538,
+                coefAP = 0,
+            },
+        }
+    },
+    [425339] = { -- Molten Blast
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 18,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 72,
+                valueRange = 36,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 ---@type SpellClassSet

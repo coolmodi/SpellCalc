@@ -1677,6 +1677,56 @@ _addon.spellInfo = {
             },
         }
     },
+    [403501] = { -- Haunt
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 12,
+        baseCostPct = 12,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 251,
+                valueRange = 44,
+                coef = 0.42899999022,
+                coefAP = 0,
+            },
+        }
+    },
+    [403629] = { -- Chaos Bolt
+        spellLevel = 1,
+        maxLevel = 0,
+        baseCostPct = 7,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 522,
+                valueRange = 140,
+                coef = 0.71399998665,
+                coefAP = 0,
+            },
+        }
+    },
+    [412758] = { -- Incinerate
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 15,
+        baseCostPct = 14,
+        school = 3,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 222,
+                valueRange = 36,
+                coef = 0.71399998665,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 ---@type SpellClassSet

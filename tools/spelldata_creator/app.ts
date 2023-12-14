@@ -608,6 +608,12 @@ function buildSpellInfo(pclass: string) {
                 && classInfo.rankInfo[spellId].effects[i].valuePerLevel != 0 
                 && classInfo.rankInfo[spellId].maxLevel == 0) console.error("Effect has perlevel scaling but maxlevel of the spell is 0! " + spellId);
         }
+
+        // Fix empty 2nd effect slot due to stupid SPELL_EFFECT_WEAPON_PERCENT_DAMAGE implementation...
+        if (classInfo.rankInfo[spellId].effects.length == 3 && !classInfo.rankInfo[spellId].effects[1])
+        {
+            classInfo.rankInfo[spellId].effects.splice(1, 1);
+        }
     }
 
     for (const spellId in classInfo.rankInfo)
