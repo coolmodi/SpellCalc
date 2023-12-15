@@ -407,8 +407,20 @@ local oldApiHitBonusSpell = 0;
 --- Combat ratings updated (seems to be hit modifier in classic)
 local function CombatRatingUpdate()
     _addon.util.PrintDebug("Combat rating update");
-    local meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) -- + GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
-    local spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
+
+    ---@type number
+    local meleeHitBonus;
+    ---@type number
+    local spellHitBonus;
+
+    if _addon.IS_CLASSIC then
+        meleeHitBonus = GetHitModifier();
+        spellHitBonus = GetSpellHitModifier();
+    else
+        meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) -- + GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
+        spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
+    end
+
     local changed = false;
 
     if meleeHitBonus ~= oldApiHitBonus then
