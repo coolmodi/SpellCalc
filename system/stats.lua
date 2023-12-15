@@ -316,33 +316,43 @@ do
 
     ---Update spirit+int based and MP5 regen values
     function _addon:UpdateManaRegen()
-        local _, int = UnitStat("player", 4);
         local _, spirit = UnitStat("player", 5);
-        local level = UnitLevel("player");
-        local spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[level]) * 0.6;
-        local changed = false;
+        local spiritIntRegen = 0;
 
-        -- Low levels have increased regen until lvl 15.
-        if level < 15 then
-            local mult = 3.2446 * math.exp(-0.078 * level);
-            spiritIntRegen = spiritIntRegen * mult;
+        if _addon.IS_CLASSIC then
+            local _, class = UnitClass("player");
+            if class == "PRIEST" or class == "MAGE" then
+                spiritIntRegen = (13 + spirit / 4) / 2;
+            elseif class == "WARLOCK" then
+                spiritIntRegen = (8 + spirit / 4) / 2;
+            else
+                spiritIntRegen = (15 + spirit / 5) / 2;
+            end
+        else
+            local level = UnitLevel("player");
+            local _, int = UnitStat("player", 4);
+            spiritIntRegen = (math.sqrt(int) * spirit * LEVEL_REGEN_MULT[level]) * 0.6;
+
+            -- Low levels have increased regen until lvl 15.
+            if level < 15 then
+                local mult = 3.2446 * math.exp(-0.078 * level);
+                spiritIntRegen = spiritIntRegen * mult;
+            end
         end
 
-        local newmanaRegCasting = spiritIntRegen * (stats.fsrRegenMult.val/100);
+        local newmanaRegCasting = spiritIntRegen * (stats.fsrRegenMult.val / 100);
         local newmanaRegAura = math.max(0, GetManaRegen() - spiritIntRegen);
         -- Remove minor errors in spirit regen calculation if mp5 should be 0.
         if newmanaRegAura < 0.1 then newmanaRegAura = 0 end
 
         if stats.manaRegBase ~= spiritIntRegen
-        or stats.manaRegCasting ~= newmanaRegCasting
-        or stats.manaRegAura ~= newmanaRegAura then
+            or stats.manaRegCasting ~= newmanaRegCasting
+            or stats.manaRegAura ~= newmanaRegAura then
             stats.manaRegBase = spiritIntRegen;
             stats.manaRegCasting = newmanaRegCasting;
             stats.manaRegAura = newmanaRegAura;
-            changed = true;
+            self:TriggerUpdate();
         end
-
-        if changed then self:TriggerUpdate() end
     end
 end
 
