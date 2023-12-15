@@ -1,5 +1,6 @@
 import { SpellData, SpellEffect } from "./SpellData";
 import * as fs from "fs";
+import { cfg } from "./config";
 
 function getMechanicSpellList(s: SpellData, m: SpellMechanic)
 {
@@ -74,5 +75,5 @@ _addon.mechanicAuras = {
 
     str += "}";
 
-    fs.writeFileSync(__dirname + "/../../../data/mechanicAuras.lua", str);
+    fs.writeFileSync(cfg.outputDir + "mechanicAuras.lua", str);
 }

@@ -25,7 +25,7 @@ system/scriptEffects.lua
 data/auras.lua
 data/aurasTarget.lua
 data/wrath/mechanicAuras.lua
-data/enchants.lua
+data/wrath/enchants.lua
 data/npcResistances.lua
 
 data/wrath/itemEffects.lua
