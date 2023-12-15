@@ -1,7 +1,5 @@
-import { createConnection } from "mysql";
-
-const PDB_NAME = "lkitems";
-const DB_QUERY = "SELECT entry, name, AllowableClass, class, subclass FROM item_template;";
+import { readDBCSV } from "./CSVReader";
+import { cfg } from "./config";
 interface DbRow
 {
     entry: number,
@@ -9,6 +7,28 @@ interface DbRow
     AllowableClass: number,
     class: number,
     subclass: number
+}
+
+interface DBCItemSparse
+{
+    ID: number,
+    AllowableRace: number,
+    Display_lang: string,
+    Flags_0: number,
+    Flags_1: number,
+    Flags_2: number,
+    Flags_3: number,
+    ItemSet: number,
+    AllowableClass: number,
+    InventoryType: number
+}
+
+interface DBCItem
+{
+    ID: number,
+    ClassID: number,
+    SubclassID: number,
+    InventoryType: number
 }
 
 const classMask = {
@@ -38,38 +58,40 @@ const LE_ITEM_ARMOR_TOTEM = 9;
 
 interface ItemDBdata
 {
-    [itemId: number]: DbRow
+    [itemId: string]: DbRow
 }
 let dbDataCache: ItemDBdata;
 
 /**
  * Get item DB data.
  */
-export async function getItemDbData(): Promise<ItemDBdata>
+export function getItemDbData()
 {
-    if (dbDataCache) return Promise.resolve(dbDataCache);
+    if (dbDataCache) return dbDataCache;
 
-    return new Promise(resolve =>
+    const sparse = readDBCSV<DBCItemSparse>(cfg.dataDir + "dbc/ItemSparse.csv", "ID");
+    const item = readDBCSV<DBCItem>(cfg.dataDir + "dbc/Item.csv", "ID");
+
+    dbDataCache = {};
+
+    for (const id in item)
     {
-        const dbcache: ItemDBdata = {};
-        const conn = createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: PDB_NAME
-        });
-        conn.query(DB_QUERY, (error: any, results: DbRow[]) =>
+        if (!sparse[id])
         {
-            if (error) throw error;
-            for (const row of results)
-            {
-                dbcache[row.entry!] = row;
-            }
-            dbDataCache = dbcache;
-            resolve(dbDataCache);
-            conn.end();
-        });
-    });
+            console.log("No item sparse for item " + id);
+            continue;
+        }
+
+        dbDataCache[id] = {
+            entry: item[id].ID,
+            class: item[id].ClassID,
+            subclass: item[id].SubclassID,
+            AllowableClass: sparse[id].AllowableClass,
+            name: sparse[id].Display_lang
+        }
+    }
+
+    return dbDataCache;
 }
 
 /**
@@ -79,7 +101,7 @@ export async function getItemDbData(): Promise<ItemDBdata>
  */
 export async function orderItemsByClass<T>(itemMap: Map<number, T>)
 {
-    const dbData = await getItemDbData();
+    const dbData = getItemDbData();
 
     const ordered = {
         warrior: new Map<number, T>(),

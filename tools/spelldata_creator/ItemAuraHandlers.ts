@@ -65,6 +65,8 @@ export const USELESS_AURAS = {
     [AURA_TYPE.SPELL_AURA_MOD_POWER_COST_SCHOOL]: true,
     [AURA_TYPE.SPELL_AURA_FAKE_INEBRIATE]: true,
     [AURA_TYPE.SPELL_AURA_MOD_INVISIBILITY]: true,
+    [AURA_TYPE.MOD_DAMAGE_PERCENT_TAKEN]: true,
+    [AURA_TYPE.MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE]: true,
 }
 export class AuraHandlers
 {
@@ -322,6 +324,7 @@ export class AuraHandlers
                             case 64959: // Increases weapon damage when you use Stormstrike by $s1.
                             case 64962: // Increases the damage done by your Death Coil ability by $s2 and by your Frost Strike ability by $s3.
                             case 64961: // Increases the base damage of your Lava Burst by $s1
+                            case 28852: // Increases the melee attack power bonus of your Seal of the Crusader by $s1 and the Holy damage increase of your Judgement of the Crusader by $s2.
                                 return {
                                     type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
                                     affectSpell: this.getAffectSpell(effect),
@@ -366,6 +369,7 @@ export class AuraHandlers
                             case 57927: // You have an additional $57927s1% chance to reflect Frost spells while your Frost Ward is active.
                             case 55444: // Damage on your Lava Lash is increased by an additional $55444s1% if your weapon is enchanted with Flametongue
                             case 62132: // "IncreasesthemanayoureceivefromyourThunderstormspellby$62132s1%,butitnolongerknocksenemiesback."
+                            case 22801: // Increases the speed of your Ghost Wolf ability by $s1%
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT2: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -595,7 +599,7 @@ export class AuraHandlers
                         value: effect.EffectBasePoints + 1,
                     } */
                     // They have both sp and flat value and only use flat value, tooltip is fake news.
-                    return; 
+                    return;
                 case 37288: // Your helpful spells have a chance to restore up to 120 mana.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_MANARESTORE,
@@ -765,6 +769,10 @@ export class AuraHandlers
                 case 61980:
                 case 73077:
                 case 57818:
+                case 422746:
+                case 425887:
+                case 425887:
+                case 429339:
                     return;
                 default:
                     throw "SPELL_AURA_DUMMY spell not handled! " + effect.SpellID;
@@ -894,6 +902,15 @@ export class AuraHandlers
             }
         }
 
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_DONE_CREATURE] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_DAMAGE,
+                affectMask: effect["EffectMiscValue_0"],
+                value: effect.EffectBasePoints + 1,
+            }
+        }
+
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_MELEE_ATTACK_POWER_VERSUS] = effect =>
         {
             return {
@@ -930,7 +947,8 @@ export class AuraHandlers
             }
         }
 
-        this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_PERCENT_DONE] = effect => {
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_PERCENT_DONE] = effect =>
+        {
             return {
                 type: ADDON_EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],

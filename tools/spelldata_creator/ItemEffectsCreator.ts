@@ -5,7 +5,7 @@ import { readDBCSVtoMap } from "./CSVReader";
 import { AuraHandlers, USELESS_AURAS } from "./ItemAuraHandlers";
 import { createEffectLua, createFileHead, getItemDbData, orderItemsByClass } from "./itemFunctions";
 import { SpellData } from "./SpellData";
-import { readFileSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 
 const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
     [AURA_TYPE.SPELL_AURA_PERIODIC_DAMAGE_PERCENT]: true,
@@ -16,6 +16,10 @@ const AURA_TYPES_TO_IGNORE: { [index: number]: true | undefined } = {
     [AURA_TYPE.SPELL_AURA_PERIODIC_TRIGGER_SPELL]: true,
     [AURA_TYPE.SPELL_AURA_PERIODIC_HEAL]: true,
     [AURA_TYPE.SPELL_AURA_PROC_TRIGGER_SPELL]: true,
+    [AURA_TYPE.SPELL_AURA_SCHOOL_ABSORB]: true,
+    [AURA_TYPE.OVERRIDE_ACTIONBAR_SPELLS]: true,
+    [AURA_TYPE.PERIODIC_DUMMY]: true,
+    [AURA_TYPE.MOD_ENVIRONMENTAL_DAMAGE_TAKEN]: true,
 }
 Object.assign(AURA_TYPES_TO_IGNORE, USELESS_AURAS);
 
@@ -72,8 +76,16 @@ export class ItemEffectsCreator
                 || spellId === 28282 || spellId === 24346 || spellId === 50009 || spellId === 48777 || spellId === 62106) continue;
             if (spellEffect.Effect !== EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) 
             {
-                if (spellId === 60837 || spellId === 54809 || spellId === 62107) continue;
-                throw "Item bonus effect doesn't apply an aura?!" + spellId;
+                switch(spellId)
+                {
+                    case 4977: // Random questitem
+                    case 60837:
+                    case 54809:
+                    case 62107:
+                        continue;
+                    default:
+                        throw "Item bonus effect doesn't apply an aura?!" + spellId;
+                }
             }
             if (AURA_TYPES_TO_IGNORE[spellEffect.EffectAura]) continue;
             if (!this.auraHandlers.handlers[spellEffect.EffectAura]) throw "Aura type isn't ignore but also not handled!";
@@ -81,7 +93,7 @@ export class ItemEffectsCreator
             {
                 const aed = this.auraHandlers.handlers[spellEffect.EffectAura](spellEffect);
                 if (aed) aedarr.push(aed);
-            } 
+            }
             catch (error)
             {
                 // Do nothing
@@ -93,61 +105,63 @@ export class ItemEffectsCreator
 
     private getItemEffectData(dbData: { [itemId: number]: DbRow })
     {
+        const cacheFile = "cache/itemEffDoneCache_" + cfg.expansion + ".json";
         const itemEffects = readDBCSVtoMap<ItemEffect>(cfg.dataDir + "dbc/itemeffect.csv", "ID");
         const filteredItems = new Map<number, AddonEffectData[]>();
-        let doneEffectIds: { [id: number]: true | { item: number, effs: AddonEffectData[] } };
+        let doneEffectIds: { [id: number]: true | AddonEffectData[] };
+        let counter = 0;
+
         try
         {
-            console.log("Load done item effect cache...");
-            doneEffectIds = JSON.parse(readFileSync("cache/itemEffDoneCache_" + cfg.expansion + ".json", "utf-8"));
-            for (const id in doneEffectIds)
+            if (existsSync(cacheFile))
             {
-                const effEntry = doneEffectIds[id];
-                if (effEntry === true) continue;
-                if (!filteredItems.has(effEntry.item)) filteredItems.set(effEntry.item, []);
-                const flistentry = filteredItems.get(effEntry.item)!;
-                for (const eff of effEntry.effs)
-                {
-                    flistentry.push(eff);
-                }
+                console.log("Load item effect cache...");
+                doneEffectIds = JSON.parse(readFileSync(cacheFile, "utf-8"));
             }
-        } catch (error)
+            else
+            {
+                doneEffectIds = {};
+            }
+        }
+        catch (error)
         {
             console.log(error);
-            console.log("Can't load done item effect cache.");
-            doneEffectIds = {};
+            process.exit(1);
         }
-        let done = 0;
+
+        console.log("Building item effect data...");
 
         for (const ie of itemEffects.values())
         {
-            if (++done % 20 === 0) console.log("Doing item " + done + " of " + itemEffects.size);
-
-            if (doneEffectIds[ie.ID]) continue;
-            doneEffectIds[ie.ID] = true;
-
-            if (done % 100 === 0)
+            const fromCache = doneEffectIds[ie.ID];
+            let effects: AddonEffectData[];
+            counter++;
+            
+            if (!fromCache)
             {
+                console.log(`${counter}/${itemEffects.size} ${dbData[ie.ParentItemID] ? dbData[ie.ParentItemID].name : ie.ParentItemID}`);
+                doneEffectIds[ie.ID] = true;
+                if (ie.TriggerType !== 1) continue; // 1 == on equip auras, we can ignore the rest
+                // Items not in the DB shouldn't matter
+                if (!dbData[ie.ParentItemID]) continue;
+                effects = this.processSpell(ie.SpellID);
+                if (effects.length === 0) continue;
+                doneEffectIds[ie.ID] = effects;
                 writeFileSync("cache/itemEffDoneCache_" + cfg.expansion + ".json", JSON.stringify(doneEffectIds, null, 4));
             }
-
-            if (ie.TriggerType !== 1) continue; // 1 == on equip auras, we can ignore the rest
-
-            // Items not in the DB shouldn't matter
-            if (!dbData[ie.ParentItemID]) continue;
-
-            const addonSpellEffect = this.processSpell(ie.SpellID);
-            if (addonSpellEffect.length === 0) continue;
+            else
+            {
+                console.log(`${counter}/${itemEffects.size} ${dbData[ie.ParentItemID] ? dbData[ie.ParentItemID].name : ie.ParentItemID} (cached)`);
+                if (fromCache === true) continue;
+                effects = fromCache;
+            }
 
             if (!filteredItems.has(ie.ParentItemID)) filteredItems.set(ie.ParentItemID, []);
             const flistentry = filteredItems.get(ie.ParentItemID)!;
-
-            for (const eff of addonSpellEffect)
+            for (const eff of effects)
             {
                 flistentry.push(eff);
             }
-
-            doneEffectIds[ie.ID] = { item: ie.ParentItemID, effs: addonSpellEffect };
         }
 
         return filteredItems;
@@ -157,7 +171,7 @@ export class ItemEffectsCreator
     {
         console.log("Creating Lua for  item effect data...");
 
-        const dbData = await getItemDbData();
+        const dbData = getItemDbData();
         const itemEffectData = this.getItemEffectData(dbData);
 
         const luaStrings = {

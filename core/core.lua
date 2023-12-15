@@ -606,6 +606,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
         calcedSpell:AddToBuffList(stats.spellModFlatValue[spellId].buffs);
     end
 
+    if stats.versusModFlatDamage[_addon.Target.creatureType] then
+        flatMod = flatMod + stats.versusModFlatDamage[_addon.Target.creatureType].val;
+        calcedSpell:AddToBuffList(stats.versusModFlatDamage[_addon.Target.creatureType].buffs);
+    end
+
     local extraSp = 0;
     if stats.spellModFlatSpellpower[spellId] ~= nil then
         extraSp = stats.spellModFlatSpellpower[spellId].val;

@@ -407,3 +407,4 @@ AddVersusTypeTableUniform(stats.versusModFlatAttackpower, "Creature Type Flat AP
 AddVersusTypeTableUniform(stats.versusModFlatAttackpowerRanged, "Creature Type Flat AP ranged", "");
 AddVersusTypeTableUniform(stats.versusModPctDamage, "Creature Type Mult", "%");
 AddVersusTypeTableUniform(stats.versusModPctCritDamage, "Creature Type Crit Mult", "%");
+AddVersusTypeTableUniform(stats.versusModFlatDamage, "Creature type flat damage", "");

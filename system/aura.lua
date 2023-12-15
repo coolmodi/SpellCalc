@@ -187,6 +187,7 @@ local effectAffectMask = {
     [EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER] = stats.versusModFlatSpellpower,
     [EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER] = stats.versusModFlatAttackpower,
     [EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED] = stats.versusModFlatAttackpowerRanged,
+    [EFFECT_TYPE.VERSUSMOD_FLAT_DAMAGE] = stats.versusModFlatDamage,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT] = stats.targetSchoolModDamageTaken,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT] = stats.targetSchoolModResistancePct,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT] = stats.targetSchoolModCritTaken,
