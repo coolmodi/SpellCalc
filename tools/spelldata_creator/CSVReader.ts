@@ -52,7 +52,7 @@ function parseField(fieldStr: string)
         if (!isNaN(f)) return f;
     }
 
-    if (!fieldStr.match(/\D/))
+    if (fieldStr.match(/^-?\d+$/))
     {
         const i = parseInt(fieldStr);
         if (!isNaN(i)) return i;

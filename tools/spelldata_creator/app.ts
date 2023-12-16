@@ -12,7 +12,7 @@ import { TalentsCreator } from "./modules/TalentCreator";
 import { AuraHandlers } from "./ItemAuraHandlers";
 import { isPlayerClass } from "./helper";
 import { SpellLevelScaling } from "./modules/SpellLevelScaling";
-import { applyHotfixes } from "./modules/HotFix";
+import { applyHotfixes } from "./modules/hotFix";
 
 const DO_CLASSES: PlayerClass[] = [
     PlayerClass.DRUID,

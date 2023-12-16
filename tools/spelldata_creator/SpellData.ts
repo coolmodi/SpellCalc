@@ -6,7 +6,8 @@ import { cfg } from "./config";
 
 const AUTO_ATTACK_ID = 6603;
 
-export interface SpellLevel {
+export interface SpellLevel
+{
     ID: number,
     DifficultyID: number,
     BaseLevel: number,
@@ -16,7 +17,8 @@ export interface SpellLevel {
     SpellID: number
 }
 
-export interface SpellEffect {
+export interface SpellEffect
+{
     ID: number,
     DifficultyID: number,
     EffectIndex: number,
@@ -55,7 +57,8 @@ export interface SpellEffect {
     SpellID: number
 }
 
-export interface SpellClassOptions {
+export interface SpellClassOptions
+{
     ID: number,
     SpellID: number,
     ModalNextSpell: number,
@@ -66,7 +69,8 @@ export interface SpellClassOptions {
     SpellClassMask_3: number,
 }
 
-export interface SpellMisc {
+export interface SpellMisc
+{
     ID: number,
     DifficultyID: number,
     CastingTimeIndex: number,
@@ -95,32 +99,37 @@ export interface SpellMisc {
     SpellID: number
 }
 
-export interface SpellCategory {
+export interface SpellCategory
+{
     DefenseType: DEFENSE_TYPE,
     DifficultyID: number,
     Mechanic: number,
 }
 
-export interface SpellName {
+export interface SpellName
+{
     ID: number
     Name_lang: string
 }
 
-export interface Spell {
+export interface Spell
+{
     ID: number,
     NameSubtext_lang: string,
     Description_lang: string,
     AuraDescription_lang: string
 }
 
-export interface SpellDuration {
+export interface SpellDuration
+{
     ID: number,
     Duration: number,
     DurationPerLevel: number,
     MaxDuration: number
 }
 
-export interface SpellCooldown {
+export interface SpellCooldown
+{
     DifficultyID: number,
     CategoryRecoveryTime: number,
     RecoveryTime: number,
@@ -128,7 +137,8 @@ export interface SpellCooldown {
     SpellID: number
 }
 
-export interface SpellPower {
+export interface SpellPower
+{
     ID: number,
     ManaCost: number,
     ManaCostPerLevel: number,
@@ -140,7 +150,8 @@ export interface SpellPower {
     SpellID: number
 }
 
-export interface SpellEquippedItems {
+export interface SpellEquippedItems
+{
     ID: number,
     SpellID: number,
     EquippedItemClass: ItemClass,
@@ -148,7 +159,8 @@ export interface SpellEquippedItems {
     EquippedItemSubclass: number
 }
 
-export interface SpellAuraOptions {
+export interface SpellAuraOptions
+{
     ID: number,
     DifficultyID: number,
     CumulativeAura: number,
@@ -161,105 +173,117 @@ export interface SpellAuraOptions {
     SpellID: number,
 }
 
-export class SpellData {
-    readonly spellEffects: {[index: number]: SpellEffect};
-    private spellLevels: {[index: number]: SpellLevel};
-    private spellMiscs: {[index: number]: SpellMisc};
-    private spellNames: {[index: number]: SpellName};
-    private spell: {[index: number]: Spell};
-    private spellDuration: {[index: number]: SpellDuration};
-    private totemSpells: {[index: number]: number};
-    readonly spellCategories: {[index: number]: SpellCategory};
-    private spellCooldowns: {[index: number]: SpellCooldown};
-    private spellPowerCost: {[index: number]: SpellPower};
-    readonly spellClassOptions: {[index: number]: SpellClassOptions};
-    private spellEquippedItems: {[index: number]: SpellEquippedItems};
-    private spellAuraOptions: {[index: number]: SpellAuraOptions};
+export class SpellData
+{
+    //private readonly spellEffects: { [index: number]: SpellEffect };
+    readonly spellEffectsBySpellId = new Map<number, SpellEffect[]>();
+    private readonly spellsByName: { [spellName: string]: number[] } = {};
+    private readonly spellLevels: { [index: number]: SpellLevel };
+    private readonly spellMiscs: { [index: number]: SpellMisc };
+    private readonly spellNames: { [index: number]: SpellName };
+    private readonly spell: { [index: number]: Spell };
+    private readonly spellDuration: { [index: number]: SpellDuration };
+    private readonly totemSpells: { [index: number]: number };
+    readonly spellCategories: { [index: number]: SpellCategory };
+    private readonly spellCooldowns: { [index: number]: SpellCooldown };
+    private readonly spellPowerCost: { [index: number]: SpellPower };
+    readonly spellClassOptions: { [index: number]: SpellClassOptions };
+    private readonly spellEquippedItems: { [index: number]: SpellEquippedItems };
+    private readonly spellAuraOptions: { [index: number]: SpellAuraOptions };
 
-    constructor() {
+    constructor()
+    {
         console.log("Creating SpellData");
-        
-        let baseDir = cfg.dataDir;
+
+        const baseDir = cfg.dataDir;
 
         this.spellNames = readDBCSV<SpellName>(baseDir + "dbc/spellname.csv", "ID");
         this.spell = readDBCSV<Spell>(baseDir + "dbc/spell.csv", "ID");
         this.spellDuration = readDBCSV<SpellDuration>(baseDir + "dbc/spellduration.csv", "ID");
-        this.spellCategories = readDBCSV<SpellCategory>(baseDir + "dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-        this.spellCooldowns = readDBCSV<SpellCooldown>(baseDir + "dbc/spellcooldowns.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+        this.spellCategories = readDBCSV<SpellCategory>(baseDir + "dbc/spellcategories.csv", "SpellID", [{ key: "DifficultyID", is: 0 }]);
+        this.spellCooldowns = readDBCSV<SpellCooldown>(baseDir + "dbc/spellcooldowns.csv", "SpellID", [{ key: "DifficultyID", is: 0 }]);
         this.spellPowerCost = readDBCSV<SpellPower>(baseDir + "dbc/spellpower.csv", "ID");
         this.spellClassOptions = readDBCSV<SpellClassOptions>(baseDir + "dbc/spellclassoptions.csv", "SpellID");
         this.spellEquippedItems = readDBCSV<SpellEquippedItems>(baseDir + "dbc/spellequippeditems.csv", "SpellID");
-        this.spellAuraOptions = readDBCSV<SpellAuraOptions>(baseDir + "dbc/spellauraoptions.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+        this.spellAuraOptions = readDBCSV<SpellAuraOptions>(baseDir + "dbc/spellauraoptions.csv", "SpellID", [{ key: "DifficultyID", is: 0 }]);
         this.totemSpells = JSON.parse(fs.readFileSync(baseDir + "totemSpells.json", "utf8"));
+        this.spellCategories = readDBCSV<SpellCategory>(baseDir + "dbc/spellcategories.csv", "SpellID", [{ key: "DifficultyID", is: 0 }]);
+        this.spellMiscs = readDBCSV<SpellMisc>(baseDir + "dbc/spellmisc.csv", "SpellID", [{ key: "DifficultyID", is: 0 }]);
+        this.spellLevels = readDBCSV<SpellLevel>(baseDir + "dbc/spelllevels.csv", "SpellID", [{ key: "DifficultyID", is: 0 }]);
 
-        try {
-            const cacheData = JSON.parse(fs.readFileSync("cache/spellDataCache_" + cfg.expansion + ".json", "utf8"));
-            this.spellEffects = cacheData.se;
-            this.spellCategories = cacheData.sc;
-            this.spellMiscs = cacheData.sm;
-            this.spellLevels = cacheData.sl;
-        } catch (error) {
-            this.spellEffects = readDBCSV<SpellEffect>(baseDir + "dbc/spelleffect.csv", "ID");
-            this.spellCategories = readDBCSV<SpellCategory>(baseDir + "dbc/spellcategories.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-            this.spellMiscs = readDBCSV<SpellMisc>(baseDir + "dbc/spellmisc.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
-            this.spellLevels = readDBCSV<SpellLevel>(baseDir + "dbc/spelllevels.csv", "SpellID", [{key: "DifficultyID", is: 0}]);
+        {
+            const spellEffects = readDBCSV<SpellEffect>(baseDir + "dbc/spelleffect.csv", "ID");
+            for (let effectId in spellEffects)
+            {
+                const spellId = spellEffects[effectId].SpellID;
+                if (!this.spellEffectsBySpellId.has(spellId)) this.spellEffectsBySpellId.set(spellId, []);
+                this.spellEffectsBySpellId.get(spellId)!.push(spellEffects[effectId]);
+            }
+        }
+
+        for (const [spellId, effects] of this.spellEffectsBySpellId)
+        {
+            // Build name list
+            const name = this.getSpellName(spellId).Name_lang;
+            if (!this.spellsByName[name]) this.spellsByName[name] = [];
+            this.spellsByName[name].push(spellId); 
 
             // make sure direct dmg is always the 1st effect on spells that also have a duration effect
-            for (let eff1 in this.spellEffects) {
-                if (isSeal(this.spellEffects[eff1].SpellID) 
-                    || this.spellEffects[eff1].EffectIndex != 1 
-                    || this.spellEffects[eff1].Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
-                console.log("Effindex is 1 and SPELL_EFFECT_SCHOOL_DAMAGE on spell " + this.spellEffects[eff1].SpellID);
+            if (isSeal(spellId)) continue;
 
-                for (let eff2 in this.spellEffects) {
-                    if (this.spellEffects[eff1].SpellID != this.spellEffects[eff2].SpellID
-                        || this.spellEffects[eff2].EffectIndex != 0
-                        || this.spellEffects[eff2].Effect != EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) continue;
-                    console.log("Effindex is 0 and SPELL_EFFECT_APPLY_AURA on spell " + this.spellEffects[eff2].SpellID);
-                    this.spellEffects[eff1].EffectIndex = 0;
-                    this.spellEffects[eff2].EffectIndex = 1;
+            for (const effect1 of effects)
+            {
+                if (effect1.EffectIndex != 1 || effect1.Effect != EFFECT_TYPE.SPELL_EFFECT_SCHOOL_DAMAGE) continue;
+
+                console.log("Effindex is 1 and SPELL_EFFECT_SCHOOL_DAMAGE on spell " + spellId);
+                for (const effect2 of effects)
+                {
+                    if (effect2.EffectIndex != 0 || effect2.Effect != EFFECT_TYPE.SPELL_EFFECT_APPLY_AURA) continue;
+                    console.log("Effindex is 0 and SPELL_EFFECT_APPLY_AURA on spell " + spellId);
+                    effect1.EffectIndex = 0;
+                    effect2.EffectIndex = 1;
                     break;
                 }
             }
-
-            fs.writeFileSync("cache/spellDataCache_" + cfg.expansion + ".json", JSON.stringify({
-                se: this.spellEffects,
-                sc: this.spellCategories,
-                sm: this.spellMiscs,
-                sl: this.spellLevels
-            }, null, 4));
         }
 
-        fixSpellEffects(this.spellEffects, this.spellCategories, this.spellMiscs, this.spellLevels, this.spellNames, this);
+        for (const effects of this.spellEffectsBySpellId.values())
+        {
+            effects.sort((a, b) => a.EffectIndex - b.EffectIndex);
+        }
+
+        fixSpellEffects(this);
+
         console.log("SpellData created!");
     }
 
-    getSpellEffects(spellId: number): SpellEffect[] 
-    getSpellEffects(spellId: number, noerr: true): SpellEffect[] | undefined
-    getSpellEffects(spellId: number, noerr = false) {
-        let effects = [];
-        for (let effect in this.spellEffects) {
-            if (this.spellEffects[effect].SpellID == spellId) 
-                effects.push(this.spellEffects[effect]);
-        }
+    getSpellsByName(spellName: string)
+    {
+        if (!this.spellsByName[spellName]) throw new Error("No spells with name " + spellName + " exist!");
+        return this.spellsByName[spellName];
+    }
 
-        if (effects.length == 0) {
+    getSpellEffects(spellId: number): SpellEffect[]
+    getSpellEffects(spellId: number, noerr: true): SpellEffect[] | undefined
+    getSpellEffects(spellId: number, noerr = false)
+    {
+        const effects = this.spellEffectsBySpellId.get(spellId);
+        if (!effects)
+        {
             if (noerr) return;
             throw new Error("Spell effect(s) not found for " + spellId);
         }
-
-        effects.sort((a, b) => {
-            return a.EffectIndex - b.EffectIndex;
-        });
         return effects;
     }
 
-    getSpellLevel(spellId: number) {
+    getSpellLevel(spellId: number)
+    {
         if (this.spellLevels[spellId]) return this.spellLevels[spellId];
 
-        if (spellId == AUTO_ATTACK_ID 
-            || spellId == 23590 
-            || spellId == 58381 /** Mind Flay */) {
+        if (spellId == AUTO_ATTACK_ID
+            || spellId == 23590
+            || spellId == 58381 /** Mind Flay */)
+        {
             return {
                 ID: 0,
                 DifficultyID: 0,
@@ -274,24 +298,33 @@ export class SpellData {
         throw new Error("Spelllevel not found for " + spellId);
     }
 
-    getSpellMisc(spellId: number) {
+    getSpellMisc(spellId: number)
+    {
         if (this.spellMiscs[spellId]) return this.spellMiscs[spellId];
         throw new Error("Spellmisc not found for " + spellId);
     }
 
-    getSpellName(spellId: number) {
+    getSpellName(spellId: number): SpellName
+    getSpellName(spellId: number, noerr: true): SpellName | undefined
+    getSpellName(spellId: number, noErr = false)
+    {
         if (this.spellNames[spellId]) return this.spellNames[spellId];
+        if (noErr) return;
         throw new Error("Spellname not found for " + spellId);
     }
 
-    getSpell(spellId: number) {
+    getSpell(spellId: number)
+    {
         if (this.spell[spellId]) return this.spell[spellId];
         throw new Error("Spellspell not found for " + spellId);
     }
 
-    getSpellDuration(durationId: number) {
-        if (this.spellDuration[durationId]) {
-            if (this.spellDuration[durationId].DurationPerLevel != 0) {
+    getSpellDuration(durationId: number)
+    {
+        if (this.spellDuration[durationId])
+        {
+            if (this.spellDuration[durationId].DurationPerLevel != 0)
+            {
                 throw new Error("Spellduration scales with level, not handled! " + durationId);
             }
             return this.spellDuration[durationId];
@@ -299,14 +332,17 @@ export class SpellData {
         throw new Error("Spellduration not found " + durationId);
     }
 
-    getTotemSpell(totemId: number): number | undefined {
+    getTotemSpell(totemId: number): number | undefined
+    {
         return this.totemSpells[totemId];
     }
 
-    getSpellCategory(spellId: number) {
+    getSpellCategory(spellId: number)
+    {
         if (this.spellCategories[spellId]) return this.spellCategories[spellId];
 
-        if (spellId == AUTO_ATTACK_ID) {
+        if (spellId == AUTO_ATTACK_ID)
+        {
             let sc: SpellCategory = {
                 DefenseType: DEFENSE_TYPE.MELEE,
                 DifficultyID: 0,
@@ -315,7 +351,8 @@ export class SpellData {
             return sc;
         }
 
-        if (spellId == 23590 ||spellId == 20168 || this.getSpellName(spellId).Name_lang == "Healing Stream Totem") {
+        if (spellId == 23590 || spellId == 20168 || this.getSpellName(spellId).Name_lang == "Healing Stream Totem")
+        {
             let sc: SpellCategory = {
                 DefenseType: DEFENSE_TYPE.NONE,
                 DifficultyID: 0,
@@ -328,7 +365,8 @@ export class SpellData {
         return;
     }
 
-    getSpellCooldown(spellId: number) {
+    getSpellCooldown(spellId: number)
+    {
         if (this.spellCooldowns[spellId]) return this.spellCooldowns[spellId];
 
         let sc: SpellCooldown = {
@@ -341,32 +379,38 @@ export class SpellData {
         return sc;
     }
 
-    getSpellPowerCosts(spellId: number) {
+    getSpellPowerCosts(spellId: number)
+    {
         let costs: SpellPower[] = [];
 
-        for (let costId in this.spellPowerCost) {
-            if (this.spellPowerCost[costId].SpellID == spellId) 
-            costs.push(this.spellPowerCost[costId]);
+        for (let costId in this.spellPowerCost)
+        {
+            if (this.spellPowerCost[costId].SpellID == spellId)
+                costs.push(this.spellPowerCost[costId]);
         }
 
         return costs;
     }
 
-    getSpellClassOption(spellId: number): SpellClassOptions 
+    getSpellClassOption(spellId: number): SpellClassOptions
     getSpellClassOption(spellId: number, noerr: true): SpellClassOptions | undefined
-    getSpellClassOption(spellId: number, noerr = false) {
-        for (let scoid in this.spellClassOptions) {
+    getSpellClassOption(spellId: number, noerr = false)
+    {
+        for (let scoid in this.spellClassOptions)
+        {
             if (this.spellClassOptions[scoid].SpellID == spellId) return this.spellClassOptions[scoid];
         }
         if (noerr) return;
         throw "No spell class options for spell ID!";
     }
 
-    getSpellClassOptions() {
+    getSpellClassOptions()
+    {
         return this.spellClassOptions;
     }
 
-    getSpellEquipeedItems(spellId: number): SpellEquippedItems | undefined {
+    getSpellEquipeedItems(spellId: number): SpellEquippedItems | undefined
+    {
         return this.spellEquippedItems[spellId];
     }
 

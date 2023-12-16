@@ -1,4 +1,4 @@
-import { SpellData } from "./SpellData";
+/* import { SpellData } from "./SpellData";
 import * as fs from "fs";
 
 export function test(spellData: SpellData)
@@ -310,4 +310,4 @@ var lel = [
     { ID: 18283, EffectID: 2523, Name: "Biznicks 247x128 Accurascope", Quality: proto.ItemQuality_ItemQualityRare, ItemType: proto.ItemType_ItemTypeRanged },
     { ID: 23765, EffectID: 2723, Name: "Khorium Scope", Quality: proto.ItemQuality_ItemQualityRare, ItemType: proto.ItemType_ItemTypeRanged },
     { ID: 23766, EffectID: 2724, Name: "Stabilized Eternium Scope", Quality: proto.ItemQuality_ItemQualityRare, ItemType: proto.ItemType_ItemTypeRanged },
-]
+] */

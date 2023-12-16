@@ -55,6 +55,28 @@ export function isSeal(id: number, specific?: SealType) {
 }
 
 /**
+ * Get array of seal spells for seal type or all seals.
+ * @param type 
+ * @returns 
+ */
+export function getSeals(type?: SealType)
+{
+    if (type)
+    {
+        if (!SEALDATA.seals[type]) throw new Error("No seals for this type!");
+        return SEALDATA.seals[type].spells;
+    }
+    
+    const seals: number[] = [];
+    for (const sealType in SEALDATA.seals)
+    {
+        const thisSeals = SEALDATA.seals[sealType as SealType].spells;
+        seals.push(...thisSeals);
+    }
+    return seals;
+}
+
+/**
  * Is effect a judgement dummy
  * @param eff 
  * @param seal 

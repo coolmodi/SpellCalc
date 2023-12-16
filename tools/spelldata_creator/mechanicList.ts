@@ -18,13 +18,15 @@ function getMechanicSpellList(s: SpellData, m: SpellMechanic)
     }
 
     // Get all spells with mechanic on effect level
-    for (const effId in s.spellEffects)
+    for (const effects of s.spellEffectsBySpellId.values())
     {
-        const eff = s.spellEffects[effId];
-        if (list.has(eff.SpellID)) continue;
-        if (eff.EffectMechanic == m)
+        for (const effect of effects)
         {
-            list.set(eff.SpellID, [eff]);
+            if (list.has(effect.SpellID)) continue;
+            if (effect.EffectMechanic == m)
+            {
+                list.set(effect.SpellID, [effect]);
+            }
         }
     }
 
