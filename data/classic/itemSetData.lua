@@ -5,8 +5,28 @@ local _addon = select(2, ...);
 
 ---@type ItemSetDataTable
 _addon.itemSetData = {
+    [121] = {
+        name = "Cadaverous Garb",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 2,
+                need = 5,
+            },
+        }
+    },
+    [143] = {
+        name = "Devilsaur Armor",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 2,
+                need = 2,
+            },
+        }
+    },
     [163] = {
-        name = "ChainoftheScarletCrusade",
+        name = "Chain of the Scarlet Crusade",
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
@@ -20,11 +40,51 @@ _addon.itemSetData = {
                 value = 1,
                 need = 5,
             },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 6,
+            },
+        }
+    },
+    [443] = {
+        name = "Bloodsoul Embrace",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+                value = 12,
+                need = 3,
+            },
+        }
+    },
+    [462] = {
+        name = "Zanzil's Concentration",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value = 1,
+                need = 2,
+            },
+        }
+    },
+    [489] = {
+        name = "Black Dragon Mail",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 2,
+            },
         }
     },
     [490] = {
-        name = "GreenDragonMail",
+        name = "Green Dragon Mail",
         effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+                value = 3,
+                need = 2,
+            },
             {
                 type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
                 value = 15,
@@ -33,7 +93,7 @@ _addon.itemSetData = {
         }
     },
     [521] = {
-        name = "DreamwalkerRaiment",
+        name = "Dreamwalker Raiment",
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.ILLUMINATION,
@@ -43,7 +103,7 @@ _addon.itemSetData = {
         }
     },
     [529] = {
-        name = "PlagueheartRaiment",
+        name = "Plagueheart Raiment",
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
@@ -54,7 +114,7 @@ _addon.itemSetData = {
         }
     },
     [533] = {
-        name = "BattlegearofUndeadSlaying",
+        name = "Battlegear of Undead Slaying",
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
@@ -65,7 +125,7 @@ _addon.itemSetData = {
         }
     },
     [534] = {
-        name = "UndeadSlayer'sArmor",
+        name = "Undead Slayer's Armor",
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
@@ -76,7 +136,7 @@ _addon.itemSetData = {
         }
     },
     [535] = {
-        name = "GarboftheUndeadSlayer",
+        name = "Garb of the Undead Slayer",
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
@@ -87,7 +147,7 @@ _addon.itemSetData = {
         }
     },
     [536] = {
-        name = "RegaliaofUndeadCleansing",
+        name = "Regalia of Undead Cleansing",
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
@@ -97,16 +157,94 @@ _addon.itemSetData = {
             },
         }
     },
+    [1570] = {
+        name = "Twilight Invoker's Vestments",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 3,
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value = 1,
+                need = 3,
+            },
+        }
+    },
+    [1577] = {
+        name = "Blackfathom Avenger's Mail",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 3,
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value = 1,
+                need = 3,
+            },
+        }
+    },
+    [1578] = {
+        name = "Blackfathom Slayer's Leather",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 3,
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value = 1,
+                need = 3,
+            },
+        }
+    },
+    [1579] = {
+        name = "Blackfathom Elementalist's Hide",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 3,
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value = 1,
+                need = 3,
+            },
+        }
+    },
 }
 
 ---@type SetItemDataTable
 _addon.setItemData = {
+    [14637] = 121,
+    [14636] = 121,
+    [14640] = 121,
+    [14638] = 121,
+    [14641] = 121,
+    [15062] = 143,
+    [15063] = 143,
     [10329] = 163,
     [10332] = 163,
     [10328] = 163,
     [10331] = 163,
     [10330] = 163,
     [10333] = 163,
+    [19690] = 443,
+    [19691] = 443,
+    [19692] = 443,
+    [19893] = 462,
+    [19905] = 462,
+    [19893] = 462,
+    [19905] = 462,
+    [16984] = 489,
+    [15050] = 489,
+    [15052] = 489,
+    [15051] = 489,
     [15045] = 490,
     [15046] = 490,
     [20296] = 490,
@@ -140,4 +278,16 @@ _addon.setItemData = {
     [23091] = 536,
     [23084] = 536,
     [23085] = 536,
+    [209683] = 1570,
+    [209671] = 1570,
+    [209669] = 1570,
+    [211506] = 1577,
+    [211504] = 1577,
+    [211505] = 1577,
+    [211510] = 1578,
+    [211511] = 1578,
+    [211512] = 1578,
+    [211507] = 1579,
+    [211508] = 1579,
+    [211509] = 1579,
 }

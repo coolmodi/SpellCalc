@@ -78,7 +78,7 @@ _addon.talentDataRaw = {
         }
     },
     -----------------------------
-    -- FeralCombat
+    -- Feral Combat
     -----------------------------
     { -- Feral Aggression
         tree = 2,

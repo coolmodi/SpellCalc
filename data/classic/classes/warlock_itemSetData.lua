@@ -8,7 +8,7 @@ if playerClass ~= "WARLOCK" then
 end
 
 _addon.itemSetData[345] = {
-    name = "Champion'sThreads",
+    name = "Champion's Threads",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
@@ -18,15 +18,15 @@ _addon.itemSetData[345] = {
         },
     }
 }
-_addon.setItemData[17576] = 345; -- BloodGuard'sDreadweaveBoots
-_addon.setItemData[17577] = 345; -- BloodGuard'sDreadweaveGloves
-_addon.setItemData[17572] = 345; -- Legionnaire'sDreadweaveRobe
-_addon.setItemData[17571] = 345; -- Legionnaire'sDreadweaveLeggings
-_addon.setItemData[17570] = 345; -- Champion'sDreadweaveHood
-_addon.setItemData[17573] = 345; -- Champion'sDreadweaveShoulders
+_addon.setItemData[17576] = 345; -- Blood Guard's Dreadweave Boots
+_addon.setItemData[17577] = 345; -- Blood Guard's Dreadweave Gloves
+_addon.setItemData[17572] = 345; -- Legionnaire's Dreadweave Robe
+_addon.setItemData[17571] = 345; -- Legionnaire's Dreadweave Leggings
+_addon.setItemData[17570] = 345; -- Champion's Dreadweave Hood
+_addon.setItemData[17573] = 345; -- Champion's Dreadweave Shoulders
 
 _addon.itemSetData[346] = {
-    name = "LieutenantCommander'sThreads",
+    name = "Lieutenant Commander's Threads",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
@@ -36,15 +36,15 @@ _addon.itemSetData[346] = {
         },
     }
 }
-_addon.setItemData[17562] = 346; -- Knight-Lieutenant'sDreadweaveBoots
-_addon.setItemData[17564] = 346; -- Knight-Lieutenant'sDreadweaveGloves
-_addon.setItemData[17568] = 346; -- Knight-Captain'sDreadweaveRobe
-_addon.setItemData[17567] = 346; -- Knight-Captain'sDreadweaveLeggings
-_addon.setItemData[17569] = 346; -- LieutenantCommander'sDreadweaveMantle
-_addon.setItemData[17566] = 346; -- LieutenantCommander'sHeadguard
+_addon.setItemData[17562] = 346; -- Knight-Lieutenant's Dreadweave Boots
+_addon.setItemData[17564] = 346; -- Knight-Lieutenant's Dreadweave Gloves
+_addon.setItemData[17568] = 346; -- Knight-Captain's Dreadweave Robe
+_addon.setItemData[17567] = 346; -- Knight-Captain's Dreadweave Leggings
+_addon.setItemData[17569] = 346; -- Lieutenant Commander's Dreadweave Mantle
+_addon.setItemData[17566] = 346; -- Lieutenant Commander's Headguard
 
 _addon.itemSetData[391] = {
-    name = "Warlord'sThreads",
+    name = "Warlord's Threads",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
@@ -54,15 +54,15 @@ _addon.itemSetData[391] = {
         },
     }
 }
-_addon.setItemData[17586] = 391; -- General'sDreadweaveBoots
-_addon.setItemData[17588] = 391; -- General'sDreadweaveGloves
-_addon.setItemData[17593] = 391; -- General'sDreadweavePants
-_addon.setItemData[17591] = 391; -- Warlord'sDreadweaveHood
-_addon.setItemData[17590] = 391; -- Warlord'sDreadweaveMantle
-_addon.setItemData[17592] = 391; -- Warlord'sDreadweaveRobe
+_addon.setItemData[17586] = 391; -- General's Dreadweave Boots
+_addon.setItemData[17588] = 391; -- General's Dreadweave Gloves
+_addon.setItemData[17593] = 391; -- General's Dreadweave Pants
+_addon.setItemData[17591] = 391; -- Warlord's Dreadweave Hood
+_addon.setItemData[17590] = 391; -- Warlord's Dreadweave Mantle
+_addon.setItemData[17592] = 391; -- Warlord's Dreadweave Robe
 
 _addon.itemSetData[392] = {
-    name = "FieldMarshal'sThreads",
+    name = "Field Marshal's Threads",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
@@ -72,15 +72,15 @@ _addon.itemSetData[392] = {
         },
     }
 }
-_addon.setItemData[17581] = 392; -- FieldMarshal'sDreadweaveRobe
-_addon.setItemData[17580] = 392; -- FieldMarshal'sDreadweaveShoulders
-_addon.setItemData[17583] = 392; -- Marshal'sDreadweaveBoots
-_addon.setItemData[17584] = 392; -- Marshal'sDreadweaveGloves
-_addon.setItemData[17579] = 392; -- Marshal'sDreadweaveLeggings
-_addon.setItemData[17578] = 392; -- FieldMarshal'sCoronal
+_addon.setItemData[17581] = 392; -- Field Marshal's Dreadweave Robe
+_addon.setItemData[17580] = 392; -- Field Marshal's Dreadweave Shoulders
+_addon.setItemData[17583] = 392; -- Marshal's Dreadweave Boots
+_addon.setItemData[17584] = 392; -- Marshal's Dreadweave Gloves
+_addon.setItemData[17579] = 392; -- Marshal's Dreadweave Leggings
+_addon.setItemData[17578] = 392; -- Field Marshal's Coronal
 
 _addon.itemSetData[481] = {
-    name = "Demoniac'sThreads",
+    name = "Demoniac's Threads",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
@@ -90,14 +90,14 @@ _addon.itemSetData[481] = {
         },
     }
 }
-_addon.setItemData[19605] = 481; -- Kezan'sUnstoppableTaint
-_addon.setItemData[19957] = 481; -- Hazza'rah'sCharmofDestruction
-_addon.setItemData[19848] = 481; -- ZandalarDemoniac'sWraps
-_addon.setItemData[19849] = 481; -- ZandalarDemoniac'sMantle
-_addon.setItemData[20033] = 481; -- ZandalarDemoniac'sRobe
+_addon.setItemData[19605] = 481; -- Kezan's Unstoppable Taint
+_addon.setItemData[19957] = 481; -- Hazza'rah's Charm of Destruction
+_addon.setItemData[19848] = 481; -- Zandalar Demoniac's Wraps
+_addon.setItemData[19849] = 481; -- Zandalar Demoniac's Mantle
+_addon.setItemData[20033] = 481; -- Zandalar Demoniac's Robe
 
 _addon.itemSetData[499] = {
-    name = "Doomcaller'sAttire",
+    name = "Doomcaller's Attire",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
@@ -107,14 +107,14 @@ _addon.itemSetData[499] = {
         },
     }
 }
-_addon.setItemData[21337] = 499; -- Doomcaller'sCirclet
-_addon.setItemData[21338] = 499; -- Doomcaller'sFootwraps
-_addon.setItemData[21335] = 499; -- Doomcaller'sMantle
-_addon.setItemData[21334] = 499; -- Doomcaller'sRobes
-_addon.setItemData[21336] = 499; -- Doomcaller'sTrousers
+_addon.setItemData[21337] = 499; -- Doomcaller's Circlet
+_addon.setItemData[21338] = 499; -- Doomcaller's Footwraps
+_addon.setItemData[21335] = 499; -- Doomcaller's Mantle
+_addon.setItemData[21334] = 499; -- Doomcaller's Robes
+_addon.setItemData[21336] = 499; -- Doomcaller's Trousers
 
 _addon.itemSetData[541] = {
-    name = "Champion'sDreadgear",
+    name = "Champion's Dreadgear",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
@@ -124,15 +124,15 @@ _addon.itemSetData[541] = {
         },
     }
 }
-_addon.setItemData[22865] = 541; -- BloodGuard'sDreadweaveHandwraps
-_addon.setItemData[22855] = 541; -- BloodGuard'sDreadweaveWalkers
-_addon.setItemData[23255] = 541; -- Champion'sDreadweaveCowl
-_addon.setItemData[23256] = 541; -- Champion'sDreadweaveSpaulders
-_addon.setItemData[22881] = 541; -- Legionnaire'sDreadweaveLegguards
-_addon.setItemData[22884] = 541; -- Legionnaire'sDreadweaveTunic
+_addon.setItemData[22865] = 541; -- Blood Guard's Dreadweave Handwraps
+_addon.setItemData[22855] = 541; -- Blood Guard's Dreadweave Walkers
+_addon.setItemData[23255] = 541; -- Champion's Dreadweave Cowl
+_addon.setItemData[23256] = 541; -- Champion's Dreadweave Spaulders
+_addon.setItemData[22881] = 541; -- Legionnaire's Dreadweave Legguards
+_addon.setItemData[22884] = 541; -- Legionnaire's Dreadweave Tunic
 
 _addon.itemSetData[547] = {
-    name = "LieutenantCommander'sDreadgear",
+    name = "Lieutenant Commander's Dreadgear",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
@@ -142,10 +142,10 @@ _addon.itemSetData[547] = {
         },
     }
 }
-_addon.setItemData[23296] = 547; -- Knight-Captain'sDreadweaveLegguards
-_addon.setItemData[23297] = 547; -- Knight-Captain'sDreadweaveTunic
-_addon.setItemData[23282] = 547; -- Knight-Lieutenant'sDreadweaveHandwraps
-_addon.setItemData[23283] = 547; -- Knight-Lieutenant'sDreadweaveWalkers
-_addon.setItemData[23310] = 547; -- LieutenantCommander'sDreadweaveCowl
-_addon.setItemData[23311] = 547; -- LieutenantCommander'sDreadweaveSpaulders
+_addon.setItemData[23296] = 547; -- Knight-Captain's Dreadweave Legguards
+_addon.setItemData[23297] = 547; -- Knight-Captain's Dreadweave Tunic
+_addon.setItemData[23282] = 547; -- Knight-Lieutenant's Dreadweave Handwraps
+_addon.setItemData[23283] = 547; -- Knight-Lieutenant's Dreadweave Walkers
+_addon.setItemData[23310] = 547; -- Lieutenant Commander's Dreadweave Cowl
+_addon.setItemData[23311] = 547; -- Lieutenant Commander's Dreadweave Spaulders
 

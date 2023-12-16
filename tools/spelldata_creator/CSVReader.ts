@@ -122,10 +122,7 @@ export function readDBCSV<T>(path: string, indexKey: string, filter?: { key: key
 export function readDBCSVtoMap<V extends object>(path: string, index: string): Map<number, V>
 {
     let raw = fs.readFileSync(path, "utf8");
-    raw = raw.replace(/"(.|\r|\n)*?"/g, (subs) =>
-    {
-        return subs.replace(/\s/g, "");
-    });
+    raw = raw.replace(/"(.|\r|\n)*?"/g, (subs) => subs.replace(/\r|\n/g, ""));
 
     const lines = raw.replace("\r", "").split("\n");
     const headers = lines[0].split(",");

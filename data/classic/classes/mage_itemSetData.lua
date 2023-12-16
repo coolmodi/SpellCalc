@@ -8,7 +8,7 @@ if playerClass ~= "MAGE" then
 end
 
 _addon.itemSetData[201] = {
-    name = "ArcanistRegalia",
+    name = "Arcanist Regalia",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -18,17 +18,17 @@ _addon.itemSetData[201] = {
         },
     }
 }
-_addon.setItemData[16802] = 201; -- ArcanistBelt
-_addon.setItemData[16799] = 201; -- ArcanistBindings
-_addon.setItemData[16795] = 201; -- ArcanistCrown
-_addon.setItemData[16800] = 201; -- ArcanistBoots
-_addon.setItemData[16801] = 201; -- ArcanistGloves
-_addon.setItemData[16796] = 201; -- ArcanistLeggings
-_addon.setItemData[16797] = 201; -- ArcanistMantle
-_addon.setItemData[16798] = 201; -- ArcanistRobes
+_addon.setItemData[16802] = 201; -- Arcanist Belt
+_addon.setItemData[16799] = 201; -- Arcanist Bindings
+_addon.setItemData[16795] = 201; -- Arcanist Crown
+_addon.setItemData[16800] = 201; -- Arcanist Boots
+_addon.setItemData[16801] = 201; -- Arcanist Gloves
+_addon.setItemData[16796] = 201; -- Arcanist Leggings
+_addon.setItemData[16797] = 201; -- Arcanist Mantle
+_addon.setItemData[16798] = 201; -- Arcanist Robes
 
 _addon.itemSetData[210] = {
-    name = "NetherwindRegalia",
+    name = "Netherwind Regalia",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_MAGE_NWR_PROC,
@@ -38,17 +38,17 @@ _addon.itemSetData[210] = {
         },
     }
 }
-_addon.setItemData[16818] = 210; -- NetherwindBelt
-_addon.setItemData[16918] = 210; -- NetherwindBindings
-_addon.setItemData[16912] = 210; -- NetherwindBoots
-_addon.setItemData[16914] = 210; -- NetherwindCrown
-_addon.setItemData[16917] = 210; -- NetherwindMantle
-_addon.setItemData[16913] = 210; -- NetherwindGloves
-_addon.setItemData[16915] = 210; -- NetherwindPants
-_addon.setItemData[16916] = 210; -- NetherwindRobes
+_addon.setItemData[16818] = 210; -- Netherwind Belt
+_addon.setItemData[16918] = 210; -- Netherwind Bindings
+_addon.setItemData[16912] = 210; -- Netherwind Boots
+_addon.setItemData[16914] = 210; -- Netherwind Crown
+_addon.setItemData[16917] = 210; -- Netherwind Mantle
+_addon.setItemData[16913] = 210; -- Netherwind Gloves
+_addon.setItemData[16915] = 210; -- Netherwind Pants
+_addon.setItemData[16916] = 210; -- Netherwind Robes
 
 _addon.itemSetData[504] = {
-    name = "TrappingsofVaultedSecrets",
+    name = "Trappings of Vaulted Secrets",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
@@ -58,7 +58,7 @@ _addon.itemSetData[504] = {
         },
     }
 }
-_addon.setItemData[21414] = 504; -- BandofVaultedSecrets
-_addon.setItemData[21413] = 504; -- BladeofVaultedSecrets
-_addon.setItemData[21415] = 504; -- DrapeofVaultedSecrets
+_addon.setItemData[21414] = 504; -- Band of Vaulted Secrets
+_addon.setItemData[21413] = 504; -- Blade of Vaulted Secrets
+_addon.setItemData[21415] = 504; -- Drape of Vaulted Secrets
 

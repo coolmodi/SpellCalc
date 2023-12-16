@@ -8,7 +8,7 @@ if playerClass ~= "PRIEST" then
 end
 
 _addon.itemSetData[202] = {
-    name = "VestmentsofProphecy",
+    name = "Vestments of Prophecy",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
@@ -24,17 +24,17 @@ _addon.itemSetData[202] = {
         },
     }
 }
-_addon.setItemData[16811] = 202; -- BootsofProphecy
-_addon.setItemData[16813] = 202; -- CircletofProphecy
-_addon.setItemData[16817] = 202; -- GirdleofProphecy
-_addon.setItemData[16812] = 202; -- GlovesofProphecy
-_addon.setItemData[16814] = 202; -- PantsofProphecy
-_addon.setItemData[16816] = 202; -- MantleofProphecy
-_addon.setItemData[16815] = 202; -- RobesofProphecy
-_addon.setItemData[16819] = 202; -- VambracesofProphecy
+_addon.setItemData[16811] = 202; -- Boots of Prophecy
+_addon.setItemData[16813] = 202; -- Circlet of Prophecy
+_addon.setItemData[16817] = 202; -- Girdle of Prophecy
+_addon.setItemData[16812] = 202; -- Gloves of Prophecy
+_addon.setItemData[16814] = 202; -- Pants of Prophecy
+_addon.setItemData[16816] = 202; -- Mantle of Prophecy
+_addon.setItemData[16815] = 202; -- Robes of Prophecy
+_addon.setItemData[16819] = 202; -- Vambraces of Prophecy
 
 _addon.itemSetData[211] = {
-    name = "VestmentsofTranscendence",
+    name = "Vestments of Transcendence",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.FSR_SPIRIT_REGEN,
@@ -49,17 +49,17 @@ _addon.itemSetData[211] = {
         },
     }
 }
-_addon.setItemData[16925] = 211; -- BeltofTranscendence
-_addon.setItemData[16926] = 211; -- BindingsofTranscendence
-_addon.setItemData[16919] = 211; -- BootsofTranscendence
-_addon.setItemData[16921] = 211; -- HaloofTranscendence
-_addon.setItemData[16920] = 211; -- HandguardsofTranscendence
-_addon.setItemData[16922] = 211; -- LeggingsofTranscendence
-_addon.setItemData[16924] = 211; -- PauldronsofTranscendence
-_addon.setItemData[16923] = 211; -- RobesofTranscendence
+_addon.setItemData[16925] = 211; -- Belt of Transcendence
+_addon.setItemData[16926] = 211; -- Bindings of Transcendence
+_addon.setItemData[16919] = 211; -- Boots of Transcendence
+_addon.setItemData[16921] = 211; -- Halo of Transcendence
+_addon.setItemData[16920] = 211; -- Handguards of Transcendence
+_addon.setItemData[16922] = 211; -- Leggings of Transcendence
+_addon.setItemData[16924] = 211; -- Pauldrons of Transcendence
+_addon.setItemData[16923] = 211; -- Robes of Transcendence
 
 _addon.itemSetData[507] = {
-    name = "GarmentsoftheOracle",
+    name = "Garments of the Oracle",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
@@ -69,14 +69,14 @@ _addon.itemSetData[507] = {
         },
     }
 }
-_addon.setItemData[21349] = 507; -- FootwrapsoftheOracle
-_addon.setItemData[21350] = 507; -- MantleoftheOracle
-_addon.setItemData[21348] = 507; -- TiaraoftheOracle
-_addon.setItemData[21352] = 507; -- TrousersoftheOracle
-_addon.setItemData[21351] = 507; -- VestmentsoftheOracle
+_addon.setItemData[21349] = 507; -- Footwraps of the Oracle
+_addon.setItemData[21350] = 507; -- Mantle of the Oracle
+_addon.setItemData[21348] = 507; -- Tiara of the Oracle
+_addon.setItemData[21352] = 507; -- Trousers of the Oracle
+_addon.setItemData[21351] = 507; -- Vestments of the Oracle
 
 _addon.itemSetData[508] = {
-    name = "FineryofInfiniteWisdom",
+    name = "Finery of Infinite Wisdom",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
@@ -86,7 +86,7 @@ _addon.itemSetData[508] = {
         },
     }
 }
-_addon.setItemData[21410] = 508; -- GavelofInfiniteWisdom
-_addon.setItemData[21411] = 508; -- RingofInfiniteWisdom
-_addon.setItemData[21412] = 508; -- ShroudofInfiniteWisdom
+_addon.setItemData[21410] = 508; -- Gavel of Infinite Wisdom
+_addon.setItemData[21411] = 508; -- Ring of Infinite Wisdom
+_addon.setItemData[21412] = 508; -- Shroud of Infinite Wisdom
 

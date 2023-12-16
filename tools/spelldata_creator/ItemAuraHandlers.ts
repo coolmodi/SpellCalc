@@ -1,8 +1,9 @@
 import { ClassSpellLists } from "./ClassSpellLists";
 import { ClassSpellSets } from "./ClassSpellSets";
 import { SpellData, SpellEffect } from "./SpellData";
+import { cfg } from "./config";
 
-export const USELESS_AURAS = {
+export const USELESS_AURAS: { [index: number]: boolean } = {
     [AURA_TYPE.SPELL_AURA_MOD_ATTACK_POWER]: true,
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_ATTACK_POWER]: true,
     [AURA_TYPE.SPELL_AURA_MOD_RESISTANCE]: true,
@@ -12,8 +13,6 @@ export const USELESS_AURAS = {
     [AURA_TYPE.SPELL_AURA_MOD_HEALING_DONE]: true, // spell bonus heal
     [AURA_TYPE.SPELL_AURA_MOD_INCREASE_SPEED]: true,
     [AURA_TYPE.SPELL_AURA_MOD_STAT]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE]: true, // can get from ingame API
-    [AURA_TYPE.SPELL_AURA_MOD_SPELL_HIT_CHANCE]: true, // can get from ingame API
     [AURA_TYPE.SPELL_AURA_MOD_PARRY_PERCENT]: true,
     [AURA_TYPE.SPELL_AURA_MOD_THREAT]: true,
     [AURA_TYPE.SPELL_AURA_MOD_SPELL_CRIT_CHANCE_SCHOOL]: true, // can get from ingame API
@@ -55,7 +54,6 @@ export const USELESS_AURAS = {
     [AURA_TYPE.SPELL_AURA_MOD_SPEED_FLIGHT]: true,
     [AURA_TYPE.SPELL_AURA_CHANGE_MODEL_FOR_ALL_HUMANOIDS]: true,
     [AURA_TYPE.SPELL_AURA_MOD_RANGED_HASTE]: true,
-    [AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN]: true, // As of TBC the API provides regen values including MP5
     [AURA_TYPE.SPELL_AURA_X_RAY]: true,
     [AURA_TYPE.SPELL_AURA_MOD_KILL_XP_PCT]: true,
     [AURA_TYPE.SPELL_AURA_MOD_QUEST_XP_PCT]: true,
@@ -68,6 +66,22 @@ export const USELESS_AURAS = {
     [AURA_TYPE.MOD_DAMAGE_PERCENT_TAKEN]: true,
     [AURA_TYPE.MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE]: true,
 }
+
+if (cfg.expansion != "CLASSIC")
+{
+    USELESS_AURAS[AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN] = true; // As of TBC the API provides regen values including MP5
+    USELESS_AURAS[AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE] = true; // can get from ingame API
+    USELESS_AURAS[AURA_TYPE.SPELL_AURA_MOD_SPELL_HIT_CHANCE]= true; // can get from ingame API
+}
+
+function getBaseValue(effect: SpellEffect)
+{
+    if (effect.EffectDieSides == 0) return effect.EffectBasePoints;
+    if (effect.EffectDieSides != 1) throw new Error("DieSides neither 0 nor 1!");
+    return effect.EffectBasePoints + 1;
+}
+
+
 export class AuraHandlers
 {
     private readonly spellData: SpellData;
@@ -953,6 +967,22 @@ export class AuraHandlers
                 type: ADDON_EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
+            };
+        }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value: getBaseValue(effect),
+            };
+        }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_SPELL_HIT_CHANCE] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value: getBaseValue(effect),
             };
         }
     }

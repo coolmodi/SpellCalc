@@ -424,8 +424,8 @@ local function CombatRatingUpdate()
     local spellHitBonus;
 
     if _addon.IS_CLASSIC then
-        meleeHitBonus = GetHitModifier();
-        spellHitBonus = GetSpellHitModifier();
+        meleeHitBonus = 0; -- GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
+        spellHitBonus = 0; -- GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason
     else
         meleeHitBonus = GetCombatRatingBonus(CR_HIT_MELEE) -- + GetHitModifier(); -- TODO: Only updates if weapon is equipped, not if it's removed
         spellHitBonus = GetCombatRatingBonus(CR_HIT_SPELL) -- + GetSpellHitModifier(); -- TODO: Broken? Returns stupid numbers for no reason

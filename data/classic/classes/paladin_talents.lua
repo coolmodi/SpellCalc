@@ -50,6 +50,17 @@ _addon.talentDataRaw = {
     -----------------------------
     -- Protection
     -----------------------------
+    { -- Precision
+        tree = 2,
+        tier = 2,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                perPoint = 1,
+            },
+        }
+    },
     { -- One-Handed Weapon Specialization
         tree = 2,
         tier = 6,

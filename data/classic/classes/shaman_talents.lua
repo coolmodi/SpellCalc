@@ -106,6 +106,21 @@ _addon.talentDataRaw = {
     -----------------------------
     -- Restoration
     -----------------------------
+    { -- Nature's Guidance
+        tree = 3,
+        tier = 3,
+        column = 1,
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                perPoint = 1,
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                perPoint = 1,
+            },
+        }
+    },
     { -- Tidal Mastery
         tree = 3,
         tier = 4,

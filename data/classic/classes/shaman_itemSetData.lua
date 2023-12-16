@@ -8,7 +8,7 @@ if playerClass ~= "SHAMAN" then
 end
 
 _addon.itemSetData[207] = {
-    name = "TheEarthfury",
+    name = "The Earthfury",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.EARTHFURY_RETURN,
@@ -17,17 +17,17 @@ _addon.itemSetData[207] = {
         },
     }
 }
-_addon.setItemData[16838] = 207; -- EarthfuryBelt
-_addon.setItemData[16837] = 207; -- EarthfuryBoots
-_addon.setItemData[16840] = 207; -- EarthfuryBracers
-_addon.setItemData[16841] = 207; -- EarthfuryVestments
-_addon.setItemData[16844] = 207; -- EarthfuryEpaulets
-_addon.setItemData[16839] = 207; -- EarthfuryGauntlets
-_addon.setItemData[16842] = 207; -- EarthfuryHelmet
-_addon.setItemData[16843] = 207; -- EarthfuryLegguards
+_addon.setItemData[16838] = 207; -- Earthfury Belt
+_addon.setItemData[16837] = 207; -- Earthfury Boots
+_addon.setItemData[16840] = 207; -- Earthfury Bracers
+_addon.setItemData[16841] = 207; -- Earthfury Vestments
+_addon.setItemData[16844] = 207; -- Earthfury Epaulets
+_addon.setItemData[16839] = 207; -- Earthfury Gauntlets
+_addon.setItemData[16842] = 207; -- Earthfury Helmet
+_addon.setItemData[16843] = 207; -- Earthfury Legguards
 
 _addon.itemSetData[216] = {
-    name = "TheTenStorms",
+    name = "The Ten Storms",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
@@ -37,17 +37,17 @@ _addon.itemSetData[216] = {
         },
     }
 }
-_addon.setItemData[16944] = 216; -- BeltofTenStorms
-_addon.setItemData[16943] = 216; -- BracersofTenStorms
-_addon.setItemData[16950] = 216; -- BreastplateofTenStorms
-_addon.setItemData[16945] = 216; -- EpauletsofTenStorms
-_addon.setItemData[16948] = 216; -- GauntletsofTenStorms
-_addon.setItemData[16949] = 216; -- GreavesofTenStorms
-_addon.setItemData[16947] = 216; -- HelmetofTenStorms
-_addon.setItemData[16946] = 216; -- LegplatesofTenStorms
+_addon.setItemData[16944] = 216; -- Belt of Ten Storms
+_addon.setItemData[16943] = 216; -- Bracers of Ten Storms
+_addon.setItemData[16950] = 216; -- Breastplate of Ten Storms
+_addon.setItemData[16945] = 216; -- Epaulets of Ten Storms
+_addon.setItemData[16948] = 216; -- Gauntlets of Ten Storms
+_addon.setItemData[16949] = 216; -- Greaves of Ten Storms
+_addon.setItemData[16947] = 216; -- Helmet of Ten Storms
+_addon.setItemData[16946] = 216; -- Legplates of Ten Storms
 
 _addon.itemSetData[301] = {
-    name = "Champion'sEarthshaker",
+    name = "Champion's Earthshaker",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -57,15 +57,15 @@ _addon.itemSetData[301] = {
         },
     }
 }
-_addon.setItemData[16519] = 301; -- BloodGuard'sMailGrips
-_addon.setItemData[16518] = 301; -- BloodGuard'sMailWalkers
-_addon.setItemData[16522] = 301; -- Legionnaire'sMailChestpiece
-_addon.setItemData[16523] = 301; -- Legionnaire'sMailLeggings
-_addon.setItemData[16521] = 301; -- Champion'sMailHelm
-_addon.setItemData[16524] = 301; -- Champion'sMailShoulders
+_addon.setItemData[16519] = 301; -- Blood Guard's Mail Grips
+_addon.setItemData[16518] = 301; -- Blood Guard's Mail Walkers
+_addon.setItemData[16522] = 301; -- Legionnaire's Mail Chestpiece
+_addon.setItemData[16523] = 301; -- Legionnaire's Mail Leggings
+_addon.setItemData[16521] = 301; -- Champion's Mail Helm
+_addon.setItemData[16524] = 301; -- Champion's Mail Shoulders
 
 _addon.itemSetData[386] = {
-    name = "Warlord'sEarthshaker",
+    name = "Warlord's Earthshaker",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -75,16 +75,21 @@ _addon.itemSetData[386] = {
         },
     }
 }
-_addon.setItemData[16577] = 386; -- Warlord'sMailArmor
-_addon.setItemData[16578] = 386; -- Warlord'sMailHelm
-_addon.setItemData[16580] = 386; -- Warlord'sMailSpaulders
-_addon.setItemData[16573] = 386; -- General'sMailBoots
-_addon.setItemData[16574] = 386; -- General'sMailGauntlets
-_addon.setItemData[16579] = 386; -- General'sMailLeggings
+_addon.setItemData[16577] = 386; -- Warlord's Mail Armor
+_addon.setItemData[16578] = 386; -- Warlord's Mail Helm
+_addon.setItemData[16580] = 386; -- Warlord's Mail Spaulders
+_addon.setItemData[16573] = 386; -- General's Mail Boots
+_addon.setItemData[16574] = 386; -- General's Mail Gauntlets
+_addon.setItemData[16579] = 386; -- General's Mail Leggings
 
 _addon.itemSetData[476] = {
-    name = "Augur'sRegalia",
+    name = "Augur's Regalia",
     effects = {
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+            need = 2,
+        },
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
             affectSpell = {-2147483648, 0, 0, 0},
@@ -93,14 +98,14 @@ _addon.itemSetData[476] = {
         },
     }
 }
-_addon.setItemData[19609] = 476; -- UnmarredVisionofVoodress
-_addon.setItemData[19956] = 476; -- Wushoolay'sCharmofSpirits
-_addon.setItemData[19830] = 476; -- ZandalarAugur'sBracers
-_addon.setItemData[19829] = 476; -- ZandalarAugur'sBelt
-_addon.setItemData[19828] = 476; -- ZandalarAugur'sHauberk
+_addon.setItemData[19609] = 476; -- Unmarred Vision of Voodress
+_addon.setItemData[19956] = 476; -- Wushoolay's Charm of Spirits
+_addon.setItemData[19830] = 476; -- Zandalar Augur's Bracers
+_addon.setItemData[19829] = 476; -- Zandalar Augur's Belt
+_addon.setItemData[19828] = 476; -- Zandalar Augur's Hauberk
 
 _addon.itemSetData[502] = {
-    name = "GiftoftheGatheringStorm",
+    name = "Gift of the Gathering Storm",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EFFECT_PAST_FIRST,
@@ -110,12 +115,12 @@ _addon.itemSetData[502] = {
         },
     }
 }
-_addon.setItemData[21400] = 502; -- CloakoftheGatheringStorm
-_addon.setItemData[21398] = 502; -- HammeroftheGatheringStorm
-_addon.setItemData[21399] = 502; -- RingoftheGatheringStorm
+_addon.setItemData[21400] = 502; -- Cloak of the Gathering Storm
+_addon.setItemData[21398] = 502; -- Hammer of the Gathering Storm
+_addon.setItemData[21399] = 502; -- Ring of the Gathering Storm
 
 _addon.itemSetData[538] = {
-    name = "Champion'sStormcaller",
+    name = "Champion's Stormcaller",
     effects = {
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
@@ -125,10 +130,10 @@ _addon.itemSetData[538] = {
         },
     }
 }
-_addon.setItemData[22857] = 538; -- BloodGuard'sMailGreaves
-_addon.setItemData[22867] = 538; -- BloodGuard'sMailVices
-_addon.setItemData[22876] = 538; -- Legionnaire'sMailHauberk
-_addon.setItemData[22887] = 538; -- Legionnaire'sMailLegguards
-_addon.setItemData[23259] = 538; -- Champion'sMailHeadguard
-_addon.setItemData[23260] = 538; -- Champion'sMailPauldrons
+_addon.setItemData[22857] = 538; -- Blood Guard's Mail Greaves
+_addon.setItemData[22867] = 538; -- Blood Guard's Mail Vices
+_addon.setItemData[22876] = 538; -- Legionnaire's Mail Hauberk
+_addon.setItemData[22887] = 538; -- Legionnaire's Mail Legguards
+_addon.setItemData[23259] = 538; -- Champion's Mail Headguard
+_addon.setItemData[23260] = 538; -- Champion's Mail Pauldrons
 
