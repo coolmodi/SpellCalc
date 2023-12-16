@@ -12,6 +12,7 @@ import { TalentsCreator } from "./modules/TalentCreator";
 import { AuraHandlers } from "./ItemAuraHandlers";
 import { isPlayerClass } from "./helper";
 import { SpellLevelScaling } from "./modules/SpellLevelScaling";
+import { applyHotfixes } from "./modules/HotFix";
 
 const DO_CLASSES: PlayerClass[] = [
     PlayerClass.DRUID,
@@ -43,6 +44,7 @@ const USEFUL_SPELL_MECHANICS: {[sm: number]: boolean} = {
 }
 
 const spellData = new SpellData();
+applyHotfixes(spellData);
 const classSpellLists = new ClassSpellLists(spellData, DO_CLASSES);
 const classSpellSets = new ClassSpellSets(spellData);
 const auraHandlers = new AuraHandlers(spellData, classSpellLists, classSpellSets);
