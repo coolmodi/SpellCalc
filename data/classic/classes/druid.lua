@@ -9,7 +9,7 @@ end
 -- Player auras
 --------------------------------------------------------------------------
 
-_addon.aurasPlayer[52610] = { -- Savage Roar
+_addon.aurasPlayer[407988] = { -- Savage Roar
     {
         type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
         affectMask = _addon.CONST.SCHOOL_MASK.PHYSICAL,

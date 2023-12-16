@@ -9,15 +9,6 @@ end
 -- Player auras
 --------------------------------------------------------------------------
 
--- Elemental Mastery
-_addon.aurasPlayer[16166] = {
-    {
-        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-        affectSpell = { -1877999613, 266240, 0, 1073741824 },
-        value = 100,
-    }
-};
-
 -- Nature's Swiftness dummy
 _addon.aurasPlayer[16188] = {
     {

@@ -298,9 +298,12 @@ export class SpellData
         throw new Error("Spelllevel not found for " + spellId);
     }
 
-    getSpellMisc(spellId: number)
+    getSpellMisc(spellId: number): SpellMisc
+    getSpellMisc(spellId: number, noErr: true): SpellMisc | undefined
+    getSpellMisc(spellId: number, noErr = false)
     {
         if (this.spellMiscs[spellId]) return this.spellMiscs[spellId];
+        if (noErr) return;
         throw new Error("Spellmisc not found for " + spellId);
     }
 

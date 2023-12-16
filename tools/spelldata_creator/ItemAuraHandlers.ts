@@ -65,13 +65,45 @@ export const USELESS_AURAS: { [index: number]: boolean } = {
     [AURA_TYPE.SPELL_AURA_MOD_INVISIBILITY]: true,
     [AURA_TYPE.MOD_DAMAGE_PERCENT_TAKEN]: true,
     [AURA_TYPE.MOD_ATTACKER_SPELL_AND_WEAPON_CRIT_CHANCE]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_HONOR_GAIN]: true,
+    [AURA_TYPE.REFLECT_SPELLS_SCHOOL]: true,
+    [AURA_TYPE.MOD_SKILL_TALENT]: true,
+    [AURA_TYPE.REFLECT_SPELLS]: true,
+    [AURA_TYPE.BIND_SIGHT]: true,
+    [AURA_TYPE.MOD_POSSESS]: true,
+    [AURA_TYPE.MOD_CONFUSE]: true,
+    [AURA_TYPE.MOD_CHARM]: true,
+    [AURA_TYPE.MOD_FEAR]: true,
+    [AURA_TYPE.MOD_TAUNT]: true,
+    [AURA_TYPE.MOD_STUN]: true,
+    [AURA_TYPE.MOD_STEALTH]: true,
+    [AURA_TYPE.OBS_MOD_HEALTH]: true,
+    [AURA_TYPE.MOD_PACIFY]: true,
+    [AURA_TYPE.MOD_ROOT]: true,
+    [AURA_TYPE.MOD_SILENCE]: true,
+    [AURA_TYPE.MOD_INCREASE_MOUNTED_SPEED]: true,
+    [AURA_TYPE.MOD_DECREASE_SPEED]: true,
+    [AURA_TYPE.MOD_INCREASE_HEALTH]: true,
+    [AURA_TYPE.MOD_SHAPESHIFT]: true,
+    [AURA_TYPE.EFFECT_IMMUNITY]: true,
+    [AURA_TYPE.STATE_IMMUNITY]: true,
+    [AURA_TYPE.SCHOOL_IMMUNITY]: true,
+    [AURA_TYPE.DAMAGE_IMMUNITY]: true,
+    [AURA_TYPE.DISPEL_IMMUNITY]: true,
+    [AURA_TYPE.MOD_BONUS_ARMOR_PCT]: true,
+    [AURA_TYPE.SPELL_AURA_MOUNTED]: true,
+    [AURA_TYPE.MOD_ATTACKSPEED]: true,
+    [AURA_TYPE.SPELL_AURA_FEATHER_FALL]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_TOTAL_THREAT]: true,
+    [AURA_TYPE.SPELL_AURA_MOD_REGEN]: true,
+    [AURA_TYPE.SPELL_AURA_WATER_WALK]: true,
 }
 
 if (cfg.expansion != "CLASSIC")
 {
     USELESS_AURAS[AURA_TYPE.SPELL_AURA_MOD_POWER_REGEN] = true; // As of TBC the API provides regen values including MP5
     USELESS_AURAS[AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE] = true; // can get from ingame API
-    USELESS_AURAS[AURA_TYPE.SPELL_AURA_MOD_SPELL_HIT_CHANCE]= true; // can get from ingame API
+    USELESS_AURAS[AURA_TYPE.SPELL_AURA_MOD_SPELL_HIT_CHANCE] = true; // can get from ingame API
 }
 
 function getBaseValue(effect: SpellEffect)
@@ -317,6 +349,8 @@ export class AuraHandlers
                             case 34318:
                             case 62210: // Increases the damage from your Arcane Blast buff by $62210s1%.
                             case 55446: // Increases the Nature damage bonus from your Stormstrike ability by an additional $55446s1%.
+                            case 18288: // Increases the effect of your next Curse of Weakness or Curse of Agony by $s1%, or your next Curse of Exhaustion by $s2%.  Lasts $d.
+                            case 24348:
                                 return
                             case 37186: // Increases the damage of your Judgements by 33.
                             case 37333: // Your Shred ability deals an additional 75 damage, and your Lacerate ability does an additional 15 per application.
@@ -406,6 +440,7 @@ export class AuraHandlers
                             case 56382: // Your Molten Armor grants an additional $56382s1% of your spirit as critical strike rating
                             case 55451: // Increases your spell critical strike chance by $55451s1% on each of your weapons with Flametongue Weapon active.
                             case 59289: // Your Ghost Wolf form regenerates an additional $59289s1% of your maximum health every 5 sec.
+                            case 400014: // You take $s1% reduced Physical damage while Blade Dance is active.
                                 return;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT3: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -847,6 +882,14 @@ export class AuraHandlers
             };
         }
 
+        this.handlers[AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE] = (effect) =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.MOD_MANA_PER_5,
+                value: 5000 * getBaseValue(effect) / effect.EffectAuraPeriod,
+            };
+        }
+
         this.handlers[AURA_TYPE.SPELL_AURA_OVERRIDE_CLASS_SCRIPTS] = (effect) =>
         {
             switch (effect.SpellID)
@@ -970,6 +1013,14 @@ export class AuraHandlers
             };
         }
 
+        this.handlers[AURA_TYPE.MOD_HEALING_DONE_PERCENT] = effect =>
+        {
+            return {
+                type: ADDON_EFFECT_TYPE.PCT_HEALING,
+                value: getBaseValue(effect),
+            };
+        }
+
         this.handlers[AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE] = effect =>
         {
             return {
@@ -993,7 +1044,7 @@ export class AuraHandlers
      */
     private getAffectSpell(effect: SpellEffect)
     {
-        if (effect["EffectSpellClassMask_0"] === 0 && effect["EffectSpellClassMask_1"] === 0 && effect["EffectSpellClassMask_2"] === 0) throw "wtf?"
+        if (effect["EffectSpellClassMask_0"] === 0 && effect["EffectSpellClassMask_1"] === 0 && effect["EffectSpellClassMask_2"] === 0 && effect["EffectSpellClassMask_3"] === 0) throw "wtf?"
         return [effect["EffectSpellClassMask_0"], effect["EffectSpellClassMask_1"], effect["EffectSpellClassMask_2"], effect["EffectSpellClassMask_3"]];
     }
 
