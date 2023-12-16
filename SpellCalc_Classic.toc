@@ -27,6 +27,7 @@ data/aurasTarget.lua
 data/classic/mechanicAuras.lua
 data/classic/enchants.lua
 data/npcResistances.lua
+data/classic/levelScaling.lua
 
 data/classic/itemEffects.lua
 data/classic/itemSetData.lua

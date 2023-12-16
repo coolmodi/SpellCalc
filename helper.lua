@@ -86,4 +86,15 @@ function util.PrintDebug(o)
     print(o);
 end
 
+---Calculate spell values for SoD level scaling formulas.
+---@param functionKey string
+---@param minValue number
+---@param maxValue number|nil
+function util.GetScalingForValue(functionKey, minValue, maxValue)
+    if not _A.spellScalingVariables[functionKey] then error("Scaling function "..functionKey.." doesn't exist!") end
+    local scalerFunction = _A.spellScalingVariables[functionKey];
+    local scalingFactor = scalerFunction(UnitLevel("player"));
+    return scalingFactor * (minValue / 100), scalingFactor * (maxValue / 100);
+end
+
 _A.util = util;

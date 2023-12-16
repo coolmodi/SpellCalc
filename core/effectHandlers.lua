@@ -30,8 +30,15 @@ local function FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spe
         baseLow = baseLow + (refLevel - spellInfo.spellLevel) * effectData.valuePerLevel;
     end
 
-    calcedEffect.min = baseLow * mod + add;
-    calcedEffect.max = (baseLow + effectData.valueRange) * mod + add;
+    if spellInfo.useScalingFormula then
+        local min, max = _addon.util.GetScalingForValue(spellInfo.useScalingFormula, baseLow, baseLow + effectData.valueRange);
+        calcedEffect.min = min * mod + add;
+        calcedEffect.max = max * mod + add;
+    else
+        calcedEffect.min = baseLow * mod + add;
+        calcedEffect.max = (baseLow + effectData.valueRange) * mod + add;
+    end
+
     calcedEffect.avg = (calcedEffect.min + calcedEffect.max) * 0.5;
     calcedEffect.avgCombined = calcedEffect.avg;
 
