@@ -535,3 +535,8 @@ function GetSpellBookItemInfo(entryName) end
 ---@param str string
 ---@return string[]
 function strsplittable(delim, str) end
+
+---@type string
+WOW_PROJECT_ID = ""
+WOW_PROJECT_CLASSIC = "CLASSIC";
+WOW_PROJECT_WRATH_CLASSIC = "WRATH";

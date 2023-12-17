@@ -41,8 +41,8 @@ local _addon = select(2, ...);
 ---@field useScalingFormula string|nil
 ---@field effects SpellEffectData[]
 
----@type SettingsTable
-SpellCalc_settings = SpellCalc_settings;
+---@class SettingsTable
+---@field debug boolean
 
 SpellCalcStatScreen = {}
 
@@ -63,8 +63,8 @@ _addon.ClassSettings = function() end
 ---@field affectMechanic SpellMechanic|nil
 ---@field neededWeaponMask integer|nil
 ---@field scriptKey string|nil Key for script effect. Must be unique!
----@field auraCategory DebuffCategory Effects from same category don't stack with each other.
----@field requiredStance PlayerStance
+---@field auraCategory DebuffCategory|nil Effects from same category don't stack with each other.
+---@field requiredStance PlayerStance|nil
 ---@field onlyPersonal boolean|nil
 
 ---@class UnitAuraEffect : AuraEffectBase
@@ -89,14 +89,8 @@ _addon.ClassSettings = function() end
 ---@field requireSlot string|nil MH or OH
 
 ---@class TalentEffect : AuraEffectBase
----@field base integer|nil
 ---@field perPoint integer|nil
 ---@field values integer[]|nil
-
----@class TalentDataEntry
----@field tree integer
----@field talent integer
----@field effects TalentEffect[]
 
 ---@class TalentDataRawEntry
 ---@field tree integer

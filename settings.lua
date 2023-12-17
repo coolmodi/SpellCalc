@@ -10,7 +10,7 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0");
 
 local MAX_RESIST = 300;
 
----@class SettingsTable
+---@type SettingsTable
 local DEFAULTSETTINGS = {
 	["firstStart"] = true,
 	["debug"] = false,

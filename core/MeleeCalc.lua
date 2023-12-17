@@ -5,6 +5,7 @@ local _, race = UnitRace("player");
 local _, class = UnitClass("player");
 local stats = _addon.stats;
 local SCHOOL_PHYSICAL = _addon.CONST.SCHOOL.PHYSICAL;
+local IS_CLASSIC = _addon.IS_CLASSIC;
 
 ---@class MeleeCalc
 local MeleeCalc = {};
@@ -25,16 +26,17 @@ end
 ---@param isRanged boolean
 ---@param cantDodgeParryBlock boolean
 function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeParryBlock)
-    _addon.util.PrintDebug("Init MeleeCalc - OH:"..tostring(isOffhand).." WH: "..tostring(isWhitehit).." R: "..tostring(isRanged));
+    _addon.util.PrintDebug("Init MeleeCalc - OH:" .. tostring(isOffhand) ..
+        " WH: " .. tostring(isWhitehit) .. " R: " .. tostring(isRanged));
     local tData = _addon.Target;
-    local ldef = tData.level * 5; -- Level based def value
+    local ldef = tData.level * 5;         -- Level based def value
     local latk = 5 * UnitLevel("player"); -- Level based attack value
-    local ratk = latk; -- Real attack value
+    local ratk = latk;                    -- Real attack value
     self.isPvP = tData.isPlayer;
 
     if not self.isPvP then
         if isRanged and stats.attackDmg.ranged.min > 0
-        and class ~= "PALADIN" then -- HoW fix?
+            and class ~= "PALADIN" then -- HoW fix?
             ratk = stats.attack.ranged;
         else
             ratk = isOffhand and stats.attack.offhand or stats.attack.mainhand;
@@ -48,9 +50,35 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
         end
 
         self.isPvP = false;
+    else
+        if not isRanged then
+            if race == "Orc" then
+                local slot = isOffhand and "offhand" or "mainhand";
+                local WTM = _addon.CONST.WEAPON_TYPES_MASK;
+                if _addon:IsWeaponTypeMaskEquipped(WTM.AXE_1H + WTM.AXE_2H, slot) then
+                    ratk = ratk + 5;
+                end
+            elseif race == "Human" then
+                local slot = isOffhand and "offhand" or "mainhand";
+                local WTM = _addon.CONST.WEAPON_TYPES_MASK;
+                if _addon:IsWeaponTypeMaskEquipped(WTM.SWORD_1H + WTM.SWORD_2H + WTM.MACE_1H + WTM.MACE_2H, slot) then
+                    ratk = ratk + 5;
+                end
+            end
+        else
+            if race == "Troll" then
+                if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.BOW, "ranged") then
+                    ratk = ratk + 5;
+                end
+            elseif race == "Dwarf" then
+                if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.GUN, "ranged") then
+                    ratk = ratk + 5;
+                end
+            end
+        end
     end
 
-    _addon.util.PrintDebug("Using ldef: "..ldef.." latk: "..latk.." ratk: "..ratk);
+    _addon.util.PrintDebug("Using ldef: " .. ldef .. " latk: " .. latk .. " ratk: " .. ratk);
 
     self.ldef = ldef;
     self.latk = latk;
@@ -62,7 +90,7 @@ function MeleeCalc:Init(calcedSpell, isOffhand, isWhitehit, isRanged, cantDodgeP
     self.isWhitehit = isWhitehit;
     self.cantDodgeParryBlock = cantDodgeParryBlock;
     self.isRanged = isRanged;
-    self.expertiseReduction = select(isOffhand and 2 or 1, GetExpertise()) * 0.25;
+    self.expertiseReduction = select(isOffhand and 2 or 1, GetExpertise()) --[[@as number]] * 0.25;
 end
 
 --- Get crit chance
@@ -76,35 +104,38 @@ function MeleeCalc:GetCrit()
 
         -- adjust offhand crit for weapon specific talents (warrior axe spec and rogue dagger and fisting spec)
         -- TODO: this is bullshit lol
+        -- Update: I forgot why this is bullshit, let's just leave it at that...
         if _addon:GetWeaponType("mainhand") ~= _addon:GetWeaponType("offhand") then
+            local addCrit = 0;
             if class == "WARRIOR" then
-                local curRank = select(5, GetTalentInfo(1, 12)); -- axe spec
+                local curRank = _addon:GetTalentRank(1, 5, 1); -- axe spec
                 if curRank > 0 then
                     if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.AXE_1H, "mainhand") then
-                        basecrit = basecrit - curRank;
+                        addCrit = -curRank;
                     elseif _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.AXE_1H, "offhand") then
-                        basecrit = basecrit + curRank;
+                        addCrit = curRank;
                     end
                 end
             elseif class == "ROGUE" then
-                local curRank = select(5, GetTalentInfo(2, 11)); -- dagger spec
+                local curRank = _addon:GetTalentRank(2, 4, 2); -- dagger spec
                 if curRank > 0 then
                     if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.DAGGER, "mainhand") then
-                        basecrit = basecrit - curRank;
+                        addCrit = -curRank;
                     elseif _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.DAGGER, "offhand") then
-                        basecrit = basecrit + curRank;
+                        addCrit = curRank;
                     end
                 end
 
-                curRank = select(5, GetTalentInfo(2, 16)); -- fisting spec
+                curRank = _addon:GetTalentRank(2, 5, 4); -- fisting spec
                 if curRank > 0 then
                     if _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.FIST, "mainhand") then
-                        basecrit = basecrit - curRank;
+                        addCrit = -curRank;
                     elseif _addon:IsWeaponTypeEquipped(_addon.CONST.WEAPON_SUBCLASS.FIST, "offhand") then
-                        basecrit = basecrit + curRank;
+                        addCrit = curRank;
                     end
                 end
             end
+            basecrit = basecrit + addCrit;
         end
     end
 
@@ -156,10 +187,10 @@ end
 --- Get parry chance against target
 ---@param calc MeleeCalc
 local function GetParryChance(calc)
-    if calc.isPvP 
-    or not SpellCalc_settings.meleeFromFront 
-    or calc.cantDodgeParryBlock
-    or calc.isRanged then
+    if calc.isPvP
+        or not SpellCalc_settings.meleeFromFront
+        or calc.cantDodgeParryBlock
+        or calc.isRanged then
         return 0;
     end
 
@@ -191,6 +222,7 @@ end
 ---@param calc MeleeCalc
 ---@param skillDiff integer
 local function GetMissChance(calc, skillDiff)
+    ---@type number
     local miss;
 
     if calc.isPvP then
@@ -201,14 +233,14 @@ local function GetMissChance(calc, skillDiff)
         else
             miss = math.max(0, 5 + skillDiff * 0.1);
         end
- 
+
         if calc.targetLevel < 10 then
             miss = miss * calc.targetLevel / 10;
         end
     end
 
     if calc.isWhitehit and not calc.isRanged and _addon:IsDualWieldEquipped() then
-        miss = 0.8 * miss + 20;
+        miss = miss + 19;
     end
 
     if miss > 100 then
@@ -224,14 +256,22 @@ end
 ---@param atk integer Actual attack value for weapon
 local function GetGlancingChanceAndDamage(ldef, baseAtk, atk)
     local skillDiff = ldef - atk;
-    local glancing = math.max(0, 6 + skillDiff * 1.2);
-    local minReduction, maxRedcution;
-    if skillDiff > 10 then
+    ---@type number, number, number
+    local glancing, minReduction, maxRedcution;
+
+    if IS_CLASSIC then
+        glancing = 10 + (ldef - math.min(baseAtk, atk)) * 2;
         minReduction = math.max(0.01, math.min(0.91, 1.3 - 0.05 * skillDiff));
         maxRedcution = math.max(0.2, math.min(0.99, 1.2 - 0.03 * skillDiff));
     else
-        minReduction = math.max(0.01, math.min(1.4 - 0.05 * skillDiff, 0.91));
-        maxRedcution = math.max(0.2, math.min(1.3 - 0.03 * skillDiff, 0.99));
+        glancing = math.max(0, 6 + skillDiff * 1.2);
+        if skillDiff > 10 then
+            minReduction = math.max(0.01, math.min(0.91, 1.3 - 0.05 * skillDiff));
+            maxRedcution = math.max(0.2, math.min(0.99, 1.2 - 0.03 * skillDiff));
+        else
+            minReduction = math.max(0.01, math.min(1.4 - 0.05 * skillDiff, 0.91));
+            maxRedcution = math.max(0.2, math.min(1.3 - 0.03 * skillDiff, 0.99));
+        end
     end
 
     local glancingDamage = (minReduction + maxRedcution) / 2;
@@ -269,6 +309,13 @@ function MeleeCalc:GetMDPGB()
         self.calcedSpell:AddToBuffList(stats.targetSchoolModHit[SCHOOL_PHYSICAL].buffs);
     end
 
+    if IS_CLASSIC then
+        if skillDiff > 10 then
+            local hitSuppression = (skillDiff - 10) * 0.2;
+            hitBonus = math.max(0, hitBonus - hitSuppression);
+        end
+    end
+
     local total = 100;
 
     local realMiss = math.max(0, 100 - hit + hitBonus);
@@ -288,12 +335,13 @@ function MeleeCalc:GetMDPGB()
     end
     total = total - parry;
 
-    local glancing, glancingDmg;
+    local glancing = 0;
+    local glancingDmg = 0;
     if self.isWhitehit and not self.isPvP and not self.isRanged then
         glancing, glancingDmg = GetGlancingChanceAndDamage(self.ldef, self.latk, self.ratk);
     end
 
-    if glancing then
+    if glancing > 0 then
         if total < glancing then
             return hit, dodge, parry, total, 0, hitBonus, glancingDmg;
         end
@@ -315,17 +363,20 @@ end
 function MeleeCalc:GetArmorDR()
     local armor = _addon.Target:GetEffectiveResistance(SCHOOL_PHYSICAL);
     local pLevel = UnitLevel("player");
-    local arpCap = (935/6) * _addon.Target.level + armor/3 - 44335/6;
-    local effArmor = armor - (GetArmorPenetration()/100) * math.min(armor, arpCap);
-    local mitigation;
+    local mitigation = 0;
 
-    if pLevel < 60 then
-        mitigation = effArmor / (effArmor + 400 + pLevel * 85);
-    else
-        mitigation = effArmor / (effArmor + 400 + 85 * (pLevel + 4.5 * (pLevel - 59)));
+    if not IS_CLASSIC then
+        local arpCap = (935 / 6) * _addon.Target.level + armor / 3 - 44335 / 6;
+        armor = armor - (GetArmorPenetration() / 100) * math.min(armor, arpCap);
     end
 
-    return math.min(mitigation, 0.75), effArmor;
+    if IS_CLASSIC or pLevel < 60 then
+        mitigation = armor / (armor + 400 + pLevel * 85);
+    else
+        mitigation = armor / (armor + 400 + 85 * (pLevel + 4.5 * (pLevel - 59)));
+    end
+
+    return math.min(mitigation, 0.75), armor;
 end
 
 _addon.MeleeCalc = MeleeCalc;
