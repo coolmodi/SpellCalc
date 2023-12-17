@@ -4,7 +4,7 @@ import { SpellData, SpellEffect } from "./../SpellData";
 
 const DO_AURAS: { [index: number]: true | undefined } = {
     //[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_TAKEN]: true,
-    [AURA_TYPE.SPELL_AURA_OBS_MOD_MANA]: true,
+    //[AURA_TYPE.SPELL_AURA_OBS_MOD_MANA]: true,
     //[AURA_TYPE.SPELL_AURA_MOD_RESISTANCE]: true,
     [AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE]: true,
     [AURA_TYPE.SPELL_AURA_MOD_HIT_CHANCE]: true,
