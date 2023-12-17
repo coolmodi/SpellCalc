@@ -721,13 +721,6 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
             local isNotHealLike = not isHeal and bit.band(calcedSpell.effects[1].effectFlags, ADDON_EFFECT_FLAGS.ABSORB) == 0;
             SetBaseModifiers(isNotHealLike, isHeal, spellId, calcedSpell, isDuration, spellInfo, calcedEffect, effectData, spellName);
 
-            --TODO: Remove this
-            -- Lets find a case and check if this is still needed.
-            if calcedEffect.modBase ~= calcedEffect.modBonus then
-                _addon.util.PrintError("Effect mod is not bonus mod! "..spellName);
-                print(calcedEffect.modBase, calcedEffect.modBonus);
-            end
-
             --------------------------
             -- Effect bonus power scaling
 
