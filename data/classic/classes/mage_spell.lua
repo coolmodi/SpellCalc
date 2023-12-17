@@ -1904,6 +1904,24 @@ _addon.spellInfo = {
             },
         }
     },
+    [12051] = { -- Evocation
+        spellLevel = 20,
+        maxLevel = 0,
+        duration = 8,
+        school = 7,
+        isChannel = true,
+        defType = 0,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 110,
+                valueBase = 1500,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
     [12505] = { -- Pyroblast(Rank 2)
         spellLevel = 24,
         maxLevel = 30,

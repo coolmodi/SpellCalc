@@ -2566,6 +2566,24 @@ _addon.spellInfo = {
             },
         }
     },
+    [29166] = { -- Innervate
+        spellLevel = 40,
+        maxLevel = 0,
+        duration = 20,
+        baseCostPct = 5,
+        school = 4,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 110,
+                valueBase = 400,
+                valueRange = 0,
+                coef = 1,
+                coefAP = 0,
+            },
+        }
+    },
     [31018] = { -- Ferocious Bite(Rank 5)
         spellLevel = 60,
         maxLevel = 0,

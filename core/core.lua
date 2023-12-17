@@ -289,6 +289,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
                 or red.auraType and (
                     red.auraType == AURA_TYPES.SPELL_AURA_OBS_MOD_MANA
                     or red.auraType == AURA_TYPES.SPELL_AURA_PERIODIC_ENERGIZE
+                    or red.auraType == AURA_TYPES.SPELL_AURA_MOD_POWER_REGEN_PERCENT
                 ) then
                     effectFlags[i] = effectFlags[i] + ADDON_EFFECT_FLAGS.MANA_RESTORE;
                 end

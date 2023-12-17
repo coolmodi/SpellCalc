@@ -286,6 +286,7 @@ function applyAuraAreaAura(rankInfo: RankInfo, effect: SpellEffect, effectNum: n
             break;
         case AURA_TYPE.SPELL_AURA_PROC_TRIGGER_DAMAGE:
         case AURA_TYPE.SPELL_AURA_PERIODIC_ENERGIZE:
+        case AURA_TYPE.MOD_POWER_REGEN_PERCENT:
         case AURA_TYPE.SPELL_AURA_OBS_MOD_MANA:
             break;
         default:

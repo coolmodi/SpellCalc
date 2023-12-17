@@ -596,6 +596,31 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellInfo, spellName, s
     calcedEffect.perResource = calcedEffect.avgAfterMitigation / calcedSpell.effectiveCost;
 end
 
+--- Handler for increased mana regen.
+---@param calcedSpell CalcedSpell
+---@param effNum integer
+---@param spellInfo SpellInfo
+local function PowerRegenPercent(calcedSpell, effNum, spellInfo)
+    assert(_addon.IS_CLASSIC, "PowerRegenPercent only supports classic!");
+    local calcedEffect = calcedSpell.effects[effNum];
+    local effectData = spellInfo.effects[effNum];
+
+    -- Everything happens in 2s intervals in classic
+    local ticks = math.floor(calcedSpell.duration / 2);
+    local regenMult = 1 + effectData.valueBase / 100;
+    local defaultRegenPerTick = stats.manaRegCasting * 2;
+    local defaultCastingRegenPerTick = stats.manaRegCasting * 2;
+    local perTickRegenExtra = (defaultRegenPerTick * regenMult) - defaultCastingRegenPerTick;
+
+    calcedEffect.min = perTickRegenExtra;
+    calcedEffect.max = calcedEffect.min;
+    calcedEffect.avg = calcedEffect.min;
+    calcedEffect.avgCombined = calcedEffect.min;
+    calcedEffect.ticks = ticks;
+    calcedEffect.tickPeriod = 2;
+    calcedEffect.avgAfterMitigation = perTickRegenExtra * ticks;
+end
+
 --- Handler for dummy auras
 ---@param calcedSpell CalcedSpell
 ---@param effNum integer
@@ -617,6 +642,7 @@ auraHandler[AURA_TYPES.SPELL_AURA_MANA_SHIELD] = ManaShield;
 auraHandler[AURA_TYPES.SPELL_AURA_SCHOOL_ABSORB] = AbsorbAura;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL] = PeriodicTriggerSpell;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE] = PeriodicTriggerSpell;
+auraHandler[AURA_TYPES.SPELL_AURA_MOD_POWER_REGEN_PERCENT] = PowerRegenPercent;
 auraHandler[AURA_TYPES.SPELL_AURA_DUMMY] = DummyAura;
 auraHandler[AURA_TYPES.SPELL_AURA_PERIODIC_ENERGIZE] = DummyAura;
 auraHandler[AURA_TYPES.SPELL_AURA_OBS_MOD_MANA] = DummyAura;
