@@ -137,6 +137,7 @@ CONST.DEF_TYPE = {
 }
 
 -- Effect flags used in addon.
+---@enum AddonEffectFlags
 CONST.ADDON_EFFECT_FLAGS = {
     DURATION = 0x1,
     HEAL = 0x2,

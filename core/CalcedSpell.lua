@@ -34,6 +34,16 @@ local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 ---Values for stackable auras when kept at max stacks, only heal compatible for now (Lifebloom)
 ---@class AuraStackData
 ---@field doneToOom number|nil
+---@field stacks integer
+---@field min number
+---@field max number
+---@field avg number
+---@field avgCombined number
+---@field avgAfterMitigation number
+---@field perSec number
+---@field perSecDurOrCD number
+---@field perResource number
+---@field ticks integer
 local AuraStackData = {
     stacks = 0,
     min = 0,
@@ -53,7 +63,7 @@ local AuraStackData = {
 ---@field avg number The average done with crits.
 
 ---@class CalcedEffect
----@field effectFlags integer
+---@field effectFlags AddonEffectFlags|0
 ---@field modBase number Modifier affecting the base value of the spell.
 ---@field modBonus number Modifier affecting the bonus scaling values of the spell.
 ---@field spellPower number Spell power this effect scales with.
@@ -119,33 +129,40 @@ CalcedEffect.__index = CalcedEffect;
 ---@field gcd number The global cooldown this spell uses.
 ---@field effCastTime number The effective cast time of the spell. Duration for channeled spells.
 ---@field dualWield DualWieldData|nil
+---@field charges number|nil
+---@field combined CombinedData|nil Exists if spell has a direct and duration component, e.g. Immolate or Regrowth
+---@field hitChance number
+---@field hitChanceBase number
+---@field hitChanceBonus number
+---@field hitChanceBinaryLoss number|nil
+---@field critChance number
+---@field critMult number
+---@field avgResist number Damage (mult) resisted from resistance for magic (avg), armor for physical (static)
+---@field resistance number Resistance used for school. Armor for physical effects
+---@field resistanceFromLevel number Resistance caused by level difference for magic spells
+---@field resistancePen number Spell/armor penetration
+---@field baseCost integer Base cost of the spell, before any talents
+---@field effectiveCost integer Cost after regeneration while casting and other returns
+---@field updated integer Update counter value last updated at
+---@field buffs string[] Buffs (internaly) used in the calculation process
 local CalcedSpell = {
     school = 1,
     costType = 0,
     critChance = 0,
     critMult = 0,
-    ---@type string[]
-    buffs = nil,            -- Buffs used in the calculation process, not buffs that affect spell indirectly
-    updated = 0,            -- Last update time
-    baseCost = 0,           -- Base cost of the spell, before any talents
-    effectiveCost = 0,      -- Cost after regeneration while casting and other returns
+    updated = 0,
+    baseCost = 0,
+    effectiveCost = 0,
 
-    avgResist = -1,         -- By res for magic (avg), armor for physical (static)
-    resistance = 0,         -- Resistance used for school. Armor for physical effects
-    resistanceFromLevel = 0,    -- Resistance caused by level difference for magic spells
-    resistancePen = 0,      -- Spell/armor penetration
+    avgResist = -1,
+    resistance = 0,
+    resistanceFromLevel = 0,
+    resistancePen = 0,
     hitChance = -1,
     hitChanceBase = -1,
     hitChanceBonus = 0,
-
-    ---@type number|nil
-    hitChanceBinaryLoss = nil,
-
-    ---@type number|nil
-    charges = nil,
-
-    ---@type CombinedData|nil
-    combined = nil,         -- Exists if spell has a direct and duration component, e.g. Immolate or Regrowth
+    gcd = 1.5,
+    effCastTime = 0
 };
 
 CalcedSpell.__index = CalcedSpell;
@@ -168,17 +185,17 @@ end
 ---@param triggeredSpell integer
 ---@param effIndex integer
 function CalcedSpell:SetTriggeredSpell(triggeredSpell, effIndex)
-    if self[effIndex] ~= nil and self[effIndex].effectFlags ~= ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
+    if self.effects[effIndex] ~= nil and self.effects[effIndex].effectFlags ~= ADDON_EFFECT_FLAGS.TRIGGERED_SPELL then
         _addon.util.PrintError("Tried to add triggered spell when 2nd effect is already in use!");
         return;
     end
 
     if self.effects[effIndex] == nil then
-        self.effects[effIndex] = {
+        self.effects[effIndex] = setmetatable({
             effectFlags = ADDON_EFFECT_FLAGS.TRIGGERED_SPELL,
             triggeredSpell = triggeredSpell,
             spellData = nil
-        }
+        }, CalcedEffect);
     end
 end
 
@@ -217,6 +234,9 @@ end
 ---@param so CalcedSpell
 local function AddDWData(so)
     ---@class DualWieldData
+    ---@field perSec number
+    ---@field perResource number
+    ---@field avgAfterMitigation number
     so.dualWield = {
         min = { mh = 0, oh = 0 },
         max = { mh = 0, oh = 0 },
@@ -225,11 +245,8 @@ local function AddDWData(so)
         maxCrit = { mh = 0, oh = 0 },
         avgCrit = { mh = 0, oh = 0 },
         critChance = { mh = 0, oh = 0 },
-        ---@type number
         perSec = 0,
-        ---@type number
         perResource = 0,
-        ---@type number
         avgAfterMitigation = 0,
     };
 end

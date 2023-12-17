@@ -1,6 +1,7 @@
 ---@class AddonEnv
 local _addon = select(2, ...);
 
+local IS_CLASSIC = _addon.IS_CLASSIC;
 local ADDON_EFFECT_FLAGS = _addon.CONST.ADDON_EFFECT_FLAGS;
 local NewCalcedSpell = _addon.NewCalcedSpell;
 local SCHOOL = _addon.CONST.SCHOOL;
@@ -143,7 +144,11 @@ local function SetBaseModifiers(isDmg, isHeal, spellId, calcedSpell, isDuration,
         end
     else
         if stats.spellModPctEffect[spellId] ~= nil then
-            bonusMod = bonusMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
+            if IS_CLASSIC then
+                baseMod = baseMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
+            else
+                bonusMod = bonusMod * (100 + stats.spellModPctEffect[spellId].val) / 100;
+            end
             calcedSpell:AddToBuffList(stats.spellModPctEffect[spellId].buffs);
         end
 
@@ -205,8 +210,14 @@ function _addon:GetEffectiveManaPool()
     end
 
     if SpellCalc_settings.calcEffManaInnervate then
-        -- lvl 80 druid base mana * 225%
-        mana = mana + 3496 * 2.25;
+        if IS_CLASSIC then
+            -- Regen in 5sec rule is already accounted for in effective mana cost, we can't add it again here!
+            mana = mana + stats.manaRegBase * 100 - stats.manaRegCasting * 20;
+        else
+            -- lvl 80 druid base mana * 225%
+            local druidMana = _addon.GetBaseMana("DRUID", UnitLevel("player"));
+            mana = mana + druidMana * 2.25;
+        end
     end
 
     return mana;
@@ -310,6 +321,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
         magicCalc:Init(calcedSpell, spellInfo, spellId);
     end
 
+    ---@type number
     local hasteMult;
     do
         local _, _, _, cast2000msBase = GetSpellInfo(31);
@@ -513,6 +525,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
                 avgCombined = 0,
                 avgAfterMitigation = 0,
                 perSec = 0,
+                timeToOom = 0
             };
         end
 
@@ -559,6 +572,7 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
     -- Cost
 
     if parentSpellData == nil then
+        ---@type table<number, SpellPowerEntry>
         local costs;
         local spellCost = 0;
 
@@ -894,7 +908,9 @@ do
     local timerDiff = 0;
     local waitForUpdate = false;
 
-    -- Only update every 1/3 sec instead of possibly after every single change
+    ---Only update every 1/3 sec instead of possibly after every single change
+    ---@param self any
+    ---@param diff number
     local function UpdateUpdate(self, diff)
         timerDiff = timerDiff + diff;
         if timerDiff > 0.333 then

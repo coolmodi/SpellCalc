@@ -17,7 +17,7 @@ end
 ---@return UniformStatMult
 local function UniformStatMult()
     ---@class UniformStatMult
-    ---@field val number
+    ---@field currentMult number
     ---@field vals table<string, integer>
     ---@field buffs string[]
     return {
