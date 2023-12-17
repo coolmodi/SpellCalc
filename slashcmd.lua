@@ -6,20 +6,28 @@ local _addon = select(2, ...);
 SLASH_SPELLCALC1 = "/sc";
 SLASH_SPELLCALC2 = "/spellcalc";
 
+---@type table<string, fun(args: string[]): nil>
+local registeredCommands = {};
+
 SlashCmdList["SPELLCALC"] = function(arg)
-    if arg == "debug" then
-        SpellCalc_settings.debug = not SpellCalc_settings.debug;
-        _addon.util.PrintWarn("Debug "..(SpellCalc_settings.debug and "active" or "disabled"));
+    local args = strsplittable(" ", arg);
+
+    if #args > 0 and registeredCommands[args[1]] then
+        local cmd = table.remove(args, 1);
+        registeredCommands[cmd](args);
         return;
     end
 
-    if arg == "ub" then
+    InterfaceOptionsFrame_OpenToCategory(_addonName);
+    InterfaceOptionsFrame_OpenToCategory(_addonName);
+
+    --[[ if arg == "ub" then
         _addon:UpdateAurasForUnit("player", true);
         _addon:UpdateAurasForUnit("player");
         _addon:UpdateAurasForUnit("target", true);
         _addon:UpdateAurasForUnit("target");
         return;
-    end
+    end ]]
 
 --[[     if string.find(arg, "^tt") then
         local talentOverride = {};
@@ -102,15 +110,6 @@ SlashCmdList["SPELLCALC"] = function(arg)
         return;
     end
 
-    if arg == "i" or arg == "info" then
-		if SpellCalcStatScreen:IsShown() then
-            SpellCalcStatScreen:Hide();
-        else
-            SpellCalcStatScreen:Show();
-        end
-		return;
-    end
-
     if string.find(arg, "dii") then
         local iid, slotid = strmatch(arg, "(%d+) (%d+)");
         if iid and slotid then
@@ -168,7 +167,31 @@ SlashCmdList["SPELLCALC"] = function(arg)
         end
         return;
     end
-
-    InterfaceOptionsFrame_OpenToCategory(_addonName);
-    InterfaceOptionsFrame_OpenToCategory(_addonName);
 end
+
+---Register a slash command.
+---@param cmdOrCmds string | string[]
+---@param callback fun(args: string[]): nil
+function _addon:RegisterSlashCommand(cmdOrCmds, callback)
+    if type(cmdOrCmds) == "string" then
+        cmdOrCmds = {cmdOrCmds};
+    end
+
+    for _, cmd in ipairs(cmdOrCmds) do
+        assert(registeredCommands[cmd] == nil, "Command with that name already exists!");
+        registeredCommands[cmd] = callback;
+    end
+end
+
+_addon:RegisterSlashCommand("debug", function()
+    SpellCalc_settings.debug = not SpellCalc_settings.debug;
+    _addon.util.PrintWarn("Debug "..(SpellCalc_settings.debug and "active" or "disabled"));
+end);
+
+_addon:RegisterSlashCommand({"info", "i"}, function()
+    if SpellCalcStatScreen:IsShown() then
+        SpellCalcStatScreen:Hide();
+    else
+        SpellCalcStatScreen:Show();
+    end
+end);

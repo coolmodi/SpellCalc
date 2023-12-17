@@ -35,6 +35,8 @@ local function SetupTalentData()
 
     talentData = {};
 
+    _addon.util.PrintDebug("Setting up "..#_addon.talentDataRaw.." talents");
+
     for _, v in ipairs(_addon.talentDataRaw) do
         assert(talentAPIData[v.tree] and talentAPIData[v.tree][v.tier] and talentAPIData[v.tree][v.tier][v.column],
             "No talent data for " .. v.tree .. " " .. v.tier .. " " .. v.column);
@@ -122,3 +124,12 @@ end
 _addon.events.Register("CHARACTER_POINTS_CHANGED", function (gain) if gain <= -1 then UpdateTalents() end end);
 _addon.events.Register("PLAYER_ENTERING_WORLD", function() UpdateTalents() end);
 _addon.events.Register("ACTIVE_TALENT_GROUP_CHANGED", function() UpdateTalents() end);
+
+_addon:RegisterSlashCommand("debugtalents", function()
+    _addon.util.PrintWarn("Updating talents with debug output!");
+    local debugSetting = SpellCalc_settings.debug;
+    SpellCalc_settings.debug = true;
+    SetupTalentData();
+    UpdateTalents();
+    SpellCalc_settings.debug = debugSetting;
+end);

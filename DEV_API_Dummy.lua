@@ -530,3 +530,8 @@ function UnitIsUnit(unit1, unit2) end
 ---@return string skillType The type of the spell (known values: "SPELL", "PETACTION", "FUTURESPELL", "FLYOUT")
 ---@return integer contextualID For SPELL and FUTURESPELL this is the spellID. For PetAction is it an integer value that is troublesome to use outside of two functions related solely to the PetBarUI. For Flyout, it is the FlyoutID.
 function GetSpellBookItemInfo(entryName) end
+
+---@param delim string
+---@param str string
+---@return string[]
+function strsplittable(delim, str) end
