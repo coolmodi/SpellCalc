@@ -4,6 +4,7 @@ local _addon = select(2, ...);
 local stats = _addon.stats;
 local _, class = UnitClass("player");
 local AEF = _addon.CONST.ADDON_EFFECT_FLAGS;
+local IS_CLASSIC = _addon.IS_CLASSIC;
 
 local HEALING_TOUCH = GetSpellInfo(5186);
 local HEALING_WAVE = GetSpellInfo(332);
@@ -106,22 +107,31 @@ end
 function CostHandler.Rage(calcedSpell, spellInfo, spellName, spellId)
     if spellName == MAUL or spellName == HEROIC_STRIKE then
         -- Some rough rage gained on hit estimate?
-        local physMask = _addon.CONST.SCHOOL_MASK.PHYSICAL;
-        local crit = calcedSpell.critChance / 100;
-        local f = 3.5 + 3.5 * crit;
-        local c;
-        local pLevel = UnitLevel("player");
-        if pLevel < 71 then
-            local lvl2 = pLevel * pLevel;
-            c = 0.0091107836 * lvl2 + 3.225598133 * pLevel + 4.2652911;
+        local critChance = calcedSpell.critChance / 100;
+        local levelFactor; ---@type number
+        local playerLevel = UnitLevel("player");
+
+        if playerLevel < 71 then
+            local lvl2 = playerLevel * playerLevel;
+            levelFactor = 0.0091107836 * lvl2 + 3.225598133 * playerLevel + 4.2652911;
         else
             -- This is just a guess, better than nothing.
-            c = 453.3 - 17.86 * (80 - pLevel);
+            levelFactor = 453.3 - 17.86 * (80 - playerLevel);
         end
-        local s = stats.attackSpeed.mainhand;
-        local roughHitDmg = (1 + 1 * crit) * stats.schoolModPctDamageMult[physMask].currentMult * (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max) / 2;
-        local rangeHitGained = (15 * roughHitDmg) / (4 * c) + (f * s) / 2;
-        calcedSpell.effectiveCost = calcedSpell.baseCost + rangeHitGained;
+
+        local avgHitDmg = (stats.attackDmg.mainhand.min + stats.attackDmg.mainhand.max) / 2
+        avgHitDmg = avgHitDmg * stats.schoolModPctDamageMult[_addon.CONST.SCHOOL_MASK.PHYSICAL].currentMult;
+        avgHitDmg = (1 + critChance) * avgHitDmg;
+
+        if IS_CLASSIC then
+            local rangeGainedFromAA = (avgHitDmg / levelFactor) * 7.5;
+            calcedSpell.effectiveCost = calcedSpell.baseCost + rangeGainedFromAA;
+        else
+            local s = stats.attackSpeed.mainhand;
+            local f = 3.5 + 3.5 * critChance;
+            local rangeGainedFromAA = (15 * avgHitDmg) / (4 * levelFactor) + (f * s) / 2;
+            calcedSpell.effectiveCost = calcedSpell.baseCost + rangeGainedFromAA;
+        end
     end
 end
 

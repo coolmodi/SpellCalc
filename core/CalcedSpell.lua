@@ -142,7 +142,7 @@ CalcedEffect.__index = CalcedEffect;
 ---@field resistanceFromLevel number Resistance caused by level difference for magic spells
 ---@field resistancePen number Spell/armor penetration
 ---@field baseCost integer Base cost of the spell, before any talents
----@field effectiveCost integer Cost after regeneration while casting and other returns
+---@field effectiveCost number Cost after regeneration while casting and other returns
 ---@field updated integer Update counter value last updated at
 ---@field buffs string[] Buffs (internaly) used in the calculation process
 local CalcedSpell = {
