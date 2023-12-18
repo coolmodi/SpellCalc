@@ -23,7 +23,8 @@ helper.lua
 system/scriptEffects.lua
 
 data/classic/auras.lua
-data/aurasTarget.lua
+data/classic/aurasTarget.lua
+data/classic/auraScripts.lua
 data/classic/mechanicAuras.lua
 data/classic/enchants.lua
 data/npcResistances.lua

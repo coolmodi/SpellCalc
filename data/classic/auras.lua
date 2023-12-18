@@ -163,6 +163,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 10,
+            hasStacks = true,
         },
     },
     [1137] = { -- Drink
@@ -474,6 +475,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
             value = -20,
+            hasStacks = true,
         },
     },
     [17360] = { -- Mana Tide
@@ -698,6 +700,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 700,
+            hasStacks = true,
         },
     },
     [20557] = { -- Beast Slaying
@@ -756,6 +759,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 8,
+            hasStacks = true,
         },
     },
     [21172] = { -- Grip of Command
@@ -769,6 +773,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 11,
+            hasStacks = true,
         },
     },
     [22833] = { -- Booze Spit
@@ -820,6 +825,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
             value = -10,
+            hasStacks = true,
         },
     },
     [22688] = { -- Tree Form
@@ -991,6 +997,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
             value = 10,
+            hasStacks = true,
         },
     },
     [23674] = { -- Test Eng Haste
@@ -1094,6 +1101,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
             value = 20,
+            hasStacks = true,
         },
     },
     [24086] = { -- Growth
@@ -1101,6 +1109,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
             value = 25,
+            hasStacks = true,
         },
     },
     [23513] = { -- Essence of the Red
@@ -1267,6 +1276,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
             affectSpell = {12582935, 69632, 262144, 0},
             value = 10,
+            hasStacks = true,
         },
     },
     [25941] = { -- Well Fed
@@ -1356,6 +1366,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
             value = 5,
+            hasStacks = true,
         },
     },
     [27650] = { -- Vengeance
@@ -1420,6 +1431,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 200,
+            hasStacks = true,
         },
     },
     [26473] = { -- Drink
@@ -1519,6 +1531,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 10,
+            hasStacks = true,
         },
     },
     [29039] = { -- Fizzy Energy Drink
@@ -1592,6 +1605,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 15,
+            hasStacks = true,
         },
     },
     [28804] = { -- Epiphany
@@ -1688,6 +1702,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 11,
+            hasStacks = true,
         },
     },
     [368371] = { -- Obsidian Fury
@@ -1695,6 +1710,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 101,
+            hasStacks = true,
         },
     },
     [368388] = { -- Berserk
@@ -1715,6 +1731,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 11,
+            hasStacks = true,
         },
     },
     [370835] = { -- Positive Charge
@@ -1722,6 +1739,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 2,
+            hasStacks = true,
         },
     },
     [370836] = { -- Negative Charge
@@ -1729,6 +1747,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 2,
+            hasStacks = true,
         },
     },
     [371206] = { -- Servant of Chaos
@@ -1743,6 +1762,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {4096, 32768, 268959744, 0},
             value = 16,
+            hasStacks = true,
         },
     },
     [401990] = { -- Shadowcrawl
@@ -1755,6 +1775,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
             value = 10,
+            hasStacks = true,
         },
     },
     [402368] = { -- Black
@@ -1762,6 +1783,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 126,
             value = 11,
+            hasStacks = true,
         },
     },
     [402906] = { -- Flagellation
@@ -1822,10 +1844,12 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 125,
             value = 6,
+            hasStacks = true,
         },
         {
             type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
             value = -50,
+            hasStacks = true,
         },
     },
     [417045] = { -- Tiger's Fury
@@ -1847,6 +1871,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 32,
             value = 16,
+            hasStacks = true,
         },
     },
     [425336] = { -- Shamanistic Rage
@@ -1867,6 +1892,7 @@ _addon.aurasPlayer = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = 11,
+            hasStacks = true,
         },
     },
     [428489] = { -- Planar Shift

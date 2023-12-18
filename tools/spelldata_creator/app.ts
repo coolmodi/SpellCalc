@@ -14,6 +14,7 @@ import { isPlayerClass } from "./helper";
 import { SpellLevelScaling } from "./modules/SpellLevelScaling";
 import { applyHotfixes } from "./modules/hotFix";
 import { PlayerAuras } from "./modules/PlayerAuras";
+import { TargetAuras } from "./modules/TargetAuras";
 
 const DO_CLASSES: PlayerClass[] = [
     PlayerClass.DRUID,
@@ -52,6 +53,7 @@ const auraHandlers = new AuraHandlers(spellData, classSpellLists, classSpellSets
 const talentCreator = new TalentsCreator(spellData, auraHandlers, classSpellSets);
 const spellLevelScaling = new SpellLevelScaling(spellData);
 const playerAuras = new PlayerAuras(spellData, auraHandlers);
+const targetAuras = new TargetAuras(spellData);
 
 const SpellClassSet = {
     MAGE: 3,
@@ -802,3 +804,4 @@ createMechanicLists([SpellMechanic.BLEED], spellData);
 createItemLua();
 
 fs.writeFileSync(cfg.outputDir + "auras.lua", playerAuras.getAuraLua());
+fs.writeFileSync(cfg.outputDir + "aurasTarget.lua", targetAuras.getAuraLua());

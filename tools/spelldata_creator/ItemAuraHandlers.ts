@@ -300,7 +300,8 @@ export class AuraHandlers
             const aed: AddonEffectData = {
                 type: ADDON_EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
                 affectMask: effect["EffectMiscValue_0"],
-                value: -(effect.EffectBasePoints + 1)
+                value: -(effect.EffectBasePoints + 1),
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
             return aed;
         }
@@ -308,9 +309,10 @@ export class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_ADD_FLAT_MODIFIER] = (effect) =>
         {
             const aed = {
-                type: "",
+                type: ADDON_EFFECT_TYPE.NONE,
                 affectSpell: this.getAffectSpell(effect),
-                value: effect.EffectBasePoints + 1
+                value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
 
             switch (effect["EffectMiscValue_0"])
@@ -479,9 +481,10 @@ export class AuraHandlers
         this.handlers[AURA_TYPE.SPELL_AURA_ADD_PCT_MODIFIER] = (effect) =>
         {
             const aed: AddonEffectData = {
-                type: "",
+                type: ADDON_EFFECT_TYPE.NONE,
                 affectSpell: this.getAffectSpell(effect),
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
 
             switch (effect["EffectMiscValue_0"])
@@ -561,7 +564,8 @@ export class AuraHandlers
         {
             const aed: AddonEffectData = {
                 type: ADDON_EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                value: effect.EffectBasePoints + 1
+                value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
             return aed;
         }
@@ -879,6 +883,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.MOD_MANA_PER_5,
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
 
@@ -887,6 +892,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.MOD_MANA_PER_5,
                 value: 5000 * getBaseValue(effect) / effect.EffectAuraPeriod,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
 
@@ -947,6 +953,7 @@ export class AuraHandlers
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
 
@@ -956,6 +963,7 @@ export class AuraHandlers
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
                 affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
 
@@ -965,6 +973,7 @@ export class AuraHandlers
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
 
@@ -974,6 +983,7 @@ export class AuraHandlers
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
                 affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
 
@@ -983,6 +993,7 @@ export class AuraHandlers
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
                 affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
 
@@ -1010,6 +1021,7 @@ export class AuraHandlers
                 type: ADDON_EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],
                 value: effect.EffectBasePoints + 1,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
 
@@ -1018,6 +1030,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.PCT_HEALING,
                 value: getBaseValue(effect),
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
 
@@ -1026,6 +1039,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
                 value: getBaseValue(effect),
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
 
@@ -1034,6 +1048,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
                 value: getBaseValue(effect),
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
     }
@@ -1046,6 +1061,17 @@ export class AuraHandlers
     {
         if (effect["EffectSpellClassMask_0"] === 0 && effect["EffectSpellClassMask_1"] === 0 && effect["EffectSpellClassMask_2"] === 0 && effect["EffectSpellClassMask_3"] === 0) throw "wtf?"
         return [effect["EffectSpellClassMask_0"], effect["EffectSpellClassMask_1"], effect["EffectSpellClassMask_2"], effect["EffectSpellClassMask_3"]];
+    }
+
+    /**
+     * Check if spell aura is cumulatively stacking.
+     * @param spellId 
+     * @returns 
+     */
+    private hasAuraCumStacks(spellId: number)
+    {
+        const cumAura = this.spellData.getSpellAuraOptions(spellId)?.CumulativeAura;
+        return typeof cumAura !== "undefined" && cumAura > 1;
     }
 
     /**

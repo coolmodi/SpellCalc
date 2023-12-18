@@ -28,19 +28,19 @@ function addMageTalents(list: TalentDummyList, spellData: SpellData, classSpellS
             }
         }
         list["Ignite"] = [{
-            type: "_addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT",
+            type: ADDON_EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
             affectSpell: affectedSpellSets,
             perPoint: 8
         }];
     }
 
     list["Arcane Concentration"] = [{
-        type: "_addon.CONST.EFFECT_TYPE.CLEARCAST_CHANCE_DMG",
+        type: ADDON_EFFECT_TYPE.CLEARCAST_CHANCE_DMG,
         perPoint: 2
     }];
 
     list["Master of Elements"] = [{
-        type: "_addon.CONST.EFFECT_TYPE.ILLUMINATION",
+        type: ADDON_EFFECT_TYPE.ILLUMINATION,
         perPoint: 10
     }];
 }
@@ -48,7 +48,7 @@ function addMageTalents(list: TalentDummyList, spellData: SpellData, classSpellS
 function addPaladinTalents(list: TalentDummyList)
 {
     list["Illumination"] = [{
-        type: "_addon.CONST.EFFECT_TYPE.ILLUMINATION",
+        type: ADDON_EFFECT_TYPE.ILLUMINATION,
         perPoint: (cfg.expansion == "CLASSIC") ? 20 : 6
     }];
 }
@@ -58,7 +58,7 @@ function addShamanTalents(list: TalentDummyList)
     if (cfg.expansion == "CLASSIC")
     {
         list["Elemental Focus"] = [{
-            type: "_addon.CONST.EFFECT_TYPE.CLEARCAST_CHANCE_DMG",
+            type: ADDON_EFFECT_TYPE.CLEARCAST_CHANCE_DMG,
             perPoint: 10
         }];
     }

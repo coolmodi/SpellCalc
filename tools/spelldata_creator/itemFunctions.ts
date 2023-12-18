@@ -174,7 +174,10 @@ export function createEffectLua(indent: string, eff: AddonEffectData, additional
     if (eff.affectMask) lua += `${indent}    affectMask = ${eff.affectMask},\n`;
     if (eff.affectSpell) lua += `${indent}    affectSpell = {${eff.affectSpell.join(", ")}},\n`;
     if (typeof eff.value !== "undefined") lua += `${indent}    value = ${eff.value},\n`;
-    if (typeof eff.scriptKey !== "undefined") lua += `${indent}    scriptKey = "${eff.scriptKey},"\n`;
+    if (typeof eff.scriptKey !== "undefined") lua += `${indent}    scriptKey = "${eff.scriptKey}",\n`;
+    if (eff.hasStacks) lua += `${indent}    hasStacks = true,\n`;
+    if (eff.affectMechanic) lua += `${indent}    affectMechanic = ${eff.affectMechanic},\n`;
+    if (eff.auraCategory) lua += `${indent}    auraCategory = ${eff.auraCategory},\n`;
     if (additionalMembers)
     {
         for (const k in additionalMembers)

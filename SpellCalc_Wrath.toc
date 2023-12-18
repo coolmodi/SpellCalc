@@ -23,7 +23,7 @@ helper.lua
 system/scriptEffects.lua
 
 data/wrath/auras.lua
-data/aurasTarget.lua
+data/wrath/aurasTarget.lua
 data/wrath/mechanicAuras.lua
 data/wrath/enchants.lua
 data/npcResistances.lua

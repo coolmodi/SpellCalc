@@ -54,7 +54,7 @@ _addon.ClassSettings = function() end
 ---@alias SpellClassSet table<integer, table<integer, integer[]>>
 
 ---@alias EffectScript fun(val:integer, cs:CalcedSpell, ce:CalcedEffect|nil, spellId:number, si:SpellInfo, scriptType: AddonEffectType, spellName:string)
----@alias AuraScript fun(apply:boolean, auraId:integer, fromPlayer:boolean, scriptType: AddonEffectType, cacheValue:integer|nil, value:integer):integer
+---@alias AuraScript fun(apply:boolean, auraId:integer, fromPlayer:boolean, scriptType: AddonEffectType, cacheValue:integer|nil, value:integer):integer|nil
 
 ---@class AuraEffectBase
 ---@field type AddonEffectType

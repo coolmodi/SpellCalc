@@ -365,6 +365,8 @@ function MeleeCalc:GetArmorDR()
     local pLevel = UnitLevel("player");
     local mitigation = 0;
 
+    armor = armor - stats.schoolModSpellPen[SCHOOL_PHYSICAL].val;
+
     if not IS_CLASSIC then
         local arpCap = (935 / 6) * _addon.Target.level + armor / 3 - 44335 / 6;
         armor = armor - (GetArmorPenetration() / 100) * math.min(armor, arpCap);
