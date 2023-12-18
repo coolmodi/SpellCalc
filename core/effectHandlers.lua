@@ -4,7 +4,7 @@ local effHandler = _addon.effectHandler;
 local stats = _addon.stats;
 local EFFECT_TYPES = _addon.CONST.SPELL_EFFECT_TYPES;
 local AURA_TYPES = _addon.CONST.SPELL_AURA_TYPES;
-local SHADOW_BOLT = GetSpellInfo(686);
+local PENANCE = _addon.IS_CLASSIC and GetSpellInfo(402174) or GetSpellInfo(47540);
 
 ---Fill effect base values.
 ---Fills min, max, avg and avgCombined.
@@ -582,6 +582,11 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellInfo, spellName, s
     local calcedEffect = calcedSpell.effects[effNum];
     local triggeredSpellData = calcedEffect.spellData;
     assert(triggeredSpellData, "triggeredSpellData for ptsa in spell "..spellName.." missing!");
+
+    if spellName == PENANCE then
+        calcedEffect.ticks = calcedEffect.ticks + 1;
+    end
+
     calcedEffect.min = triggeredSpellData.effects[1].min;
     calcedEffect.max = triggeredSpellData.effects[1].max;
     calcedEffect.avg = triggeredSpellData.effects[1].avg;
