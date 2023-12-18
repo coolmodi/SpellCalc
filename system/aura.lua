@@ -176,6 +176,7 @@ local effectSimpleStat = {
     [EFFECT_TYPE.GLOBAL_FLAT_MANARESTORE_AVG] = stats.castManaRestoreAvg,
     [EFFECT_TYPE.TARGET_HEALING_RECIEVED] = stats.targetHealingRecieved,
     [EFFECT_TYPE.GLOBAL_MOD_CRITICAL_HEALING] = stats.modCriticalHealing,
+    [EFFECT_TYPE.TARGET_HEALPOWER] = stats.targetModHealPower,
 }
 
 local effectAffectMask = {
@@ -192,6 +193,7 @@ local effectAffectMask = {
     [EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT] = stats.targetSchoolModResistancePct,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_CRIT_CHANCE_FLAT] = stats.targetSchoolModCritTaken,
     [EFFECT_TYPE.TARGET_SCHOOLMOD_HIT_CHANCE_FLAT] = stats.targetSchoolModHit,
+    [EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER] = stats.targetSchoolModSpellPower,
 }
 
 local fuckThisWhyIsThisMultiplicative = {

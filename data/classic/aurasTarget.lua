@@ -61,6 +61,17 @@ _addon.aurasTarget = {
             value = -40,
         },
     },
+    [604] = { -- Dampen Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = -10,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -20,
+        },
+    },
     [1138] = { -- Crystal Protection
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -78,6 +89,17 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -315,
+        },
+    },
+    [1008] = { -- Amplify Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = 15,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = 30,
         },
     },
     [673] = { -- Lesser Armor
@@ -99,6 +121,14 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
             affectMask = 127,
             value = -75,
+        },
+    },
+    [27891] = { -- Disease Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 8,
+            value = 80,
+            hasStacks = true,
         },
     },
     [1490] = { -- Curse of the Elements
@@ -225,6 +255,14 @@ _addon.aurasTarget = {
             value = -35,
         },
     },
+    [2537] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 6,
+            hasStacks = true,
+        },
+    },
     [1515] = { -- Tame Beast
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
@@ -244,6 +282,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -150,
+        },
+    },
+    [4166] = { -- Vulnerable
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 30,
         },
     },
     [4149] = { -- Toughen Hide
@@ -282,11 +327,32 @@ _addon.aurasTarget = {
             value = 50,
         },
     },
+    [4154] = { -- Ferocity
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 60,
+        },
+    },
+    [3247] = { -- Agonizing Pain
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 1,
+        },
+    },
     [3252] = { -- Shred
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 240,
+        },
+    },
+    [3427] = { -- Infected Wound
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 3,
         },
     },
     [28770] = { -- Arcane Resistance
@@ -310,6 +376,27 @@ _addon.aurasTarget = {
             value = -720,
         },
     },
+    [3264] = { -- Blood Howl
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
+        },
+    },
+    [3439] = { -- Wandering Plague
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
+        },
+    },
+    [3436] = { -- Wandering Plague
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
+        },
+    },
     [4137] = { -- Bruise
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -329,6 +416,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 40,
+        },
+    },
+    [4805] = { -- Distracting Spit
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
         },
     },
     [5508] = { -- Cleave Armor
@@ -373,11 +467,25 @@ _addon.aurasTarget = {
             value = -1,
         },
     },
+    [5111] = { -- Living Flame Passive
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 16,
+            value = 100,
+        },
+    },
     [4107] = { -- Tough Shell
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -84,
+        },
+    },
+    [4244] = { -- Open Wound Effect
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 10,
         },
     },
     [5363] = { -- Thick Skin
@@ -427,6 +535,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -99,
+        },
+    },
+    [4932] = { -- Ward of Myzrael
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = -40,
         },
     },
     [5404] = { -- Gazban Water Form
@@ -548,6 +663,13 @@ _addon.aurasTarget = {
             value = -200,
         },
     },
+    [5810] = { -- Stone Skin
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = -15,
+        },
+    },
     [6016] = { -- Pierce Armor
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
@@ -562,11 +684,26 @@ _addon.aurasTarget = {
             value = 24,
         },
     },
+    [6873] = { -- Foul Chill
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 16,
+            value = 50,
+        },
+    },
     [7300] = { -- Frost Armor
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -110,
+        },
+    },
+    [14517] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 10,
+            hasStacks = true,
         },
     },
     [1006] = { -- Inner Fire
@@ -576,11 +713,36 @@ _addon.aurasTarget = {
             value = -945,
         },
     },
+    [3387] = { -- Rage of Thule
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 8,
+        },
+    },
+    [7367] = { -- Infected Bite
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
+        },
+    },
     [1032] = { -- Devotion Aura
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -505,
+        },
+    },
+    [8450] = { -- Dampen Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = -20,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -40,
         },
     },
     [7302] = { -- Ice Armor
@@ -607,6 +769,20 @@ _addon.aurasTarget = {
             value = -9,
         },
     },
+    [12279] = { -- Curse of Blood
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 1,
+        },
+    },
+    [7139] = { -- Fel Stomp
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 10,
+        },
+    },
     [168] = { -- Frost Armor
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -614,11 +790,36 @@ _addon.aurasTarget = {
             value = -30,
         },
     },
+    [7140] = { -- Expose Weakness
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
+        },
+    },
     [3263] = { -- Touch of Ravenclaw
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 120,
+        },
+    },
+    [6922] = { -- Curse of the Shadowhorn
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 3,
+        },
+    },
+    [8455] = { -- Amplify Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = 30,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = 60,
         },
     },
     [706] = { -- Demon Armor
@@ -631,6 +832,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 32,
             value = -3,
+        },
+    },
+    [8282] = { -- Curse of Blood
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 1,
         },
     },
     [8245] = { -- Corrosive Acid
@@ -697,11 +905,30 @@ _addon.aurasTarget = {
             value = -15,
         },
     },
+    [8451] = { -- Dampen Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = -40,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -80,
+        },
+    },
     [704] = { -- Curse of Recklessness
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 140,
+        },
+    },
+    [14518] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 20,
+            hasStacks = true,
         },
     },
     [7405] = { -- Sunder Armor
@@ -712,11 +939,26 @@ _addon.aurasTarget = {
             hasStacks = true,
         },
     },
+    [9482] = { -- Amplify Flames
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 100,
+        },
+    },
     [9657] = { -- Shadow Shell
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -5000,
+        },
+    },
+    [9574] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 30,
+            hasStacks = true,
         },
     },
     [9806] = { -- Phantom Strike
@@ -747,6 +989,17 @@ _addon.aurasTarget = {
             value = 20,
         },
     },
+    [10173] = { -- Dampen Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = -60,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -120,
+        },
+    },
     [8064] = { -- Sleepy
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
@@ -766,6 +1019,41 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -1170,
+        },
+    },
+    [10174] = { -- Dampen Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = -90,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -180,
+        },
+    },
+    [8823] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 10,
+            hasStacks = true,
+        },
+    },
+    [8824] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 15,
+            hasStacks = true,
+        },
+    },
+    [9658] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 20,
+            hasStacks = true,
         },
     },
     [8258] = { -- Devotion Aura
@@ -881,6 +1169,17 @@ _addon.aurasTarget = {
             value = -10000,
         },
     },
+    [10170] = { -- Amplify Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = 75,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = 150,
+        },
+    },
     [9884] = { -- Mark of the Wild
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -907,6 +1206,17 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
             affectMask = 1,
             value = -50,
+        },
+    },
+    [10169] = { -- Amplify Magic
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = 50,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = 100,
         },
     },
     [11348] = { -- Greater Armor
@@ -942,6 +1252,29 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -285,
+        },
+    },
+    [12545] = { -- Spitelash
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 15,
+        },
+    },
+    [10336] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 22,
+            hasStacks = true,
+        },
+    },
+    [10452] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 20,
+            hasStacks = true,
         },
     },
     [11596] = { -- Sunder Armor
@@ -1021,6 +1354,14 @@ _addon.aurasTarget = {
             value = 50,
         },
     },
+    [10337] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 30,
+            hasStacks = true,
+        },
+    },
     [12097] = { -- Pierce Armor
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
@@ -1050,6 +1391,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 32,
             value = -15,
+        },
+    },
+    [11374] = { -- Gift of Arthas
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 8,
         },
     },
     [11197] = { -- Expose Armor
@@ -1097,6 +1445,27 @@ _addon.aurasTarget = {
             value = 10,
         },
     },
+    [13222] = { -- Wound Poison
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -75,
+            hasStacks = true,
+        },
+    },
+    [13223] = { -- Wound Poison
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -105,
+            hasStacks = true,
+        },
+    },
+    [13224] = { -- Wound Poison
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -135,
+            hasStacks = true,
+        },
+    },
     [13583] = { -- Curse of the Deadwood
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
@@ -1125,6 +1494,13 @@ _addon.aurasTarget = {
             value = 50,
         },
     },
+    [12245] = { -- Infected Spine
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 3,
+        },
+    },
     [12733] = { -- Fearless
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -1142,6 +1518,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
             affectMask = 127,
             value = 20,
+        },
+    },
+    [13218] = { -- Wound Poison
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = -55,
+            hasStacks = true,
         },
     },
     [26064] = { -- Shell Shield
@@ -1200,6 +1583,11 @@ _addon.aurasTarget = {
     },
     [13744] = { -- Blazing Emblem
         {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = -25,
+        },
+        {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 4,
             value = -50,
@@ -1254,6 +1642,13 @@ _addon.aurasTarget = {
             value = -75,
         },
     },
+    [15128] = { -- Mark of Flames
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 1000,
+        },
+    },
     [15007] = { -- Resurrection Sickness
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
@@ -1280,6 +1675,21 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 200,
+        },
+    },
+    [16128] = { -- Infected Bite
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 20,
+        },
+    },
+    [16536] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 30,
+            hasStacks = true,
         },
     },
     [15357] = { -- Inspiration
@@ -1325,6 +1735,20 @@ _addon.aurasTarget = {
             value = -200,
         },
     },
+    [15042] = { -- Curse of Blood
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 1,
+        },
+    },
+    [15595] = { -- Force of Will
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = -25,
+        },
+    },
     [14532] = { -- Creeper Venom
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
@@ -1365,6 +1789,28 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 16,
             value = -75,
+        },
+    },
+    [17348] = { -- Hemorrhage
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 7,
+        },
+    },
+    [16168] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 180,
+            hasStacks = true,
+        },
+    },
+    [16511] = { -- Hemorrhage
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 3,
         },
     },
     [16470] = { -- Gift of Stone
@@ -1409,12 +1855,26 @@ _addon.aurasTarget = {
             value = 100,
         },
     },
+    [17151] = { -- Shadow Barrier
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 32,
+            value = -50,
+        },
+    },
     [16359] = { -- Corrosive Acid Breath
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 160,
             hasStacks = true,
+        },
+    },
+    [16098] = { -- Curse of Blood
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 2,
         },
     },
     [16231] = { -- Curse of Recklessness
@@ -1452,6 +1912,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 8,
             value = -30,
+        },
+    },
+    [17347] = { -- Hemorrhage
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
         },
     },
     [16878] = { -- Mark of the Wild
@@ -1546,6 +2013,14 @@ _addon.aurasTarget = {
             value = -75,
         },
     },
+    [17281] = { -- Crusader Strike
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 30,
+            hasStacks = true,
+        },
+    },
     [16887] = { -- Armor IV
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -1634,6 +2109,13 @@ _addon.aurasTarget = {
             value = -300,
         },
     },
+    [17230] = { -- Infected Wound
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 6,
+        },
+    },
     [17820] = { -- Veil of Shadow
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
@@ -1696,6 +2178,14 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = 160,
+            hasStacks = true,
+        },
+    },
+    [19397] = { -- Incinerate
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 25,
             hasStacks = true,
         },
     },
@@ -1767,6 +2257,18 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
             value = -20,
             auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_NEGATIVE,
+        },
+    },
+    [20590] = { -- Ragged John's Neverending Cup
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = -5,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = 20,
         },
     },
     [23767] = { -- Sayge's Dark Fortune of Armor
@@ -1911,11 +2413,47 @@ _addon.aurasTarget = {
             value = -150,
         },
     },
+    [21183] = { -- Judgement of the Crusader
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 20,
+        },
+    },
     [21553] = { -- Mortal Strike
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
             value = -50,
             auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_NEGATIVE,
+        },
+    },
+    [20913] = { -- Blessing of Sanctuary
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -19,
+        },
+    },
+    [20914] = { -- Blessing of Sanctuary
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -24,
+        },
+    },
+    [20542] = { -- Static Conduit
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 8,
+            value = 100,
+            hasStacks = true,
+        },
+    },
+    [20188] = { -- Judgement of the Crusader
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 30,
         },
     },
     [20594] = { -- Stoneform
@@ -1932,6 +2470,13 @@ _addon.aurasTarget = {
             value = -10,
         },
     },
+    [25795] = { -- Ahn'Qiraj Reward Buff (Melee - 40)
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -15,
+        },
+    },
     [20798] = { -- Demon Skin
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -1939,11 +2484,32 @@ _addon.aurasTarget = {
             value = -40,
         },
     },
+    [20302] = { -- Judgement of the Crusader
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 110,
+        },
+    },
+    [20300] = { -- Judgement of the Crusader
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 50,
+        },
+    },
     [21850] = { -- Gift of the Wild
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -285,
+        },
+    },
+    [23120] = { -- Black March Blessing
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -100,
         },
     },
     [21163] = { -- Polished Armor
@@ -1997,6 +2563,13 @@ _addon.aurasTarget = {
             value = 100,
         },
     },
+    [20911] = { -- Blessing of Sanctuary
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -10,
+        },
+    },
     [21551] = { -- Mortal Strike
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
@@ -2026,6 +2599,21 @@ _addon.aurasTarget = {
             value = 2000,
         },
     },
+    [22433] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 1000,
+            hasStacks = true,
+        },
+    },
+    [20912] = { -- Blessing of Sanctuary
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -14,
+        },
+    },
     [22693] = { -- Harden Skin
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -2038,6 +2626,20 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 126,
             value = -10,
+        },
+    },
+    [20301] = { -- Judgement of the Crusader
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 80,
+        },
+    },
+    [20303] = { -- Judgement of the Crusader
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 2,
+            value = 140,
         },
     },
     [22959] = { -- Fire Vulnerability
@@ -2251,6 +2853,20 @@ _addon.aurasTarget = {
             auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_NEGATIVE,
         },
     },
+    [23341] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 150,
+            hasStacks = true,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 150,
+            hasStacks = true,
+        },
+    },
     [23154] = { -- Brood Affliction: Black
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
@@ -2317,6 +2933,14 @@ _addon.aurasTarget = {
             value = -90,
         },
     },
+    [22713] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 20,
+            hasStacks = true,
+        },
+    },
     [24501] = { -- Arcane Resistance
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -2362,6 +2986,14 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 16,
             value = -90,
+        },
+    },
+    [24339] = { -- Infected Bite
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 100,
+            hasStacks = true,
         },
     },
     [23605] = { -- Spell Vulnerability
@@ -2432,6 +3064,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 1,
             value = -550,
+        },
+    },
+    [24673] = { -- Curse of Blood
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 500,
         },
     },
     [24111] = { -- Corrosive Poison
@@ -2590,6 +3229,13 @@ _addon.aurasTarget = {
             value = 100,
         },
     },
+    [25796] = { -- Ahn'Qiraj Reward Buff (Melee - 60)
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -25,
+        },
+    },
     [25051] = { -- Sunder Armor
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -2640,11 +3286,55 @@ _addon.aurasTarget = {
             value = -50,
         },
     },
+    [25794] = { -- Ahn'Qiraj Reward Buff (Melee - 20)
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -5,
+        },
+    },
+    [25799] = { -- Ahn'Qiraj Reward Buff (Caster - 60)
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -25,
+        },
+    },
+    [25651] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 40,
+            hasStacks = true,
+        },
+    },
+    [25685] = { -- Energize
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -50,
+        },
+    },
+    [25050] = { -- Mark of Flames
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 1000,
+        },
+    },
     [27580] = { -- Mortal Strike
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
             value = -50,
             auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_NEGATIVE,
+        },
+    },
+    [26419] = { -- Acid Spray
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 8,
+            value = 100,
+            hasStacks = true,
         },
     },
     [26977] = { -- Curse of the Elemental Lord
@@ -2677,11 +3367,40 @@ _addon.aurasTarget = {
             auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_NEGATIVE,
         },
     },
+    [25668] = { -- Flame Buffet
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 4,
+            value = 40,
+            hasStacks = true,
+        },
+    },
     [27652] = { -- Elixir of Resistance
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 124,
             value = -15,
+        },
+    },
+    [25797] = { -- Ahn'Qiraj Reward Buff (Caster - 20)
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -5,
+        },
+    },
+    [25798] = { -- Ahn'Qiraj Reward Buff (Caster - 40)
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -15,
+        },
+    },
+    [25899] = { -- Greater Blessing of Sanctuary
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = -1,
+            value = -24,
         },
     },
     [28440] = { -- Veil of Shadow
@@ -2718,6 +3437,13 @@ _addon.aurasTarget = {
             hasStacks = true,
         },
     },
+    [27857] = { -- Copy of Wandering Plague
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 5,
+        },
+    },
     [28768] = { -- Nature Resistance
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
@@ -2744,6 +3470,20 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 16,
             value = -35,
+        },
+    },
+    [28772] = { -- Elemental Vulnerability
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 126,
+            value = 200,
+        },
+    },
+    [30113] = { -- Putrid Bite
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = 120,
         },
     },
     [28776] = { -- Necrotic Poison
@@ -2804,11 +3544,39 @@ _addon.aurasTarget = {
             value = -700,
         },
     },
+    [28846] = { -- Cheat Death
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALPOWER,
+            value = 160,
+        },
+    },
+    [29306] = { -- Infected Wound
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 100,
+            hasStacks = true,
+        },
+    },
     [29061] = { -- Shield Wall
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
             affectMask = 127,
             value = -75,
+        },
+    },
+    [30081] = { -- Retching Plague
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 250,
+        },
+    },
+    [30080] = { -- Retching Plague
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 1,
+            value = 250,
         },
     },
     [346285] = { -- Just Pretend
@@ -2854,6 +3622,13 @@ _addon.aurasTarget = {
             hasStacks = true,
         },
     },
+    [370544] = { -- Skeletal Artifact
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = -5,
+        },
+    },
     [370835] = { -- Positive Charge
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
@@ -2868,6 +3643,13 @@ _addon.aurasTarget = {
             value = 1,
             hasStacks = true,
             auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_POSITIVE,
+        },
+    },
+    [371206] = { -- Servant of Chaos
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = 75,
         },
     },
     [402791] = { -- Curse of Shadow
@@ -3046,6 +3828,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
             affectMask = 103,
             value = -75,
+        },
+    },
+    [427143] = { -- Curse of Vulnerability
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+            affectMask = 127,
+            value = 2,
         },
     },
     [428482] = { -- Shadow Seep

@@ -193,6 +193,8 @@ local stats = {
     targetSchoolModCritTaken = SchoolStatTable(),
     targetSchoolModHit = SchoolStatTable(),
     targetHealingRecieved = UniformStat(),
+    targetSchoolModSpellPower = SchoolStatTable(),
+    targetModHealPower = UniformStat(),
 
     schoolModPctDamageMult = SchoolStatTableMult(),
 

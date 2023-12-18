@@ -115,6 +115,37 @@ export class TargetAuraHandlers
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
+
+        this.handlers[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_TAKEN] = effect => 
+        {
+            if (effect.EffectMiscValue_0 == 0)
+            {
+                if (effect.SpellID == 398117) return;
+                throw new Error("SPELL_AURA_MOD_DAMAGE_TAKEN: EffectMiscValue_0 is 0!");
+            }
+
+            const value = getBaseValue(effect);
+            if (value == 0) return;
+
+            return {
+                type: ADDON_EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
+                affectMask: effect.EffectMiscValue_0,
+                value: value,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
+            };
+        }
+
+        this.handlers[AURA_TYPE.MOD_HEALING_TAKEN] = effect => 
+        {
+            const value = getBaseValue(effect);
+            if (value == 0) return;
+
+            return {
+                type: ADDON_EFFECT_TYPE.TARGET_HEALPOWER,
+                value: value,
+                hasStacks: this.hasAuraCumStacks(effect.SpellID)
+            };
+        }
     }
 
     /**

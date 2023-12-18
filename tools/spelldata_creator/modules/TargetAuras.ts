@@ -3,8 +3,8 @@ import { SpellData, SpellEffect } from "../SpellData";
 import { TargetAuraHandlers } from "./TargetAuraHandlers";
 
 const DO_AURAS: { [index: number]: true | undefined } = {
-    //[AURA_TYPE.SPELL_AURA_MOD_DAMAGE_TAKEN]: true, // == spell damage (misc_0 = school mask)
-    //[AURA_TYPE.MOD_HEALING_TAKEN]: true, // == healing power
+    [AURA_TYPE.SPELL_AURA_MOD_DAMAGE_TAKEN]: true, // = spell power? (misc_0 = school mask)
+    [AURA_TYPE.MOD_HEALING_TAKEN]: true, // = heal power?
     [AURA_TYPE.SPELL_AURA_MOD_RESISTANCE]: true,
     [AURA_TYPE.MOD_DAMAGE_PERCENT_TAKEN]: true,
     [AURA_TYPE.MOD_RESISTANCE_PCT]: true,

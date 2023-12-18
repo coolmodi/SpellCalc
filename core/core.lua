@@ -626,15 +626,28 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
         calcedSpell:AddToBuffList(stats.versusModFlatDamage[_addon.Target.creatureType].buffs);
     end
 
-    local extraSp = 0;
+    local extraSpellPower = 0;
+    local extraHealPower = 0;
+
     if stats.spellModFlatSpellpower[spellId] ~= nil then
-        extraSp = stats.spellModFlatSpellpower[spellId].val;
+        extraSpellPower = stats.spellModFlatSpellpower[spellId].val;
+        extraHealPower = extraHealPower + stats.spellModFlatSpellpower[spellId].val;
         calcedSpell:AddToBuffList(stats.spellModFlatSpellpower[spellId].buffs);
     end
 
     if stats.versusModFlatSpellpower[_addon.Target.creatureType] then
-        extraSp = extraSp + stats.versusModFlatSpellpower[_addon.Target.creatureType].val;
+        extraSpellPower = extraSpellPower + stats.versusModFlatSpellpower[_addon.Target.creatureType].val;
         calcedSpell:AddToBuffList(stats.versusModFlatSpellpower[_addon.Target.creatureType].buffs);
+    end
+
+    if stats.targetModHealPower.val > 0 then
+        extraHealPower = extraHealPower + stats.targetModHealPower.val;
+        calcedSpell:AddToBuffList(stats.targetModHealPower.buffs);
+    end
+
+    if stats.targetSchoolModSpellPower[spellInfo.school].val > 0 then
+        extraSpellPower = extraSpellPower + stats.targetSchoolModSpellPower[spellInfo.school].val;
+        calcedSpell:AddToBuffList(stats.targetSchoolModSpellPower[spellInfo.school].buffs);
     end
 
     --------------------------
@@ -728,8 +741,11 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
             calcedEffect.flatMod = flatMod;
 
             -- Spell power
-            calcedEffect.spellPower = (isHeal or effectData.forceScaleWithHeal) and stats.spellHealing or stats.spellPower[spellInfo.school];
-            calcedEffect.spellPower = calcedEffect.spellPower + extraSp;
+            if isHeal then
+                calcedEffect.spellPower = stats.spellHealing + extraHealPower;
+            else
+                calcedEffect.spellPower = stats.spellPower[spellInfo.school] + extraSpellPower;
+            end
 
             if effectData.coef > 0 then
                 local coef = effectData.coef;
