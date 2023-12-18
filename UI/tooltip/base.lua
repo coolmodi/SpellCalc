@@ -229,8 +229,19 @@ local function AppendDurationEffect(calcedSpell, effectNum, isHeal, spellId)
 
     SCT:AppendCoefData(coefMitSpell, coefEffect, nil, calcedEffect.ticks);
 
-    if not isHeal and effectNum == 1 then
-        AppendMitigation(coefMitSpell);
+    if not isHeal then
+        if effectNum == 1 then
+            AppendMitigation(coefMitSpell);
+        else
+            local eff1 = calcedSpell.effects[1];
+            local eff1Flags = eff1.effectFlags;
+            if bit.band(eff1Flags, ADDON_EFFECT_FLAGS.TRIGGERED_SPELL + ADDON_EFFECT_FLAGS.TRIGGER_SPELL_AURA) > 0 then
+                eff1Flags = eff1.spellData.effects[1].effectFlags;
+            end
+            if bit.band(eff1Flags, ADDON_EFFECT_FLAGS.HEAL) > 0 then
+                AppendMitigation(coefMitSpell);
+            end
+        end
     end
 
     local isChannel = bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.CHANNEL) > 0;
