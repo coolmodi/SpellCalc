@@ -403,6 +403,13 @@ function druidFixes(sd: SpellData)
     if (cfg.expansion == "CLASSIC")
     {
         LB.push(408124);
+
+        const RIP = [1079, 9492, 9493, 9752, 9894, 9896];
+        for (const ripId of RIP)
+        {
+            const effects = sd.getSpellEffects(ripId);
+            effects[0].EffectMechanic = SpellMechanic.BLEED;
+        }
     }
     else
     {
