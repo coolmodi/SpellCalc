@@ -54,3 +54,17 @@ _addon.aurasPlayer[25228] = {
         value = 3,
     }
 };
+
+--------------------------------------------------------------------------
+-- Target auras
+--------------------------------------------------------------------------
+
+-- Haunt
+_addon.aurasTarget[403501] = {
+    {
+        type = _addon.CONST.EFFECT_TYPE.TARGET_SPELLMOD_DMG_TAKEN_FROM_CASTER,
+        value = 20,
+        affectSpell = { 17418 },
+        onlyPersonal = true
+    }
+};
