@@ -30,3 +30,16 @@ _addon.itemEffects[22399] = { -- Idol of Health (Dummy effect to trigger update)
         value = 0
     }
 }
+
+--------------------------------------------------------------------------
+-- Runes
+--------------------------------------------------------------------------
+
+-- Lifebloom rune Rejuvenation GCD reduce
+_addon:DefineRuneSpell(408124, {
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
+        affectSpell = { 16, 0, 0, 0 },
+        value = -500,
+    }
+});
