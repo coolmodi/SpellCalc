@@ -1,6 +1,6 @@
 # SpellCalc
 
-A WoW Wrath classic addon that shows information for spells, like actual damage done, crit and hit chance, scaling etc.
+A WoW Classic SoD/Wrath addon that shows information for spells, like actual damage done, crit and hit chance, scaling etc.
 
 This is NOT a combat simulation tool. Calculated values are for the current stats and buffs of your character and target. Not all effects in the game are implemented, numbers won't be correct in all situations. This is only meant to give you more insight than the default tooltips.
 
