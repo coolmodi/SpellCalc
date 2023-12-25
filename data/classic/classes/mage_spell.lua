@@ -2399,6 +2399,73 @@ _addon.spellInfo = {
             },
         }
     },
+    [401417] = { -- Regeneration
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 3,
+        baseCostPct = 43,
+        school = 7,
+        isChannel = true,
+        defType = 1,
+        useScalingFormula = "809healpower",
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 1,
+                valueBase = 42,
+                valueRange = 0,
+                coef = 0.24300000072,
+                coefAP = 0,
+            },
+        }
+    },
+    [412510] = { -- Mass Regeneration
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 3,
+        baseCostPct = 69,
+        school = 7,
+        isChannel = true,
+        defType = 1,
+        useScalingFormula = "809healpower",
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 1,
+                valueBase = 42,
+                valueRange = 0,
+                coef = 0.08100000024,
+                coefAP = 0,
+            },
+        }
+    },
+    [425124] = { -- Arcane Surge
+        spellLevel = 1,
+        maxLevel = 0,
+        duration = 8,
+        school = 7,
+        defType = 1,
+        useScalingFormula = "809power",
+        effects = {
+            [1] = {
+                effectType = 2,
+                valueBase = 226,
+                valueRange = 38,
+                coef = 0.42899999022,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 110,
+                valueBase = 300,
+                valueRange = 0,
+                coef = 0,
+                coefAP = 0,
+            },
+        }
+    },
 };
 
 ---@type SpellClassSet

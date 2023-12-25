@@ -1764,6 +1764,12 @@ _addon.aurasPlayer = {
             value = 15,
             hasStacks = true,
         },
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
+            affectSpell = {0, 0, 4096, 2},
+            value = 15,
+            hasStacks = true,
+        },
     },
     [401990] = { -- Shadowcrawl
         {
