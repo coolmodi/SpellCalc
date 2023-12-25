@@ -60,3 +60,16 @@ _addon.scripting.RegisterAuraScript("Water_Shield", function (apply, auraId, fro
         _addon:RemoveAuraEffect(name, wsAura, cacheValue, auraId, fromPlayer);
     end
 end);
+
+-- Dual Wield Spec Rune
+-- TODO: Stormstrike OH attack?
+_addon:DefineRuneSpell(408496, {
+    {
+        type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+        value = 10,
+    },
+    {
+        type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+        value = 10,
+    }
+});

@@ -37,7 +37,7 @@ _addon.itemSetData = {
             {
                 type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
                 affectMask = 32,
-                value = 1,
+                value = 0,
                 need = 5,
             },
             {

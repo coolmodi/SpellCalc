@@ -19,8 +19,10 @@ i18n/deDE.lua
 
 constants.lua
 helper.lua
+events.lua
 
 system/scriptEffects.lua
+system/sodrunes.lua
 
 data/classic/auras.lua
 data/classic/aurasTarget.lua
@@ -83,7 +85,6 @@ data/classic/classes/warrior.lua
 data/classic/racials.lua
 
 slashcmd.lua
-events.lua
 settings.lua
 
 system/stats.lua

@@ -540,3 +540,20 @@ function strsplittable(delim, str) end
 WOW_PROJECT_ID = ""
 WOW_PROJECT_CLASSIC = "CLASSIC";
 WOW_PROJECT_WRATH_CLASSIC = "WRATH";
+
+---@param spellID integer
+---@param isPetSpell boolean|nil if true, will check if the currently active pet knows the spell; if false or omitted, will check if the player knows the spell
+---@return boolean
+function IsSpellKnown(spellID, isPetSpell) end
+
+---@param spellID integer
+---@return integer|nil
+function FindBaseSpellByID(spellID) end
+
+---@param spellID integer
+---@return integer|nil
+function FindSpellOverrideByID(spellID) end
+
+---@param spellID integer
+---@return boolean
+function IsPlayerSpell(spellID) end
