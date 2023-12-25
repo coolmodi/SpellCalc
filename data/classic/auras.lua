@@ -731,7 +731,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
-            value = 151,
+            value = 150,
         },
     },
     [25701] = { -- Brain Food
@@ -772,7 +772,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 11,
+            value = 10,
             hasStacks = true,
         },
     },
@@ -805,7 +805,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 201,
+            value = 200,
         },
     },
     [21955] = { -- Razorlash Root
@@ -1671,7 +1671,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 51,
+            value = 50,
         },
     },
     [355366] = { -- Warchief's Blessing
@@ -1701,7 +1701,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 11,
+            value = 10,
             hasStacks = true,
         },
     },
@@ -1709,7 +1709,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 101,
+            value = 100,
             hasStacks = true,
         },
     },
@@ -1717,7 +1717,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 901,
+            value = 900,
         },
     },
     [370548] = { -- Skeletal Artifact
@@ -1730,7 +1730,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 11,
+            value = 10,
             hasStacks = true,
         },
     },
@@ -1738,7 +1738,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 2,
+            value = 1,
             hasStacks = true,
         },
     },
@@ -1746,7 +1746,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 2,
+            value = 1,
             hasStacks = true,
         },
     },
@@ -1754,21 +1754,21 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 201,
+            value = 200,
         },
     },
     [400573] = { -- Arcane Blast
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
             affectSpell = {4096, 32768, 268959744, 0},
-            value = 16,
+            value = 15,
             hasStacks = true,
         },
     },
     [401990] = { -- Shadowcrawl
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            value = 16,
+            value = 15,
         },
     },
     [402362] = { -- White
@@ -1782,7 +1782,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 126,
-            value = 11,
+            value = 10,
             hasStacks = true,
         },
     },
@@ -1790,21 +1790,21 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
-            value = 26,
+            value = 25,
         },
     },
     [407791] = { -- Aku'mai's Rage
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
-            value = 26,
+            value = 25,
         },
     },
     [407805] = { -- Sacrifice Redeemed
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 11,
+            value = 10,
         },
         {
             type = _addon.CONST.EFFECT_TYPE.PCT_HEALING,
@@ -1815,35 +1815,35 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = -49,
+            value = -50,
         },
     },
     [409824] = { -- Lifebloom
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
             affectSpell = {16, 0, 0, 0},
-            value = -499,
+            value = -500,
         },
     },
     [412326] = { -- Enlightenment
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 126,
-            value = 11,
+            value = 10,
         },
     },
     [412758] = { -- Incinerate
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 4,
-            value = 26,
+            value = 25,
         },
     },
     [413685] = { -- Path of Arthas
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 125,
-            value = 6,
+            value = 5,
             hasStacks = true,
         },
         {
@@ -1856,21 +1856,21 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
-            value = 16,
+            value = 15,
         },
     },
     [422978] = { -- Coward!
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = -19,
+            value = -20,
         },
     },
     [425234] = { -- Orbs of Shadow
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 32,
-            value = 16,
+            value = 15,
             hasStacks = true,
         },
     },
@@ -1884,14 +1884,14 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
-            value = 21,
+            value = 20,
         },
     },
     [426489] = { -- Manifesting Dreams
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 11,
+            value = 10,
             hasStacks = true,
         },
     },
@@ -1899,21 +1899,21 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = -29,
+            value = -30,
         },
     },
     [429868] = { -- Void Madness
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 126,
-            value = 11,
+            value = 10,
         },
     },
     [430352] = { -- Ashenvale Rallying Cry
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 6,
+            value = 5,
         },
     },
     [430947] = { -- Boon of Blackfathom
@@ -1925,7 +1925,7 @@ _addon.aurasPlayer = {
     [430948] = { -- Arcane Recovery
         {
             type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 9,
+            value = 8,
         },
     },
     [430949] = { -- Arcane Accuracy
@@ -1938,7 +1938,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 20,
-            value = -49,
+            value = -50,
         },
     },
     [433255] = { -- Shamanistic Rage

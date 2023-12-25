@@ -300,7 +300,7 @@ export class AuraHandlers
             const aed: AddonEffectData = {
                 type: ADDON_EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
                 affectMask: effect["EffectMiscValue_0"],
-                value: -(effect.EffectBasePoints + 1),
+                value: -(getBaseValue(effect)),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
             return aed;
@@ -311,7 +311,7 @@ export class AuraHandlers
             const aed = {
                 type: ADDON_EFFECT_TYPE.NONE,
                 affectSpell: this.getAffectSpell(effect),
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
 
@@ -378,7 +378,7 @@ export class AuraHandlers
                                 return {
                                     type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_VALUE,
                                     affectSpell: this.getAffectSpell(effect),
-                                    value: effect.EffectBasePoints + 1
+                                    value: getBaseValue(effect)
                                 }
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT1: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
@@ -452,13 +452,13 @@ export class AuraHandlers
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_CHARGES,
                         affectSpell: this.getAffectSpell(effect),
-                        value: effect.EffectBasePoints + 1
+                        value: getBaseValue(effect)
                     }
                 case 24: // SPELLMOD_FLAT_SPELL_SCALE
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELL_SCALE,
                         affectSpell: this.getAffectSpell(effect),
-                        value: effect.EffectBasePoints + 1
+                        value: getBaseValue(effect)
                     }
                 case 14: // SPELLMOD_COST
                 case 10: // SPELLMOD_CASTING_TIME (handled by addon api, gear change will always trigger update)
@@ -483,7 +483,7 @@ export class AuraHandlers
             const aed: AddonEffectData = {
                 type: ADDON_EFFECT_TYPE.NONE,
                 affectSpell: this.getAffectSpell(effect),
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
 
@@ -564,7 +564,7 @@ export class AuraHandlers
         {
             const aed: AddonEffectData = {
                 type: ADDON_EFFECT_TYPE.FSR_SPIRIT_REGEN,
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
             return aed;
@@ -602,44 +602,44 @@ export class AuraHandlers
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: [1073741824],
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 case 34231: // Holy Light Librams
                 case 64956: // Increases spell power of Holy Light by 160.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: [2147483648],
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 case 64950: //  Increases the spell power of your Insect Swarm by 374.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: [2097152],
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 case 64949: // Increases the spell power of your Nourish by 187.
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: [0, 33554432],
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 case 43743: // Libram of Divine Purpose
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: [134217728],
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 case 34294:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: [64],
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 case 33695:
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: [0, 2 + 2097152],
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 case 60659: // Increases spell power of Flash of Light by 331.
                 case 60656: // Increases spell power of Flash of Light by 293.
@@ -649,7 +649,7 @@ export class AuraHandlers
                     /* return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: this.getAffectSpell(effect),
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     } */
                     // They have both sp and flat value and only use flat value, tooltip is fake news.
                     return;
@@ -670,7 +670,7 @@ export class AuraHandlers
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_EFFECT1_FLAT_SPELLPOWER,
                         affectSpell: [0, 16],
-                        value: effect.EffectBasePoints + 1
+                        value: getBaseValue(effect)
                     }
                 case 67201:
                     return {
@@ -882,7 +882,7 @@ export class AuraHandlers
         {
             return {
                 type: ADDON_EFFECT_TYPE.MOD_MANA_PER_5,
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
@@ -940,7 +940,7 @@ export class AuraHandlers
                     return {
                         type: ADDON_EFFECT_TYPE.SPELLMOD_FLAT_SPELLPOWER,
                         affectSpell: this.getAffectSpell(effect),
-                        value: effect.EffectBasePoints + 1,
+                        value: getBaseValue(effect),
                     }
                 default:
                     throw "SPELL_AURA_OVERRIDE_CLASS_SCRIPTS spell not handled! " + effect.SpellID;
@@ -952,7 +952,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
@@ -962,7 +962,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_SPELLPOWER,
                 affectMask: effect["EffectMiscValue_0"],
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
@@ -972,7 +972,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
@@ -982,7 +982,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
                 affectMask: effect["EffectMiscValue_0"],
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
@@ -992,7 +992,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
                 affectMask: effect["EffectMiscValue_0"],
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             }
         }
@@ -1020,7 +1020,7 @@ export class AuraHandlers
             return {
                 type: ADDON_EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
                 affectMask: effect["EffectMiscValue_0"],
-                value: effect.EffectBasePoints + 1,
+                value: getBaseValue(effect),
                 hasStacks: this.hasAuraCumStacks(effect.SpellID)
             };
         }
