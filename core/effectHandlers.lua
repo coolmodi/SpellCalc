@@ -613,7 +613,7 @@ local function PowerRegenPercent(calcedSpell, effNum, spellInfo)
     -- Everything happens in 2s intervals in classic
     local ticks = math.floor(calcedSpell.duration / 2);
     local regenMult = 1 + effectData.valueBase / 100;
-    local defaultRegenPerTick = stats.manaRegCasting * 2;
+    local defaultRegenPerTick = stats.manaRegBase * 2;
     local defaultCastingRegenPerTick = stats.manaRegCasting * 2;
     local perTickRegenExtra = (defaultRegenPerTick * regenMult) - defaultCastingRegenPerTick;
 
