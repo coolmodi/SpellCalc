@@ -1712,6 +1712,120 @@ _addon.spellInfo = {
             },
         }
     },
+    [403677] = { -- Drain Life(Rank 1)
+        spellLevel = 14,
+        maxLevel = 19,
+        duration = 15,
+        baseCost = 110,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 1,
+                valueBase = 10,
+                valueRange = 0,
+                coef = 0.07800000161,
+                coefAP = 0,
+            },
+        }
+    },
+    [403685] = { -- Drain Life(Rank 2)
+        spellLevel = 22,
+        maxLevel = 27,
+        duration = 15,
+        baseCost = 170,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 1,
+                valueBase = 17,
+                valueRange = 0,
+                coef = 0.10000000149,
+                coefAP = 0,
+            },
+        }
+    },
+    [403686] = { -- Drain Life(Rank 3)
+        spellLevel = 30,
+        maxLevel = 35,
+        duration = 15,
+        baseCost = 270,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 1,
+                valueBase = 29,
+                valueRange = 0,
+                coef = 0.10000000149,
+                coefAP = 0,
+            },
+        }
+    },
+    [403687] = { -- Drain Life(Rank 4)
+        spellLevel = 38,
+        maxLevel = 43,
+        duration = 15,
+        baseCost = 370,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 1,
+                valueBase = 41,
+                valueRange = 0,
+                coef = 0.10000000149,
+                coefAP = 0,
+            },
+        }
+    },
+    [403688] = { -- Drain Life(Rank 5)
+        spellLevel = 46,
+        maxLevel = 51,
+        duration = 15,
+        baseCost = 480,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 1,
+                valueBase = 55,
+                valueRange = 0,
+                coef = 0.10000000149,
+                coefAP = 0,
+            },
+        }
+    },
+    [403689] = { -- Drain Life(Rank 6)
+        spellLevel = 54,
+        maxLevel = 59,
+        duration = 15,
+        baseCost = 600,
+        school = 6,
+        defType = 1,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 53,
+                tickPeriod = 1,
+                valueBase = 71,
+                valueRange = 0,
+                coef = 0.10000000149,
+                coefAP = 0,
+            },
+        }
+    },
     [412758] = { -- Incinerate
         spellLevel = 1,
         maxLevel = 0,
