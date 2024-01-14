@@ -225,7 +225,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 perResouce = 4,
                 coef = 0,
-                coefAP = 0.008,
+                coefAP = 0.01,
                 mechanic = 15,
             },
         }
@@ -1430,7 +1430,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 perResouce = 7,
                 coef = 0,
-                coefAP = 0.008,
+                coefAP = 0.01,
                 mechanic = 15,
             },
         }
@@ -1452,7 +1452,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 perResouce = 9,
                 coef = 0,
-                coefAP = 0.008,
+                coefAP = 0.01,
                 mechanic = 15,
             },
         }
@@ -1520,7 +1520,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 perResouce = 14,
                 coef = 0,
-                coefAP = 0.008,
+                coefAP = 0.01,
                 mechanic = 15,
             },
         }
@@ -2186,7 +2186,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 perResouce = 20,
                 coef = 0,
-                coefAP = 0.008,
+                coefAP = 0.01,
                 mechanic = 15,
             },
         }
@@ -2208,7 +2208,7 @@ _addon.spellInfo = {
                 valueRange = 0,
                 perResouce = 28,
                 coef = 0,
-                coefAP = 0.008,
+                coefAP = 0.01,
                 mechanic = 15,
             },
         }
