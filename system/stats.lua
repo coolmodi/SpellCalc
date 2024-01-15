@@ -324,9 +324,7 @@ do
         if _addon.IS_CLASSIC then
             local _, class = UnitClass("player");
             if class == "PRIEST" or class == "MAGE" then
-                spiritIntRegen = (13 + spirit / 4) / 2;
-            elseif class == "WARLOCK" then
-                spiritIntRegen = (8 + spirit / 4) / 2;
+                spiritIntRegen = (12.5 + spirit / 4) / 2;
             else
                 spiritIntRegen = (15 + spirit / 5) / 2;
             end
