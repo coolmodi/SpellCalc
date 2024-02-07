@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-return
 ---@class AddonEnv
 local _addon = select(2, ...);
 
@@ -38,7 +39,7 @@ local _addon = select(2, ...);
 ---@field usePeriodicHaste boolean|nil
 ---@field onNextSwing boolean|nil
 ---@field isOffhandAttack boolean|nil
----@field useScalingFormula string|nil
+---@field useScalingFormula {id:integer, label:string}|nil
 ---@field effects SpellEffectData[]
 
 ---@class SettingsTable

@@ -2675,7 +2675,7 @@ _addon.spellInfo = {
         defType = 1,
         forceHeal = true,
         charges = 5,
-        useScalingFormula = "810healpower",
+        useScalingFormula = { id = 810, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2693,7 +2693,7 @@ _addon.spellInfo = {
         baseCostPct = 56,
         school = 2,
         defType = 1,
-        useScalingFormula = "810healpower",
+        useScalingFormula = { id = 810, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 10,
@@ -2710,7 +2710,7 @@ _addon.spellInfo = {
         baseCostPct = 12,
         school = 6,
         defType = 1,
-        useScalingFormula = "810damagepower",
+        useScalingFormula = { id = 810, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -2730,7 +2730,7 @@ _addon.spellInfo = {
         isChannel = true,
         defType = 0,
         usePeriodicHaste = true,
-        useScalingFormula = "810damagepower",
+        useScalingFormula = { id = 810, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2759,7 +2759,7 @@ _addon.spellInfo = {
         maxLevel = 0,
         school = 2,
         defType = 1,
-        useScalingFormula = "810damagepower",
+        useScalingFormula = { id = 810, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -2775,7 +2775,7 @@ _addon.spellInfo = {
         maxLevel = 0,
         school = 2,
         defType = 1,
-        useScalingFormula = "810healpower",
+        useScalingFormula = { id = 810, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 10,
@@ -2795,7 +2795,7 @@ _addon.spellInfo = {
         isChannel = true,
         defType = 1,
         usePeriodicHaste = true,
-        useScalingFormula = "810damagepower",
+        useScalingFormula = { id = 810, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2831,7 +2831,7 @@ _addon.spellInfo = {
         baseCostPct = 13,
         school = 6,
         defType = 1,
-        useScalingFormula = "810damagepower",
+        useScalingFormula = { id = 810, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 6,

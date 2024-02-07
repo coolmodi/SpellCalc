@@ -1,4 +1,4 @@
----@diagnostic disable: lowercase-global
+---@diagnostic disable: lowercase-global, missing-return
 SlashCmdList = {}
 UIParent = CreateFrame("");
 WorldFrame = CreateFrame("");

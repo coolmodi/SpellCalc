@@ -30,7 +30,6 @@ data/classic/auraScripts.lua
 data/classic/mechanicAuras.lua
 data/classic/enchants.lua
 data/npcResistances.lua
-data/classic/levelScaling.lua
 
 data/classic/itemEffects.lua
 data/classic/itemSetData.lua
@@ -94,6 +93,7 @@ system/talents.lua
 system/items.lua
 system/target.lua
 system/unitAuras.lua
+system/variableScaling.lua
 
 core/CostHandler.lua
 core/MagicCalc.lua

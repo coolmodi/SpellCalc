@@ -93,7 +93,7 @@ export class SpellLevelScaling
         if (variables.has("damagepower")) return "damagepower";
         if (variables.has("power")) return "power";
         if (variables.has("base")) return "base";
-        if (variables.has("mult")) return "mult";
+        if (variables.has("mult")) return //"mult"; don't need those...
 
         throw new Error("Not healing spell but no variable damagepower, power or base exists!");
     }
@@ -107,7 +107,7 @@ export class SpellLevelScaling
     {
         const mapping = this.spellMappings.get(spellId);
         if (!mapping) return;
-        return mapping.variablesId + mapping.variablesKey;
+        return { id: mapping.variablesId, label: mapping.variablesKey }
     }
 
     /**
@@ -122,26 +122,23 @@ export class SpellLevelScaling
 
 ---@class AddonEnv
 local _addon = select(2, ...);
-
----@type table<string, fun(playerLevel:number):number>
-_addon.spellScalingVariables = {\n`;
-
-        for (const [variableId, variables] of this.descriptionVariables)
-        {
-            for (const [varName, formula] of variables)
-            {
-                lua += `    ["${variableId}${varName}"] = ${formula.asLuaFunctionString()},\n`;
-            }
-        }
-
-        lua += "}\n";
+`;
+        lua += this.getVarSetsLua("_addon.spellScalingVariables");
         return lua;
     }
 
-    getVarSetsLua(ids: number[])
+    /**
+     * Get Lua table of this crap.
+     * @param varName For the table variable.
+     * @param ids Optionally get specific sets of crap.
+     * @returns 
+     */
+    getVarSetsLua(varName: string, ids?: number[])
     {
         let lua = `---@type table<number, table<string, fun(playerLevel:number):number>>
-_addon.spellScalingVariables = {\n`;
+${varName} = {\n`;
+
+        ids = ids ?? Array.from(this.descriptionVariables.keys());
 
         for (const setId of ids)
         {
@@ -159,5 +156,6 @@ _addon.spellScalingVariables = {\n`;
         }
 
         lua += "}\n";
+        return lua;
     }
 }

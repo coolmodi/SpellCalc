@@ -1854,7 +1854,7 @@ _addon.spellInfo = {
         baseCostPct = 10,
         school = 3,
         defType = 1,
-        useScalingFormula = "824damagepower",
+        useScalingFormula = { id = 824, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -1893,7 +1893,7 @@ _addon.spellInfo = {
         defType = 1,
         forceHeal = true,
         charges = 6,
-        useScalingFormula = "824healpower",
+        useScalingFormula = { id = 824, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -1911,7 +1911,7 @@ _addon.spellInfo = {
         baseCostPct = 18,
         school = 3,
         defType = 1,
-        useScalingFormula = "824damagepower",
+        useScalingFormula = { id = 824, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,

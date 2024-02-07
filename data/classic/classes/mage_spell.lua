@@ -2351,7 +2351,7 @@ _addon.spellInfo = {
         baseCostPct = 7,
         school = 7,
         defType = 1,
-        useScalingFormula = "809power",
+        useScalingFormula = { id = 809, label = "power" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -2369,7 +2369,7 @@ _addon.spellInfo = {
         baseCostPct = 22,
         school = 3,
         defType = 1,
-        useScalingFormula = "809power",
+        useScalingFormula = { id = 809, label = "power" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2388,7 +2388,7 @@ _addon.spellInfo = {
         baseCostPct = 8,
         school = 5,
         defType = 1,
-        useScalingFormula = "809power",
+        useScalingFormula = { id = 809, label = "power" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -2407,7 +2407,7 @@ _addon.spellInfo = {
         school = 7,
         isChannel = true,
         defType = 1,
-        useScalingFormula = "809healpower",
+        useScalingFormula = { id = 809, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2428,7 +2428,7 @@ _addon.spellInfo = {
         school = 7,
         isChannel = true,
         defType = 1,
-        useScalingFormula = "809healpower",
+        useScalingFormula = { id = 809, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2447,7 +2447,7 @@ _addon.spellInfo = {
         duration = 8,
         school = 7,
         defType = 1,
-        useScalingFormula = "809power",
+        useScalingFormula = { id = 809, label = "power" },
         effects = {
             [1] = {
                 effectType = 2,

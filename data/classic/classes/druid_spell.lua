@@ -2652,7 +2652,7 @@ _addon.spellInfo = {
         baseCostPct = 56,
         school = 4,
         defType = 1,
-        useScalingFormula = "823healpower",
+        useScalingFormula = { id = 823, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2673,7 +2673,7 @@ _addon.spellInfo = {
         school = 4,
         GCD = 1,
         defType = 1,
-        useScalingFormula = "823healpower",
+        useScalingFormula = { id = 823, label = "healpower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2701,7 +2701,7 @@ _addon.spellInfo = {
         baseCost = 100,
         school = 1,
         defType = 2,
-        useScalingFormula = "823damagepower",
+        useScalingFormula = { id = 823, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 6,
@@ -2722,7 +2722,7 @@ _addon.spellInfo = {
         baseCostPct = 21,
         school = 4,
         defType = 1,
-        useScalingFormula = "823damagepower",
+        useScalingFormula = { id = 823, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -2749,7 +2749,7 @@ _addon.spellInfo = {
         baseCost = 200,
         school = 4,
         defType = 1,
-        useScalingFormula = "823damagepower",
+        useScalingFormula = { id = 823, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -2776,7 +2776,7 @@ _addon.spellInfo = {
         baseCost = 40,
         school = 4,
         defType = 1,
-        useScalingFormula = "823damagepower",
+        useScalingFormula = { id = 823, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
@@ -2802,7 +2802,7 @@ _addon.spellInfo = {
         baseCostPct = 1,
         school = 7,
         defType = 1,
-        useScalingFormula = "823damagepower",
+        useScalingFormula = { id = 823, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,

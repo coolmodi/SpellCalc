@@ -15,6 +15,7 @@ import { SpellLevelScaling } from "./modules/SpellLevelScaling/SpellLevelScaling
 import { applyHotfixes } from "./modules/hotFix";
 import { PlayerAuras } from "./modules/PlayerAuras";
 import { TargetAuras } from "./modules/TargetAuras";
+import path from "path";
 
 console.log("clusterfuck gooooooo!");
 
@@ -680,7 +681,7 @@ end
         if (ri.usePeriodicHaste) str += `\t\tusePeriodicHaste = true,\n`;
         if (ri.onNextAttack) str += `\t\tonNextSwing = true,\n`;
         if (ri.isOffhandAttack) str += `\t\tisOffhandAttack = true,\n`;
-        if (ri.useScalingFormula) str += `\t\tuseScalingFormula = "${ri.useScalingFormula}",\n`;
+        if (ri.useScalingFormula) str += `\t\tuseScalingFormula = { id = ${ri.useScalingFormula.id}, label = "${ri.useScalingFormula.label}" },\n`;
 
         str += `\t\teffects = {\n`;
 
@@ -799,8 +800,18 @@ for (let i = 0; i < DO_CLASSES.length; i++) {
     fs.writeFileSync(cfg.outputDir + "classes/" + DO_CLASSES[i] + "_talents.lua", ctlua);
 }
 
-const levelScalingLua = spellLevelScaling.getVariablesLua();
-fs.writeFileSync(cfg.outputDir + "levelScaling.lua", levelScalingLua);
+// now do stupid shit
+{
+    const pathToLua = path.join(cfg.outputDir, "../../system/variableScaling.lua");
+    const origcontent = fs.readFileSync(pathToLua, "utf-8");
+    let magicStart = origcontent.indexOf("-- MAGIC LINE WEEEEEEEEEEEEEEEEEEEE");
+    if (magicStart === -1) throw new Error("Magic failed.");
+    magicStart = origcontent.indexOf("\n", magicStart);
+    if (magicStart === -1) throw new Error("Magic failed #2.");
+    let newContent = origcontent.substring(0, magicStart + 1);
+    newContent += "\n" + spellLevelScaling.getVarSetsLua("spellScalingVariables");
+    fs.writeFileSync(pathToLua, newContent);
+}
 
 createMechanicLists([SpellMechanic.BLEED], spellData);
 createItemLua();

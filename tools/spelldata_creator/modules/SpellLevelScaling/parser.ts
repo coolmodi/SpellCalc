@@ -42,7 +42,7 @@ class Variable extends FormulaObject
 type FunctionType = "HaveTalent" | "ValueOfVariable";
 class FunctionCall extends FormulaObject
 {
-    constructor(readonly val: string, readonly functionType: FunctionType) { super("function") }
+    constructor(readonly val: string | number, readonly functionType: FunctionType) { super("function") }
     toString() { return `${this.functionType}(${typeof this.val == "string" ? `"${this.val}"` : this.val})` }
 }
 
@@ -133,7 +133,7 @@ function readSpellLearnedCondition(str: string, startPos: number): [FunctionCall
         throw new Error(`Invalid start of spell condition, expected "s" but found "${str[startPos]}"!`);
 
     const [c, endConst] = readConst(str, startPos + 1);
-    return [new FunctionCall(c.val.toString(), "HaveTalent"), endConst]
+    return [new FunctionCall(c.val, "HaveTalent"), endConst]
 }
 
 function readVarRedirect(str: string, startPos: number): [FunctionCall, number]

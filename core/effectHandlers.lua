@@ -31,7 +31,7 @@ local function FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spe
     end
 
     if spellInfo.useScalingFormula then
-        local min, max = _addon.util.GetScalingForValue(spellInfo.useScalingFormula, baseLow, baseLow + effectData.valueRange);
+        local min, max = _addon.ApplyScalingFormula(spellInfo.useScalingFormula, baseLow, baseLow + effectData.valueRange);
         calcedEffect.min = min * mod + add;
         calcedEffect.max = max * mod + add;
     else

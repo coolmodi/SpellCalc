@@ -251,7 +251,7 @@ interface RankInfo {
     usePeriodicHaste: boolean,
     onNextAttack: boolean,
     isOffhandAttack: boolean,
-    useScalingFormula: string | undefined,
+    useScalingFormula: { label: string, id: number } | undefined,
     effects: EffectInfo[]
 }
 

@@ -1565,7 +1565,7 @@ _addon.spellInfo = {
         school = 2,
         isBinary = true,
         defType = 3,
-        useScalingFormula = "815damagepower",
+        useScalingFormula = { id = 815, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
