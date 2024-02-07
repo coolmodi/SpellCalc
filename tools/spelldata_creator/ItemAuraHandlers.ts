@@ -109,7 +109,6 @@ if (cfg.expansion != "CLASSIC")
 function getBaseValue(effect: SpellEffect)
 {
     if (effect.EffectDieSides == 0) return effect.EffectBasePoints;
-    if (effect.EffectDieSides != 1) throw new Error("DieSides neither 0 nor 1!");
     return effect.EffectBasePoints + 1;
 }
 
@@ -223,6 +222,8 @@ export class AuraHandlers
                 case 61792: // Glyph of Shadow
                 case 28753: // hunter t3 mana restore
                 case 60803:
+                case 435978: // SoD Chance on spell cast to increase your damage and healing by up to 40 for 10 sec.
+                case 435981: // SoD mana reg chance
                     return;
                 case 37601: // Each time you cast an offensive spell, there is a chance your next spell will cost $37601s1 less mana.
                     return {
@@ -468,6 +469,7 @@ export class AuraHandlers
                 case 11: // SPELLMOD_COOLDOWN (TODO: if DPSCD is ever implemented?)
                 case 17: // SPELLMOD_JUMP_TARGETS
                 case 18: // SPELLMOD_CHANCE_OF_SUCCESS
+                case 9: // pushback reduction?
                     return;
                 default:
                     throw "SPELL_AURA_ADD_FLAT_MODIFIER type not handled!";
@@ -514,9 +516,18 @@ export class AuraHandlers
                             case 67164: // "IncreasesthearmoryougainfromIceArmorby$s1%,themanaregenerationyougainfromMageArmorby$s2%,andaddsanadditional$s3%ofyourSpiritincriticalstrikeratingwhenMoltenArmorisactive."
                             case 56384: // Your Ice Armor and Frost Armor spells grant an additional $56384s1% armor and resistance.
                                 return;
+                            case 15259: // Darkness talent effect for SoD SW:Death
+                            case 15307: // Darkness talent effect for SoD SW:Death
+                            case 15308: // Darkness talent effect for SoD SW:Death
+                            case 15309: // Darkness talent effect for SoD SW:Death
+                            case 15310: // Darkness talent effect for SoD SW:Death
+                            case 428738: // Increases the magnitude of your Mana Shield, Frost Ward, and Fire Ward by $s1%, and decreases mana drained by Mana Shield by $s2% per damage done.
+                                aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_EFFECT; // TODO: this could alos behave like pct dmg healing (=include bonus)
+                                break;
                             default:
                                 throw new Error("Unhandled FLAT SPELLMOD_EFFECT1: " + effect.SpellID + ": // " + spellData.getSpell(effect.SpellID).Description_lang);
                         }
+                        break;
                     }
                 case 12: // SPELLMOD_EFFECT2
                     {

@@ -121,6 +121,7 @@ export class TargetAuraHandlers
             if (effect.EffectMiscValue_0 == 0)
             {
                 if (effect.SpellID == 398117) return;
+                if (effect.SpellID == 428491) return;
                 throw new Error("SPELL_AURA_MOD_DAMAGE_TAKEN: EffectMiscValue_0 is 0!");
             }
 

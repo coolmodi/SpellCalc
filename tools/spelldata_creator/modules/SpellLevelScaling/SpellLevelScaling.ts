@@ -1,6 +1,7 @@
-import { readDBCSV } from "../CSVReader";
-import { SpellData } from "../SpellData";
-import { cfg } from "../config";
+import { readDBCSV } from "../../CSVReader";
+import { SpellData } from "../../SpellData";
+import { cfg } from "../../config";
+import { ScalingFormulaParsed } from "./parser";
 
 interface SpellXDescriptionVariables
 {
@@ -19,7 +20,7 @@ export class SpellLevelScaling
 {
     private readonly spellData: SpellData;
     /** Map<set id, Map<name, formula>> */
-    private readonly descriptionVariables = new Map<number, Map<string, string>>();
+    private readonly descriptionVariables = new Map<number, Map<string, ScalingFormulaParsed>>();
     /** SpellId -> variable set Id */
     private readonly spellMappings = new Map<number, { variablesId: number, variablesKey: string }>();
 
@@ -30,14 +31,15 @@ export class SpellLevelScaling
         const spellDescVars = readDBCSV<SpellDescriptionVariables>(cfg.dataDir + "dbc/SpellDescriptionVariables.csv", "ID");
         for (const id in spellDescVars)
         {
-            const descvars = spellDescVars[id].Variables.match(/(\$.*?})/g);
-            if (!descvars) throw new Error("Empty variables?");
-            const variables = new Map<string, string>();
-            for (const descvar of descvars)
+            const varSplit = spellDescVars[id].Variables.trim().split("\n");
+            const variables = new Map<string, ScalingFormulaParsed>();
+
+            for (const varEntry of varSplit)
             {
-                const parsed = this.parseVariable(descvar);
-                variables.set(parsed.name, parsed.formula);
+                const parsed = ScalingFormulaParsed.fromString(varEntry);
+                variables.set(parsed.label, parsed);
             }
+
             this.descriptionVariables.set(parseInt(id), variables);
         }
 
@@ -63,15 +65,6 @@ export class SpellLevelScaling
             // Force add Earth Shield
             this.spellMappings.set(408514, { variablesId: 824, variablesKey: "healpower" });
         }
-    }
-
-    private parseVariable(varstr: string)
-    {
-        const matches = varstr.match(/\$(.+)=\${(.*)}/);
-        if (!matches || matches.length !== 3) throw new Error("Couldn't match variable formula!");
-        const varName = matches[1];
-        const varFormula = matches[2];
-        return { name: varName, formula: varFormula };
     }
 
     private spellResolveVariableName(variablesId: number, spellId: number)
@@ -100,15 +93,9 @@ export class SpellLevelScaling
         if (variables.has("damagepower")) return "damagepower";
         if (variables.has("power")) return "power";
         if (variables.has("base")) return "base";
+        if (variables.has("mult")) return "mult";
 
         throw new Error("Not healing spell but no variable damagepower, power or base exists!");
-    }
-
-    private convertFormulaToAddonLua(raw: string)
-    {
-        const formula = raw.replace(/\$PL/g, "playerLevel");
-        if (formula.indexOf("[") !== -1) return `function(playerLevel) error("Spell variable formula not implemented!") end`;
-        return `function(playerLevel) return ${formula} end`;
     }
 
     /**
@@ -143,11 +130,34 @@ _addon.spellScalingVariables = {\n`;
         {
             for (const [varName, formula] of variables)
             {
-                lua += `    ["${variableId}${varName}"] = ${this.convertFormulaToAddonLua(formula)},\n`;
+                lua += `    ["${variableId}${varName}"] = ${formula.asLuaFunctionString()},\n`;
             }
         }
 
         lua += "}\n";
         return lua;
+    }
+
+    getVarSetsLua(ids: number[])
+    {
+        let lua = `---@type table<number, table<string, fun(playerLevel:number):number>>
+_addon.spellScalingVariables = {\n`;
+
+        for (const setId of ids)
+        {
+            const vars = this.descriptionVariables.get(setId);
+            if (!vars) throw new Error("Invalid variable set id " + setId);
+
+            lua += `    [${setId}] = {\n`;
+
+            for (const [label, sform] of vars)
+            {
+                lua += `        ${label} = ${sform.asLuaFunctionString()},\n`;
+            }
+
+            lua += `    },\n`;
+        }
+
+        lua += "}\n";
     }
 }

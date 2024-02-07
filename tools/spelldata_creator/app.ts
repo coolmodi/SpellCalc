@@ -11,10 +11,12 @@ import { cfg } from "./config";
 import { TalentsCreator } from "./modules/TalentCreator";
 import { AuraHandlers } from "./ItemAuraHandlers";
 import { isPlayerClass } from "./helper";
-import { SpellLevelScaling } from "./modules/SpellLevelScaling";
+import { SpellLevelScaling } from "./modules/SpellLevelScaling/SpellLevelScaling";
 import { applyHotfixes } from "./modules/hotFix";
 import { PlayerAuras } from "./modules/PlayerAuras";
 import { TargetAuras } from "./modules/TargetAuras";
+
+console.log("clusterfuck gooooooo!");
 
 const DO_CLASSES: PlayerClass[] = [
     PlayerClass.DRUID,

@@ -82,6 +82,7 @@ export class ItemEffectsCreator
                     case 60837:
                     case 54809:
                     case 62107:
+                    case 17232: // Broken SoD item https://www.wowhead.com/classic/item=211940/ecksavs-tribal-guardian
                         continue;
                     default:
                         throw "Item bonus effect doesn't apply an aura?!" + spellId;

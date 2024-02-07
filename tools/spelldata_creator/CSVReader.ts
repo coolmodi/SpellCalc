@@ -2,26 +2,29 @@ import * as fs from "fs";
 
 const enum QuoteState { NO_QUOTES = 1, IN_QUOTES, WAS_IN_QUOTES }
 
-function parseLine(line: string)
+function parseNextEntry(csvString: string, startPos: number): [string[], number]
 {
     const delim = ",";
     const fields: string[] = [];
 
-    let fstart = 0;
+    let fstart = startPos;
     let qstate = QuoteState.NO_QUOTES;
-    let i = 0;
-    let current: string | undefined = line[i];
+    let i = startPos;
+    let current: string | undefined = csvString[i];
 
     while (true)
     {
-        if (!current || current == delim)
+        if (!current || current == delim || current == "\n")
         {
             if (qstate != QuoteState.IN_QUOTES)
             {
                 if (qstate == QuoteState.WAS_IN_QUOTES)
-                    fields.push(line.substring(fstart + 1, i - 1).replace(/""/g, "\""));
+                    fields.push(csvString.substring(fstart + 1, i - 1).replace(/""/g, "\""));
                 else
-                    fields.push(line.substring(fstart, i));
+                    fields.push(csvString.substring(fstart, i));
+
+                if (current == "\n")
+                    break;
 
                 qstate = QuoteState.NO_QUOTES;
                 fstart = i + 1;
@@ -31,17 +34,17 @@ function parseLine(line: string)
         {
             if (qstate == QuoteState.NO_QUOTES)
                 qstate = QuoteState.IN_QUOTES;
-            else if (line[i + 1] == "\"")
+            else if (csvString[i + 1] == "\"")
                 i++;
             else
                 qstate = QuoteState.WAS_IN_QUOTES
         }
 
         if (!current) break;
-        current = line[++i];
+        current = csvString[++i];
     }
 
-    return fields;
+    return [fields, i];
 }
 
 function parseField(fieldStr: string)
@@ -68,50 +71,63 @@ function parseField(fieldStr: string)
  * @param filter 
  * @returns 
  */
-export function readDBCSV<T>(path: string, indexKey: string, filter?: { key: keyof T, is: any }[]): { [index: string]: T }
+export function readDBCSVString<T>(csvString: string, indexKey: string, filter?: { key: keyof T, is: any }[]): { [index: string]: T }
 {
-    let raw = fs.readFileSync(path, "utf8");
-    raw = raw.replace(/"(.|\r|\n)*?"/g, (subs) => subs.replace(/\r|\n/g, ""));
-
-    const lines = raw.replace("\r", "").split("\n");
-    const headers = lines[0].split(",");
+    const [headers, headersEnd] = parseNextEntry(csvString, 0);
+    const fieldCount = headers.length;
     const data: { [index: string]: T } = {};
 
-    for (let i = 1; i < lines.length; i++)
+    let nextStartPos = headersEnd + 1;
+    while (nextStartPos < csvString.length)
     {
-        const line = lines[i];
-        if (line == "") continue;
-
-        const fields = parseLine(line);
-        if (headers.length != fields.length) throw new Error(path + " > Line column count doesn't match header count! Line: " + i);
+        const [fields, entryEndPos] = parseNextEntry(csvString, nextStartPos);
+        if (fields.length != fieldCount)
+            throw new Error(`Invalid field count for fields at pos ${nextStartPos}!`);
 
         const thisData: { [index: string]: number | string } = {};
-        for (let j = 0; j < headers.length; j++)
+        for (let i = 0; i < headers.length; i++)
         {
-            thisData[headers[j]] = parseField(fields[j]);
+            thisData[headers[i]] = parseField(fields[i]);
         }
+
+        let discardThis = false;
 
         if (filter)
         {
-            let doContinue = false;
             for (const fentry of filter)
             {
                 if (typeof fentry.is !== "undefined" && thisData[fentry.key as string] != fentry.is)
                 {
-                    doContinue = true;
+                    discardThis = true;
                     break;
                 }
             }
-            if (doContinue) continue;
         }
 
-        if (!thisData[indexKey]) throw new Error("CSV index not found!");
-        if (data[thisData[indexKey]]) throw new Error("Duplicate index encountered!");
+        if (!discardThis)
+        {
+            if (!thisData[indexKey]) throw new Error("CSV index not found!");
+            if (data[thisData[indexKey]]) throw new Error("Duplicate index encountered!");
+            data[thisData[indexKey]] = thisData as T;
+        }
 
-        data[thisData[indexKey]] = thisData as T;
+        nextStartPos = entryEndPos + 1;
     }
 
     return data;
+}
+
+/**
+ * Read WoW DBC CSV file.
+ * @param path 
+ * @param indexKey 
+ * @param filter 
+ * @returns 
+ */
+export function readDBCSV<T>(path: string, indexKey: string, filter?: { key: keyof T, is: any }[]): { [index: string]: T }
+{
+    let csvString = fs.readFileSync(path, "utf8").trim().replace(/\r/g, "");
+    return readDBCSVString(csvString, indexKey, filter);
 }
 
 /**
@@ -121,23 +137,24 @@ export function readDBCSV<T>(path: string, indexKey: string, filter?: { key: key
  */
 export function readDBCSVtoMap<V extends object>(path: string, index: string): Map<number, V>
 {
-    let raw = fs.readFileSync(path, "utf8");
-    raw = raw.replace(/"(.|\r|\n)*?"/g, (subs) => subs.replace(/\r|\n/g, ""));
+    let csvString = fs.readFileSync(path, "utf8").trim().replace(/\r/g, "");
 
-    const lines = raw.replace("\r", "").split("\n");
-    const headers = lines[0].split(",");
+    const [headers, headersEnd] = parseNextEntry(csvString, 0);
+    const fieldCount = headers.length;
+
     const data: Map<number, V> = new Map<number, V>();
 
-    for (let i = 1; i < lines.length; i++)
+    let nextStartPos = headersEnd + 1;
+    while (nextStartPos < csvString.length)
     {
-        if (lines[i].length < 2) continue;
+        const [fields, entryEndPos] = parseNextEntry(csvString, nextStartPos);
+        if (fields.length != fieldCount)
+            throw new Error(`Invalid field count for fields at pos ${nextStartPos}!`);
 
-        const fields = parseLine(lines[i]);
         const thisData: { [index: string]: number | string } = {};
-
-        for (let j = 0; j < headers.length; j++)
+        for (let i = 0; i < headers.length; i++)
         {
-            thisData[headers[j]] = parseField(fields[j]);
+            thisData[headers[i]] = parseField(fields[i]);
         }
 
         const key = thisData[index];
@@ -147,6 +164,8 @@ export function readDBCSVtoMap<V extends object>(path: string, index: string): M
         if (data.has(key)) throw new Error("Duplicate index encountered!");
 
         data.set(key, thisData as V);
+
+        nextStartPos = entryEndPos + 1;
     }
 
     return data;

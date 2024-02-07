@@ -7,7 +7,7 @@ interface IHotFix
 }
 
 const hotFixes: IHotFix[] = [
-    {
+    /* {
         name: "Void Plague 200% increase",
         func: sd =>
         {
@@ -66,7 +66,7 @@ const hotFixes: IHotFix[] = [
             }
             return false;
         }
-    },
+    }, */
 ];
 
 /**
