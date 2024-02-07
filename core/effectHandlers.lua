@@ -406,6 +406,7 @@ dummyAuraHandlers[GetSpellInfo(12051)] = Evocation;
 
 if _addon.IS_CLASSIC then
     dummyAuraHandlers[GetSpellInfo(401859)] = PoM_ES; -- Prayer of Mending
+    dummyAuraHandlers[GetSpellInfo(407676)] = ArcaneTorrent; -- Crusader Strike mana restore
 else
     dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
     dummyAuraHandlers[GetSpellInfo(48505)] = Starfall;
