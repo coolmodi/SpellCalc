@@ -2542,6 +2542,7 @@ _addon.spellClassSet = {
             412230, -- Fire Ward(Rank 3)
             412231, -- Fire Ward(Rank 4)
             412232, -- Fire Ward(Rank 5)
+            425225, -- Fire Damage Check
         },
         [16] = {
             2948, -- Scorch(Rank 1)
@@ -2740,6 +2741,8 @@ _addon.spellClassSet = {
             30092, -- Blast Wave
             31378, -- Worm Blast
             400640, -- Ice Lance
+            425225, -- Fire Damage Check
+            434443, -- Pyroblast
         },
         [262144] = {
             118, -- Polymorph(Rank 1)
@@ -2775,6 +2778,7 @@ _addon.spellClassSet = {
             28271, -- Polymorph(Turtle)
             28272, -- Polymorph(Pig)
             29124, -- Polymorph
+            428741, -- Molten Armor
         },
         [524288] = {
             10, -- Blizzard(Rank 1)
@@ -2847,6 +2851,7 @@ _addon.spellClassSet = {
             412207, -- Frost Ward(Rank 3)
             412209, -- Frost Ward(Rank 4)
             412210, -- Frost Ward(Rank 5)
+            412532, -- Spellfrost Bolt
         },
         [1048576] = {
             116, -- Frostbolt(Rank 1)
@@ -2883,6 +2888,8 @@ _addon.spellClassSet = {
             29163, -- Copy of Frostbolt(Rank 1)
             30095, -- Cone of Cold
             350025, -- Frostbolt
+            401502, -- Frostfire Bolt
+            412532, -- Spellfrost Bolt
         },
         [2097152] = {
             7268, -- Arcane Missile(Rank 1)
@@ -2907,6 +2914,7 @@ _addon.spellClassSet = {
             17274, -- Pyroblast
             18809, -- Pyroblast(Rank 8)
             20228, -- Pyroblast
+            434443, -- Pyroblast
         },
         [8388608] = {
             11113, -- Blast Wave(Rank 1)
@@ -3035,6 +3043,12 @@ _addon.spellClassSet = {
             400574, -- Arcane Blast
             400613, -- Living Bomb
             400640, -- Ice Lance
+            401502, -- Frostfire Bolt
+            412532, -- Spellfrost Bolt
+            428878, -- Balefire Bolt
+            434443, -- Pyroblast
+            435849, -- Conjure Comprehension Charms
+            436516, -- Chronostatic Preservation
         },
         [2147483648] = {
             66, -- Lesser Invisibility
@@ -3112,9 +3126,13 @@ _addon.spellClassSet = {
             29124, -- Polymorph
             412113, -- Remove Greater Curse
             425124, -- Arcane Surge
+            435849, -- Conjure Comprehension Charms
         },
     },
     [2] = {
+        [4096] = {
+            401502, -- Frostfire Bolt
+        },
         [16384] = {
             425121, -- Icy Veins
             429125, -- Icy Veins
@@ -3125,10 +3143,25 @@ _addon.spellClassSet = {
         [131072] = {
             400613, -- Living Bomb
         },
+        [1048576] = {
+            428739, -- Deep Freeze
+        },
     },
     [3] = {
         [8] = {
+            401502, -- Frostfire Bolt
+            412532, -- Spellfrost Bolt
             429125, -- Icy Veins
+        },
+        [32] = {
+            428917, -- Deep Freeze
+        },
+        [64] = {
+            412532, -- Spellfrost Bolt
+        },
+        [256] = {
+            436516, -- Chronostatic Preservation
+            436517, -- Chronostatic Preservation
         },
         [4096] = {
             412510, -- Mass Regeneration
@@ -3137,6 +3170,9 @@ _addon.spellClassSet = {
             401556, -- Living Flame
             401558, -- Living Flame
         },
+        [16777216] = {
+            428885, -- Temporal Anomaly
+        },
         [268435456] = {
             425124, -- Arcane Surge
         },
@@ -3144,6 +3180,20 @@ _addon.spellClassSet = {
     [4] = {
         [2] = {
             401417, -- Regeneration
+        },
+        [16384] = {
+            428878, -- Balefire Bolt
+        },
+        [33554432] = {
+            1459, -- Arcane Intellect(Rank 1)
+            1460, -- Arcane Intellect(Rank 2)
+            1461, -- Arcane Intellect(Rank 3)
+            10156, -- Arcane Intellect(Rank 4)
+            10157, -- Arcane Intellect(Rank 5)
+            364161, -- Arcane Intellect(Rank 2)
+        },
+        [536870912] = {
+            436517, -- Chronostatic Preservation
         },
     },
 };

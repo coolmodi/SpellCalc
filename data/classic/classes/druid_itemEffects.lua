@@ -143,3 +143,11 @@ _addon.itemEffects[23197] = { -- Idol of the Moon
     },
 }
 
+_addon.itemEffects[216490] = { -- Idol of Wrath
+    {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+        affectSpell = {1, 0, 0, 0},
+        value = 2,
+    },
+}
+

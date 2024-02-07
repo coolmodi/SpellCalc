@@ -180,7 +180,7 @@ _addon.itemEffects[209574] = { -- Discarded Tenets of the Silver Hand
     {
         type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
         affectMask = 32,
-        value = 1,
+        value = 0,
     },
 }
 

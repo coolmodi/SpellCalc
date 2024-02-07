@@ -142,7 +142,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
-                affectSpell = {240, 100663312, 0, 0},
+                affectSpell = {240, 1174405136, 16777216, 0},
                 perPoint = 2,
             },
         }

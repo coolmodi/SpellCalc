@@ -172,3 +172,17 @@ _addon.itemEffects[209575] = { -- Carved Driftwood Icon
     },
 }
 
+_addon.itemEffects[212996] = { -- Lightningcaller's Bindings
+    {
+        type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+        value = 1,
+    },
+}
+
+_addon.itemEffects[212997] = { -- Tidecaller's Bindings
+    {
+        type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+        value = 3,
+    },
+}
+

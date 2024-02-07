@@ -3273,7 +3273,7 @@ _addon.itemEffects = {
         {
             type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_DAMAGE,
             affectMask = 1,
-            value = 5,
+            value = 4,
         },
     },
     [211423] = { -- Void-Touched Leather Gloves
@@ -3326,6 +3326,266 @@ _addon.itemEffects = {
         {
             type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 4,
+        },
+    },
+    [213319] = { -- Machinist's Gloves
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER,
+            affectMask = 256,
+            value = 30,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_FLAT_ATTACKPOWER_RANGED,
+            affectMask = 256,
+            value = 30,
+        },
+    },
+    [213320] = { -- Fingers of Arcane Accuracy
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213318] = { -- Ornate Dark Iron Bangles
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213285] = { -- Lev's Oil-Stained Bindings
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 3,
+        },
+    },
+    [213338] = { -- Electromantic Grounding Boots
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [213332] = { -- Insulated Legguards
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213354] = { -- Staff of the Evil Genius
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213334] = { -- Electromantic Gambeson
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [213333] = { -- Electromantic Chausses
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213328] = { -- Hyperconductive Pantaloons
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 6,
+        },
+    },
+    [213324] = { -- Electromagnetic Waistcord
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213325] = { -- Darkvision Girdle
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213321] = { -- Volatile Concoction Belt
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213414] = { -- Mech-Mender's Sash
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [213310] = { -- Hyperconductive Shimmershirt
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 6,
+        },
+    },
+    [213312] = { -- Insulated Apron
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213303] = { -- Lightning Rod Spaulders
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [213417] = { -- Truesilver Filament Coif
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 5,
+        },
+    },
+    [213309] = { -- Cloak of Invention
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 2,
+        },
+    },
+    [213349] = { -- Gniodine Pill Bottle
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [213346] = { -- Pendant of Homecoming
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 3,
+        },
+    },
+    [213283] = { -- Hypercharged Gear of Conflagration
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [213282] = { -- Hypercharged Gear of Innovation
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 3,
+        },
+    },
+    [213412] = { -- Dielectric Safety Shield
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [215378] = { -- Irradiated Boots
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [215379] = { -- Irradiated Trousers
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [213330] = { -- H.A.Z.A.R.D. Legplates
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [215382] = { -- Rad-Resistant Scale Hood
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [215166] = { -- Glowing Gneuro-Linked Cowl
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
+        },
+    },
+    [215111] = { -- Gneuro-Linked Arcano-Filament Monocle
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 4,
+        },
+    },
+    [215115] = { -- Hyperconductive Goldwrap
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+            value = 1,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 1,
         },
     },
 }

@@ -128,7 +128,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
-                affectSpell = {1475, 0, 8388672, 0},
+                affectSpell = {1475, 0, 8388688, 0},
                 perPoint = 1,
             },
         }
@@ -140,7 +140,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
-                affectSpell = {448, 0, 8388672, 0},
+                affectSpell = {448, 0, 8388688, 0},
                 perPoint = 2,
             },
         }

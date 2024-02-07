@@ -217,6 +217,68 @@ _addon.itemSetData = {
             },
         }
     },
+    [1586] = {
+        name = "Insulated Sorceror's Leathers",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {5, 0, 0, 0},
+                value = 2,
+                need = 3,
+            },
+        }
+    },
+    [1587] = {
+        name = "Hyperconductive Wizard's Attire",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 2,
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value = 1,
+                need = 2,
+            },
+        }
+    },
+    [1588] = {
+        name = "Hyperconductive Mender's Meditation",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+                value = 7,
+                need = 3,
+            },
+        }
+    },
+    [1589] = {
+        name = "H.A.Z.A.R.D. Suit",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE,
+                value = 1,
+                need = 3,
+            },
+            {
+                type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+                value = 1,
+                need = 3,
+            },
+        }
+    },
+    [1592] = {
+        name = "Shockforged Warplate",
+        effects = {
+            {
+                type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+                affectSpell = {2097152, 65536, 0, 0},
+                value = 2,
+                need = 3,
+            },
+        }
+    },
 }
 
 ---@type SetItemDataTable
@@ -290,4 +352,19 @@ _addon.setItemData = {
     [211507] = 1579,
     [211508] = 1579,
     [211509] = 1579,
+    [213312] = 1586,
+    [213331] = 1586,
+    [213342] = 1586,
+    [213311] = 1587,
+    [213336] = 1587,
+    [213329] = 1587,
+    [213310] = 1588,
+    [213328] = 1588,
+    [213337] = 1588,
+    [213316] = 1589,
+    [213330] = 1589,
+    [213335] = 1589,
+    [216486] = 1592,
+    [216485] = 1592,
+    [216484] = 1592,
 }

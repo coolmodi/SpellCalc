@@ -290,3 +290,10 @@ _addon.itemEffects[23317] = { -- Lieutenant Commander's Satin Mantle
     },
 }
 
+_addon.itemEffects[216519] = { -- Sanguine Shadow Band
+    {
+        type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+        value = 3,
+    },
+}
+

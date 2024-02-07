@@ -2680,7 +2680,7 @@ _addon.spellInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 4,
-                valueBase = 93,
+                valueBase = 74,
                 valueRange = 0,
                 coef = 0.42899999022,
                 coefAP = 0,
@@ -2697,8 +2697,8 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                valueBase = 162,
-                valueRange = 18,
+                valueBase = 130,
+                valueRange = 14,
                 coef = 0.21400000155,
                 coefAP = 0,
             },
@@ -2714,9 +2714,9 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 261,
-                valueRange = 44,
-                coef = 0.42899999022,
+                valueBase = 532,
+                valueRange = 88,
+                coef = 0.64300000668,
                 coefAP = 0,
             },
         }
@@ -2779,7 +2779,7 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 10,
-                valueBase = 106,
+                valueBase = 85,
                 valueRange = 0,
                 coef = 0.28499999642,
                 coefAP = 0,
@@ -3152,9 +3152,6 @@ _addon.spellClassSet = {
             19284, -- Hex of Weakness(Rank 5)
             19285, -- Hex of Weakness(Rank 6)
             25816, -- Hex of Weakness(Rank 6)
-            402791, -- Curse of Shadow
-            402792, -- Curse of the Elements
-            402794, -- Curse of Tongues
         },
         [134217728] = {
             15007, -- Resurrection Sickness
@@ -3192,6 +3189,8 @@ _addon.spellClassSet = {
             25808, -- Dispel
             27870, -- Lightwell(Rank 2)
             27871, -- Lightwell(Rank 3)
+            34433, -- Shadowfiend
+            401977, -- Shadowfiend
             402799, -- Homunculi
             402801, -- Homunculi
             402802, -- Homunculi
@@ -3273,6 +3272,7 @@ _addon.spellClassSet = {
             28419, -- General's Warcry
             28420, -- General's Warcry
             30238, -- Lordaeron's Blessing
+            402004, -- Pain Suppression
             421248, -- Shadowguard(Rank 1)
         },
     },
@@ -3293,12 +3293,18 @@ _addon.spellClassSet = {
             401877, -- Prayer of Mending
             401880, -- Prayer of Mending
         },
+        [256] = {
+            34433, -- Shadowfiend
+            401977, -- Shadowfiend
+        },
+        [2048] = {
+            15473, -- Shadowform
+        },
         [4096] = {
+            402004, -- Pain Suppression
             402362, -- White
             402368, -- Black
-            402791, -- Curse of Shadow
-            402792, -- Curse of the Elements
-            402794, -- Curse of Tongues
+            431624, -- Divine Aegis
         },
         [8192] = {
             401962, -- Shadow Word: Death
@@ -3310,6 +3316,9 @@ _addon.spellClassSet = {
             402277, -- Penance
             402289, -- Penance
         },
+        [262144] = {
+            425294, -- Dispersion
+        },
         [524288] = {
             413260, -- Mind Sear
         },
@@ -3319,15 +3328,30 @@ _addon.spellClassSet = {
         [8388608] = {
             402174, -- Penance
         },
+        [16777216] = {
+            431624, -- Divine Aegis
+        },
+        [268435456] = {
+            402004, -- Pain Suppression
+        },
     },
     [3] = {
         [128] = {
             402261, -- Penance
             402277, -- Penance
         },
+        [512] = {
+            425284, -- Spirit of the Redeemer
+        },
         [1024] = {
             401859, -- Prayer of Mending
             401877, -- Prayer of Mending
+            402004, -- Pain Suppression
+            425294, -- Dispersion
+            431624, -- Divine Aegis
+        },
+        [65536] = {
+            431655, -- Mind Spike
         },
         [16777216] = {
             425207, -- Power Word: Barrier
@@ -3339,8 +3363,20 @@ _addon.spellClassSet = {
         },
     },
     [4] = {
+        [1024] = {
+            431681, -- Void Zone
+            431690, -- Void Zone
+        },
         [268435456] = {
             425204, -- Void Plague
+        },
+        [536870912] = {
+            1243, -- Power Word: Fortitude(Rank 1)
+            1244, -- Power Word: Fortitude(Rank 2)
+            1245, -- Power Word: Fortitude(Rank 3)
+            2791, -- Power Word: Fortitude(Rank 4)
+            10937, -- Power Word: Fortitude(Rank 5)
+            10938, -- Power Word: Fortitude(Rank 6)
         },
     },
 };

@@ -1868,7 +1868,7 @@ _addon.spellInfo = {
     [408507] = { -- Lava Lash
         spellLevel = 1,
         maxLevel = 0,
-        baseCostPct = 4,
+        baseCostPct = 1,
         school = 3,
         defType = 2,
         equippedWeaponMask = 173555,
@@ -1948,6 +1948,7 @@ _addon.spellClassSet = {
             408474, -- Lightning Bolt(Rank 8)
             408475, -- Lightning Bolt(Rank 9)
             408477, -- Lightning Bolt(Rank 10)
+            434357, -- Harness Lightning
         },
         [2] = {
             421, -- Chain Lightning(Rank 1)
@@ -1958,6 +1959,7 @@ _addon.spellClassSet = {
             408481, -- Chain Lightning(Rank 2)
             408482, -- Chain Lightning(Rank 3)
             408484, -- Chain Lightning(Rank 4)
+            434357, -- Harness Lightning
         },
         [4] = {
             8187, -- Magma Totem(Rank 1)
@@ -2028,6 +2030,7 @@ _addon.spellClassSet = {
             416244, -- Chain Heal(Rank 1)
             416245, -- Chain Heal(Rank 2)
             416246, -- Chain Heal(Rank 3)
+            436376, -- Chain Heal Cost Reduced
         },
         [512] = {
             20608, -- Reincarnation(Passive)
@@ -2051,6 +2054,14 @@ _addon.spellClassSet = {
             26369, -- Lightning Shield(Rank 5)
             26370, -- Lightning Shield(Rank 6)
             27635, -- Lightning Shield
+            432129, -- Rolling Thunder
+            432143, -- Lightning Shield(Rank 1)
+            432144, -- Lightning Shield(Rank 2)
+            432145, -- Lightning Shield(Rank 3)
+            432146, -- Lightning Shield(Rank 4)
+            432147, -- Lightning Shield(Rank 5)
+            432148, -- Lightning Shield(Rank 6)
+            432149, -- Lightning Shield(Rank 7)
         },
         [2048] = {
             2645, -- Ghost Wolf
@@ -2157,6 +2168,8 @@ _addon.spellClassSet = {
             8236, -- Windfury Weapon(Rank 2)
             10484, -- Windfury Weapon(Rank 3)
             16361, -- Windfury Weapon(Rank 4)
+            439440, -- Windfury Weapon(Rank 1)
+            439441, -- Windfury Weapon(Rank 1)
         },
         [16777216] = {
             8034, -- Frostbrand Attack(Rank 1)
@@ -2192,6 +2205,7 @@ _addon.spellClassSet = {
             16191, -- Mana Tide(Rank 1)
             17355, -- Mana Tide(Rank 2)
             17360, -- Mana Tide(Rank 3)
+            425876, -- Decoy Totem
         },
         [134217728] = {
             1535, -- Fire Nova Totem(Rank 1)
@@ -2209,6 +2223,7 @@ _addon.spellClassSet = {
             10447, -- Flame Shock(Rank 4)
             10448, -- Flame Shock(Rank 5)
             29228, -- Flame Shock(Rank 6)
+            436286, -- Flame Shock Cost Reduced
         },
         [536870912] = {
             1535, -- Fire Nova Totem(Rank 1)
@@ -2265,6 +2280,7 @@ _addon.spellClassSet = {
             25908, -- Tranquil Air Totem
             27621, -- Windfury Totem(Rank 3)
             27623, -- Fire Nova Totem(Rank 5)
+            425874, -- Decoy Totem
         },
         [1073741824] = {
             3606, -- Attack(Rank 1)
@@ -2283,6 +2299,10 @@ _addon.spellClassSet = {
             11306, -- Fire Nova(Rank 4)
             11307, -- Fire Nova(Rank 5)
             25002, -- Spirit Disruption
+            408424, -- Fire Nova(Rank 2)
+            408426, -- Fire Nova(Rank 3)
+            408427, -- Fire Nova(Rank 4)
+            408428, -- Fire Nova(Rank 5)
         },
         [2147483648] = {
             8056, -- Frost Shock(Rank 1)
@@ -2310,6 +2330,9 @@ _addon.spellClassSet = {
             526, -- Cure Poison
             2870, -- Cure Disease
         },
+        [16] = {
+            17364, -- Stormstrike(Rank 1)
+        },
         [32] = {
             408510, -- Water Shield
         },
@@ -2321,6 +2344,12 @@ _addon.spellClassSet = {
             408490, -- Lava Burst
             408491, -- Lava Burst
         },
+        [262144] = {
+            408341, -- Fire Nova(Rank 1)
+            408342, -- Fire Nova(Rank 2)
+            408343, -- Fire Nova(Rank 3)
+            408345, -- Fire Nova(Rank 5)
+        },
     },
     [3] = {
         [4] = {
@@ -2330,14 +2359,28 @@ _addon.spellClassSet = {
             379, -- Earth Shield
             408519, -- Earth Shield
         },
+        [256] = {
+            439431, -- Windfury Weapon(Rank 1)
+        },
+        [512] = {
+            408498, -- Maelstrom Weapon
+        },
         [1048576] = {
             415236, -- Healing Rain
         },
         [8388608] = {
             415242, -- Healing Rain
         },
+        [268435456] = {
+            425858, -- Ancestral Awakening
+            425861, -- Ancestral Awakening
+            425864, -- Ancestral Awakening
+        },
     },
     [4] = {
+        [16] = {
+            408505, -- Maelstrom Weapon
+        },
         [1073741824] = {
             425339, -- Molten Blast
         },

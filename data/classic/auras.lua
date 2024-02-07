@@ -137,7 +137,7 @@ _addon.aurasPlayer = {
     [12042] = { -- Arcane Power
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-            affectSpell = {551686903, 69632, 268697664, 524288},
+            affectSpell = {551686903, 69632, 268697696, 540672},
             value = 30,
         },
         {
@@ -1760,7 +1760,7 @@ _addon.aurasPlayer = {
     [400573] = { -- Arcane Blast
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-            affectSpell = {4096, 32768, 268959744, 0},
+            affectSpell = {4096, 32768, 268960064, 0},
             value = 15,
             hasStacks = true,
         },
@@ -1769,6 +1769,13 @@ _addon.aurasPlayer = {
             affectSpell = {0, 0, 4096, 2},
             value = 15,
             hasStacks = true,
+        },
+    },
+    [400589] = { -- Missile Barrage
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_TICKPERIOD,
+            affectSpell = {2048, 0, 0, 0},
+            value = -500,
         },
     },
     [401990] = { -- Shadowcrawl
@@ -1831,6 +1838,13 @@ _addon.aurasPlayer = {
             value = -500,
         },
     },
+    [412322] = { -- Spell Power
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
+            affectSpell = {551686903, 102472, 0, 0},
+            value = 50,
+        },
+    },
     [412326] = { -- Enlightenment
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -1858,6 +1872,20 @@ _addon.aurasPlayer = {
             hasStacks = true,
         },
     },
+    [415058] = { -- Guarded by the Light
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {24576, 65536, 0, 0},
+            value = -50,
+        },
+    },
+    [415423] = { -- Aspect of the Viper
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 127,
+            value = -10,
+        },
+    },
     [417045] = { -- Tiger's Fury
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -1865,11 +1893,31 @@ _addon.aurasPlayer = {
             value = 15,
         },
     },
+    [420536] = { -- Stealth
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = -100,
+        },
+    },
     [422978] = { -- Coward!
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = -20,
+        },
+    },
+    [34074] = { -- Aspect of the Viper
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 127,
+            value = -50,
+        },
+    },
+    [425098] = { -- Master of Subtlety
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 127,
+            value = 10,
         },
     },
     [425234] = { -- Orbs of Shadow
@@ -1890,7 +1938,21 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 1,
-            value = 20,
+            value = 10,
+        },
+    },
+    [426303] = { -- Grimoire of Synergy
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 127,
+            value = 5,
+        },
+    },
+    [426311] = { -- Shadow and Flame
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 36,
+            value = 10,
         },
     },
     [426489] = { -- Manifesting Dreams
@@ -1901,11 +1963,32 @@ _addon.aurasPlayer = {
             hasStacks = true,
         },
     },
+    [427066] = { -- Enrage
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 1,
+            value = 10,
+        },
+    },
+    [53672] = { -- Infusion of Light
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {-2147483648, 0, 0, 0},
+            value = 10,
+        },
+    },
     [428489] = { -- Planar Shift
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
             value = -30,
+        },
+    },
+    [428738] = { -- Advanced Warding
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_EFFECT,
+            affectSpell = {33032, 0, 0, 0},
+            value = 100,
         },
     },
     [429868] = { -- Void Madness
@@ -1940,6 +2023,19 @@ _addon.aurasPlayer = {
             value = 1,
         },
     },
+    [431111] = { -- Boon of Blackfathom
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 3,
+        },
+    },
+    [432041] = { -- Tidal Waves
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_CRIT_CHANCE,
+            affectSpell = {128, 0, 0, 0},
+            value = 25,
+        },
+    },
     [432069] = { -- Tangled Causality
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -1951,6 +2047,60 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 50,
+        },
+    },
+    [434851] = { -- Minor Evocation
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 375,
+        },
+    },
+    [434907] = { -- Amplified Circuitry
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 1,
+            value = 25,
+        },
+    },
+    [434941] = { -- Toxic Vigor
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 127,
+            value = 25,
+            hasStacks = true,
+        },
+    },
+    [435167] = { -- Miniaturized Combustion Chamber
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 5,
+        },
+    },
+    [435168] = { -- Guard of the Innovator
+        {
+            type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
+            value = 12,
+        },
+    },
+    [436387] = { -- Blessing of the Blood Loa
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 127,
+            value = 8,
+        },
+    },
+    [436641] = { -- Blood Moon Copy
+        {
+            type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
+            value = 0,
+        },
+    },
+    [437713] = { -- Blood Craze
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
+            affectMask = 127,
+            value = 1,
+            hasStacks = true,
         },
     },
 }

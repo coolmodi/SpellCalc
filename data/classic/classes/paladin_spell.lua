@@ -1563,6 +1563,7 @@ _addon.spellInfo = {
         duration = 10,
         baseCostPct = 26,
         school = 2,
+        isBinary = true,
         defType = 3,
         useScalingFormula = "815damagepower",
         effects = {
@@ -1592,7 +1593,7 @@ _addon.spellInfo = {
             },
             [2] = {
                 effectType = 137,
-                valueBase = 2,
+                valueBase = 5,
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
@@ -1747,6 +1748,9 @@ _addon.spellClassSet = {
             20923, -- Consecration(Rank 4)
             20924, -- Consecration(Rank 5)
             26573, -- Consecration(Rank 1)
+            429139, -- Wrath
+            429142, -- Fanaticism
+            429152, -- Improved Hammer of Wrath
         },
         [64] = {
             465, -- Devotion Aura(Rank 1)
@@ -1997,8 +2001,17 @@ _addon.spellClassSet = {
             415072, -- Exorcism(Rank 5)
             415073, -- Exorcism(Rank 6)
         },
+        [128] = {
+            24239, -- Hammer of Wrath(Rank 3)
+            24274, -- Hammer of Wrath(Rank 2)
+            24275, -- Hammer of Wrath(Rank 1)
+            429151, -- Hammer of Wrath
+        },
         [8192] = {
             409324, -- Ancestral Guidance
+        },
+        [16384] = {
+            415058, -- Guarded by the Light
         },
         [32768] = {
             407676, -- Crusader Strike
@@ -2012,17 +2025,72 @@ _addon.spellClassSet = {
             407778, -- Divine Storm
             407782, -- Divine Storm
         },
+        [524288] = {
+            53601, -- Sacred Shield(Rank 1)
+            58597, -- Sacred Shield(Rank 1)
+        },
+        [2097152] = {
+            2812, -- Holy Wrath(Rank 1)
+            10318, -- Holy Wrath(Rank 2)
+            429145, -- Holy Wrath(Rank 1)
+            429146, -- Holy Wrath(Rank 2)
+        },
         [16777216] = {
             407613, -- Beacon of Light
             407615, -- Beacon of Light
         },
+        [2147483648] = {
+            415058, -- Guarded by the Light
+        },
     },
     [3] = {
+        [1] = {
+            415058, -- Guarded by the Light
+        },
+        [2] = {
+            53489, -- The Art of War
+        },
         [4] = {
             407804, -- Divine Sacrifice
         },
+        [65536] = {
+            1038, -- Blessing of Salvation
+            19740, -- Blessing of Might(Rank 1)
+            19742, -- Blessing of Wisdom(Rank 1)
+            19834, -- Blessing of Might(Rank 2)
+            19835, -- Blessing of Might(Rank 3)
+            19836, -- Blessing of Might(Rank 4)
+            19837, -- Blessing of Might(Rank 5)
+            19838, -- Blessing of Might(Rank 6)
+            19850, -- Blessing of Wisdom(Rank 2)
+            19852, -- Blessing of Wisdom(Rank 3)
+            19853, -- Blessing of Wisdom(Rank 4)
+            19854, -- Blessing of Wisdom(Rank 5)
+            19977, -- Blessing of Light(Rank 1)
+            19978, -- Blessing of Light(Rank 2)
+            19979, -- Blessing of Light(Rank 3)
+            20217, -- Blessing of Kings
+            20911, -- Blessing of Sanctuary(Rank 1)
+            20912, -- Blessing of Sanctuary(Rank 2)
+            20913, -- Blessing of Sanctuary(Rank 3)
+            20914, -- Blessing of Sanctuary(Rank 4)
+            25290, -- Blessing of Wisdom(Rank 6)
+            25291, -- Blessing of Might(Rank 7)
+        },
+        [536870912] = {
+            25902, -- Holy Shock(Rank 3)
+            25911, -- Holy Shock(Rank 2)
+            25912, -- Holy Shock(Rank 1)
+        },
     },
     [4] = {
+        [64] = {
+            20911, -- Blessing of Sanctuary(Rank 1)
+            20912, -- Blessing of Sanctuary(Rank 2)
+            20913, -- Blessing of Sanctuary(Rank 3)
+            20914, -- Blessing of Sanctuary(Rank 4)
+            25899, -- Greater Blessing of Sanctuary(Rank 1)
+        },
         [2147483648] = {
             407627, -- Righteous Fury
         },

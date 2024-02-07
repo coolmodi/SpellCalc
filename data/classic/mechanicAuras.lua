@@ -81,7 +81,9 @@ _addon.mechanicAuras = {
     [412609] = 15, -- Deep Wound
     [414644] = 15, -- Lacerate
     [417448] = 15, -- Thrash (Cat)
+    [424573] = 15, -- Wounded
     [430723] = 15, -- Triple Puncture
+    [436332] = 15, -- Exsanguination
     [1824] = 15, -- Rake
     [1823] = 15, -- Rake
     [1822] = 15, -- Rake
@@ -91,4 +93,5 @@ _addon.mechanicAuras = {
     [9904] = 15, -- Rake
     [9894] = 15, -- Rip
     [417441] = 15, -- Thrash (Bear)
+    [424785] = 15, -- Saber Slash
 }

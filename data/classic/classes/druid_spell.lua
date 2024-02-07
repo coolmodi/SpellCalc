@@ -2619,7 +2619,7 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 58,
-                weaponCoef = 3,
+                weaponCoef = 2.7,
                 valueBase = 0,
                 valueRange = 0,
                 coef = 1,
@@ -2631,7 +2631,7 @@ _addon.spellInfo = {
         spellLevel = 1,
         maxLevel = 0,
         duration = 60,
-        baseCost = 200,
+        baseCost = 150,
         school = 1,
         defType = 2,
         effects = {
@@ -2681,7 +2681,7 @@ _addon.spellInfo = {
                 tickPeriod = 1,
                 valueBase = 4,
                 valueRange = 0,
-                coef = 0.05099999905,
+                coef = 0,
                 coefAP = 0,
                 auraStacks = 3,
             },
@@ -2698,7 +2698,7 @@ _addon.spellInfo = {
         spellLevel = 1,
         maxLevel = 0,
         duration = 15,
-        baseCost = 150,
+        baseCost = 100,
         school = 1,
         defType = 2,
         useScalingFormula = "823damagepower",
@@ -2742,7 +2742,7 @@ _addon.spellInfo = {
             },
         }
     },
-    [414687] = { -- Sunfire
+    [414687] = { -- Sunfire(Bear)
         spellLevel = 1,
         maxLevel = 0,
         duration = 12,
@@ -2769,7 +2769,7 @@ _addon.spellInfo = {
             },
         }
     },
-    [414689] = { -- Sunfire
+    [414689] = { -- Sunfire(Cat)
         spellLevel = 1,
         maxLevel = 0,
         duration = 12,
@@ -2799,15 +2799,15 @@ _addon.spellInfo = {
     [417157] = { -- Starsurge
         spellLevel = 1,
         maxLevel = 1,
-        baseCostPct = 3,
+        baseCostPct = 1,
         school = 7,
         defType = 1,
         useScalingFormula = "823damagepower",
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 379,
-                valueRange = 30,
+                valueBase = 381,
+                valueRange = 86,
                 coef = 1,
                 coefAP = 0,
             },
@@ -2912,6 +2912,15 @@ _addon.spellClassSet = {
             9856, -- Regrowth(Rank 7)
             9857, -- Regrowth(Rank 8)
             9858, -- Regrowth(Rank 9)
+            436937, -- Regrowth(Rank 1)
+            436938, -- Regrowth(Rank 2)
+            436939, -- Regrowth(Rank 3)
+            436940, -- Regrowth(Rank 4)
+            436942, -- Regrowth(Rank 5)
+            436943, -- Regrowth(Rank 6)
+            436944, -- Regrowth(Rank 7)
+            436945, -- Regrowth(Rank 8)
+            436946, -- Regrowth(Rank 9)
         },
         [128] = {
             740, -- Tranquility(Rank 1)
@@ -3151,22 +3160,61 @@ _addon.spellClassSet = {
         [1024] = {
             407993, -- Mangle(Cat)
         },
+        [33554432] = {
+            408247, -- Nourish
+        },
         [67108864] = {
             408120, -- Wild Growth
         },
         [268435456] = {
             407988, -- Savage Roar
         },
+        [1073741824] = {
+            22842, -- Frenzied Regeneration(Rank 1)
+            22895, -- Frenzied Regeneration(Rank 2)
+            22896, -- Frenzied Regeneration(Rank 3)
+            428708, -- Frenzied Regeneration
+        },
     },
     [3] = {
+        [1] = {
+            5209, -- Challenging Roar
+        },
         [16] = {
             16979, -- Feral Charge
+        },
+        [64] = {
+            417141, -- Berserk
+        },
+        [2048] = {
+            5217, -- Tiger's Fury(Rank 1)
+            6793, -- Tiger's Fury(Rank 2)
+            9845, -- Tiger's Fury(Rank 3)
+            9846, -- Tiger's Fury(Rank 4)
+            417045, -- Tiger's Fury
         },
         [65536] = {
             407989, -- Savage Roar
         },
+        [8388608] = {
+            17002, -- Feline Swiftness
+            24866, -- Feline Swiftness
+        },
+        [16777216] = {
+            417148, -- Efflorescence
+        },
         [33554432] = {
             417157, -- Starsurge
+        },
+        [536870912] = {
+            1126, -- Mark of the Wild(Rank 1)
+            5232, -- Mark of the Wild(Rank 2)
+            5234, -- Mark of the Wild(Rank 4)
+            6756, -- Mark of the Wild(Rank 3)
+            8907, -- Mark of the Wild(Rank 5)
+            9884, -- Mark of the Wild(Rank 6)
+            9885, -- Mark of the Wild(Rank 7)
+            364163, -- Mark of the Wild(Rank 6)
         },
         [2147483648] = {
             417440, -- Thrash (Bear)
@@ -3179,16 +3227,23 @@ _addon.spellClassSet = {
         },
         [64] = {
             414684, -- Sunfire
-            414687, -- Sunfire
-            414689, -- Sunfire
+            414687, -- Sunfire(Bear)
+            414689, -- Sunfire(Cat)
         },
         [1024] = {
             414683, -- Living Seed
+        },
+        [262144] = {
+            16864, -- Omen of Clarity
         },
         [134217728] = {
             410176, -- Skull Bash
         },
         [1073741824] = {
+            1822, -- Rake(Rank 1)
+            1823, -- Rake(Rank 2)
+            1824, -- Rake(Rank 3)
+            9904, -- Rake(Rank 4)
             417448, -- Thrash (Cat)
         },
     },

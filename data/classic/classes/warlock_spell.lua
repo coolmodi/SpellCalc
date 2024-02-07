@@ -35,6 +35,7 @@ _addon.spellInfo = {
         baseCost = 25,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -172,6 +173,7 @@ _addon.spellInfo = {
         baseCost = 45,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -293,6 +295,7 @@ _addon.spellInfo = {
         baseCost = 90,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -379,6 +382,7 @@ _addon.spellInfo = {
         baseCost = 155,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -797,6 +801,7 @@ _addon.spellInfo = {
         baseCost = 220,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -824,6 +829,7 @@ _addon.spellInfo = {
         baseCost = 295,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -851,6 +857,7 @@ _addon.spellInfo = {
         baseCost = 370,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -1620,6 +1627,7 @@ _addon.spellInfo = {
         baseCost = 380,
         school = 3,
         defType = 1,
+        useScalingFormula = "859mult",
         effects = {
             [1] = {
                 effectType = 2,
@@ -1872,6 +1880,7 @@ _addon.spellClassSet = {
             18376, -- Corruption
             21068, -- Corruption
             25311, -- Corruption(Rank 7)
+            426241, -- Invocation
         },
         [4] = {
             265, -- Area Death (TEST)
@@ -1886,6 +1895,7 @@ _addon.spellClassSet = {
             13716, -- AOD
             25309, -- Immolate(Rank 8)
             30879, -- Permanent Area Damage 50k(QASpell)
+            426245, -- Invocation
         },
         [8] = {
             689, -- Drain Life(Rank 1)
@@ -1955,6 +1965,7 @@ _addon.spellClassSet = {
             11712, -- Curse of Agony(Rank 5)
             11713, -- Curse of Agony(Rank 6)
             28608, -- Test Curse of Agony(Rank 6)
+            426246, -- Invocation
         },
         [2048] = {
             1098, -- Subjugate Demon(Rank 1)
@@ -2145,6 +2156,8 @@ _addon.spellClassSet = {
             23502, -- Summon Succubus
             23503, -- Summon Imp
             25112, -- Summon Voidwalker(Summon)
+            427733, -- Summon Felguard(Summon)
+            427748, -- Summon Felguard
         },
         [1073741824] = {
             6358, -- Seduction
@@ -2185,6 +2198,7 @@ _addon.spellClassSet = {
             18879, -- Siphon Life(Rank 2)
             18880, -- Siphon Life(Rank 3)
             18881, -- Siphon Life(Rank 4)
+            426247, -- Invocation
         },
         [2] = {
             603, -- Curse of Doom
@@ -2192,13 +2206,22 @@ _addon.spellClassSet = {
         [64] = {
             412758, -- Incinerate
         },
+        [256] = {
+            427717, -- Unstable Affliction
+        },
         [1024] = {
             5782, -- Fear(Rank 1)
             6213, -- Fear(Rank 2)
             6215, -- Fear(Rank 3)
         },
+        [2048] = {
+            427719, -- Unstable Affliction
+        },
         [8192] = {
             412729, -- Tamed Pet Passive (DND)
+        },
+        [65536] = {
+            426320, -- Shadowflame
         },
         [131072] = {
             403629, -- Chaos Bolt
@@ -2221,6 +2244,10 @@ _addon.spellClassSet = {
         },
     },
     [3] = {
+        [2] = {
+            426325, -- Shadowflame
+            426331, -- Invocation
+        },
         [8192] = {
             403789, -- Metamorphosis(Shapeshift)
             403816, -- Metamorphosis(Shapeshift)
@@ -2244,6 +2271,17 @@ _addon.spellClassSet = {
         },
         [262144] = {
             425463, -- Demonic Grace
+        },
+        [1048576] = {
+            426301, -- Grimoire of Synergy
+        },
+        [8388608] = {
+            426245, -- Invocation
+        },
+        [33554432] = {
+            698, -- Ritual of Summoning
+            437169, -- Portal of Summoning
+            437311, -- Portal of Summoning
         },
     },
     [4] = {

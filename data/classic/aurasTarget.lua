@@ -3652,28 +3652,11 @@ _addon.aurasTarget = {
             value = 75,
         },
     },
-    [402791] = { -- Curse of Shadow
-        {
-            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-            affectMask = 96,
-            value = 75,
-        },
+    [402004] = { -- Pain Suppression
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = 96,
-            value = 10,
-        },
-    },
-    [402792] = { -- Curse of the Elements
-        {
-            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
-            affectMask = 20,
-            value = 75,
-        },
-        {
-            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
-            affectMask = 20,
-            value = 10,
+            affectMask = 127,
+            value = -40,
         },
     },
     [402818] = { -- Degrade
@@ -3802,11 +3785,61 @@ _addon.aurasTarget = {
             value = -25,
         },
     },
+    [425235] = { -- Polished Iceblock
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 1,
+            value = -17000,
+        },
+    },
+    [425294] = { -- Dispersion
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = -90,
+        },
+    },
     [425336] = { -- Shamanistic Rage
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
             affectMask = 127,
             value = -20,
+        },
+    },
+    [426086] = { -- Electrostatic Discharge Shielding
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 20,
+            value = -135,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 20,
+            value = -25,
+        },
+    },
+    [426097] = { -- Auxiliary Anti-Tamper Mechanism
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 127,
+            value = 25,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = 25,
+        },
+    },
+    [426101] = { -- Central Reaping Function 9000
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 127,
+            value = 25,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = 20,
         },
     },
     [426917] = { -- Nature Form
@@ -3830,11 +3863,25 @@ _addon.aurasTarget = {
             value = -75,
         },
     },
+    [426972] = { -- Vigilance
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = -3,
+        },
+    },
     [427143] = { -- Curse of Vulnerability
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_SPELLPOWER,
             affectMask = 127,
             value = 2,
+        },
+    },
+    [427726] = { -- Immolation Aura
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 126,
+            value = -10,
         },
     },
     [428482] = { -- Shadow Seep
@@ -3850,6 +3897,13 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
             affectMask = 127,
             value = -30,
+        },
+    },
+    [428713] = { -- Barkskin
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 1,
+            value = -20,
         },
     },
     [429541] = { -- Dark Protection
@@ -3892,6 +3946,138 @@ _addon.aurasTarget = {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
             affectMask = 16,
             value = -20,
+        },
+    },
+    [433251] = { -- Static Arc
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            value = 500,
+            affectMechanic = 23,
+        },
+    },
+    [434724] = { -- Radiation Sickness
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 8,
+            value = 50,
+            hasStacks = true,
+        },
+    },
+    [434837] = { -- Puncture Armor
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 1,
+            value = 160,
+        },
+    },
+    [434841] = { -- Mekkatorque's Arcano-Shredder
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 20,
+            value = 45,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 20,
+            value = 6,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 96,
+            value = 45,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 96,
+            value = 6,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 10,
+            value = 45,
+        },
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 10,
+            value = 6,
+        },
+    },
+    [434869] = { -- Shadow Ritual of Sacrifice
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            value = -100,
+            auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_NEGATIVE,
+        },
+    },
+    [435359] = { -- Hardened to the Core
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 1,
+            value = -1000,
+        },
+    },
+    [435973] = { -- Mildly Irradiated
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 41,
+            value = 100,
+        },
+    },
+    [436100] = { -- Petrify
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_RESISTANCE_PCT,
+            affectMask = 1,
+            value = 30,
+        },
+    },
+    [436387] = { -- Blessing of the Blood Loa
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_HEALING_RECIEVED,
+            value = 8,
+            auraCategory = _addon.CONST.DEBUFF_CATEGORY.HEALING_RECIEVED_POSITIVE,
+        },
+    },
+    [436741] = { -- Overheat
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = 25,
+        },
+    },
+    [436835] = { -- Nutty Shield
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = -25,
+        },
+    },
+    [436837] = { -- Widget Fortress
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = -50,
+        },
+    },
+    [437132] = { -- Dreamstate
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 8,
+            value = 20,
+        },
+    },
+    [437377] = { -- Intense Concentration
+        {
+            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_RESISTANCE_PENETRATION,
+            affectMask = 126,
+            value = -50,
+        },
+    },
+    [438727] = { -- Radiation Sickness
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 8,
+            value = 50,
+            hasStacks = true,
         },
     },
 }
