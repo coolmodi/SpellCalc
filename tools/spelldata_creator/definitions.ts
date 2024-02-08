@@ -233,6 +233,7 @@ const enum PowerType {
 
 interface RankInfo {
     school: number,
+    schoolMask: number,
     isChannel: boolean,
     isBinary: boolean,
     gcd: number,

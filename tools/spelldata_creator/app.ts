@@ -40,7 +40,6 @@ const SCHOOL_MASK_TO_ENUM = {
     [SCHOOL_MASK.FROST]: 5,
     [SCHOOL_MASK.SHADOW]: 6,
     [SCHOOL_MASK.ARCANE]: 7,
-    [SCHOOL_MASK.FROST + SCHOOL_MASK.FIRE]: 5 // TODO: Hackfix for FFB, just set as frost, most likely won't do what it should do
 }
 
 const USEFUL_SPELL_MECHANICS: {[sm: number]: boolean} = {
@@ -529,6 +528,17 @@ const effectInfoHandler: {[index: number]: (rankInfo: RankInfo, effect: SpellEff
     },
 }
 
+function schoolMaskToLegacyEnum(mask: number)
+{
+    let school = SCHOOL_MASK_TO_ENUM[SCHOOL_MASK.ARCANE];
+    while (school > 0)
+    {
+        if (mask & 1 << (school - 1)) return school;
+        school--;
+    }
+    throw new Error(`No valid school in mask ${mask}!`);
+}
+
 /**
  * Build spell info data for class
  * @param pclass 
@@ -573,7 +583,8 @@ function buildSpellInfo(pclass: string) {
             let dur = (spellMisc.DurationIndex) ? spellData.getSpellDuration(spellMisc.DurationIndex).Duration / 1000 : 0;
             if (dur < 1 ) dur = 0;
             classInfo.rankInfo[spellId] = {
-                school: SCHOOL_MASK_TO_ENUM[spellMisc.SchoolMask],
+                school: schoolMaskToLegacyEnum(spellMisc.SchoolMask),
+                schoolMask: spellMisc.SchoolMask,
                 isChannel: ((spellMisc["Attributes_1"] & SPELL_ATTR1.SPELL_ATTR_EX_CHANNELED_ANY) > 0),
                 isBinary: false,
                 gcd: spellcd.StartRecoveryTime / 1000,
@@ -669,6 +680,7 @@ end
         if (ri.baseCost > 0) str += `\t\tbaseCost = ${ri.baseCost},\n`;
         if (ri.baseCostPct > 0) str += `\t\tbaseCostPct = ${ri.baseCostPct},\n`;
         str += `\t\tschool = ${ri.school},\n`;
+        str += `\t\tschoolMask = ${ri.schoolMask},\n`;
         if (ri.isChannel) str += `\t\tisChannel = true,\n`;
         if (ri.isBinary) str += `\t\tisBinary = true,\n`;
         if (ri.gcd != 1.5) str += `\t\tGCD = ${ri.gcd},\n`;

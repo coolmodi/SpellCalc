@@ -1991,6 +1991,14 @@ _addon.aurasPlayer = {
             value = 100,
         },
     },
+    [428878] = { -- Balefire Bolt
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {0, 0, 0, 16384},
+            value = 10,
+            hasStacks = true,
+        },
+    },
     [429868] = { -- Void Madness
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,

@@ -179,5 +179,13 @@
   "Ice Lance": 400640,
   "Regeneration": 401417,
   "Mass Regeneration": 412510,
-  "Arcane Surge": 425124
+  "Arcane Surge": 425124,
+
+  "Frostfire Bolt": 401502,
+  "Soellfrost Bolt": 412532,
+  "Chronostatic Preservation": 436516,
+  "Balefire Bolt": 428878,
+  "Molten Armor": 428741,
+  "Deep Freeze": 428739,
+  "Temporal Anomaly": 428885
 }
