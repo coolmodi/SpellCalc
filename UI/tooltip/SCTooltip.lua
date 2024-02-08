@@ -239,6 +239,10 @@ local function GetEffectTitle(flags)
         return L["Absorb"];
     end
 
+    if bit.band(flags, ADDON_EFFECT_FLAGS.MANA_RESTORE) > 0 then
+        return L["Restore"];
+    end
+
     return L["Damage"];
 end
 
