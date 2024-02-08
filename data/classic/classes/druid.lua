@@ -78,7 +78,6 @@ if _addon.IS_CLASSIC_SOD then
         if GetSpellInfo(spellId) == SHRED then
             spellInfo.effects[1].weaponCoef = 3;
             spellInfo.effects[1].valueBase = spellInfo.effects[1].valueBase * 0.75;
-            print("Fix shred " .. spellId .. " B: " .. spellInfo.effects[1].valueBase .. " C: " .. spellInfo.effects[1].weaponCoef)
         end
     end
 end

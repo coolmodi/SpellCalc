@@ -478,7 +478,6 @@ do
     _addon.scripting.RegisterAuraScript("Mage_Armor", function (apply, auraId, fromPlayer, scriptType, cacheValue)
         local name = "MageArmor";
         if apply then
-            print(_addon.scripting.GetValue("Glyph_of_Mage_Armor"))
             local total = 50 + _addon.scripting.GetValue("Glyph_of_Mage_Armor");
             _addon:ApplyAuraEffect(name, mageArmorAura, total, auraId, fromPlayer);
             return total;
