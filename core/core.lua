@@ -760,10 +760,12 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
                     calcedSpell:AddToBuffList(stats.spellModPctSpellScale[spellId].buffs);
                 end
 
-                if spellInfo.maxLevel > 0 and bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) == 0 then
-                    local downrank = math.max(0, (22 + spellInfo.maxLevel - UnitLevel("player")) / 20);
-                    if downrank < 1 then
-                        coef = coef * downrank;
+                if not IS_CLASSIC then
+                    if spellInfo.maxLevel > 0 and bit.band(calcedEffect.effectFlags, ADDON_EFFECT_FLAGS.DUMMY_AURA) == 0 then
+                        local downrank = math.max(0, (22 + spellInfo.maxLevel - UnitLevel("player")) / 20);
+                        if downrank < 1 then
+                            coef = coef * downrank;
+                        end
                     end
                 end
 
