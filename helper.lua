@@ -4,6 +4,7 @@ local _addonName = select(1, ...);
 local _A = select(2, ...);
 
 _A.IS_CLASSIC = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC;
+_A.IS_CLASSIC_SOD = _A.IS_CLASSIC and C_Engraving and C_Engraving.IsEngravingEnabled();
 _A.IS_WRATH = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC;
 
 local util = {};

@@ -186,6 +186,7 @@ const enum SPELL_ATTR3 {
 }
 
 const enum SPELL_ATTR5 {
+    EXTRA_INITIAL_PERIOD = 0x0200,
     SPELL_ATTR_SPELL_HASTE_AFFECTS_PERIODIC = 0x2000,
 }
 
@@ -250,6 +251,7 @@ interface RankInfo {
     baseCost: number,
     baseCostPct: number,
     usePeriodicHaste: boolean,
+    extraTickAtApplication: boolean,
     onNextAttack: boolean,
     isOffhandAttack: boolean,
     useScalingFormula: { label: string, id: number } | undefined,

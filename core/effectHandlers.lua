@@ -4,7 +4,6 @@ local effHandler = _addon.effectHandler;
 local stats = _addon.stats;
 local EFFECT_TYPES = _addon.CONST.SPELL_EFFECT_TYPES;
 local AURA_TYPES = _addon.CONST.SPELL_AURA_TYPES;
-local PENANCE = _addon.IS_CLASSIC and GetSpellInfo(402174) or GetSpellInfo(47540);
 
 ---Fill effect base values.
 ---Fills min, max, avg and avgCombined.
@@ -445,6 +444,10 @@ local function PeriodicDamage(calcedSpell, effNum, spellInfo, spellName, spellId
         calcedEffect.avgCombined = calcedEffect.avg;
     end
 
+    if spellInfo.extraTickAtApplication then
+        calcedEffect.ticks = calcedEffect.ticks + 1;
+    end
+
     local total = calcedEffect.avgCombined * calcedEffect.ticks;
 
     if stats.spellModExtraOnHit[spellId] and stats.spellModExtraOnHit[spellId].val ~= 0 then
@@ -476,6 +479,10 @@ local function PeriodicHeal(calcedSpell, effNum, spellInfo, spellName, spellId)
     local effectData = spellInfo.effects[effNum];
 
     FillBaseValues(calcedSpell, calcedEffect, spellId, spellInfo, spellName, effectData, calcedEffect.flatMod, calcedEffect.modBase, calcedEffect.effectivePower);
+
+    if spellInfo.extraTickAtApplication then
+        calcedEffect.ticks = calcedEffect.ticks + 1;
+    end
 
     calcedEffect.avgAfterMitigation = calcedEffect.avgCombined * calcedEffect.ticks;
 
@@ -584,7 +591,7 @@ local function PeriodicTriggerSpell(calcedSpell, effNum, spellInfo, spellName, s
     local triggeredSpellData = calcedEffect.spellData;
     assert(triggeredSpellData, "triggeredSpellData for ptsa in spell "..spellName.." missing!");
 
-    if spellName == PENANCE then
+    if spellInfo.extraTickAtApplication then
         calcedEffect.ticks = calcedEffect.ticks + 1;
     end
 

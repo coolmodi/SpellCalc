@@ -2875,6 +2875,7 @@ _addon.spellInfo = {
         isChannel = true,
         defType = 0,
         usePeriodicHaste = true,
+        extraTickAtApplication = true,
         useScalingFormula = { id = 810, label = "damagepower" },
         effects = {
             [1] = {
@@ -2990,6 +2991,216 @@ _addon.spellInfo = {
                 valueBase = 117,
                 valueRange = 0,
                 coef = 0.20000000298,
+                coefAP = 0,
+            },
+        }
+    },
+    [425268] = { -- Renew(Rank 1)
+        spellLevel = 8,
+        maxLevel = 13,
+        duration = 15,
+        baseCost = 30,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 9,
+                valueRange = 0,
+                coef = 0.12649999559,
+                coefAP = 0,
+            },
+        }
+    },
+    [425269] = { -- Renew(Rank 2)
+        spellLevel = 14,
+        maxLevel = 19,
+        duration = 15,
+        baseCost = 65,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 20,
+                valueRange = 0,
+                coef = 0.17824999988,
+                coefAP = 0,
+            },
+        }
+    },
+    [425270] = { -- Renew(Rank 3)
+        spellLevel = 20,
+        maxLevel = 25,
+        duration = 15,
+        baseCost = 105,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 35,
+                valueRange = 0,
+                coef = 0.23000000417,
+                coefAP = 0,
+            },
+        }
+    },
+    [425271] = { -- Renew(Rank 4)
+        spellLevel = 26,
+        maxLevel = 31,
+        duration = 15,
+        baseCost = 140,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 49,
+                valueRange = 0,
+                coef = 0.23000000417,
+                coefAP = 0,
+            },
+        }
+    },
+    [425272] = { -- Renew(Rank 5)
+        spellLevel = 32,
+        maxLevel = 37,
+        duration = 15,
+        baseCost = 170,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 63,
+                valueRange = 0,
+                coef = 0.23000000417,
+                coefAP = 0,
+            },
+        }
+    },
+    [425273] = { -- Renew(Rank 6)
+        spellLevel = 38,
+        maxLevel = 43,
+        duration = 15,
+        baseCost = 205,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 80,
+                valueRange = 0,
+                coef = 0.23000000417,
+                coefAP = 0,
+            },
+        }
+    },
+    [425274] = { -- Renew(Rank 7)
+        spellLevel = 44,
+        maxLevel = 49,
+        duration = 15,
+        baseCost = 250,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 102,
+                valueRange = 0,
+                coef = 0.23000000417,
+                coefAP = 0,
+            },
+        }
+    },
+    [425275] = { -- Renew(Rank 8)
+        spellLevel = 50,
+        maxLevel = 55,
+        duration = 15,
+        baseCost = 305,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 130,
+                valueRange = 0,
+                coef = 0.23000000417,
+                coefAP = 0,
+            },
+        }
+    },
+    [425276] = { -- Renew(Rank 9)
+        spellLevel = 56,
+        maxLevel = 61,
+        duration = 15,
+        baseCost = 365,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 162,
+                valueRange = 0,
+                coef = 0.23000000417,
+                coefAP = 0,
+            },
+        }
+    },
+    [425277] = { -- Renew(Rank 10)
+        spellLevel = 60,
+        maxLevel = 65,
+        duration = 15,
+        baseCost = 410,
+        school = 2,
+        schoolMask = 2,
+        defType = 1,
+        extraTickAtApplication = true,
+        effects = {
+            [1] = {
+                effectType = 6,
+                auraType = 8,
+                tickPeriod = 3,
+                valueBase = 194,
+                valueRange = 0,
+                coef = 0.23000000417,
                 coefAP = 0,
             },
         }

@@ -37,6 +37,7 @@ local _addon = select(2, ...);
 ---@field baseCost integer|nil
 ---@field baseCostPct integer|nil
 ---@field usePeriodicHaste boolean|nil
+---@field extraTickAtApplication boolean|nil
 ---@field onNextSwing boolean|nil
 ---@field isOffhandAttack boolean|nil
 ---@field useScalingFormula {id:integer, label:string}|nil
