@@ -154,3 +154,4 @@ L["Level difference to use if no target available."] = "Verwendete Leveldifferen
 -- L["crit"] = "crit";
 -- L["healing"] = "healing";
 -- L["On Hit"] = "On Hit";
+-- L["Restore"] = "Restore";

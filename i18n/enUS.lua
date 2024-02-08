@@ -154,3 +154,4 @@ if L == nil then return end
 -- L["crit"] = "crit";
 -- L["healing"] = "healing";
 -- L["On Hit"] = "On Hit";
+-- L["Restore"] = "Restore";
