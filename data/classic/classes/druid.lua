@@ -58,13 +58,13 @@ if _addon.IS_CLASSIC_SOD then
     -- Rake Modifies Effect #1's Value +50%: (direct)
     table.insert(_addon.classPassives, {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
-        affectSpell = { 0, 0, 1073741824 },
+        affectSpell = { 0, 0, 0, 1073741824 },
         value = 50
     });
     -- Rake Modifies Effect #2's Value +50%: (DoT)
     table.insert(_addon.classPassives, {
         type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
-        affectSpell = { 0, 0, 1073741824 },
+        affectSpell = { 0, 0, 0, 1073741824 },
         value = 50
     });
 
