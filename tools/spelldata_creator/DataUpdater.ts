@@ -75,16 +75,16 @@ function downloadFile(url: string): Promise<string>
     });
 }
 
-async function updateDataFiles(expansion: Expansion, build: string)
+async function updateDataFiles(expansion: Expansion, branch: string)
 {
-    if (!build.match(/\d\.\d+.*\d\d\d\d\d/))
-        throw new Error("Build is probably invalid!");
+    /* if (!build.match(/\d\.\d+.*\d\d\d\d\d/))
+        throw new Error("Build is probably invalid!"); */
 
     const dataDir = getDataDir(expansion);
 
     for (const tableName of dataTables)
     {
-        const url = `https://wago.tools/db2/${tableName}/csv?build=${build}`;
+        const url = `https://wago.tools/db2/${tableName}/csv?branch=${branch}`;
         let data: string;
 
         console.log("Starting download for: " + tableName);
@@ -105,4 +105,9 @@ async function updateDataFiles(expansion: Expansion, build: string)
     }
 }
 
-updateDataFiles("classic", "1.15.1.53247");
+const expArg: string | undefined = process.argv[2];
+
+if (!expArg || expArg != "classic" && expArg != "wotlk")
+    throw new Error("Expansion argument missing or invalid!");
+
+updateDataFiles(expArg, (expArg == "classic") ? "wow_classic_era" : "wow_classic");

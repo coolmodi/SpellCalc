@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "update-tables-classic": "tsc && node ./build/DataUpdater.js classic",
+    "update-tables-wotlk": "tsc && node ./build/DataUpdater.js wotlk",
+    "start": "tsc && node ./build/app.js"
   },
   "author": "coolmodi",
   "devDependencies": {
