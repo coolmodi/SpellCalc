@@ -363,7 +363,9 @@ local function CalcSpell(spellId, calcedSpell, parentSpellData, parentValue)
             calcedSpell:AddToBuffList(stats.spellModGCDms[spellId].buffs);
         end
 
-        GCD = GCD * hasteMult;
+        if not IS_CLASSIC then
+            GCD = GCD * hasteMult;
+        end
 
         if spellInfo.onNextSwing then
             castTime = stats.attackSpeed.mainhand;
