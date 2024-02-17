@@ -296,7 +296,7 @@ _addon.spellInfo = {
                 valueBase = 19,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
             },
             [2] = {
                 effectType = 6,
@@ -305,7 +305,7 @@ _addon.spellInfo = {
                 valueBase = 13,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
                 mechanic = 15,
             },
         }
@@ -325,7 +325,7 @@ _addon.spellInfo = {
                 valueBase = 28,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
             },
             [2] = {
                 effectType = 6,
@@ -334,7 +334,7 @@ _addon.spellInfo = {
                 valueBase = 19,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
                 mechanic = 15,
             },
         }
@@ -354,7 +354,7 @@ _addon.spellInfo = {
                 valueBase = 43,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
             },
             [2] = {
                 effectType = 6,
@@ -363,7 +363,7 @@ _addon.spellInfo = {
                 valueBase = 25,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
                 mechanic = 15,
             },
         }
@@ -2337,7 +2337,7 @@ _addon.spellInfo = {
                 valueBase = 58,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
             },
             [2] = {
                 effectType = 6,
@@ -2346,7 +2346,7 @@ _addon.spellInfo = {
                 valueBase = 32,
                 valueRange = 0,
                 coef = 0,
-                coefAP = 0,
+                coefAP = 0.04,
                 mechanic = 15,
             },
         }
