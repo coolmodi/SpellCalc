@@ -68,16 +68,33 @@ if _addon.IS_CLASSIC_SOD then
         value = 50
     });
 
-    -- Shred
-    -- Modifies Effect #1's Value -25% = WEAPON_DAMAGE = the base dmg
-    -- Modifies Effect #2's Value +75 = WEAPON_PERCENT_DAMAGE
-    -- hackfix it :/
-    -- TODO: ffs why did I not implement effects properly...
+    -- Rip 4s extra duration
+    table.insert(_addon.classPassives, {
+        type = _addon.CONST.EFFECT_TYPE.SPELLMOD_FLAT_DURATION,
+        affectSpell = { 8388608 },
+        value = 4
+    });
+
+    local RAKE = GetSpellInfo(1822);
+    local SWIPE = GetSpellInfo(769);
     local SHRED = GetSpellInfo(5221);
+
+    -- TODO: ffs why did I not implement effects properly...
     for spellId, spellInfo in pairs(_addon.spellInfo) do
         if GetSpellInfo(spellId) == SHRED then
+            -- Shred
+            -- Modifies Effect #1's Value -25% = WEAPON_DAMAGE = the base dmg
+            -- Modifies Effect #2's Value +75 = WEAPON_PERCENT_DAMAGE
+            -- hackfix it :/
             spellInfo.effects[1].weaponCoef = 3;
             spellInfo.effects[1].valueBase = spellInfo.effects[1].valueBase * 0.75;
+        elseif GetSpellInfo(spellId) == RAKE then
+            -- Rake AP coef
+            spellInfo.effects[1].coefAP = 0.04;
+            spellInfo.effects[2].coefAP = 0.04;
+        elseif GetSpellInfo(spellId) == SWIPE then
+            -- Rake AP coef
+            spellInfo.effects[1].coefAP = 0.1;
         end
     end
 end
