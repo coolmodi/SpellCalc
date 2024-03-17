@@ -280,15 +280,22 @@ end
 ---@param effNum integer
 ---@param spellInfo SpellInfo
 ---@param spellName string
-local function DivinePlea(calcedSpell, effNum, spellInfo, spellName)
+local function PctManaPeriodic(calcedSpell, effNum, spellInfo, spellName)
     local calcedEffect = calcedSpell.effects[effNum];
-    calcedEffect.min = stats.manaMax * 0.05;
+    local effectData = spellInfo.effects[effNum];
+
+    local pct = effectData.valueBase / 100;
+    local duration = spellInfo.duration;
+    local period = duration > 10 and 3 or 1;
+    local ticks = math.floor(duration / period)
+
+    calcedEffect.min = stats.manaMax * pct;
     calcedEffect.max = calcedEffect.min;
     calcedEffect.avg = calcedEffect.min;
     calcedEffect.avgCombined = calcedEffect.min;
-    calcedEffect.ticks = 5;
-    calcedEffect.tickPeriod = 3;
-    calcedSpell.duration = 15;
+    calcedEffect.ticks = ticks;
+    calcedEffect.tickPeriod = period;
+    calcedSpell.duration = duration;
     calcedEffect.avgAfterMitigation = calcedEffect.avg * calcedEffect.ticks;
 end
 
@@ -406,10 +413,11 @@ dummyAuraHandlers[GetSpellInfo(12051)] = Evocation;
 if _addon.IS_CLASSIC then
     dummyAuraHandlers[GetSpellInfo(401859)] = PoM_ES; -- Prayer of Mending
     dummyAuraHandlers[GetSpellInfo(407676)] = ArcaneTorrent; -- Crusader Strike mana restore
+    dummyAuraHandlers[GetSpellInfo(425294)] = PctManaPeriodic;
 else
     dummyAuraHandlers[GetSpellInfo(33076)] = PoM_ES; -- Prayer of Mending
     dummyAuraHandlers[GetSpellInfo(48505)] = Starfall;
-    dummyAuraHandlers[GetSpellInfo(54428)] = DivinePlea;
+    dummyAuraHandlers[GetSpellInfo(54428)] = PctManaPeriodic;
     dummyAuraHandlers[GetSpellInfo(51490)] = Thunderstorm;
     dummyAuraHandlers[GetSpellInfo(17962)] = Conflagrate;
     dummyAuraHandlers[GetSpellInfo(28730)] = ArcaneTorrent;
