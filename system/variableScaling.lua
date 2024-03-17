@@ -100,4 +100,7 @@ spellScalingVariables = {
         mult1 = function() if HaveTalent(29192) then return 1.15 else return 1 end end,
         mult = function() if HaveTalent(29193) then return 1.3 else return ValueOfVariable("mult1") end end,
     },
+    [865] = {
+        ticks = function() if HaveTalent(436895) then return 8 else return 6 end end,
+    },
 }

@@ -76,7 +76,11 @@ export class SpellLevelScaling
 
         if (!effects) return;
 
-        if (variables.size === 1) return variables.keys().next().value;
+        if (variables.size === 1)
+        {
+            if (variables.has("ticks")) return;
+            return variables.keys().next().value;
+        } 
 
         if (effects[0].Effect == EFFECT_TYPE.SPELL_EFFECT_HEAL || effects[0].EffectAura == AURA_TYPE.SPELL_AURA_PERIODIC_HEAL)
         {

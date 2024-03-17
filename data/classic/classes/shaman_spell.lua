@@ -1991,7 +1991,7 @@ _addon.spellInfo = {
         spellLevel = 1,
         maxLevel = 0,
         duration = 600,
-        baseCostPct = 15,
+        baseCostPct = 5,
         school = 4,
         schoolMask = 8,
         defType = 1,
@@ -2002,7 +2002,15 @@ _addon.spellInfo = {
             [1] = {
                 effectType = 6,
                 auraType = 4,
-                valueBase = 100,
+                valueBase = 55,
+                valueRange = 0,
+                coef = 0.538,
+                coefAP = 0,
+            },
+            [2] = {
+                effectType = 6,
+                auraType = 4,
+                valueBase = 1,
                 valueRange = 0,
                 coef = 0.538,
                 coefAP = 0,
@@ -2454,6 +2462,10 @@ _addon.spellClassSet = {
             408342, -- Fire Nova(Rank 2)
             408343, -- Fire Nova(Rank 3)
             408345, -- Fire Nova(Rank 5)
+            408424, -- Fire Nova(Rank 2)
+            408426, -- Fire Nova(Rank 3)
+            408427, -- Fire Nova(Rank 4)
+            408428, -- Fire Nova(Rank 5)
         },
     },
     [3] = {

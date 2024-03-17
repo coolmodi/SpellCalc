@@ -2534,7 +2534,7 @@ _addon.spellInfo = {
                 tickPeriod = 1,
                 valueBase = 42,
                 valueRange = 0,
-                coef = 0.24300000072,
+                coef = 0.45699998736,
                 coefAP = 0,
             },
         }
@@ -2552,16 +2552,16 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 258,
-                valueRange = 42,
-                coef = 0.85699999332,
+                valueBase = 387,
+                valueRange = 64,
+                coef = 1,
                 coefAP = 0,
             },
             [2] = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 8,
+                valueBase = 12,
                 valueRange = 0,
                 coef = 0,
                 coefAP = 0,
@@ -2585,7 +2585,7 @@ _addon.spellInfo = {
                 tickPeriod = 1,
                 valueBase = 42,
                 valueRange = 0,
-                coef = 0.08100000024,
+                coef = 0.15199999511,
                 coefAP = 0,
             },
         }
@@ -2603,9 +2603,9 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 203,
-                valueRange = 34,
-                coef = 0.71399998665,
+                valueBase = 305,
+                valueRange = 50,
+                coef = 0.81400001049,
                 coefAP = 0,
             },
         }
@@ -3267,14 +3267,13 @@ _addon.spellClassSet = {
             29515, -- TEST Scorch
             350025, -- Frostbolt
             400574, -- Arcane Blast
-            400613, -- Living Bomb
-            400640, -- Ice Lance
             401502, -- Frostfire Bolt
             412532, -- Spellfrost Bolt
             428878, -- Balefire Bolt
             434443, -- Pyroblast
             435849, -- Conjure Comprehension Charms
             436516, -- Chronostatic Preservation
+            443369, -- Chronostatic Preservation
         },
         [2147483648] = {
             66, -- Lesser Invisibility
@@ -3388,6 +3387,7 @@ _addon.spellClassSet = {
         [256] = {
             436516, -- Chronostatic Preservation
             436517, -- Chronostatic Preservation
+            443369, -- Chronostatic Preservation
         },
         [4096] = {
             412510, -- Mass Regeneration

@@ -2858,9 +2858,9 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 532,
-                valueRange = 88,
-                coef = 0.64300000668,
+                valueBase = 320,
+                valueRange = 52,
+                coef = 0.42899999022,
                 coefAP = 0,
             },
         }
@@ -2988,9 +2988,9 @@ _addon.spellInfo = {
                 effectType = 6,
                 auraType = 3,
                 tickPeriod = 3,
-                valueBase = 117,
+                valueBase = 129,
                 valueRange = 0,
-                coef = 0.20000000298,
+                coef = 0.16599999368,
                 coefAP = 0,
             },
         }
@@ -3235,8 +3235,8 @@ _addon.spellInfo = {
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 111,
-                valueRange = 18,
+                valueBase = 122,
+                valueRange = 20,
                 coef = 0.42899999022,
                 coefAP = 0,
             },
@@ -3687,8 +3687,6 @@ _addon.spellClassSet = {
         },
         [32] = {
             401859, -- Prayer of Mending
-            401863, -- Prayer of Mending
-            401877, -- Prayer of Mending
             401880, -- Prayer of Mending
         },
         [256] = {

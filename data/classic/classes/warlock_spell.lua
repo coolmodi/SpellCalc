@@ -2353,6 +2353,8 @@ _addon.spellClassSet = {
             18937, -- Dark Pact(Rank 2)
             18938, -- Dark Pact(Rank 3)
             403828, -- Menace
+            442226, -- Menace
+            442233, -- Menace
         },
     },
     [2] = {

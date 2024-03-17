@@ -1668,8 +1668,8 @@ _addon.spellInfo = {
     [407676] = { -- Crusader Strike
         spellLevel = 1,
         maxLevel = 0,
-        school = 1,
-        schoolMask = 1,
+        school = 2,
+        schoolMask = 2,
         defType = 2,
         equippedWeaponMask = 173555,
         effects = {
@@ -1678,7 +1678,7 @@ _addon.spellInfo = {
                 weaponCoef = 0.75,
                 valueBase = 0,
                 valueRange = 0,
-                coef = 1,
+                coef = 0,
                 coefAP = 0,
             },
             [2] = {
@@ -2117,6 +2117,9 @@ _addon.spellClassSet = {
             24275, -- Hammer of Wrath(Rank 1)
             429151, -- Hammer of Wrath
         },
+        [1024] = {
+            407799, -- Seal of Martyrdom
+        },
         [8192] = {
             409324, -- Ancestral Guidance
         },
@@ -2162,6 +2165,23 @@ _addon.spellClassSet = {
         },
         [4] = {
             407804, -- Divine Sacrifice
+        },
+        [16] = {
+            407803, -- Judgement of Martyrdom
+        },
+        [8192] = {
+            879, -- Exorcism(Rank 1)
+            5614, -- Exorcism(Rank 2)
+            5615, -- Exorcism(Rank 3)
+            10312, -- Exorcism(Rank 4)
+            10313, -- Exorcism(Rank 5)
+            10314, -- Exorcism(Rank 6)
+            415068, -- Exorcism(Rank 1)
+            415069, -- Exorcism(Rank 2)
+            415070, -- Exorcism(Rank 3)
+            415071, -- Exorcism(Rank 4)
+            415072, -- Exorcism(Rank 5)
+            415073, -- Exorcism(Rank 6)
         },
         [65536] = {
             1038, -- Blessing of Salvation

@@ -142,7 +142,7 @@ _addon.aurasPlayer = {
         },
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
-            affectSpell = {4194437, 131072, 0, 0},
+            affectSpell = {4194437, 131072, 262144, 0},
             value = 30,
         },
     },
@@ -409,6 +409,13 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
             value = 283.3333333333333,
+        },
+    },
+    [16886] = { -- Nature's Grace
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_GCD_MS,
+            affectSpell = {1, 0, 0, 0},
+            value = -500,
         },
     },
     [16592] = { -- Shadowform
@@ -1841,7 +1848,7 @@ _addon.aurasPlayer = {
     [412322] = { -- Spell Power
         {
             type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_CRIT_MULT,
-            affectSpell = {551686903, 102472, 0, 0},
+            affectSpell = {551686903, 102472, 64, 0},
             value = 50,
         },
     },
@@ -1893,6 +1900,13 @@ _addon.aurasPlayer = {
             value = 15,
         },
     },
+    [417157] = { -- Starsurge
+        {
+            type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_DAMAGE_HEALING,
+            affectSpell = {4, 0, 0, 0},
+            value = 80,
+        },
+    },
     [420536] = { -- Stealth
         {
             type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
@@ -1931,7 +1945,7 @@ _addon.aurasPlayer = {
     [425336] = { -- Shamanistic Rage
         {
             type = _addon.CONST.EFFECT_TYPE.MOD_MANA_PER_5,
-            value = 75,
+            value = 25,
         },
     },
     [425415] = { -- Enrage
@@ -1945,7 +1959,7 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
             affectMask = 127,
-            value = 5,
+            value = 25,
         },
     },
     [426311] = { -- Shadow and Flame
@@ -2090,6 +2104,12 @@ _addon.aurasPlayer = {
             value = 12,
         },
     },
+    [436365] = { -- Two-Handed Mastery
+        {
+            type = _addon.CONST.EFFECT_TYPE.GLOBAL_FLAT_HIT_CHANCE_SPELL,
+            value = 10,
+        },
+    },
     [436387] = { -- Blessing of the Blood Loa
         {
             type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
@@ -2101,14 +2121,6 @@ _addon.aurasPlayer = {
         {
             type = _addon.CONST.EFFECT_TYPE.VERSUSMOD_PCT_DAMAGE,
             value = 0,
-        },
-    },
-    [437713] = { -- Blood Craze
-        {
-            type = _addon.CONST.EFFECT_TYPE.SCHOOLMOD_PCT_DAMAGE,
-            affectMask = 127,
-            value = 1,
-            hasStacks = true,
         },
     },
 }

@@ -2802,7 +2802,7 @@ _addon.spellInfo = {
         spellLevel = 1,
         maxLevel = 0,
         duration = 7,
-        baseCostPct = 28,
+        baseCostPct = 14,
         school = 4,
         schoolMask = 8,
         GCD = 1,
@@ -2831,7 +2831,7 @@ _addon.spellInfo = {
     [408247] = { -- Nourish
         spellLevel = 1,
         maxLevel = 0,
-        baseCostPct = 36,
+        baseCostPct = 26,
         school = 4,
         schoolMask = 8,
         defType = 1,
@@ -3175,17 +3175,19 @@ _addon.spellInfo = {
     [417157] = { -- Starsurge
         spellLevel = 1,
         maxLevel = 1,
+        duration = 15,
         baseCostPct = 1,
         school = 7,
         schoolMask = 64,
         defType = 1,
+        charges = 1,
         useScalingFormula = { id = 823, label = "damagepower" },
         effects = {
             [1] = {
                 effectType = 2,
-                valueBase = 381,
-                valueRange = 86,
-                coef = 1,
+                valueBase = 248,
+                valueRange = 56,
+                coef = 0.42899999022,
                 coefAP = 0,
             },
         }
@@ -3678,7 +3680,6 @@ _addon.spellClassSet = {
         },
         [524288] = {
             5229, -- Enrage
-            25503, -- Enrage
         },
         [1048576] = {
             16689, -- Nature's Grasp(Rank 1)
@@ -3784,10 +3785,19 @@ _addon.spellClassSet = {
         },
         [256] = {
             414644, -- Lacerate
-            414647, -- Lacerate
         },
         [1024] = {
             407993, -- Mangle(Cat)
+        },
+        [4096] = {
+            29166, -- Innervate
+        },
+        [1048576] = {
+            769, -- Swipe(Rank 3)
+            779, -- Swipe(Rank 1)
+            780, -- Swipe(Rank 2)
+            9754, -- Swipe(Rank 4)
+            9908, -- Swipe(Rank 5)
         },
         [33554432] = {
             408247, -- Nourish
@@ -3814,6 +3824,9 @@ _addon.spellClassSet = {
         },
         [64] = {
             417141, -- Berserk
+        },
+        [512] = {
+            437138, -- Revive
         },
         [2048] = {
             5217, -- Tiger's Fury(Rank 1)

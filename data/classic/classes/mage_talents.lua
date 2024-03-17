@@ -82,7 +82,7 @@ _addon.talentDataRaw = {
             },
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_PCT_OVER_TIME,
-                affectSpell = {4194437, 131072, 0, 0},
+                affectSpell = {4194437, 131072, 262144, 0},
                 perPoint = 1,
             },
             {
@@ -102,7 +102,7 @@ _addon.talentDataRaw = {
         effects = {
             {
                 type = _addon.CONST.EFFECT_TYPE.SPELLMOD_EXTRA_ON_CRIT,
-                affectSpell = {43451023732, 200704, 524808, 536887296},
+                affectSpell = {43451023732, 200704, 525064, 536887296},
                 perPoint = 8,
             },
         }

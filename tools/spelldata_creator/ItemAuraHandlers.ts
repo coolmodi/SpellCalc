@@ -522,6 +522,16 @@ export class AuraHandlers
                             case 15309: // Darkness talent effect for SoD SW:Death
                             case 15310: // Darkness talent effect for SoD SW:Death
                             case 428738: // Increases the magnitude of your Mana Shield, Frost Ward, and Fire Ward by $s1%, and decreases mana drained by Mana Shield by $s2% per damage done.
+                            case 16896: // Increases the damage done by your Starfire, Moonfire and Wrath spells by $s1%
+                            case 16897: // Increases the damage done by your Starfire, Moonfire and Wrath spells by $s1%
+                            case 16899: // Increases the damage done by your Starfire, Moonfire and Wrath spells by $s1%
+                            case 16900: // Increases the damage done by your Starfire, Moonfire and Wrath spells by $s1%
+                            case 16901: // Increases the damage done by your Starfire, Moonfire and Wrath spells by $s1%
+                            case 20224: // Increases the damage done by your Seal of Righteousness and Judgement of Righteousness by $s1%
+                            case 20225: // Increases the damage done by your Seal of Righteousness and Judgement of Righteousness by $s1%
+                            case 20330: // Increases the damage done by your Seal of Righteousness and Judgement of Righteousness by $s1%
+                            case 20331: // Increases the damage done by your Seal of Righteousness and Judgement of Righteousness by $s1%
+                            case 20332: // Increases the damage done by your Seal of Righteousness and Judgement of Righteousness by $s1%
                                 aed.type = ADDON_EFFECT_TYPE.SPELLMOD_PCT_EFFECT; // TODO: this could alos behave like pct dmg healing (=include bonus)
                                 break;
                             default:

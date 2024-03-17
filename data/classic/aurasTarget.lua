@@ -4072,12 +4072,27 @@ _addon.aurasTarget = {
             value = -50,
         },
     },
+    [437713] = { -- Blood Craze
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
+            affectMask = 127,
+            value = 10,
+            hasStacks = true,
+        },
+    },
     [438727] = { -- Radiation Sickness
         {
             type = _addon.CONST.EFFECT_TYPE.TARGET_SCHOOLMOD_DMG_TAKEN_PCT,
             affectMask = 8,
             value = 50,
             hasStacks = true,
+        },
+    },
+    [442225] = { -- Static Arc
+        {
+            type = _addon.CONST.EFFECT_TYPE.TARGET_MECHANICMOD_DMG_TAKEN_PCT,
+            value = 500,
+            affectMechanic = 23,
         },
     },
 }
